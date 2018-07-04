@@ -1,5 +1,6 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 type Props = {
@@ -21,7 +22,9 @@ class AppContainer extends React.PureComponent<Props> {
 
     return (
       <IntlProvider locale={locale} messages={messages}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </IntlProvider>
     );
   }
