@@ -8,8 +8,8 @@ export type ProviderState = {
 };
 
 export type ProviderOptions = {
-  provider?: string,
   type: string,
+  provider?: string,
   url?: string,
   networkId?: number,
 };
@@ -18,6 +18,8 @@ export type SetProviderAction = {
   type: 'provider/SET_PROVIDER',
   payload: any,
 };
+
+export type ProviderEvent = any => ProviderState => ProviderState;
 
 export type ProviderErrorAction = {
   type: 'provider/ERROR',

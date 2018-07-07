@@ -1,3 +1,4 @@
+// @flow
 import createReducer from './createReducer';
 import etherBalanceActionTypes from './actions/etherBalance';
 import providerActionTypes from './actions/provider';

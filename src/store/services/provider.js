@@ -40,19 +40,19 @@ export const createDefaultProvider = async () => {
 
 export const createInfuraProvider = async (networkName: string) => {
   let provider = new providers.InfuraProvider(networkName);
-  let blockNumber = await provider.getBlockNumber(); //TODO 2
+  let blockNumber = await provider.getBlockNumber(); //TODO check on block number
   window.provider = provider;
 };
 
 export const createJsonRpcProvider = async (url: ?string, networkId: ?number) => {
   let provider = new providers.JsonRpcProvider(url, { chainId: networkId, name: 'unspecified' });
-  let blockNumber = await provider.getBlockNumber();
+  let blockNumber = await provider.getBlockNumber(); //TODO check on block number
   window.provider = provider;
 };
 
 export const createMetamaskProvider = async () => {
   let provider = new providers.Web3Provider(window.web3.currentProvider);
-  let blockNumber = await provider.getBlockNumber();
+  let blockNumber = await provider.getBlockNumber(); //TODO check on block number
   window.provider = provider;
 };
 
