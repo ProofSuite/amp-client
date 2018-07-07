@@ -9,11 +9,11 @@ import ProviderSettingsRenderer from './ProviderSettingsRenderer';
 import README from './README.md';
 
 const networks = [
-  { name: '1 (Mainnet)', id: 1 },
-  { name: '2 (Ropsten)', id: 2 },
-  { name: '3 (Rinkeby)', id: 3 },
-  { name: '4 (?)', id: 4 },
-  { name: '1000 (Local Default TestRPC)', id: 1000 },
+  { name: 'Mainnet', id: 1 },
+  { name: 'Ropsten', id: 3 },
+  { name: 'Rinkeby', id: 4 },
+  { name: 'Private', id: 1000 },
+  { name: 'Private', id: 8888 },
 ].map((m, index) => ({ ...m, rank: index + 1 }));
 
 storiesOf('ProviderSettings', module)
@@ -34,7 +34,12 @@ storiesOf('ProviderSettings', module)
     'Provider Settings',
     withInfo()(() => (
       <div className="pt-dark">
-        <ProviderSettings setProvider={action('setProvider')} />
+        <ProviderSettings
+          loading={false}
+          error=""
+          currentProvider={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          setProvider={action('setProvider')}
+        />
       </div>
     ))
   )
@@ -43,7 +48,8 @@ storiesOf('ProviderSettings', module)
     withInfo()(() => (
       <div className="pt-dark">
         <ProviderSettingsRenderer
-          options={{ provider: 'metamask', type: '', url: '', networkId: 1 }}
+          options={{ provider: 'metamask', type: '', url: '', networkId: 8888 }}
+          currentProvider={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
@@ -59,9 +65,11 @@ storiesOf('ProviderSettings', module)
         <ProviderSettingsRenderer
           loading
           options={{ provider: 'metamask', type: '', url: '', networkId: 1 }}
+          currentProvider={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
+          error=""
           networks={networks}
         />
       </div>
@@ -73,47 +81,29 @@ storiesOf('ProviderSettings', module)
       <div className="pt-dark">
         <ProviderSettingsRenderer
           options={{ provider: 'custom', type: 'wallet', url: 'https://my.node.com', networkId: 2 }}
+          currentProvider={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
+          error=""
+          networks={networks}
+        />
+      </div>
+    ))
+  )
+  .add(
+    'Renderer (Custom - Expanded - Error)',
+    withInfo()(() => (
+      <div className="pt-dark">
+        <ProviderSettingsRenderer
+          options={{ provider: 'custom', type: 'wallet', url: 'https://my.node.com', networkId: 2 }}
+          currentProvider={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          handleSubmit={action('handleSubmit')}
+          handleChange={action('handleChange')}
+          handleNetworkChange={action('handleNetworkChange')}
+          error="Could not set provider"
           networks={networks}
         />
       </div>
     ))
   );
-
-// storiesOf('EtherBalance', module)
-//   .addDecorator(withKnobs)
-//   .add(
-//     'Default Export',
-//     withInfo({ text: README, propTablesExclude: [EtherBalanceContainer], source: false })(() => (
-//       <EtherBalanceContainer
-//         address={text('account', '0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE')}
-//         loadingMessage="Loading..."
-//       />
-//     ))
-//   )
-//   .add(
-//     'Inner Component (Loading)',
-//     withInfo()(() => (
-//       <EtherBalanceComponent
-//         address="0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE"
-//         balance={null}
-//         isSubscribed={true}
-//         loadingMessage="Your balance is..."
-//         subscribeBalance={action('subscribeBalance')}
-//       />
-//     ))
-//   )
-//   .add(
-//     'Inner Component (Loaded)',
-//     withInfo()(() => (
-//       <EtherBalanceComponent
-//         address="0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE"
-//         balance="1.2345"
-//         isSubscribed={true}
-//         loadingMessage="Your balance is..."
-//         subscribeBalance={action('subscribeBalance')}
-//       />
-//     ))
-//   );

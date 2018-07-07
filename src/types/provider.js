@@ -1,5 +1,7 @@
 //@flow
 export type ProviderState = {
+  +loading: boolean,
+  +error: string,
   +type: string,
   +url: string,
   +networkId: number,
@@ -9,7 +11,6 @@ export type ProviderOptions = {
   provider?: string,
   type: string,
   url?: string,
-  websockets?: boolean,
   networkId?: number,
 };
 
@@ -20,7 +21,11 @@ export type SetProviderAction = {
 
 export type ProviderErrorAction = {
   type: 'provider/ERROR',
-  payload: any,
+  payload: { message: string },
 };
 
-export type ProviderAction = SetProviderAction | ProviderErrorAction;
+export type RequestProviderAction = {
+  type: 'provider/REQUEST_PROVIDER',
+};
+
+export type ProviderAction = SetProviderAction | ProviderErrorAction | RequestProviderAction;

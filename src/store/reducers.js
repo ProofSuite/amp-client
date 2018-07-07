@@ -21,10 +21,13 @@ export const etherBalance = createReducer(action => {
 
 export const provider = createReducer(action => {
   const { type, payload } = action;
-
   switch (type) {
     case providerActionTypes.setProvider:
-      return providerEvents.setProvider(payload.options);
+      return providerEvents.providerSet(payload.options);
+    case providerActionTypes.requestProvider:
+      return providerEvents.providerRequested();
+    case providerActionTypes.error:
+      return providerEvents.providerError(payload.message);
     default:
       return providerEvents.initialized();
   }

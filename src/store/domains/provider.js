@@ -2,6 +2,8 @@
 import type { ProviderState, ProviderOptions } from '../../types/provider';
 
 const initialState = {
+  loading: false,
+  error: '',
   type: 'local',
   url: 'http://127.0.0.1:8545',
   networkId: 8888,
@@ -12,9 +14,11 @@ export const initialized = () => {
   return event;
 };
 
-export const setProvider = ({ type, url, networkId }: ProviderOptions) => {
+export const providerSet = ({ type, url, networkId }: ProviderOptions) => {
   const event = (state: ProviderState) => ({
     ...state,
+    loading: false,
+    error: null,
     type: type || state.type,
     url: url || state.url,
     networkId: networkId || state.networkId,
@@ -23,8 +27,32 @@ export const setProvider = ({ type, url, networkId }: ProviderOptions) => {
   return event;
 };
 
+export const providerRequested = () => {
+  const event = (state: ProviderState) => ({
+    ...state,
+    loading: true,
+  });
+
+  return event;
+};
+
+export const providerError = (error: string) => {
+  const event = (state: ProviderState) => ({
+    ...state,
+    loading: false,
+    error: error,
+  });
+
+  return event;
+};
+
 export default function model(state: ProviderState) {
   return {
+    isLoading: () => state.loading,
+    getError: () => state.error,
+    getCurrentProvider: () => {
+      return { type: state.type, url: state.url, networkId: state.networkId };
+    },
     getType: () => state.type,
     getUrl: () => state.url,
     getNetworkId: () => state.networkId,

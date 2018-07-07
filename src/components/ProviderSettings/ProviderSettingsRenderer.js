@@ -2,13 +2,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import NetworkSelect from '../NetworkSelect/NetworkSelect';
-import { Card, Radio, RadioGroup, Button, InputGroup, Label } from '@blueprintjs/core';
+import { Card, Radio, RadioGroup, Button, InputGroup, Label, Callout } from '@blueprintjs/core';
 
 import type { ProviderOptions } from '../../types/provider';
 
 type Props = {
   loading: boolean,
+  error: string,
   options: ProviderOptions,
+  currentProvider: ProviderOptions,
   handleSubmit: (SyntheticEvent<>) => void,
   handleChange: (SyntheticInputEvent<>) => void,
   handleNetworkChange: Object => void,
@@ -16,11 +18,11 @@ type Props = {
 };
 
 const ProviderSettingsRenderer = (props: Props) => {
-  const { handleChange, handleSubmit, options, loading } = props;
-  const { provider } = options;
+  const { handleChange, handleSubmit, options, loading, error, currentProvider } = props;
+  const { provider, type, networkId, url } = options;
 
   return (
-    <CardContainer>
+    <CardBox>
       <Card interactive={true}>
         <options>
           <RadioGroup name="provider" onChange={handleChange} selectedValue={provider} label="Choose a provider">
@@ -32,11 +34,32 @@ const ProviderSettingsRenderer = (props: Props) => {
           </RadioGroup>
         </options>
         {provider === 'custom' && renderCustomProviderForm(props)}
-        <ButtonWrapper>
+        <ButtonBox>
           <Button intent="primary" loading={loading} onClick={handleSubmit} text="Change Provider" />
-        </ButtonWrapper>
+        </ButtonBox>
+        {error ? renderErrorCallout(error) : renderCurrentProviderCallout(currentProvider)}
       </Card>
-    </CardContainer>
+    </CardBox>
+  );
+};
+
+const renderErrorCallout = (error: string) => {
+  return (
+    <CalloutBox>
+      <Callout title="Error" intent="danger">
+        Could not connect provider ({error})
+      </Callout>
+    </CalloutBox>
+  );
+};
+
+const renderCurrentProviderCallout = (currentProvider: ProviderOptions) => {
+  return (
+    <CalloutBox>
+      <Callout title="Provider Connected" intent="success">
+        Current Provider Type: {currentProvider.type}
+      </Callout>
+    </CalloutBox>
   );
 };
 
@@ -52,11 +75,11 @@ const renderCustomProviderForm = (props: Props) => {
         <Radio label="Wallet" value="wallet" />
       </RadioGroup>
 
-      <InputWrapper>
+      <InputBox>
         <Label text="Network ID">
           <NetworkSelect handleChange={handleNetworkChange} networkId={networkId} networks={networks} />
         </Label>
-      </InputWrapper>
+      </InputBox>
 
       <Label text="Provider URL">
         <InputGroup placeholder="Ex: 127.0.0.1:8545" value={url} onChange={handleChange} name="url" />
@@ -65,16 +88,20 @@ const renderCustomProviderForm = (props: Props) => {
   );
 };
 
-const CardContainer = styled.div`
+const CardBox = styled.div`
   text-align: left;
 `;
 
-const InputWrapper = styled.div`
+const InputBox = styled.div`
   padding-bottom: 15px;
   padding-top: 15px;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonBox = styled.div`
+  padding-top: 20px;
+`;
+
+const CalloutBox = styled.div`
   padding-top: 20px;
 `;
 

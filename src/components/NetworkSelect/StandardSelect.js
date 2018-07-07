@@ -6,6 +6,7 @@ import { Select } from '@blueprintjs/select';
 type Item = {
   name: string,
   rank: number,
+  id: number,
 };
 
 type Props = {
@@ -20,10 +21,10 @@ class StandardSelect extends React.PureComponent<Props> {
       <MenuItem
         active={modifiers.active}
         disabled={modifiers.disabled}
-        label={item.name}
+        label={item ? `Network ID: ${item.id}` : ``}
         key={item.rank}
         onClick={handleClick}
-        text={`${item.rank}. ${item.name}`}
+        text={`${item.name}`}
       />
     );
   }
@@ -36,7 +37,7 @@ class StandardSelect extends React.PureComponent<Props> {
         itemRenderer={this.renderItem}
         noResults={<MenuItem disabled text="No results." />}
         onItemSelect={this.props.handleChange}
-        popoverProps={false}
+        popoverProps={{ minimal: true }}
       >
         <Button
           text={this.props.item ? `${this.props.item.name}` : '(No selection)'}

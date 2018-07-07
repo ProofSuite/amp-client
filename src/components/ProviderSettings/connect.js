@@ -1,5 +1,15 @@
 import { connect } from 'react-redux';
-import * as providerActionCreators from '../../store/models/provider';
+import getProviderModel, * as providerActionCreators from '../../store/models/provider';
+
+export function mapStateToProps(state, props) {
+  const provider = getProviderModel(state);
+
+  return {
+    loading: provider.isLoading(),
+    error: provider.getError(),
+    currentProvider: provider.getCurrentProvider(),
+  };
+}
 
 export function mapDispatchToProps(dispatch) {
   return {
@@ -8,6 +18,6 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 );
