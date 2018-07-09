@@ -1,3 +1,6 @@
-export default function createReducer(actionHandler) {
-  return (state, action) => actionHandler(action)(state);
+// @flow
+import type { State, Action, ActionHandler } from './index';
+
+export default function createReducer(actionHandler: ActionHandler) {
+  return (state: State, action: Action) => actionHandler(action)(state);
 }

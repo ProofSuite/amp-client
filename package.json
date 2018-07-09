@@ -13,6 +13,8 @@
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
+    "@blueprintjs/core": "~2.3.1",
+    "@blueprintjs/select": "~2.0.1",
     "ethers": "^3.0.25",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -21,7 +23,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "~3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
