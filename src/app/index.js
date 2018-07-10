@@ -12,24 +12,32 @@ import SettingPage from './SettingPage';
 import LogoutPage from './LogoutPage';
 import './index.css';
 
+function App(props) {
+  return (
+    <Layout>
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/portfolio" component={PortfolioPage} />
+        <Route path="/wallet" component={WalletPage} />
+        <Route path="/exchange" component={ExchangePage} />
+        <Route path="/setting" component={SettingPage} />
+        <Route path="/logout" component={LogoutPage} />
+      </Switch>
+    </Layout>
+  );
+}
+
 export function bootstrap(store, container) {
   const app = (
     <Provider store={store}>
       <BrowserRouter>
-        <Layout>
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/portfolio" component={PortfolioPage} />
-            <Route path="/wallet" component={WalletPage} />
-            <Route path="/exchange" component={ExchangePage} />
-            <Route path="/setting" component={SettingPage} />
-            <Route path="/logout" component={LogoutPage} />
-          </Switch>
-        </Layout>
+        <App />
       </BrowserRouter>
     </Provider>
   );
 
   ReactDOM.render(app, container);
 }
+
+export default App;

@@ -1,3 +1,4 @@
 import Layout from './Layout';
+import connect from './connect';
 
-export default Layout;
+export default connect(Layout);
