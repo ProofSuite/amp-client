@@ -48,7 +48,7 @@ const MenuItemLink = styled(NavLink).attrs({
   role: 'button',
 })``;
 
-function Layout({ children, locale, messages, wallet }) {
+function Layout({ children, defaultAccount, locale, messages }) {
   const menu = (
     <Menu>
       <MenuItem>
@@ -80,11 +80,11 @@ function Layout({ children, locale, messages, wallet }) {
               <NavbarLink to="/exchange">Exchange</NavbarLink>
             </NavbarGroup>
             <NavbarGroup align={Alignment.RIGHT}>
-              {!wallet ? (
+              {!defaultAccount ? (
                 <NavbarLink to="/login">Login</NavbarLink>
               ) : (
                 <Popover content={menu} position={Position.BOTTOM_RIGHT}>
-                  <Button icon="key" text={wallet} minimal />
+                  <Button icon="key" text={defaultAccount} minimal />
                 </Popover>
               )}
             </NavbarGroup>

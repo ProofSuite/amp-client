@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_C
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 }
 
-const middlewares = [thunk];
+const middlewares = [thunk.withExtraArgument(window)];
 const enhancers = [applyMiddleware(...middlewares)];
 const storeEnhancer = composeEnhancers(...enhancers);
 const rootReducer = combineReducers(reducers);

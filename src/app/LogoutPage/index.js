@@ -1,3 +1,4 @@
 import LogoutPage from './LogoutPage';
+import connect from './connect';
 
-export default LogoutPage;
+export default connect(LogoutPage);

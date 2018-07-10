@@ -1,11 +1,24 @@
 import React from 'react';
-import { NonIdealState } from '@blueprintjs/core';
+import { Redirect } from 'react-router-dom';
+import { NonIdealState, Spinner } from '@blueprintjs/core';
 
 class LogoutPage extends React.PureComponent {
+  componentDidMount() {
+    this.props.logout();
+  }
+
   render() {
+    const {
+      props: { isDefaultAccountSet },
+    } = this;
+
+    if (!isDefaultAccountSet) {
+      return <Redirect to="/" />;
+    }
+
     return (
-      <NonIdealState title="WORK IN PROGRESS" visual="wrench">
-        Logout Page
+      <NonIdealState title="Cleaning up your data..." visual={<Spinner intent="primary" large />}>
+        Please wait for a moment.
       </NonIdealState>
     );
   }
