@@ -1,4 +1,3 @@
-#### Usage
 ```js
 import EtherBalance from '../../components/EtherBalance';
 ```
