@@ -75,4 +75,4 @@ package-lock.json
 
 #Webstorm's config .idea files
 .idea
-.idea/
+.sass-cache
