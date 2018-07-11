@@ -2,7 +2,7 @@ import { createStore } from '../../store';
 
 import { getDefaultSigner } from '../services/signer';
 import etherTxModel, * as actionCreators from './etherTx';
-import { mockTxReceipt, mockFailedTxReceipt, mockEtherTxParams } from '../../mockData';
+import { mockEtherTxParams } from '../../mockData';
 
 jest.mock('ethers');
 jest.mock('../services/signer');
