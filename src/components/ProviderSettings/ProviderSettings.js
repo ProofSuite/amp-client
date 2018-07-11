@@ -27,11 +27,11 @@ class ProviderSettings extends React.PureComponent<Props, State> {
 
   handleChange = ({ target }: SyntheticInputEvent<>) => {
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ ...this.state, [target.name]: value });
+    this.setState({ [target.name]: value });
   };
 
   handleNetworkChange = (network: Object) => {
-    this.setState({ ...this.state, networkId: network.id });
+    this.setState({ networkId: network.id });
   };
 
   render() {

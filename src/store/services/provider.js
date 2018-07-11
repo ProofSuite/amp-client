@@ -32,28 +32,28 @@ export const createProvider = async (providerOptions: ProviderOptions) => {
   return options;
 };
 
-export const createDefaultProvider = async () => {
-  let provider = new providers.getDefaultProvider();
+const createDefaultProvider = async () => {
+  let provider = providers.getDefaultProvider();
   let blockNumber = await provider.getBlockNumber();
-  window.provider = provider;
+  window.provider = { provider: provider, type: 'wallet' };
 };
 
-export const createInfuraProvider = async (networkName: string) => {
+const createInfuraProvider = async (networkName: string) => {
   let provider = new providers.InfuraProvider(networkName);
   let blockNumber = await provider.getBlockNumber(); //TODO check on block number
-  window.provider = provider;
+  window.provider = { provider: provider, type: 'wallet' };
 };
 
-export const createJsonRpcProvider = async (url: ?string, networkId: ?number) => {
+const createJsonRpcProvider = async (url: ?string, networkId: ?number) => {
   let provider = new providers.JsonRpcProvider(url, { chainId: networkId, name: 'unspecified' });
   let blockNumber = await provider.getBlockNumber(); //TODO check on block number
-  window.provider = provider;
+  window.provider = { provider: provider, type: 'local' };
 };
 
-export const createMetamaskProvider = async () => {
+const createMetamaskProvider = async () => {
   let provider = new providers.Web3Provider(window.web3.currentProvider);
   let blockNumber = await provider.getBlockNumber(); //TODO check on block number
-  window.provider = provider;
+  window.provider = { provider: provider, type: 'metamask' };
 };
 
 export const getProvider = () => window.provider;

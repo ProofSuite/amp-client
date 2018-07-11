@@ -81,7 +81,7 @@ storiesOf('ProviderSettings', module)
       <div className="pt-dark">
         <ProviderSettingsRenderer
           options={{ provider: 'custom', type: 'wallet', url: 'https://my.node.com', networkId: 2 }}
-          currentProvider={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          currentProvider={{ type: 'wallet', url: 'http://127.0.0.1:8545', networkId: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
@@ -101,7 +101,7 @@ storiesOf('ProviderSettings', module)
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
-          error="Could not set provider"
+          error="Invalid Json Response"
           networks={networks}
         />
       </div>

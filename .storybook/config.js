@@ -5,7 +5,8 @@ import { setOptions } from '@storybook/addon-options';
 import { withStore } from './addon-store';
 
 import '@blueprintjs/core/lib/css/blueprint.css'
-// import './../src/styles/reset.css'
+import './../src/styles/reset.css'
+import './../src/styles/global.css'
 
 const req = require.context('../src/components', true, /stories\.js$/)
 
@@ -14,9 +15,9 @@ function loadStories() {
 }
 
 // @storybook/addon-console
-setConsoleOptions({
-  panelExclude: [],
-});
+// setConsoleOptions({
+//   panelExclude: [],
+// });
 
 // @storybook/addon-info
 setDefaults({
@@ -27,7 +28,6 @@ setDefaults({
       boxShadow: 'none',
     },
     infoStory: {
-      textAlign: 'center',
       border: '1px #eee dashed',
       padding: '40px',
       margin: '0 40px',

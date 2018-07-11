@@ -1,7 +1,10 @@
+// @flow
 import { connect } from 'react-redux';
 import getProviderModel, * as providerActionCreators from '../../store/models/provider';
+import type { State, Dispatch } from '../../types';
+import type { ProviderOptions } from '../../types/provider';
 
-export function mapStateToProps(state, props) {
+export function mapStateToProps(state: State) {
   const provider = getProviderModel(state);
 
   return {
@@ -11,9 +14,9 @@ export function mapStateToProps(state, props) {
   };
 }
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    setProvider: options => dispatch(providerActionCreators.setProvider(options)),
+    setProvider: (options: ProviderOptions) => dispatch(providerActionCreators.setProvider(options)),
   };
 }
 
