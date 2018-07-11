@@ -29,3 +29,5 @@ export const mockTransferTokensTxParams = {
   gasPrice: 2e9,
   gas: 100000,
 };
+
+export const mockHash = '0x7379944c48520639ed73f8cbad1a922cbf15fb44db7f109ba1fca40d6c483d9e';

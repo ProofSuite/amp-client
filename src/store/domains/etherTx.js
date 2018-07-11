@@ -35,6 +35,18 @@ export const etherTxInvalidated = (statusMessage: string) => {
   return event;
 };
 
+export const etherTxSent = (hash: string) => {
+  const event = (state: EtherTxState) => ({
+    ...state,
+    loading: false,
+    status: 'sent',
+    statusMessage: null,
+    receipt: null,
+    hash: hash,
+  });
+  return event;
+};
+
 export const etherTxReverted = (statusMessage: string, receipt: TxReceipt) => {
   const event = (state: EtherTxState) => ({
     ...state,
@@ -56,18 +68,6 @@ export const etherTxError = (status: string, statusMessage: string) => {
   return event;
 };
 
-export const etherTxSent = (hash: string) => {
-  const event = (state: EtherTxState) => ({
-    ...state,
-    loading: false,
-    status: 'sent',
-    statusMessage: null,
-    receipt: null,
-    hash: hash,
-  });
-  return event;
-};
-
 export const etherTxConfirmed = (receipt: TxReceipt) => {
   const event = (state: EtherTxState) => ({
     ...state,
@@ -85,6 +85,7 @@ export default function model(state: EtherTxState) {
     getStatus: () => state.status,
     getStatusMessage: () => state.statusMessage,
     getGas: () => state.gas,
+    getGasPrice: () => state.gasPrice,
     getHash: () => state.hash,
     getReceipt: () => state.receipt,
   };
