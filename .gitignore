@@ -72,3 +72,7 @@ package-lock.json
 
 # misc
 .DS_Store
+
+#Webstorm's config .idea files
+.idea
+.idea/

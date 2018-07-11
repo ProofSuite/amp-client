@@ -6,7 +6,7 @@
     "precommit": "lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --coverage --watch",
     "eject": "react-scripts eject",
     "flow": "flow",
     "storybook": "start-storybook -p 9009 -s public",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@blueprintjs/core": "~2.3.1",
     "@blueprintjs/select": "~2.0.1",
+    "@blueprintjs/table": "^3.0.0",
     "ethers": "^3.0.25",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

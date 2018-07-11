@@ -1,0 +1,73 @@
+@import "vars";
+
+.order-form {
+  width: 485px;
+  font-size: 13px;
+  h5 {
+    border-bottom: 1px solid $light-gray1;
+    padding-bottom: 5px;
+    text-align: left;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pt-form-group {
+    width: 235px;
+    label{
+
+    }
+    input {
+      width: 100%;
+    }
+    .pt-form-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      span {
+        transform: translateX(-135%);
+        color: $gray3;
+      }
+
+      .radio-buttons {
+        display: flex;
+        justify-content: flex-end;
+        .box {
+          width: 45px;
+          height: 30px;
+          display: flex;
+          background: #27343d;
+          text-align: center;
+          padding: 6px 0;
+          justify-content: center;
+          margin-right: 10px;
+          cursor: pointer;
+          border: 1px solid #2584c1;
+          box-shadow: none;
+          border-radius: 3px;
+          input {
+            opacity: 0;
+            width: 0px;
+            margin: 0px;
+          }
+        }
+        .active-box {
+          box-shadow: 0 0 3px 2px $blue3, 0 0 0 1px $blue3, 0 0 0 3px rgba(19, 124, 189, 0.3), inset 0 0 0 1px rgba(16, 22, 26, 0.3), inset 0 1px 1px rgba(16, 22, 26, 0.4);
+          border-radius: 3px;
+          border: 1px solid transparent;
+        }
+      }
+    }
+  }
+
+
+  label {
+    text-align: left;
+
+  }
+  button {
+    width: 100%;
+    min-height: 35px !important;
+  }
+}
