@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import etherTxModel, { validateEtherTx, sendEtherTx } from '../../store/models/etherTx';
 import { validateTransferTokensTx, sendTransferTokensTx } from '../../store/models/etherTokensTx';
 
-const mapStateToProps = state => {
+import type { State } from '../../types';
+
+export const mapStateToProps = (state: State) => {
   return etherTxModel(state).getState();
 };
 
-const mapDispatchToProps = {
+export const mapDispatchToProps = {
   validateEtherTx,
   sendEtherTx,
   validateTransferTokensTx,

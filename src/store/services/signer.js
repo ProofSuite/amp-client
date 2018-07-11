@@ -2,13 +2,14 @@ import { Wallet } from 'ethers';
 import { getProvider } from './provider';
 import { getDefaultWalletAddress, getWalletFromSessionStorage } from './wallet';
 
+//TODO
 export const PrivateKeySigner = (privateKey, provider) => {
   this.wallet = new Wallet(privateKey);
   this.provider = provider;
   this.getAddress = async () => {
     return this.wallet.address;
   };
-  this.sign = async tx => {}; //TODO
+  this.sign = async tx => {};
   return {
     provider: this.provider,
     getAddress: this.getAddress,
@@ -16,11 +17,12 @@ export const PrivateKeySigner = (privateKey, provider) => {
   };
 };
 
+//TODO
 export const WalletSigner = async (wallet, provider) => {
   this.getAddress = async () => {
     return wallet.address;
   };
-  this.sign = async () => {}; //TODO
+  this.sign = async () => {};
 
   return {
     provider: this.wallet,
@@ -32,13 +34,6 @@ export const WalletSigner = async (wallet, provider) => {
 export const MetamaskSigner = async (provider, accountIndex) => {
   let accounts = await provider.listAccounts();
   let signer = provider.getSigner(accounts[accountIndex]);
-
-  signer.estimateGas = async tx => {
-    let estimatedGas = await signer.provider.estimateGas(tx);
-    estimatedGas = estimatedGas.toNumber();
-    return estimatedGas;
-  };
-
   return signer;
 };
 

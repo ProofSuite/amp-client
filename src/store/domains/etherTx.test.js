@@ -1,5 +1,5 @@
 import model, * as eventCreators from './etherTx';
-import { mockHash } from '../../mockData';
+import { mockHash, mockReceipt } from '../../mockData';
 
 function getModel(events) {
   const state = events.reduce((state, event) => event(state), undefined);
@@ -58,18 +58,52 @@ it('handles etherTxSent event properly', () => {
   expect(etherTx.getReceipt()).toEqual(null);
 });
 
-it('handles etherTxSent event properly', () => {
+it('handles etherTxReverted event properly', () => {
   const etherTx = getModel([
     eventCreators.initialized(),
     eventCreators.etherTxValidated('Transaction Valid', 21000),
     eventCreators.etherTxSent(mockHash),
+    eventCreators.etherTxReverted('Transaction Failed', mockReceipt),
   ]);
 
   expect(etherTx.isLoading()).toEqual(false);
-  expect(etherTx.getStatus()).toEqual('sent');
+  expect(etherTx.getStatus()).toEqual('reverted');
+  expect(etherTx.getStatusMessage()).toEqual('Transaction Failed');
+  expect(etherTx.getGas()).toEqual(21000);
+  expect(etherTx.getGasPrice()).toEqual(null);
+  expect(etherTx.getHash()).toEqual(mockHash);
+  expect(etherTx.getReceipt()).toEqual(mockReceipt);
+});
+
+it('handles etherTxConfirmed event properly', () => {
+  const etherTx = getModel([
+    eventCreators.initialized(),
+    eventCreators.etherTxValidated('Transaction Valid', 21000),
+    eventCreators.etherTxSent(mockHash),
+    eventCreators.etherTxConfirmed(mockReceipt),
+  ]);
+
+  expect(etherTx.isLoading()).toEqual(false);
+  expect(etherTx.getStatus()).toEqual('confirmed');
   expect(etherTx.getStatusMessage()).toEqual(null);
   expect(etherTx.getGas()).toEqual(21000);
   expect(etherTx.getGasPrice()).toEqual(null);
   expect(etherTx.getHash()).toEqual(mockHash);
-  expect(etherTx.getReceipt()).toEqual(null);
+  expect(etherTx.getReceipt()).toEqual(mockReceipt);
+});
+
+it('handles etherTxError event properly', () => {
+  const etherTx = getModel([
+    eventCreators.initialized(),
+    eventCreators.etherTxValidated('Transaction Valid', 21000),
+    eventCreators.etherTxSent(mockHash),
+    eventCreators.etherTxError('error', 'Error during transaction'),
+  ]);
+
+  expect(etherTx.isLoading()).toEqual(false);
+  expect(etherTx.getStatus()).toEqual('error');
+  expect(etherTx.getStatusMessage()).toEqual('Error during transaction');
+  expect(etherTx.getGas()).toEqual(21000);
+  expect(etherTx.getGasPrice()).toEqual(null);
+  expect(etherTx.getHash()).toEqual(mockHash);
 });
