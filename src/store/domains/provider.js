@@ -50,9 +50,7 @@ export default function model(state: ProviderState) {
   return {
     isLoading: () => state.loading,
     getError: () => state.error,
-    getCurrentProvider: () => {
-      return { type: state.type, url: state.url, networkId: state.networkId };
-    },
+    getCurrentProvider: () => ({ type: state.type, url: state.url, networkId: state.networkId }),
     getType: () => state.type,
     getUrl: () => state.url,
     getNetworkId: () => state.networkId,
