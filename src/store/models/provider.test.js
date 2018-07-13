@@ -1,33 +1,40 @@
 import { createStore } from '../../store';
-import configureMockStore from 'redux-thunk';
 import * as providerService from '../services/provider';
 
-import ethers from 'ethers';
-import providerModel, * as actionCreators from './provider';
+import getProviderModel, * as actionCreators from './provider';
+import getAccountModel from './account';
 
 jest.mock('../services/provider');
 
-let model;
+let providerModel;
+let accountModel;
 
 it('returns default provider state', () => {
   const store = createStore();
 
-  model = providerModel(store.getState());
-  expect(model.getType()).toEqual('local');
-  expect(model.getNetworkId()).toEqual(8888);
-  expect(model.getUrl()).toEqual('http://127.0.0.1:8545');
+  providerModel = getProviderModel(store.getState());
+  expect(providerModel.getType()).toEqual('local');
+  expect(providerModel.getNetworkId()).toEqual(8888);
+  expect(providerModel.getUrl()).toEqual('http://127.0.0.1:8545');
 });
 
 it('handles setProvider (metamask) properly', async () => {
-  providerService.createProvider.mockReturnValue(Promise.resolve({ type: 'metamask' }));
+  providerService.createProvider.mockReturnValue(
+    Promise.resolve({
+      address: 'test address',
+      options: { type: 'metamask' },
+    })
+  );
 
   const store = createStore();
   await store.dispatch(actionCreators.setProvider('test providerOptions'));
 
-  model = providerModel(store.getState());
+  providerModel = getProviderModel(store.getState());
+  accountModel = getAccountModel(store.getState());
   expect(providerService.createProvider).toHaveBeenCalledTimes(1);
   expect(providerService.createProvider).toHaveBeenCalledWith('test providerOptions');
-  expect(model.getType()).toEqual('metamask');
+  expect(providerModel.getType()).toEqual('metamask');
+  expect(accountModel.address()).toEqual('test address');
 });
 
 // it('handles setProvider (local) properly', async () => {

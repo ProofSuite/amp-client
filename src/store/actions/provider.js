@@ -12,10 +12,10 @@ const actionTypes = {
   error: 'provider/ERROR',
 };
 
-export function setProvider(options: ProviderOptions): SetProviderAction {
+export function setProvider(options: ProviderOptions, address: ?string): SetProviderAction {
   return {
     type: actionTypes.setProvider,
-    payload: { options },
+    payload: { options, address },
   };
 }
 
