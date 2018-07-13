@@ -54,6 +54,12 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+#webstorm cofig files
+.idea
+
+#scss cache
+.sass-cache
+
 # dotenv environment variables file
 .env
 .env.local
