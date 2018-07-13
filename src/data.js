@@ -24,11 +24,20 @@ export const tx = {
 };
 
 export const tokens = [
-  { name: 'ETH', address: '0x0' },
-  { name: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-  { name: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
-  { name: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
+  { symbol: 'ETH', address: '0x0' },
+  { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
+  { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
+  { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
 ].map((m, index) => ({ ...m, rank: index + 1 }));
+
+export const tokenSymbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
+
+export const tokensBySymbol = {
+  ETH: { symbol: 'ETH', address: '0x0' },
+  EOS: { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
+  WETH: { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
+  ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
+};
 
 export const networks = [
   { name: 'Mainnet', id: 1 },
