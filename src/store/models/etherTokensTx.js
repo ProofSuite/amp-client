@@ -8,7 +8,7 @@ import { ERC20Token } from 'proof-contracts-interfaces';
 import type { TransferTokensTxParams } from '../../types/etherTx';
 import type { State, ThunkAction } from '../../types';
 
-export default function getModel(state: State) {
+export default function getEtherTokensTxModel(state: State) {
   return etherTxModel(state.etherTx);
 }
 
@@ -35,8 +35,13 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       let signer = await getDefaultSigner(getState);
       let token = new Contract(tokenAddress, ERC20Token.abi, signer);
 
-      let tx = await token.transfer(receiver, amount, params);
-      dispatch(actionCreators.sendEtherTx(tx.Hash));
+      let txOpts = {
+        gasLimit: gas || 0,
+        gasPrice: gasPrice || 2 * 10e9,
+      };
+      let tx = await token.transfer(receiver, amount, txOpts);
+
+      dispatch(actionCreators.sendEtherTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
       if (receipt.status === '0x0') {

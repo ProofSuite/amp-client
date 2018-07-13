@@ -7,7 +7,7 @@ import { getDefaultSigner } from '../services/signer';
 import type { EtherTxParams } from '../../types/etherTx';
 import type { State, ThunkAction } from '../../types';
 
-export default function getModel(state: State) {
+export default function getEtherTxModel(state: State) {
   return etherTxModel(state.etherTx);
 }
 
