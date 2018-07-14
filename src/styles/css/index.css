@@ -34,6 +34,36 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  background-color: #31404c;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #27343d;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #27343d;
+}
+
+.loading-overlay {
+  width: 100%;
+  background-color: #5b656d;
+  height: 89%;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-overlay svg path.pt-spinner-track {
+  stroke: rgba(16, 22, 26, 0.5) !important;
+}
+
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  */
@@ -101,6 +131,100 @@ input[type='number']::-webkit-outer-spin-button {
 .order-form button {
   width: 100%;
   min-height: 35px !important;
+}
+
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ */
+.Sell.order-book .price {
+  color: #f55656;
+}
+
+.Buy.order-book .price {
+  color: #3dcc91;
+}
+
+.order-book {
+  padding: 20px;
+  text-align: left;
+  width: 380px;
+  height: 500px;
+  background-color: #31404c;
+}
+.order-book .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-book h5 {
+  border-bottom: 1px solid #ced9e0;
+  padding-bottom: 5px;
+  text-align: left;
+}
+.order-book .list-container {
+  height: 95%;
+  overflow-y: hidden;
+}
+.order-book .list-container .list {
+  height: 90%;
+  overflow-y: scroll;
+}
+.order-book ul {
+  text-align: left;
+}
+.order-book ul li {
+  display: inline-block;
+  padding: 3px 0;
+  font-size: 13px;
+  width: 100%;
+}
+.order-book ul li span {
+  float: left;
+  margin-right: 8px;
+  text-align: left;
+}
+.order-book ul li span.index {
+  margin-left: 6px;
+  min-width: 15px;
+}
+.order-book ul li span.price,
+.order-book ul li span.amount,
+.order-book ul li span.total {
+  min-width: 90px;
+}
+.order-book ul li.heading {
+  margin: 5px auto 3px;
+}
+.order-book ul li.heading span {
+  font-weight: 600;
+}
+.order-book ul li.not-heading {
+  cursor: pointer;
+  margin: 0px !important;
+  border: 1px transparent;
+  border-radius: 2px;
+  display: inline-block;
+}
+.order-book ul li.not-heading:hover {
+  background-color: #5b656d;
+  padding: 4px 0;
+  position: relative;
+  right: -2px;
+  left: -2px;
+  font-size: 13.5px;
+  z-index: 1;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
+  box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
+}
+.order-book ul li.not-heading:hover span {
+  font-weight: bold;
+}
+.order-book ul.heading {
+  box-shadow: 0px 1px 2px 1px #2f3c46;
+}
+.order-book .loading-overlay {
+  height: 91%;
 }
 
 /*# sourceMappingURL=index.css.map */

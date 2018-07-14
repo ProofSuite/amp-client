@@ -1,0 +1,22 @@
+{
+  "list": [
+    { "time": 1383118420905, "type": "sell", "amount": 8509.0992, "price": 0.0061 },
+    { "time": 1325794112377, "type": "buy", "amount": 6912.2062, "price": 0.0077 },
+    { "time": 1347042227557, "type": "sell", "amount": 4911.483, "price": 0.0046 },
+    { "time": 1377157034739, "type": "buy", "amount": 867.6288, "price": 0.0015 },
+    { "time": 1349294794826, "type": "sell", "amount": 7458.8255, "price": 0.01 },
+    { "time": 1395608687854, "type": "buy", "amount": 27.5758, "price": 0.0044 },
+    { "time": 1482566000328, "type": "sell", "amount": 5913.9462, "price": 0.0008 },
+    { "time": 1482638948354, "type": "sell", "amount": 5798.9249, "price": 0.0001 },
+    { "time": 1487740025164, "type": "sell", "amount": 7989.1234, "price": 0.009 },
+    { "time": 1466954729157, "type": "sell", "amount": 4871.5108, "price": 0.0092 },
+    { "time": 1452138955574, "type": "buy", "amount": 9819.956, "price": 0.0047 },
+    { "time": 1311967426544, "type": "sell", "amount": 6842.3967, "price": 0.0039 },
+    { "time": 1498125441147, "type": "buy", "amount": 443.6881, "price": 0.0072 },
+    { "time": 1386979711488, "type": "sell", "amount": 3547.2812, "price": 0.0097 },
+    { "time": 1413726132305, "type": "sell", "amount": 2139.8306, "price": 0.0061 },
+    { "time": 1396167849367, "type": "buy", "amount": 7275.0762, "price": 0.0094 },
+    { "time": 1399683204015, "type": "buy", "amount": 8398.1422, "price": 0.0078 },
+    { "time": 1434875247331, "type": "buy", "amount": 9022.2405, "price": 0.0027 }
+  ]
+}

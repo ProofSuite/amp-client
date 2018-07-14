@@ -1,0 +1,26 @@
+{
+  "list": [
+    { "amount": 157.2815, "price": 0.0042 },
+    { "amount": 343.146, "price": 0.0085 },
+    { "amount": 326.3351, "price": 0.0013 },
+    { "amount": 445.4587, "price": 0.0059 },
+    { "amount": 168.6526, "price": 0.0027 },
+    { "amount": 51.1285, "price": 0.0079 },
+    { "amount": 234.4636, "price": 0.0083 },
+    { "amount": 927.7376, "price": 0.0052 },
+    { "amount": 741.7332, "price": 0.0039 },
+    { "amount": 202.5709, "price": 0.0091 },
+    { "amount": 578.6983, "price": 0.0031 },
+    { "amount": 224.0269, "price": 0.0031 },
+    { "amount": 510.5596, "price": 0.0023 },
+    { "amount": 533.4979, "price": 0.0082 },
+    { "amount": 282.1325, "price": 0.0084 },
+    { "amount": 146.4967, "price": 0.0043 },
+    { "amount": 165.1555, "price": 0.0042 },
+    { "amount": 627.1233, "price": 0.0078 },
+    { "amount": 722.9215, "price": 0.0021 },
+    { "amount": 254.8544, "price": 0.008 },
+    { "amount": 101.0218, "price": 0.0068 },
+    { "amount": 332.5877, "price": 0.0099 }
+  ]
+}
