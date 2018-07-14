@@ -319,6 +319,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 .trade-history button {
   width: 100%;
+  min-height: 35px;
 }
 .trade-history .loading-overlay {
   height: 100%;

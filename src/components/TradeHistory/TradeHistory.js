@@ -25,21 +25,21 @@ const HistroyList = (props: TradeListTypes) => {
         </li>
       </ul>
       <ul className="pt-list-unstyled list">
-        {tradeHistory.map((order, index) => <Row key={index} props={{ order, decimals: decimals, index }} />)}
+        {tradeHistory.map((trade, index) => <Row key={index} props={{ trade, decimals: decimals, index }} />)}
       </ul>
     </div>
   );
 };
 
 const Row = ({ props }: ListRow) => {
-  const { order, decimals, index } = props;
+  const { trade, decimals, index } = props;
   return (
     <li className="not-heading">
       <span className="index">{index + 1}</span>
-      <span className="time">{toDate(order.time)}</span>
-      {order.type === 'sell' ? <Sell>{order.type}</Sell> : <Buy>{order.type}</Buy>}
-      <span className="amount">{reduceDecimals(order.amount, decimals)}</span>
-      <span className="price">{reduceDecimals(order.price, decimals)}</span>
+      <span className="time">{toDate(trade.time)}</span>
+      {trade.type === 'sell' ? <Sell>{trade.type}</Sell> : <Buy>{trade.type}</Buy>}
+      <span className="amount">{reduceDecimals(trade.amount, decimals)}</span>
+      <span className="price">{reduceDecimals(trade.price, decimals)}</span>
     </li>
   );
 };

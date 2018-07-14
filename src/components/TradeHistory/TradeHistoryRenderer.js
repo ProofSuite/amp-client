@@ -36,7 +36,7 @@ class TradeHistoryRenderer extends React.PureComponent<Props, State> {
     return (
       <Card className="pt-dark trade-history">
         <h5>Trade History</h5>
-        <Tabs style={{ height: '100%' }} id="TabsExample" selectedTabId={selectedTabId} onChange={changeTab}>
+        <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={changeTab}>
           <Tab
             id="all"
             title="Market"
@@ -45,7 +45,6 @@ class TradeHistoryRenderer extends React.PureComponent<Props, State> {
           <Tab
             id="mine"
             title="Mine"
-            style={{ display: 'flex', alignItems: 'flex-end' }}
             panel={
               loggedIn ? (
                 <TradeHistory
