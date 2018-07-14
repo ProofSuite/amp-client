@@ -29,3 +29,7 @@ export function reduceDecimals(value, decimals, format = 'float') {
     return Math.floor(parseFloat(value) * Math.pow(10, parseInt(decimals))) / Math.pow(10, parseInt(decimals));
   }
 }
+
+export function toDate(timeStamp) {
+  return new Date(timeStamp).toLocaleDateString().replace(/\//g, '-');
+}
