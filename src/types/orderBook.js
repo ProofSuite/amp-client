@@ -1,14 +1,5 @@
 //@flow
 
-export type OrderBookRendererProps = {
-  loading: boolean,
-  decimals: number,
-  sellOrderList: Array<Object>,
-  buyOrderList: Array<Object>,
-  quoteToken: string,
-  baseToken: string,
-};
-
 export type OrderListTypes = {
   orderList: Array<Object>,
   bookName: string,

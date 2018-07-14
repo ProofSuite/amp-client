@@ -26,9 +26,8 @@ export const OrderBook = (props: ListTypes) => {
             </li>
           </ul>
           <ul className="pt-list-unstyled list">
-            {[]
-              .concat(orderList)
-              .sort((a, b) => a.price <= b.price)
+            {
+              orderList
               .map((order, index) => <SingleOrder decimals={decimals} key={index} index={index} order={order} />)}
           </ul>
         </div>

@@ -2,9 +2,16 @@
 import React from 'react';
 import { OrderBook } from './OrderBook';
 import styled from 'styled-components';
-import type { OrderBookRendererProps } from '../../types/orderBook';
+// import type { OrderBookRendererProps } from '../../types/orderBook';
 
-type Props = OrderBookRendererProps;
+type Props = {
+  loading: boolean,
+  decimals: number,
+  sellOrderList: Array<Object>,
+  buyOrderList: Array<Object>,
+  quoteToken: string,
+  baseToken: string,
+};
 
 export default class OrderBookRenderer extends React.PureComponent<Props> {
   static defaultProps = {
