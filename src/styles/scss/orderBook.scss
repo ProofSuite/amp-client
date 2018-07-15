@@ -1,6 +1,5 @@
 @import "vars";
 
-
 .Sell.order-book {
   .price {
     color: $red4;
@@ -89,6 +88,9 @@
   }
   ul.heading {
     box-shadow: 0px 4px 2px -1px $shadow;
+    span.price {
+      color: #fff;
+    }
   }
   .loading-overlay {
     height: 91%;

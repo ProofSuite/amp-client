@@ -20,15 +20,13 @@ export const OrderBook = (props: ListTypes) => {
               <span className="index">#</span>
               <span className="total">Total ({quoteToken})</span>
               <span className="amount">Amount ({baseToken})</span>
-              <span className="price" style={{ color: '#fff' }}>
-                Price ({quoteToken})
-              </span>
+              <span className="price">Price ({quoteToken})</span>
             </li>
           </ul>
           <ul className="pt-list-unstyled list">
-            {
-              orderList
-              .map((order, index) => <SingleOrder decimals={decimals} key={index} index={index} order={order} />)}
+            {orderList.map((order, index) => (
+              <SingleOrder decimals={decimals} key={index} index={index} order={order} />
+            ))}
           </ul>
         </div>
       )}
