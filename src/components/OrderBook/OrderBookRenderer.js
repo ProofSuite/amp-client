@@ -2,9 +2,15 @@
 import React from 'react';
 import { OrderBook } from './OrderBook';
 import styled from 'styled-components';
-import type { OrderBookRendererProps } from '../../types/orderBook';
-
-type Props = OrderBookRendererProps;
+import { sortArray } from '../../utils/helpers';
+type Props = {
+  loading: boolean,
+  decimals: number,
+  sellOrderList: Array<Object>,
+  buyOrderList: Array<Object>,
+  quoteToken: string,
+  baseToken: string,
+};
 
 export default class OrderBookRenderer extends React.PureComponent<Props> {
   static defaultProps = {
@@ -15,7 +21,7 @@ export default class OrderBookRenderer extends React.PureComponent<Props> {
     return (
       <Row>
         <OrderBook
-          orderList={sellOrderList}
+          orderList={sortArray(sellOrderList, 'price')}
           bookName="Sell"
           loading={loading}
           baseToken={baseToken}
@@ -23,7 +29,7 @@ export default class OrderBookRenderer extends React.PureComponent<Props> {
           decimals={decimals}
         />
         <OrderBook
-          orderList={buyOrderList}
+          orderList={sortArray(buyOrderList, 'price')}
           bookName="Buy"
           loading={loading}
           baseToken={baseToken}
