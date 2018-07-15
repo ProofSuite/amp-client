@@ -325,4 +325,14 @@ input[type='number']::-webkit-outer-spin-button {
   height: 100%;
 }
 
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ */
+.order-history {
+  width: auto !important;
+}
+.order-history span.close svg {
+  fill: #c23030;
+}
+
 /*# sourceMappingURL=index.css.map */
