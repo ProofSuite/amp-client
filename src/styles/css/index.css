@@ -328,4 +328,122 @@ input[type='number']::-webkit-outer-spin-button {
   height: 100%;
 }
 
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ */
+.coin-searcher {
+  min-width: 800px;
+  width: 100%;
+  height: 700px;
+  background-color: #31404c;
+}
+.coin-searcher .pt-tabs {
+  height: 100%;
+}
+.coin-searcher .pt-tabs .pt-tab-panel {
+  margin-top: 0px;
+  height: 100%;
+}
+.coin-searcher .pt-tab-list .pt-tab {
+  font-weight: 600;
+}
+.coin-searcher .pt-tab-list .pt-tab svg {
+  margin-top: 6px;
+}
+.coin-searcher input {
+  color: #fff;
+  background-color: #27343d;
+  width: 230px;
+  height: 35px;
+}
+.coin-searcher ul {
+  list-style: none;
+  padding: 0px;
+}
+.coin-searcher ul li {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+}
+.coin-searcher ul li span {
+  text-align: left;
+  word-wrap: break-word;
+}
+.coin-searcher ul li span.star {
+  cursor: pointer;
+  width: 30px;
+  min-width: 30px;
+}
+.coin-searcher ul li span.pair {
+  width: 120px;
+}
+.coin-searcher ul li span.name {
+  width: 220px;
+}
+.coin-searcher ul li span.symbol {
+  width: 100px;
+}
+.coin-searcher ul li span.change {
+  min-width: 110px;
+  width: 110px;
+}
+.coin-searcher ul li span.price {
+  width: 130px;
+}
+.coin-searcher ul li.not-heading:hover {
+  background-color: #5b656d;
+  z-index: 1;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
+  box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
+}
+.coin-searcher ul li.not-heading:hover span {
+  font-weight: bold;
+}
+.coin-searcher ul.list {
+  height: 88.5%;
+  margin-top: 0px;
+  overflow-y: scroll;
+}
+.coin-searcher ul.heading {
+  padding: 5px 0px;
+  margin: 5px auto;
+  box-shadow: 0px 4px 2px -1px #2f3c46;
+}
+.coin-searcher li.not-heading {
+  box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15) !important;
+  padding: 5px;
+}
+.coin-searcher li.not-heading span {
+  font-size: 13px;
+  color: #fff;
+  text-align: left;
+}
+.coin-searcher li.heading span {
+  box-shadow: none !important;
+  cursor: pointer;
+  font-weight: 600;
+}
+.coin-searcher li.heading span span svg {
+  color: #48aff0;
+  margin-top: 2px;
+}
+.coin-searcher li.loading-row {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.coin-searcher li.loading-row span {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.coin-searcher li.not-found span {
+  margin: 0px auto;
+}
+.coin-searcher .loading-overlay {
+  height: 88.5%;
+}
+
 /*# sourceMappingURL=index.css.map */
