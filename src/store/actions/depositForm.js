@@ -48,21 +48,21 @@ export function confirmConvertTx(receipt: TxReceipt) {
 
 export function sendAllowTx(hash: string) {
   return {
-    types: actionTypes.sendAllowTx,
+    type: actionTypes.sendAllowTx,
     payload: { hash },
   };
 }
 
 export function revertAllowTx(receipt: TxReceipt) {
   return {
-    types: actionTypes.revertAllowTx,
+    type: actionTypes.revertAllowTx,
     payload: { receipt },
   };
 }
 
 export function confirmAllowTx(receipt: TxReceipt) {
   return {
-    types: actionTypes.confirmAllowTx,
+    type: actionTypes.confirmAllowTx,
     payload: { receipt },
   };
 }

@@ -4,7 +4,9 @@ import type { TxReceipt } from '../../types/common';
 
 const initialState = {
   step: 'waiting',
-  allowTxHash: null,
+  convertTxStatus: 'incomplete',
+  allowTxStatus: 'incomplete',
+  convertTxHash: null,
   convertTxReceipt: null,
   allowTxHash: null,
   allowTxReceipt: null,
@@ -32,18 +34,21 @@ export const confirmed = (): DepositFormEvent => {
   return event;
 };
 
-export const convertTxSent = (hash: string): DepositFormEvent => {
-  const event = (state: DepositFormState) => ({
-    ...state,
-    convertTxHash: hash,
-  });
-
+export const convertTxSent = (hash: string) => {
+  const event = (state: DepositFormState) => {
+    return {
+      ...state,
+      convertTxStatus: 'sent',
+      convertTxHash: hash,
+    };
+  };
   return event;
 };
 
 export const convertTxReverted = (receipt: TxReceipt): DepositFormEvent => {
   const event = (state: DepositFormState) => ({
     ...state,
+    convertTxStatus: 'reverted',
     convertTxReceipt: receipt,
   });
 
@@ -53,6 +58,7 @@ export const convertTxReverted = (receipt: TxReceipt): DepositFormEvent => {
 export const convertTxConfirmed = (receipt: TxReceipt): DepositFormEvent => {
   const event = (state: DepositFormState) => ({
     ...state,
+    convertTxStatus: 'confirmed',
     convertTxReceipt: receipt,
   });
 
@@ -62,6 +68,7 @@ export const convertTxConfirmed = (receipt: TxReceipt): DepositFormEvent => {
 export const allowTxSent = (hash: string): DepositFormEvent => {
   const event = (state: DepositFormState) => ({
     ...state,
+    allowTxStatus: 'sent',
     allowTxHash: hash,
   });
 
@@ -71,6 +78,7 @@ export const allowTxSent = (hash: string): DepositFormEvent => {
 export const allowTxReverted = (receipt: TxReceipt): DepositFormEvent => {
   const event = (state: DepositFormState) => ({
     ...state,
+    allowTxStatus: 'reverted',
     allowTxReceipt: receipt,
   });
 
@@ -80,6 +88,7 @@ export const allowTxReverted = (receipt: TxReceipt): DepositFormEvent => {
 export const allowTxConfirmed = (receipt: TxReceipt): DepositFormEvent => {
   const event = (state: DepositFormState) => ({
     ...state,
+    allowTxStatus: 'confirmed',
     allowTxReceipt: receipt,
   });
 
@@ -88,8 +97,22 @@ export const allowTxConfirmed = (receipt: TxReceipt): DepositFormEvent => {
 
 export default function model(state: DepositFormState) {
   return {
-    step() {
+    getStep() {
       return state.step;
+    },
+    getAllowTxState() {
+      return {
+        allowTxStatus: state.allowTxStatus,
+        allowTxHash: state.allowTxHash,
+        allowTxReceipt: state.allowTxReceipt,
+      };
+    },
+    getConvertTxState() {
+      return {
+        convertTxStatus: state.convertTxStatus,
+        convertTxHash: state.convertTxHash,
+        convertTxReceipt: state.convertTxReceipt,
+      };
     },
   };
 }

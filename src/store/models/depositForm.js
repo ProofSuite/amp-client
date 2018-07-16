@@ -90,6 +90,7 @@ export const confirmEtherDeposit = (
 ): ThunkAction => {
   return async (dispatch, getState) => {
     try {
+      dispatch(depositFormActionCreators.confirm());
       let signer = await getDefaultSigner(getState);
       let network = getProviderModel(getState()).getNetworkId();
       let weth = new Contract(WETH_ADDRESS[network], WETH.abi, signer);
@@ -117,8 +118,8 @@ export const confirmEtherDeposit = (
             : dispatch(depositFormActionCreators.confirmConvertTx(convertTxReceipt));
 
           allowTxReceipt.status === '0x0'
-            ? dispatch(depositFormActionCreators.revertConvertTx(allowTxReceipt))
-            : dispatch(depositFormActionCreators.confirmConvertTx(allowTxReceipt));
+            ? dispatch(depositFormActionCreators.revertAllowTx(allowTxReceipt))
+            : dispatch(depositFormActionCreators.confirmAllowTx(allowTxReceipt));
         } else {
           let convertTxParams = { value: 1000 };
           let convertTx = await weth.convert();
@@ -130,8 +131,6 @@ export const confirmEtherDeposit = (
             : dispatch(depositFormActionCreators.confirmConvertTx(convertTxReceipt));
         }
       }
-
-      dispatch(depositFormActionCreators.confirm());
     } catch (error) {
       console.log(error.message);
     }

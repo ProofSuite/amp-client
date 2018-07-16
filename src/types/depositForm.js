@@ -1,5 +1,13 @@
+import { TxStatus, TxReceipt } from './common';
+
 export type DepositFormState = {
-  +step: 'waiting' | 'convert',
+  +step: 'waiting' | 'convert' | 'confirm',
+  +convertTxStatus: TxStatus,
+  +allowTxStatus: TxStatus,
+  +convertTxHash: string,
+  +allowTxHash: string,
+  +convertTxReceipt: TxReceipt,
+  +allowTxReceipt: TxReceipt,
 };
 
 export type DepositAction = {

@@ -1,15 +1,22 @@
 import { createStore } from '../../store';
+import { getDefaultSigner } from '../services/signer';
+import { Contract } from 'ethers';
+import { mockTxReceipt, mockTxReceipt2, mockFailedTxReceipt, mockFailedTxReceipt2, mockTokens } from '../../mockData';
 
 import * as accountBalancesService from '../services/accountBalances';
 
 import getTokenModel from './tokens';
+import getProviderModel from './provider';
 import getAccountModel from './account';
 import getAccountBalancesModel from './accountBalances';
 import getDepositFormModel, * as actionCreators from './depositForm';
 
 jest.mock('../services/accountBalances');
+jest.mock('../services/signer');
 jest.mock('./tokens');
 jest.mock('./account');
+jest.mock('./provider');
+jest.mock('ethers');
 
 let unsubscribeEtherBalance = jest.fn();
 let unsubscribeTokenBalance = jest.fn();
@@ -132,17 +139,259 @@ it('subscribeBalance (ether) updates the depositForm model correctly', async () 
   getAccountModel.mockImplementation(getAccountModelMock);
 
   model = getDepositFormModel(store.getState());
-  expect(model.step()).toEqual('waiting');
+  expect(model.getStep()).toEqual('waiting');
 
   const unsubscribeCallback = await store.dispatch(actionCreators.subscribeBalance(token));
 
   model = getDepositFormModel(store.getState());
-  expect(model.step()).toEqual('waiting');
+  expect(model.getStep()).toEqual('waiting');
 
   expect(accountBalancesService.subscribeEtherBalance).toHaveBeenCalledTimes(1);
   const updateBalanceCallback = accountBalancesService.subscribeEtherBalance.mock.calls[0][1];
 
   updateBalanceCallback(1000);
   model = getDepositFormModel(store.getState());
-  expect(model.step()).toEqual('convert');
+  expect(model.getStep()).toEqual('convert');
+});
+
+it('confirmEtherDeposit (both transactions succeed) updates the depositForm model correctly', async () => {
+  const store = createStore();
+  const shouldConvert = true;
+  const shouldAllow = true;
+  const convertAmount = 100;
+
+  let waitForTransaction = jest.fn(hash => {
+    return {
+      'deposit weth tx hash': Promise.resolve(mockTxReceipt2),
+      'approve weth tx hash': Promise.resolve(mockTxReceipt),
+    }[hash];
+  });
+
+  let getProviderModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction } }));
+  let deposit = jest.fn(() => Promise.resolve({ hash: 'deposit weth tx hash' }));
+  let approve = jest.fn(() => Promise.resolve({ hash: 'approve weth tx hash' }));
+  let wethContractMock = jest.fn(() => ({ deposit, approve }));
+
+  getDefaultSigner.mockImplementation(getDefaultSignerMock);
+  Contract.mockImplementation(wethContractMock);
+  getProviderModel.mockImplementation(getProviderModelMock);
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('waiting');
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'incomplete',
+    convertTxHash: null,
+    convertTxReceipt: null,
+  });
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'incomplete',
+    allowTxHash: null,
+    allowTxReceipt: null,
+  });
+
+  await store.dispatch(actionCreators.confirmEtherDeposit(shouldConvert, shouldAllow, convertAmount));
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('confirm');
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'confirmed',
+    allowTxHash: 'approve weth tx hash',
+    allowTxReceipt: mockTxReceipt,
+  });
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'confirmed',
+    convertTxHash: 'deposit weth tx hash',
+    convertTxReceipt: mockTxReceipt2,
+  });
+});
+
+it('confirmEtherDeposit (both transactions fail) updates the depositForm model correctly', async () => {
+  const store = createStore();
+  const shouldConvert = true;
+  const shouldAllow = true;
+  const convertAmount = 100;
+
+  let waitForTransaction = jest.fn(hash => {
+    return {
+      'approve weth tx hash': Promise.resolve(mockFailedTxReceipt),
+      'deposit weth tx hash': Promise.resolve(mockFailedTxReceipt2),
+    }[hash];
+  });
+
+  let getProviderModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction } }));
+  let deposit = jest.fn(() => Promise.resolve({ hash: 'deposit weth tx hash' }));
+  let approve = jest.fn(() => Promise.resolve({ hash: 'approve weth tx hash' }));
+  let wethContractMock = jest.fn(() => ({ deposit, approve }));
+
+  getDefaultSigner.mockImplementation(getDefaultSignerMock);
+  Contract.mockImplementation(wethContractMock);
+  getProviderModel.mockImplementation(getProviderModelMock);
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('waiting');
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'incomplete',
+    convertTxHash: null,
+    convertTxReceipt: null,
+  });
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'incomplete',
+    allowTxHash: null,
+    allowTxReceipt: null,
+  });
+
+  await store.dispatch(actionCreators.confirmEtherDeposit(shouldConvert, shouldAllow, convertAmount));
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('confirm');
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'reverted',
+    allowTxHash: 'approve weth tx hash',
+    allowTxReceipt: mockFailedTxReceipt,
+  });
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'reverted',
+    convertTxHash: 'deposit weth tx hash',
+    convertTxReceipt: mockFailedTxReceipt2,
+  });
+});
+
+it('confirmEtherDeposit (one transactions fails) updates the depositForm model correctly', async () => {
+  const store = createStore();
+  const shouldConvert = true;
+  const shouldAllow = true;
+  const convertAmount = 100;
+
+  let waitForTransaction = jest.fn(hash => {
+    return {
+      'approve weth tx hash': Promise.resolve(mockFailedTxReceipt),
+      'deposit weth tx hash': Promise.resolve(mockTxReceipt),
+    }[hash];
+  });
+
+  let getProviderModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction } }));
+  let deposit = jest.fn(() => Promise.resolve({ hash: 'deposit weth tx hash' }));
+  let approve = jest.fn(() => Promise.resolve({ hash: 'approve weth tx hash' }));
+  let wethContractMock = jest.fn(() => ({ deposit, approve }));
+
+  getDefaultSigner.mockImplementation(getDefaultSignerMock);
+  Contract.mockImplementation(wethContractMock);
+  getProviderModel.mockImplementation(getProviderModelMock);
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('waiting');
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'incomplete',
+    convertTxHash: null,
+    convertTxReceipt: null,
+  });
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'incomplete',
+    allowTxHash: null,
+    allowTxReceipt: null,
+  });
+
+  await store.dispatch(actionCreators.confirmEtherDeposit(shouldConvert, shouldAllow, convertAmount));
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('confirm');
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'reverted',
+    allowTxHash: 'approve weth tx hash',
+    allowTxReceipt: mockFailedTxReceipt,
+  });
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'confirmed',
+    convertTxHash: 'deposit weth tx hash',
+    convertTxReceipt: mockTxReceipt,
+  });
+});
+
+it('confirmTokenDeposit (transaction succeeds updates the depositForm model correctly', async () => {
+  const store = createStore();
+  const shouldAllow = true;
+
+  let waitForTransaction = jest.fn(() => Promise.resolve(mockTxReceipt));
+  let getProviderModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction } }));
+  let approve = jest.fn(() => Promise.resolve({ hash: 'approve tx hash' }));
+  let tokenContract = jest.fn(() => ({ approve }));
+
+  getDefaultSigner.mockImplementation(getDefaultSignerMock);
+  Contract.mockImplementation(tokenContract);
+  getProviderModel.mockImplementation(getProviderModelMock);
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('waiting');
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'incomplete',
+    convertTxHash: null,
+    convertTxReceipt: null,
+  });
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'incomplete',
+    allowTxHash: null,
+    allowTxReceipt: null,
+  });
+
+  await store.dispatch(actionCreators.confirmTokenDeposit(mockTokens[2], shouldAllow));
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('confirm');
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'confirmed',
+    allowTxHash: 'approve tx hash',
+    allowTxReceipt: mockTxReceipt,
+  });
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'incomplete',
+    convertTxHash: null,
+    convertTxReceipt: null,
+  });
+});
+
+it('confirmTokenDeposit (transaction fails) updates the depositForm model correctly', async () => {
+  const store = createStore();
+  const shouldAllow = true;
+
+  let waitForTransaction = jest.fn(() => Promise.resolve(mockFailedTxReceipt));
+  let getProviderModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction } }));
+  let approve = jest.fn(() => Promise.resolve({ hash: 'approve tx hash' }));
+  let tokenContract = jest.fn(() => ({ approve }));
+
+  getDefaultSigner.mockImplementation(getDefaultSignerMock);
+  Contract.mockImplementation(tokenContract);
+  getProviderModel.mockImplementation(getProviderModelMock);
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('waiting');
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'incomplete',
+    convertTxHash: null,
+    convertTxReceipt: null,
+  });
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'incomplete',
+    allowTxHash: null,
+    allowTxReceipt: null,
+  });
+
+  await store.dispatch(actionCreators.confirmTokenDeposit(mockTokens[2], shouldAllow));
+
+  model = getDepositFormModel(store.getState());
+  expect(model.getStep()).toEqual('confirm');
+  expect(model.getAllowTxState()).toEqual({
+    allowTxStatus: 'reverted',
+    allowTxHash: 'approve tx hash',
+    allowTxReceipt: mockFailedTxReceipt,
+  });
+  expect(model.getConvertTxState()).toEqual({
+    convertTxStatus: 'incomplete',
+    convertTxHash: null,
+    convertTxReceipt: null,
+  });
 });

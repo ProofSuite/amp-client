@@ -113,6 +113,8 @@ export const depositForm = createReducer(action => {
   switch (type) {
     case depositFormActionTypes.deposit:
       return depositFormEvents.deposited();
+    case depositFormActionTypes.confirm:
+      return depositFormEvents.confirmed();
     case depositFormActionTypes.sendConvertTx:
       return depositFormEvents.convertTxSent(payload.hash);
     case depositFormActionTypes.revertConvertTx:
