@@ -1,0 +1,121 @@
+@import "vars";
+
+.main-chart {
+  .toolbar {
+    width: 100%;
+    display: inline-block;
+    .pt-icon {
+      cursor: pointer;
+      float: left;
+      margin-right: 15px;
+    }
+    .pt-icon.active {
+      color: $hoverBlue;
+    }
+    .menu {
+      position: relative;
+      float: left;
+      width: 150px;
+      margin-right: 25px;
+      display: flex;
+      flex-direction: column;
+      .pt-menu {
+        z-index: 9;
+        position: absolute;
+        li {
+          margin: 2px auto;
+        }
+
+      }
+      .pt-menu.open {
+        display: block;
+        top: 31px;
+      }
+      .pt-menu.closed {
+        display: none;
+      }
+    }
+    .menu.duration {
+      width: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 0px 2px 10px;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.4);
+      background-color: #394b59;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.05)), to(rgba(255, 255, 255, 0)));
+      background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+      background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+      color: #f5f8fa;
+      button {
+        box-shadow: none;
+        float: left;
+        min-height: 26px;
+        margin: 0px 10px 0 0;
+        padding: 0px 6px;
+      }
+    }
+    .menu {
+      .pt-popover-target {
+        button{
+          width: 100%;
+        }
+      }
+    }
+    button {
+      float: left;
+    }
+  }
+  .chart-container {
+    text-align: left;
+    label, select {
+      display: none !important;
+    }
+    g.react-stockcharts-moving-average-tooltip, g.react-stockcharts-tooltip-hover {
+      text {
+        tspan.react-stockcharts-tooltip-label {
+          fill: $hoverBlue !important;
+        }
+        tspan {
+          fill: $primary !important;
+        }
+      }
+    }
+    g.react-stockcharts-tooltip {
+      text {
+        tspan.react-stockcharts-tooltip-label {
+          fill: $hoverBlue !important;
+        }
+        tspan {
+          fill: $primary;
+        }
+        tspan[fill="#4682B4"] {
+          fill: $primary;
+        }
+        tspan[fill="#FF0000"] {
+          fill: #FF0000;
+        }
+        tspan[fill="#00F300"] {
+          fill: #00F300;
+        }
+      }
+    }
+  }
+}
+.chart-overlay {
+  //width: 95%;
+  //margin: 50px;
+  .pt-card {
+    height: 100%;
+  }
+  .main-chart{
+    .chart-container {
+      height: 90%;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
+}
