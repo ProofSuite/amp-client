@@ -1,7 +1,7 @@
 // @flow
 import { objectWithoutKey } from '../../helpers/utils';
 
-import type { AccountBalancesState } from '../../types/accountBalances';
+import type { AccountBalancesState, AccountBalances } from '../../types/accountBalances';
 
 const initialState = {};
 
@@ -15,22 +15,45 @@ export function initialized() {
 export function subscribed(symbol: string) {
   const event = (state: AccountBalancesState) => ({
     ...state,
-    [symbol]: null,
+    [symbol]: {
+      balance: state[symbol] ? state[symbol].balance : null,
+      symbol: symbol,
+      subscribed: true,
+    },
   });
   return event;
 }
 
-export function updated(symbol: string, balance: number) {
-  const event = (state: AccountBalancesState) => ({
-    ...state,
-    [symbol]: balance,
-  });
+export function updated(accountBalances: AccountBalances) {
+  const event = (state: AccountBalancesState) => {
+    let newState = accountBalances.reduce((result, item) => {
+      result[item.symbol] = {
+        ...state[item.symbol],
+        symbol: item.symbol,
+        balance: item.balance,
+        subscribed: state[item.symbol] ? state[item.symbol].subscribed : false,
+      };
+      return result;
+    }, {});
+
+    return {
+      ...state,
+      ...newState,
+    };
+  };
 
   return event;
 }
 
 export function unsubscribed(symbol: string) {
-  const event = (state: AccountBalancesState) => objectWithoutKey(state, symbol);
+  const event = (state: AccountBalancesState) => ({
+    ...state,
+    [symbol]: {
+      ...state[symbol],
+      subscribed: false,
+    },
+  });
+
   return event;
 }
 
@@ -45,11 +68,10 @@ export default function model(state: AccountBalancesState) {
       return state;
     },
     get(symbol: string) {
-      if (!this.isSubscribed(symbol)) return null;
-      return state[symbol];
+      return state[symbol] ? state[symbol].balance : null;
     },
     isSubscribed(symbol: string) {
-      return typeof state[symbol] !== 'undefined';
+      return state[symbol] ? state[symbol].subscribed : false;
     },
   };
 }
