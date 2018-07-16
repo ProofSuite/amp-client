@@ -16,6 +16,10 @@
   "dependencies": {
     "@blueprintjs/core": "~2.3.1",
     "@blueprintjs/select": "~2.0.1",
+    "@blueprintjs/table": "^3.0.0",
+    "d3-dsv": "^1.0.8",
+    "d3-format": "^1.3.0",
+    "d3-time-format": "^2.1.1",
     "ethers": "git+https://github.com/ethers-io/ethers.js.git",
     "proof-contracts-interfaces": "https://github.com/ProofSuite/proof-contract-interfaces",
     "react": "^16.4.1",
@@ -24,6 +28,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-stockcharts": "^0.7.7",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "styled-components": "~3.3.3"

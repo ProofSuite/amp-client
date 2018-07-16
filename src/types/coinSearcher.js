@@ -4,7 +4,7 @@ export type CoinSearchTypes = {
   small: boolean,
   loading: boolean,
   filteredCoins: Array<Object>,
-  decimals?: number,
+  decimals: number,
   toggleStar: string => void,
   onChangeFilterName: string => void,
 };

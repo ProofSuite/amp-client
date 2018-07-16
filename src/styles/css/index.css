@@ -1,6 +1,11 @@
 @import url(../../../node_modules/@blueprintjs/core/lib/css/blueprint.css);
 @import url(../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css);
-
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ */
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ */
 /*
   $light-gray1:
       - h5 border
@@ -8,42 +13,35 @@
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
-  background-color: #31404c;
-}
+  background-color: #31404c; }
 
 ::-webkit-scrollbar {
   width: 6px;
-  background-color: #27343d;
-}
+  background-color: #27343d; }
 
 .pt-tab:focus {
-  outline: none;
-}
+  outline: none; }
 
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  margin: 0;
-}
+  margin: 0; }
 
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
-  background-color: #31404c;
-}
+  background-color: #31404c; }
 
 ::-webkit-scrollbar {
   width: 6px;
-  background-color: #27343d;
-}
+  background-color: #27343d; }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 3px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #27343d;
-}
+  background-color: #27343d; }
 
 .loading-overlay {
   width: 100%;
@@ -52,285 +50,222 @@ input[type='number']::-webkit-outer-spin-button {
   opacity: 0.5;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-.loading-overlay svg path.pt-spinner-track {
-  stroke: rgba(16, 22, 26, 0.5) !important;
-}
+  align-items: center; }
+  .loading-overlay svg path.pt-spinner-track {
+    stroke: rgba(16, 22, 26, 0.5) !important; }
 
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  */
 .order-form {
   width: 485px;
-  font-size: 13px;
-}
-.order-form h5 {
-  border-bottom: 1px solid #ced9e0;
-  padding-bottom: 5px;
-  text-align: left;
-}
-.order-form .row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.order-form .pt-form-group {
-  width: 235px;
-}
-.order-form .pt-form-group input {
-  width: 100%;
-}
-.order-form .pt-form-group .pt-form-content {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.order-form .pt-form-group .pt-form-content span {
-  transform: translateX(-135%);
-  color: #8a9ba8;
-}
-.order-form .pt-form-group .pt-form-content .radio-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-.order-form .pt-form-group .pt-form-content .radio-buttons .box {
-  width: 45px;
-  height: 30px;
-  display: flex;
-  background: #27343d;
-  text-align: center;
-  padding: 6px 0;
-  justify-content: center;
-  margin-right: 10px;
-  cursor: pointer;
-  border: 1px solid #2584c1;
-  box-shadow: none;
-  border-radius: 3px;
-}
-.order-form .pt-form-group .pt-form-content .radio-buttons .box input {
-  opacity: 0;
-  width: 0px;
-  margin: 0px;
-}
-.order-form .pt-form-group .pt-form-content .radio-buttons .active-box {
-  box-shadow: 0 0 3px 2px #137cbd, 0 0 0 1px #137cbd, 0 0 0 3px rgba(19, 124, 189, 0.3),
-    inset 0 0 0 1px rgba(16, 22, 26, 0.3), inset 0 1px 1px rgba(16, 22, 26, 0.4);
-  border-radius: 3px;
-  border: 1px solid transparent;
-}
-.order-form label {
-  text-align: left;
-}
-.order-form button {
-  width: 100%;
-  min-height: 35px !important;
-}
+  font-size: 13px; }
+  .order-form h5 {
+    border-bottom: 1px solid #ced9e0;
+    padding-bottom: 5px;
+    text-align: left; }
+  .order-form .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  .order-form .pt-form-group {
+    width: 235px; }
+    .order-form .pt-form-group input {
+      width: 100%; }
+    .order-form .pt-form-group .pt-form-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start; }
+      .order-form .pt-form-group .pt-form-content span {
+        transform: translateX(-135%);
+        color: #8a9ba8; }
+      .order-form .pt-form-group .pt-form-content .radio-buttons {
+        display: flex;
+        justify-content: flex-end; }
+        .order-form .pt-form-group .pt-form-content .radio-buttons .box {
+          width: 45px;
+          height: 30px;
+          display: flex;
+          background: #27343d;
+          text-align: center;
+          padding: 6px 0;
+          justify-content: center;
+          margin-right: 10px;
+          cursor: pointer;
+          border: 1px solid #2584c1;
+          box-shadow: none;
+          border-radius: 3px; }
+          .order-form .pt-form-group .pt-form-content .radio-buttons .box input {
+            opacity: 0;
+            width: 0px;
+            margin: 0px; }
+        .order-form .pt-form-group .pt-form-content .radio-buttons .active-box {
+          box-shadow: 0 0 3px 2px #137cbd, 0 0 0 1px #137cbd, 0 0 0 3px rgba(19, 124, 189, 0.3), inset 0 0 0 1px rgba(16, 22, 26, 0.3), inset 0 1px 1px rgba(16, 22, 26, 0.4);
+          border-radius: 3px;
+          border: 1px solid transparent; }
+  .order-form label {
+    text-align: left; }
+  .order-form button {
+    width: 100%;
+    min-height: 35px !important; }
 
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  */
 .Sell.order-book .price {
-  color: #f55656;
-}
+  color: #f55656; }
 
 .Buy.order-book .price {
-  color: #3dcc91;
-}
+  color: #3dcc91; }
 
 .order-book {
   padding: 20px;
   text-align: left;
   width: 380px;
   height: 500px;
-  background-color: #31404c;
-}
-.order-book .row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.order-book h5 {
-  border-bottom: 1px solid #ced9e0;
-  padding-bottom: 5px;
-  text-align: left;
-}
-.order-book .list-container {
-  height: 95%;
-  overflow-y: hidden;
-}
-.order-book .list-container .list {
-  height: 90%;
-  overflow-y: scroll;
-  margin-top: 3px;
-}
-.order-book ul {
-  text-align: left;
-}
-.order-book ul li {
-  display: inline-block;
-  padding: 3px 0;
-  font-size: 13px;
-  width: 100%;
-}
-.order-book ul li span {
-  float: left;
-  margin-right: 8px;
-  text-align: left;
-}
-.order-book ul li span.index {
-  margin-left: 6px;
-  min-width: 15px;
-}
-.order-book ul li span.price,
-.order-book ul li span.amount,
-.order-book ul li span.total {
-  min-width: 90px;
-}
-.order-book ul li.heading {
-  margin: 5px auto 3px;
-}
-.order-book ul li.heading span {
-  font-weight: 600;
-}
-.order-book ul li.not-heading {
-  cursor: pointer;
-  margin: 0px !important;
-  border: 1px transparent;
-  border-radius: 2px;
-  display: inline-block;
-}
-.order-book ul li.not-heading:hover {
-  background-color: #5b656d;
-  padding: 4px 0;
-  position: relative;
-  right: -2px;
-  left: -2px;
-  font-size: 13.5px;
-  z-index: 1;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
-  box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
-}
-.order-book ul li.not-heading:hover span {
-  font-weight: bold;
-}
-.order-book ul.heading {
-  box-shadow: 0px 4px 2px -1px #2f3c46;
-}
-.order-book ul.heading span.price {
-  color: #fff;
-}
-.order-book .loading-overlay {
-  height: 91%;
-}
+  background-color: #31404c; }
+  .order-book .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  .order-book h5 {
+    border-bottom: 1px solid #ced9e0;
+    padding-bottom: 5px;
+    text-align: left; }
+  .order-book .list-container {
+    height: 95%;
+    overflow-y: hidden; }
+    .order-book .list-container .list {
+      height: 90%;
+      overflow-y: scroll;
+      margin-top: 3px; }
+  .order-book ul {
+    text-align: left; }
+    .order-book ul li {
+      display: inline-block;
+      padding: 3px 0;
+      font-size: 13px;
+      width: 100%; }
+      .order-book ul li span {
+        float: left;
+        margin-right: 8px;
+        text-align: left; }
+      .order-book ul li span.index {
+        margin-left: 6px;
+        min-width: 15px; }
+      .order-book ul li span.price, .order-book ul li span.amount, .order-book ul li span.total {
+        min-width: 90px; }
+    .order-book ul li.heading {
+      margin: 5px auto 3px; }
+      .order-book ul li.heading span {
+        font-weight: 600; }
+    .order-book ul li.not-heading {
+      cursor: pointer;
+      margin: 0px !important;
+      border: 1px transparent;
+      border-radius: 2px;
+      display: inline-block; }
+    .order-book ul li.not-heading:hover {
+      background-color: #5b656d;
+      padding: 4px 0;
+      position: relative;
+      right: -2px;
+      left: -2px;
+      font-size: 13.5px;
+      z-index: 1;
+      border-radius: 3px;
+      -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
+      box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2); }
+      .order-book ul li.not-heading:hover span {
+        font-weight: bold; }
+  .order-book ul.heading {
+    box-shadow: 0px 4px 2px -1px #2f3c46; }
+    .order-book ul.heading span.price {
+      color: #fff; }
+  .order-book .loading-overlay {
+    height: 91%; }
 
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  */
 .trade-history {
   height: 400px;
-  background-color: #31404c;
-}
-.trade-history .list-container {
-  height: 100%;
-}
-.trade-history .pt-card {
-  padding-top: 0px;
-  box-shadow: none !important;
-}
-.trade-history .pt-tabs {
-  height: 90%;
-}
-.trade-history .pt-tab-panel {
-  margin-top: 0;
-  height: 90%;
-  position: relative;
-}
-.trade-history .pt-tab-panel button {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.trade-history ul li {
-  display: inline-block;
-  padding: 2px 8px;
-  font-size: 13px;
-  width: 100%;
-}
-.trade-history ul li span {
-  float: left;
-  margin-right: 15px;
-  text-align: left;
-}
-.trade-history ul li span.index {
-  margin-left: 7px;
-  min-width: 15px;
-}
-.trade-history ul li span.time {
-  min-width: 90px;
-}
-.trade-history ul li span.type {
-  min-width: 35px;
-}
-.trade-history ul li span.price,
-.trade-history ul li span.amount,
-.trade-history ul li span.total {
-  min-width: 80px !important;
-}
-.trade-history ul li.heading {
-  margin: 5px auto 3px;
-}
-.trade-history ul li.heading span {
-  font-weight: 600;
-}
-.trade-history ul li.not-heading {
-  cursor: pointer;
-  margin: 0px !important;
-  border: 1px transparent;
-  border-radius: 2px;
-  display: inline-block;
-}
-.trade-history ul li.not-heading:hover {
-  background-color: #5b656d;
-  padding: 4px 0;
-  position: relative;
-  right: -2px;
-  left: -2px;
-  font-size: 13.5px;
-  z-index: 1;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
-  box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
-}
-.trade-history ul li.not-heading:hover span {
-  font-weight: bold;
-}
-.trade-history ul.heading {
-  box-shadow: 0px 4px 2px -1px #2f3c46;
-}
-.trade-history ul.list {
-  margin-top: 3px;
-  overflow-y: scroll;
-  height: 91%;
-}
-.trade-history button {
-  width: 100%;
-  min-height: 35px;
-}
-.trade-history .loading-overlay {
-  height: 100%;
-}
+  background-color: #31404c; }
+  .trade-history .list-container {
+    height: 100%; }
+  .trade-history .pt-card {
+    padding-top: 0px;
+    box-shadow: none !important; }
+  .trade-history .pt-tabs {
+    height: 90%; }
+  .trade-history .pt-tab-panel {
+    margin-top: 0;
+    height: 90%;
+    position: relative; }
+    .trade-history .pt-tab-panel button {
+      position: absolute;
+      bottom: 0;
+      left: 0; }
+  .trade-history ul li {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 13px;
+    width: 100%; }
+    .trade-history ul li span {
+      float: left;
+      margin-right: 15px;
+      text-align: left; }
+    .trade-history ul li span.index {
+      margin-left: 7px;
+      min-width: 15px; }
+    .trade-history ul li span.time {
+      min-width: 90px; }
+    .trade-history ul li span.type {
+      min-width: 35px; }
+    .trade-history ul li span.price, .trade-history ul li span.amount, .trade-history ul li span.total {
+      min-width: 80px !important; }
+  .trade-history ul li.heading {
+    margin: 5px auto 3px; }
+    .trade-history ul li.heading span {
+      font-weight: 600; }
+  .trade-history ul li.not-heading {
+    cursor: pointer;
+    margin: 0px !important;
+    border: 1px transparent;
+    border-radius: 2px;
+    display: inline-block; }
+  .trade-history ul li.not-heading:hover {
+    background-color: #5b656d;
+    padding: 4px 0;
+    position: relative;
+    right: -2px;
+    left: -2px;
+    font-size: 13.5px;
+    z-index: 1;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
+    box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2); }
+    .trade-history ul li.not-heading:hover span {
+      font-weight: bold; }
+  .trade-history ul.heading {
+    box-shadow: 0px 4px 2px -1px #2f3c46; }
+  .trade-history ul.list {
+    margin-top: 3px;
+    overflow-y: scroll;
+    height: 91%; }
+  .trade-history button {
+    width: 100%;
+    min-height: 35px; }
+  .trade-history .loading-overlay {
+    height: 100%; }
 
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  */
 .order-history {
-  width: auto !important;
-}
-.order-history span.close svg {
-  fill: #c23030;
-}
+  width: auto !important; }
+  .order-history span.close svg {
+    fill: #c23030; }
 
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
@@ -339,115 +274,168 @@ input[type='number']::-webkit-outer-spin-button {
   min-width: 800px;
   width: 100%;
   height: 700px;
-  background-color: #31404c;
-}
-.coin-searcher .pt-tabs {
-  height: 100%;
-}
-.coin-searcher .pt-tabs .pt-tab-panel {
-  margin-top: 0px;
-  height: 100%;
-}
-.coin-searcher .pt-tab-list .pt-tab {
-  font-weight: 600;
-}
-.coin-searcher .pt-tab-list .pt-tab svg {
-  margin-top: 6px;
-}
-.coin-searcher input {
-  color: #fff;
-  background-color: #27343d;
-  width: 230px;
-  height: 35px;
-}
-.coin-searcher ul {
-  list-style: none;
-  padding: 0px;
-}
-.coin-searcher ul li {
+  background-color: #31404c; }
+  .coin-searcher .pt-tabs {
+    height: 100%; }
+    .coin-searcher .pt-tabs .pt-tab-panel {
+      margin-top: 0px;
+      height: 100%; }
+  .coin-searcher .pt-tab-list .pt-tab {
+    font-weight: 600; }
+    .coin-searcher .pt-tab-list .pt-tab svg {
+      margin-top: 6px; }
+  .coin-searcher input {
+    color: #fff;
+    background-color: #27343d;
+    width: 230px;
+    height: 35px; }
+  .coin-searcher ul {
+    list-style: none;
+    padding: 0px; }
+    .coin-searcher ul li {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      color: #fff; }
+      .coin-searcher ul li span {
+        text-align: left;
+        word-wrap: break-word; }
+      .coin-searcher ul li span.star {
+        cursor: pointer;
+        width: 30px;
+        min-width: 30px; }
+      .coin-searcher ul li span.pair {
+        width: 120px; }
+      .coin-searcher ul li span.name {
+        width: 220px; }
+      .coin-searcher ul li span.symbol {
+        width: 100px; }
+      .coin-searcher ul li span.change {
+        min-width: 110px;
+        width: 110px; }
+      .coin-searcher ul li span.price {
+        width: 130px; }
+    .coin-searcher ul li.not-heading:hover {
+      background-color: #5b656d;
+      z-index: 1;
+      border-radius: 3px;
+      -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
+      box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2); }
+      .coin-searcher ul li.not-heading:hover span {
+        font-weight: bold; }
+  .coin-searcher ul.list {
+    height: 88.5%;
+    margin-top: 0px;
+    overflow-y: scroll; }
+  .coin-searcher ul.heading {
+    padding: 5px 0px;
+    margin: 5px auto;
+    box-shadow: 0px 4px 2px -1px #2f3c46; }
+  .coin-searcher li.not-heading {
+    box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15) !important;
+    padding: 5px; }
+    .coin-searcher li.not-heading span {
+      font-size: 13px;
+      color: #fff;
+      text-align: left; }
+  .coin-searcher li.heading span {
+    box-shadow: none !important;
+    cursor: pointer;
+    font-weight: 600; }
+    .coin-searcher li.heading span span svg {
+      color: #48aff0;
+      margin-top: 2px; }
+  .coin-searcher li.loading-row {
+    height: 100%;
+    width: 100%;
+    text-align: center; }
+    .coin-searcher li.loading-row span {
+      width: 100%;
+      height: 100%;
+      text-align: center; }
+  .coin-searcher li.not-found span {
+    margin: 0px auto; }
+  .coin-searcher .loading-overlay {
+    height: 88.5%; }
+
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ */
+.main-chart .toolbar {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  color: #fff;
-}
-.coin-searcher ul li span {
-  text-align: left;
-  word-wrap: break-word;
-}
-.coin-searcher ul li span.star {
-  cursor: pointer;
-  width: 30px;
-  min-width: 30px;
-}
-.coin-searcher ul li span.pair {
-  width: 120px;
-}
-.coin-searcher ul li span.name {
-  width: 220px;
-}
-.coin-searcher ul li span.symbol {
-  width: 100px;
-}
-.coin-searcher ul li span.change {
-  min-width: 110px;
-  width: 110px;
-}
-.coin-searcher ul li span.price {
-  width: 130px;
-}
-.coin-searcher ul li.not-heading:hover {
-  background-color: #5b656d;
-  z-index: 1;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 0 0 0 1px #31404c, -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
-  box-shadow: inset 0 0 0 1px #31404c, -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
-}
-.coin-searcher ul li.not-heading:hover span {
-  font-weight: bold;
-}
-.coin-searcher ul.list {
-  height: 88.5%;
-  margin-top: 0px;
+  display: inline-block; }
+  .main-chart .toolbar .pt-icon {
+    cursor: pointer;
+    float: left;
+    margin-right: 15px; }
+  .main-chart .toolbar .pt-icon.active {
+    color: #48aff0; }
+  .main-chart .toolbar .menu {
+    position: relative;
+    float: left;
+    width: 150px;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column; }
+    .main-chart .toolbar .menu .pt-menu {
+      z-index: 9;
+      position: absolute; }
+      .main-chart .toolbar .menu .pt-menu li {
+        margin: 2px auto; }
+    .main-chart .toolbar .menu .pt-menu.open {
+      display: block;
+      top: 31px; }
+    .main-chart .toolbar .menu .pt-menu.closed {
+      display: none; }
+  .main-chart .toolbar .menu.duration {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0px 2px 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.4);
+    background-color: #394b59;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.05)), to(rgba(255, 255, 255, 0)));
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    color: #f5f8fa; }
+    .main-chart .toolbar .menu.duration button {
+      box-shadow: none;
+      float: left;
+      min-height: 26px;
+      margin: 0px 10px 0 0;
+      padding: 0px 6px; }
+  .main-chart .toolbar .menu .pt-popover-target button {
+    width: 100%; }
+  .main-chart .toolbar button {
+    float: left; }
+.main-chart .chart-container {
+  text-align: left; }
+  .main-chart .chart-container label, .main-chart .chart-container select {
+    display: none !important; }
+  .main-chart .chart-container g.react-stockcharts-moving-average-tooltip text tspan.react-stockcharts-tooltip-label, .main-chart .chart-container g.react-stockcharts-tooltip-hover text tspan.react-stockcharts-tooltip-label {
+    fill: #48aff0 !important; }
+  .main-chart .chart-container g.react-stockcharts-moving-average-tooltip text tspan, .main-chart .chart-container g.react-stockcharts-tooltip-hover text tspan {
+    fill: #fff !important; }
+  .main-chart .chart-container g.react-stockcharts-tooltip text tspan.react-stockcharts-tooltip-label {
+    fill: #48aff0 !important; }
+  .main-chart .chart-container g.react-stockcharts-tooltip text tspan {
+    fill: #fff; }
+  .main-chart .chart-container g.react-stockcharts-tooltip text tspan[fill="#4682B4"] {
+    fill: #fff; }
+  .main-chart .chart-container g.react-stockcharts-tooltip text tspan[fill="#FF0000"] {
+    fill: #FF0000; }
+  .main-chart .chart-container g.react-stockcharts-tooltip text tspan[fill="#00F300"] {
+    fill: #00F300; }
+
+.chart-overlay .pt-card {
+  height: 100%; }
+.chart-overlay .main-chart .chart-container {
+  height: 90%;
   overflow-y: scroll;
-}
-.coin-searcher ul.heading {
-  padding: 5px 0px;
-  margin: 5px auto;
-  box-shadow: 0px 4px 2px -1px #2f3c46;
-}
-.coin-searcher li.not-heading {
-  box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15) !important;
-  padding: 5px;
-}
-.coin-searcher li.not-heading span {
-  font-size: 13px;
-  color: #fff;
-  text-align: left;
-}
-.coin-searcher li.heading span {
-  box-shadow: none !important;
-  cursor: pointer;
-  font-weight: 600;
-}
-.coin-searcher li.heading span span svg {
-  color: #48aff0;
-  margin-top: 2px;
-}
-.coin-searcher li.loading-row {
-  height: 100%;
-  width: 100%;
-  text-align: center;
-}
-.coin-searcher li.loading-row span {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-.coin-searcher li.not-found span {
-  margin: 0px auto;
-}
-.coin-searcher .loading-overlay {
-  height: 88.5%;
-}
+  overflow-x: hidden; }
 
 /*# sourceMappingURL=index.css.map */
