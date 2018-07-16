@@ -16,7 +16,10 @@ export type ProviderOptions = {
 
 export type SetProviderAction = {
   type: 'provider/SET_PROVIDER',
-  payload: any,
+  payload: {
+    options: ProviderOptions,
+    address: ?string,
+  },
 };
 
 export type ProviderEvent = any => ProviderState => ProviderState;

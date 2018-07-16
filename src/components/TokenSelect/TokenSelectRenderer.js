@@ -20,7 +20,7 @@ const TokenSelectRenderer = ({ item, items, onChange }: Props) => {
       popoverProps={{ minimal: true }}
     >
       <Button
-        text={item ? `${item.name}` : '(No selection)'}
+        text={item ? `${item.symbol}` : '(No selection)'}
         rightIconName="double-caret-vertical"
         fill={true}
         intent="primary"
@@ -34,10 +34,10 @@ const renderItem = (item, { handleClick, modifiers }) => {
     <MenuItem
       active={modifiers.active}
       disabled={modifiers.disabled}
-      label={item.name}
+      label={item.address}
       key={item.rank}
       onClick={handleClick}
-      text={`${item.rank}. ${item.name}`}
+      text={`${item.rank}. ${item.symbol}`}
     />
   );
 };

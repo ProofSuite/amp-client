@@ -8,7 +8,7 @@ import { ERC20Token } from 'proof-contracts-interfaces';
 import type { TransferTokensTxParams } from '../../types/etherTx';
 import type { State, ThunkAction } from '../../types';
 
-export default function getModel(state: State) {
+export default function getEtherTokensTxModel(state: State) {
   return etherTxModel(state.etherTx);
 }
 
@@ -21,9 +21,9 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
 
       let estimatedGas = await token.estimate.transfer(receiver, amount);
       estimatedGas = estimatedGas.toNumber();
-      return dispatch(actionCreators.validateEtherTx('Transaction Valid', estimatedGas));
+      dispatch(actionCreators.validateEtherTx('Transaction Valid', estimatedGas));
     } catch (error) {
-      return dispatch(actionCreators.invalidateEtherTx(error.message));
+      dispatch(actionCreators.invalidateEtherTx(error.message));
     }
   };
 };
@@ -35,15 +35,19 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       let signer = await getDefaultSigner(getState);
       let token = new Contract(tokenAddress, ERC20Token.abi, signer);
 
-      let tx = await token.transfer(receiver, amount, params);
-      dispatch(actionCreators.sendEtherTx(tx.Hash));
+      let txOpts = {
+        gasLimit: gas || 0,
+        gasPrice: gasPrice || 2 * 10e9,
+      };
+      let tx = await token.transfer(receiver, amount, txOpts);
+
+      dispatch(actionCreators.sendEtherTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
-      if (receipt.status === '0x0') {
-        return dispatch(actionCreators.revertEtherTx('Transaction Failed', receipt));
-      } else {
-        return dispatch(actionCreators.confirmEtherTx(receipt));
-      }
+
+      receipt.status === '0x0'
+        ? dispatch(actionCreators.revertEtherTx('Transaction Failed', receipt))
+        : dispatch(actionCreators.confirmEtherTx(receipt));
     } catch (error) {
       dispatch(actionCreators.etherTxError('error', error.message));
     }

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Spinner, Intent } from '@blueprintjs/core';
-import TxSuccessNotification from './TxSucessNotification';
+import TxSuccessNotification from './TxSuccessNotification';
 import TxErrorNotification from './TxErrorNotification';
 import TxPendingNotification from './TxPendingNotification';
 import TxValidityNotification from './TxValidityNotification';
@@ -13,10 +13,11 @@ type Props = {
   status: string,
   statusMessage: string,
   gas: number,
+  title: ?string,
 };
 
 const TxNotification = (props: Props) => {
-  const { hash, receipt, status, statusMessage, gas } = props;
+  const { hash, receipt, status, statusMessage, gas, title } = props;
   switch (status) {
     case 'incomplete':
       return null;
@@ -25,36 +26,36 @@ const TxNotification = (props: Props) => {
     case 'valid':
       return renderValidityNotification('valid', statusMessage, gas);
     case 'sent':
-      return renderTxPendingNotification(hash);
+      return renderTxPendingNotification(hash, title);
     case 'confirmed':
-      return renderTxSuccessNotification(hash, receipt);
+      return renderTxSuccessNotification(hash, receipt, title);
     case 'reverted':
-      return renderErrorNotification(statusMessage, receipt);
+      return renderErrorNotification(statusMessage, receipt, title);
     case 'error':
-      return renderErrorNotification(statusMessage, receipt);
+      return renderErrorNotification(statusMessage, receipt, title);
     default:
       return null;
   }
-};
-
-const renderErrorNotification = (statusMessage: string, receipt: Object) => {
-  return <TxErrorNotification error={statusMessage} receipt={receipt} />;
 };
 
 const renderLoader = () => {
   return <Spinner intent={Intent.SUCCESS} />;
 };
 
+const renderErrorNotification = (statusMessage: string, receipt: Object, title: ?string) => {
+  return <TxErrorNotification error={statusMessage} receipt={receipt} title={title} />;
+};
+
 const renderValidityNotification = (status: string, statusMessage: string, gas: number) => {
   return <TxValidityNotification status={status} statusMessage={statusMessage} gas={gas} />;
 };
 
-const renderTxPendingNotification = (hash: string) => {
-  return <TxPendingNotification hash={hash} />;
+const renderTxPendingNotification = (hash: string, title: ?string) => {
+  return <TxPendingNotification hash={hash} title={title} />;
 };
 
-const renderTxSuccessNotification = (hash: string, receipt: Object) => {
-  return <TxSuccessNotification hash={hash} receipt={receipt} />;
+const renderTxSuccessNotification = (hash: string, receipt: Object, title: ?string) => {
+  return <TxSuccessNotification hash={hash} receipt={receipt} title={title} />;
 };
 
 export default TxNotification;
