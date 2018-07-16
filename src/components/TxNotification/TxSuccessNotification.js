@@ -6,13 +6,18 @@ import TxReceipt from '../TxReceipt';
 type Props = {
   receipt: Object,
   hash: string,
+  title: ?string,
 };
 
-const TxSuccessNotification = ({ receipt, hash }: Props) => (
-  <Callout intent={Intent.SUCCESS} icon="info-sign" title="Transaction successful!">
+const TxSuccessNotification = ({ receipt, hash, title }: Props) => (
+  <Callout intent={Intent.SUCCESS} icon="info-sign" title={title}>
     <p>Transaction Hash: {hash}</p>
     <TxReceipt receipt={receipt} />
   </Callout>
 );
+
+TxSuccessNotification.defaultProps = {
+  title: 'Transaction successful',
+};
 
 export default TxSuccessNotification;
