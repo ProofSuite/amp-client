@@ -9,19 +9,13 @@ import * as bidAsk from '../../jsons/bidAsk.json';
 storiesOf('DepthChart', module)
   .addDecorator(withKnobs)
   .add(
-    'Logged Out state',
+    'Loading',
     withInfo({ text: README, source: false })(() => (
-      <DepthChartRenderer data={bidAsk.list} loading={false} title="Price (BTC/USDT)" />
+      <DepthChartRenderer data={bidAsk.list} loading={true} title="Price (BTC/USDT)" />
     ))
   )
   .add(
-    'Logged In state Buy Eth Form',
-    withInfo({ text: README, source: false })(() => (
-      <DepthChartRenderer data={bidAsk.list} loading={false} title="Price (BTC/USDT)" />
-    ))
-  )
-  .add(
-    'Logged In state Sell Eth Form',
+    'Not Loading',
     withInfo({ text: README, source: false })(() => (
       <DepthChartRenderer data={bidAsk.list} loading={false} title="Price (BTC/USDT)" />
     ))
