@@ -21,9 +21,9 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
 
       let estimatedGas = await token.estimate.transfer(receiver, amount);
       estimatedGas = estimatedGas.toNumber();
-      return dispatch(actionCreators.validateEtherTx('Transaction Valid', estimatedGas));
+      dispatch(actionCreators.validateEtherTx('Transaction Valid', estimatedGas));
     } catch (error) {
-      return dispatch(actionCreators.invalidateEtherTx(error.message));
+      dispatch(actionCreators.invalidateEtherTx(error.message));
     }
   };
 };
@@ -44,11 +44,10 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       dispatch(actionCreators.sendEtherTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
-      if (receipt.status === '0x0') {
-        return dispatch(actionCreators.revertEtherTx('Transaction Failed', receipt));
-      } else {
-        return dispatch(actionCreators.confirmEtherTx(receipt));
-      }
+
+      receipt.status === '0x0'
+        ? dispatch(actionCreators.revertEtherTx('Transaction Failed', receipt))
+        : dispatch(actionCreators.confirmEtherTx(receipt));
     } catch (error) {
       dispatch(actionCreators.etherTxError('error', error.message));
     }

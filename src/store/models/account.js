@@ -1,7 +1,10 @@
+//@flow
 import accountModel from '../domains/account';
 import * as actionCreators from '../actions/account';
 
-export default function getAccountModel(state) {
+import type { State } from '../../types';
+
+export default function getAccountModel(state: State) {
   return accountModel(state.account);
 }
 
