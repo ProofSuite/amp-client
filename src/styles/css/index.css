@@ -5,9 +5,6 @@
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  */
 /*
- * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
- */
-/*
   $light-gray1:
       - h5 border
 */
@@ -358,5 +355,32 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0px auto; }
   .coin-searcher .loading-overlay {
     height: 88.5%; }
+
+/*
+ * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ */
+.depth-chart-container .depth-chart {
+  width: 400px; }
+  .depth-chart-container .depth-chart svg {
+    background: #31404c; }
+    .depth-chart-container .depth-chart svg g path {
+      stroke-width: 1; }
+    .depth-chart-container .depth-chart svg g image {
+      color: #fff; }
+    .depth-chart-container .depth-chart svg g text, .depth-chart-container .depth-chart svg g image {
+      fill: #fff; }
+    .depth-chart-container .depth-chart svg g:hover > path {
+      stroke-width: 2; }
+    .depth-chart-container .depth-chart svg g:hover > rect, .depth-chart-container .depth-chart svg g:hover > image, .depth-chart-container .depth-chart svg g:hover > text {
+      background: red; }
+  .depth-chart-container .depth-chart a {
+    display: none !important; }
+
+.depth-chart-container.loading {
+  height: 500px;
+  background-color: #31404c;
+  padding: 20px; }
+  .depth-chart-container.loading .loading-overlay {
+    height: 100%; }
 
 /*# sourceMappingURL=index.css.map */

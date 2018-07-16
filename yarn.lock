@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@amcharts/amcharts3-react@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@amcharts/amcharts3-react/-/amcharts3-react-3.1.0.tgz#9a23d1f8dbf47fd217db4fdb0323491a923816ac"
+  dependencies:
+    create-react-class "^15.5.2"
+
 "@blueprintjs/core@^2.3.1", "@blueprintjs/core@~2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-2.3.1.tgz#c998f8d22b02bfc9990b66b201f1ea095fb15450"
@@ -430,6 +436,10 @@ align-text@^0.1.1, align-text@^0.1.3:
 alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
+
+amcharts3@^3.21.13:
+  version "3.21.13"
+  resolved "https://registry.yarnpkg.com/amcharts3/-/amcharts3-3.21.13.tgz#ff0e876dcef63bca93f5d69eac17fd6703ace655"
 
 amdefine@>=0.0.4:
   version "1.0.1"

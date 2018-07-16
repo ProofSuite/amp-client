@@ -14,11 +14,13 @@
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
+    "@amcharts/amcharts3-react": "^3.1.0",
     "@blueprintjs/core": "~2.3.1",
     "@blueprintjs/select": "~2.0.1",
+    "@blueprintjs/table": "^3.0.0",
+    "amcharts3": "^3.21.13",
     "ethers": "git+https://github.com/ethers-io/ethers.js.git",
     "proof-contracts-interfaces": "https://github.com/ProofSuite/proof-contract-interfaces",
-    "@blueprintjs/table": "^3.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-intl": "^2.4.0",
