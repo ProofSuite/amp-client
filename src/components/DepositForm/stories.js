@@ -40,7 +40,7 @@ const customStore2 = createStore({
   },
 });
 
-storiesOf('Deposit Ether/Tokens Form', module)
+storiesOf('Deposit Form', module)
   .addDecorator(withKnobs)
   .add(
     'Connected Deposit Ether/Tokens Form',
