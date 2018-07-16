@@ -1,0 +1,10 @@
+@import "vars";
+
+.order-history {
+  width: auto !important;
+  span.close {
+    svg {
+      fill: $red2;
+    }
+  }
+}

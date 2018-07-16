@@ -9,6 +9,7 @@
     "test": "react-scripts test --env=jsdom --watch",
     "eject": "react-scripts eject",
     "flow": "flow",
+    "scss": "scss --watch src/styles/scss/index.scss:src/styles/css/index.css",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
