@@ -22,10 +22,12 @@ export const mapStateToProps = (state: State) => {
   const depositFormModel = getDepositFormModel(state);
 
   return {
-    step: depositFormModel.step(),
     balances: accountBalancesModel.balances(),
     address: accountModel.address(),
     tokens: tokenModel.rankedTokens(),
+    step: depositFormModel.getStep(),
+    convertTx: depositFormModel.getConvertTxState(),
+    allowTx: depositFormModel.getAllowTxState(),
   };
 };
 
