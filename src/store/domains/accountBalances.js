@@ -1,6 +1,5 @@
 // @flow
 import { objectWithoutKey } from '../../helpers/utils';
-
 import type { AccountBalancesState, AccountBalances } from '../../types/accountBalances';
 
 const initialState = {};

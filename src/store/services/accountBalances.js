@@ -11,7 +11,7 @@ export async function queryEtherBalance(address: string) {
   const balance = await provider.getBalance(address);
   return {
     symbol: 'ETH',
-    balance: utils.formatEther(balance),
+    balance: utils.formatUnits(balance, 18),
   };
 }
 
@@ -27,7 +27,7 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
   balances = await Promise.all(balancePromises);
   balances = (balances: TokenBalances).map((balance, i) => ({
     symbol: tokens[i].symbol,
-    balance: utils.formatEther(balance),
+    balance: utils.formatUnits(balance, 18),
   }));
 
   return balances;
@@ -38,7 +38,7 @@ export async function subscribeEtherBalance(address: string, callback: number =>
   const initialBalance = await provider.getBalance(address);
 
   const handler = async balance => {
-    if (balance !== initialBalance) callback(utils.formatEther(balance));
+    if (balance !== initialBalance) callback(utils.formatUnits(balance, 18));
   };
 
   provider.on(address, handler);
@@ -57,7 +57,7 @@ export async function subscribeTokenBalance(address: string, token: Object, call
   const handler = async (sender, receiver, tokens) => {
     if (receiver === address) {
       const balance = await contract.balanceOf(receiver);
-      if (balance !== initialBalance) callback(utils.formatEther(balance));
+      if (balance !== initialBalance) callback(utils.formatUnits(balance, 18));
     }
   };
 
@@ -67,18 +67,3 @@ export async function subscribeTokenBalance(address: string, token: Object, call
     provider.removeListener(address, handler);
   };
 }
-
-// export async function subscribeTokenTransfers(address: string, token: Object, callback: number => void) {
-//   const { provider } = await getProvider();
-//   const contract = new Contract(token.address, ERC20Token.abi, provider);
-
-//   const handler = async (sender, receiver, tokens) => {
-//     if (receiver === address) callback({ sender, receiver, tokens });
-//   };
-
-//   contract.ontransfer = handler;
-
-//   return () => {
-//     provider.removeListener(handler);
-//   };
-// }
