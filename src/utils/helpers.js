@@ -27,3 +27,24 @@ function sorter(a, b, wrt, order) {
 export function sortArray(array, wrt, sortOrder = 'asc') {
   return array.sort((a, b) => sorter(a, b, wrt, sortOrder));
 }
+
+export function getObjectFromProperty(array, prop, value) {
+  let foundObject;
+  array.map(function(obj) {
+    if (obj[prop] === value) {
+      foundObject = obj;
+    }
+  });
+  if (foundObject) {
+    return foundObject;
+  } else {
+    return false;
+  }
+}
+
+export function filterer(filter, coin, wrt, filterValue) {
+  if (filter) {
+    return coin[wrt] === filterValue;
+  }
+  return true;
+}
