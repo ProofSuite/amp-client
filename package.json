@@ -21,6 +21,8 @@
     "d3-dsv": "^1.0.8",
     "d3-format": "^1.3.0",
     "d3-time-format": "^2.1.1",
+    "@amcharts/amcharts3-react": "^3.1.0",
+    "amcharts3": "^3.21.13",
     "ethers": "git+https://github.com/ethers-io/ethers.js.git",
     "express": "^4.16.3",
     "nodemon": "^1.18.2",
