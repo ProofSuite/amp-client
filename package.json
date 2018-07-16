@@ -18,7 +18,6 @@
     "@blueprintjs/select": "~2.0.1",
     "ethers": "git+https://github.com/ethers-io/ethers.js.git",
     "proof-contracts-interfaces": "https://github.com/ProofSuite/proof-contract-interfaces",
-    "@blueprintjs/table": "^3.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-intl": "^2.4.0",
