@@ -6,7 +6,7 @@ import DepositFormContainer from '../DepositForm';
 type Props = {
   isOpen: boolean,
   handleClose: (SyntheticEvent<>) => void,
-  step: 'waiting' | 'convert',
+  step: 'waiting' | 'convert' | 'confirm',
   balance: ?number,
   address: string,
   tokens: Array<Object>,
@@ -16,13 +16,7 @@ type Props = {
 const DepositModal = (props: Props) => {
   return (
     <Modal title="Send Ether or Tokens" icon="info-sign" isOpen={props.isOpen} onClose={props.handleClose}>
-      <DepositFormContainer
-        step={props.step}
-        balance={props.balance}
-        address={props.address}
-        tokens={props.tokens}
-        token={props.token}
-      />
+      <DepositFormContainer />
     </Modal>
   );
 };

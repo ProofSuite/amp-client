@@ -13,36 +13,14 @@ storiesOf('Deposit Modal', module)
   .add(
     'Waiting Step',
     withInfo({ source: false })(() => (
-      <ModalBox>
-        {({ handleClose, isOpen }) => (
-          <DepositModal
-            handleClose={handleClose}
-            isOpen={isOpen}
-            step="waiting"
-            balance={1.54}
-            address="0xc73eec564e96e6653943d6d0e32121d455917653"
-            tokens={tokens}
-            token={tokens[0]}
-          />
-        )}
-      </ModalBox>
+      <ModalBox>{({ handleClose, isOpen }) => <DepositModal handleClose={handleClose} isOpen={isOpen} />}</ModalBox>
     ))
   )
   .add(
     'Convert Step',
     withInfo({ source: false })(() => (
       <ModalBox>
-        {({ handleClose, isOpen }) => (
-          <DepositModal
-            handleClose={handleClose}
-            isOpen={isOpen}
-            step="convert"
-            balance={1.54}
-            address="0xc73eec564e96e6653943d6d0e32121d455917653"
-            tokens={tokens}
-            token={tokens[0]}
-          />
-        )}
+        {({ handleClose, isOpen }) => <DepositModal handleClose={handleClose} isOpen={isOpen} step="convert" />}
       </ModalBox>
     ))
   );
