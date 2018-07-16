@@ -1,7 +1,8 @@
 // @flow
 import { arrayWithoutElement, objectWithoutKey, addKeyToObject, addElementToArray } from '../../helpers/utils';
-import type { TokenState } from '../../types/tokens';
 import { tokenSymbols, tokensBySymbol } from '../../data';
+
+import type { TokenState } from '../../types/tokens';
 
 const initialState = {
   symbols: tokenSymbols,
@@ -36,6 +37,6 @@ export default function model(state: TokenState) {
     bySymbol: () => state.bySymbol,
     symbols: () => state.symbols,
     tokens: () => Object.values(state.bySymbol),
-    rankedTokens: () => Object.values(state.bySymbol).map((m, index) => ({ ...m, rank: index + 1 })),
+    rankedTokens: () => (Object.values(state.bySymbol): any).map((m, index) => ({ ...m, rank: index + 1 })),
   };
 }

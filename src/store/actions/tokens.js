@@ -1,4 +1,5 @@
-import type { UpdateTokensAction, RemoveTokensAction } from '../../types';
+//@flow
+import type { UpdateTokensAction, RemoveTokensAction } from '../../types/tokens';
 
 const actionTypes = {
   updateTokens: 'tokens/UPDATE_TOKENS',

@@ -12,13 +12,13 @@ export type TokenState = {
 };
 
 export type UpdateTokensAction = {
-  type: 'tokens/UPDATE',
+  type: 'tokens/UPDATE_TOKENS',
   payload: Token,
 };
 
 export type RemoveTokensAction = {
-  type: 'tokens/REMOVE',
-  payload: Symbol,
+  type: 'tokens/REMOVE_TOKENS',
+  payload: { [Symbol]: Symbol },
 };
 
 export type TokenEvent = any => TokenState => TokenState;
