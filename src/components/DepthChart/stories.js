@@ -19,16 +19,4 @@ storiesOf('DepthChart', module)
     withInfo({ text: README, source: false })(() => (
       <DepthChartRenderer data={bidAsk.list} loading={false} title="Price (BTC/USDT)" />
     ))
-  )
-  .add(
-    'Logged In state Buy Eth Form',
-    withInfo({ text: README, source: false })(() => (
-      <DepthChartRenderer data={bidAsk.list} loading={false} title="Price (BTC/USDT)" />
-    ))
-  )
-  .add(
-    'Logged In state Sell Eth Form',
-    withInfo({ text: README, source: false })(() => (
-      <DepthChartRenderer data={bidAsk.list} loading={false} title="Price (BTC/USDT)" />
-    ))
   );
