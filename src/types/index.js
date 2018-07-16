@@ -6,6 +6,8 @@ import type { AccountBalancesState, AccountBalancesEvent, AccountBalancesAction 
 import type { EtherTxState, EtherTxAction, EtherTxEvent } from './etherTx';
 import type { TokenState, TokenAction, TokenEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
+import type { DepositFormState, DepositFormAction, DepositFormEvent } from './depositForm';
+import type { SettingsState, SettingsAction, SettingsEvent } from './settings';
 
 export type ReduxInitAction = { type: '@@INIT' };
 
@@ -16,9 +18,19 @@ export type Action =
   | EtherTxAction
   | TokenAction
   | AccountBalancesAction
-  | AccountAction;
+  | AccountAction
+  | DepositFormAction
+  | SettingsAction;
 
-export type Event = ProviderEvent | EtherBalanceEvent | EtherTxEvent | TokenEvent | AccountBalancesEvent | AccountEvent;
+export type Event =
+  | ProviderEvent
+  | EtherBalanceEvent
+  | EtherTxEvent
+  | TokenEvent
+  | AccountBalancesEvent
+  | AccountEvent
+  | DepositFormEvent
+  | SettingsEvent;
 
 export type ActionHandler = Action => Event;
 
@@ -29,6 +41,8 @@ export type State = {
   etherTx: EtherTxState,
   tokens: TokenState,
   account: AccountState,
+  depositForm: DepositFormState,
+  settings: SettingsState,
 };
 
 export type Store = ReduxStore<State, Action>;
