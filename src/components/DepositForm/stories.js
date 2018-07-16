@@ -3,29 +3,34 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import ReceiveEtherFormRenderer from './ReceiveEtherFormRenderer';
-import ReceiveEtherFormContainer from './index.js';
+import DepositFormRenderer from './DepositFormRenderer';
+import DepositFormContainer from './index.js';
 import { Card } from '@blueprintjs/core';
 import { tokens } from '../../data';
 import README from './README.md';
+import { createStore } from '../../store';
+import { Provider } from 'react-redux';
 
-storiesOf('Receive Ether/Tokens Form', module)
+const store = createStore({
+  account: {
+    address: '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47',
+  },
+  depositForm: {
+    step: 'convert',
+  },
+});
+
+storiesOf('Deposit Ether/Tokens Form', module)
   .addDecorator(withKnobs)
   .add(
-    'Connected Receive Ether/Tokens Form',
+    'Connected Deposit Ether/Tokens Form',
     withInfo({
       text: README,
       source: false,
     })(() => (
       <div className="pt-dark">
         <Card>
-          <ReceiveEtherFormContainer
-            step="waiting"
-            address="0xc73eec564e96e6653943d6d0e32121d455917653"
-            balance={1.54}
-            tokens={tokens}
-            token={tokens[0]}
-          />
+          <DepositFormContainer />
         </Card>
       </div>
     ))
@@ -38,13 +43,7 @@ storiesOf('Receive Ether/Tokens Form', module)
     })(() => (
       <div className="pt-dark">
         <Card>
-          <ReceiveEtherFormContainer
-            step="convert"
-            address="0xc73eec564e96e6653943d6d0e32121d455917653"
-            balance={1.54}
-            tokens={tokens}
-            token={tokens[0]}
-          />
+          <DepositFormContainer />
         </Card>
       </div>
     ))
@@ -55,25 +54,21 @@ storiesOf('Receive Ether/Tokens Form', module)
       text: README,
       source: false,
     })(() => (
-      <div className="pt-dark">
-        <Card>
-          <ReceiveEtherFormContainer
-            step="convert"
-            address="0xc73eec564e96e6653943d6d0e32121d455917653"
-            balance={1.54}
-            tokens={tokens}
-            token={tokens[0]}
-          />
-        </Card>
-      </div>
+      <Provider store={store}>
+        <div className="pt-dark">
+          <Card>
+            <DepositFormContainer />
+          </Card>
+        </div>
+      </Provider>
     ))
   )
   .add(
-    'Receive Ether/Tokens Form (Conversion)',
+    'Deposit Ether/Tokens Form (Conversion)',
     withInfo()(() => (
       <div className="pt-dark">
         <Card>
-          <ReceiveEtherFormRenderer
+          <DepositFormRenderer
             step="convert"
             token={tokens[0]}
             tokens={tokens}

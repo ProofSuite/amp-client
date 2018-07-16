@@ -4,7 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { tokens } from '../../data';
 import ModalBox from '../ModalBox';
-import ReceiveEtherModal from './ReceiveEtherModal';
+import DepositModal from './DepositModal';
 
 import '../../styles/reset.css';
 
@@ -15,7 +15,7 @@ storiesOf('Deposit Modal', module)
     withInfo({ source: false })(() => (
       <ModalBox>
         {({ handleClose, isOpen }) => (
-          <ReceiveEtherModal
+          <DepositModal
             handleClose={handleClose}
             isOpen={isOpen}
             step="waiting"
@@ -33,7 +33,7 @@ storiesOf('Deposit Modal', module)
     withInfo({ source: false })(() => (
       <ModalBox>
         {({ handleClose, isOpen }) => (
-          <ReceiveEtherModal
+          <DepositModal
             handleClose={handleClose}
             isOpen={isOpen}
             step="convert"

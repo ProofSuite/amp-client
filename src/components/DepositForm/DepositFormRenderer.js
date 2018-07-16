@@ -21,11 +21,11 @@ type Props = {
   toggleTokenSuggest: void => void,
   showTokenSuggest: boolean,
   handleChangeToken: (SyntheticEvent<>) => void,
-  handleSubmitChangeToken: (SyntheticEvent<>) => void,
+  handleSubmitChangeToken: (SyntheticEvent<>) => Promise<void>,
   handleConfirm: (SyntheticEvent<>) => void,
 };
 
-const ReceiveEtherFormRenderer = (props: Props) => {
+const DepositFormRenderer = (props: Props) => {
   switch (props.step) {
     case 'waiting':
       return renderWaitingForm(props);
@@ -151,4 +151,4 @@ const SliderBox = styled.div`
   width: 430px;
 `;
 
-export default ReceiveEtherFormRenderer;
+export default DepositFormRenderer;

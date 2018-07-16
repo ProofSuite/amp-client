@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import Modal from '../Modal';
-import ReceiveEtherFormContainer from '../ReceiveEtherForm';
+import DepositFormContainer from '../DepositForm';
 
 type Props = {
   isOpen: boolean,
@@ -13,10 +13,10 @@ type Props = {
   token: Object,
 };
 
-const ReceiveEtherModal = (props: Props) => {
+const DepositModal = (props: Props) => {
   return (
     <Modal title="Send Ether or Tokens" icon="info-sign" isOpen={props.isOpen} onClose={props.handleClose}>
-      <ReceiveEtherFormContainer
+      <DepositFormContainer
         step={props.step}
         balance={props.balance}
         address={props.address}
@@ -27,4 +27,4 @@ const ReceiveEtherModal = (props: Props) => {
   );
 };
 
-export default ReceiveEtherModal;
+export default DepositModal;
