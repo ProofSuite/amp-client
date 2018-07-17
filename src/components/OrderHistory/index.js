@@ -1,3 +1,3 @@
-import OrderHistoryRenderer from './OrderHistoryRenderer';
+import OrderHistory from './OrderHistory';
 
-export default OrderHistoryRenderer;
+export default OrderHistory;
