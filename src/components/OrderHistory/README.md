@@ -12,7 +12,8 @@ import OrderHistoryRenderer from '../../components/OrderHistoryRenderer';
 ```js
 <OrderHistoryRenderer
   orderHistory={orderHistory}
-  loggedIn={true}
+  userOrderHistory={userOrderHistory}
+  authenticated={true}
   loading={false}
   decimals={7}
 />

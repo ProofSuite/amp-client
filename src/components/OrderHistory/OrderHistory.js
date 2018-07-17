@@ -1,53 +1,64 @@
+//@flow
 import React from 'react';
+import OrderHistoryRenderer from './OrderHistoryRenderer';
 import { reduceDecimals, toDate } from '../../utils/converters';
-import Loading from '../Loading';
-import { Colors } from '@blueprintjs/core';
-import styled from 'styled-components';
-import type { ListRow, OrderListContainerTypes, OrderListTypes } from '../../types/orderHistory';
+import type { Order } from '../../types/orderHistory';
 
-const OrderHistory = (props: OrderListContainerTypes) => {
-  const { decimals, loading, orderHistory } = props;
-  return loading ? <Loading /> : <HistroyList orderHistory={orderHistory} decimals={decimals} />;
+type Props = {
+  orderHistory: Array<Order>,
+  userOrderHistory: Array<Order>,
+  loading: boolean,
+  decimals?: number,
+  authenticated: boolean,
 };
+
+type State = {
+  selectedTabId: string,
+};
+
+class OrderHistory extends React.PureComponent<Props, State> {
+  static defaultProps = { decimals: 7 };
+
+  state = { selectedTabId: 'all' };
+
+  changeTab = (tabId: string) => {
+    this.setState({ selectedTabId: tabId });
+  };
+
+  parseOrderHistory = (orderHistory: Array<Object>) => {
+    const { decimals } = this.props;
+
+    return (orderHistory: any).map(order => ({
+      time: toDate(order.time),
+      type: order.type,
+      amount: reduceDecimals(order.amount, decimals),
+      price: reduceDecimals(order.price, decimals),
+    }));
+  };
+
+  render() {
+    const {
+      props: { loading, orderHistory, userOrderHistory, decimals, authenticated },
+      state: { selectedTabId },
+      changeTab,
+      parseOrderHistory,
+    } = this;
+
+    const formattedOrderHistory = parseOrderHistory(orderHistory);
+    const formattedUserOrderHistory = parseOrderHistory(userOrderHistory);
+
+    return (
+      <OrderHistoryRenderer
+        selectedTabId={selectedTabId}
+        onChange={changeTab}
+        loading={loading}
+        authenticated={authenticated}
+        decimals={decimals}
+        orderHistory={formattedOrderHistory}
+        userOrderHistory={formattedUserOrderHistory}
+      />
+    );
+  }
+}
+
 export default OrderHistory;
-
-const HistroyList = (props: OrderListTypes) => {
-  const { decimals, orderHistory } = props;
-  return (
-    <div className="list-container pt-dark">
-      <ul className="pt-list-unstyled heading">
-        <li className="heading">
-          <span className="index">#</span>
-          <span className="time">Time</span>
-          <span className="type">Type</span>
-          <span className="amount">Amount</span>
-          <span className="price">Price</span>
-        </li>
-      </ul>
-      <ul className="pt-list-unstyled list">
-        {orderHistory.map((order, index) => <Row key={index} props={{ order, decimals: decimals, index }} />)}
-      </ul>
-    </div>
-  );
-};
-
-const Row = ({ props }: ListRow) => {
-  const { order, decimals, index } = props;
-  return (
-    <li className="not-heading">
-      <span className="index">{index + 1}</span>
-      <span className="time">{toDate(order.time)}</span>
-      {order.type === 'sell' ? <Sell>{order.type}</Sell> : <Buy>{order.type}</Buy>}
-      <span className="amount">{reduceDecimals(order.amount, decimals)}</span>
-      <span className="price">{reduceDecimals(order.price, decimals)}</span>
-    </li>
-  );
-};
-
-const Sell = styled.span`
-  color: ${Colors.RED4};
-`;
-
-const Buy = styled.span`
-  color: ${Colors.GREEN5};
-`;
