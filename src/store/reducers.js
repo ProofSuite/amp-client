@@ -17,6 +17,7 @@ import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
 import * as depositFormEvents from './domains/depositForm';
 import * as settingsEvents from './domains/settings';
+import * as tokenPairsEvents from './domains/tokenPairs';
 
 export const etherBalance = createReducer(action => {
   const { type, payload } = action;
@@ -141,5 +142,17 @@ export const settings = createReducer(action => {
       return settingsEvents.defaultGasPriceSet();
     default:
       return settingsEvents.initialized();
+  }
+});
+
+export const tokenPairs = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case tokensActionTypes.updateTokens:
+      return tokenPairsEvents.tokenPairUpdated(payload);
+    case tokensActionTypes.tokenRemoved:
+      return tokenPairsEvents.tokenPairRemoved(payload);
+    default:
+      return tokenPairsEvents.initialized();
   }
 });
