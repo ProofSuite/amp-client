@@ -16,7 +16,7 @@ export const addKeyToObject = (obj, key, addKey) => {
 };
 
 export const arrayWithoutElement = (arr, element) => {
-  return arr.filter(arr => arr !== element);
+  return arr.filter(elem => elem !== element);
 };
 
 export const addElementToArray = (arr, element) => {

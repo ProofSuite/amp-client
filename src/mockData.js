@@ -34,7 +34,7 @@ export const mockFailedTxReceipt2 = {
 
 export const mockEtherTxParams = {
   amount: 10e18,
-  receiver: '0x14d281013d8ee8ccfa0eca87524e5b3cfa6152ba',
+  receiver: '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47',
   gasPrice: 2e9,
   gas: 100000,
 };

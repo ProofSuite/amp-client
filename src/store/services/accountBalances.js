@@ -11,7 +11,7 @@ export async function queryEtherBalance(address: string) {
   const balance = await provider.getBalance(address);
   return {
     symbol: 'ETH',
-    balance: utils.formatUnits(balance, 18),
+    balance: utils.formatEther(balance),
   };
 }
 
@@ -27,7 +27,7 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
   balances = await Promise.all(balancePromises);
   balances = (balances: TokenBalances).map((balance, i) => ({
     symbol: tokens[i].symbol,
-    balance: utils.formatUnits(balance, 18),
+    balance: utils.formatEther(balance),
   }));
 
   return balances;
@@ -38,7 +38,7 @@ export async function subscribeEtherBalance(address: string, callback: number =>
   const initialBalance = await provider.getBalance(address);
 
   const handler = async balance => {
-    if (balance !== initialBalance) callback(utils.formatUnits(balance, 18));
+    if (balance !== initialBalance) callback(utils.formatEther(balance));
   };
 
   provider.on(address, handler);
@@ -57,7 +57,7 @@ export async function subscribeTokenBalance(address: string, token: Object, call
   const handler = async (sender, receiver, tokens) => {
     if (receiver === address) {
       const balance = await contract.balanceOf(receiver);
-      if (balance !== initialBalance) callback(utils.formatUnits(balance, 18));
+      if (balance !== initialBalance) callback(utils.formatEther(balance));
     }
   };
 
