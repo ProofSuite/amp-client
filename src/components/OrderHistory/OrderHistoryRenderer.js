@@ -54,7 +54,7 @@ const OrderHistoryTable = (props: OrderHistoryTableProps) => {
 const OrderHistoryList = (props: { orderHistory: Array<Object> }) => {
   const { orderHistory } = props;
   return (
-    <div className="list-container pt-dark">
+    <div className="list-container">
       <ul className="pt-list-unstyled heading">
         <li className="heading">
           <span className="index">#</span>
@@ -74,7 +74,7 @@ const OrderHistoryList = (props: { orderHistory: Array<Object> }) => {
 const Row = (props: { order: Object, index: number }) => {
   const { order, index } = props;
   return (
-    <li className="not-heading">
+    <li>
       <span className="index">{index + 1}</span>
       <span className="time">{order.time}</span>
       {order.type === 'sell' ? <Sell>{order.type}</Sell> : <Buy>{order.type}</Buy>}

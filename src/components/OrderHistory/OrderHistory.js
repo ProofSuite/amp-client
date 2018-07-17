@@ -17,7 +17,7 @@ type State = {
 };
 
 class OrderHistory extends React.PureComponent<Props, State> {
-  static defaultProps = { decimals: 7 };
+  static defaultProps = { decimals: 3 };
 
   state = { selectedTabId: 'all' };
 
