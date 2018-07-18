@@ -9,6 +9,7 @@ import WalletPage from './WalletPage';
 import ExchangePage from './ExchangePage';
 import SettingsPage from './SettingsPage';
 import LogoutPage from './LogoutPage';
+import TestApisPage from './App/App';
 
 import '../styles/css/app.css';
 
@@ -22,6 +23,7 @@ function App(props) {
         <Route path="/exchange" component={ExchangePage} />
         <Route path="/settings" component={SettingsPage} />
         <Route path="/logout" component={LogoutPage} />
+        <Route path="/testApis" component={TestApisPage} />
       </Switch>
     </Layout>
   );

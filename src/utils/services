@@ -16,12 +16,12 @@ export function parseData(parse) {
 
 export const parseDate = timeParse("%Y-%m-%d");
 
-export async function getData() {
-  const promiseMSFT = await fetch("http://rrag.github.io/react-stockcharts/data/MSFT_full.tsv")
+export function getData() {
+  let promiseMSFT = fetch("http://rrag.github.io/react-stockcharts/data/MSFT_full.tsv")
     .then(response => response.text())
     .then(data => {
-      // console.log(tsvParse(data, parseData(parseDate)), 'api data')
+      console.log(tsvParse(data, parseData(parseDate)), 'api data')
       return tsvParse(data, parseData(parseDate));
-    })
+    });
   return promiseMSFT;
 }

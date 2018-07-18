@@ -2,17 +2,22 @@
 import React from 'react';
 import SmallChart from './SmallChart';
 import ExtendedChart from './ExtendedChart';
-import { getData } from '../../utils/services';
+import type {SendTimelineParams} from '../../types/ohlcv';
 
 type State = {
   expandedChard: boolean,
-  data: Array<Object>,
 };
 
-export default class OHLCVRenderer extends React.PureComponent<State> {
+type Props = {
+  ohlcvData: Array<Object>,
+  pair: string,
+  pairId: string,
+  updateTimeLine: (SendTimelineParams) => void
+};
+
+export default class OHLCVRenderer extends React.PureComponent<Props, State> {
   state = {
     expandedChard: false,
-    data: [],
   };
 
   toggleExpand = () => {
@@ -23,22 +28,16 @@ export default class OHLCVRenderer extends React.PureComponent<State> {
     });
   };
 
-  componentDidMount() {
-    const self = this;
-    getData().then(data => {
-      self.setState({ data: data });
-    });
-  }
-
   render() {
     const {
-      state: { data, expandedChard },
+      props: {ohlcvData, pair, updateTimeLine, pairId},
+      state: { expandedChard },
       toggleExpand,
     } = this;
     return (
       <React.Fragment>
-        <SmallChart ohlcvData={data} toggleExpand={toggleExpand} expandedChard={expandedChard} />
-        <ExtendedChart ohlcvData={data} expandedChard={expandedChard} toggleExpand={toggleExpand} />
+        <SmallChart updateTimeLine={updateTimeLine} ohlcvData={ohlcvData} pair={pair} pairId={pairId} toggleExpand={toggleExpand} expandedChard={expandedChard} />
+        <ExtendedChart updateTimeLine={updateTimeLine} ohlcvData={ohlcvData} pair={pair} pairId={pairId} expandedChard={expandedChard} toggleExpand={toggleExpand} />
       </React.Fragment>
     );
   }

@@ -7,4 +7,4 @@ import README from './README.md';
 
 storiesOf('OHLCV', module)
   .addDecorator(withKnobs)
-  .add('Chart', withInfo({ text: README, source: false })(() => <OHLCVRenderer />));
+  .add('Chart', withInfo({ text: README, source: false })(() => <OHLCVRenderer ohlcvData={[]} pair="BTC/USD" pairId="123" />));
