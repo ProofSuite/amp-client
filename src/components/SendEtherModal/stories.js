@@ -5,8 +5,6 @@ import { withInfo } from '@storybook/addon-info';
 import ModalBox from '../ModalBox';
 import SendEtherModal from './SendEtherModal';
 
-import '../../styles/reset.css';
-
 storiesOf('Send Ether Modal', module)
   .addDecorator(withKnobs)
   .add(

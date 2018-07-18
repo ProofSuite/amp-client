@@ -1,0 +1,60 @@
+@import "vars";
+
+// Adapting the steps package to the blueprint dark theme
+.rc-steps-item-icon {
+  border: 1px solid $pt-dark-divider-black !important;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+  border-radius: 26px;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.rc-steps-item-title {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: $white !important;
+  font-weight: bold;
+  display: inline-block;
+  padding-right: 10px;
+  position: relative;
+}
+
+.rc-steps-item-wait .rc-steps-item-title {
+  color: rgba(0, 0, 0, 0.43);
+}
+
+.rc-steps-item-wait .rc-steps-item-icon {
+  border-color: #ccc;
+  background-color: $dark-gray5 !important;
+}
+
+.rc-steps-item-process .rc-steps-item-title {
+  color: rgba(0, 0, 0, 0.43);
+}
+
+.rc-steps-item-process .rc-steps-item-icon {
+  background: $pt-intent-primary !important;
+}
+
+.rc-steps-item-process .rc-steps-item-title {
+  color: rgba(0, 0, 0, 0.43);
+}
+
+.rc-steps-item-finish .rc-steps-item-icon {
+  border-color: $pt-intent-primary !important;
+  background-color: $dark-gray5 !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon > .rc-steps-icon {
+  border-color: $pt-intent-primary !important;
+  color: $pt-intent-primary !important;
+  background-color: $dark-gray5 !important;
+  font-weight: bolder;
+}
+
+.rc-steps-item-wait .rc-steps-item-icon > .rc-steps-icon {
+  color: #ccc;
+}

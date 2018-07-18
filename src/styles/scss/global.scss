@@ -56,3 +56,16 @@ input[type=number]::-webkit-outer-spin-button {
     stroke: rgba(16, 22, 26, 0.5) !important;
   }
 }
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+*:focus {
+  outline: none !important;
+}
