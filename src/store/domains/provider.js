@@ -89,3 +89,11 @@ export default function model(state: ProviderState) {
 //   networkID: 4,
 //   networkName: 'rinkeby'
 // }
+
+// const initialState = {
+//   loading: false,
+//   error: '',
+//   type: 'wallet',
+//   url: 'http://127.0.0.1:8545',
+//   networkId: 8888,
+// };

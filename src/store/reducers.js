@@ -8,6 +8,7 @@ import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
 import depositFormActionTypes from './actions/depositForm';
 import settingsActionTypes from './actions/settings';
+import walletsActionTypes from './actions/wallets';
 
 import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
@@ -18,6 +19,7 @@ import * as accountEvents from './domains/account';
 import * as depositFormEvents from './domains/depositForm';
 import * as settingsEvents from './domains/settings';
 import * as tokenPairsEvents from './domains/tokenPairs';
+import * as walletsEvents from './domains/wallets';
 
 export const etherBalance = createReducer(action => {
   const { type, payload } = action;
@@ -154,5 +156,17 @@ export const tokenPairs = createReducer(action => {
       return tokenPairsEvents.tokenPairRemoved(payload);
     default:
       return tokenPairsEvents.initialized();
+  }
+});
+
+export const wallets = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case walletsActionTypes.addWallet:
+      return walletsEvents.walletAdded(payload.address, payload.serialized);
+    case walletsActionTypes.removeWallet:
+      return walletsEvents.walletRemoved(payload);
+    default:
+      return walletsEvents.initialized();
   }
 });
