@@ -8,6 +8,7 @@ import type { TokenState, TokenAction, TokenEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
 import type { DepositFormState, DepositFormAction, DepositFormEvent } from './depositForm';
 import type { SettingsState, SettingsAction, SettingsEvent } from './settings';
+import type { WalletsState, WalletsAction, WalletsEvent } from './wallets';
 
 export type ReduxInitAction = { type: '@@INIT' };
 
@@ -20,7 +21,8 @@ export type Action =
   | AccountBalancesAction
   | AccountAction
   | DepositFormAction
-  | SettingsAction;
+  | SettingsAction
+  | WalletsAction;
 
 export type Event =
   | ProviderEvent
@@ -30,7 +32,8 @@ export type Event =
   | AccountBalancesEvent
   | AccountEvent
   | DepositFormEvent
-  | SettingsEvent;
+  | SettingsEvent
+  | WalletsEvent;
 
 export type ActionHandler = Action => Event;
 
@@ -43,6 +46,7 @@ export type State = {
   account: AccountState,
   depositForm: DepositFormState,
   settings: SettingsState,
+  wallets: WalletsState,
 };
 
 export type Store = ReduxStore<State, Action>;

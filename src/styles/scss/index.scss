@@ -1,7 +1,11 @@
 @import "../../../node_modules/@blueprintjs/core/lib/css/blueprint.css";
 @import "../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import '../../../node_modules/rc-steps/assets/index.css';
+@import '../../../node_modules/rc-steps/assets/iconfont.css';
+@import "reset";
 @import "vars";
 @import "global";
+@import "override";
 @import "orderForm";
 @import "orderBook";
 @import "tradeHistory";

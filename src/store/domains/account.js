@@ -11,7 +11,6 @@ export const initialized = () => {
 };
 
 export const accountUpdated = (address: string) => {
-  console.log('Address updated', address);
   const event = (state: AccountState) => ({
     ...state,
     address,

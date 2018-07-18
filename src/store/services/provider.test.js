@@ -62,9 +62,12 @@ describe('createProvider', () => {
     let providerOptions = { provider: 'wallet' };
     let { options } = await provider.createProvider(providerOptions);
 
-    expect(options).toEqual({ type: 'wallet', url: 'wss://mainnet.infura.io/ws', networkId: 1 });
-    expect(providers.InfuraProvider).toHaveBeenCalledTimes(1);
-    expect(providers.InfuraProvider).toHaveBeenCalledWith('homestead');
+    expect(options).toEqual({ type: 'wallet', url: 'http://127.0.0.1:8545', networkId: 8888 });
+    expect(providers.JsonRpcProvider).toHaveBeenCalledTimes(1);
+    expect(providers.JsonRpcProvider).toHaveBeenCalledWith('http://127.0.0.1:8545', {
+      chainId: 8888,
+      name: 'unspecified',
+    });
     expect(window.provider.provider).toBe(providerMock);
     expect(window.provider.type).toEqual('wallet');
   });

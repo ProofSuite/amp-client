@@ -4,9 +4,11 @@ import { setDefaults } from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
 import { withStore } from './addon-store';
 
-import '@blueprintjs/core/lib/css/blueprint.css'
-import './../src/styles/reset.css'
-import './../src/styles/global.css'
+// import '@blueprintjs/core/lib/css/blueprint.css'
+// import './../src/styles/reset.css'
+// import './../src/styles/global.css'
+//(better method ?)
+
 
 const req = require.context('../src/components', true, /stories\.js$/)
 

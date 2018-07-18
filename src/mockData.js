@@ -57,3 +57,29 @@ export const mockTokens = [
   { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
   { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
 ].map((m, index) => ({ ...m, rank: index + 1 }));
+
+export const mockSerializedWallet = JSON.stringify({
+  salt: '67YrtLxm6qGNgzIPY6HPBxjW3oATs8l2TmvV1Zll2+U=',
+  hdPathString: "m/44'/60'/0'/0",
+  encSeed: {
+    encStr:
+      'LOpBAzuNT0Zx5f7tFdXhHEFMmyt7ktB0T8b0uFZYhU6R9+GtNLzHcB5ICl5V5xDFeDLSE8VMBRegVdUFDfEnoF3dSUXnesAhN5dShi+wMiS/4EORN3oh6IEn4eWqaJla1oGTaxIpnBozcCbh+5kxD3YE9c2btNpJALJB7BaCGDU8C3pY4u9CcQ==',
+    nonce: 'X7Ph+SKxiu6+4xbQ07GnY/VzVDgL7yYT',
+  },
+  encHdRootPriv: {
+    encStr:
+      'MwI9UtmS9n64zXewZAQAhG2VHR/PqiQfTzPudWbX4n/3+JpAXNX+k4JFGEhk9WKI8PBaI6GkOICrPQ6ecAy90Q0gE+PFvOaBh/X0fZ/teleNES7VvFSlKkCeUppneeyGJiPVnwMkV8adyHceJWVvKfFz44tYT/gaVia2JAoQXw==',
+    nonce: '/w2R/m5a39mNXZcLFErb1reYwff8VdTi',
+  },
+  version: 3,
+  hdIndex: 1,
+  encPrivKeys: {
+    c838efcb6512a2ca12027ebcdf9e1fc5e4ff7ee3: {
+      key: 'DX+LkOaQ6T7TF0Lgw5DnPs9DulGVSsLTgcSL4e8tlg50YU4DgR3ITXV88eANHG2/',
+      nonce: '4M6YxEGOPXXbs7ZBEVTg77VgXurbTJCg',
+    },
+  },
+  addresses: ['c838efcb6512a2ca12027ebcdf9e1fc5e4ff7ee3'],
+});
+
+export const mockSerializedWalletAddress = 'c838efcb6512a2ca12027ebcdf9e1fc5e4ff7ee3';

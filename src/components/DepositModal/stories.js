@@ -6,8 +6,6 @@ import { tokens } from '../../data';
 import ModalBox from '../ModalBox';
 import DepositModal from './DepositModal';
 
-import '../../styles/reset.css';
-
 storiesOf('Deposit Modal', module)
   .addDecorator(withKnobs)
   .add(

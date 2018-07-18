@@ -1,7 +1,6 @@
 import { quoteTokens } from '../../config/quotes';
 import { tokens } from '../../data';
 import type { TokenPairState } from '../../types/tokens';
-import { objectWithoutKey, arrayWithoutElement } from '../../helpers/utils';
 
 const getPairSymbol = (baseTokenSymbol, quoteTokenSymbol) => {
   return `${baseTokenSymbol}_${quoteTokenSymbol}`;
@@ -75,10 +74,7 @@ export const tokenPairUpdated = baseToken => {
 
     return {
       pairs: [...state.pairs, ...newState.pairs],
-      byPair: {
-        ...state.byPair,
-        ...newState.byPair,
-      },
+      byPair: { ...state.byPair, ...newState.byPair },
     };
   };
 

@@ -7,8 +7,6 @@ import { withInfo } from '@storybook/addon-info';
 import { tokens } from '../../data';
 import TokenSelect from './TokenSelect';
 
-import '../../styles/reset.css';
-
 storiesOf('TokenSelect', module)
   .addDecorator(withKnobs)
   .add(

@@ -14,8 +14,10 @@ export const createProvider = async (providerOptions: ProviderOptions) => {
       address = await createJsonRpcProvider(options.url, options.networkId);
       break;
     case 'wallet':
-      options = { type: 'wallet', url: 'wss://mainnet.infura.io/ws', networkId: 1 };
-      await createInfuraProvider('homestead');
+      options = { type: 'wallet', url: 'http://127.0.0.1:8545', networkId: 8888 };
+      address = await createLocalWalletProvider(options.url, options.networkId);
+      // options = { type: 'wallet', url: 'wss://mainnet.infura.io/ws', networkId: 1 };
+      // await createInfuraProvider('homestead');
       break;
     case 'wallet (rinkeby)':
       options = { type: 'wallet', url: 'wss://rinkeby.infura.io/_ws', networkId: 4 };
@@ -40,6 +42,13 @@ const createDefaultProvider = async () => {
 const createInfuraProvider = async (networkName: string) => {
   let provider = new providers.InfuraProvider(networkName);
   window.provider = { provider: provider, type: 'wallet' };
+};
+
+const createLocalWalletProvider = async (url: ?string, networkId: ?number) => {
+  let provider = new providers.JsonRpcProvider(url, { chainId: networkId, name: 'unspecified' });
+  window.provider = { provider: provider, type: 'wallet' };
+
+  return '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47';
 };
 
 const createJsonRpcProvider = async (url: ?string, networkId: ?number) => {

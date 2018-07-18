@@ -5,8 +5,6 @@ import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import ModalStory from './ModalStory';
 
-import '../../styles/reset.css';
-
 storiesOf('Modal', module)
   .addDecorator(withKnobs)
   .add('Default Export', withInfo({ source: false })(() => <ModalStory title="Modal Title" icon="info-sign" />));
