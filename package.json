@@ -14,6 +14,7 @@
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
+    "@axetroy/react-download": "^1.1.1",
     "@blueprintjs/core": "~2.3.1",
     "@blueprintjs/select": "~2.0.1",
     "@blueprintjs/table": "^3.0.0",
@@ -22,6 +23,7 @@
     "d3-time-format": "^2.1.1",
     "ethers": "git+https://github.com/ethers-io/ethers.js.git",
     "proof-contracts-interfaces": "https://github.com/ProofSuite/proof-contract-interfaces",
+    "rc-steps": "^3.1.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-intl": "^2.4.0",
