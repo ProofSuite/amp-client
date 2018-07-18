@@ -1,8 +1,11 @@
-import ethers from 'ethers';
-const Wallet = ethers.Wallet;
+import { Wallet } from 'ethers';
 
 export const getDefaultWalletAddress = () => {
-  return 'some address';
+  return '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47';
+};
+
+export const getDefaultPrivateKey = () => {
+  return '';
 };
 
 /**
@@ -54,6 +57,7 @@ export const createWalletFromMemnonic = mnemonic => {
 export const createAndEncryptWallet = async (password, callback) => {
   let wallet = await Wallet.createRandom();
   let address = wallet.address;
+  console.log(wallet);
   let serialized = await wallet.encrypt(password, callback);
   return { serialized, address };
 };
@@ -72,13 +76,30 @@ export const decryptWallet = async (jsonWallet, password) => {
 export const saveWalletInSessionStorage = wallet => {
   let address = wallet.address;
   let privateKey = wallet.privateKey;
-
   sessionStorage.setItem(address, privateKey);
 };
 
 export const getWalletFromSessionStorage = address => {
   let privateKey = sessionStorage.getItem(address);
-
   let wallet = new Wallet(privateKey);
   return wallet;
+};
+
+export const savePrivateKeyInSessionStorage = async (address, password, serialized) => {
+  let { privateKey } = await decryptWallet(serialized, password);
+  sessionStorage.setItem(address, privateKey);
+};
+
+export const getPrivateKeyFromSessionStorage = address => {
+  let key = sessionStorage.getItem(address);
+  return key;
+};
+
+export const saveEncryptedWalletInLocalStorage = (address, serialized) => {
+  localStorage.setItem(address, serialized);
+};
+
+export const getEncryptedWalletFromLocalStorage = address => {
+  let serialized = localStorage.getItem(address);
+  return serialized;
 };
