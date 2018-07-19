@@ -10,7 +10,7 @@ import ExchangePage from './ExchangePage';
 import SettingsPage from './SettingsPage';
 import LogoutPage from './LogoutPage';
 
-import '../styles/css/index.css';
+import '../styles/css/app.css';
 
 function App(props) {
   return (
