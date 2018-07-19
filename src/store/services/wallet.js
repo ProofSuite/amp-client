@@ -57,7 +57,6 @@ export const createWalletFromMemnonic = mnemonic => {
 export const createAndEncryptWallet = async (password, callback) => {
   let wallet = await Wallet.createRandom();
   let address = wallet.address;
-  console.log(wallet);
   let serialized = await wallet.encrypt(password, callback);
   return { serialized, address };
 };
