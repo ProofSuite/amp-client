@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PortfolioPage from './PortfolioPage';
+import SettingsPage from './SettingsPage';
 
 it('renders without crashing', () => {
-  shallow(<PortfolioPage />);
+  shallow(<SettingsPage />);
 });

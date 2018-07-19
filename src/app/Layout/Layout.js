@@ -75,9 +75,9 @@ function Layout({ children, defaultAccount, locale, messages }) {
                 <NavbarHeaderLink to="/">PROOF</NavbarHeaderLink>
               </NavbarHeading>
               <NavbarDivider />
-              <NavbarLink to="/portfolio">Portfolio</NavbarLink>
               <NavbarLink to="/wallet">Wallet</NavbarLink>
               <NavbarLink to="/exchange">Exchange</NavbarLink>
+              <NavbarLink to="/settings">Settings</NavbarLink>
             </NavbarGroup>
             <NavbarGroup align={Alignment.RIGHT}>
               {!defaultAccount ? (

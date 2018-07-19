@@ -1,7 +1,7 @@
 import React from 'react';
 import { NonIdealState } from '@blueprintjs/core';
 
-class SettingPage extends React.PureComponent {
+class SettingsPage extends React.PureComponent {
   render() {
     return (
       <NonIdealState title="WORK IN PROGRESS" visual="wrench">
@@ -11,4 +11,4 @@ class SettingPage extends React.PureComponent {
   }
 }
 
-export default SettingPage;
+export default SettingsPage;

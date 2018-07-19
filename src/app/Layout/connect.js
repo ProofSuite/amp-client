@@ -5,7 +5,7 @@ export function mapStateToProps(state, props) {
   const selector = createSelector(state);
 
   return {
-    defaultAccount: selector.getDefaultAccount(),
+    defaultAccount: null,
   };
 }
 

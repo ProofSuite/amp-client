@@ -5,12 +5,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Layout from './Layout';
 import LandingPage from './LandingPage';
 import LoginPage from './LoginPage';
-import PortfolioPage from './PortfolioPage';
 import WalletPage from './WalletPage';
 import ExchangePage from './ExchangePage';
-import SettingPage from './SettingPage';
+import SettingsPage from './SettingsPage';
 import LogoutPage from './LogoutPage';
-import './index.css';
+
+import '../styles/css/index.css';
 
 function App(props) {
   return (
@@ -18,10 +18,9 @@ function App(props) {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/portfolio" component={PortfolioPage} />
         <Route path="/wallet" component={WalletPage} />
         <Route path="/exchange" component={ExchangePage} />
-        <Route path="/setting" component={SettingPage} />
+        <Route path="/settings" component={SettingsPage} />
         <Route path="/logout" component={LogoutPage} />
       </Switch>
     </Layout>

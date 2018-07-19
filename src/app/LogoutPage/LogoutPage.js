@@ -4,13 +4,11 @@ import { NonIdealState, Spinner } from '@blueprintjs/core';
 
 class LogoutPage extends React.PureComponent {
   componentDidMount() {
-    this.props.logout();
+    //this.props.logout();
   }
 
   render() {
-    const {
-      props: { isDefaultAccountSet },
-    } = this;
+    const { isDefaultAccountSet } = this;
 
     if (!isDefaultAccountSet) {
       return <Redirect to="/" />;

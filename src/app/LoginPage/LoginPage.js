@@ -4,6 +4,74 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card, Callout } from '@blueprintjs/core';
 
+class LoginPage extends React.PureComponent {
+  render() {
+    const {
+      props: { connectMetamask, importWallet, isDefaultAccountSet },
+    } = this;
+
+    if (isDefaultAccountSet) {
+      return <Redirect to="/" />;
+    }
+    return (
+      <Wrapper>
+        <Announcement>
+          <Callout intent="warning">
+            <FormattedMessage
+              {...messages.announcement}
+              values={{ link: <a href="https://proof-amp.com">https://proof-amp.com</a> }}
+            />
+          </Callout>
+        </Announcement>
+        <Notes>
+          <Callout>
+            <Reminder>
+              <FormattedMessage {...messages.noPlugins} />
+            </Reminder>
+            <Reminder>
+              <FormattedMessage {...messages.noPhoneCalls} />
+            </Reminder>
+            <Reminder>
+              <FormattedMessage {...messages.noOfficialStaffs} />
+            </Reminder>
+            <Reminder>
+              <FormattedMessage {...messages.noDisclosure} />
+            </Reminder>
+          </Callout>
+        </Notes>
+        <LoginMethods>
+          <Provider onClick={connectMetamask}>
+            <FormattedMessage
+              {...messages.connect}
+              values={{
+                name: (
+                  <h5>
+                    <FormattedMessage {...messages.metamask} />
+                  </h5>
+                ),
+              }}
+            />
+          </Provider>
+          <Provider onClick={importWallet}>
+            <FormattedMessage
+              {...messages.import}
+              values={{
+                name: (
+                  <h5>
+                    <FormattedMessage {...messages.wallet} />
+                  </h5>
+                ),
+              }}
+            />
+          </Provider>
+        </LoginMethods>
+      </Wrapper>
+    );
+  }
+}
+
+export default LoginPage;
+
 const messages = defineMessages({
   announcement: {
     id: 'loginPage.announcement',
@@ -70,72 +138,3 @@ const Provider = styled(Card).attrs({
   height: 200px;
   flex: 1;
 `;
-
-class LoginPage extends React.PureComponent {
-  render() {
-    const {
-      props: { connectMetamask, importWallet, isDefaultAccountSet },
-    } = this;
-
-    if (isDefaultAccountSet) {
-      return <Redirect to="/" />;
-    }
-
-    return (
-      <Wrapper>
-        <Announcement>
-          <Callout intent="warning">
-            <FormattedMessage
-              {...messages.announcement}
-              values={{ link: <a href="https://proof-amp.com">https://proof-amp.com</a> }}
-            />
-          </Callout>
-        </Announcement>
-        <Notes>
-          <Callout>
-            <Reminder>
-              <FormattedMessage {...messages.noPlugins} />
-            </Reminder>
-            <Reminder>
-              <FormattedMessage {...messages.noPhoneCalls} />
-            </Reminder>
-            <Reminder>
-              <FormattedMessage {...messages.noOfficialStaffs} />
-            </Reminder>
-            <Reminder>
-              <FormattedMessage {...messages.noDisclosure} />
-            </Reminder>
-          </Callout>
-        </Notes>
-        <LoginMethods>
-          <Provider onClick={connectMetamask}>
-            <FormattedMessage
-              {...messages.connect}
-              values={{
-                name: (
-                  <h5>
-                    <FormattedMessage {...messages.metamask} />
-                  </h5>
-                ),
-              }}
-            />
-          </Provider>
-          <Provider onClick={importWallet}>
-            <FormattedMessage
-              {...messages.import}
-              values={{
-                name: (
-                  <h5>
-                    <FormattedMessage {...messages.wallet} />
-                  </h5>
-                ),
-              }}
-            />
-          </Provider>
-        </LoginMethods>
-      </Wrapper>
-    );
-  }
-}
-
-export default LoginPage;
