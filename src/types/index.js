@@ -5,6 +5,7 @@ import type { EtherBalanceState, EtherBalanceAction, EtherBalanceEvent } from '.
 import type { AccountBalancesState, AccountBalancesEvent, AccountBalancesAction } from './accountBalances';
 import type { EtherTxState, EtherTxAction, EtherTxEvent } from './etherTx';
 import type { OHLCVState } from './ohlcv';
+import type { HomeState } from './homePage';
 import type { TokenState, TokenAction, TokenEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
 import type { DepositFormState, DepositFormAction, DepositFormEvent } from './depositForm';
@@ -43,7 +44,9 @@ export type State = {
   etherBalance: EtherBalanceState,
   accountBalances: AccountBalancesState,
   etherTx: EtherTxState,
+  homePage: HomeState,
   ohlcv: OHLCVState,
+  etherTx: EtherTxState,
   tokens: TokenState,
   account: AccountState,
   depositForm: DepositFormState,

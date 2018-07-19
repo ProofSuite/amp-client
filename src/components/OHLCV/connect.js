@@ -1,11 +1,10 @@
 // @flow
 import { connect } from 'react-redux';
-import ohlcvModel, {updateTimeLine} from '../../store/models/ohlcv';
-// import { validateTransferTokensTx, sendTransferTokensTx } from '../../store/models/etherTokensTx';
+import ohlcvModel, { updateTimeLine } from '../../store/models/ohlcv';
 
-import type { State } from '../../types';
+import type { OHLCVState } from '../../types/ohlcv';
 
-export const mapStateToProps = (state: State) => {
+export const mapStateToProps = (state: OHLCVState) => {
   return ohlcvModel(state).getState();
 };
 

@@ -4,7 +4,7 @@ import type { OHLCVState } from '../../types/ohlcv';
 const initialState: OHLCVState = {
   ohlcvData: [],
   pair: '',
-  pairId: ''
+  pairId: '',
 };
 
 export const initialized = () => {
@@ -12,6 +12,14 @@ export const initialized = () => {
   return event;
 };
 
+export const saveOHLCVvData = ohlcv => {
+  const event = (state: OHLCVState) => ({
+    ...state,
+    loading: false,
+    ohlcvData: ohlcv,
+  });
+  return event;
+};
 
 export default function model(state: OHLCVState) {
   return {

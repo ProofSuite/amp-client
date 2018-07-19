@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { defineMessages, FormattedMessage } from 'react-intl';
-// import logo from './logo.svg';
-// import './App.css';
 import OHLCVRenderer from '../../components/OHLCV';
+import HomePage from '../../components/HomePage';
 
 class TestApisPage extends Component {
 
+
   state = {
-    ohlcvData: [],
-  }
+    ohlcvData: [{ data: '' }],
+  };
 
   render() {
-    const {ohlcvData} = this.state;
-
+    const { ohlcvData } = this.state;
     return (
-      <OHLCVRenderer ohlcvData={ohlcvData}/>
+      <React.Fragment>
+        <OHLCVRenderer />
+        <HomePage />
+      </React.Fragment>
     );
   }
 }
@@ -47,4 +49,3 @@ const messages = defineMessages({
     defaultMessage: 'To get started, edit {code} and save to reload.',
   },
 });
-

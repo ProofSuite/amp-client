@@ -4,6 +4,8 @@ import etherBalanceActionTypes from './actions/etherBalance';
 import accountBalancesActionTypes from './actions/accountBalances';
 import providerActionTypes from './actions/provider';
 import etherTxActionTypes from './actions/etherTx';
+import homePageTypes from './actions/homePage';
+import ohlcvTypes from './actions/ohlcv';
 import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
 import depositFormActionTypes from './actions/depositForm';
@@ -14,6 +16,8 @@ import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
 import * as providerEvents from './domains/provider';
 import * as etherTxEvents from './domains/etherTx';
+import * as homePageEvents from './domains/homePage';
+import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
 import * as depositFormEvents from './domains/depositForm';
@@ -84,6 +88,27 @@ export const etherTx = createReducer(action => {
       return etherTxEvents.etherTxConfirmed(payload.receipt);
     default:
       return etherTxEvents.initialized();
+  }
+});
+
+export const homePage = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case homePageTypes.saveData:
+      return ohlcvEvents.saveOHLCVvData(payload.data);
+
+    default:
+      return homePageEvents.initialized();
+  }
+});
+
+export const ohlcv = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case ohlcvTypes.saveData:
+      return ohlcvEvents.saveOHLCVvData(payload.data);
+    default:
+      return ohlcvEvents.initialized();
   }
 });
 
