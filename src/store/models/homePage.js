@@ -5,8 +5,10 @@ import type { State, ThunkAction } from '../../types';
 import { getData } from '../services/homePage';
 import * as ohlcvActionCreators from '../actions/ohlcv';
 import * as orderBookActionCreators from '../actions/orderBook';
+import * as tradeHistoryActionCreators from '../actions/tradeHistory';
 
 import * as orderList from '../../jsons/ordersList.json';
+import * as tradeHistory from '../../jsons/tradeHistory.json';
 
 export default function getHomePageModel(state: State) {
   return HomePageModel(state.homePage);
@@ -20,6 +22,12 @@ const orderBookData = {
   loading: false,
   decimals: 7,
 };
+const tradeHistoryData = {
+  tradeHistory: tradeHistory.list,
+  loading: false,
+  decimals: 7,
+  loggedIn: true,
+};
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
   return async (dispatch, getState) => {
@@ -27,5 +35,6 @@ export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
     dispatch(ohlcvActionCreators.saveData(ohlcvData));
 
     dispatch(orderBookActionCreators.saveData(orderBookData));
+    dispatch(tradeHistoryActionCreators.saveData(tradeHistoryData));
   };
 };

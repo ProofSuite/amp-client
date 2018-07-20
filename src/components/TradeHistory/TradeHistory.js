@@ -1,53 +1,66 @@
+//@flow
 import React from 'react';
-import { reduceDecimals, toDate } from '../../utils/converters';
-import Loading from '../Loading';
-import { Colors } from '@blueprintjs/core';
-import styled from 'styled-components';
-import type { ListRow, TradeListContainerTypes, TradeListTypes } from '../../types/tradeHistory';
+import TradeHistoryRenderer from './TradeHistoryRenderer';
+import { Card, Tab, Tabs, Button } from '@blueprintjs/core';
+import { sortArray } from '../../utils/helpers';
 
-const TradeHistory = (props: TradeListContainerTypes) => {
-  const { decimals, loading, tradeHistory } = props;
-  return loading ? <Loading /> : <HistroyList tradeHistory={tradeHistory} decimals={decimals} />;
+type Props = {
+  tradeHistory: Array<Object>,
+  loading: boolean,
+  decimals: number,
+  loggedIn: boolean,
 };
+type State = {
+  selectedTabId: string,
+};
+
+class TradeHistory extends React.PureComponent<Props, State> {
+  state = {
+    selectedTabId: 'all',
+  };
+
+  changeTab = (tabId: string) => {
+    this.setState({
+      selectedTabId: tabId,
+    });
+  };
+
+  render() {
+    const {
+      props: { loading, tradeHistory, decimals, loggedIn },
+      state: { selectedTabId },
+      changeTab,
+    } = this;
+    return (
+      <Card className="pt-dark trade-history">
+        <h5>Trade History</h5>
+        <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={changeTab}>
+          <Tab
+            id="all"
+            title="Market"
+            panel={<TradeHistoryRenderer loading={loading} tradeHistory={tradeHistory} decimals={decimals} />}
+          />
+          <Tab
+            id="mine"
+            title="Mine"
+            panel={
+              loggedIn ? (
+                <TradeHistoryRenderer
+                  loading={loading}
+                  tradeHistory={sortArray(tradeHistory, 'time', 'desc')}
+                  decimals={decimals}
+                />
+              ) : (
+                <Login />
+              )
+            }
+          />
+        </Tabs>
+      </Card>
+    );
+  }
+}
+
 export default TradeHistory;
 
-const HistroyList = (props: TradeListTypes) => {
-  const { decimals, tradeHistory } = props;
-  return (
-    <div className="list-container pt-dark">
-      <ul className="pt-list-unstyled heading">
-        <li className="heading">
-          <span className="index">#</span>
-          <span className="time">Time</span>
-          <span className="type">Type</span>
-          <span className="amount">Amount</span>
-          <span className="price">Price</span>
-        </li>
-      </ul>
-      <ul className="pt-list-unstyled list">
-        {tradeHistory.map((trade, index) => <Row key={index} props={{ trade, decimals: decimals, index }} />)}
-      </ul>
-    </div>
-  );
-};
-
-const Row = ({ props }: ListRow) => {
-  const { trade, decimals, index } = props;
-  return (
-    <li className="not-heading">
-      <span className="index">{index + 1}</span>
-      <span className="time">{toDate(trade.time)}</span>
-      {trade.type === 'sell' ? <Sell>{trade.type}</Sell> : <Buy>{trade.type}</Buy>}
-      <span className="amount">{reduceDecimals(trade.amount, decimals)}</span>
-      <span className="price">{reduceDecimals(trade.price, decimals)}</span>
-    </li>
-  );
-};
-
-const Sell = styled.span`
-  color: ${Colors.RED4};
-`;
-
-const Buy = styled.span`
-  color: ${Colors.GREEN5};
-`;
+const Login = () => <Button large={true} intent="primary" text="Login" />;

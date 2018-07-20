@@ -1,5 +1,5 @@
 ```js
-import TradeHistoryRenderer from '../../components/TradeHistoryRenderer';
+import TradeHistory from '../../components/TradeHistory';
 ```
 
 #### Properties
@@ -10,7 +10,7 @@ import TradeHistoryRenderer from '../../components/TradeHistoryRenderer';
 
 #### Example
 ```js
-<OrderBookRenderer
+<TradeHistory
   tradeHistory={tradeHistory}
   loggedIn={true}
   loading={false}

@@ -16,7 +16,6 @@ export const initialized = () => {
 };
 
 export const saveData = (data: OrderBookState) => {
-  console.log('OrderBook data: ', data);
   const event = (state: OrderBookState) => ({
     ...state,
     loading: false,

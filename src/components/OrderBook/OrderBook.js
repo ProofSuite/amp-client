@@ -20,7 +20,6 @@ export default class OrderBook extends React.PureComponent<Props> {
 
   render() {
     const { buyOrderList, sellOrderList, loading, baseToken, quoteToken, decimals } = this.props;
-    console.log('Props: ', this.props);
     return (
       <Row>
         <OrderBookRenderer
