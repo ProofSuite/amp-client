@@ -5,6 +5,7 @@ import accountBalancesActionTypes from './actions/accountBalances';
 import providerActionTypes from './actions/provider';
 import etherTxActionTypes from './actions/etherTx';
 import orderBookTypes from './actions/orderBook';
+import tradeHistoryTypes from './actions/tradeHistory';
 import ohlcvTypes from './actions/ohlcv';
 import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
@@ -20,6 +21,7 @@ import * as providerEvents from './domains/provider';
 import * as etherTxEvents from './domains/etherTx';
 import * as homePageEvents from './domains/homePage';
 import * as orderBookEvents from './domains/orderBook';
+import * as tradeHistoryEvents from './domains/tradeHistory';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
@@ -120,6 +122,17 @@ export const orderBook = createReducer(action => {
 
     default:
       return orderBookEvents.initialized();
+  }
+});
+
+export const tradeHistory = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case tradeHistoryTypes.saveData:
+      return tradeHistoryEvents.saveData(payload.data);
+
+    default:
+      return tradeHistoryEvents.initialized();
   }
 });
 
