@@ -8,7 +8,7 @@ type Props = {
   orderHistory: Array<Order>,
   userOrderHistory: Array<Order>,
   loading: boolean,
-  decimals?: number,
+  decimals: number,
   authenticated: boolean,
 };
 
@@ -17,8 +17,6 @@ type State = {
 };
 
 class OrderHistory extends React.PureComponent<Props, State> {
-  static defaultProps = { decimals: 3 };
-
   state = { selectedTabId: 'all' };
 
   changeTab = (tabId: string) => {
