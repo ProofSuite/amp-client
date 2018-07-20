@@ -3,6 +3,7 @@ export type AccountBalanceState = {
   symbol: string,
   balance: number,
   subscribed: boolean,
+  allowed: boolean,
 };
 
 export type AccountBalancesState = { +[string]: AccountBalanceState };
@@ -12,6 +13,12 @@ export type AccountBalance = {
   balance: number,
 };
 
+export type AccountAllowance = {
+  symbol: string,
+  allowance: number,
+};
+
+export type AccountAllowances = Array<AccountAllowance>;
 export type AccountBalances = Array<AccountBalance>;
 
 export type SubscribeAccountBalanceAction = {
@@ -34,6 +41,16 @@ export type UpdateAccountBalancesAction = {
   payload: { balances: AccountBalances },
 };
 
+export type UpdateAccountAllowanceAction = {
+  type: 'accountBalances/UPDATE_ALLOWANCE',
+  payload: AccountAllowance,
+};
+
+export type UpdateAccountAllowancesAction = {
+  type: 'accountBalances/UPDATE_ALLOWANCES',
+  payload: { allowances: AccountAllowances },
+};
+
 export type ClearAccountBalancesAction = {
   type: 'accountBalances/CLEAR_BALANCES',
 };
@@ -43,4 +60,7 @@ export type AccountBalancesEvent = any => AccountBalancesState => AccountBalance
 export type AccountBalancesAction =
   | SubscribeAccountBalanceAction
   | UpdateAccountBalanceAction
+  | UpdateAccountBalancesAction
+  | UpdateAccountAllowanceAction
+  | UpdateAccountAllowancesAction
   | UnsubscribeAccountBalanceAction;

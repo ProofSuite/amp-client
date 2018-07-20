@@ -33,6 +33,24 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
   return balances;
 }
 
+export async function queryTokenAllowances(address: string, tokens: Array<Token>) {
+  let allowances;
+  const { provider } = await getProvider();
+
+  const allowancePromises = tokens.map(token => {
+    const contract = new Contract(token.address, ERC20Token.abi, provider);
+    return contract.allowance(address);
+  });
+
+  allowances = await Promise.all(allowancePromises);
+  allowances = (allowances: TokenBalances).map((allowance, i) => ({
+    symbol: tokens[i].symbol,
+    allowance: utils.formatEther(allowance),
+  }));
+
+  return allowances;
+}
+
 export async function subscribeEtherBalance(address: string, callback: number => void) {
   const { provider } = await getProvider();
   const initialBalance = await provider.getBalance(address);

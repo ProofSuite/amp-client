@@ -1,4 +1,5 @@
 import { TxStatus, TxReceipt } from './common';
+import { AccountBalance, AccountBalances } from './accountBalances';
 
 export type DepositFormState = {
   +step: 'waiting' | 'convert' | 'confirm',
@@ -47,6 +48,36 @@ export type ConfirmAllowTxAction = {
   payload: {},
 };
 
+export type SubscribeBalanceAction = {
+  type: 'depositForm/SUBSCRIBE_BALANCE',
+  payload: { symbol: string },
+};
+
+export type UpdateBalanceAction = {
+  type: 'depositForm/UPDATE_BALANCE',
+  payload: AccountBalance,
+};
+
+export type UnsubscribeBalanceAction = {
+  type: 'depositForm/UNSUBSCRIBE_BALANCE',
+  payload: { symbol: string },
+};
+
+export type UpdateBalancesAction = {
+  type: 'depositForm/UPDATE_BALANCES',
+  payload: { balances: AccountBalances },
+};
+
+export type UpdateAllowanceAction = {
+  type: 'depositForm/UPDATE_ALLOWANCE',
+  payload: AccountAllowance,
+};
+
+export type UpdateAllowancesAction = {
+  type: 'depositForm/UPDATE_ALLOWANCES',
+  payload: { allowances: AccountAllowances },
+};
+
 export type DepositFormEvent = any => DepositFormState => DepositFormState;
 
 export type DepositFormAction =
@@ -57,4 +88,10 @@ export type DepositFormAction =
   | ConfirmConvertTxAction
   | SendAllowTxAction
   | RevertAllowTxAction
-  | ConfirmAllowTxAction;
+  | ConfirmAllowTxAction
+  | SubscribeAccountBalanceAction
+  | UpdateAccountBalanceAction
+  | UpdateAccountBalancesAction
+  | UpdateAccountAllowanceAction
+  | UpdateAccountAllowancesAction
+  | UnsubscribeAccountBalanceAction;

@@ -1,8 +1,8 @@
 import { createStore } from '../../store';
 
-import * as actionCreators from './wallet';
+import * as actionCreators from './createWallet';
 import * as walletService from '../services/wallet';
-import getCreateWalletModel from './wallet';
+import getCreateWalletModel from './createWallet';
 
 jest.mock('../services/wallet');
 

@@ -1,6 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
-import { createWallet } from '../../store/models/wallet';
+import { createWallet } from '../../store/models/createWallet';
 
 export const mapDispatchToProps = {
   createWallet,

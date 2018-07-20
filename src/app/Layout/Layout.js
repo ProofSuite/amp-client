@@ -15,44 +15,11 @@ import {
   Position,
 } from '@blueprintjs/core';
 
-const Wrapper = styled.div.attrs({
-  className: 'pt-dark',
-})`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Header = styled.header``;
-
-const MainContent = styled.main`
-  flex: 1;
-`;
-
-const NavbarHeaderLink = styled(Link).attrs({
-  className: 'pt-button pt-minimal pt-intent-primary',
-  role: 'button',
-})``;
-
-const NavbarLink = styled(NavLink).attrs({
-  activeClassName: 'pt-active',
-  className: 'pt-button pt-minimal',
-  role: 'button',
-})``;
-
-const MenuItem = styled.li``;
-
-const MenuItemLink = styled(NavLink).attrs({
-  activeClassName: 'pt-active',
-  className: props => `pt-menu-item pt-popover-dismiss pt-icon-${props.icon}`,
-  role: 'button',
-})``;
-
 function Layout({ children, defaultAccount, locale, messages }) {
   const menu = (
     <Menu>
       <MenuItem>
-        <MenuItemLink to="/setting" icon="settings">
+        <MenuItemLink to="/settings" icon="settings">
           Setting
         </MenuItemLink>
       </MenuItem>
@@ -97,3 +64,34 @@ function Layout({ children, defaultAccount, locale, messages }) {
 }
 
 export default Layout;
+
+const Wrapper = styled.div.attrs({ className: 'pt-dark' })`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Header = styled.header``;
+
+const MainContent = styled.main`
+  flex: 1;
+`;
+
+const NavbarHeaderLink = styled(Link).attrs({
+  className: 'pt-button pt-minimal pt-intent-primary',
+  role: 'button',
+})``;
+
+const NavbarLink = styled(NavLink).attrs({
+  activeClassName: 'pt-active',
+  className: 'pt-button pt-minimal',
+  role: 'button',
+})``;
+
+const MenuItem = styled.li``;
+
+const MenuItemLink = styled(NavLink).attrs({
+  activeClassName: 'pt-active',
+  className: props => `pt-menu-item pt-popover-dismiss pt-icon-${props.icon}`,
+  role: 'button',
+})``;
