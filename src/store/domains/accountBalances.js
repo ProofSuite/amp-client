@@ -1,6 +1,6 @@
 // @flow
-import { objectWithoutKey } from '../../helpers/utils';
-import type { AccountBalancesState, AccountBalances } from '../../types/accountBalances';
+
+import type { AccountBalancesState, AccountBalances, AccountAllowances } from '../../types/accountBalances';
 
 const initialState = {};
 
@@ -44,6 +44,26 @@ export function updated(accountBalances: AccountBalances) {
   return event;
 }
 
+export function allowancesUpdated(allowances: AccountAllowances) {
+  const event = (state: AccountBalancesState) => {
+    let newState = allowances.reduce((result, item) => {
+      result[item.symbol] = {
+        ...state[item.symbol],
+        symbol: item.symbol,
+        allowance: item.allowance,
+      };
+      return result;
+    }, {});
+
+    return {
+      ...state,
+      ...newState,
+    };
+  };
+
+  return event;
+}
+
 export function unsubscribed(symbol: string) {
   const event = (state: AccountBalancesState) => ({
     ...state,
@@ -71,6 +91,18 @@ export default function model(state: AccountBalancesState) {
     },
     isSubscribed(symbol: string) {
       return state[symbol] ? state[symbol].subscribed : false;
+    },
+    isAllowed(symbol: string) {
+      return state[symbol] ? state[symbol].allowance === -1 : false;
+    },
+    balancesArray() {
+      return Object.values(state).map(item => {
+        return {
+          symbol: item.symbol,
+          balance: item.balance,
+          allowed: item.allowance ? item.allowance === -1 : false,
+        };
+      });
     },
   };
 }
