@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { defineMessages, FormattedMessage } from 'react-intl';
-import OHLCVRenderer from '../../components/OHLCV';
+import OHLCV from '../../components/OHLCV';
 import HomePage from '../../components/HomePage';
 
 class TestApisPage extends Component {
-
-
   state = {
     ohlcvData: [{ data: '' }],
   };
@@ -14,7 +12,7 @@ class TestApisPage extends Component {
     const { ohlcvData } = this.state;
     return (
       <React.Fragment>
-        <OHLCVRenderer />
+        <OHLCV />
         <HomePage />
       </React.Fragment>
     );

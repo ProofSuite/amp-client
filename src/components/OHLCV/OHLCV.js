@@ -15,7 +15,7 @@ type Props = {
   updateTimeLine: SendTimelineParams => void,
 };
 
-export default class OHLCVRenderer extends React.PureComponent<Props, State> {
+export default class OHLCV extends React.PureComponent<Props, State> {
   state = {
     expandedChard: false,
   };
