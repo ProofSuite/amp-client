@@ -94,9 +94,6 @@ export const etherTx = createReducer(action => {
 export const homePage = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case homePageTypes.saveData:
-      return ohlcvEvents.saveOHLCVvData(payload.data);
-
     default:
       return homePageEvents.initialized();
   }
