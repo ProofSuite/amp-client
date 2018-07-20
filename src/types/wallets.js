@@ -4,6 +4,11 @@ export type WalletsState = {
   +byAddress: Object,
 };
 
+export type CreateWalletAction = {
+  type: 'createWallet/CREATE',
+  payload: { address: string, serialized: string },
+};
+
 export type AddWalletAction = {
   type: 'wallets/ADD',
   payload: { address: string, serialized: string },
@@ -23,4 +28,4 @@ export type CreateWalletParams = {
 };
 
 export type WalletsEvent = any => WalletsState => WalletsState;
-export type WalletsAction = AddWalletAction | RemoveWalletAction;
+export type WalletsAction = AddWalletAction | RemoveWalletAction | CreateWalletAction;
