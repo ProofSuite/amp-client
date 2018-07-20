@@ -3,6 +3,7 @@ import React from 'react';
 import { MultiSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 import { Button, Card, Icon, Overlay } from '@blueprintjs/core';
+import type {SendTimelineParams} from '../../types/ohlcv';
 
 const timeSpans: Array<Object> = [
   { name: '1 min' },
@@ -29,15 +30,17 @@ const indicators: Array<Object> = [
 
 type Props = {
   ohlcvData: Array<Object>,
+  pairId: string,
+  pair: string,
   toggleExpand: () => void,
   expandedChard: boolean,
+  updateTimeLine: (SendTimelineParams) => void
 };
 type State = {
   chartHeight: number,
   indicatorHeight: number,
-  showIndicatorMenu: boolean,
-  showTimeSpanMenu: boolean,
-  currentTimeSpan: string,
+  currentTimeSpan: Object,
+  currentDuration: string,
   indicators: Array<Object>,
   timeSpans: Array<Object>,
   expandedChard: boolean,
@@ -47,9 +50,8 @@ export default class ExtendedChart extends React.Component<Props, State> {
   state = {
     chartHeight: 450,
     indicatorHeight: 300,
-    showIndicatorMenu: false,
-    showTimeSpanMenu: false,
-    currentTimeSpan: '',
+    currentTimeSpan: timeSpans[0],
+    currentDuration: '',
     indicators: indicators,
     timeSpans: timeSpans,
     expandedChard: false,
@@ -82,32 +84,29 @@ export default class ExtendedChart extends React.Component<Props, State> {
   };
 
   changeDuration = (menu: string) => {
-    if (menu === 'indicator') {
-      this.setState(function(prevState) {
-        return {
-          showIndicatorMenu: !prevState.showIndicatorMenu,
-        };
-      });
-    } else if (menu === 'timespan') {
-      this.setState(function(prevState) {
-        return {
-          showTimeSpanMenu: !prevState.showTimeSpanMenu,
-        };
-      });
-    }
+    const {currentTimeSpan} = this.state;
+    const {pair, pairId} = this.props;
+
+    this.setState({currentDuration: menu});
+    this.props.updateTimeLine({pair, pairId, time: currentTimeSpan.name, duration: menu});
   };
-  changeTimeSpan = (e: string) => {
+  changeTimeSpan = (e: Object) => {
+    const {currentDuration} = this.state;
+    const {pair, pairId} = this.props;
+
     this.setState({ currentTimeSpan: e });
+    this.props.updateTimeLine({pair, pairId, time: e.name, duration: currentDuration});
   };
 
   render() {
     const {
-      props: { expandedChard, toggleExpand, ohlcvData },
+      props: { expandedChard, toggleExpand, ohlcvData, pair, pairId },
       state: { indicators, chartHeight, indicatorHeight },
       changeTimeSpan,
       toogleChartIndicator,
       changeDuration,
     } = this;
+
     return (
       <Overlay isOpen={expandedChard} className="pt-overlay-scroll-container chart-overlay">
         <Card style={{ width: '100%' }} className="pt-dark main-chart">
@@ -157,14 +156,14 @@ const Toolbar = ({ state, toogleChartIndicator, toggleExpand, changeTimeSpan, ch
     </div>
     <div className="menu duration">
       <Icon icon="time" />
-      <Button onClick={changeDuration('1 hr')} text="1h" />
-      <Button onClick={changeDuration('6 hr')} text="6h" />
-      <Button onClick={changeDuration('1 day')} text="1d" />
-      <Button onClick={changeDuration('3 days')} text="3d" />
-      <Button onClick={changeDuration('7 days')} text="7d" />
-      <Button onClick={changeDuration('1 month')} text="1m" />
-      <Button onClick={changeDuration('3 months')} text="3m" />
-      <Button onClick={changeDuration('6 months')} text="6m" />
+      <Button onClick={() => changeDuration('1 hr')} text="1h" />
+      <Button onClick={() => changeDuration('6 hr')} text="6h" />
+      <Button onClick={() => changeDuration('1 day')} text="1d" />
+      <Button onClick={() => changeDuration('3 days')} text="3d" />
+      <Button onClick={() => changeDuration('7 days')} text="7d" />
+      <Button onClick={() => changeDuration('1 month')} text="1m" />
+      <Button onClick={() => changeDuration('3 months')} text="3m" />
+      <Button onClick={() => changeDuration('6 months')} text="6m" />
     </div>
     <Button icon="fullscreen" onClick={toggleExpand} />
   </div>

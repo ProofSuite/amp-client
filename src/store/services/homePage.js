@@ -1,5 +1,5 @@
-import { tsvParse, csvParse } from  "d3-dsv";
-import { timeParse } from "d3-time-format";
+import { tsvParse, csvParse } from 'd3-dsv';
+import { timeParse } from 'd3-time-format';
 
 export function parseData(parse) {
   return function(d) {
@@ -14,13 +14,13 @@ export function parseData(parse) {
   };
 }
 
-export const parseDate = timeParse("%Y-%m-%d");
+export const parseDate = timeParse('%Y-%m-%d');
 
 export function getData() {
-  let promiseMSFT = fetch("http://rrag.github.io/react-stockcharts/data/MSFT_full.tsv")
+  const promiseMSFT = fetch('http://rrag.github.io/react-stockcharts/data/MSFT_full.tsv')
     .then(response => response.text())
     .then(data => {
-      console.log(tsvParse(data, parseData(parseDate)), 'api data')
+      // console.log(tsvParse(data, parseData(parseDate)), 'api data')
       return tsvParse(data, parseData(parseDate));
     });
   return promiseMSFT;

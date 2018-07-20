@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import OHLCV from './index';
+import HomePage from './index';
 import README from './README.md';
 
-storiesOf('OHLCV', module)
+storiesOf('A HomePage', module)
   .addDecorator(withKnobs)
-  .add('Chart', withInfo({ text: README, source: false })(() => <OHLCV />));
+  .add('Default', withInfo({ text: README, source: false })(() => <HomePage />));

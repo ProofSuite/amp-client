@@ -1,3 +1,5 @@
-import OHLCVRenderer from './OHLCVRenderer';
+// @flow
+import OHLCV from './OHLCV';
+import connect from './connect';
 
-export default OHLCVRenderer;
+export default connect(OHLCV);
