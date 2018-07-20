@@ -1,5 +1,5 @@
-import model, * as eventCreators from './tokenPairs';
-import { quoteTokens } from '../../config/quotes';
+import model from './tokenPairs';
+import * as eventCreators from './tokenPairs';
 
 const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
 

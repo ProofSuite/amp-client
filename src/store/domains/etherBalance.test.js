@@ -1,4 +1,5 @@
-import model, * as eventCreators from './etherBalance';
+import model from './etherBalance';
+import * as eventCreators from './etherBalance';
 
 function getModel(events) {
   const state = events.reduce((state, event) => event(state), undefined);

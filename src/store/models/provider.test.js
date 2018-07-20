@@ -1,7 +1,8 @@
 import { createStore } from '../../store';
 import * as providerService from '../services/provider';
 
-import getProviderModel, * as actionCreators from './provider';
+import getProviderModel from './provider';
+import * as actionCreators from './provider';
 import getAccountModel from './account';
 
 jest.mock('../services/provider');

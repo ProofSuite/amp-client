@@ -1,9 +1,9 @@
 //@flow
 import type {
-  SetProviderAction,
-  RequestProviderAction,
   ProviderErrorAction,
   ProviderOptions,
+  RequestProviderAction,
+  SetProviderAction,
 } from '../../types/provider';
 
 const actionTypes = {

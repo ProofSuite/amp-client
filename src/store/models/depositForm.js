@@ -15,7 +15,6 @@ import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
 import { ERC20Token, WETH } from 'proof-contracts-interfaces';
 
 import type { Token } from '../../types/common';
-import type { DepositFormState } from '../../types/depositForm';
 import type { State, ThunkAction } from '../../types';
 
 export default function depositFormModel(state: State) {

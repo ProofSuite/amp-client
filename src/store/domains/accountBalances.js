@@ -1,6 +1,6 @@
 // @flow
 
-import type { AccountBalancesState, AccountBalances, AccountAllowances } from '../../types/accountBalances';
+import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances';
 
 const initialState = {};
 

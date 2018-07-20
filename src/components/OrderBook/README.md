@@ -1,5 +1,5 @@
 ```js
-import OrderBookRenderer from '../../components/OrderBookRenderer';
+import OrderBook from '../../components/OrderBook';
 ```
 
 #### Properties
@@ -12,7 +12,7 @@ import OrderBookRenderer from '../../components/OrderBookRenderer';
 
 #### Example
 ```js
-<OrderBookRenderer
+<OrderBook
   buyOrderList={buyOrderList}
   sellOrderList={sellOrderList}
   baseToken="ETH"

@@ -1,11 +1,12 @@
-import model, * as eventCreators from './depositForm';
+import model from './depositForm';
+import * as eventCreators from './depositForm';
 import {
-  mockHash,
-  mockTxReceipt,
-  mockHash2,
-  mockTxReceipt2,
   mockFailedTxReceipt,
   mockFailedTxReceipt2,
+  mockHash,
+  mockHash2,
+  mockTxReceipt,
+  mockTxReceipt2,
 } from '../../mockData';
 
 function getModel(events) {

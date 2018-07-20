@@ -1,11 +1,8 @@
-//@flow
-import type {} from '../../types/homePage';
-
 const actionTypes = {
   saveData: 'homePage/SAVE_DATA',
 };
 
-export function saveData(data) {
+export function saveData(data: any) {
   return {
     type: actionTypes.saveData,
     payload: { data },

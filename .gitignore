@@ -62,6 +62,9 @@ typings/
 .idea
 .editorconfig
 
+#ignored css files
+src/styles/css/app.css
+
 #scss cache
 .sass-cache
 

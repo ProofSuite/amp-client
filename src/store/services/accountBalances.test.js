@@ -1,4 +1,4 @@
-import { utils, Contract } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
 import * as providerService from './provider';
 import * as accountBalancesService from './accountBalances';

@@ -1,14 +1,14 @@
 // @flow
 import type {
-  SubscribeAccountBalanceAction,
-  UpdateAccountBalanceAction,
-  UpdateAccountAllowanceAction,
-  UpdateAccountBalancesAction,
-  UpdateAccountAllowancesAction,
-  UnsubscribeAccountBalanceAction,
-  ClearAccountBalancesAction,
   AccountAllowances,
   AccountBalances,
+  ClearAccountBalancesAction,
+  SubscribeAccountBalanceAction,
+  UnsubscribeAccountBalanceAction,
+  UpdateAccountAllowanceAction,
+  UpdateAccountAllowancesAction,
+  UpdateAccountBalanceAction,
+  UpdateAccountBalancesAction,
 } from '../../types/accountBalances';
 
 const actionTypes = {

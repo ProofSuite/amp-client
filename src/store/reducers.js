@@ -4,7 +4,7 @@ import etherBalanceActionTypes from './actions/etherBalance';
 import accountBalancesActionTypes from './actions/accountBalances';
 import providerActionTypes from './actions/provider';
 import etherTxActionTypes from './actions/etherTx';
-import homePageTypes from './actions/homePage';
+import orderBookTypes from './actions/orderBook';
 import ohlcvTypes from './actions/ohlcv';
 import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
@@ -19,6 +19,7 @@ import * as accountBalancesEvents from './domains/accountBalances';
 import * as providerEvents from './domains/provider';
 import * as etherTxEvents from './domains/etherTx';
 import * as homePageEvents from './domains/homePage';
+import * as orderBookEvents from './domains/orderBook';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
@@ -108,6 +109,17 @@ export const ohlcv = createReducer(action => {
       return ohlcvEvents.saveOHLCVvData(payload.data);
     default:
       return ohlcvEvents.initialized();
+  }
+});
+
+export const orderBook = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case orderBookTypes.saveData:
+      return orderBookEvents.saveData(payload.data);
+
+    default:
+      return orderBookEvents.initialized();
   }
 });
 

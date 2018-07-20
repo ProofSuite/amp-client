@@ -1,4 +1,5 @@
-import model, * as eventCreators from './provider';
+import model from './provider';
+import * as eventCreators from './provider';
 
 function getModel(events) {
   const state = events.reduce((state, event) => event(state), undefined);
