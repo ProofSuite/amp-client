@@ -2,7 +2,7 @@
 import type { OrderBookState } from '../../types/orderBook';
 
 const initialState: OrderBookState = {
-  loading: false,
+  loading: true,
   decimals: 0,
   sellOrderList: [{}],
   buyOrderList: [{}],

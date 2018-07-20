@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import type { LoadDataParams } from '../../types/homePage';
 
 type Props = {
-  loadData: LoadDataParams => void,
+  loadData: (params: LoadDataParams) => void,
 };
 
 export default class HomePage extends React.PureComponent<Props> {

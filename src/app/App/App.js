@@ -12,11 +12,17 @@ class TestApisPage extends Component {
   render() {
     const { ohlcvData } = this.state;
     return (
-      <React.Fragment>
-        <OHLCV />
-        <OrderBook />
-        <HomePage />
-      </React.Fragment>
+      <div className="App">
+        <header className="App-header">
+          <img className="App-logo" alt="logo" />
+          <h1 className="App-title">
+            <FormattedMessage {...messages.title} />
+          </h1>
+        </header>
+        <p className="App-intro">
+          <FormattedMessage {...messages.introduction} values={{ code: <code>src/App.js</code> }} />
+        </p>
+      </div>
     );
   }
 }
