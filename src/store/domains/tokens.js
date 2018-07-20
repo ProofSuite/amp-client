@@ -1,6 +1,6 @@
 // @flow
-import { arrayWithoutElement, objectWithoutKey, addKeyToObject, addElementToArray } from '../../helpers/utils';
-import { tokenSymbols, tokensBySymbol } from '../../data';
+import { addElementToArray, addKeyToObject, arrayWithoutElement, objectWithoutKey } from '../../helpers/utils';
+import { tokensBySymbol, tokenSymbols } from '../../data';
 
 import type { TokenState } from '../../types/tokens';
 

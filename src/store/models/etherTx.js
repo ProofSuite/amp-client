@@ -1,5 +1,5 @@
 // @flow
-import ethers from 'ethers';
+import ethers, { Contract } from 'ethers';
 import etherTxModel from '../domains/etherTx';
 import * as actionCreators from '../actions/etherTx';
 
@@ -7,7 +7,6 @@ import type { EtherTxParams, TransferTokensTxParams } from '../../types/etherTx'
 import type { State, ThunkAction } from '../../types';
 
 import { getDefaultSigner } from '../services/signer';
-import { Contract } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
 
 export default function getEtherTxModel(state: State) {

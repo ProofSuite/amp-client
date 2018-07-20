@@ -1,4 +1,5 @@
-import model, * as eventCreators from './etherTx';
+import model from './etherTx';
+import * as eventCreators from './etherTx';
 import { mockHash, mockReceipt } from '../../mockData';
 
 function getModel(events) {

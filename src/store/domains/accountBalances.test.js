@@ -1,4 +1,5 @@
-import model, * as eventCreators from './accountBalances';
+import model from './accountBalances';
+import * as eventCreators from './accountBalances';
 
 function getModel(events) {
   const state = events.reduce((state, event) => event(state), undefined);

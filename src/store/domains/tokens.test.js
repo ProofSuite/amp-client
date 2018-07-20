@@ -1,4 +1,5 @@
-import model, * as eventCreators from './tokens';
+import model from './tokens';
+import * as eventCreators from './tokens';
 
 const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
 

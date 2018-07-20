@@ -1,3 +1,5 @@
-import OrderBookRenderer from './OrderBookRenderer';
+// @flow
+import OrderBook from './OrderBook';
+import connect from './connect';
 
-export default OrderBookRenderer;
+export default connect(OrderBook);

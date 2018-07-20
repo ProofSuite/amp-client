@@ -1,4 +1,5 @@
-import model, * as eventCreators from './wallets';
+import model from './wallets';
+import * as eventCreators from './wallets';
 import { mockSerializedWallet, mockSerializedWalletAddress } from '../../mockData';
 
 function getModel(events) {

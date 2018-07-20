@@ -8,6 +8,6 @@ export default function getOHLCVModel(state: State) {
 }
 export const updateTimeLine = ({ pair, pairId, duration, time }: SendTimelineParams): ThunkAction => {
   return async (dispatch, getState) => {
-    console.log(pair, pairId, duration, time )
+    console.log(pair, pairId, duration, time);
   };
 };

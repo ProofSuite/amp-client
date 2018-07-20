@@ -1,12 +1,5 @@
 // @flow
-import type {
-  UpdateAccountBalanceAction,
-  UpdateAccountAllowanceAction,
-  UpdateAccountBalancesAction,
-  UpdateAccountAllowancesAction,
-  UnsubscribeAccountBalanceAction,
-  ClearAccountBalancesAction,
-} from '../../types/walletPage';
+import type { UpdateAccountAllowancesAction, UpdateAccountBalancesAction } from '../../types/walletPage';
 
 import type { AccountAllowances, AccountBalances } from '../../types/accountBalances';
 

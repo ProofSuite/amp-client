@@ -1,9 +1,9 @@
 // @flow
-import { utils, Contract } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
 import { getProvider } from './provider';
 
-import type { Token, Tokens, TokenBalances } from '../../types/common';
+import type { Token, TokenBalances } from '../../types/common';
 
 export async function queryEtherBalance(address: string) {
   const { provider } = await getProvider();

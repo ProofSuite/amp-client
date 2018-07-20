@@ -1,13 +1,13 @@
 //@flow
 import type {
-  EtherTxErrorAction,
-  ValidateEtherTxAction,
-  InvalidateEtherTxAction,
-  SendEtherTxAction,
-  RevertEtherTxAction,
   ConfirmEtherTxAction,
+  EtherTxErrorAction,
   EtherTxStatus,
+  InvalidateEtherTxAction,
+  RevertEtherTxAction,
+  SendEtherTxAction,
   TxReceipt,
+  ValidateEtherTxAction,
 } from '../../types/etherTx';
 
 const actionTypes = {

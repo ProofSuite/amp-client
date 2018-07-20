@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { defineMessages, FormattedMessage } from 'react-intl';
 import OHLCV from '../../components/OHLCV';
+import OrderBook from '../../components/OrderBook';
 import HomePage from '../../components/HomePage';
 
 class TestApisPage extends Component {
@@ -13,6 +14,7 @@ class TestApisPage extends Component {
     return (
       <React.Fragment>
         <OHLCV />
+        <OrderBook />
         <HomePage />
       </React.Fragment>
     );
