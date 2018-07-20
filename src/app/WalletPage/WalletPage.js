@@ -1,13 +1,22 @@
 import React from 'react';
-import { NonIdealState } from '@blueprintjs/core';
+import styled from 'styled-components';
+import WalletPageRenderer from './WalletPageRenderer';
 
-class WalletPage extends React.PureComponent {
+type Props = {
+  loading: boolean,
+  queryAccountData: void => void,
+  depositTableData: Array<Object>,
+};
+
+class WalletPage extends React.PureComponent<Props> {
+  componentDidMount() {
+    this.props.queryAccountData();
+  }
+
   render() {
-    return (
-      <NonIdealState title="WORK IN PROGRESS" visual="wrench">
-        Wallet Page
-      </NonIdealState>
-    );
+    const { loading, depositTableData } = this.props;
+
+    return <WalletPageRenderer loading={loading} depositTableData={depositTableData} />;
   }
 }
 

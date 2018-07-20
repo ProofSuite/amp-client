@@ -10,7 +10,9 @@ import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
 import depositFormActionTypes from './actions/depositForm';
 import settingsActionTypes from './actions/settings';
-import walletsActionTypes from './actions/wallets';
+
+import createWalletActionTypes from './actions/createWallet';
+import walletPageActionTypes from './actions/walletPage';
 
 import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
@@ -25,20 +27,6 @@ import * as settingsEvents from './domains/settings';
 import * as tokenPairsEvents from './domains/tokenPairs';
 import * as walletsEvents from './domains/wallets';
 
-export const etherBalance = createReducer(action => {
-  const { type, payload } = action;
-  switch (type) {
-    case etherBalanceActionTypes.subscribeBalance:
-      return etherBalanceEvents.subscribed(payload.address);
-    case etherBalanceActionTypes.unsubscribeBalance:
-      return etherBalanceEvents.unsubscribed(payload.address);
-    case etherBalanceActionTypes.updateBalance:
-      return etherBalanceEvents.updated(payload.address, payload.balance);
-    default:
-      return etherBalanceEvents.initialized();
-  }
-});
-
 export const accountBalances = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
@@ -52,6 +40,20 @@ export const accountBalances = createReducer(action => {
       return accountBalancesEvents.updated(payload.balances);
     case accountBalancesActionTypes.clearBalances:
       return accountBalancesEvents.cleared();
+    case depositFormActionTypes.subscribeBalance:
+      return accountBalancesEvents.subscribed(payload.symbol);
+    case depositFormActionTypes.unsubscribeBalance:
+      return accountBalancesEvents.unsubscribed(payload.symbol);
+    case depositFormActionTypes.updateBalance:
+      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }]);
+    case depositFormActionTypes.updateBalances:
+      return accountBalancesEvents.updated(payload.balances);
+    case depositFormActionTypes.clearBalances:
+      return accountBalancesEvents.cleared();
+    case walletPageActionTypes.updateBalances:
+      return accountBalancesEvents.updated(payload.balances);
+    case walletPageActionTypes.updateAllowances:
+      return accountBalancesEvents.allowancesUpdated(payload.allowances);
     default:
       return accountBalancesEvents.initialized();
   }
@@ -184,11 +186,27 @@ export const tokenPairs = createReducer(action => {
 export const wallets = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case walletsActionTypes.addWallet:
+    case createWalletActionTypes.createWallet:
       return walletsEvents.walletAdded(payload.address, payload.serialized);
-    case walletsActionTypes.removeWallet:
+    case createWalletActionTypes.addWallet:
+      return walletsEvents.walletAdded(payload.address, payload.serialized);
+    case createWalletActionTypes.removeWallet:
       return walletsEvents.walletRemoved(payload);
     default:
       return walletsEvents.initialized();
+  }
+});
+
+export const etherBalance = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case etherBalanceActionTypes.subscribeBalance:
+      return etherBalanceEvents.subscribed(payload.address);
+    case etherBalanceActionTypes.unsubscribeBalance:
+      return etherBalanceEvents.unsubscribed(payload.address);
+    case etherBalanceActionTypes.updateBalance:
+      return etherBalanceEvents.updated(payload.address, payload.balance);
+    default:
+      return etherBalanceEvents.initialized();
   }
 });

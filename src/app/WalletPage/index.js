@@ -1,3 +1,4 @@
 import WalletPage from './WalletPage';
+import connect from './connect';
 
-export default WalletPage;
+export default connect(WalletPage);
