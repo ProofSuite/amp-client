@@ -108,6 +108,65 @@ describe('queryBalances', () => {
   });
 });
 
+describe('queryTokenAllowances', () => {
+  let allowance;
+  let providerMock, contractMock;
+  let tokens, address;
+
+  beforeEach(() => {
+    allowance = jest.fn();
+    contractMock = jest.fn(() => ({ allowance }));
+    providerMock = 'test provider';
+    providerService.getProvider.mockImplementation(() => Promise.resolve({ provider: providerMock }));
+    Contract.mockImplementation(contractMock);
+
+    address = '0x4dc5790733b997f3db7fc49118ab013182d6ba9b';
+    tokens = [
+      { symbol: 'REQ', address: '0x6e9a406696617ec5105f9382d33ba3360fcfabcc' },
+      { symbol: 'WETH', address: '0x44809695706c252435531029b1e9d7d0355d475f' },
+    ];
+  });
+
+  it('loads the current provider', async () => {
+    await accountBalancesService.queryTokenAllowances(address, tokens);
+    expect(providerService.getProvider).toHaveBeenCalledTimes(1);
+  });
+
+  it('the provider returns the current ether balance', async () => {
+    await accountBalancesService.queryTokenAllowances(address, tokens);
+
+    expect(contractMock).toHaveBeenCalledTimes(2);
+    expect(contractMock.mock.calls[0][0]).toEqual('0x6e9a406696617ec5105f9382d33ba3360fcfabcc');
+    expect(contractMock.mock.calls[0][1]).toEqual('test ERC20Token abi');
+    expect(contractMock.mock.calls[0][2]).toEqual(providerMock);
+
+    expect(allowance).toHaveBeenCalledTimes(2);
+    expect(contractMock.mock.calls[1][0]).toEqual('0x44809695706c252435531029b1e9d7d0355d475f');
+    expect(contractMock.mock.calls[1][1]).toEqual('test ERC20Token abi');
+    expect(contractMock.mock.calls[1][2]).toEqual(providerMock);
+  });
+
+  it('returns the formatted token balances', async () => {
+    allowance.mockReturnValueOnce(Promise.resolve('test REQ balance'));
+    allowance.mockReturnValueOnce(Promise.resolve('test WETH balance'));
+    utils.formatEther.mockReturnValueOnce(1000);
+    utils.formatEther.mockReturnValueOnce(2000);
+
+    let result = await accountBalancesService.queryTokenAllowances(address, tokens);
+
+    expect(utils.formatEther).toHaveBeenCalledTimes(2);
+    expect(utils.formatEther.mock.calls[0][0]).toEqual('test REQ balance');
+    expect(utils.formatEther.mock.calls[1][0]).toEqual('test WETH balance');
+
+    expect(contractMock).toHaveBeenCalledTimes(2);
+    expect(contractMock.mock.calls[0][0]).toEqual('0x6e9a406696617ec5105f9382d33ba3360fcfabcc');
+    expect(contractMock.mock.calls[0][1]).toEqual('test ERC20Token abi');
+    expect(contractMock.mock.calls[0][2]).toEqual(providerMock);
+
+    expect(result).toEqual([{ symbol: 'REQ', allowance: 1000 }, { symbol: 'WETH', allowance: 2000 }]);
+  });
+});
+
 describe('subscribeEtherBalance(address, callback', () => {
   let on, getBalance, removeListener;
   let providerMock;
