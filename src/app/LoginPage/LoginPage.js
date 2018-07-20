@@ -3,12 +3,12 @@ import { defineMessages, FormattedMessage } from 'react-intl';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card, Callout } from '@blueprintjs/core';
+import MetamaskIcon from '../../components/Icons/Metamask';
+import KeyIcon from '../../components/Icons/Key';
 
 class LoginPage extends React.PureComponent {
   render() {
-    const {
-      props: { connectMetamask, importWallet, isDefaultAccountSet },
-    } = this;
+    const { connectMetamask, importWallet, isDefaultAccountSet } = this.props;
 
     if (isDefaultAccountSet) {
       return <Redirect to="/" />;
@@ -16,54 +16,45 @@ class LoginPage extends React.PureComponent {
     return (
       <Wrapper>
         <Announcement>
-          <Callout intent="warning">
-            <FormattedMessage
-              {...messages.announcement}
-              values={{ link: <a href="https://proof-amp.com">https://proof-amp.com</a> }}
-            />
+          <Callout intent="success" title="Important notice">
+            <AnnouncementMessages>
+              <FormattedMessage
+                {...messages.announcement}
+                values={{ link: <a href="https://proof-amp.com">https://proof-amp.com</a> }}
+              />
+              <Reminder>
+                <FormattedMessage {...messages.noPlugins} />
+              </Reminder>
+              <Reminder>
+                <FormattedMessage {...messages.noPhoneCalls} />
+              </Reminder>
+              <Reminder>
+                <FormattedMessage {...messages.noOfficialStaffs} />
+              </Reminder>
+              <Reminder>
+                <FormattedMessage {...messages.noDisclosure} />
+              </Reminder>
+            </AnnouncementMessages>
           </Callout>
         </Announcement>
-        <Notes>
-          <Callout>
-            <Reminder>
-              <FormattedMessage {...messages.noPlugins} />
-            </Reminder>
-            <Reminder>
-              <FormattedMessage {...messages.noPhoneCalls} />
-            </Reminder>
-            <Reminder>
-              <FormattedMessage {...messages.noOfficialStaffs} />
-            </Reminder>
-            <Reminder>
-              <FormattedMessage {...messages.noDisclosure} />
-            </Reminder>
-          </Callout>
-        </Notes>
         <LoginMethods>
-          <Provider onClick={connectMetamask}>
-            <FormattedMessage
-              {...messages.connect}
-              values={{
-                name: (
-                  <h5>
-                    <FormattedMessage {...messages.metamask} />
-                  </h5>
-                ),
-              }}
-            />
-          </Provider>
-          <Provider onClick={importWallet}>
-            <FormattedMessage
-              {...messages.import}
-              values={{
-                name: (
-                  <h5>
-                    <FormattedMessage {...messages.wallet} />
-                  </h5>
-                ),
-              }}
-            />
-          </Provider>
+          <LoginMethodsHeading>
+            <FormattedMessage {...messages.loginMethods} />
+          </LoginMethodsHeading>
+          <LoginCards>
+            <LoginCard onClick={connectMetamask}>
+              <MetamaskIcon size={160} />
+              <Heading>
+                <FormattedMessage {...messages.metamask} />
+              </Heading>
+            </LoginCard>
+            <LoginCard onClick={importWallet}>
+              <KeyIcon size={160} />
+              <Heading>
+                <FormattedMessage {...messages.wallet} />
+              </Heading>
+            </LoginCard>
+          </LoginCards>
         </LoginMethods>
       </Wrapper>
     );
@@ -71,6 +62,62 @@ class LoginPage extends React.PureComponent {
 }
 
 export default LoginPage;
+
+const Wrapper = styled.div`
+  display: grid;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: 2em;
+`;
+
+const Announcement = styled.section``;
+
+const Heading = styled.h4`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const Notes = styled.section`
+  margin: 10px;
+`;
+
+const Reminder = styled.div``;
+
+const LoginMethods = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const LoginMethodsHeading = styled.h3`
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+`;
+
+const LoginCards = styled.div`
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const AnnouncementMessages = styled.div`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
+const LoginCard = styled(Card).attrs({
+  interactive: true,
+})`
+  margin: 10px;
+  height: 13em;
+  width: 13em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const messages = defineMessages({
   announcement: {
@@ -94,6 +141,10 @@ const messages = defineMessages({
     defaultMessage:
       'Never disclose your password, private keys or other authentication elements to anyone, including Proofsuite support',
   },
+  loginMethods: {
+    id: 'loginPage.loginMethodsHeading',
+    defaultMessage: 'Select a login method',
+  },
   connect: {
     id: 'loginPage.connect',
     defaultMessage: 'Connect to {name}',
@@ -111,30 +162,3 @@ const messages = defineMessages({
     defaultMessage: 'Wallet',
   },
 });
-
-const Wrapper = styled.div`
-  padding: 10px;
-`;
-
-const Announcement = styled.section`
-  margin: 10px;
-`;
-
-const Notes = styled.section`
-  margin: 10px;
-`;
-
-const Reminder = styled.div``;
-
-const LoginMethods = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const Provider = styled(Card).attrs({
-  interactive: true,
-})`
-  margin: 10px;
-  height: 200px;
-  flex: 1;
-`;
