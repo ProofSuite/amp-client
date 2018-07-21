@@ -96,7 +96,7 @@ export default function model(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].allowance === -1 : false;
     },
     balancesArray() {
-      return Object.values(state).map(item => {
+      return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
           balance: item.balance,
