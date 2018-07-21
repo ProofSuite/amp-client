@@ -4,10 +4,11 @@ import etherBalanceActionTypes from './actions/etherBalance';
 import accountBalancesActionTypes from './actions/accountBalances';
 import providerActionTypes from './actions/provider';
 import etherTxActionTypes from './actions/etherTx';
-import orderBookTypes from './actions/orderBook';
-import tradeHistoryTypes from './actions/tradeHistory';
-import orderHistoryTypes from './actions/orderHistory';
-import ohlcvTypes from './actions/ohlcv';
+import orderBookActionTypes from './actions/orderBook';
+import tradeHistoryActionTypes from './actions/tradeHistory';
+import orderHistoryActionTypes from './actions/orderHistory';
+import depthChartActionTypes from './actions/depthChart';
+import ohlcvActionTypes from './actions/ohlcv';
 import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
 import depositFormActionTypes from './actions/depositForm';
@@ -24,6 +25,7 @@ import * as homePageEvents from './domains/homePage';
 import * as orderBookEvents from './domains/orderBook';
 import * as tradeHistoryEvents from './domains/tradeHistory';
 import * as orderHistoryEvents from './domains/orderHistory';
+import * as depthChartEvents from './domains/depthChart';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
@@ -109,7 +111,7 @@ export const homePage = createReducer(action => {
 export const ohlcv = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case ohlcvTypes.saveData:
+    case ohlcvActionTypes.saveData:
       return ohlcvEvents.saveOHLCVvData(payload.data);
     default:
       return ohlcvEvents.initialized();
@@ -119,7 +121,7 @@ export const ohlcv = createReducer(action => {
 export const orderBook = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case orderBookTypes.saveData:
+    case orderBookActionTypes.saveData:
       return orderBookEvents.saveData(payload.data);
 
     default:
@@ -130,7 +132,7 @@ export const orderBook = createReducer(action => {
 export const orderHistory = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case orderHistoryTypes.saveData:
+    case orderHistoryActionTypes.saveData:
       return orderHistoryEvents.saveData(payload.data);
 
     default:
@@ -138,10 +140,21 @@ export const orderHistory = createReducer(action => {
   }
 });
 
+export const depthChart = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case depthChartActionTypes.saveData:
+      return depthChartEvents.saveData(payload.data);
+
+    default:
+      return depthChartEvents.initialized();
+  }
+});
+
 export const tradeHistory = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case tradeHistoryTypes.saveData:
+    case tradeHistoryActionTypes.saveData:
       return tradeHistoryEvents.saveData(payload.data);
 
     default:

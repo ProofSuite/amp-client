@@ -1,105 +1,51 @@
+//@flow
 import React from 'react';
-import 'amcharts3/amcharts/amcharts';
-import 'amcharts3/amcharts/serial';
-import 'amcharts3/amcharts/themes/light';
-import AmCharts from '@amcharts/amcharts3-react';
+import Loading from '../Loading';
+import DepthChartRenderer from './DepthChartRenderer';
+var AmCharts = require('@amcharts/amcharts3-react');
 
-type ChartProps = {
-  title: string,
+type Props = {
   data: Array<Object>,
-  tootlTip: (Object, Object) => string,
+  loading: boolean,
+  title: string,
 };
 
-const DepthChart = (props: ChartProps) => {
-  const { data, tootlTip, title } = props;
-  return (
-    <div>
-      <AmCharts.React
-        className="depth-chart"
-        style={{
-          width: '100%',
-          height: '500px',
-        }}
-        options={{
-          type: 'serial',
-          theme: 'dark',
-          dataProvider: data,
-          graphs: [
-            {
-              id: 'bids',
-              fillAlphas: 0.1,
-              lineAlpha: 1,
-              lineThickness: 2,
-              lineColor: '#0f0',
-              type: 'step',
-              valueField: 'bidstotalvolume',
-              balloonFunction: tootlTip,
-            },
-            {
-              id: 'asks',
-              fillAlphas: 0.1,
-              lineAlpha: 1,
-              lineThickness: 2,
-              lineColor: '#f00',
-              type: 'step',
-              valueField: 'askstotalvolume',
-              balloonFunction: tootlTip,
-            },
-            {
-              lineAlpha: 0,
-              fillAlphas: 0.2,
-              lineColor: '#000',
-              type: 'column',
-              clustered: false,
-              valueField: 'bidsvolume',
-              showBalloon: false,
-            },
-            {
-              lineAlpha: 0,
-              fillAlphas: 0.2,
-              lineColor: '#000',
-              type: 'column',
-              clustered: false,
-              valueField: 'asksvolume',
-              showBalloon: false,
-            },
-          ],
-          categoryField: 'value',
-          chartCursor: {},
-          balloon: {
-            textAlign: 'left',
-          },
-          valueAxes: [
-            {
-              title: 'Volume',
-            },
-          ],
-          categoryAxis: {
-            title: title,
-            minHorizontalGap: 100,
-            startOnAxis: true,
-            showFirstLabel: false,
-            showLastLabel: false,
-          },
-          listeners: [
-            {
-              event: 'zoomed',
-              method: function(e) {
-                if (document.querySelector('g image')) {
-                  document
-                    .querySelector('g image')
-                    .setAttribute('xlink:href', 'https://www.amcharts.com/lib/3/images/lens.svg');
-                }
-              },
-            },
-            {
-              event: 'clickGraphItem',
-              method: function(e) {},
-            },
-          ],
-        }}
-      />
-    </div>
-  );
-};
+class DepthChart extends React.Component<Props> {
+  formatNumber = (val: string, chart: Object, precision: number) => {
+    return AmCharts.formatNumber(val, {
+      precision: precision ? precision : chart.precision,
+      decimalSeparator: chart.decimalSeparator,
+      thousandsSeparator: chart.thousandsSeparator,
+    });
+  };
+
+  toolTip = (item: Object, graph: Object) => {
+    let txt;
+    if (graph.id == 'asks') {
+      txt = `Ask: <strong>${this.formatNumber(item.dataContext.value, graph.chart, 4)}</strong><br />
+      Total volume: <strong>${this.formatNumber(item.dataContext.askstotalvolume, graph.chart, 4)}</strong><br />
+      Volume: <strong>${this.formatNumber(item.dataContext.asksvolume, graph.chart, 4)}</strong>`;
+    } else {
+      txt = `Bid: <strong>${this.formatNumber(item.dataContext.value, graph.chart, 4)}</strong><br />
+      Total volume: <strong>${this.formatNumber(item.dataContext.bidstotalvolume, graph.chart, 4)}</strong><br />
+      Volume: <strong>${this.formatNumber(item.dataContext.bidsvolume, graph.chart, 4)}</strong>`;
+    }
+    return txt;
+  };
+
+  render() {
+    const {
+      props: { loading, data, title },
+      toolTip,
+    } = this;
+    console.log('loading, data, title: ', loading, data, title);
+    return (
+      <div className={loading ? 'depth-chart-container loading' : 'depth-chart-container'}>
+        {loading && <Loading />}
+        {!loading && <DepthChartRenderer data={data} title={title} tootlTip={toolTip} />}
+      </div>
+    );
+  }
+}
+
 export default DepthChart;

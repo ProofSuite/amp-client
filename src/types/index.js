@@ -8,6 +8,7 @@ import type { OHLCVState } from './ohlcv';
 import type { OrderBookState } from './orderBook';
 import type { HomeState } from './homePage';
 import type { TradeHistoryState } from './tradeHistory';
+import type { DepthChartState } from './depthChart';
 import type { OrderHistoryState } from './orderHistory';
 import type { TokenState, TokenAction, TokenEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
@@ -52,6 +53,7 @@ export type State = {
   orderBook: OrderBookState,
   tradeHistory: TradeHistoryState,
   orderHistory: OrderHistoryState,
+  depthChart: DepthChartState,
   etherTx: EtherTxState,
   tokens: TokenState,
   account: AccountState,

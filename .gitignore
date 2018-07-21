@@ -10,6 +10,7 @@ src/styles/css/*
 
 #yarn lock file
 yarn.lock
+
 # Runtime data
 pids
 *.pid

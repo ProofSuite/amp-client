@@ -1,5 +1,5 @@
 ```js
-import DepthChartRenderer from '../../components/DepthChartRenderer';
+import DepthChart from '../../components/DepthChart';
 ```
 
 #### Properties
@@ -9,7 +9,7 @@ import DepthChartRenderer from '../../components/DepthChartRenderer';
 
 #### Example
 ```js
-<DepthChartRenderer
+<DepthChart
     data={data}
     loading={false}
     title="Price (BTC/USDT)"
