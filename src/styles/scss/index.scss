@@ -1,14 +1,11 @@
 @import "../../../node_modules/@blueprintjs/core/lib/css/blueprint.css";
 @import "../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
-<<<<<<< HEAD
 @import '../../../node_modules/rc-steps/assets/index.css';
 @import '../../../node_modules/rc-steps/assets/iconfont.css';
+@import "../../../node_modules/@blueprintjs/table/lib/css/table.css";
 @import "reset";
 @import "vars";
 @import "app";
-=======
-@import "../../../node_modules/@blueprintjs/table/lib/css/table.css";
->>>>>>> added <DepthChart />
 @import "global";
 @import "override";
 @import "orderForm";
@@ -16,8 +13,5 @@
 @import "tradeHistory";
 @import "orderHistory";
 @import "coinSearcher";
-<<<<<<< HEAD
 @import "ohlcvChart";
-=======
 @import "depthChart";
->>>>>>> added <DepthChart />
