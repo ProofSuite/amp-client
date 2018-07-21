@@ -6,6 +6,8 @@ import providerActionTypes from './actions/provider';
 import etherTxActionTypes from './actions/etherTx';
 import orderBookTypes from './actions/orderBook';
 import tradeHistoryTypes from './actions/tradeHistory';
+import coinSearcherTypes from './actions/coinSearcher';
+// import orderHistoryTypes from './actions/orderHistory';
 import ohlcvTypes from './actions/ohlcv';
 import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
@@ -22,6 +24,8 @@ import * as etherTxEvents from './domains/etherTx';
 import * as homePageEvents from './domains/homePage';
 import * as orderBookEvents from './domains/orderBook';
 import * as tradeHistoryEvents from './domains/tradeHistory';
+import * as coinSearcherEvents from './domains/coinSearcher';
+// import * as orderHistoryEvents from './domains/orderHistory';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
@@ -122,6 +126,30 @@ export const orderBook = createReducer(action => {
 
     default:
       return orderBookEvents.initialized();
+  }
+});
+
+// export const orderHistory = createReducer(action => {
+//   const { type, payload } = action;
+//   switch (type) {
+//     case orderHistoryTypes.saveData:
+//       return orderHistoryEvents.saveData(payload.data);
+//
+//     default:
+//       return orderHistoryEvents.initialized();
+//   }
+// });
+
+export const coinSearcher = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case coinSearcherTypes.saveData:
+      return coinSearcherEvents.saveData(payload.data);
+    case coinSearcherTypes.toggleStar:
+      return coinSearcherEvents.toggleStar(payload.data);
+
+    default:
+      return coinSearcherEvents.initialized();
   }
 });
 

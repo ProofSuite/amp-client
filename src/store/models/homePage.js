@@ -7,8 +7,13 @@ import * as ohlcvActionCreators from '../actions/ohlcv';
 import * as orderBookActionCreators from '../actions/orderBook';
 import * as tradeHistoryActionCreators from '../actions/tradeHistory';
 
+// import * as orderHistoryActionCreators from '../actions/orderHistory';
+import * as coinSearcherActionCreators from '../actions/coinSearcher';
+
 import * as orderList from '../../jsons/ordersList.json';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
+import * as orderHistory from '../../jsons/orderHistory.json';
+import * as coinsList from '../../jsons/coinsList.json';
 
 export default function getHomePageModel(state: State) {
   return HomePageModel(state.homePage);
@@ -28,6 +33,20 @@ const tradeHistoryData = {
   decimals: 7,
   loggedIn: true,
 };
+const orderHistoryData = {
+  orderHistory: orderHistory.list,
+  userOrderHistory: orderHistory.list,
+  loading: false,
+  decimals: 7,
+  authenticated: true,
+};
+const coinSearcherData = {
+  coinsList: coinsList.list,
+  loading: false,
+  small: false,
+  decimals: 7,
+  authenticated: true,
+};
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
   return async (dispatch, getState) => {
@@ -36,5 +55,7 @@ export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
 
     dispatch(orderBookActionCreators.saveData(orderBookData));
     dispatch(tradeHistoryActionCreators.saveData(tradeHistoryData));
+    // dispatch(orderHistoryActionCreators.saveData(orderHistoryData));
+    dispatch(coinSearcherActionCreators.saveData(coinSearcherData));
   };
 };
