@@ -4,6 +4,7 @@ import OrderBook from '../../components/OrderBook';
 import OrderHistory from '../../components/OrderHistory';
 import TradeHistory from '../../components/TradeHistory';
 import DepthChart from '../../components/DepthChart';
+import CoinSearcher from '../../components/CoinSearcher';
 import HomePage from '../HomePage';
 
 class TestApisPage extends Component {
@@ -13,6 +14,7 @@ class TestApisPage extends Component {
         <HomePage />
         <DepthChart />
         <OrderHistory />
+        <CoinSearcher />
         <TradeHistory />
         <OHLCV />
         <OrderBook />
