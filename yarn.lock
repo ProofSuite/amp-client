@@ -8,6 +8,7 @@
   dependencies:
     create-react-class "^15.5.2"
 
+<<<<<<< HEAD
 "@axetroy/react-download@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@axetroy/react-download/-/react-download-1.1.1.tgz#7203cbb23a6e9d5f01a9787aae13c2229598c289"
@@ -16,6 +17,8 @@
   version "7.0.0-beta.53"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.53.tgz#1f45eb617bf9463d482b2c04d349d9e4edbf4892"
 
+=======
+>>>>>>> cee1a658560fe47ca0614fc04c0035ee88fc53a8
 "@blueprintjs/core@^2.3.1", "@blueprintjs/core@~2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-2.3.1.tgz#c998f8d22b02bfc9990b66b201f1ea095fb15450"

@@ -3,9 +3,12 @@
 @import '../../../node_modules/rc-steps/assets/index.css';
 @import '../../../node_modules/rc-steps/assets/iconfont.css';
 @import "../../../node_modules/@blueprintjs/table/lib/css/table.css";
+<<<<<<< HEAD
 
 @import "reset";
 @import "vars";
+=======
+>>>>>>> cee1a658560fe47ca0614fc04c0035ee88fc53a8
 @import "global";
 @import "override";
 @import "orderForm";
@@ -13,6 +16,10 @@
 @import "tradeHistory";
 @import "orderHistory";
 @import "coinSearcher";
+<<<<<<< HEAD
 @import "ohlcvChart";
 @import "depthChart";
 @import "app";
+=======
+@import "depthChart";
+>>>>>>> cee1a658560fe47ca0614fc04c0035ee88fc53a8
