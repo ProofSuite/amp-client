@@ -1,5 +1,5 @@
 //@flow
-import type { DepositFormState, DepositFormEvent } from '../../types/depositForm';
+import type { DepositFormEvent, DepositFormState } from '../../types/depositForm';
 import type { TxReceipt } from '../../types/common';
 
 const initialState = {

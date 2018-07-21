@@ -1,4 +1,4 @@
-import { providers, utils } from 'ethers';
+import { providers } from 'ethers';
 import * as provider from './provider';
 
 jest.mock('ethers');

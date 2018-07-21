@@ -34,7 +34,6 @@ export default class OHLCV extends React.PureComponent<Props, State> {
       state: { expandedChard },
       toggleExpand,
     } = this;
-    console.log('this.props: ', this.props);
     return (
       <React.Fragment>
         <SmallChart

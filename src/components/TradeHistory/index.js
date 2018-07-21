@@ -1,3 +1,5 @@
-import TradeHistoryRenderer from './TradeHistoryRenderer';
+// @flow
+import TradeHistory from './TradeHistory';
+import connect from './connect';
 
-export default TradeHistoryRenderer;
+export default connect(TradeHistory);

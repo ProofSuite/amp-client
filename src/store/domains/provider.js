@@ -1,5 +1,5 @@
 // @flow
-import type { ProviderState, ProviderOptions } from '../../types/provider';
+import type { ProviderOptions, ProviderState } from '../../types/provider';
 
 const initialState = {
   loading: false,

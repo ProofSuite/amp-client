@@ -1,23 +1,23 @@
 //@flow
 import type {
-  DepositAction,
   ConfirmAction,
-  SendConvertTxAction,
-  RevertConvertTxAction,
-  ConfirmConvertTxAction,
-  SendAllowTxAction,
-  RevertAllowTxAction,
   ConfirmAllowTxAction,
+  ConfirmConvertTxAction,
+  DepositAction,
+  RevertAllowTxAction,
+  RevertConvertTxAction,
+  SendAllowTxAction,
+  SendConvertTxAction,
   SubscribeBalanceAction,
-  UpdateBalanceAction,
-  UpdateBalancesAction,
+  UnsubscribeBalanceAction,
   UpdateAllowanceAction,
   UpdateAllowancesAction,
-  UnsubscribeBalanceAction,
+  UpdateBalanceAction,
+  UpdateBalancesAction,
 } from '../../types/depositForm';
 
 import type { TxReceipt } from '../../types/common';
-import type { AccountBalances, AccountAllowances } from '../../types/accountBalances';
+import type { AccountAllowances, AccountBalances } from '../../types/accountBalances';
 
 const actionTypes = {
   deposit: 'depositForm/DEPOSIT',

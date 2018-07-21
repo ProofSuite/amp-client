@@ -1,0 +1,23 @@
+import React, { Component } from 'react';
+import OHLCV from '../../components/OHLCV';
+import OrderBook from '../../components/OrderBook';
+import TradeHistory from '../../components/TradeHistory';
+import CoinSearcher from '../../components/CoinSearcher';
+import HomePage from '../HomePage';
+
+class TestApisPage extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <HomePage />
+        <CoinSearcher />
+        {/*<OrderHistory />*/}
+        <TradeHistory />
+        <OHLCV />
+        <OrderBook />
+      </React.Fragment>
+    );
+  }
+}
+
+export default TestApisPage;

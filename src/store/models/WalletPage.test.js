@@ -4,7 +4,7 @@ import * as accountBalancesService from '../services/accountBalances';
 import getTokenModel from './tokens';
 import getAccountModel from './account';
 import getAccountBalancesModel from './accountBalances';
-import getWalletPageModel, * as actionCreators from './WalletPage';
+import * as actionCreators from './WalletPage';
 
 jest.mock('../services/accountBalances');
 jest.mock('../services/signer');

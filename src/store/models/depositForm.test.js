@@ -1,7 +1,7 @@
 import { createStore } from '../../store';
 import { getDefaultSigner } from '../services/signer';
 import { Contract } from 'ethers';
-import { mockTxReceipt, mockTxReceipt2, mockFailedTxReceipt, mockFailedTxReceipt2, mockTokens } from '../../mockData';
+import { mockFailedTxReceipt, mockFailedTxReceipt2, mockTokens, mockTxReceipt, mockTxReceipt2 } from '../../mockData';
 
 import * as accountBalancesService from '../services/accountBalances';
 
@@ -9,7 +9,8 @@ import getTokenModel from './tokens';
 import getProviderModel from './provider';
 import getAccountModel from './account';
 import getAccountBalancesModel from './accountBalances';
-import getDepositFormModel, * as actionCreators from './depositForm';
+import getDepositFormModel from './depositForm';
+import * as actionCreators from './depositForm';
 
 jest.mock('../services/accountBalances');
 jest.mock('../services/signer');

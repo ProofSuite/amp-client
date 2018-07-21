@@ -1,184 +1,215 @@
 // @flow
-
 import React from 'react';
-import CoinSearch from './CoinSearch';
-import { Card, Icon, Tab, Tabs } from '@blueprintjs/core';
-import { filterer, getObjectFromProperty, sortArray } from '../../utils/helpers';
+import { Colors, Icon } from '@blueprintjs/core';
+import styled from 'styled-components';
+import { reduceDecimals } from '../../utils/converters';
+import Loading from '../Loading';
+import type { CoinRowTypes, CoinSearchTypes, HeaderTypes } from '../../types/coinSearcher';
 
-type Props = {
-  loading: boolean,
-  coinsList: Object,
-  small: boolean,
-  decimals: number,
-};
-type State = {
-  coinsList: Array<Object>,
-  searchFilter: string,
-  filteredCoins: Array<Object>,
-  filterName: string,
-  sortOrder: string,
-  selectedTabId: string,
-  orderChanged: boolean,
-};
+const CoinSearchRenderer = (props: CoinSearchTypes) => {
+  const {
+    state: { filterName, sortOrder },
+    small,
+    loading,
+    filteredCoins,
+    decimals,
+    toggleStar,
+    onChangeFilterName,
+  } = props;
+  return (
+    <div style={{ height: '100%' }}>
+      {small ? (
+        <SmallHeader onChangeFilterName={onChangeFilterName} filterName={filterName} sortOrder={sortOrder} />
+      ) : (
+        <LargeHeader onChangeFilterName={onChangeFilterName} filterName={filterName} sortOrder={sortOrder} />
+      )}
 
-class CoinSearchRenderer extends React.PureComponent<Props, State> {
-  static defaultProps = {
-    decimals: 2,
-    small: false,
-  };
-  state = {
-    coinsList: this.props.coinsList.btc,
-    searchFilter: '',
-    filteredCoins: this.props.coinsList.btc,
-    filterName: 'name',
-    sortOrder: 'asc',
-    selectedTabId: 'btc',
-    orderChanged: false,
-  };
+      {loading && <Loading />}
 
-  toggleStar = (name: string) => {
-    let coin = getObjectFromProperty(this.state.filteredCoins, 'name', name);
-    if (coin) {
-      coin.starred = !coin.starred;
-    }
-    this.forceUpdate();
-  };
-  onChangeSearchFilter = (e: SyntheticInputEvent<>) => {
-    let X;
-    if (e.target.value) {
-      X = this.state.coinsList.filter(function(coin) {
-        return coin.name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1;
-      });
-    } else {
-      X = this.state.coinsList;
-    }
-    this.setState({
-      searchFilter: e.target.value,
-      filteredCoins: X,
-    });
-  };
-  onChangeFilterName = (value: string) => {
-    if (value === this.state.filterName && !this.state.orderChanged) {
-      this.setState({
-        filterName: value,
-        sortOrder: 'desc',
-        orderChanged: true,
-      });
-    } else {
-      this.setState({
-        filterName: value,
-        sortOrder: 'asc',
-        orderChanged: false,
-      });
-    }
-  };
-  onChangeSortOrder = (value: string) => {
-    this.setState({
-      sortOrder: value,
-    });
-  };
-  changeTab = (tabId: string) => {
-    let filteredCoins;
-    if (tabId !== 'starred') {
-      filteredCoins = this.props.coinsList.btc;
-    } else {
-      filteredCoins = this.props.coinsList.btc;
-    }
-    this.setState({
-      selectedTabId: tabId,
-      filteredCoins: filteredCoins,
-    });
-  };
-
-  render() {
-    const {
-      state: { selectedTabId, searchFilter, sortOrder, filterName, filteredCoins },
-      props: { loading, small, decimals },
-      toggleStar,
-      onChangeSearchFilter,
-      onChangeFilterName,
-      onChangeSortOrder,
-      changeTab,
-    } = this;
-    return (
-      <Card
-        style={{ width: '100%', margin: '10px' }}
-        className={small ? 'small-searcher coin-searcher pt-dark' : 'coin-searcher pt-dark'}
-      >
-        <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={changeTab}>
-          <input
-            onChange={onChangeSearchFilter}
-            value={searchFilter}
-            className="pt-input"
-            type="text"
-            placeholder="Search ..."
-            dir="auto"
-          />
-          <Tab
-            id="btc"
-            title="BTC Market"
-            panel={
-              <CoinSearch
-                state={this.state}
-                filteredCoins={sortArray(filteredCoins, filterName, sortOrder).filter(coin =>
-                  filterer(selectedTabId === 'starred', coin, 'starred', true)
-                )}
-                loading={loading}
-                small={small}
-                decimals={decimals}
-                toggleStar={toggleStar}
-                onChangeSearchFilter={onChangeSearchFilter}
-                onChangeFilterName={onChangeFilterName}
-                onChangeSortOrder={onChangeSortOrder}
-              />
-            }
-          />
-          <Tab
-            id="usdt"
-            title="USDT Market"
-            panel={
-              <CoinSearch
-                state={this.state}
-                filteredCoins={sortArray(filteredCoins, filterName, sortOrder).filter(coin =>
-                  filterer(selectedTabId === 'starred', coin, 'starred', true)
-                )}
-                loading={loading}
-                small={small}
-                decimals={decimals}
-                toggleStar={toggleStar}
-                onChangeSearchFilter={onChangeSearchFilter}
-                onChangeFilterName={onChangeFilterName}
-                onChangeSortOrder={onChangeSortOrder}
-              />
-            }
-          />
-          <Tab
-            id="starred"
-            title={<Icon icon="star" />}
-            panel={
-              <CoinSearch
-                state={this.state}
-                filteredCoins={sortArray(filteredCoins, filterName, sortOrder).filter(coin =>
-                  filterer(selectedTabId === 'starred', coin, 'starred', true)
-                )}
-                loading={loading}
-                small={small}
-                decimals={decimals}
-                toggleStar={toggleStar}
-                onChangeSearchFilter={onChangeSearchFilter}
-                onChangeFilterName={onChangeFilterName}
-                onChangeSortOrder={onChangeSortOrder}
-              />
-            }
-          />
-        </Tabs>
-      </Card>
-    );
-  }
-}
-
-CoinSearchRenderer.defaultProps = {
-  loading: false,
-  style: {},
+      {!loading && (
+        <ul className="list">
+          {filteredCoins.map(function(coin, index) {
+            return small ? (
+              <SmallCoinRow key={index} props={{ index, coin, decimals, toggleStar }} />
+            ) : (
+              <CoinRow key={index} props={{ index, coin, decimals, toggleStar }} />
+            );
+          })}
+          {filteredCoins.length === 0 && <NotFound />}
+        </ul>
+      )}
+    </div>
+  );
 };
 export default CoinSearchRenderer;
+
+const NotFound = () => (
+  <li className="not-heading not-found">
+    <span style={{ textAlign: 'center' }}>
+      <Icon style={{ color: '#f2b824' }} icon="issue" />&nbsp; No result found.
+    </span>
+  </li>
+);
+
+const CoinRow = ({ props }: CoinRowTypes) => (
+  <li key={props.index} className="not-heading">
+    <span className="star">
+      <Icon icon={props.coin.starred ? 'star' : 'star-empty'} onClick={() => props.toggleStar(props.coin.name)} />
+    </span>
+    <span className="pair">{props.coin.pair}</span>
+    <span className="name">{props.coin.name}</span>
+    <span className="symbol">{props.coin.symbol}</span>
+    <span className="price">{reduceDecimals(props.coin.lastPrice, props.decimals)}</span>
+    <span
+      className="change"
+      style={parseFloat(props.coin.change) > 0 ? { color: Colors.GREEN5 } : { color: Colors.RED4 }}
+    >
+      {reduceDecimals(props.coin.change, props.decimals)}%
+    </span>
+    <span className="price">{reduceDecimals(props.coin.high, props.decimals)}</span>
+    <span className="price">{reduceDecimals(props.coin.low, props.decimals)}</span>
+    <span className="price">{reduceDecimals(props.coin.volume, props.decimals)}</span>
+  </li>
+);
+
+const SmallCoinRow = ({ props }: CoinRowTypes) => (
+  <li key={props.index} className="not-heading">
+    <span className="star">
+      <Icon icon={props.coin.starred ? 'star' : 'star-empty'} onClick={() => props.toggleStar(props.coin.name)} />
+    </span>
+    <span className="symbol">{props.coin.symbol}</span>
+    <span className="price">{reduceDecimals(props.coin.lastPrice, props.decimals)}</span>
+    {parseFloat(props.coin.change) > 0 ? (
+      <PositiveChange className="change">{reduceDecimals(props.coin.change, props.decimals)}%</PositiveChange>
+    ) : (
+      <NegativeChange className="change">{reduceDecimals(props.coin.change, props.decimals)}%</NegativeChange>
+    )}
+    <span className="price">{reduceDecimals(props.coin.volume, props.decimals)}</span>
+  </li>
+);
+
+const SmallHeader = (props: HeaderTypes) => {
+  const { onChangeFilterName, filterName, sortOrder } = props;
+  return (
+    <ul className="heading">
+      <li className="heading">
+        <span className="star">&nbsp;</span>
+        <span className="symbol" onClick={() => onChangeFilterName('symbol')}>
+          Symbol
+          {filterName === 'symbol' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="price" onClick={() => onChangeFilterName('lastPrice')}>
+          Last Price
+          {filterName === 'lastPrice' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="change" onClick={() => onChangeFilterName('change')}>
+          24hr Change
+          {filterName === 'change' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="price" onClick={() => onChangeFilterName('volume')}>
+          Volume
+          {filterName === 'volume' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+      </li>
+    </ul>
+  );
+};
+
+const LargeHeader = (props: HeaderTypes) => {
+  const { onChangeFilterName, filterName, sortOrder } = props;
+  return (
+    <ul className="heading">
+      <li className="heading">
+        <span className="star">&nbsp;</span>
+        <span className="pair" onClick={() => onChangeFilterName('pair')}>
+          Pair
+          {filterName === 'pair' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="name" onClick={() => onChangeFilterName('name')}>
+          Name
+          {filterName === 'name' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="symbol" onClick={() => onChangeFilterName('symbol')}>
+          Symbol
+          {filterName === 'symbol' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="price" onClick={() => onChangeFilterName('lastPrice')}>
+          Last Price
+          {filterName === 'lastPrice' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="change" onClick={() => onChangeFilterName('change')}>
+          24hr Change
+          {filterName === 'change' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="price" onClick={() => onChangeFilterName('high')}>
+          24hr High
+          {filterName === 'high' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="price" onClick={() => onChangeFilterName('low')}>
+          24hr Low
+          {filterName === 'low' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+        <span className="price" onClick={() => onChangeFilterName('volume')}>
+          Volume
+          {filterName === 'volume' && (
+            <span>
+              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
+            </span>
+          )}
+        </span>
+      </li>
+    </ul>
+  );
+};
+
+const NegativeChange = styled.span`
+  color: ${Colors.RED4} !important;
+`;
+
+const PositiveChange = styled.span`
+  color: ${Colors.GREEN5} !important;
+`;

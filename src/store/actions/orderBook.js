@@ -1,8 +1,8 @@
 const actionTypes = {
-  saveData: 'ohlcv/SAVE_DATA',
+  saveData: 'orderBook/SAVE_DATA',
 };
 
-export function saveData(data: Array<Object>) {
+export function saveData(data: any) {
   return {
     type: actionTypes.saveData,
     payload: { data },

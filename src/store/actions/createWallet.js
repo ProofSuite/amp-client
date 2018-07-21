@@ -1,5 +1,5 @@
 //@flow
-import type { AddWalletAction, RemoveWalletAction, CreateWalletAction } from '../../types/wallets';
+import type { CreateWalletAction, RemoveWalletAction } from '../../types/wallets';
 
 const actionTypes = {
   createWallet: 'createWallet/CREATE',

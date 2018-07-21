@@ -15,6 +15,13 @@ export type HeaderTypes = {
   sortOrder: string,
 };
 
+export type CoinSearcherState = {
+  coinsList: Array<Object>,
+  loading: boolean,
+  small: boolean,
+  decimals: number,
+};
+
 export type CoinRowTypes = {
   props: {
     index: number,

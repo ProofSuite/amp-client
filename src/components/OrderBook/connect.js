@@ -1,16 +1,14 @@
 // @flow
 import { connect } from 'react-redux';
-import ohlcvModel, { updateTimeLine } from '../../store/models/ohlcv';
+import orderBookModel from '../../store/models/orderBook';
 
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
-  return ohlcvModel(state).getState();
+  return orderBookModel(state).getState();
 };
 
-export const mapDispatchToProps = {
-  updateTimeLine,
-};
+export const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
