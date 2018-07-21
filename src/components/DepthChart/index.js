@@ -1,3 +1,5 @@
-import DepthChartRenderer from './DepthChartRenderer';
+// @flow
+import DepthChart from './DepthChart';
+import connect from './connect';
 
-export default DepthChartRenderer;
+export default connect(DepthChart);
