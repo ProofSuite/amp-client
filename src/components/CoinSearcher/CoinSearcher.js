@@ -99,6 +99,7 @@ class CoinSearcher extends React.PureComponent<Props, State> {
       filterCoins,
     } = this;
     const filteredSortedCoins = filterCoins(coins);
+
     return (
       <Card
         style={{ width: '100%', margin: '10px' }}

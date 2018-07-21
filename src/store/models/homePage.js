@@ -7,10 +7,8 @@ import { getData } from '../services/homePage';
 import * as ohlcvActionCreators from '../actions/ohlcv';
 import * as orderBookActionCreators from '../actions/orderBook';
 import * as tradeHistoryActionCreators from '../actions/tradeHistory';
-import * as orderHistoryActionCreators from '../actions/orderHistory';
 import * as depthChartActionCreators from '../actions/depthChart';
-
-// import * as orderHistoryActionCreators from '../actions/orderHistory';
+import * as orderHistoryActionCreators from '../actions/orderHistory';
 import * as coinSearcherActionCreators from '../actions/coinSearcher';
 
 import * as orderList from '../../jsons/ordersList.json';
