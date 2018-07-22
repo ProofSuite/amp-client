@@ -10,6 +10,7 @@ import * as tradeHistoryActionCreators from '../actions/tradeHistory';
 import * as depthChartActionCreators from '../actions/depthChart';
 import * as orderHistoryActionCreators from '../actions/orderHistory';
 import * as coinSearcherActionCreators from '../actions/coinSearcher';
+import * as orderFormActionCreators from '../actions/orderForm';
 
 import * as orderList from '../../jsons/ordersList.json';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
@@ -50,6 +51,17 @@ const depthChartData = {
 const coinSearcherData = {
   coinsList: coinsList.list,
 };
+const orderFormData = {
+  askPrice: 0.25,
+  bidPrice: 0.1,
+  totalQuoteBalance: 100,
+  totalBaseBalance: 1000,
+  formName: 'Sell',
+  quoteToken: 'ETH',
+  baseToken: 'USD',
+  decimals: 7,
+  loggedIn: false,
+};
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
   return async (dispatch, getState) => {
@@ -61,5 +73,6 @@ export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
     dispatch(orderHistoryActionCreators.saveData(orderHistoryData));
     dispatch(depthChartActionCreators.saveData(depthChartData));
     dispatch(coinSearcherActionCreators.saveData(coinSearcherData));
+    dispatch(orderFormActionCreators.saveData(orderFormData));
   };
 };
