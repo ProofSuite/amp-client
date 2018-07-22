@@ -7,6 +7,7 @@ import etherTxActionTypes from './actions/etherTx';
 import orderBookActionTypes from './actions/orderBook';
 import tradeHistoryActionTypes from './actions/tradeHistory';
 import orderHistoryActionTypes from './actions/orderHistory';
+import orderFromActionTypes from './actions/orderForm';
 import depthChartActionTypes from './actions/depthChart';
 import ohlcvActionTypes from './actions/ohlcv';
 import tokensActionTypes from './actions/tokens';
@@ -25,6 +26,7 @@ import * as homePageEvents from './domains/homePage';
 import * as orderBookEvents from './domains/orderBook';
 import * as tradeHistoryEvents from './domains/tradeHistory';
 import * as orderHistoryEvents from './domains/orderHistory';
+import * as orderFormEvents from './domains/orderForm';
 import * as depthChartEvents from './domains/depthChart';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
@@ -137,6 +139,17 @@ export const orderHistory = createReducer(action => {
 
     default:
       return orderHistoryEvents.initialized();
+  }
+});
+
+export const orderForm = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case orderFromActionTypes.saveData:
+      return orderFormEvents.saveData(payload.data);
+
+    default:
+      return orderFormEvents.initialized();
   }
 });
 

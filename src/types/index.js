@@ -10,6 +10,7 @@ import type { HomeState } from './homePage';
 import type { TradeHistoryState } from './tradeHistory';
 import type { DepthChartState } from './depthChart';
 import type { OrderHistoryState } from './orderHistory';
+import type { OrderFormState } from './orderForm';
 import type { TokenState, TokenAction, TokenEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
 import type { DepositFormState, DepositFormAction, DepositFormEvent } from './depositForm';
@@ -53,6 +54,7 @@ export type State = {
   orderBook: OrderBookState,
   tradeHistory: TradeHistoryState,
   orderHistory: OrderHistoryState,
+  orderForm: OrderFormState,
   depthChart: DepthChartState,
   etherTx: EtherTxState,
   tokens: TokenState,
