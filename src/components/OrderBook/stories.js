@@ -11,26 +11,12 @@ storiesOf('OrderBook', module)
   .add(
     'Loading state',
     withInfo({ text: README, source: false })(() => (
-      <OrderBook
-        buyOrderList={orderList.list}
-        sellOrderList={orderList.list}
-        baseToken="ETH"
-        quoteToken="USDT"
-        loading={true}
-        decimals={7}
-      />
+      <OrderBook buyOrderList={[]} sellOrderList={[]} baseToken="ETH" quoteToken="USDT" />
     ))
   )
   .add(
     'Loaded',
     withInfo({ text: README, source: false })(() => (
-      <OrderBook
-        buyOrderList={orderList.list}
-        sellOrderList={orderList.list}
-        baseToken="ETH"
-        quoteToken="USDT"
-        loading={false}
-        decimals={7}
-      />
+      <OrderBook buyOrderList={orderList.list} sellOrderList={orderList.list} baseToken="ETH" quoteToken="USDT" />
     ))
   );

@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import { sortArray } from '../../utils/helpers';
 
 type Props = {
-  loading: boolean,
-  decimals: number,
   sellOrderList: Array<Object>,
   buyOrderList: Array<Object>,
   quoteToken: string,
@@ -15,17 +13,16 @@ type Props = {
 
 export default class OrderBook extends React.PureComponent<Props> {
   static defaultProps = {
-    decimals: 2,
+    decimals: 6,
   };
 
   render() {
-    const { buyOrderList, sellOrderList, loading, baseToken, quoteToken, decimals } = this.props;
+    const { buyOrderList, sellOrderList, baseToken, quoteToken, decimals } = this.props;
     return (
       <Row>
         <OrderBookRenderer
           orderList={sortArray(sellOrderList, 'price')}
           bookName="Sell"
-          loading={loading}
           baseToken={baseToken}
           quoteToken={quoteToken}
           decimals={decimals}
@@ -33,7 +30,6 @@ export default class OrderBook extends React.PureComponent<Props> {
         <OrderBookRenderer
           orderList={sortArray(buyOrderList, 'price')}
           bookName="Buy"
-          loading={loading}
           baseToken={baseToken}
           quoteToken={quoteToken}
           decimals={decimals}
