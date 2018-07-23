@@ -29,13 +29,11 @@ const tradeHistoryData = {
   tradeHistory: tradeHistory.list,
   loading: false,
   decimals: 7,
-  loggedIn: true,
+  loggedIn: false,
 };
 const orderHistoryData = {
   orderHistory: orderHistory.list,
   userOrderHistory: orderHistory.list,
-  loading: false,
-  decimals: 7,
   authenticated: true,
 };
 

@@ -4,8 +4,6 @@ import type { OrderHistoryState } from '../../types/orderHistory';
 const initialState: OrderHistoryState = {
   orderHistory: [{}],
   userOrderHistory: [{}],
-  loading: true,
-  decimals: 7,
   authenticated: false,
 };
 
@@ -14,11 +12,9 @@ export const initialized = () => {
   return event;
 };
 
-export const saveData = (data: OrderHistoryState) => {
+export const dataSaved = (data: OrderHistoryState) => {
   const event = (state: OrderHistoryState) => ({
     ...state,
-    loading: data.loading,
-    decimals: data.decimals,
     orderHistory: data.orderHistory,
     userOrderHistory: data.userOrderHistory,
     authenticated: data.authenticated,

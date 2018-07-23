@@ -131,7 +131,7 @@ export const orderHistory = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case orderHistoryTypes.saveData:
-      return orderHistoryEvents.saveData(payload.data);
+      return orderHistoryEvents.dataSaved(payload.data);
 
     default:
       return orderHistoryEvents.initialized();

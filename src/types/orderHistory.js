@@ -7,9 +7,7 @@ export type Order = {
 };
 
 export type OrderHistoryState = {
-  orderHistory: Array<Order>,
-  userOrderHistory: Array<Order>,
-  loading: boolean,
-  decimals: number,
+  orderHistory: Array<Object>,
+  userOrderHistory: Array<Object>,
   authenticated: boolean,
 };
