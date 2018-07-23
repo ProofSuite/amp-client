@@ -146,7 +146,7 @@ export const orderForm = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case orderFromActionTypes.saveData:
-      return orderFormEvents.saveData(payload.data);
+      return orderFormEvents.dataSaved(payload.data);
 
     default:
       return orderFormEvents.initialized();

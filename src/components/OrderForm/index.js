@@ -1,3 +1,3 @@
-import OrderFormRenderer from './OrderFormRenderer';
+import OrderForm from './OrderForm';
 import connect from './connect';
-export default connect(OrderFormRenderer);
+export default connect(OrderForm);

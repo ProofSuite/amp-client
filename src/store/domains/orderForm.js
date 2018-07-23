@@ -9,8 +9,6 @@ const initialState: OrderFormState = {
   formName: '',
   quoteToken: '',
   baseToken: '',
-  decimals: 7,
-  loggedIn: false,
 };
 
 export const initialized = () => {
@@ -18,7 +16,7 @@ export const initialized = () => {
   return event;
 };
 
-export const saveData = (data: OrderFormState) => {
+export const dataSaved = (data: OrderFormState) => {
   const event = (state: OrderFormState) => ({
     ...state,
     askPrice: data.askPrice,
@@ -28,8 +26,6 @@ export const saveData = (data: OrderFormState) => {
     formName: data.formName,
     quoteToken: data.quoteToken,
     baseToken: data.baseToken,
-    decimals: data.decimals,
-    loggedIn: data.loggedIn,
   });
   return event;
 };
@@ -45,5 +41,12 @@ export const buyLimit = (data: OrderFormState) => {
 export default function model(state: OrderFormState) {
   return {
     getState: () => state,
+    getAskPrice: () => state.askPrice,
+    getBidPrice: () => state.bidPrice,
+    getTotalQuoteBalance: () => state.totalQuoteBalance,
+    getTotalBaseBalance: () => state.totalBaseBalance,
+    getFormName: () => state.formName,
+    getQuoteToken: () => state.quoteToken,
+    getBaseToken: () => state.baseToken,
   };
 }
