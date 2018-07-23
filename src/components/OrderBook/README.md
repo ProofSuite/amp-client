@@ -7,8 +7,6 @@ import OrderBook from '../../components/OrderBook';
 * `baseToken` - Base Token/Coin/currenct
 * `sellOrderList` - List of Sell orders
 * `buyOrderList` - List of Buy orders
-* `loading` - Loading state of orders List
-* `decimals` - Number of figures to show after decimal point
 
 #### Example
 ```js
@@ -17,7 +15,5 @@ import OrderBook from '../../components/OrderBook';
   sellOrderList={sellOrderList}
   baseToken="ETH"
   quoteToken="USDT"
-  loading={false}
-  decimals={5}
 />
 ```
