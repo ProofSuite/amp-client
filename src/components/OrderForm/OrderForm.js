@@ -2,7 +2,7 @@
 import React from 'react';
 import Form from './Form';
 import { Card, Tab, Tabs } from '@blueprintjs/core';
-import { reduceDecimals } from '../../utils/converters';
+import { round } from '../../utils/converters';
 
 type Props = {
   formName: string,
@@ -10,10 +10,9 @@ type Props = {
   bidPrice: number,
   totalQuoteBalance: number,
   totalBaseBalance: number,
-  loggedIn: boolean,
   baseToken: string,
   quoteToken: string,
-  decimals: number,
+  loggedIn?: boolean,
   handleLimit: any => void,
   handleStopLimit: any => void,
 };
@@ -31,6 +30,7 @@ type State = {
 class OrderForm extends React.PureComponent<Props, State> {
   static defaultProps = {
     decimals: 7,
+    loggedIn: true,
   };
   state = {
     portion: 0,
@@ -74,16 +74,16 @@ class OrderForm extends React.PureComponent<Props, State> {
       let total = price * amount;
       this.setState({
         portion: portion,
-        amount: reduceDecimals(amount, decimals),
-        total: reduceDecimals(total, decimals),
+        amount: round(amount, decimals),
+        total: round(total, decimals),
       });
     } else {
       let total = (totalBaseBalance / 100) * portion;
       amount = total / price;
       this.setState({
         portion: portion,
-        amount: reduceDecimals(amount, decimals),
-        total: reduceDecimals(total, decimals),
+        amount: round(amount, decimals),
+        total: round(total, decimals),
       });
     }
   };
@@ -97,7 +97,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       total = amount * targetValue;
 
     this.setState({
-      total: reduceDecimals(total, decimals),
+      total: round(total, decimals),
       price: targetValue,
     });
   };
@@ -121,7 +121,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       total = amount * targetValue;
 
     this.setState({
-      total: reduceDecimals(total, decimals),
+      total: round(total, decimals),
       stopPrice: targetValue,
     });
   };
@@ -140,7 +140,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       total = price * targetValue;
     }
     this.setState({
-      total: reduceDecimals(total, decimals),
+      total: round(total, decimals),
       amount: targetValue,
     });
   };
@@ -159,7 +159,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       amount = parseFloat(targetValue / price);
     }
     this.setState({
-      amount: reduceDecimals(amount, decimals),
+      amount: round(amount, decimals),
       total: parseFloat(e.target.value),
     });
   };
@@ -257,6 +257,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       changeTab,
       handleTxClick,
     } = this;
+    console.log(this.props);
     return (
       <Card className="pt-dark order-form">
         <h5>

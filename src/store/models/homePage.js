@@ -59,8 +59,6 @@ const orderFormData = {
   formName: 'Sell',
   quoteToken: 'ETH',
   baseToken: 'USD',
-  decimals: 7,
-  loggedIn: false,
 };
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
