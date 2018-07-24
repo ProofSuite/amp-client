@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore as baseCreateStore } from 'redux';
 import thunk from 'redux-thunk';
+// import { createStore } from 'redux'
 import * as reducers from './reducers';
 import '../styles/css/index.css';
 
@@ -14,6 +15,19 @@ const enhancers = [applyMiddleware(...middlewares)];
 const storeEnhancer = composeEnhancers(...enhancers);
 const rootReducer = combineReducers(reducers);
 
-export function createStore(preloadedState) {
+export function configureStore(preloadedState) {
   return baseCreateStore(rootReducer, preloadedState, storeEnhancer);
 }
+
+export const createStore = () => {
+  const store = configureStore(rootReducer);
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (module.hot) {
+      module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer);
+      });
+    }
+  }
+  return store;
+};

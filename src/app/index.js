@@ -13,7 +13,7 @@ import TestReduxandApis from './TestReduxandApis';
 
 import '../styles/css/app.css';
 
-function App(props) {
+export function App(props) {
   return (
     <Layout>
       <Switch>
@@ -40,5 +40,3 @@ export function bootstrap(store, container) {
 
   ReactDOM.render(app, container);
 }
-
-export default App;
