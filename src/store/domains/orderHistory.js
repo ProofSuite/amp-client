@@ -17,7 +17,6 @@ export const dataSaved = (data: OrderHistoryState) => {
     ...state,
     orderHistory: data.orderHistory,
     userOrderHistory: data.userOrderHistory,
-    authenticated: data.authenticated,
   });
   return event;
 };
@@ -25,5 +24,7 @@ export const dataSaved = (data: OrderHistoryState) => {
 export default function model(state: OrderHistoryState) {
   return {
     getState: () => state,
+    getOrderHistory: () => state.orderHistory,
+    getUserOrderHistory: () => state.userOrderHistory,
   };
 }
