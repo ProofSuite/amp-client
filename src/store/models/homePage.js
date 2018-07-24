@@ -32,16 +32,10 @@ const orderBookData = {
 };
 const tradeHistoryData = {
   tradeHistory: tradeHistory.list,
-  loading: false,
-  decimals: 7,
-  loggedIn: true,
 };
 const orderHistoryData = {
   orderHistory: orderHistory.list,
   userOrderHistory: orderHistory.list,
-  loading: false,
-  decimals: 7,
-  authenticated: true,
 };
 const depthChartData = {
   data: bidAsk.list,

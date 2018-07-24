@@ -1,13 +1,18 @@
 import React from 'react';
-import { reduceDecimals, toDate } from '../../utils/converters';
+import { round, toDate } from '../../utils/converters';
 import Loading from '../Loading';
 import { Colors } from '@blueprintjs/core';
 import styled from 'styled-components';
 import type { ListRow, TradeListContainerTypes, TradeListTypes } from '../../types/tradeHistory';
 
 const TradeHistory = (props: TradeListContainerTypes) => {
-  const { decimals, loading, tradeHistory } = props;
-  return loading ? <Loading /> : <HistroyList tradeHistory={tradeHistory} decimals={decimals} />;
+  const { decimals, tradeHistory } = props;
+  const tradeSize = Object.keys(tradeHistory[0]).length;
+  return tradeHistory.length < 2 && tradeSize < 1 ? (
+    <Loading />
+  ) : (
+    <HistroyList tradeHistory={tradeHistory} decimals={decimals} />
+  );
 };
 export default TradeHistory;
 
@@ -38,8 +43,8 @@ const Row = ({ props }: ListRow) => {
       <span className="index">{index + 1}</span>
       <span className="time">{toDate(trade.time)}</span>
       {trade.type === 'sell' ? <Sell>{trade.type}</Sell> : <Buy>{trade.type}</Buy>}
-      <span className="amount">{reduceDecimals(trade.amount, decimals)}</span>
-      <span className="price">{reduceDecimals(trade.price, decimals)}</span>
+      <span className="amount">{round(trade.amount, decimals)}</span>
+      <span className="price">{round(trade.price, decimals)}</span>
     </li>
   );
 };
