@@ -3,7 +3,7 @@ export type AccountBalanceState = {
   symbol: string,
   balance: number,
   subscribed: boolean,
-  allowed: boolean,
+  allowance: boolean,
 };
 
 export type AccountBalancesState = { +[string]: AccountBalanceState };

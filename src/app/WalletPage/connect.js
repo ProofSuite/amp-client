@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import createSelector, { queryAccountData } from '../../store/models/WalletPage';
+import createSelector, { queryAccountData } from '../../store/models/walletPage';
 
 export function mapStateToProps(state, props) {
   const depositTableSelector = createSelector(state);

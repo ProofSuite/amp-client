@@ -1,4 +1,4 @@
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 
 import { getDefaultSigner } from '../services/signer';
 import etherTxModel from './etherTx';
@@ -18,7 +18,7 @@ it('handles validateEtherTx (valid) correctly', async () => {
   let signer = jest.fn(() => Promise.resolve({ provider: { estimateGas } }));
   getDefaultSigner.mockImplementation(signer);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.validateEtherTx(mockEtherTxParams));
 
@@ -32,7 +32,7 @@ it('handles validateEtherTx (invalid) correctly', async () => {
   let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { estimateGas } }));
   getDefaultSigner.mockImplementation(getDefaultSignerMock);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
 
   await store.dispatch(actionCreators.validateEtherTx({ mockEtherTxParams }));
@@ -47,7 +47,7 @@ it('handles sendEtherTx (transaction confirmed) correctly', async () => {
   let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction }, sendTransaction }));
   getDefaultSigner.mockImplementation(getDefaultSignerMock);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
 
   await store.dispatch(actionCreators.sendEtherTx(mockEtherTxParams));
@@ -65,7 +65,7 @@ it('handles sendEtherTx (failed) correctly', async () => {
   let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction }, sendTransaction }));
   getDefaultSigner.mockImplementation(getDefaultSignerMock);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.sendEtherTx(mockEtherTxParams));
 
@@ -81,7 +81,7 @@ it('handles sendEtherTx (throwing an error) correctly', async () => {
   let getDefaultSignerMock = jest.fn(() => Promise.resolve({ provider: { waitForTransaction }, sendTransaction }));
   getDefaultSigner.mockImplementation(getDefaultSignerMock);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.sendEtherTx(mockEtherTxParams));
 
@@ -97,7 +97,7 @@ it('handles validateTransferTokens (valid) correctly', async () => {
   Contract.mockImplementation(contractMock);
   getDefaultSigner.mockImplementation(() => Promise.resolve('signer'));
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.validateTransferTokensTx(mockEtherTxParams));
 
@@ -112,7 +112,7 @@ it('handles validateTransferTokens (invalid) correctly', async () => {
   Contract.mockImplementation(contractMock);
   getDefaultSigner.mockImplementation(() => Promise.resolve('signer'));
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.validateTransferTokensTx(mockEtherTxParams));
 
@@ -129,7 +129,7 @@ it('handles sendTransferTokens (transaction confirmed) correctly', async () => {
   getDefaultSigner.mockImplementation(getDefaultSignerMock);
   Contract.mockImplementation(contractMock);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.sendTransferTokensTx(mockEtherTxParams));
 
@@ -149,7 +149,7 @@ it('handles sendTransferTokensTx (transaction failed) correctly', async () => {
   getDefaultSigner.mockImplementation(getDefaultSignerMock);
   Contract.mockImplementation(contractMock);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.sendTransferTokensTx(mockEtherTxParams));
 
@@ -168,7 +168,7 @@ it('handles sendTransferTokens (throwing an error) correctly', async () => {
   getDefaultSigner.mockImplementation(getDefaultSignerMock);
   Contract.mockImplementation(contractMock);
 
-  const store = createStore();
+  const { store } = createStore();
   model = etherTxModel(store.getState());
   await store.dispatch(actionCreators.sendTransferTokensTx(mockEtherTxParams));
 

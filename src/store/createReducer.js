@@ -1,6 +1,6 @@
 // @flow
-import type { Action, ActionHandler, State } from './index';
+import type { Action, ActionHandler, State } from '../types';
 
-export default function createReducer(actionHandler: ActionHandler) {
-  return (state: State, action: Action) => actionHandler(action)(state);
+export default function createReducer(actionHandler: *) {
+  return (state: *, action: *) => actionHandler(action)(state);
 }

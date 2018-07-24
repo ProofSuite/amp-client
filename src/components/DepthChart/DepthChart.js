@@ -45,5 +45,5 @@ class DepthChart extends React.Component<Props> {
       </div>
     );
   }
-};
+}
 export default DepthChart;

@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import createSelector, * as actionCreators from '../../store/models/Layout';
+import layoutSelector, * as actionCreators from '../../store/models/layout';
 
 export function mapStateToProps(state, props) {
-  const selector = createSelector(state);
+  const selector = layoutSelector(state);
 
   return {
-    defaultAccount: null,
+    authenticated: selector.authenticated,
+    address: selector.account,
   };
 }
 

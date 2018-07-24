@@ -48,3 +48,12 @@ export function filterer(filter, coin, wrt, filterValue) {
   }
   return true;
 }
+
+export const isJson = text => {
+  return /^[\],:{}\s]*$/.test(
+    text
+      .replace(/\\["\\\/bfnrtu]/g, '@')
+      .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+      .replace(/(?:^|:|,)(?:\s*\[)+/g, '')
+  );
+};

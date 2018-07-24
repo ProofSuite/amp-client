@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 import connect, { mapStateToProps, mapDispatchToProps } from './connect';
 import providerModel, * as providerActionCreators from '../../store/models/provider';
 
@@ -52,7 +52,7 @@ describe('mapDispatchToProps(dispatch, props)', () => {
 
 describe('connect(Component)', () => {
   it('injects a certain prop and renders without crashing', () => {
-    const store = createStore();
+    const { store } = createStore();
     const ConnectedTestComponent = connect(props => {
       expect(props).toBeDefined();
       expect(props).toHaveProperty('setProvider');

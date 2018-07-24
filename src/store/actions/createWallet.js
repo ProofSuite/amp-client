@@ -7,18 +7,18 @@ const actionTypes = {
   removeWallet: 'wallets/REMOVE', //DEPRECATED
 };
 
-export function createWallet(address: string, serialized: string): CreateWalletAction {
+export function createWallet(address: string, encryptedWallet: string): CreateWalletAction {
   return {
     type: actionTypes.createWallet,
-    payload: { address, serialized },
+    payload: { address, encryptedWallet },
   };
 }
 
 //DEPRECATED ?
-export function addWallet(address: string, serialized: string): CreateWalletAction {
+export function addWallet(address: string, encryptedWallet: string): CreateWalletAction {
   return {
     type: actionTypes.createWallet,
-    payload: { address, serialized },
+    payload: { address, encryptedWallet },
   };
 }
 

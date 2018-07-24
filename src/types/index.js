@@ -14,6 +14,8 @@ import type { CoinSearcherState } from './coinSearcher';
 import type { OrderFormState } from './orderForm';
 import type { TokenState, TokenAction, TokenEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
+import type { LoginPageState, LoginPageAction, LoginPageEvent } from './loginPage';
+import type { LogoutPageAction } from './logoutPage';
 import type { DepositFormState, DepositFormAction, DepositFormEvent } from './depositForm';
 import type { SettingsState, SettingsAction, SettingsEvent } from './settings';
 import type { WalletsState, WalletsAction, WalletsEvent } from './wallets';
@@ -30,9 +32,12 @@ export type Action =
   | AccountAction
   | DepositFormAction
   | SettingsAction
-  | WalletsAction;
+  | WalletsAction
+  | LoginPageAction
+  | LogoutPageAction;
 
 export type Event =
+  | LoginPageEvent
   | ProviderEvent
   | EtherBalanceEvent
   | EtherTxEvent
@@ -46,11 +51,12 @@ export type Event =
 export type ActionHandler = Action => Event;
 
 export type State = {
+  loginPage: LoginPageState,
+  homePage: HomeState,
   provider: ProviderState,
   etherBalance: EtherBalanceState,
   accountBalances: AccountBalancesState,
   etherTx: EtherTxState,
-  homePage: HomeState,
   ohlcv: OHLCVState,
   orderBook: OrderBookState,
   tradeHistory: TradeHistoryState,

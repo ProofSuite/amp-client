@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Link, NavLink } from 'react-router-dom';
@@ -15,13 +16,23 @@ import {
   Position,
 } from '@blueprintjs/core';
 
-function Layout({ children, defaultAccount, locale, messages }) {
+import type { Node } from 'react';
+
+type Props = {
+  children?: Node,
+  authenticated: boolean,
+  address: string,
+  locale: string,
+  messages: string,
+};
+
+function Layout(props: Props) {
+  const { children, authenticated, address, locale, messages } = props;
+
   const menu = (
     <Menu>
       <MenuItem>
-        <MenuItemLink to="/settings" icon="settings">
-          Setting
-        </MenuItemLink>
+        <MenuItemLink to="/">Current Account: ${address}</MenuItemLink>
       </MenuItem>
       <MenuDivider />
       <MenuItem>
@@ -47,11 +58,11 @@ function Layout({ children, defaultAccount, locale, messages }) {
               <NavbarLink to="/settings">Settings</NavbarLink>
             </NavbarGroup>
             <NavbarGroup align={Alignment.RIGHT}>
-              {!defaultAccount ? (
+              {!authenticated ? (
                 <NavbarLink to="/login">Login</NavbarLink>
               ) : (
-                <Popover content={menu} position={Position.BOTTOM_RIGHT}>
-                  <Button icon="key" text={defaultAccount} minimal />
+                <Popover content={menu} position={Position.BOTTOM_RIGHT} minimal>
+                  <Button icon="key" text="Authenticated" />
                 </Popover>
               )}
             </NavbarGroup>

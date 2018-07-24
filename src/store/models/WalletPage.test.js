@@ -1,4 +1,4 @@
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 import * as accountBalancesService from '../services/accountBalances';
 
 import getTokenModel from './tokens';
@@ -30,7 +30,7 @@ beforeEach(() => {
 
 it('handles queryAccountData properly', async () => {
   const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
-  const store = createStore();
+  const { store } = createStore();
   const ether = {
     address: '0x0',
     symbol: 'ETH',

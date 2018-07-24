@@ -10,7 +10,6 @@ import etherTxModel, {
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
-  console.log('etherTx state:- ', state);
   return etherTxModel(state).getState();
 };
 

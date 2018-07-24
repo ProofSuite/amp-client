@@ -20,3 +20,13 @@ it('handles updated event properly', () => {
 
   expect(accountModel.address()).toEqual('0x44809695706c252435531029b1e9d7d0355d475f');
 });
+
+it('handles removed event', () => {
+  const accountModel = getModel([
+    eventCreators.initialized(),
+    eventCreators.accountUpdated('0x44809695706c252435531029b1e9d7d0355d475f'),
+    eventCreators.accountRemoved(),
+  ]);
+
+  expect(accountModel.address()).toEqual(null);
+});

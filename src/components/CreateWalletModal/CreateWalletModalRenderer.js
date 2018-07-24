@@ -33,7 +33,7 @@ type Props = {
   handleChange: (SyntheticInputEvent<>) => void,
   storeWallet: boolean,
   storePrivateKey: boolean,
-  serialized: string,
+  encryptedWallet: string,
 };
 
 const CreateWalletWizardRenderer = (props: Props) => {
@@ -43,7 +43,7 @@ const CreateWalletWizardRenderer = (props: Props) => {
     hideModal,
     currentStep,
     password,
-    serialized,
+    encryptedWallet,
     showEncryptionProgress,
     encryptionPercentage,
     goToDownloadWallet,
@@ -87,7 +87,7 @@ const CreateWalletWizardRenderer = (props: Props) => {
         encryptionPercentage={encryptionPercentage}
       />
     ),
-    '1': <WalletDownloadStep address={address} serialized={serialized} />,
+    '1': <WalletDownloadStep address={address} encryptedWallet={encryptedWallet} />,
     '2': (
       <WalletInformationStep
         address={address}
@@ -161,12 +161,12 @@ const WalletPasswordStep = props => {
 };
 
 const WalletDownloadStep = props => {
-  const { serialized, address } = props;
+  const { encryptedWallet, address } = props;
   return (
     <WalletDownloadBox>
       <Icon icon="tick-circle" iconSize={150} intent={Intent.SUCCESS} />
       <WalletDownloadHeader>Wallet successfully encrypted</WalletDownloadHeader>
-      <Download file={`${address}.json`} content={serialized}>
+      <Download file={`${address}.json`} content={encryptedWallet}>
         <Button intent={Intent.PRIMARY} minimal>
           Download Wallet
         </Button>

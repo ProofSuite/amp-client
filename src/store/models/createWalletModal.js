@@ -7,7 +7,7 @@ import type { State, ThunkAction } from '../../types';
 
 type CreateWalletParams = {
   address: string,
-  serialized: string,
+  encryptedWallet: string,
   password: string,
   storeWallet: boolean,
   storePrivateKey: boolean,
@@ -20,11 +20,11 @@ export default function getWalletModel(state: State) {
 export function createWallet(params: CreateWalletParams): ThunkAction {
   return async dispatch => {
     try {
-      let { address, serialized, password, storeWallet, storePrivateKey } = params;
-      dispatch(actionCreators.createWallet(address, serialized));
+      let { address, encryptedWallet, password, storeWallet, storePrivateKey } = params;
+      dispatch(actionCreators.createWallet(address, encryptedWallet));
 
-      if (storeWallet) saveEncryptedWalletInLocalStorage(address, serialized);
-      if (storePrivateKey) await savePrivateKeyInSessionStorage(address, password, serialized);
+      if (storeWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
+      if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, password, encryptedWallet });
     } catch (e) {
       console.log(e);
     }

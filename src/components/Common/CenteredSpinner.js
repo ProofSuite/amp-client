@@ -1,8 +1,9 @@
+//@flow
 import React from 'react';
 import styled from 'styled-components';
 import { Spinner } from '@blueprintjs/core';
 
-const SpinnerContainer = props => {
+const SpinnerContainer = () => {
   return (
     <Wrapper>
       <Spinner large intent="primary" />
