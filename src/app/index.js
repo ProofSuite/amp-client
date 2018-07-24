@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Layout from './Layout';
 import LandingPage from './LandingPage';
 import LoginPage from './LoginPage';
@@ -27,18 +25,6 @@ function App(props) {
       </Switch>
     </Layout>
   );
-}
-
-export function bootstrap(store, container) {
-  const app = (
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  ReactDOM.render(app, container);
 }
 
 export default App;

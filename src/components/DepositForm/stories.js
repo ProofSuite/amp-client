@@ -5,10 +5,9 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { Card } from '@blueprintjs/core';
-import { Provider } from 'react-redux';
 
 import { tokens } from '../../data';
-import { createStore } from '../../store';
+import configureStore from '../../store/configureStore';
 import {
   mockTxReceipt,
   mockTxReceipt2,
@@ -22,7 +21,7 @@ import {
 import DepositFormContainer from './index.js';
 import DepositFormRenderer from './DepositFormRenderer';
 
-const customStore = createStore({
+const { store: customStore } = configureStore({
   account: {
     address: '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47',
   },
@@ -31,7 +30,7 @@ const customStore = createStore({
   },
 });
 
-const customStore2 = createStore({
+const { store: customStore2 } = configureStore({
   account: {
     address: '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47',
   },

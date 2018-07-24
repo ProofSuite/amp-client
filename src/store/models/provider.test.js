@@ -1,4 +1,4 @@
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 import * as providerService from '../services/provider';
 
 import getProviderModel from './provider';
@@ -11,7 +11,7 @@ let providerModel;
 let accountModel;
 
 it('returns default provider state', () => {
-  const store = createStore();
+  const { store } = createStore();
 
   providerModel = getProviderModel(store.getState());
   expect(providerModel.getType()).toEqual('local');
@@ -27,7 +27,7 @@ it('handles setProvider (metamask) properly', async () => {
     })
   );
 
-  const store = createStore();
+  const { store } = createStore();
   await store.dispatch(actionCreators.setProvider('test providerOptions'));
 
   providerModel = getProviderModel(store.getState());

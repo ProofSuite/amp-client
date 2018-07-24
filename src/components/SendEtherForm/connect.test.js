@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 import connect, { mapStateToProps, mapDispatchToProps } from './connect';
 import etherTxModel, * as actionCreators from '../../store/models/etherTx';
 
@@ -56,7 +56,7 @@ describe('mapStateToProps(state, props)', () => {
 
 describe('connect(Component)', () => {
   it('injects certain props and renders without crashing', () => {
-    const store = createStore();
+    const { store } = createStore();
     const ConnectedTestComponent = connect(props => {
       expect(props).toBeDefined();
       expect(props).toHaveProperty('validateEtherTx');

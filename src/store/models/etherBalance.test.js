@@ -1,4 +1,4 @@
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 import * as ether from '../services/ether';
 import etherBalanceModel from './etherBalance';
 import * as actionCreators from './etherBalance';
@@ -14,7 +14,7 @@ beforeEach(() => {
 
 it('handle subscribeBalance properly', () => {
   const address = 'test address';
-  const store = createStore();
+  const { store } = createStore();
 
   model = etherBalanceModel(store.getState());
   expect(model.get(address)).toEqual(null);

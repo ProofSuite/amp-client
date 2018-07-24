@@ -1,4 +1,4 @@
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 import { getDefaultSigner } from '../services/signer';
 import { Contract } from 'ethers';
 import { mockFailedTxReceipt, mockFailedTxReceipt2, mockTokens, mockTxReceipt, mockTxReceipt2 } from '../../mockData';
@@ -31,7 +31,7 @@ beforeEach(() => {
 
 it('handles subscribeBalance (token) properly', async () => {
   const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
-  const store = createStore();
+  const { store } = createStore();
   const token = {
     address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
     symbol: 'REQ',
@@ -81,7 +81,7 @@ it('handles subscribeBalance (token) properly', async () => {
 });
 
 it('handles subscribeBalance (ether) properly', async () => {
-  const store = createStore();
+  const { store } = createStore();
   const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
   const token = { address: '0x0', symbol: 'ETH' };
 
@@ -126,7 +126,7 @@ it('handles subscribeBalance (ether) properly', async () => {
 });
 
 it('subscribeBalance (ether) updates the depositForm model correctly', async () => {
-  const store = createStore();
+  const { store } = createStore();
   const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
   const token = { address: '0x0', symbol: 'ETH' };
 
@@ -156,7 +156,7 @@ it('subscribeBalance (ether) updates the depositForm model correctly', async () 
 });
 
 it('confirmEtherDeposit (both transactions succeed) updates the depositForm model correctly', async () => {
-  const store = createStore();
+  const { store } = createStore();
   const shouldConvert = true;
   const shouldAllow = true;
   const convertAmount = 100;
@@ -208,7 +208,7 @@ it('confirmEtherDeposit (both transactions succeed) updates the depositForm mode
 });
 
 it('confirmEtherDeposit (both transactions fail) updates the depositForm model correctly', async () => {
-  const store = createStore();
+  const { store } = createStore();
   const shouldConvert = true;
   const shouldAllow = true;
   const convertAmount = 100;
@@ -260,7 +260,7 @@ it('confirmEtherDeposit (both transactions fail) updates the depositForm model c
 });
 
 it('confirmEtherDeposit (one transactions fails) updates the depositForm model correctly', async () => {
-  const store = createStore();
+  const { store } = createStore();
   const shouldConvert = true;
   const shouldAllow = true;
   const convertAmount = 100;
@@ -312,7 +312,7 @@ it('confirmEtherDeposit (one transactions fails) updates the depositForm model c
 });
 
 it('confirmTokenDeposit (transaction succeeds updates the depositForm model correctly', async () => {
-  const store = createStore();
+  const { store } = createStore();
   const shouldAllow = true;
 
   let waitForTransaction = jest.fn(() => Promise.resolve(mockTxReceipt));
@@ -355,7 +355,7 @@ it('confirmTokenDeposit (transaction succeeds updates the depositForm model corr
 });
 
 it('confirmTokenDeposit (transaction fails) updates the depositForm model correctly', async () => {
-  const store = createStore();
+  const { store } = createStore();
   const shouldAllow = true;
 
   let waitForTransaction = jest.fn(() => Promise.resolve(mockFailedTxReceipt));
