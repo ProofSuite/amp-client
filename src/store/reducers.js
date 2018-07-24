@@ -144,7 +144,8 @@ export const coinSearcher = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case coinSearcherTypes.saveData:
-      return coinSearcherEvents.saveData(payload.data);
+      return coinSearcherEvents.dataSaved(payload.data);
+
     case coinSearcherTypes.toggleStar:
       return coinSearcherEvents.toggleStar(payload.data);
 
