@@ -2,15 +2,20 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { NonIdealState, Spinner } from '@blueprintjs/core';
 
-class LogoutPage extends React.PureComponent {
+type Props = {
+  logout: void => void,
+  authenticated: boolean,
+};
+
+class LogoutPage extends React.PureComponent<Props> {
   componentDidMount() {
-    //this.props.logout();
+    this.props.logout();
   }
 
   render() {
-    const { isDefaultAccountSet } = this;
+    const { authenticated } = this.props;
 
-    if (!isDefaultAccountSet) {
+    if (!authenticated) {
       return <Redirect to="/" />;
     }
 
