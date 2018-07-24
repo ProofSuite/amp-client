@@ -5,3 +5,9 @@ export type Order = {
   amount: number,
   price: number,
 };
+
+export type OrderHistoryState = {
+  orderHistory: Array<Object>,
+  userOrderHistory: Array<Object>,
+  authenticated: boolean,
+};

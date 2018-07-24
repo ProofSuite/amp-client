@@ -2163,8 +2163,8 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000869"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000869.tgz#c3da59fa8d9456df88a24bb292ede0e3798798cb"
+  version "1.0.30000870"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000870.tgz#f397cd64922c24f85d0ce7803c9bd5c5a1571b16"
 
 caniuse-lite@^1.0.30000748, caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805, caniuse-lite@^1.0.30000844:
   version "1.0.30000865"
@@ -2820,8 +2820,8 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
     cssom "0.3.x"
 
 csstype@^2.2.0:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.5.tgz#4125484a3d42189a863943f23b9e4b80fedfa106"
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.6.tgz#2ae1db2319642d8b80a668d2d025c6196071e788"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -7672,8 +7672,8 @@ react-color@^2.14.0:
     tinycolor2 "^1.4.1"
 
 react-datetime@^2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.14.0.tgz#c7859c5b765275d7980f1cca27c03a727ff9ccef"
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.15.0.tgz#a8f7da6c58b6b45dbeea32d4e8485db17614e12c"
   dependencies:
     create-react-class "^15.5.2"
     object-assign "^3.0.0"
@@ -7745,8 +7745,8 @@ react-fuzzy@^0.5.2:
     prop-types "^15.5.9"
 
 react-html-attributes@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/react-html-attributes/-/react-html-attributes-1.4.2.tgz#0d2ccf134fc79b2d3543837dc1591d32b7b903f9"
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/react-html-attributes/-/react-html-attributes-1.4.3.tgz#8c36c35fce6b750938d286af428ed1da7625186e"
   dependencies:
     html-element-attributes "^1.0.0"
 

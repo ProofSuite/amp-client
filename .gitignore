@@ -5,9 +5,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-#
-src/styles/css/index.css
-src/styles/css/app.css
+#css
+src/styles/css/*
 
 # Runtime data
 pids

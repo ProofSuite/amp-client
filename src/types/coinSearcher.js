@@ -2,7 +2,6 @@
 export type CoinSearchTypes = {
   state: Object,
   small: boolean,
-  loading: boolean,
   filteredCoins: Array<Object>,
   decimals: number,
   toggleStar: string => void,
@@ -16,10 +15,7 @@ export type HeaderTypes = {
 };
 
 export type CoinSearcherState = {
-  coinsList: Array<Object>,
-  loading: boolean,
-  small: boolean,
-  decimals: number,
+  coinsList: Object,
 };
 
 export type CoinRowTypes = {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Colors, Icon } from '@blueprintjs/core';
 import styled from 'styled-components';
-import { reduceDecimals } from '../../utils/converters';
+import { round } from '../../utils/converters';
 import Loading from '../Loading';
 import type { CoinRowTypes, CoinSearchTypes, HeaderTypes } from '../../types/coinSearcher';
 
@@ -10,12 +10,12 @@ const CoinSearchRenderer = (props: CoinSearchTypes) => {
   const {
     state: { filterName, sortOrder },
     small,
-    loading,
     filteredCoins,
     decimals,
     toggleStar,
     onChangeFilterName,
   } = props;
+  const emptyCoin = Object.keys(filteredCoins[0]).length < 1;
   return (
     <div style={{ height: '100%' }}>
       {small ? (
@@ -24,9 +24,9 @@ const CoinSearchRenderer = (props: CoinSearchTypes) => {
         <LargeHeader onChangeFilterName={onChangeFilterName} filterName={filterName} sortOrder={sortOrder} />
       )}
 
-      {loading && <Loading />}
-
-      {!loading && (
+      {filteredCoins.length < 2 && emptyCoin ? (
+        <Loading />
+      ) : (
         <ul className="list">
           {filteredCoins.map(function(coin, index) {
             return small ? (
@@ -59,16 +59,16 @@ const CoinRow = ({ props }: CoinRowTypes) => (
     <span className="pair">{props.coin.pair}</span>
     <span className="name">{props.coin.name}</span>
     <span className="symbol">{props.coin.symbol}</span>
-    <span className="price">{reduceDecimals(props.coin.lastPrice, props.decimals)}</span>
+    <span className="price">{round(props.coin.lastPrice, props.decimals)}</span>
     <span
       className="change"
       style={parseFloat(props.coin.change) > 0 ? { color: Colors.GREEN5 } : { color: Colors.RED4 }}
     >
-      {reduceDecimals(props.coin.change, props.decimals)}%
+      {round(props.coin.change, props.decimals)}%
     </span>
-    <span className="price">{reduceDecimals(props.coin.high, props.decimals)}</span>
-    <span className="price">{reduceDecimals(props.coin.low, props.decimals)}</span>
-    <span className="price">{reduceDecimals(props.coin.volume, props.decimals)}</span>
+    <span className="price">{round(props.coin.high, props.decimals)}</span>
+    <span className="price">{round(props.coin.low, props.decimals)}</span>
+    <span className="price">{round(props.coin.volume, props.decimals)}</span>
   </li>
 );
 
@@ -78,13 +78,13 @@ const SmallCoinRow = ({ props }: CoinRowTypes) => (
       <Icon icon={props.coin.starred ? 'star' : 'star-empty'} onClick={() => props.toggleStar(props.coin.name)} />
     </span>
     <span className="symbol">{props.coin.symbol}</span>
-    <span className="price">{reduceDecimals(props.coin.lastPrice, props.decimals)}</span>
+    <span className="price">{round(props.coin.lastPrice, props.decimals)}</span>
     {parseFloat(props.coin.change) > 0 ? (
-      <PositiveChange className="change">{reduceDecimals(props.coin.change, props.decimals)}%</PositiveChange>
+      <PositiveChange className="change">{round(props.coin.change, props.decimals)}%</PositiveChange>
     ) : (
-      <NegativeChange className="change">{reduceDecimals(props.coin.change, props.decimals)}%</NegativeChange>
+      <NegativeChange className="change">{round(props.coin.change, props.decimals)}%</NegativeChange>
     )}
-    <span className="price">{reduceDecimals(props.coin.volume, props.decimals)}</span>
+    <span className="price">{round(props.coin.volume, props.decimals)}</span>
   </li>
 );
 

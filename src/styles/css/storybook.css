@@ -121,13 +121,6 @@ ul {
 /*
  * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
  */
-body {
-  background-color: #293742;
-}
-
-/*
- * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
- */
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
@@ -786,6 +779,10 @@ a:hover {
 }
 .depth-chart-container.loading .loading-overlay {
   height: 100%;
+}
+
+body {
+  background: white;
 }
 
 /*# sourceMappingURL=storybook.css.map */

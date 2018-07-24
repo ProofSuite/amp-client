@@ -1,19 +1,19 @@
 // @flow
 import React from 'react';
 import Loading from '../Loading';
-import { reduceDecimals } from '../../utils/converters';
+import { round } from '../../utils/converters';
 import type { OrderListTypes, SingleOrderTypes } from '../../types/orderBook';
 
 type ListTypes = OrderListTypes;
 type SingleOrderProps = SingleOrderTypes;
 
 export const OrderBookRenderer = (props: ListTypes) => {
-  const { bookName, loading, quoteToken, baseToken, decimals, orderList } = props;
+  const { bookName, quoteToken, baseToken, decimals, orderList } = props;
   return (
     <div className={bookName + ' order-book inner pt-dark'}>
       <h5>{bookName}</h5>
-      {loading && <Loading />}
-      {!loading && (
+      {orderList.length < 1 && <Loading />}
+      {orderList.length > 0 && (
         <div className="list-container">
           <ul className="pt-list-unstyled heading">
             <li className="heading">
@@ -39,9 +39,9 @@ const SingleOrder = (props: SingleOrderProps) => {
   return (
     <li className="not-heading">
       <span className="index">{index + 1}</span>
-      <span className="total">{reduceDecimals(order.amount * order.price, decimals)}</span>
-      <span className="amount">{reduceDecimals(order.amount, decimals)}</span>
-      <span className="price">{reduceDecimals(order.price, decimals)}</span>
+      <span className="total">{round(order.amount * order.price, decimals)}</span>
+      <span className="amount">{round(order.amount, decimals)}</span>
+      <span className="price">{round(order.price, decimals)}</span>
     </li>
   );
 };

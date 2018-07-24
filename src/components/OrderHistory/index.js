@@ -1,3 +1,5 @@
+// @flow
 import OrderHistory from './OrderHistory';
+import connect from './connect';
 
-export default OrderHistory;
+export default connect(OrderHistory);
