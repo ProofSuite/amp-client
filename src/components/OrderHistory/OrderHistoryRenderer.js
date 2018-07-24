@@ -8,38 +8,30 @@ type OrderListContainerProps = {
   selectedTabId: string,
   onChange: string => void,
   authenticated: boolean,
-  loading: boolean,
   orderHistory: Array<Object>,
   userOrderHistory: Array<Object>,
 };
 
 type OrderHistoryTableProps = {
-  loading: boolean,
   requireAuthentication: boolean,
   orderHistory: Array<Object>,
 };
 
 const OrderHistoryRenderer = (props: OrderListContainerProps) => {
-  const { selectedTabId, onChange, loading, authenticated, orderHistory, userOrderHistory } = props;
+  const { selectedTabId, onChange, authenticated, orderHistory, userOrderHistory } = props;
   return (
-    <Card className="pt-dark trade-history">
+    <Card className="pt-dark trade-history order-history">
       <h5>Order History</h5>
       <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={onChange}>
         <Tab
           id="all"
           title="Market"
-          panel={<OrderHistoryTable loading={loading} orderHistory={orderHistory} requireAuthentication={false} />}
+          panel={<OrderHistoryTable orderHistory={orderHistory} requireAuthentication={false} />}
         />
         <Tab
           id="mine"
           title="Mine"
-          panel={
-            <OrderHistoryTable
-              loading={loading}
-              orderHistory={userOrderHistory}
-              requireAuthentication={!authenticated}
-            />
-          }
+          panel={<OrderHistoryTable orderHistory={userOrderHistory} requireAuthentication={!authenticated} />}
         />
       </Tabs>
     </Card>
@@ -47,8 +39,14 @@ const OrderHistoryRenderer = (props: OrderListContainerProps) => {
 };
 
 const OrderHistoryTable = (props: OrderHistoryTableProps) => {
-  const { loading, orderHistory, requireAuthentication } = props;
-  return requireAuthentication ? <Login /> : loading ? <Loading /> : <OrderHistoryList orderHistory={orderHistory} />;
+  const { orderHistory, requireAuthentication } = props;
+  return requireAuthentication ? (
+    <Login />
+  ) : orderHistory.length < 2 ? (
+    <Loading />
+  ) : (
+    <OrderHistoryList orderHistory={orderHistory} />
+  );
 };
 
 const OrderHistoryList = (props: { orderHistory: Array<Object> }) => {
@@ -74,12 +72,12 @@ const OrderHistoryList = (props: { orderHistory: Array<Object> }) => {
 const Row = (props: { order: Object, index: number }) => {
   const { order, index } = props;
   return (
-    <li>
+    <li className="not-heading">
       <span className="index">{index + 1}</span>
       <span className="time">{order.time}</span>
       {order.type === 'sell' ? <Sell>{order.type}</Sell> : <Buy>{order.type}</Buy>}
-      <span className="amount">{order.amount}</span>
-      <span className="price">{order.price}</span>
+      <span className="amount">{order.amount.toString()}</span>
+      <span className="price">{order.price.toString()}</span>
     </li>
   );
 };

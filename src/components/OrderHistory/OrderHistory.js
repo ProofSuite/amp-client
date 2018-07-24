@@ -3,13 +3,13 @@ import React from 'react';
 import OrderHistoryRenderer from './OrderHistoryRenderer';
 import { reduceDecimals, toDate } from '../../utils/converters';
 import type { Order } from '../../types/orderHistory';
+import { sortArray } from '../../utils/helpers';
 
 type Props = {
   orderHistory: Array<Order>,
   userOrderHistory: Array<Order>,
-  loading: boolean,
-  decimals: number,
   authenticated: boolean,
+  decimals?: number,
 };
 
 type State = {
@@ -17,6 +17,9 @@ type State = {
 };
 
 class OrderHistory extends React.PureComponent<Props, State> {
+  static defaultProps = {
+    decimals: 5,
+  };
   state = { selectedTabId: 'all' };
 
   changeTab = (tabId: string) => {
@@ -25,6 +28,8 @@ class OrderHistory extends React.PureComponent<Props, State> {
 
   parseOrderHistory = (orderHistory: Array<Object>) => {
     const { decimals } = this.props;
+    console.log(decimals);
+    orderHistory = sortArray(orderHistory, 'time', 'desc');
 
     return (orderHistory: any).map(order => ({
       time: toDate(order.time),
@@ -36,12 +41,11 @@ class OrderHistory extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { loading, orderHistory, userOrderHistory, decimals, authenticated },
+      props: { orderHistory, userOrderHistory, decimals, authenticated },
       state: { selectedTabId },
       changeTab,
       parseOrderHistory,
     } = this;
-
     const formattedOrderHistory = parseOrderHistory(orderHistory);
     const formattedUserOrderHistory = parseOrderHistory(userOrderHistory);
 
@@ -49,7 +53,6 @@ class OrderHistory extends React.PureComponent<Props, State> {
       <OrderHistoryRenderer
         selectedTabId={selectedTabId}
         onChange={changeTab}
-        loading={loading}
         authenticated={authenticated}
         decimals={decimals}
         orderHistory={formattedOrderHistory}
