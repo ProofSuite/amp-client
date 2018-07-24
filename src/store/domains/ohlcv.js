@@ -12,10 +12,9 @@ export const initialized = () => {
   return event;
 };
 
-export const saveOHLCVvData = (ohlcv: Array<Object>) => {
+export const savedOHLCVData = ohlcv => {
   const event = (state: OHLCVState) => ({
     ...state,
-    loading: false,
     ohlcvData: ohlcv,
   });
   return event;

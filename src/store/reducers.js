@@ -110,7 +110,7 @@ export const ohlcv = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case ohlcvTypes.saveData:
-      return ohlcvEvents.saveOHLCVvData(payload.data);
+      return ohlcvEvents.savedOHLCVData(payload.data);
     default:
       return ohlcvEvents.initialized();
   }
