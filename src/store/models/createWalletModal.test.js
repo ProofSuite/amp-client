@@ -1,7 +1,6 @@
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 
-import * as actionCreators from './createWallet';
-import getCreateWalletModel from './createWallet';
+import getCreateWalletModel, * as actionCreators from './createWalletModal';
 import * as walletService from '../services/wallet';
 
 jest.mock('../services/wallet');
@@ -17,10 +16,10 @@ describe('create Wallet', () => {
   walletService.savePrivateKeyInSessionStorage = jest.fn();
 
   it('handles create wallet properly (no wallet storage)', async () => {
-    const store = createStore();
+    const { store } = createStore();
     const params = {
       address: 'test address',
-      serialized: 'test serialized',
+      encryptedWallet: 'test encryptedWallet',
       password: 'test password',
       storeWallet: false,
       storePrivateKey: false,
@@ -37,16 +36,16 @@ describe('create Wallet', () => {
     expect(model.byAddress()).toEqual({
       'test address': {
         address: 'test address',
-        serialized: 'test serialized',
+        encryptedWallet: 'test encryptedWallet',
       },
     });
   });
 
   it('handles create wallet properly (store wallet in local storage)', async () => {
-    const store = createStore();
+    const { store } = createStore();
     const params = {
       address: 'test address',
-      serialized: 'test serialized',
+      encryptedWallet: 'test encryptedWallet',
       password: 'test password',
       storeWallet: true,
       storePrivateKey: false,
@@ -55,7 +54,10 @@ describe('create Wallet', () => {
     await store.dispatch(actionCreators.createWallet(params));
 
     expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledTimes(1);
-    expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledWith('test address', 'test serialized');
+    expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledWith(
+      'test address',
+      'test encryptedWallet'
+    );
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(0);
 
     model = getCreateWalletModel(store.getState());
@@ -64,16 +66,16 @@ describe('create Wallet', () => {
     expect(model.byAddress()).toEqual({
       'test address': {
         address: 'test address',
-        serialized: 'test serialized',
+        encryptedWallet: 'test encryptedWallet',
       },
     });
   });
 
   it('handles create wallet properly (store wallet and key)', async () => {
-    const store = createStore();
+    const { store } = createStore();
     const params = {
       address: 'test address',
-      serialized: 'test serialized',
+      encryptedWallet: 'test encryptedWallet',
       password: 'test password',
       storeWallet: true,
       storePrivateKey: true,
@@ -82,13 +84,16 @@ describe('create Wallet', () => {
     await store.dispatch(actionCreators.createWallet(params));
 
     expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledTimes(1);
-    expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledWith('test address', 'test serialized');
-    expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(1);
-    expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledWith(
+    expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledWith(
       'test address',
-      'test password',
-      'test serialized'
+      'test encryptedWallet'
     );
+    expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(1);
+    expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledWith({
+      address: 'test address',
+      password: 'test password',
+      encryptedWallet: 'test encryptedWallet',
+    });
 
     model = getCreateWalletModel(store.getState());
 
@@ -96,7 +101,7 @@ describe('create Wallet', () => {
     expect(model.byAddress()).toEqual({
       'test address': {
         address: 'test address',
-        serialized: 'test serialized',
+        encryptedWallet: 'test encryptedWallet',
       },
     });
   });

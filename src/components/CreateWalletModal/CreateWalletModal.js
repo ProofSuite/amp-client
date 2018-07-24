@@ -17,7 +17,7 @@ type State = {
   showEncryptionProgress: boolean,
   encryptionPercentage: number,
   address: string,
-  serialized: string,
+  encryptedWallet: string,
   storeWallet: boolean,
   storePrivateKey: boolean,
 };
@@ -27,7 +27,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
     currentStep: 0,
     password: '',
     address: '',
-    serialized: '',
+    encryptedWallet: '',
     storeWallet: false,
     storePrivateKey: false,
     encryptionPercentage: 0,
@@ -42,7 +42,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
         password: '',
         encryptionPercentage: 0,
         address: '',
-        serialized: '',
+        encryptedWallet: '',
         showEncryptionProgress: false,
       });
     }, 500);
@@ -65,10 +65,10 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
 
   goToDownloadWallet = async () => {
     this.setState({ showEncryptionProgress: true });
-    let { serialized, address } = await createAndEncryptWallet(this.state.password, percent =>
+    let { encryptedWallet, address } = await createAndEncryptWallet(this.state.password, percent =>
       this.updateProgressBar(percent)
     );
-    this.setState({ address, serialized });
+    this.setState({ address, encryptedWallet });
   };
 
   goBackToCreateWallet = () => {
@@ -85,9 +85,9 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
 
   complete = () => {
     const { createWallet, hideModal } = this.props;
-    const { address, password, serialized, storeWallet, storePrivateKey } = this.state;
+    const { address, password, encryptedWallet, storeWallet, storePrivateKey } = this.state;
 
-    createWallet({ address, password, serialized, storeWallet, storePrivateKey });
+    createWallet({ address, password, encryptedWallet, storeWallet, storePrivateKey });
     hideModal();
   };
 
@@ -104,7 +104,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
       showEncryptionProgress,
       encryptionPercentage,
       address,
-      serialized,
+      encryptedWallet,
       storeWallet,
       storePrivateKey,
     } = this.state;
@@ -117,7 +117,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
         showEncryptionProgress={showEncryptionProgress}
         encryptionPercentage={encryptionPercentage}
         address={address}
-        serialized={serialized}
+        encryptedWallet={encryptedWallet}
         password={password}
         storeWallet={storeWallet}
         storePrivateKey={storePrivateKey}
