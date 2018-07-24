@@ -9,15 +9,17 @@
     "test": "react-scripts test --env=jsdom --watch",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "scss": "scss --watch src/styles/scss/storybook.scss:src/styles/css/index.css && scss --watch src/styles/scss/index.scss:src/styles/css/app.css",
+    "scss": "scss --watch src/styles/scss/storybook.scss:src/styles/css/storybook.css && scss --watch src/styles/scss/index.scss:src/styles/css/app.css",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
+    "@amcharts/amcharts3-react": "^3.1.0",
     "@axetroy/react-download": "^1.1.1",
     "@blueprintjs/core": "~2.3.1",
     "@blueprintjs/select": "~2.0.1",
     "@blueprintjs/table": "^3.0.0",
+    "amcharts3": "^3.21.13",
     "d3-dsv": "^1.0.8",
     "d3-format": "^1.3.0",
     "d3-time-format": "^2.1.1",

@@ -2,15 +2,35 @@
 import React from 'react';
 import Form from './Form';
 import { Card, Tab, Tabs } from '@blueprintjs/core';
-import { reduceDecimals } from '../../utils/converters';
-import type { OrderFormRendererState, OrderFormRendererProps } from '../../types/orderForm';
+import { round } from '../../utils/converters';
 
-type Props = OrderFormRendererProps;
-type State = OrderFormRendererState;
+type Props = {
+  formName: string,
+  askPrice: number,
+  bidPrice: number,
+  totalQuoteBalance: number,
+  totalBaseBalance: number,
+  baseToken: string,
+  quoteToken: string,
+  loggedIn?: boolean,
+  handleLimit: any => void,
+  handleStopLimit: any => void,
+};
+type State = {
+  portion: number,
+  priceType: string,
+  selectedTabId: string,
+  price: number,
+  stopPrice: number,
+  limitPrice: number,
+  amount: number,
+  total: number,
+};
 
-class OrderFormRenderer extends React.PureComponent<Props, State> {
+class OrderForm extends React.PureComponent<Props, State> {
   static defaultProps = {
     decimals: 7,
+    loggedIn: true,
   };
   state = {
     portion: 0,
@@ -40,6 +60,8 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
   }
 
   handlePortion = (e: SyntheticInputEvent<>) => {
+    console.log(e);
+
     const {
       state: { price },
       props: { formName, decimals, totalQuoteBalance, totalBaseBalance },
@@ -52,16 +74,16 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
       let total = price * amount;
       this.setState({
         portion: portion,
-        amount: reduceDecimals(amount, decimals),
-        total: reduceDecimals(total, decimals),
+        amount: round(amount, decimals),
+        total: round(total, decimals),
       });
     } else {
       let total = (totalBaseBalance / 100) * portion;
       amount = total / price;
       this.setState({
         portion: portion,
-        amount: reduceDecimals(amount, decimals),
-        total: reduceDecimals(total, decimals),
+        amount: round(amount, decimals),
+        total: round(total, decimals),
       });
     }
   };
@@ -75,7 +97,7 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
       total = amount * targetValue;
 
     this.setState({
-      total: reduceDecimals(total, decimals),
+      total: round(total, decimals),
       price: targetValue,
     });
   };
@@ -99,7 +121,7 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
       total = amount * targetValue;
 
     this.setState({
-      total: reduceDecimals(total, decimals),
+      total: round(total, decimals),
       stopPrice: targetValue,
     });
   };
@@ -118,7 +140,7 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
       total = price * targetValue;
     }
     this.setState({
-      total: reduceDecimals(total, decimals),
+      total: round(total, decimals),
       amount: targetValue,
     });
   };
@@ -137,7 +159,7 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
       amount = parseFloat(targetValue / price);
     }
     this.setState({
-      amount: reduceDecimals(amount, decimals),
+      amount: round(amount, decimals),
       total: parseFloat(e.target.value),
     });
   };
@@ -221,13 +243,21 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
     }
   };
 
+  handleTxClick = () => {
+    const { selectedTabId } = this.state;
+    if (selectedTabId === 'limit') {
+    } else if (selectedTabId === 'stop') {
+    }
+  };
   render() {
     const {
       state: { selectedTabId },
       props: { formName, baseToken, loggedIn, quoteToken },
       onInputChange,
       changeTab,
+      handleTxClick,
     } = this;
+    console.log(this.props);
     return (
       <Card className="pt-dark order-form">
         <h5>
@@ -245,6 +275,7 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
                 loggedIn={loggedIn}
                 state={this.state}
                 onInputChange={onInputChange}
+                handleTxClick={handleTxClick}
               />
             }
           />
@@ -259,6 +290,7 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
                 loggedIn={loggedIn}
                 state={this.state}
                 onInputChange={onInputChange}
+                handleTxClick={handleTxClick}
               />
             }
           />
@@ -267,4 +299,4 @@ class OrderFormRenderer extends React.PureComponent<Props, State> {
     );
   }
 }
-export default OrderFormRenderer;
+export default OrderForm;

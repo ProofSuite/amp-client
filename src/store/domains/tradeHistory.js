@@ -3,9 +3,6 @@ import type { TradeHistoryState } from '../../types/tradeHistory';
 
 const initialState: TradeHistoryState = {
   tradeHistory: [{}],
-  loading: true,
-  decimals: 7,
-  loggedIn: false,
 };
 
 export const initialized = () => {
@@ -13,13 +10,10 @@ export const initialized = () => {
   return event;
 };
 
-export const saveData = (data: TradeHistoryState) => {
+export const dataSaved = (data: TradeHistoryState) => {
   const event = (state: TradeHistoryState) => ({
     ...state,
-    loading: false,
-    decimals: data.decimals,
     tradeHistory: data.tradeHistory,
-    loggedIn: data.loggedIn,
   });
   return event;
 };
@@ -27,5 +21,6 @@ export const saveData = (data: TradeHistoryState) => {
 export default function model(state: TradeHistoryState) {
   return {
     getState: () => state,
+    getTradeHistory: () => state.tradeHistory,
   };
 }

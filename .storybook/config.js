@@ -3,6 +3,7 @@ import { setConsoleOptions, withConsole } from '@storybook/addon-console';
 import { setDefaults } from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
 import { withStore } from './addon-store';
+import '../src/styles/css/storybook.css';
 
 const req = require.context('../src/components', true, /stories\.js$/)
 
