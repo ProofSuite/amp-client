@@ -13,8 +13,8 @@ class TestApisPage extends Component {
       <React.Fragment>
         <HomePage />
         <DepthChart />
-        <OrderHistory />
         <CoinSearcher />
+        <OrderHistory />
         <TradeHistory />
         <OHLCV />
         <OrderBook />
