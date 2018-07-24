@@ -31,9 +31,6 @@ const tradeHistoryData = {
 const orderHistoryData = {
   orderHistory: orderHistory.list,
   userOrderHistory: orderHistory.list,
-  loading: false,
-  decimals: 7,
-  authenticated: true,
 };
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
