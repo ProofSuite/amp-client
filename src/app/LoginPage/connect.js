@@ -1,15 +1,20 @@
 import { connect } from 'react-redux';
-import createSelector, * as actionCreators from '../../store/models/LoginPage';
+import loginPageSelector, { connectWithWallet, connectWithMetamask } from '../../store/models/loginPage';
 
 export function mapStateToProps(state, props) {
-  const selector = createSelector(state);
+  const selector = loginPageSelector(state);
 
   return {
-    isDefaultAccountSet: false,
+    authenticated: selector.authenticated,
   };
 }
 
+const mapDispatchToProps = {
+  connectWithWallet,
+  connectWithMetamask,
+};
+
 export default connect(
   mapStateToProps,
-  actionCreators
+  mapDispatchToProps
 );

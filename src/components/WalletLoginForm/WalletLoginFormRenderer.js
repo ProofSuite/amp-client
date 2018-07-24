@@ -16,11 +16,14 @@ import {
   Checkbox,
 } from '@blueprintjs/core';
 
+import { OverlaySpinner, Text, Divider } from '../../components/Common';
+
 type Status = 'incomplete' | 'valid' | 'invalid';
 
 type Props = {
+  loading: boolean,
   handleChange: (SyntheticInputEvent<>) => void,
-  onDrop: void => void,
+  onDrop: (Array<Object>) => void,
   method: string,
   privateKey: ?string,
   privateKeyStatus: Status,
@@ -33,6 +36,8 @@ type Props = {
   password: ?string,
   storeWallet: boolean,
   storePrivateKey: boolean,
+  submit: (SyntheticEvent<>) => Promise<void>,
+  saveEncryptedWalletDisabled: boolean,
 };
 
 const inputStatuses = {
@@ -48,7 +53,7 @@ const inputStatuses = {
   },
   walletFile: {
     incomplete: '',
-    valid: 'Invalid Wallet',
+    valid: 'Wallet File Valid',
     invalid: 'Invalid Wallet',
   },
   mnemonic: {
@@ -66,6 +71,7 @@ const intents = {
 
 const WalletLoginFormRenderer = (props: Props) => {
   const {
+    loading,
     handleChange,
     method,
     privateKey,
@@ -80,6 +86,8 @@ const WalletLoginFormRenderer = (props: Props) => {
     onDrop,
     storeWallet,
     storePrivateKey,
+    submit,
+    saveEncryptedWalletDisabled,
   } = props;
 
   const inputForms = {
@@ -102,8 +110,8 @@ const WalletLoginFormRenderer = (props: Props) => {
   };
 
   return (
-    <Card interactive style={{ width: '600px' }}>
-      <options>
+    <Card elevation="1" style={{ width: '600px' }}>
+      <InputFormBox>
         <RadioGroup
           name="method"
           onChange={handleChange}
@@ -115,19 +123,25 @@ const WalletLoginFormRenderer = (props: Props) => {
           <Radio label="Wallet File" value="walletFile" />
           <Radio label="Mnemonic Sentence" value="mnemonic" />
         </RadioGroup>
-      </options>
-      <InputFormsBox>{inputForms[method]}</InputFormsBox>
-      <FormGroup helperText="Learn more about different options here">
-        <Checkbox name="storeWallet" checked={storeWallet} onChange={handleChange}>
-          <strong>Save encrypted wallet in local storage</strong>
-        </Checkbox>
-        <Checkbox name="storePrivateKey" checked={storePrivateKey} onChange={handleChange}>
-          <strong>Save private key in session storage </strong>
-        </Checkbox>
-      </FormGroup>
-      <ButtonBox>
-        <Button intent="primary" text="Authenticate" />
-      </ButtonBox>
+        <InputFormsBox>{inputForms[method]}</InputFormsBox>
+        <FormGroup helperText="Learn more about different options here">
+          <Checkbox
+            name="storeWallet"
+            disabled={saveEncryptedWalletDisabled}
+            checked={storeWallet && !saveEncryptedWalletDisabled}
+            onChange={handleChange}
+          >
+            <strong>Save encrypted wallet in local storage</strong>
+          </Checkbox>
+          <Checkbox name="storePrivateKey" checked={storePrivateKey} onChange={handleChange}>
+            <strong>Save private key in session storage </strong>
+          </Checkbox>
+        </FormGroup>
+        <ButtonBox>
+          <Button intent="primary" text="Authenticate" onClick={submit} />
+        </ButtonBox>
+        <OverlaySpinner visible={loading} transparent />
+      </InputFormBox>
     </Card>
   );
 };
@@ -160,7 +174,6 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password }: *) => {
           <FormGroup helperText={inputStatuses['json'][jsonStatus]} intent={intents[jsonStatus]}>
             <TextArea
               name="json"
-              large
               intent={intents[jsonStatus]}
               onChange={handleChange}
               value={json}
@@ -189,14 +202,16 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password }: *) => {
   );
 };
 
-const JSONFileInputForm = ({ handleChange, walletFile, walletFileStatus, onDrop, password }: *) => {
+const JSONFileInputForm = ({ onDrop, walletFileStatus }: *) => {
   return (
     <Label text="Drag on Click on Container to load your JSON wallet">
       <DropzoneContainer>
-        <Dropzone onDrop={onDrop.bind(this)} style={{ width: '100px', height: '100px' }}>
+        <Dropzone onDrop={onDrop} style={{ width: '150px', height: '150px' }}>
           <DropzoneMessageContainer>
             <Icon icon="inbox" iconSize={50} intent={Intent.PRIMARY} />
           </DropzoneMessageContainer>
+          <Divider />
+          <Text intent={intents[walletFileStatus]}>{inputStatuses['walletFile'][walletFileStatus]}</Text>
         </Dropzone>
       </DropzoneContainer>
     </Label>
@@ -236,12 +251,17 @@ const ButtonBox = styled.div`
   padding-top: 20px;
 `;
 
+const InputFormBox = styled.div`
+  position: relative;
+`;
+
 const DropzoneContainer = styled.div`
   padding-top: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   margin: auto;
 `;
 
