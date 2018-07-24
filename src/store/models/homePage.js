@@ -49,10 +49,6 @@ const depthChartData = {
 }
 const coinSearcherData = {
   coinsList: coinsList.list,
-  loading: false,
-  small: false,
-  decimals: 7,
-  authenticated: true,
 };
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {

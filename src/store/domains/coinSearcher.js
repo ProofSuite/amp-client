@@ -5,10 +5,7 @@ import getCoinSearcherModel from '../models/coinSearcher';
 import type { State } from '../../types';
 
 const initialState: CoinSearcherState = {
-  loading: true,
-  coinsList: { btc: [] },
-  small: false,
-  decimals: 7,
+  coinsList: { btc: [{}] },
 };
 
 export const initialized = () => {
@@ -16,13 +13,10 @@ export const initialized = () => {
   return event;
 };
 
-export const saveData = (data: CoinSearcherState) => {
+export const dataSaved = (data: CoinSearcherState) => {
   const event = (state: CoinSearcherState) => ({
     ...state,
-    loading: data.loading,
-    decimals: data.decimals,
     coinsList: data.coinsList,
-    small: data.small,
   });
   return event;
 };

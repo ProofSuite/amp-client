@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import CoinSearcherRenderer from './CoinSearcherRenderer';
 import { Card, Icon, Tab, Tabs } from '@blueprintjs/core';
@@ -8,8 +6,6 @@ import { filterer, getObjectFromProperty, sortArray } from '../../utils/helpers'
 type Props = {
   loading: boolean,
   coinsList: Object,
-  small: boolean,
-  decimals: number,
   toggleStar: string => void,
 };
 
@@ -75,18 +71,11 @@ class CoinSearcher extends React.PureComponent<Props, State> {
     X = X.filter(coin => filterer(selectedTabId === 'starred', coin, 'starred', true));
     return X;
   };
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  }
-  componentWillReceiveProps() {
-    console.log('componentWillReceiveProps');
-  }
 
   render() {
     const {
       state: { selectedTabId, searchFilter },
       props: {
-        loading,
         small,
         decimals,
         coinsList: { btc: coins },
@@ -120,7 +109,6 @@ class CoinSearcher extends React.PureComponent<Props, State> {
               <CoinSearcherRenderer
                 state={this.state}
                 filteredCoins={filteredSortedCoins}
-                loading={loading}
                 small={small}
                 decimals={decimals}
                 toggleStar={toggleStar}
@@ -137,7 +125,6 @@ class CoinSearcher extends React.PureComponent<Props, State> {
               <CoinSearcherRenderer
                 state={this.state}
                 filteredCoins={filteredSortedCoins}
-                loading={loading}
                 small={small}
                 decimals={decimals}
                 toggleStar={toggleStar}
@@ -154,7 +141,6 @@ class CoinSearcher extends React.PureComponent<Props, State> {
               <CoinSearcherRenderer
                 state={this.state}
                 filteredCoins={filteredSortedCoins}
-                loading={loading}
                 small={small}
                 decimals={decimals}
                 toggleStar={toggleStar}
