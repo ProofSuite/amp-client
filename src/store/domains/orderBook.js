@@ -2,8 +2,6 @@
 import type { OrderBookState } from '../../types/orderBook';
 
 const initialState: OrderBookState = {
-  loading: true,
-  decimals: 0,
   sellOrderList: [{}],
   buyOrderList: [{}],
   quoteToken: '',
@@ -15,11 +13,10 @@ export const initialized = () => {
   return event;
 };
 
-export const saveData = (data: OrderBookState) => {
+export const dataSaved = (data: OrderBookState) => {
+  console.log('OrderBook data: ', data);
   const event = (state: OrderBookState) => ({
     ...state,
-    loading: false,
-    decimals: data.decimals,
     sellOrderList: data.sellOrderList,
     buyOrderList: data.buyOrderList,
     quoteToken: data.quoteToken,
@@ -31,5 +28,9 @@ export const saveData = (data: OrderBookState) => {
 export default function model(state: OrderBookState) {
   return {
     getState: () => state,
+    getSellOrderList: () => state.sellOrderList,
+    getBuyOrderList: () => state.buyOrderList,
+    getQuoteToken: () => state.quoteToken,
+    getBaseToken: () => state.baseToken,
   };
 }

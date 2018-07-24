@@ -126,7 +126,6 @@ export const orderBook = createReducer(action => {
   switch (type) {
     case orderBookActionTypes.saveData:
       return orderBookEvents.saveData(payload.data);
-
     default:
       return orderBookEvents.initialized();
   }
