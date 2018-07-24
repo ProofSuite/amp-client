@@ -1,3 +1,8 @@
+import accountDomain from '../domains/account';
+
 export default function createSelector(state) {
-  return {};
+  return {
+    authenticated: accountDomain(state.account).authenticated(),
+    account: accountDomain(state.account).address(),
+  };
 }

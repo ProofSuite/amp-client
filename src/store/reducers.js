@@ -16,11 +16,14 @@ import settingsActionTypes from './actions/settings';
 
 import createWalletActionTypes from './actions/createWallet';
 import walletPageActionTypes from './actions/walletPage';
+import loginPageActionTypes from './actions/loginPage';
+import logoutPageActionTypes from './actions/logoutPage';
 
 import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
 import * as providerEvents from './domains/provider';
 import * as etherTxEvents from './domains/etherTx';
+import * as loginPageEvents from './domains/loginPage';
 import * as homePageEvents from './domains/homePage';
 import * as orderBookEvents from './domains/orderBook';
 import * as tradeHistoryEvents from './domains/tradeHistory';
@@ -33,6 +36,28 @@ import * as depositFormEvents from './domains/depositForm';
 import * as settingsEvents from './domains/settings';
 import * as tokenPairsEvents from './domains/tokenPairs';
 import * as walletsEvents from './domains/wallets';
+
+export const homePage = createReducer(action => {
+  const { type } = action;
+  switch (type) {
+    default:
+      return homePageEvents.initialized();
+  }
+});
+
+export const loginPage = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case loginPageActionTypes.requestLogin:
+      return loginPageEvents.loginRequested();
+    case loginPageActionTypes.loginError:
+      return loginPageEvents.loginFailed(payload.error);
+    case loginPageActionTypes.login:
+      return loginPageEvents.authenticated();
+    default:
+      return loginPageEvents.initialized();
+  }
+});
 
 export const accountBalances = createReducer(action => {
   const { type, payload } = action;
@@ -97,14 +122,6 @@ export const etherTx = createReducer(action => {
       return etherTxEvents.etherTxConfirmed(payload.receipt);
     default:
       return etherTxEvents.initialized();
-  }
-});
-
-export const homePage = createReducer(action => {
-  const { type, payload } = action;
-  switch (type) {
-    default:
-      return homePageEvents.initialized();
   }
 });
 
@@ -183,6 +200,10 @@ export const account = createReducer(action => {
       return accountEvents.accountUpdated(payload.address);
     case providerActionTypes.setProvider:
       return accountEvents.accountUpdated(payload.address);
+    case loginPageActionTypes.login:
+      return accountEvents.accountUpdated(payload.address);
+    case logoutPageActionTypes.logout:
+      return accountEvents.accountRemoved();
     default:
       return accountEvents.initialized();
   }
@@ -240,11 +261,13 @@ export const wallets = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case createWalletActionTypes.createWallet:
-      return walletsEvents.walletAdded(payload.address, payload.serialized);
+      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
     case createWalletActionTypes.addWallet:
-      return walletsEvents.walletAdded(payload.address, payload.serialized);
+      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
     case createWalletActionTypes.removeWallet:
       return walletsEvents.walletRemoved(payload);
+    case loginPageActionTypes.createWallet:
+      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
     default:
       return walletsEvents.initialized();
   }
