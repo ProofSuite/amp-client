@@ -11,7 +11,7 @@ import SettingsPage from './SettingsPage';
 import LogoutPage from './LogoutPage';
 import TestReduxandApis from './TestReduxandApis';
 
-import '../styles/css/app.css';
+import '../styles/css/index.css';
 
 function App(props) {
   return (

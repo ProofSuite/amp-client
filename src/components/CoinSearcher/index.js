@@ -1,3 +1,5 @@
-import CoinSearcherRenderer from './CoinSearcherRenderer';
+// @flow
+import CoinSearcher from './CoinSearcher';
+import connect from './connect';
 
-export default CoinSearcherRenderer;
+export default connect(CoinSearcher);
