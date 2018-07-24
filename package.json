@@ -10,7 +10,7 @@
     "eject": "react-scripts eject",
     "flow": "flow",
     "flowwatch": "fswatch -o ./ | xargs -n1 -I{} sh -c 'clear; printf \"\\033[3J\" && flow'",
-    "scss": "scss --watch src/styles/scss/storybook.scss:src/styles/css/storybook.css && scss --watch src/styles/scss/index.scss:src/styles/css/index.css",
+    "scss": "scss --watch src/styles/scss/index.scss:src/styles/css/index.css src/styles/scss/storybook.scss:src/styles/css/storybook.css",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
