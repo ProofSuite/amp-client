@@ -6,12 +6,12 @@ export type WalletsState = {
 
 export type CreateWalletAction = {
   type: 'createWallet/CREATE',
-  payload: { address: string, serialized: string },
+  payload: { address: string, encryptedWallet: string },
 };
 
 export type AddWalletAction = {
   type: 'wallets/ADD',
-  payload: { address: string, serialized: string },
+  payload: { address: string, encryptedWallet: string },
 };
 
 export type RemoveWalletAction = {
@@ -21,7 +21,7 @@ export type RemoveWalletAction = {
 
 export type CreateWalletParams = {
   address: string,
-  serialized: string,
+  encryptedWallet: string,
   password: string,
   storeWallet: boolean,
   storePrivateKey: boolean,

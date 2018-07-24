@@ -24,7 +24,7 @@ it('handles wallet added event properly', () => {
   expect(wallets.byAddress()).toEqual({
     [mockSerializedWalletAddress]: {
       address: mockSerializedWalletAddress,
-      serialized: mockSerializedWallet,
+      encryptedWallet: mockSerializedWallet,
     },
   });
 });

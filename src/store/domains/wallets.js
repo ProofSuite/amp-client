@@ -11,13 +11,16 @@ export const initialized = () => {
   return event;
 };
 
-export const walletAdded = (address: string, serialized: string) => {
+export const walletAdded = (address: string, encryptedWallet: ?string) => {
   const event = (state: WalletsState) => ({
     ...state,
     addresses: [...new Set([...state.addresses, address])],
     byAddress: {
       ...state.byAddress,
-      [address]: { address, serialized },
+      [address]: {
+        address: address,
+        encryptedWallet: encryptedWallet || null,
+      },
     },
   });
 
@@ -39,7 +42,7 @@ export const walletRemoved = (address: string) => {
   return event;
 };
 
-export default function model(state: WalletsState) {
+export default function walletDomain(state: WalletsState) {
   return {
     addresses: () => state.addresses,
     byAddress: () => state.byAddress,

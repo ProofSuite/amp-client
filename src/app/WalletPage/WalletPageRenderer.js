@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card, Callout, Spinner } from '@blueprintjs/core';
-import SpinnerContainer from '../components/Common/SpinnerContainer';
+import CenteredSpinner from '../../components/Common/CenteredSpinner';
 
 import DepositTable from '../../components/DepositTable';
 
@@ -13,7 +13,7 @@ const WalletPageRenderer = ({ loading, depositTableData }: Props) => {
   return (
     <Wrapper>
       <WalletPagePanel />
-      <WalletPageContent>{loading ? <SpinnerContainer /> : <DepositTable data={depositTableData} />}</WalletPageContent>
+      <WalletPageContent>{loading ? <CenteredSpinner /> : <DepositTable data={depositTableData} />}</WalletPageContent>
     </Wrapper>
   );
 };

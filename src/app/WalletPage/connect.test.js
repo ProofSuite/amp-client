@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { shallow } from 'enzyme';
-import { createStore } from '../../store';
+import createStore from '../../store/configureStore';
 import connect, { mapStateToProps, mapDispatchToProps } from './connect';
 import createSelector from '../../store/models/WalletPage';
 
@@ -16,7 +16,7 @@ const depositTableData = [
 
 describe('connect(Component)', () => {
   it('injects certain props and renders without crashing', () => {
-    const store = createStore();
+    const { store } = createStore();
     const ConnectedTestComponent = connect(props => {
       expect(props).toBeDefined();
       expect(props).toHaveProperty('queryAccountData');
