@@ -12,7 +12,6 @@ import type { DepthChartState } from './depthChart';
 import type { OrderHistoryState } from './orderHistory';
 import type { CoinSearcherState } from './coinSearcher';
 import type { OrderFormState } from './orderForm';
-
 import type { TokenState, TokenAction, TokenEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
 import type { DepositFormState, DepositFormAction, DepositFormEvent } from './depositForm';
