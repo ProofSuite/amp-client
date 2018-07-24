@@ -115,7 +115,7 @@ export const ohlcv = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case ohlcvActionTypes.saveData:
-      return ohlcvEvents.saveOHLCVvData(payload.data);
+      return ohlcvEvents.savedOHLCVData(payload.data);
     default:
       return ohlcvEvents.initialized();
   }
@@ -125,7 +125,7 @@ export const orderBook = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case orderBookActionTypes.saveData:
-      return orderBookEvents.saveData(payload.data);
+      return orderBookEvents.dataSaved(payload.data);
     default:
       return orderBookEvents.initialized();
   }
@@ -135,7 +135,7 @@ export const orderHistory = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case orderHistoryActionTypes.saveData:
-      return orderHistoryEvents.saveData(payload.data);
+      return orderHistoryEvents.dataSaved(payload.data);
 
     default:
       return orderHistoryEvents.initialized();
@@ -182,7 +182,7 @@ export const tradeHistory = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case tradeHistoryActionTypes.saveData:
-      return tradeHistoryEvents.saveData(payload.data);
+      return tradeHistoryEvents.dataSaved(payload.data);
     default:
       return tradeHistoryEvents.initialized();
   }

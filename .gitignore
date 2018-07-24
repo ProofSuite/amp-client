@@ -88,3 +88,4 @@ package-lock.json
 
 # misc
 .DS_Store
+wallaby.js
