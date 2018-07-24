@@ -7,13 +7,15 @@ import { getData } from '../services/homePage';
 import * as ohlcvActionCreators from '../actions/ohlcv';
 import * as orderBookActionCreators from '../actions/orderBook';
 import * as tradeHistoryActionCreators from '../actions/tradeHistory';
-import * as orderHistoryActionCreators from '../actions/orderHistory';
 import * as depthChartActionCreators from '../actions/depthChart';
+import * as orderHistoryActionCreators from '../actions/orderHistory';
+import * as coinSearcherActionCreators from '../actions/coinSearcher';
 
 import * as orderList from '../../jsons/ordersList.json';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
 import * as orderHistory from '../../jsons/orderHistory.json';
 import * as bidAsk from '../../jsons/bidAsk.json';
+import * as coinsList from '../../jsons/coinsList.json';
 
 export default function getHomePageModel(state: State) {
   return HomePageModel(state.homePage);
@@ -44,6 +46,9 @@ const depthChartData = {
   data: bidAsk.list,
   loading: false,
   title: 'ETJ/BTC',
+}
+const coinSearcherData = {
+  coinsList: coinsList.list,
 };
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
@@ -55,5 +60,6 @@ export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
     dispatch(tradeHistoryActionCreators.saveData(tradeHistoryData));
     dispatch(orderHistoryActionCreators.saveData(orderHistoryData));
     dispatch(depthChartActionCreators.saveData(depthChartData));
+    dispatch(coinSearcherActionCreators.saveData(coinSearcherData));
   };
 };

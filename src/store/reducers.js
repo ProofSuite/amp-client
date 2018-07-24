@@ -9,11 +9,11 @@ import tradeHistoryActionTypes from './actions/tradeHistory';
 import orderHistoryActionTypes from './actions/orderHistory';
 import depthChartActionTypes from './actions/depthChart';
 import ohlcvActionTypes from './actions/ohlcv';
+import coinSearcherActionTypes from './actions/coinSearcher';
 import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
 import depositFormActionTypes from './actions/depositForm';
 import settingsActionTypes from './actions/settings';
-
 import createWalletActionTypes from './actions/createWallet';
 import walletPageActionTypes from './actions/walletPage';
 
@@ -26,6 +26,7 @@ import * as orderBookEvents from './domains/orderBook';
 import * as tradeHistoryEvents from './domains/tradeHistory';
 import * as orderHistoryEvents from './domains/orderHistory';
 import * as depthChartEvents from './domains/depthChart';
+import * as coinSearcherEvents from './domains/coinSearcher';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
@@ -148,6 +149,20 @@ export const depthChart = createReducer(action => {
 
     default:
       return depthChartEvents.initialized();
+  }
+});
+
+export const coinSearcher = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case coinSearcherActionTypes.saveData:
+      return coinSearcherEvents.dataSaved(payload.data);
+
+    case coinSearcherActionTypes.toggleStar:
+      return coinSearcherEvents.toggleStar(payload.data);
+
+    default:
+      return coinSearcherEvents.initialized();
   }
 });
 
