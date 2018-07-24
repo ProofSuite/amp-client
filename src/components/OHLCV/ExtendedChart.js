@@ -3,7 +3,6 @@ import React from 'react';
 import { MultiSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 import { Button, Card, Icon, Overlay } from '@blueprintjs/core';
-import type {SendTimelineParams} from '../../types/ohlcv';
 
 const timeSpans: Array<Object> = [
   { name: '1 min' },
@@ -34,7 +33,7 @@ type Props = {
   pair: string,
   toggleExpand: () => void,
   expandedChard: boolean,
-  updateTimeLine: (SendTimelineParams) => void
+  updateTimeLine: SendTimelineParams => void,
 };
 type State = {
   chartHeight: number,
@@ -84,18 +83,18 @@ export default class ExtendedChart extends React.Component<Props, State> {
   };
 
   changeDuration = (menu: string) => {
-    const {currentTimeSpan} = this.state;
-    const {pair, pairId} = this.props;
+    const { currentTimeSpan } = this.state;
+    const { pair, pairId } = this.props;
 
-    this.setState({currentDuration: menu});
-    this.props.updateTimeLine({pair, pairId, time: currentTimeSpan.name, duration: menu});
+    this.setState({ currentDuration: menu });
+    this.props.updateTimeLine({ pair, pairId, time: currentTimeSpan.name, duration: menu });
   };
   changeTimeSpan = (e: Object) => {
-    const {currentDuration} = this.state;
-    const {pair, pairId} = this.props;
+    const { currentDuration } = this.state;
+    const { pair, pairId } = this.props;
 
     this.setState({ currentTimeSpan: e });
-    this.props.updateTimeLine({pair, pairId, time: e.name, duration: currentDuration});
+    this.props.updateTimeLine({ pair, pairId, time: e.name, duration: currentDuration });
   };
 
   render() {

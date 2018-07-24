@@ -1,7 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore as baseCreateStore } from 'redux';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
-import '../styles/css/index.css';
 
 let composeEnhancers = compose;
 

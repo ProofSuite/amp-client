@@ -1,20 +1,18 @@
-//@flow
 import React from 'react';
 import TradeHistoryRenderer from './TradeHistoryRenderer';
-import { Card, Tab, Tabs, Button } from '@blueprintjs/core';
+import { Button, Card, Tab, Tabs } from '@blueprintjs/core';
 import { sortArray } from '../../utils/helpers';
 
 type Props = {
   tradeHistory: Array<Object>,
-  loading: boolean,
-  decimals: number,
-  loggedIn: boolean,
 };
 type State = {
   selectedTabId: string,
 };
 
 class TradeHistory extends React.PureComponent<Props, State> {
+  static defaultProps = { decimals: 5, loggedIn: true };
+
   state = {
     selectedTabId: 'all',
   };
@@ -25,12 +23,20 @@ class TradeHistory extends React.PureComponent<Props, State> {
     });
   };
 
+  sortTradeHistory = (tradeHistory: any) => {
+    return sortArray(tradeHistory, 'time', 'desc');
+  };
+
   render() {
     const {
-      props: { loading, tradeHistory, decimals, loggedIn },
+      props: { tradeHistory, decimals, loggedIn },
       state: { selectedTabId },
       changeTab,
+      sortTradeHistory,
     } = this;
+
+    const sortedTradeHistory = sortTradeHistory(tradeHistory);
+
     return (
       <Card className="pt-dark trade-history">
         <h5>Trade History</h5>
@@ -38,21 +44,13 @@ class TradeHistory extends React.PureComponent<Props, State> {
           <Tab
             id="all"
             title="Market"
-            panel={<TradeHistoryRenderer loading={loading} tradeHistory={tradeHistory} decimals={decimals} />}
+            panel={<TradeHistoryRenderer tradeHistory={sortedTradeHistory} decimals={decimals} />}
           />
           <Tab
             id="mine"
             title="Mine"
             panel={
-              loggedIn ? (
-                <TradeHistoryRenderer
-                  loading={loading}
-                  tradeHistory={sortArray(tradeHistory, 'time', 'desc')}
-                  decimals={decimals}
-                />
-              ) : (
-                <Login />
-              )
+              loggedIn ? <TradeHistoryRenderer tradeHistory={sortedTradeHistory} decimals={decimals} /> : <Login />
             }
           />
         </Tabs>

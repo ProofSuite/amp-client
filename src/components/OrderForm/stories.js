@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import OrderFormRenderer from './index';
+import OrderForm from './OrderForm';
 import * as README from './README.md';
 
 storiesOf('Order Form', module)
@@ -10,12 +10,12 @@ storiesOf('Order Form', module)
   .add(
     'Logged Out state',
     withInfo({ text: README, source: false })(() => (
-      <OrderFormRenderer
+      <OrderForm
         askPrice={0.25}
         bidPrice={0.29}
         totalQuoteBalance={1000}
         totalBaseBalance={10}
-        formName="Sell"
+        formName="Buy"
         quoteToken="ETH"
         baseToken="BTC"
         decimals={7}
@@ -24,9 +24,9 @@ storiesOf('Order Form', module)
     ))
   )
   .add(
-    'Logged In state Buy Eth Form',
+    'Logged In state Sell Eth Form',
     withInfo({ text: README, source: false })(() => (
-      <OrderFormRenderer
+      <OrderForm
         askPrice={0.25}
         bidPrice={0.29}
         totalQuoteBalance={1000}
@@ -34,19 +34,20 @@ storiesOf('Order Form', module)
         formName="Sell"
         quoteToken="ETH"
         baseToken="BTC"
+        loggedIn={true}
         decimals={7}
       />
     ))
   )
   .add(
-    'Logged In state Sell Eth Form',
+    'Logged In state Buy Eth Form',
     withInfo({ text: README, source: false })(() => (
-      <OrderFormRenderer
+      <OrderForm
         askPrice={0.25}
         bidPrice={0.29}
         totalQuoteBalance={1000}
         totalBaseBalance={10}
-        formName="Sell"
+        formName="Buy"
         quoteToken="ETH"
         baseToken="BTC"
         decimals={7}
