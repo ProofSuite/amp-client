@@ -27,9 +27,6 @@ const orderBookData = {
 };
 const tradeHistoryData = {
   tradeHistory: tradeHistory.list,
-  loading: false,
-  decimals: 7,
-  loggedIn: true,
 };
 const orderHistoryData = {
   orderHistory: orderHistory.list,
