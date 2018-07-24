@@ -15,7 +15,7 @@ const CoinSearchRenderer = (props: CoinSearchTypes) => {
     toggleStar,
     onChangeFilterName,
   } = props;
-  const emptyCoin = Object.keys(filteredCoins[0]).length < 1;
+  const emptyCoin = filteredCoins.length > 0 && Object.keys(filteredCoins[0]).length < 1;
   return (
     <div style={{ height: '100%' }}>
       {small ? (

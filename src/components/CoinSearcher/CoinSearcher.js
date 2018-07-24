@@ -21,7 +21,7 @@ type State = {
 
 class CoinSearcher extends React.PureComponent<Props, State> {
   static defaultProps = {
-    decimals: 2,
+    decimals: 5,
     small: false,
   };
   state = {
@@ -88,6 +88,7 @@ class CoinSearcher extends React.PureComponent<Props, State> {
       filterCoins,
     } = this;
     const filteredSortedCoins = filterCoins(coins);
+    console.log('filteredSortedCoins', filteredSortedCoins);
     return (
       <Card
         style={{ width: '100%', margin: '10px' }}
