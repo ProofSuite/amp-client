@@ -1,0 +1,41 @@
+@import "vars";
+
+.depth-chart-container {
+  .depth-chart {
+    width: 400px;
+    svg {
+      background: $secondary;
+      g {
+        path {
+          stroke-width: 1;
+        }
+        rect:hover, image:hover, text:hover {
+        }
+        image {
+          color: $primary;
+        }
+        text,image  {
+          fill: $primary;
+        }
+      }
+      g:hover > path {
+        stroke-width: 2;
+      }
+      g:hover > rect, g:hover > image, g:hover > text {
+        background: red;
+
+      }
+    }
+    a {
+      display: none !important;
+    }
+  }
+}
+.depth-chart-container.loading {
+  height: 500px;
+  background-color: #31404c;
+  padding: 20px;
+  .loading-overlay {
+    height: 100%;
+  }
+}

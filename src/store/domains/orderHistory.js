@@ -1,4 +1,3 @@
-// @flow
 import type { OrderHistoryState } from '../../types/orderHistory';
 
 const initialState: OrderHistoryState = {
