@@ -7,9 +7,10 @@ import { getData } from '../services/homePage';
 import * as ohlcvActionCreators from '../actions/ohlcv';
 import * as orderBookActionCreators from '../actions/orderBook';
 import * as tradeHistoryActionCreators from '../actions/tradeHistory';
-import * as depthChartActionCreators from '../actions/depthChart';
 import * as orderHistoryActionCreators from '../actions/orderHistory';
 import * as coinSearcherActionCreators from '../actions/coinSearcher';
+import * as depthChartActionCreators from '../actions/depthChart';
+import * as orderFormActionCreators from '../actions/orderForm';
 
 import * as orderList from '../../jsons/ordersList.json';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
@@ -46,9 +47,18 @@ const depthChartData = {
   data: bidAsk.list,
   loading: false,
   title: 'ETJ/BTC',
-}
+};
 const coinSearcherData = {
   coinsList: coinsList.list,
+};
+const orderFormData = {
+  askPrice: 0.25,
+  bidPrice: 0.1,
+  totalQuoteBalance: 100,
+  totalBaseBalance: 1000,
+  formName: 'Sell',
+  quoteToken: 'ETH',
+  baseToken: 'USD',
 };
 
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
@@ -61,5 +71,6 @@ export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
     dispatch(orderHistoryActionCreators.saveData(orderHistoryData));
     dispatch(depthChartActionCreators.saveData(depthChartData));
     dispatch(coinSearcherActionCreators.saveData(coinSearcherData));
+    dispatch(orderFormActionCreators.saveData(orderFormData));
   };
 };

@@ -38,7 +38,6 @@ class DepthChart extends React.Component<Props> {
       props: { loading, data, title },
       toolTip,
     } = this;
-    console.log('loading, data, title: ', loading, data, title);
     return (
       <div className={loading ? 'depth-chart-container loading' : 'depth-chart-container'}>
         {loading && <Loading />}
@@ -46,6 +45,5 @@ class DepthChart extends React.Component<Props> {
       </div>
     );
   }
-}
-
+};
 export default DepthChart;
