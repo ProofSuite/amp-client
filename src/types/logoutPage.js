@@ -1,5 +1,5 @@
 export type LogoutAction = {
-  type: 'logoutAction/LOGOUT',
+  type: 'logoutPageAction/LOGOUT',
 };
 
-export type LoginPageActions = LogoutAction;
+export type LogoutPageAction = LogoutAction;

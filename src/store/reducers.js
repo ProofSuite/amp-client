@@ -80,8 +80,6 @@ export const accountBalances = createReducer(action => {
       return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }]);
     case depositFormActionTypes.updateBalances:
       return accountBalancesEvents.updated(payload.balances);
-    case depositFormActionTypes.clearBalances:
-      return accountBalancesEvents.cleared();
     case walletPageActionTypes.updateBalances:
       return accountBalancesEvents.updated(payload.balances);
     case walletPageActionTypes.updateAllowances:
@@ -186,7 +184,7 @@ export const tokens = createReducer(action => {
   switch (type) {
     case tokensActionTypes.updateTokens:
       return tokensEvents.tokenUpdated(payload.symbol, payload.address);
-    case tokensActionTypes.removeToken:
+    case tokensActionTypes.removeTokens:
       return tokensEvents.tokenRemoved(payload.symbol);
     default:
       return tokensEvents.initialized();
@@ -250,7 +248,7 @@ export const tokenPairs = createReducer(action => {
   switch (type) {
     case tokensActionTypes.updateTokens:
       return tokenPairsEvents.tokenPairUpdated(payload);
-    case tokensActionTypes.tokenRemoved:
+    case tokensActionTypes.removeTokens:
       return tokenPairsEvents.tokenPairRemoved(payload);
     default:
       return tokenPairsEvents.initialized();

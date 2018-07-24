@@ -24,4 +24,4 @@ export type RequestLoginAction = {
   type: 'loginPage/REQUEST_LOGIN',
 };
 
-export type LoginPageActions = CreateWalletAction | LoginAction | LoginErrorAction | RequestLoginAction;
+export type LoginPageAction = CreateWalletAction | LoginAction | LoginErrorAction | RequestLoginAction;
