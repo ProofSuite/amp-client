@@ -129,7 +129,7 @@ export const tradeHistory = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case tradeHistoryTypes.saveData:
-      return tradeHistoryEvents.saveData(payload.data);
+      return tradeHistoryEvents.dataSaved(payload.data);
 
     default:
       return tradeHistoryEvents.initialized();
