@@ -9,7 +9,6 @@ import {
 } from '../../store/services/wallet';
 
 import WalletLoginFormRenderer from './WalletLoginFormRenderer';
-
 import type { CreateWalletParams } from '../../types/walletLoginForm';
 
 type Status = 'incomplete' | 'valid' | 'invalid';
@@ -57,11 +56,13 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       try {
         const walletFile = (reader.result: any);
         const address = JSON.parse(walletFile).address;
+        console.log('here');
         this.setState({ walletFile, walletFileStatus: 'valid' });
       } catch (e) {
         this.setState({ walletFile: '', walletFileStatus: 'invalid' });
       }
     };
+    console.log('here');
     reader.readAsText(file);
   };
 

@@ -90,3 +90,15 @@ export const mockDepositTableData = [
   { symbol: 'EOS', balance: '5.00000', allowed: false },
   { symbol: 'EOS', balance: '8.00000', allowed: true },
 ];
+
+export const mockAllowTxState = {
+  allowTxStatus: 'incomplete',
+  allowTxHash: null,
+  allowTxReceipt: null,
+};
+
+export const mockConvertTxState = {
+  convertTxStatus: 'incomplete',
+  convertTxHash: null,
+  convertTxReceipt: null,
+};
