@@ -1,12 +1,12 @@
 // @flow
 import { connect } from 'react-redux';
-import homePageModel, { loadData } from '../../store/models/homePage';
-import {} from '../../store/models/homePage';
+import tradingPageModel, { loadData } from '../../store/models/tradingPage';
+import {} from '../../store/models/tradingPage';
 
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
-  return homePageModel(state).getState();
+  return tradingPageModel(state).getState();
 };
 
 export const mapDispatchToProps = {

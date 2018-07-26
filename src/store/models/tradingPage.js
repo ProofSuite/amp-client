@@ -1,6 +1,6 @@
 // @flow
-import HomePageModel from '../domains/homePage';
-import type { LoadDataParams } from '../../types/homePage';
+import TradingPageModel from '../domains/tradingPage';
+import type { LoadDataParams } from '../../types/tradingPage';
 import type { State, ThunkAction } from '../../types';
 import { getData } from '../services/homePage';
 
@@ -18,8 +18,8 @@ import * as orderHistory from '../../jsons/orderHistory.json';
 import * as bidAsk from '../../jsons/bidAsk.json';
 import * as coinsList from '../../jsons/coinsList.json';
 
-export default function getHomePageModel(state: State) {
-  return HomePageModel(state.homePage);
+export default function getTradingPageModel(state: State) {
+  return TradingPageModel(state.tradingPage);
 }
 
 const orderBookData = {
