@@ -12,22 +12,22 @@ import type { CreateWalletParams } from '../../types/createWallet';
 type Props = {
   view: string,
   showWalletLoginForm: CreateWalletParams => void,
-  connectWithMetamask: void => void,
-  connectWithWallet: void => void,
+  loginWithMetamask: void => void,
+  loginWithWallet: void => void,
 };
 
 const LoginPageRenderer = (props: Props) => {
-  const { view, connectWithMetamask, connectWithWallet, showWalletLoginForm, metamaskStatus } = props;
+  const { view, loginWithMetamask, loginWithWallet, showWalletLoginForm, metamaskStatus } = props;
 
   const views = {
     loginMethods: (
       <LoginMethodsView
         showWalletLoginForm={showWalletLoginForm}
-        connectWithMetamask={connectWithMetamask}
+        loginWithMetamask={loginWithMetamask}
         metamaskStatus={metamaskStatus}
       />
     ),
-    wallet: <WalletLoginFormView connectWithWallet={connectWithWallet} />,
+    wallet: <WalletLoginFormView loginWithWallet={loginWithWallet} />,
     loading: <LoginLoadingView />,
   };
 
@@ -35,7 +35,7 @@ const LoginPageRenderer = (props: Props) => {
 };
 
 const LoginMethodsView = (props: Props) => {
-  const { showWalletLoginForm, connectWithMetamask, metamaskStatus } = props;
+  const { showWalletLoginForm, loginWithMetamask, metamaskStatus } = props;
   return (
     <Wrapper>
       <Announcement>
@@ -65,7 +65,7 @@ const LoginMethodsView = (props: Props) => {
           <FormattedMessage {...messages.loginMethods} />
         </LoginMethodsHeading>
         <LoginCards>
-          <LoginCard onClick={connectWithMetamask}>
+          <LoginCard onClick={loginWithMetamask}>
             <MetamaskIcon size={100} />
             <Heading>
               <FormattedMessage {...messages.metamask} />
@@ -85,10 +85,10 @@ const LoginMethodsView = (props: Props) => {
 };
 
 const WalletLoginFormView = (props: Props) => {
-  const { connectWithWallet } = props;
+  const { loginWithWallet } = props;
   return (
     <WalletLoginViewWrapper>
-      <WalletLoginForm connectWithWallet={connectWithWallet} />
+      <WalletLoginForm loginWithWallet={loginWithWallet} />
     </WalletLoginViewWrapper>
   );
 };
