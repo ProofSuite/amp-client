@@ -1,5 +1,5 @@
 import { quoteTokens } from '../../config/quotes';
-import { tokens } from '../../data';
+import { tokens } from '../../config/tokens';
 import type { TokenPairState } from '../../types/tokens';
 
 const getPairSymbol = (baseTokenSymbol, quoteTokenSymbol) => {
@@ -14,7 +14,7 @@ const getQuoteToken = pairSymbol => {
   return pairSymbol.split('_')[1];
 };
 
-const createInitialState = (quoteTokens, tokens) => {
+export const createInitialState = (quoteTokens, tokens) => {
   let pairs = [];
   let byPair = {};
 
@@ -41,9 +41,13 @@ const createInitialState = (quoteTokens, tokens) => {
   };
 };
 
-const initialState = createInitialState(quoteTokens, tokens);
+const defaultInitialState = createInitialState(quoteTokens, tokens);
 
-export const initialized = () => {
+//By default the application is started with a default create from tokens in a configuration file. To
+//create a tokenpair domain with less tokens, the initialized function can be called with a custom initial
+//token pair state (that can be created with the createInitialState function).
+export const initialized = customInitialState => {
+  let initialState = customInitialState || defaultInitialState;
   const event = (state: TokenPairState = initialState) => state;
   return event;
 };

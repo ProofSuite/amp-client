@@ -1,7 +1,13 @@
 import getTokenPairsDomain, * as eventCreators from './tokenPairs';
+import { quoteTokens } from '../../config/quotes';
+
+//createInitialState is not an eventCreator. We simply import it in order to create a new
+//create an initial state. The default initial state used in the application has to many
+//tokens to be used for tests. Therefore we recreate an initial state with less tokens
+//to test the token pair model
+const createInitialState = eventCreators.createInitialState;
 
 const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
-
 const tokensBySymbol = {
   ETH: { symbol: 'ETH', address: '0x0' },
   EOS: { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
@@ -9,13 +15,16 @@ const tokensBySymbol = {
   ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
 };
 
+const tokens = Object.values(tokensBySymbol);
+const customInitialTokenPairState = createInitialState(quoteTokens, tokens);
+
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
   return getTokenPairsDomain(state);
 }
 
 it('handles initialized event properly', () => {
-  const tokenPairsDomain = getDomain([eventCreators.initialized()]);
+  const tokenPairsDomain = getDomain([eventCreators.initialized(customInitialTokenPairState)]);
   const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI'];
 
   const expectedByPairsBySymbol = {
@@ -65,7 +74,10 @@ it('handles tokenPairUpdated event properly', () => {
     address: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
   };
 
-  const tokenPairsDomain = getDomain([eventCreators.initialized(), eventCreators.tokenPairUpdated(token)]);
+  const tokenPairsDomain = getDomain([
+    eventCreators.initialized(customInitialTokenPairState),
+    eventCreators.tokenPairUpdated(token),
+  ]);
 
   const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI', 'REQ_WETH', 'REQ_DAI'];
 
@@ -131,7 +143,10 @@ it('handles tokenPairUpdated event properly if the event is already if the token
     address: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
   };
 
-  const tokenPairsDomain = getDomain([eventCreators.initialized(), eventCreators.tokenPairUpdated(token)]);
+  const tokenPairsDomain = getDomain([
+    eventCreators.initialized(customInitialTokenPairState),
+    eventCreators.tokenPairUpdated(token),
+  ]);
 
   const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI'];
 
@@ -188,7 +203,7 @@ it('handles tokenPairUpdated event properly', () => {
   };
 
   const tokenPairsDomain = getDomain([
-    eventCreators.initialized(),
+    eventCreators.initialized(customInitialTokenPairState),
     eventCreators.tokenPairUpdated(token1),
     eventCreators.tokenPairRemoved(token2),
   ]);
