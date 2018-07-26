@@ -2,7 +2,7 @@ import createStore from '../../store/configureStore';
 import logoutPageSelector, * as actionCreators from './logoutPage';
 
 let unsubscribe = jest.fn();
-let model;
+let selector;
 
 describe('Logout Page Model', () => {
   it('handles logout', () => {
@@ -12,12 +12,12 @@ describe('Logout Page Model', () => {
       },
     });
 
-    model = logoutPageSelector(store.getState());
-    expect(model.authenticated).toEqual(true);
+    selector = logoutPageSelector(store.getState());
+    expect(selector.authenticated).toEqual(true);
 
     store.dispatch(actionCreators.logout());
 
-    model = logoutPageSelector(store.getState());
-    expect(model.authenticated).toEqual(false);
+    selector = logoutPageSelector(store.getState());
+    expect(selector.authenticated).toEqual(false);
   });
 });

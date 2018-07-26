@@ -1,33 +1,45 @@
 // @flow
 import { Contract } from 'ethers';
-
-import getAccountBalancesModel from './accountBalances';
-import getAccountModel from './account';
-import getTokenModel from './tokens';
-import getProviderModel from './provider';
+import {
+  getTokenDomain,
+  getAccountDomain,
+  getSignerDomain,
+  getDepositFormDomain,
+  getAccountBalancesDomain,
+} from '../domains';
 
 import * as actionCreators from '../actions/accountBalances';
 import * as depositFormActionCreators from '../actions/depositForm';
 import * as accountBalancesService from '../services/accountBalances';
-import getDepositFormModel from '../domains/depositForm';
-import { getDefaultSigner } from '../services/signer';
+import { getSigner } from '../services/signer';
 import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
 import { ERC20Token, WETH } from 'proof-contracts-interfaces';
 
 import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
 
-export default function depositFormModel(state: State) {
-  return getDepositFormModel(state.depositForm);
+export default function depositFormSelector(state: State) {
+  return {
+    accountAddress: () => getAccountDomain(state).address(),
+    tokens: () => getTokenDomain(state).tokens(),
+    rankedTokens: () => getTokenDomain(state).rankedTokens(),
+    symbols: () => getTokenDomain(state).symbols(),
+    tokenIsSubscribed: (symbol: string) => getAccountBalancesDomain(state).isSubscribed(symbol),
+    balances: () => getAccountBalancesDomain(state).balances(),
+    networkId: () => getSignerDomain(state).getNetworkId(),
+    getStep: () => getDepositFormDomain(state).getStep(),
+    getAllowTxState: () => getDepositFormDomain(state).getAllowTxState(),
+    getConvertTxState: () => getDepositFormDomain(state).getConvertTxState(),
+  };
 }
 
 export function queryBalances(): ThunkAction {
   return async (dispatch, getState) => {
     try {
       const state = getState();
-      const accountAddress = getAccountModel(state).address();
-      let tokens = getTokenModel(state).tokens();
-      tokens = tokens.filter((token: Token) => token.symbol != 'ETH');
+      const accountAddress = depositFormSelector(state).accountAddress();
+      let tokens = depositFormSelector(state).tokens();
+      tokens = tokens.filter((token: Token) => token.symbol !== 'ETH');
 
       if (!accountAddress) throw new Error('Account address is not set');
 
@@ -48,10 +60,9 @@ export function subscribeBalance(token: Token): ThunkAction {
       let unsubscribe;
       const { symbol } = token;
       const state = getState();
-
-      const accountAddress = getAccountModel(state).address();
-      const tokenSymbols = getTokenModel(state).symbols();
-      const tokenIsSubscribed = getAccountBalancesModel(state).isSubscribed(symbol);
+      const accountAddress = depositFormSelector(state).accountAddress();
+      const tokenSymbols = depositFormSelector(state).symbols();
+      const tokenIsSubscribed = depositFormSelector(state).tokenIsSubscribed(symbol);
 
       const updateBalanceHandler = balance => {
         dispatch(actionCreators.updateBalance(symbol, balance));
@@ -90,8 +101,8 @@ export const confirmEtherDeposit = (
   return async (dispatch, getState) => {
     try {
       dispatch(depositFormActionCreators.confirm());
-      let signer = await getDefaultSigner(getState);
-      let network = getProviderModel(getState()).getNetworkId();
+      let signer = getSigner();
+      let network = depositFormSelector(getState()).networkId();
       let weth = new Contract(WETH_ADDRESS[network], WETH.abi, signer);
 
       if (shouldConvert) {
@@ -139,8 +150,8 @@ export const confirmEtherDeposit = (
 export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): ThunkAction => {
   return async (dispatch, getState) => {
     try {
-      let signer = await getDefaultSigner(getState);
-      let network = getProviderModel(getState()).getNetworkId();
+      let signer = getSigner();
+      let network = depositFormSelector(getState()).networkId();
       let token = new Contract(address, ERC20Token.abi, signer);
 
       if (shouldAllow) {

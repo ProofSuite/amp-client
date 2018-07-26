@@ -3,9 +3,9 @@ import { Provider } from 'react-redux';
 import { shallow } from 'enzyme';
 import createStore from '../../store/configureStore';
 import connect, { mapStateToProps, mapDispatchToProps } from './connect';
-import createSelector from '../../store/models/WalletPage';
+import * as walletPage from '../../store/models/walletPage';
 
-jest.mock('../../store/models/WalletPage');
+jest.mock('../../store/models/walletPage');
 
 const depositTableData = [
   { symbol: 'EOS', balance: '10.0000', allowed: true },
@@ -35,14 +35,8 @@ describe('connect(Component)', () => {
 });
 
 describe('mapStateToProps(state, props)', () => {
-  let balancesArray;
-
-  beforeEach(() => {
-    balancesArray = jest.fn(() => depositTableData);
-    createSelector.mockReturnValue({ balancesArray });
-  });
-
   it('returns expected props', () => {
+    walletPage.default = jest.fn(() => ({ depositTableData }));
     const state = {};
     const props = {};
     const result = mapStateToProps(state, props);

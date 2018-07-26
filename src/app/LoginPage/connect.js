@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import loginPageSelector, { connectWithWallet, connectWithMetamask } from '../../store/models/loginPage';
+import loginPageSelector, { loginWithWallet, loginWithMetamask } from '../../store/models/loginPage';
 
 export function mapStateToProps(state, props) {
   const selector = loginPageSelector(state);
@@ -10,8 +10,8 @@ export function mapStateToProps(state, props) {
 }
 
 const mapDispatchToProps = {
-  connectWithWallet,
-  connectWithMetamask,
+  loginWithWallet,
+  loginWithMetamask,
 };
 
 export default connect(

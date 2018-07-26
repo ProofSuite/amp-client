@@ -5,8 +5,8 @@ import LoginPageRenderer from './LoginPageRenderer';
 
 type Props = {
   authenticated: boolean,
-  connectWithMetamask: (SyntheticEvent<>) => void,
-  connectWithWallet: (SyntheticEvent<>) => void,
+  loginWithMetamask: (SyntheticEvent<>) => void,
+  loginWithWallet: (SyntheticEvent<>) => void,
 };
 
 type State = {
@@ -33,7 +33,7 @@ class LoginPage extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { connectWithMetamask, connectWithWallet, authenticated } = this.props;
+    const { loginWithMetamask, loginWithWallet, authenticated } = this.props;
     const { view, metamaskStatus } = this.state;
 
     if (authenticated) {
@@ -43,8 +43,8 @@ class LoginPage extends React.PureComponent<Props, State> {
       <LoginPageRenderer
         view={view}
         metamaskStatus={metamaskStatus}
-        connectWithWallet={connectWithWallet}
-        connectWithMetamask={connectWithMetamask}
+        loginWithWallet={loginWithWallet}
+        loginWithMetamask={loginWithMetamask}
         showWalletLoginForm={this.showWalletLoginForm}
       />
     );

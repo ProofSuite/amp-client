@@ -1,10 +1,10 @@
 //@flow
-import getAccountBalancesModel from '../domains/accountBalances';
+import getAccountBalancesDomain from '../domains';
 
 import type { State } from '../../types';
 
-export default function createSelector(state: State) {
-  let accountBalancesModel = getAccountBalancesModel(state.accountBalances);
+export default function getDepositTableSelector(state: State) {
+  let accountBalancesModel = getAccountBalancesDomain(state);
 
   return accountBalancesModel;
 }

@@ -4,16 +4,15 @@ import { connect } from 'react-redux';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import { connectWithWallet } from '../../store/models/loginPage';
+import { loginWithWallet } from '../../store/models/loginPage';
 import { action } from '@storybook/addon-actions';
 import WalletLoginForm from './index';
 import WalletLoginFormRenderer from './WalletLoginFormRenderer';
 
 let ConnectedWalletLoginForm = connect(
   null,
-  { connectWithWallet }
+  { loginWithWallet }
 )(WalletLoginForm);
-
 storiesOf('WalletLoginForm', module)
   .addDecorator(withKnobs)
   .add(

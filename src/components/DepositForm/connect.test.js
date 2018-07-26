@@ -4,17 +4,12 @@ import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
 import connect, { mapStateToProps, mapDispatchToProps } from './connect';
 import getDepositFormModel, * as depositFormActionCreators from '../../store/models/depositForm';
-import getAccountBalancesModel from '../../store/models/accountBalances';
-import getTokenModel from '../../store/models/tokens';
-import getAccountModel from '../../store/models/account';
 
 jest.mock('../../store/models/tokens');
-jest.mock('../../store/models/account');
-jest.mock('../../store/models/accountBalances');
 jest.mock('../../store/models/depositForm');
 
 describe('mapStateToProps(state, props)', () => {
-  let getStep, balances, address, rankedTokens, getTokens, getAllowTxState, getConvertTxState;
+  let getStep, balances, accountAddress, rankedTokens, getTokens, getAllowTxState, getConvertTxState;
 
   beforeEach(() => {
     getStep = jest.fn(() => 'test step');
@@ -23,24 +18,15 @@ describe('mapStateToProps(state, props)', () => {
 
     rankedTokens = jest.fn(() => 'test rankedTokens');
     balances = jest.fn(() => 'test balances');
-    address = jest.fn(() => 'test address');
+    accountAddress = jest.fn(() => 'test address');
 
     getDepositFormModel.mockReturnValue({
+      accountAddress,
       getStep,
       getConvertTxState,
       getAllowTxState,
-    });
-
-    getTokenModel.mockReturnValue({
       rankedTokens,
-    });
-
-    getAccountBalancesModel.mockReturnValue({
       balances,
-    });
-
-    getAccountModel.mockReturnValue({
-      address,
     });
   });
 
@@ -66,14 +52,9 @@ describe('mapStateToProps(state, props)', () => {
     const props = {};
 
     mapStateToProps(state, props);
-
-    expect(getTokenModel).toBeCalledWith(state);
     expect(getDepositFormModel).toBeCalledWith(state);
-    expect(getAccountBalancesModel).toBeCalledWith(state);
-    expect(getAccountModel).toBeCalledWith(state);
-
     expect(balances).toBeCalled();
-    expect(address).toBeCalled();
+    expect(accountAddress).toBeCalled();
     expect(rankedTokens).toBeCalled();
     expect(getStep).toBeCalled();
     expect(getConvertTxState).toBeCalled();

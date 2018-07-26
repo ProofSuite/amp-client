@@ -1,21 +1,20 @@
-import model from './wallets';
-import * as eventCreators from './wallets';
+import getWalletDomain, * as eventCreators from './wallets';
 import { mockSerializedWallet, mockSerializedWalletAddress } from '../../mockData';
 
-function getModel(events) {
+function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
-  return model(state);
+  return getWalletDomain(state);
 }
 
 it('handles initialized event properly', () => {
-  const wallets = getModel([eventCreators.initialized()]);
+  const wallets = getDomain([eventCreators.initialized()]);
 
   expect(wallets.addresses()).toEqual([]);
   expect(wallets.byAddress()).toEqual({});
 });
 
 it('handles wallet added event properly', () => {
-  const wallets = getModel([
+  const wallets = getDomain([
     eventCreators.initialized(),
     eventCreators.walletAdded(mockSerializedWalletAddress, mockSerializedWallet),
   ]);
@@ -30,7 +29,7 @@ it('handles wallet added event properly', () => {
 });
 
 it('handles wallet removed event properly', () => {
-  const wallets = getModel([
+  const wallets = getDomain([
     eventCreators.initialized(),
     eventCreators.walletAdded(mockSerializedWalletAddress, mockSerializedWallet),
     eventCreators.walletRemoved(mockSerializedWalletAddress),

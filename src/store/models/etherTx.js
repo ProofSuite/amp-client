@@ -1,22 +1,22 @@
 // @flow
 import ethers, { Contract } from 'ethers';
-import etherTxModel from '../domains/etherTx';
+import { getEtherTxDomain } from '../domains';
 import * as actionCreators from '../actions/etherTx';
 
 import type { EtherTxParams, TransferTokensTxParams } from '../../types/etherTx';
 import type { State, ThunkAction } from '../../types';
 
-import { getDefaultSigner } from '../services/signer';
+import { getSigner } from '../services/signer';
 import { ERC20Token } from 'proof-contracts-interfaces';
 
-export default function getEtherTxModel(state: State) {
-  return etherTxModel(state.etherTx);
+export default function getEtherTxSelector(state: State) {
+  return getEtherTxDomain(state);
 }
 
 export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams): ThunkAction => {
   return async (dispatch, getState) => {
     try {
-      let signer = await getDefaultSigner(getState);
+      let signer = getSigner();
 
       let tx = {
         gasLimit: gas || 0,
@@ -38,7 +38,7 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
 export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams): ThunkAction => {
   return async (dispatch, getState) => {
     try {
-      let signer = await getDefaultSigner(getState);
+      let signer = getSigner();
 
       let rawTx = {
         gasLimit: gas || 0,
@@ -66,7 +66,7 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
   return async (dispatch, getState) => {
     try {
       let { receiver, amount, gas, gasPrice, tokenAddress } = params;
-      let signer = await getDefaultSigner(getState);
+      let signer = getSigner();
       let token = new Contract(tokenAddress, ERC20Token.abi, signer);
 
       let estimatedGas = await token.estimate.transfer(receiver, amount);
@@ -82,7 +82,7 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
   return async (dispatch, getState) => {
     try {
       let { receiver, amount, gas, gasPrice, tokenAddress } = params;
-      let signer = await getDefaultSigner(getState);
+      let signer = getSigner();
       let token = new Contract(tokenAddress, ERC20Token.abi, signer);
 
       let txOpts = {

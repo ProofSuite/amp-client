@@ -1,3 +1,4 @@
+//@flow
 export type LoginPageState = {
   +loading: boolean,
   +error: string,
@@ -10,8 +11,13 @@ export type CreateWalletAction = {
   payload: { address: string, encryptedWallet: string },
 };
 
-export type LoginAction = {
-  type: 'loginPage/LOGIN',
+export type LoginWithMetamaskAction = {
+  type: 'loginPage/LOGIN_WITH_METAMASK',
+  payload: { address: string },
+};
+
+export type LoginWithWalletAction = {
+  type: 'loginPage/LOGIN_WITH_WALLET',
   payload: { address: string },
 };
 
@@ -24,4 +30,9 @@ export type RequestLoginAction = {
   type: 'loginPage/REQUEST_LOGIN',
 };
 
-export type LoginPageAction = CreateWalletAction | LoginAction | LoginErrorAction | RequestLoginAction;
+export type LoginPageAction =
+  | CreateWalletAction
+  | LoginErrorAction
+  | RequestLoginAction
+  | LoginWithWalletAction
+  | LoginWithMetamaskAction;

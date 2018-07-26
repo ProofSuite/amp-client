@@ -1,5 +1,4 @@
-import model from './depositForm';
-import * as eventCreators from './depositForm';
+import depositFormDomain, * as eventCreators from './depositForm';
 import {
   mockFailedTxReceipt,
   mockFailedTxReceipt2,
@@ -9,21 +8,21 @@ import {
   mockTxReceipt2,
 } from '../../mockData';
 
-function getModel(events) {
+function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
-  return model(state);
+  return depositFormDomain(state);
 }
 
 it('handles initialized event properly', () => {
-  const depositForm = getModel([eventCreators.initialized()]);
+  const domain = getDomain([eventCreators.initialized()]);
 
-  expect(depositForm.getStep()).toEqual('waiting');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('waiting');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'incomplete',
     allowTxHash: null,
     allowTxReceipt: null,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'incomplete',
     convertTxHash: null,
     convertTxReceipt: null,
@@ -31,15 +30,15 @@ it('handles initialized event properly', () => {
 });
 
 it('handles deposit event properly', () => {
-  const depositForm = getModel([eventCreators.initialized(), eventCreators.deposited()]);
+  const domain = getDomain([eventCreators.initialized(), eventCreators.deposited()]);
 
-  expect(depositForm.getStep()).toEqual('convert');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('convert');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'incomplete',
     allowTxHash: null,
     allowTxReceipt: null,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'incomplete',
     convertTxHash: null,
     convertTxReceipt: null,
@@ -47,15 +46,15 @@ it('handles deposit event properly', () => {
 });
 
 it('handles deposit event properly', () => {
-  const depositForm = getModel([eventCreators.initialized(), eventCreators.deposited(), eventCreators.confirmed()]);
+  const domain = getDomain([eventCreators.initialized(), eventCreators.deposited(), eventCreators.confirmed()]);
 
-  expect(depositForm.getStep()).toEqual('confirm');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('confirm');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'incomplete',
     allowTxHash: null,
     allowTxReceipt: null,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'incomplete',
     convertTxHash: null,
     convertTxReceipt: null,
@@ -63,19 +62,19 @@ it('handles deposit event properly', () => {
 });
 
 it('handles convertTxSent event properly', () => {
-  const depositForm = getModel([
+  const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.deposited(),
     eventCreators.convertTxSent(mockHash),
   ]);
 
-  expect(depositForm.getStep()).toEqual('convert');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('convert');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'incomplete',
     allowTxHash: null,
     allowTxReceipt: null,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'sent',
     convertTxHash: mockHash,
     convertTxReceipt: null,
@@ -83,20 +82,20 @@ it('handles convertTxSent event properly', () => {
 });
 
 it('handles allowTxSent event properly', () => {
-  const depositForm = getModel([
+  const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.deposited(),
     eventCreators.convertTxSent(mockHash),
     eventCreators.allowTxSent(mockHash2),
   ]);
 
-  expect(depositForm.getStep()).toEqual('convert');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('convert');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'sent',
     allowTxHash: mockHash2,
     allowTxReceipt: null,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'sent',
     convertTxHash: mockHash,
     convertTxReceipt: null,
@@ -104,7 +103,7 @@ it('handles allowTxSent event properly', () => {
 });
 
 it('handles convertTxReverted event properly', () => {
-  const depositForm = getModel([
+  const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.deposited(),
     eventCreators.convertTxSent(mockHash),
@@ -112,13 +111,13 @@ it('handles convertTxReverted event properly', () => {
     eventCreators.convertTxReverted(mockFailedTxReceipt),
   ]);
 
-  expect(depositForm.getStep()).toEqual('convert');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('convert');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'sent',
     allowTxHash: mockHash2,
     allowTxReceipt: null,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'reverted',
     convertTxHash: mockHash,
     convertTxReceipt: mockFailedTxReceipt,
@@ -126,7 +125,7 @@ it('handles convertTxReverted event properly', () => {
 });
 
 it('handles convertTxConfirmed event properly', () => {
-  const depositForm = getModel([
+  const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.deposited(),
     eventCreators.convertTxSent(mockHash),
@@ -134,13 +133,13 @@ it('handles convertTxConfirmed event properly', () => {
     eventCreators.convertTxConfirmed(mockTxReceipt),
   ]);
 
-  expect(depositForm.getStep()).toEqual('convert');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('convert');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'sent',
     allowTxHash: mockHash2,
     allowTxReceipt: null,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'confirmed',
     convertTxHash: mockHash,
     convertTxReceipt: mockTxReceipt,
@@ -148,7 +147,7 @@ it('handles convertTxConfirmed event properly', () => {
 });
 
 it('handles allowTxReverted event properly', () => {
-  const depositForm = getModel([
+  const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.deposited(),
     eventCreators.convertTxSent(mockHash),
@@ -157,13 +156,13 @@ it('handles allowTxReverted event properly', () => {
     eventCreators.allowTxReverted(mockFailedTxReceipt2),
   ]);
 
-  expect(depositForm.getStep()).toEqual('convert');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('convert');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'reverted',
     allowTxHash: mockHash2,
     allowTxReceipt: mockFailedTxReceipt2,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'confirmed',
     convertTxHash: mockHash,
     convertTxReceipt: mockTxReceipt,
@@ -171,7 +170,7 @@ it('handles allowTxReverted event properly', () => {
 });
 
 it('handles allowTxConfirmed event properly', () => {
-  const depositForm = getModel([
+  const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.deposited(),
     eventCreators.convertTxSent(mockHash),
@@ -180,13 +179,13 @@ it('handles allowTxConfirmed event properly', () => {
     eventCreators.allowTxConfirmed(mockTxReceipt2),
   ]);
 
-  expect(depositForm.getStep()).toEqual('convert');
-  expect(depositForm.getAllowTxState()).toEqual({
+  expect(domain.getStep()).toEqual('convert');
+  expect(domain.getAllowTxState()).toEqual({
     allowTxStatus: 'confirmed',
     allowTxHash: mockHash2,
     allowTxReceipt: mockTxReceipt2,
   });
-  expect(depositForm.getConvertTxState()).toEqual({
+  expect(domain.getConvertTxState()).toEqual({
     convertTxStatus: 'confirmed',
     convertTxHash: mockHash,
     convertTxReceipt: mockTxReceipt,
