@@ -1,10 +1,11 @@
 @import "vars";
 
 .trade-history {
-  height: 400px;
-  //width: 400px;
-  h5 {
-  }
+  height: 690px;
+  min-width: 430px !important;
+  width: 430px !important;
+
+  margin: 10px 0px 0px 10px;
   .list-container {
     height: 100%;
   }
@@ -14,12 +15,12 @@
     box-shadow: none !important;
   }
   .pt-tabs {
-    height: 90%;
+    height: 95%;
   }
 
   .pt-tab-panel {
     margin-top: 0;
-    height: 90%;
+    height: 95%;
     position: relative;
     button {
       position: absolute;
@@ -88,7 +89,7 @@
   ul.list {
     margin-top: 3px;
     overflow-y: scroll;
-    height: 91%;
+    height: 94%;
   }
   button {
     width: 100%;

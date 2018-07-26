@@ -99,7 +99,7 @@ export default class ExtendedChart extends React.Component<Props, State> {
 
   render() {
     const {
-      props: { expandedChard, toggleExpand, ohlcvData, pair, pairId },
+      props: { expandedChard, toggleExpand, ohlcvData, hideOrderBook, toggleOrderBook },
       state: { indicators, chartHeight, indicatorHeight },
       changeTimeSpan,
       toogleChartIndicator,
@@ -115,6 +115,8 @@ export default class ExtendedChart extends React.Component<Props, State> {
             toogleChartIndicator={toogleChartIndicator}
             changeTimeSpan={changeTimeSpan}
             state={this.state}
+            hideOrderBook={hideOrderBook}
+            toggleOrderBook={toggleOrderBook}
           />
           <ChartLoadingScreen
             volume={indicators[0]}
@@ -135,7 +137,7 @@ export default class ExtendedChart extends React.Component<Props, State> {
   }
 }
 
-const Toolbar = ({ state, toogleChartIndicator, toggleExpand, changeTimeSpan, changeDuration }) => (
+const Toolbar = ({ state, toogleChartIndicator, toggleOrderBook, changeTimeSpan, changeDuration }) => (
   <div className="toolbar">
     <div className="menu time-span">
       <StandardSelect
@@ -164,6 +166,6 @@ const Toolbar = ({ state, toogleChartIndicator, toggleExpand, changeTimeSpan, ch
       <Button onClick={() => changeDuration('3 months')} text="3m" />
       <Button onClick={() => changeDuration('6 months')} text="6m" />
     </div>
-    <Button icon="fullscreen" onClick={toggleExpand} />
+    <Button icon="fullscreen" onClick={toggleOrderBook} />
   </div>
 );

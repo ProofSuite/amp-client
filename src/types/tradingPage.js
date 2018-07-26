@@ -1,6 +1,6 @@
 //@flow
 
-export type HomeState = {};
+export type TradingState = {};
 
 export type LoadDataParams = {
   tokenId: string,

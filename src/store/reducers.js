@@ -25,7 +25,7 @@ import * as accountBalancesEvents from './domains/accountBalances';
 import * as providerEvents from './domains/provider';
 import * as etherTxEvents from './domains/etherTx';
 import * as loginPageEvents from './domains/loginPage';
-import * as homePageEvents from './domains/homePage';
+import * as tradingPageEvents from './domains/tradingPage';
 import * as orderBookEvents from './domains/orderBook';
 import * as tradeHistoryEvents from './domains/tradeHistory';
 import * as orderHistoryEvents from './domains/orderHistory';
@@ -40,11 +40,11 @@ import * as settingsEvents from './domains/settings';
 import * as tokenPairsEvents from './domains/tokenPairs';
 import * as walletsEvents from './domains/wallets';
 
-export const homePage = createReducer(action => {
+export const tradingPage = createReducer(action => {
   const { type } = action;
   switch (type) {
     default:
-      return homePageEvents.initialized();
+      return tradingPageEvents.initialized();
   }
 });
 

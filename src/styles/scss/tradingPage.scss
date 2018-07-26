@@ -1,0 +1,24 @@
+@import "vars";
+
+.trading-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .open-order-book {
+    width: 22%;
+  }
+  button.open-menu {
+    margin: 10px 0px 0px 0px;
+  }
+  .hidden-order-book {
+    width: 0px;
+    overflow: hidden;
+    padding: 0px;
+  }
+  .extended-charting {
+    width: 77%;
+  }
+  .small-charting {
+    width: 55%;
+  }
+}

@@ -69,11 +69,6 @@ const DepthChartRenderer = (props: ChartProps) => {
           balloon: {
             textAlign: 'left',
           },
-          valueAxes: [
-            {
-              title: 'Volume',
-            },
-          ],
           categoryAxis: {
             title: title,
             minHorizontalGap: 100,
