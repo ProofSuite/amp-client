@@ -54,6 +54,7 @@ export type State = {
   loginPage: LoginPageState,
   homePage: HomeState,
   signer: SignerState,
+  provider: ProviderState,
   etherBalance: EtherBalanceState,
   accountBalances: AccountBalancesState,
   etherTx: EtherTxState,
