@@ -1,6 +1,6 @@
 // @flow
 import type { Store as ReduxStore, Dispatch as ReduxDispatch } from 'redux';
-import type { ProviderState, ProviderAction, ProviderEvent } from './provider';
+import type { SignerState, SignerSettingsAction, SignerEvent } from './signer';
 import type { EtherBalanceState, EtherBalanceAction, EtherBalanceEvent } from './etherBalance';
 import type { AccountBalancesState, AccountBalancesEvent, AccountBalancesAction } from './accountBalances';
 import type { EtherTxState, EtherTxAction, EtherTxEvent } from './etherTx';
@@ -24,7 +24,6 @@ export type ReduxInitAction = { type: '@@INIT' };
 
 export type Action =
   | ReduxInitAction
-  | ProviderAction
   | EtherBalanceAction
   | EtherTxAction
   | TokenAction
@@ -34,11 +33,11 @@ export type Action =
   | SettingsAction
   | WalletsAction
   | LoginPageAction
-  | LogoutPageAction;
+  | LogoutPageAction
+  | SignerSettingsAction;
 
 export type Event =
   | LoginPageEvent
-  | ProviderEvent
   | EtherBalanceEvent
   | EtherTxEvent
   | TokenEvent
@@ -46,14 +45,15 @@ export type Event =
   | AccountEvent
   | DepositFormEvent
   | SettingsEvent
-  | WalletsEvent;
+  | WalletsEvent
+  | SignerEvent;
 
 export type ActionHandler = Action => Event;
 
 export type State = {
   loginPage: LoginPageState,
   homePage: HomeState,
-  provider: ProviderState,
+  signer: SignerState,
   etherBalance: EtherBalanceState,
   accountBalances: AccountBalancesState,
   etherTx: EtherTxState,

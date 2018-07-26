@@ -1,33 +1,33 @@
-import domain, * as eventCreators from './loginPage';
+import getLoginPageDomain, * as eventCreators from './loginPage';
 
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
-  return domain(state);
+  return getLoginPageDomain(state);
 }
 
 it('handles initialized event', () => {
-  const loginPageDomain = getDomain([eventCreators.initialized()]);
-  expect(loginPageDomain.isLoading()).toEqual(false);
-  expect(loginPageDomain.getError()).toEqual('');
+  const domain = getDomain([eventCreators.initialized()]);
+  expect(domain.isLoading()).toEqual(false);
+  expect(domain.getError()).toEqual('');
 });
 
 it('handles loginRequested event', () => {
-  const loginPageDomain = getDomain([eventCreators.initialized(), eventCreators.loginRequested()]);
+  const domain = getDomain([eventCreators.initialized(), eventCreators.loginRequested()]);
 
-  expect(loginPageDomain.isLoading()).toEqual(true);
-  expect(loginPageDomain.getError()).toEqual('');
+  expect(domain.isLoading()).toEqual(true);
+  expect(domain.getError()).toEqual('');
 });
 
 it('handles loginFailed event', () => {
-  const loginPageDomain = getDomain([eventCreators.initialized(), eventCreators.loginFailed('Metamask not found')]);
+  const domain = getDomain([eventCreators.initialized(), eventCreators.loginFailed('Metamask not found')]);
 
-  expect(loginPageDomain.isLoading()).toEqual(false);
-  expect(loginPageDomain.getError()).toEqual('Metamask not found');
+  expect(domain.isLoading()).toEqual(false);
+  expect(domain.getError()).toEqual('Metamask not found');
 });
 
 it('handles authenticated event properly', () => {
-  const loginPageDomain = getDomain([eventCreators.initialized(), eventCreators.authenticated()]);
+  const domain = getDomain([eventCreators.initialized(), eventCreators.authenticated()]);
 
-  expect(loginPageDomain.isLoading()).toEqual(false);
-  expect(loginPageDomain.getError()).toEqual('');
+  expect(domain.isLoading()).toEqual(false);
+  expect(domain.getError()).toEqual('');
 });

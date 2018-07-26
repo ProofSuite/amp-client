@@ -1,5 +1,5 @@
 // @flow
-import walletModel from '../domains/wallets';
+import { getWalletsDomain } from '../domains';
 import * as actionCreators from '../actions/createWallet';
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
 
@@ -13,8 +13,8 @@ type CreateWalletParams = {
   storePrivateKey: boolean,
 };
 
-export default function getWalletModel(state: State) {
-  return walletModel(state.wallets);
+export default function createWalletModalSelector(state: State) {
+  return getWalletsDomain(state);
 }
 
 export function createWallet(params: CreateWalletParams): ThunkAction {

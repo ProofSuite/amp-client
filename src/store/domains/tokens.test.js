@@ -1,5 +1,4 @@
-import model from './tokens';
-import * as eventCreators from './tokens';
+import getTokenDomain, * as eventCreators from './tokens';
 
 const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
 
@@ -10,16 +9,16 @@ const tokensBySymbol = {
   ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
 };
 
-function getModel(events) {
+function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
-  return model(state);
+  return getTokenDomain(state);
 }
 
 it('handles initialized event properly', () => {
-  const tokenModel = getModel([eventCreators.initialized()]);
+  const tokenDomain = getDomain([eventCreators.initialized()]);
 
-  expect(tokenModel.symbols()).toEqual(symbols);
-  expect(tokenModel.bySymbol()).toEqual(tokensBySymbol);
+  expect(tokenDomain.symbols()).toEqual(symbols);
+  expect(tokenDomain.bySymbol()).toEqual(tokensBySymbol);
 });
 
 it('handles update tokens event properly', () => {
@@ -44,14 +43,14 @@ it('handles update tokens event properly', () => {
   ];
 
   const expectedSymbols = ['ETH', 'EOS', 'WETH', 'ZRX', 'PRFT'];
-  const tokenModel = getModel([
+  const tokenDomain = getDomain([
     eventCreators.initialized(),
     eventCreators.tokenUpdated(newToken.symbol, newToken.address),
   ]);
 
-  expect(tokenModel.symbols()).toEqual(expectedSymbols);
-  expect(tokenModel.bySymbol()).toEqual(expectedTokensBySymbol);
-  expect(tokenModel.tokens()).toEqual(expectedTokens);
+  expect(tokenDomain.symbols()).toEqual(expectedSymbols);
+  expect(tokenDomain.bySymbol()).toEqual(expectedTokensBySymbol);
+  expect(tokenDomain.tokens()).toEqual(expectedTokens);
 });
 
 it('handles update and remove tokens events properly', () => {
@@ -82,14 +81,14 @@ it('handles update and remove tokens events properly', () => {
 
   const expectedSymbols = ['ETH', 'EOS', 'WETH', 'PRFT'];
 
-  const tokenModel = getModel([
+  const tokenDomain = getDomain([
     eventCreators.initialized(),
     eventCreators.tokenUpdated(newToken.symbol, newToken.address),
     eventCreators.tokenRemoved('ZRX'),
   ]);
 
-  expect(tokenModel.symbols()).toEqual(expectedSymbols);
-  expect(tokenModel.bySymbol()).toEqual(expectedTokensBySymbols);
-  expect(tokenModel.tokens()).toEqual(expectedTokens);
-  expect(tokenModel.rankedTokens()).toEqual(expectedRankedTokens);
+  expect(tokenDomain.symbols()).toEqual(expectedSymbols);
+  expect(tokenDomain.bySymbol()).toEqual(expectedTokensBySymbols);
+  expect(tokenDomain.tokens()).toEqual(expectedTokens);
+  expect(tokenDomain.rankedTokens()).toEqual(expectedRankedTokens);
 });

@@ -32,7 +32,7 @@ export const tokenRemoved = (symbol: string) => {
   return event;
 };
 
-export default function model(state: TokenState) {
+export default function getTokenDomain(state: TokenState) {
   return {
     bySymbol: () => state.bySymbol,
     symbols: () => state.symbols,

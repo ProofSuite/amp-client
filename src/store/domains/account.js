@@ -27,7 +27,7 @@ export const accountRemoved = () => {
   return event;
 };
 
-export default function model(state: AccountState) {
+export default function accountDomain(state: AccountState) {
   return {
     address: () => state.address,
     authenticated: () => state.address !== null,

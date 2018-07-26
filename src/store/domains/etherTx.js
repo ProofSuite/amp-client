@@ -78,7 +78,7 @@ export const etherTxConfirmed = (receipt: TxReceipt) => {
   return event;
 };
 
-export default function model(state: EtherTxState) {
+export default function getEtherTxDomain(state: EtherTxState) {
   return {
     getState: () => state,
     isLoading: () => state.loading,

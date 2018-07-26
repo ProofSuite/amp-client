@@ -3,8 +3,10 @@ import loginPageSelector, * as actionCreators from './loginPage';
 import getAccountDomain from '../domains/account';
 import getWalletDomain from '../domains/wallets';
 import * as walletService from '../services/wallet';
+import * as signerService from '../services/signer';
 
 jest.mock('../services/wallet');
+jest.mock('../services/signer');
 
 let accountDomain, domain;
 
@@ -18,15 +20,16 @@ let model;
 describe('Login Page Model', () => {
   walletService.saveEncryptedWalletInLocalStorage = jest.fn();
   walletService.savePrivateKeyInSessionStorage = jest.fn();
+  signerService.createMetamaskSigner = jest.fn(() => Promise.resolve('test address'));
 
-  it('handles connectWithMetamask action (web3 undefined)', async () => {
+  it('handles loginWithMetamask action (web3 undefined)', async () => {
     global.web3 = undefined;
     const { store } = createStore();
 
     model = loginPageSelector(store.getState());
     expect(model.authenticated).toEqual(false);
 
-    await store.dispatch(actionCreators.connectWithMetamask());
+    await store.dispatch(actionCreators.loginWithMetamask());
 
     model = loginPageSelector(store.getState());
     expect(model.authenticated).toEqual(false);
@@ -37,17 +40,19 @@ describe('Login Page Model', () => {
     model = loginPageSelector(store.getState());
     expect(model.authenticated).toEqual(false);
     expect(model.loading).toEqual(false);
-    expect(model.error).toEqual('Metamask not found');
+    expect(model.error).toEqual('Metamask not installed');
   });
 
-  it('handles connectWithMetamask action (web3 present but account locked)', async () => {
+  it('handles loginWithMetamask action (web3 present but account locked)', async () => {
     const { store } = createStore();
-    global.web3 = 'test web3';
+    global.web3 = {
+      eth: 'test eth',
+    };
 
     model = loginPageSelector(store.getState());
     expect(model.authenticated).toEqual(false);
 
-    await store.dispatch(actionCreators.connectWithMetamask());
+    await store.dispatch(actionCreators.loginWithMetamask());
 
     model = loginPageSelector(store.getState());
     expect(model.authenticated).toEqual(false);
@@ -61,7 +66,7 @@ describe('Login Page Model', () => {
     expect(model.error).toEqual('Metamask account locked');
   });
 
-  it('handles connectWithMetamask action (metamask unlocked)', async () => {
+  it('handles loginWithMetamask action (metamask unlocked)', async () => {
     global.web3 = {
       eth: {
         defaultAccount: 'c838efcb6512a2ca12027ebcdf9e1fc5e4ff7ee3',
@@ -72,14 +77,14 @@ describe('Login Page Model', () => {
     model = loginPageSelector(store.getState());
     expect(model.authenticated).toEqual(false);
 
-    await store.dispatch(actionCreators.connectWithMetamask());
+    await store.dispatch(actionCreators.loginWithMetamask());
 
     model = loginPageSelector(store.getState());
     expect(model.authenticated).toEqual(true);
     expect(model.loading).toEqual(false);
   });
 
-  it('handles connectWithWallet (no storage)', async () => {
+  it('handles loginWithWallet (no storage)', async () => {
     const { store } = createStore();
     const params = {
       wallet: {
@@ -90,7 +95,7 @@ describe('Login Page Model', () => {
       storePrivateKey: false,
     };
 
-    await store.dispatch(actionCreators.connectWithWallet(params));
+    await store.dispatch(actionCreators.loginWithWallet(params));
 
     expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledTimes(0);
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(0);
@@ -104,7 +109,7 @@ describe('Login Page Model', () => {
     });
   });
 
-  it('handles connectWithWallet (no encrypted wallet)', async () => {
+  it('handles loginWithWallet (no encrypted wallet)', async () => {
     const { store } = createStore();
     const params = {
       wallet: {
@@ -114,7 +119,7 @@ describe('Login Page Model', () => {
       storePrivateKey: true,
     };
 
-    await store.dispatch(actionCreators.connectWithWallet(params));
+    await store.dispatch(actionCreators.loginWithWallet(params));
 
     expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledTimes(0);
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(1);
@@ -129,7 +134,7 @@ describe('Login Page Model', () => {
     });
   });
 
-  it('handles connectWithWallet (store encrypted wallet and private key', async () => {
+  it('handles loginWithWallet (store encrypted wallet and private key', async () => {
     const { store } = createStore();
     const params = {
       wallet: {
@@ -141,7 +146,7 @@ describe('Login Page Model', () => {
       storePrivateKey: true,
     };
 
-    await store.dispatch(actionCreators.connectWithWallet(params));
+    await store.dispatch(actionCreators.loginWithWallet(params));
 
     expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledTimes(1);
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(1);
@@ -161,7 +166,7 @@ describe('Create wallet (Integration Test)', () => {
   beforeEach(() => {
     localStorage.clear();
   });
-  it('handles connectWithWallet (store encrypted wallet and private key', async () => {
+  it('handles loginWithWallet (store encrypted wallet and private key', async () => {
     walletService.saveEncryptedWalletInLocalStorage.mockImplementationOnce(
       require.requireActual('../services/wallet').saveEncryptedWalletInLocalStorage
     );
@@ -181,7 +186,7 @@ describe('Create wallet (Integration Test)', () => {
       storePrivateKey: true,
     };
 
-    await store.dispatch(actionCreators.connectWithWallet(params));
+    await store.dispatch(actionCreators.loginWithWallet(params));
 
     domain = getWalletDomain(store.getState().wallets);
     expect(domain.addresses()).toEqual(['0x17fE89190052827FB351e965C965E5fE1Ee60080']);

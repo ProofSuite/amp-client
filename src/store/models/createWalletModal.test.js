@@ -1,11 +1,11 @@
 import createStore from '../../store/configureStore';
 
-import getCreateWalletModel, * as actionCreators from './createWalletModal';
+import createWalletModalSelector, * as actionCreators from './createWalletModal';
 import * as walletService from '../services/wallet';
 
 jest.mock('../services/wallet');
 
-let model;
+let selector;
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -30,10 +30,10 @@ describe('create Wallet', () => {
     expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledTimes(0);
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(0);
 
-    model = getCreateWalletModel(store.getState());
+    selector = createWalletModalSelector(store.getState());
 
-    expect(model.addresses()).toEqual(['test address']);
-    expect(model.byAddress()).toEqual({
+    expect(selector.addresses()).toEqual(['test address']);
+    expect(selector.byAddress()).toEqual({
       'test address': {
         address: 'test address',
         encryptedWallet: 'test encryptedWallet',
@@ -60,10 +60,10 @@ describe('create Wallet', () => {
     );
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(0);
 
-    model = getCreateWalletModel(store.getState());
+    selector = createWalletModalSelector(store.getState());
 
-    expect(model.addresses()).toEqual(['test address']);
-    expect(model.byAddress()).toEqual({
+    expect(selector.addresses()).toEqual(['test address']);
+    expect(selector.byAddress()).toEqual({
       'test address': {
         address: 'test address',
         encryptedWallet: 'test encryptedWallet',
@@ -95,10 +95,10 @@ describe('create Wallet', () => {
       encryptedWallet: 'test encryptedWallet',
     });
 
-    model = getCreateWalletModel(store.getState());
+    selector = createWalletModalSelector(store.getState());
 
-    expect(model.addresses()).toEqual(['test address']);
-    expect(model.byAddress()).toEqual({
+    expect(selector.addresses()).toEqual(['test address']);
+    expect(selector.byAddress()).toEqual({
       'test address': {
         address: 'test address',
         encryptedWallet: 'test encryptedWallet',

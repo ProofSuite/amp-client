@@ -1,5 +1,4 @@
-import model from './tokenPairs';
-import * as eventCreators from './tokenPairs';
+import getTokenPairsDomain, * as eventCreators from './tokenPairs';
 
 const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
 
@@ -10,13 +9,13 @@ const tokensBySymbol = {
   ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
 };
 
-function getModel(events) {
+function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
-  return model(state);
+  return getTokenPairsDomain(state);
 }
 
 it('handles initialized event properly', () => {
-  const tokenPairsModel = getModel([eventCreators.initialized()]);
+  const tokenPairsDomain = getDomain([eventCreators.initialized()]);
   const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI'];
 
   const expectedByPairsBySymbol = {
@@ -56,8 +55,8 @@ it('handles initialized event properly', () => {
       quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
     },
   };
-  expect(tokenPairsModel.getPairs()).toEqual(expectedPairs);
-  expect(tokenPairsModel.getPairsBySymbol()).toEqual(expectedByPairsBySymbol);
+  expect(tokenPairsDomain.getPairs()).toEqual(expectedPairs);
+  expect(tokenPairsDomain.getPairsBySymbol()).toEqual(expectedByPairsBySymbol);
 });
 
 it('handles tokenPairUpdated event properly', () => {
@@ -66,7 +65,7 @@ it('handles tokenPairUpdated event properly', () => {
     address: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
   };
 
-  const tokensPairsModel = getModel([eventCreators.initialized(), eventCreators.tokenPairUpdated(token)]);
+  const tokenPairsDomain = getDomain([eventCreators.initialized(), eventCreators.tokenPairUpdated(token)]);
 
   const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI', 'REQ_WETH', 'REQ_DAI'];
 
@@ -122,8 +121,8 @@ it('handles tokenPairUpdated event properly', () => {
     },
   };
 
-  expect(tokensPairsModel.getPairs()).toEqual(expectedPairs);
-  expect(tokensPairsModel.getPairsBySymbol()).toEqual(expectedPairsBySymbol);
+  expect(tokenPairsDomain.getPairs()).toEqual(expectedPairs);
+  expect(tokenPairsDomain.getPairsBySymbol()).toEqual(expectedPairsBySymbol);
 });
 
 it('handles tokenPairUpdated event properly if the event is already if the token is a quote token', () => {
@@ -132,7 +131,7 @@ it('handles tokenPairUpdated event properly if the event is already if the token
     address: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
   };
 
-  const tokensPairsModel = getModel([eventCreators.initialized(), eventCreators.tokenPairUpdated(token)]);
+  const tokenPairsDomain = getDomain([eventCreators.initialized(), eventCreators.tokenPairUpdated(token)]);
 
   const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI'];
 
@@ -174,8 +173,8 @@ it('handles tokenPairUpdated event properly if the event is already if the token
     },
   };
 
-  expect(tokensPairsModel.getPairs()).toEqual(expectedPairs);
-  expect(tokensPairsModel.getPairsBySymbol()).toEqual(expectedPairsBySymbol);
+  expect(tokenPairsDomain.getPairs()).toEqual(expectedPairs);
+  expect(tokenPairsDomain.getPairsBySymbol()).toEqual(expectedPairsBySymbol);
 });
 
 it('handles tokenPairUpdated event properly', () => {
@@ -188,7 +187,7 @@ it('handles tokenPairUpdated event properly', () => {
     address: '0xc73eec564e96e6653943d6d0e32121d455917653',
   };
 
-  const tokensPairsModel = getModel([
+  const tokenPairsDomain = getDomain([
     eventCreators.initialized(),
     eventCreators.tokenPairUpdated(token1),
     eventCreators.tokenPairRemoved(token2),
@@ -234,6 +233,6 @@ it('handles tokenPairUpdated event properly', () => {
     },
   };
 
-  expect(tokensPairsModel.getPairs()).toEqual(expectedPairs);
-  expect(tokensPairsModel.getPairsBySymbol()).toEqual(expectedPairsBySymbol);
+  expect(tokenPairsDomain.getPairs()).toEqual(expectedPairs);
+  expect(tokenPairsDomain.getPairsBySymbol()).toEqual(expectedPairsBySymbol);
 });

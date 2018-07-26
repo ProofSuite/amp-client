@@ -2,7 +2,6 @@
 import createReducer from './createReducer';
 import etherBalanceActionTypes from './actions/etherBalance';
 import accountBalancesActionTypes from './actions/accountBalances';
-import providerActionTypes from './actions/provider';
 import etherTxActionTypes from './actions/etherTx';
 import orderBookActionTypes from './actions/orderBook';
 import tradeHistoryActionTypes from './actions/tradeHistory';
@@ -19,10 +18,10 @@ import createWalletActionTypes from './actions/createWallet';
 import walletPageActionTypes from './actions/walletPage';
 import loginPageActionTypes from './actions/loginPage';
 import logoutPageActionTypes from './actions/logoutPage';
+import signerSettingsActionTypes from './actions/signerSettings';
 
 import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
-import * as providerEvents from './domains/provider';
 import * as etherTxEvents from './domains/etherTx';
 import * as loginPageEvents from './domains/loginPage';
 import * as homePageEvents from './domains/homePage';
@@ -38,6 +37,7 @@ import * as accountEvents from './domains/account';
 import * as depositFormEvents from './domains/depositForm';
 import * as settingsEvents from './domains/settings';
 import * as tokenPairsEvents from './domains/tokenPairs';
+import * as signerEvents from './domains/signer';
 import * as walletsEvents from './domains/wallets';
 
 export const homePage = createReducer(action => {
@@ -55,7 +55,9 @@ export const loginPage = createReducer(action => {
       return loginPageEvents.loginRequested();
     case loginPageActionTypes.loginError:
       return loginPageEvents.loginFailed(payload.error);
-    case loginPageActionTypes.login:
+    case loginPageActionTypes.loginWithMetamask:
+      return loginPageEvents.authenticated();
+    case loginPageActionTypes.loginWithWallet:
       return loginPageEvents.authenticated();
     default:
       return loginPageEvents.initialized();
@@ -92,17 +94,17 @@ export const accountBalances = createReducer(action => {
   }
 });
 
-export const provider = createReducer(action => {
+export const signer = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case providerActionTypes.requestProvider:
-      return providerEvents.providerRequested();
-    case providerActionTypes.setProvider:
-      return providerEvents.providerSet(payload.options);
-    case providerActionTypes.error:
-      return providerEvents.providerError(payload.message);
+    case signerSettingsActionTypes.requestSigner:
+      return signerEvents.signerRequested();
+    case signerSettingsActionTypes.updateSigner:
+      return signerEvents.signerUpdated(payload.params);
+    case signerSettingsActionTypes.error:
+      return signerEvents.signerError(payload.message);
     default:
-      return providerEvents.initialized();
+      return signerEvents.initialized();
   }
 });
 
@@ -220,9 +222,11 @@ export const account = createReducer(action => {
   switch (type) {
     case accountActionTypes.updateAccount:
       return accountEvents.accountUpdated(payload.address);
-    case providerActionTypes.setProvider:
+    case signerSettingsActionTypes.updateSigner:
       return accountEvents.accountUpdated(payload.address);
-    case loginPageActionTypes.login:
+    case loginPageActionTypes.loginWithMetamask:
+      return accountEvents.accountUpdated(payload.address);
+    case loginPageActionTypes.loginWithWallet:
       return accountEvents.accountUpdated(payload.address);
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved();

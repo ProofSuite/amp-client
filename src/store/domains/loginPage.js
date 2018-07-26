@@ -40,7 +40,7 @@ export const authenticated = () => {
   return event;
 };
 
-export default function domain(state: LoginPageState) {
+export default function getLoginPageDomain(state: LoginPageState) {
   return {
     isLoading: () => state.loading,
     getError: () => state.error,

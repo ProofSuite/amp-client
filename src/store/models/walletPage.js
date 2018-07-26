@@ -1,8 +1,5 @@
 // @flow
-import getAccountModel from './account';
-import getTokenModel from './tokens';
-import getAccountBalancesModel from '../domains/accountBalances';
-
+import { getTokenDomain, getAccountBalancesDomain, getAccountDomain } from '../domains';
 import * as actionCreators from '../actions/walletPage';
 import * as accountBalancesService from '../services/accountBalances';
 
@@ -10,18 +7,20 @@ import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
 
 //@flow
-export default function createSelector(state: State) {
-  let accountBalancesModel = getAccountBalancesModel(state.accountBalances);
-
-  return accountBalancesModel;
+export default function walletPageSelector(state: State) {
+  return {
+    depositTableData: getAccountBalancesDomain(state).balancesArray(),
+    accountAddress: getAccountDomain(state).address(),
+    tokens: getTokenDomain(state).tokens(),
+  };
 }
 
 export function queryAccountData(): ThunkAction {
   return async (dispatch, getState) => {
     try {
       const state = getState();
-      const accountAddress = getAccountModel(state).address();
-      let tokens = getTokenModel(state).tokens();
+      const accountAddress = getAccountDomain(state).address();
+      let tokens = getTokenDomain(state).tokens();
       tokens = tokens.filter((token: Token) => token.symbol != 'ETH');
 
       if (!accountAddress) throw new Error('Account address is not set');
