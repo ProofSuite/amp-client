@@ -3,21 +3,21 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
 import connect, { mapStateToProps, mapDispatchToProps } from './connect';
-import providerModel, * as providerActionCreators from '../../store/models/provider';
+import signerSettingsSelector, * as actionCreators from '../../store/models/signerSettings';
 
-jest.mock('../../store/models/provider');
+jest.mock('../../store/models/signerSettings');
 
 describe('mapStateToProps(state, props)', () => {
   let isLoading = jest.fn(() => 'test isLoading');
   let getError = jest.fn(() => 'test getError');
-  let getCurrentProvider = jest.fn(() => 'test getCurrentProvider');
-  providerModel.mockReturnValue({ isLoading, getError, getCurrentProvider });
+  let getCurrentSigner = jest.fn(() => 'test getCurrentSigner');
+  signerSettingsSelector.mockReturnValue({ isLoading, getError, getCurrentSigner });
 });
 
 it('returns something as expected', () => {
   const state = {};
   const result = mapStateToProps(state, null);
-  const expected = { loading: 'test isLoading', error: 'test getError', currentProvider: 'test getCurrentProvider' };
+  const expected = { loading: 'test isLoading', error: 'test getError', currentSigner: 'test getCurrentSigner' };
 
   expect(result).toBeDefined();
   expect(result).toEqual(expected);
@@ -25,7 +25,7 @@ it('returns something as expected', () => {
 
 describe('mapDispatchToProps(dispatch, props)', () => {
   beforeEach(() => {
-    providerActionCreators.setProvider.mockReturnValue('test setProvider');
+    actionCreators.updateSigner.mockReturnValue('test updateSigner');
   });
 
   it('returns something as expected', () => {
@@ -34,19 +34,19 @@ describe('mapDispatchToProps(dispatch, props)', () => {
     const actionDispatchers = mapDispatchToProps(dispatch, props);
 
     expect(actionDispatchers).toBeDefined();
-    expect(actionDispatchers).toHaveProperty('setProvider');
+    expect(actionDispatchers).toHaveProperty('updateSigner');
   });
 
-  it('creates a wrapped setProvider function with dispatch', () => {
+  it('creates a wrapped updateSigner function with dispatch', () => {
     const dispatch = jest.fn(() => 'test dispatch');
     const options = { url: 'http://localhost:8545', networkId: 8888 };
     const actionDispatchers = mapDispatchToProps(dispatch, null);
 
-    const result = actionDispatchers.setProvider(options);
+    const result = actionDispatchers.updateSigner(options);
 
     expect(result).toEqual('test dispatch');
-    expect(providerActionCreators.setProvider).toBeCalledWith(options);
-    expect(dispatch).toBeCalledWith('test setProvider');
+    expect(actionCreators.updateSigner).toBeCalledWith(options);
+    expect(dispatch).toBeCalledWith('test updateSigner');
   });
 });
 
@@ -55,7 +55,7 @@ describe('connect(Component)', () => {
     const { store } = createStore();
     const ConnectedTestComponent = connect(props => {
       expect(props).toBeDefined();
-      expect(props).toHaveProperty('setProvider');
+      expect(props).toHaveProperty('updateSigner');
       expect(props).toHaveProperty('loading');
 
       return null;

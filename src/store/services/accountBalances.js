@@ -1,13 +1,12 @@
 // @flow
 import { Contract, utils } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
-import { getProvider } from './provider';
+import { getProvider } from './signer';
 
 import type { Token, TokenBalances } from '../../types/common';
 
 export async function queryEtherBalance(address: string) {
-  const { provider } = await getProvider();
-
+  const provider = getProvider();
   const balance = await provider.getBalance(address);
   return {
     symbol: 'ETH',
@@ -17,7 +16,7 @@ export async function queryEtherBalance(address: string) {
 
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
   let balances;
-  const { provider } = await getProvider();
+  const provider = getProvider();
 
   const balancePromises = tokens.map(token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider);
@@ -35,7 +34,7 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
 
 export async function queryTokenAllowances(address: string, tokens: Array<Token>) {
   let allowances;
-  const { provider } = await getProvider();
+  const provider = getProvider();
 
   const allowancePromises = tokens.map(token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider);
@@ -52,7 +51,7 @@ export async function queryTokenAllowances(address: string, tokens: Array<Token>
 }
 
 export async function subscribeEtherBalance(address: string, callback: number => void) {
-  const { provider } = await getProvider();
+  const provider = getProvider();
   const initialBalance = await provider.getBalance(address);
 
   const handler = async balance => {
@@ -67,7 +66,7 @@ export async function subscribeEtherBalance(address: string, callback: number =>
 }
 
 export async function subscribeTokenBalance(address: string, token: Object, callback: number => void) {
-  const { provider } = await getProvider();
+  const provider = getProvider();
   const contract = new Contract(token.address, ERC20Token.abi, provider);
 
   const initialBalance = await contract.balanceOf(address);

@@ -1,11 +1,11 @@
 // @flow
 import * as actionCreators from '../actions/logoutPage';
-import accountDomain from '../domains/account';
+import { getAccountDomain } from '../domains';
 import type { State, ThunkAction } from '../../types';
 
 export default function logoutPageSelector(state: State) {
   return {
-    authenticated: accountDomain(state.account).authenticated(),
+    authenticated: getAccountDomain(state).authenticated(),
   };
 }
 

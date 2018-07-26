@@ -1,15 +1,13 @@
 import { Contract, utils } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
-import * as providerService from './provider';
+import * as signerService from './signer';
 import * as accountBalancesService from './accountBalances';
 
 jest.mock('ethers');
 jest.mock('proof-contracts-interfaces', () => ({
-  ERC20Token: {
-    abi: 'test ERC20Token abi',
-  },
+  ERC20Token: { abi: 'test ERC20Token abi' },
 }));
-jest.mock('./provider');
+jest.mock('./signer');
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -23,14 +21,14 @@ describe('queryEtherBalance', () => {
   beforeEach(() => {
     getBalance = jest.fn().mockReturnValue('test getBalance');
     providerMock = { getBalance };
-    providerService.getProvider.mockImplementation(() => Promise.resolve({ provider: providerMock }));
+    signerService.getProvider = jest.fn(() => providerMock);
     utils.formatEther.mockReturnValue(1000);
     address = '0x4dc5790733b997f3db7fc49118ab013182d6ba9b';
   });
 
   it('loads the current provider', async () => {
     await accountBalancesService.queryEtherBalance(address);
-    expect(providerService.getProvider).toHaveBeenCalledTimes(1);
+    expect(signerService.getProvider).toHaveBeenCalledTimes(1);
   });
 
   it('the provider returns the current ether balance', async () => {
@@ -58,7 +56,7 @@ describe('queryBalances', () => {
     balanceOf = jest.fn();
     contractMock = jest.fn(() => ({ balanceOf }));
     providerMock = 'test provider';
-    providerService.getProvider.mockImplementation(() => Promise.resolve({ provider: providerMock }));
+    signerService.getProvider.mockImplementation(() => providerMock);
     Contract.mockImplementation(contractMock);
 
     address = '0x4dc5790733b997f3db7fc49118ab013182d6ba9b';
@@ -70,7 +68,7 @@ describe('queryBalances', () => {
 
   it('loads the current provider', async () => {
     await accountBalancesService.queryTokenBalances(address, tokens);
-    expect(providerService.getProvider).toHaveBeenCalledTimes(1);
+    expect(signerService.getProvider).toHaveBeenCalledTimes(1);
   });
 
   it('the provider returns the current ether balance', async () => {
@@ -117,7 +115,7 @@ describe('queryTokenAllowances', () => {
     allowance = jest.fn();
     contractMock = jest.fn(() => ({ allowance }));
     providerMock = 'test provider';
-    providerService.getProvider.mockImplementation(() => Promise.resolve({ provider: providerMock }));
+    signerService.getProvider.mockImplementation(() => providerMock);
     Contract.mockImplementation(contractMock);
 
     address = '0x4dc5790733b997f3db7fc49118ab013182d6ba9b';
@@ -129,7 +127,7 @@ describe('queryTokenAllowances', () => {
 
   it('loads the current provider', async () => {
     await accountBalancesService.queryTokenAllowances(address, tokens);
-    expect(providerService.getProvider).toHaveBeenCalledTimes(1);
+    expect(signerService.getProvider).toHaveBeenCalledTimes(1);
   });
 
   it('the provider returns the current ether balance', async () => {
@@ -176,7 +174,7 @@ describe('subscribeEtherBalance(address, callback', () => {
     removeListener = jest.fn();
     getBalance = jest.fn();
     providerMock = { on, removeListener, getBalance };
-    providerService.getProvider.mockImplementation(() => ({ provider: providerMock }));
+    signerService.getProvider.mockImplementation(() => providerMock);
     utils.formatEther.mockReturnValue(1000);
   });
 
@@ -185,7 +183,7 @@ describe('subscribeEtherBalance(address, callback', () => {
     const callback = jest.fn();
 
     await accountBalancesService.subscribeEtherBalance(address, callback);
-    expect(providerService.getProvider).toHaveBeenCalledTimes(1);
+    expect(signerService.getProvider).toHaveBeenCalledTimes(1);
   });
 
   it('subscribe to the provided address, unsubscribes it when calling the return function', async () => {
@@ -227,7 +225,7 @@ describe('subscribeTokenBalance(address, callback)', () => {
     balanceOf = jest.fn();
     contractMock = jest.fn(() => ({ balanceOf }));
     providerMock = { on, removeListener };
-    providerService.getProvider.mockImplementation(() => Promise.resolve({ provider: providerMock }));
+    signerService.getProvider.mockImplementation(() => providerMock);
     Contract.mockImplementation(contractMock);
     utils.formatEther.mockReturnValue(1000);
 
@@ -238,14 +236,14 @@ describe('subscribeTokenBalance(address, callback)', () => {
   it('loads the current provider', async () => {
     const callback = jest.fn();
     await accountBalancesService.subscribeTokenBalance(address, token, callback);
-    expect(providerService.getProvider).toHaveBeenCalledTimes(1);
+    expect(signerService.getProvider).toHaveBeenCalledTimes(1);
   });
 
   it('subscribe to the provided token balance, unsubscribes it when calling the return function', async () => {
     const callback = jest.fn();
     const unsubscribe = await accountBalancesService.subscribeTokenBalance(address, token, callback);
 
-    expect(providerService.getProvider).toHaveBeenCalledTimes(1);
+    expect(signerService.getProvider).toHaveBeenCalledTimes(1);
 
     expect(balanceOf).toHaveBeenCalledTimes(1);
     expect(balanceOf).toHaveBeenCalledWith(address);

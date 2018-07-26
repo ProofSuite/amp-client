@@ -1,15 +1,16 @@
-import etherBalanceModel from '../domains/etherBalance';
+import { getEtherBalanceDomain } from '../domains';
+
 import * as actionCreators from '../actions/etherBalance';
 import * as ether from '../services/ether';
 
-export default function getModel(state) {
-  return etherBalanceModel(state.etherBalance);
+export default function getEtherTxSelector(state) {
+  return getEtherBalanceDomain(state);
 }
 
 export function subscribeBalance(address) {
   return (dispatch, getState) => {
     const state = getState();
-    const model = getModel(state);
+    const model = getEtherTxSelector(state);
 
     if (model.isSubscribed(address)) {
       return;

@@ -100,7 +100,7 @@ export const tokenPairRemoved = baseToken => {
   return event;
 };
 
-export default function model(state: TokenPairState) {
+export default function getTokenPairsDomain(state: TokenPairState) {
   return {
     getPairs: () => state.pairs,
     getPairsBySymbol: () => state.byPair,

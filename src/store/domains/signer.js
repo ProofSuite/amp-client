@@ -1,21 +1,22 @@
 // @flow
-import type { ProviderOptions, ProviderState } from '../../types/provider';
+import type { SignerSettings, SignerState } from '../../types/signer';
+import type { State } from '../../types';
 
 const initialState = {
   loading: false,
   error: '',
-  type: 'local',
+  type: 'rpc',
   url: 'http://127.0.0.1:8545',
   networkId: 8888,
 };
 
 export const initialized = () => {
-  const event = (state: ProviderState = initialState) => state;
+  const event = (state: SignerState = initialState) => state;
   return event;
 };
 
-export const providerSet = ({ type, url, networkId }: ProviderOptions) => {
-  const event = (state: ProviderState) => ({
+export const signerUpdated = ({ type, url, networkId }: SignerSettings) => {
+  const event = (state: SignerState) => ({
     ...state,
     loading: false,
     error: null,
@@ -27,8 +28,8 @@ export const providerSet = ({ type, url, networkId }: ProviderOptions) => {
   return event;
 };
 
-export const providerRequested = () => {
-  const event = (state: ProviderState) => ({
+export const signerRequested = () => {
+  const event = (state: SignerState) => ({
     ...state,
     loading: true,
   });
@@ -36,8 +37,8 @@ export const providerRequested = () => {
   return event;
 };
 
-export const providerError = (error: string) => {
-  const event = (state: ProviderState) => ({
+export const signerError = (error: string) => {
+  const event = (state: SignerState) => ({
     ...state,
     loading: false,
     error: error,
@@ -46,11 +47,11 @@ export const providerError = (error: string) => {
   return event;
 };
 
-export default function model(state: ProviderState) {
+export default function signerDomain(state: SignerState) {
   return {
     isLoading: () => state.loading,
     getError: () => state.error,
-    getCurrentProvider: () => ({ type: state.type, url: state.url, networkId: state.networkId }),
+    getCurrentSigner: () => ({ type: state.type, url: state.url, networkId: state.networkId }),
     getType: () => state.type,
     getUrl: () => state.url,
     getNetworkId: () => state.networkId,

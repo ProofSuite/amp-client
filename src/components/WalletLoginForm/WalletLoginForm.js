@@ -12,7 +12,7 @@ import WalletLoginFormRenderer from './WalletLoginFormRenderer';
 import type { CreateWalletParams } from '../../types/walletLoginForm';
 
 type Status = 'incomplete' | 'valid' | 'invalid';
-type Props = { connectWithWallet: CreateWalletParams => void };
+type Props = { loginWithWallet: CreateWalletParams => void };
 
 type State = {
   loading: boolean,
@@ -101,7 +101,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
   submit = async () => {
     const { method, json, walletFile, privateKey, password, mnemonic, storeWallet, storePrivateKey } = this.state;
-    const { connectWithWallet } = this.props;
+    const { loginWithWallet } = this.props;
     var wallet, encryptedWallet;
 
     this.setState({ loading: true });
@@ -124,7 +124,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     }
 
     this.setState({ loading: false });
-    connectWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
+    loginWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
   };
 
   render() {

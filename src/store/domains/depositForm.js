@@ -95,7 +95,7 @@ export const allowTxConfirmed = (receipt: TxReceipt): DepositFormEvent => {
   return event;
 };
 
-export default function model(state: DepositFormState) {
+export default function depositFormDomain(state: DepositFormState) {
   return {
     getStep() {
       return state.step;

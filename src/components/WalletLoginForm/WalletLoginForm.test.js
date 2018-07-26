@@ -6,18 +6,18 @@ import * as walletService from '../../store/services/wallet';
 
 jest.mock('../../store/services/wallet');
 
-let connectWithWallet = jest.fn();
+let loginWithWallet = jest.fn();
 
 describe('Rendering', () => {
   it('renders without crashing', () => {
-    shallow(<WalletLoginForm connectWithWallet={connectWithWallet} />);
+    shallow(<WalletLoginForm loginWithWallet={loginWithWallet} />);
   });
 });
 
 describe('Component methods', () => {
   let wrapper, instance;
   beforeEach(() => {
-    wrapper = shallow(<WalletLoginForm connectWithWallet={connectWithWallet} />);
+    wrapper = shallow(<WalletLoginForm loginWithWallet={loginWithWallet} />);
 
     instance = wrapper.instance();
   });
@@ -35,7 +35,7 @@ describe('Component methods', () => {
 
     expect(walletService.createWalletFromPrivateKey).toHaveBeenCalledTimes(1);
     expect(walletService.createWalletFromPrivateKey).toHaveBeenCalledWith('test privateKey');
-    expect(connectWithWallet).toHaveBeenCalledWith({
+    expect(loginWithWallet).toHaveBeenCalledWith({
       wallet: 'test wallet',
       encryptedWallet: undefined,
       storeWallet: false,

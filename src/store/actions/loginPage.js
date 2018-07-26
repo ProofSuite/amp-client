@@ -1,10 +1,17 @@
 //@flow
-import type { CreateWalletAction, LoginAction, LoginErrorAction, RequestLoginAction } from '../../types/loginPage';
+import type {
+  CreateWalletAction,
+  LoginWithWalletAction,
+  LoginWithMetamaskAction,
+  LoginErrorAction,
+  RequestLoginAction,
+} from '../../types/loginPage';
 
 const actionTypes = {
   createWallet: 'loginPage/CREATE_WALLET',
   requestLogin: 'loginPage/REQUEST_LOGIN',
-  login: 'loginPage/LOGIN',
+  loginWithMetamask: 'loginPage/LOGIN_WITH_METAMASK',
+  loginWithWallet: 'loginPage/LOGIN_WITH_WALLET',
   loginError: 'loginPage/LOGIN_ERROR',
 };
 
@@ -15,9 +22,16 @@ export function createWallet(address: string, encryptedWallet: string): CreateWa
   };
 }
 
-export function login(address: string): LoginAction {
+export function loginWithMetamask(address: string): LoginWithMetamaskAction {
   return {
-    type: actionTypes.login,
+    type: actionTypes.loginWithMetamask,
+    payload: { address },
+  };
+}
+
+export function loginWithWallet(address: string): LoginWithWalletAction {
+  return {
+    type: actionTypes.loginWithWallet,
     payload: { address },
   };
 }

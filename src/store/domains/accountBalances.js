@@ -81,7 +81,7 @@ export function cleared() {
   return event;
 }
 
-export default function model(state: AccountBalancesState) {
+export default function accountBalancesDomain(state: AccountBalancesState) {
   return {
     balances() {
       return state;
