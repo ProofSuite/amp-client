@@ -2,8 +2,7 @@ import React from 'react';
 import CoinSearcherRenderer from './CoinSearcherRenderer';
 import { Card, Icon, Tab, Tabs } from '@blueprintjs/core';
 import { filterer, getObjectFromProperty, sortArray } from '../../utils/helpers';
-import SmallCoinSearcher from './SmallCoinSearcher';
-import LargeCoinSearcher from './LargeCoinSearcher';
+
 type Props = {
   loading: boolean,
   coinsList: Object,
@@ -20,7 +19,7 @@ type State = {
   orderChanged: boolean,
 };
 
-class CoinSearcher extends React.PureComponent<Props, State> {
+class LargeCoinSearcher extends React.PureComponent<Props, State> {
   static defaultProps = {
     decimals: 5,
     small: false,
@@ -76,31 +75,76 @@ class CoinSearcher extends React.PureComponent<Props, State> {
   render() {
     const {
       state: { selectedTabId, searchFilter },
-      props: {
-        small,
-        decimals,
-        coinsList: { btc: coins },
-        toggleStar,
-      },
+      props: { small, decimals, coinsList, toggleStar },
       onChangeSearchFilter,
       onChangeFilterName,
       onChangeSortOrder,
       changeTab,
       filterCoins,
     } = this;
+    const filteredSortedCoins = filterCoins(coinsList);
+    console.log('filteredSortedCoins', filteredSortedCoins);
     return (
-      <Card
-        style={{ width: '100%', margin: '10px' }}
-        className={small ? 'small-searcher coin-searcher pt-dark' : 'coin-searcher pt-dark'}
-      >
-        {small ? (
-          <SmallCoinSearcher decimals={decimals} coinsList={coins} toggleStar={toggleStar} />
-        ) : (
-          <LargeCoinSearcher decimals={decimals} coinsList={coins} toggleStar={toggleStar} />
-        )}
-      </Card>
+      <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={changeTab}>
+        <input
+          onChange={onChangeSearchFilter}
+          value={searchFilter}
+          className="pt-input"
+          type="text"
+          placeholder="Search ..."
+          dir="auto"
+        />
+        <Tab
+          id="btc"
+          title="BTC Market"
+          panel={
+            <CoinSearcherRenderer
+              state={this.state}
+              filteredCoins={filteredSortedCoins}
+              small={false}
+              decimals={decimals}
+              toggleStar={toggleStar}
+              onChangeSearchFilter={onChangeSearchFilter}
+              onChangeFilterName={onChangeFilterName}
+              onChangeSortOrder={onChangeSortOrder}
+            />
+          }
+        />
+        <Tab
+          id="usdt"
+          title="USDT Market"
+          panel={
+            <CoinSearcherRenderer
+              state={this.state}
+              filteredCoins={filteredSortedCoins}
+              small={false}
+              decimals={decimals}
+              toggleStar={toggleStar}
+              onChangeSearchFilter={onChangeSearchFilter}
+              onChangeFilterName={onChangeFilterName}
+              onChangeSortOrder={onChangeSortOrder}
+            />
+          }
+        />
+        <Tab
+          id="starred"
+          title={<Icon icon="star" />}
+          panel={
+            <CoinSearcherRenderer
+              state={this.state}
+              filteredCoins={filteredSortedCoins}
+              small={false}
+              decimals={decimals}
+              toggleStar={toggleStar}
+              onChangeSearchFilter={onChangeSearchFilter}
+              onChangeFilterName={onChangeFilterName}
+              onChangeSortOrder={onChangeSortOrder}
+            />
+          }
+        />
+      </Tabs>
     );
   }
 }
 
-export default CoinSearcher;
+export default LargeCoinSearcher;

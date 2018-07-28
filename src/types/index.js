@@ -6,7 +6,7 @@ import type { AccountBalancesState, AccountBalancesEvent, AccountBalancesAction 
 import type { EtherTxState, EtherTxAction, EtherTxEvent } from './etherTx';
 import type { OHLCVState } from './ohlcv';
 import type { OrderBookState } from './orderBook';
-import type { HomeState } from './homePage';
+import type { TradingState } from './tradingPage';
 import type { TradeHistoryState } from './tradeHistory';
 import type { DepthChartState } from './depthChart';
 import type { OrderHistoryState } from './orderHistory';
@@ -52,6 +52,8 @@ export type ActionHandler = Action => Event;
 
 export type State = {
   loginPage: LoginPageState,
+  tradingPage: TradingState,
+  provider: ProviderState,
   homePage: HomeState,
   signer: SignerState,
   provider: ProviderState,

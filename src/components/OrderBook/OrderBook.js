@@ -19,7 +19,7 @@ export default class OrderBook extends React.PureComponent<Props> {
   render() {
     const { buyOrderList, sellOrderList, baseToken, quoteToken, decimals } = this.props;
     return (
-      <Row>
+      <Column>
         <OrderBookRenderer
           orderList={sortArray(sellOrderList, 'price')}
           bookName="Sell"
@@ -34,11 +34,12 @@ export default class OrderBook extends React.PureComponent<Props> {
           quoteToken={quoteToken}
           decimals={decimals}
         />
-      </Row>
+      </Column>
     );
   }
 }
-const Row = styled.div`
+const Column = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 `;

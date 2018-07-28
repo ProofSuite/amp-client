@@ -10,12 +10,15 @@
     color: $green5;
   }
 }
-
+.order-book-chart {
+  margin: 10px 10px 0px 0px;
+}
 .order-book {
   padding: 20px;
   text-align: left;
-  width: 380px;
+  //width: 380px;
   height: 500px;
+  margin: 10px 0px 0px 10px;
   background-color: $secondary;
   .row {
     display: flex;

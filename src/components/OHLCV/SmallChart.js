@@ -111,7 +111,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { expandedChard, toggleExpand, ohlcvData },
+      props: { expandedChard, toggleExpand, ohlcvData, hideOrderBook, toggleOrderBook },
       state: { indicators, chartHeight, indicatorHeight },
       changeTimeSpan,
       toogleChartIndicator,
@@ -125,6 +125,8 @@ export default class SmallChart extends React.PureComponent<Props, State> {
           toogleChartIndicator={toogleChartIndicator}
           changeTimeSpan={changeTimeSpan}
           state={this.state}
+          hideOrderBook={hideOrderBook}
+          toggleOrderBook={toggleOrderBook}
         />
         <ChartLoadingScreen
           volume={indicators[0]}
@@ -144,7 +146,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
   }
 }
 
-const Toolbar = ({ state, toogleChartIndicator, changeTimeSpan, changeDuration, toggleExpand }) => (
+const Toolbar = ({ state, toogleChartIndicator, changeTimeSpan, changeDuration, toggleOrderBook, hideOrderBook }) => (
   <div className="toolbar">
     <div className="menu time-span">
       <StandardSelect
@@ -173,6 +175,7 @@ const Toolbar = ({ state, toogleChartIndicator, changeTimeSpan, changeDuration, 
       <Button onClick={() => changeDuration('3 months')} text="3m" />
       <Button onClick={() => changeDuration('6 months')} text="6m" />
     </div>
-    <Button icon="fullscreen" onClick={toggleExpand} />
+    {hideOrderBook && <Button onClick={toggleOrderBook} icon="menu-closed" />}
+    {!hideOrderBook && <Button onClick={toggleOrderBook} icon="menu-open" />}
   </div>
 );

@@ -1,7 +1,9 @@
 @import "vars";
 
 .order-form {
-  width: 485px;
+  //width: 315px;
+  width: 100%;
+  margin: 10px;
   font-size: 13px;
   h5 {
     border-bottom: 1px solid $light-gray1;
@@ -13,9 +15,18 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  .radio-btns-container {
+    padding-right: 15px;
+    label {
+      display: none;
+    }
+  }
   .pt-form-group {
-    width: 235px;
+    flex-direction: row;
+    align-items: flex-start;
     label{
+      width: 95px;
 
     }
     input {
@@ -25,14 +36,18 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      width: 100%;
       span {
         transform: translateX(-135%);
         color: $gray3;
       }
-
       .radio-buttons {
+        width: 100%;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        label {
+          width: auto;
+        }
         .box {
           width: 45px;
           height: 30px;

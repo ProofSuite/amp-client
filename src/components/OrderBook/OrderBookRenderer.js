@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Card } from '@blueprintjs/core';
 import Loading from '../Loading';
 import { round } from '../../utils/converters';
 import type { OrderListTypes, SingleOrderTypes } from '../../types/orderBook';
@@ -10,7 +11,7 @@ type SingleOrderProps = SingleOrderTypes;
 export const OrderBookRenderer = (props: ListTypes) => {
   const { bookName, quoteToken, baseToken, decimals, orderList } = props;
   return (
-    <div className={bookName + ' order-book inner pt-dark'}>
+    <Card className={bookName + ' order-book inner pt-dark'}>
       <h5>{bookName}</h5>
       {orderList.length < 1 && <Loading />}
       {orderList.length > 0 && (
@@ -30,7 +31,7 @@ export const OrderBookRenderer = (props: ListTypes) => {
           </ul>
         </div>
       )}
-    </div>
+    </Card>
   );
 };
 

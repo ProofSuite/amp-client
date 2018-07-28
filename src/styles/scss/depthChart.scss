@@ -1,8 +1,9 @@
 @import "vars";
 
 .depth-chart-container {
+  margin: 10px 0px 0px 10px;
   .depth-chart {
-    width: 400px;
+    width: 100%;
     svg {
       background: $secondary;
       g {

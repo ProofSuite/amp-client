@@ -14,6 +14,7 @@ const CoinSearchRenderer = (props: CoinSearchTypes) => {
     decimals,
     toggleStar,
     onChangeFilterName,
+    changeSelectedCoin,
   } = props;
   const emptyCoin = filteredCoins.length > 0 && Object.keys(filteredCoins[0]).length < 1;
   return (
@@ -30,7 +31,7 @@ const CoinSearchRenderer = (props: CoinSearchTypes) => {
         <ul className="list">
           {filteredCoins.map(function(coin, index) {
             return small ? (
-              <SmallCoinRow key={index} props={{ index, coin, decimals, toggleStar }} />
+              <SmallCoinRow key={index} props={{ index, coin, decimals, toggleStar, changeSelectedCoin }} />
             ) : (
               <CoinRow key={index} props={{ index, coin, decimals, toggleStar }} />
             );
@@ -72,21 +73,32 @@ const CoinRow = ({ props }: CoinRowTypes) => (
   </li>
 );
 
-const SmallCoinRow = ({ props }: CoinRowTypes) => (
-  <li key={props.index} className="not-heading">
-    <span className="star">
-      <Icon icon={props.coin.starred ? 'star' : 'star-empty'} onClick={() => props.toggleStar(props.coin.name)} />
-    </span>
-    <span className="symbol">{props.coin.symbol}</span>
-    <span className="price">{round(props.coin.lastPrice, props.decimals)}</span>
-    {parseFloat(props.coin.change) > 0 ? (
-      <PositiveChange className="change">{round(props.coin.change, props.decimals)}%</PositiveChange>
-    ) : (
-      <NegativeChange className="change">{round(props.coin.change, props.decimals)}%</NegativeChange>
-    )}
-    <span className="price">{round(props.coin.volume, props.decimals)}</span>
-  </li>
-);
+const SmallCoinRow = ({ props }: CoinRowTypes) => {
+  const {
+    index,
+    coin,
+    decimals,
+    coin: { starred, lastPrice, change, name, symbol },
+    toggleStar,
+    changeSelectedCoin,
+  } = props;
+  return (
+    <li key={index} className="not-heading">
+      <span className="star">
+        <Icon icon={starred ? 'star' : 'star-empty'} onClick={() => toggleStar(name)} />
+      </span>
+      <span className="symbol" onClick={() => changeSelectedCoin(coin)}>
+        {symbol}
+      </span>
+      <span className="price">{round(lastPrice, decimals)}</span>
+      {parseFloat(change) > 0 ? (
+        <PositiveChange className="change">{round(change, decimals)}%</PositiveChange>
+      ) : (
+        <NegativeChange className="change">{round(change, decimals)}%</NegativeChange>
+      )}
+    </li>
+  );
+};
 
 const SmallHeader = (props: HeaderTypes) => {
   const { onChangeFilterName, filterName, sortOrder } = props;
@@ -97,7 +109,7 @@ const SmallHeader = (props: HeaderTypes) => {
         <span className="symbol" onClick={() => onChangeFilterName('symbol')}>
           Symbol
           {filterName === 'symbol' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -105,7 +117,7 @@ const SmallHeader = (props: HeaderTypes) => {
         <span className="price" onClick={() => onChangeFilterName('lastPrice')}>
           Last Price
           {filterName === 'lastPrice' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -113,15 +125,7 @@ const SmallHeader = (props: HeaderTypes) => {
         <span className="change" onClick={() => onChangeFilterName('change')}>
           24hr Change
           {filterName === 'change' && (
-            <span>
-              <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
-            </span>
-          )}
-        </span>
-        <span className="price" onClick={() => onChangeFilterName('volume')}>
-          Volume
-          {filterName === 'volume' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -140,7 +144,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="pair" onClick={() => onChangeFilterName('pair')}>
           Pair
           {filterName === 'pair' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -148,7 +152,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="name" onClick={() => onChangeFilterName('name')}>
           Name
           {filterName === 'name' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -156,7 +160,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="symbol" onClick={() => onChangeFilterName('symbol')}>
           Symbol
           {filterName === 'symbol' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -164,7 +168,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="price" onClick={() => onChangeFilterName('lastPrice')}>
           Last Price
           {filterName === 'lastPrice' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -172,7 +176,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="change" onClick={() => onChangeFilterName('change')}>
           24hr Change
           {filterName === 'change' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -180,7 +184,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="price" onClick={() => onChangeFilterName('high')}>
           24hr High
           {filterName === 'high' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -188,7 +192,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="price" onClick={() => onChangeFilterName('low')}>
           24hr Low
           {filterName === 'low' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}
@@ -196,7 +200,7 @@ const LargeHeader = (props: HeaderTypes) => {
         <span className="price" onClick={() => onChangeFilterName('volume')}>
           Volume
           {filterName === 'volume' && (
-            <span>
+            <span className="icon">
               <Icon icon={sortOrder === 'asc' ? 'chevron-down' : 'chevron-up'} />
             </span>
           )}

@@ -6,7 +6,7 @@ import OrderForm from '../../components/OrderForm';
 import TradeHistory from '../../components/TradeHistory';
 import DepthChart from '../../components/DepthChart';
 import CoinSearcher from '../../components/CoinSearcher';
-import HomePage from '../HomePage';
+import HomePage from '../TradingPage';
 
 class TestApisPage extends Component {
   render() {

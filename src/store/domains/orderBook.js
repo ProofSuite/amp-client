@@ -2,8 +2,8 @@
 import type { OrderBookState } from '../../types/orderBook';
 
 const initialState: OrderBookState = {
-  sellOrderList: [{}],
-  buyOrderList: [{}],
+  sellOrderList: [{ price: 0, amount: 0 }],
+  buyOrderList: [{ price: 0, amount: 0 }],
   quoteToken: '',
   baseToken: '',
 };

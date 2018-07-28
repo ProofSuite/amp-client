@@ -7,7 +7,7 @@ import WalletPage from './WalletPage';
 import ExchangePage from './ExchangePage';
 import SettingsPage from './SettingsPage';
 import LogoutPage from './LogoutPage';
-import TestReduxandApis from './TestReduxandApis';
+import TradingPage from './TradingPage';
 
 import '../styles/css/index.css';
 
@@ -21,7 +21,7 @@ function App(props) {
         <Route path="/exchange" component={ExchangePage} />
         <Route path="/settings" component={SettingsPage} />
         <Route path="/logout" component={LogoutPage} />
-        <Route path="/test" component={TestReduxandApis} />
+        <Route path="/trade" component={TradingPage} />
       </Switch>
     </Layout>
   );
