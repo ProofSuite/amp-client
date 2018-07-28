@@ -110,38 +110,31 @@ const WalletLoginFormRenderer = (props: Props) => {
   };
 
   return (
-    <Card elevation="1" style={{ width: '600px' }}>
-      <InputFormBox>
-        <RadioGroup
-          name="method"
+    <Card elevation="1" style={{ width: '600px', position: 'relative' }}>
+      <RadioGroup name="method" onChange={handleChange} selectedValue={method} label="Choose how to access your wallet">
+        <Radio label="Private Key" value="privateKey" />
+        <Radio label="JSON" value="json" />
+        <Radio label="Wallet File" value="walletFile" />
+        <Radio label="Mnemonic Sentence" value="mnemonic" />
+      </RadioGroup>
+      <InputFormsBox>{inputForms[method]}</InputFormsBox>
+      <FormGroup helperText="Learn more about different options here">
+        <Checkbox
+          name="storeWallet"
+          disabled={saveEncryptedWalletDisabled}
+          checked={storeWallet && !saveEncryptedWalletDisabled}
           onChange={handleChange}
-          selectedValue={method}
-          label="Choose how to access your wallet"
         >
-          <Radio label="Private Key" value="privateKey" />
-          <Radio label="JSON" value="json" />
-          <Radio label="Wallet File" value="walletFile" />
-          <Radio label="Mnemonic Sentence" value="mnemonic" />
-        </RadioGroup>
-        <InputFormsBox>{inputForms[method]}</InputFormsBox>
-        <FormGroup helperText="Learn more about different options here">
-          <Checkbox
-            name="storeWallet"
-            disabled={saveEncryptedWalletDisabled}
-            checked={storeWallet && !saveEncryptedWalletDisabled}
-            onChange={handleChange}
-          >
-            <strong>Save encrypted wallet in local storage</strong>
-          </Checkbox>
-          <Checkbox name="storePrivateKey" checked={storePrivateKey} onChange={handleChange}>
-            <strong>Save private key in session storage </strong>
-          </Checkbox>
-        </FormGroup>
-        <ButtonBox>
-          <Button intent="primary" text="Authenticate" onClick={submit} />
-        </ButtonBox>
-        <OverlaySpinner visible={loading} transparent />
-      </InputFormBox>
+          <strong>Save encrypted wallet in local storage</strong>
+        </Checkbox>
+        <Checkbox name="storePrivateKey" checked={storePrivateKey} onChange={handleChange}>
+          <strong>Save private key in session storage </strong>
+        </Checkbox>
+      </FormGroup>
+      <ButtonBox>
+        <Button intent="primary" text="Authenticate" onClick={submit} />
+      </ButtonBox>
+      <OverlaySpinner visible={loading} transparent />
     </Card>
   );
 };

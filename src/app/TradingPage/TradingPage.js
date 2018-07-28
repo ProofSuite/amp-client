@@ -8,9 +8,10 @@ import OrderHistory from '../../components/OrderHistory';
 import OrderForm from '../../components/OrderForm';
 import TradeHistory from '../../components/TradeHistory';
 import DepthChart from '../../components/DepthChart';
-import CoinSearcher from '../../components/CoinSearcher';
+import TokenSearcher from '../../components/TokenSearcher';
 import OrderBookandChart from '../../components/OrderBookandChart';
 import { Button } from '@blueprintjs/core';
+import { Box } from '../../components/Common';
 
 import type { LoadDataParams } from '../../types/tradingPage';
 
@@ -43,7 +44,9 @@ export default class TradingPage extends React.PureComponent<Props> {
     return (
       <div className="trading-page">
         <div style={{ width: '22%' }} className="column">
-          <CoinSearcher small={true} />
+          <Box m={1} p={1}>
+            <TokenSearcher />
+          </Box>
           <OrderForm />
           <OrderForm />
         </div>
