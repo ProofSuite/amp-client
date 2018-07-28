@@ -1,0 +1,114 @@
+@import "vars";
+
+.token-searcher {
+  min-width: 400px;
+  max-width: 700px;
+  height: 700px;
+  width: 100%;
+
+  .pt-tabs {
+    height: 75%;
+    .pt-tab-panel {
+      margin-top: 0px;
+      height: 600px;
+    }
+  }
+
+  .pt-tab-list {
+    .pt-tab {
+      font-weight: 600;
+      svg {
+        margin-top: 6px;
+      }
+    }
+  }
+
+  ul {
+    li {
+      width: 100%;
+
+      span {
+        text-align: left;
+      }
+
+      span.icon {
+        float: initial;
+      }
+
+      span.star {
+        cursor: pointer;
+        width: 30px;
+        min-width: 30px;
+        width: 10%;
+      }
+
+      span.base {
+        width: 25%;
+      }
+      span.name {
+        width: 25%;
+      }
+      span.symbol {
+        width: 25%;
+      }
+      span.change {
+        width: 25%;
+      }
+      span.lastPrice {
+        width: 25%;
+      }
+    }
+
+    li.row:hover {
+      cursor: pointer;
+      background-color: $BGHover;
+      z-index: 1;
+      border-radius: 3px;
+    }
+  }
+
+  .row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: space-around;
+  }
+  .heading {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: space-around;
+  }
+
+  ul.list {
+    height: 60%;
+    margin-top: 0px;
+    overflow-y: scroll;
+  }
+
+  li.row {
+    box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15) !important;
+    padding: 5px;
+  }
+
+  li.heading {
+    span {
+      cursor: pointer;
+      font-weight: 600;
+      span {
+        svg {
+          color: $hoverBlue;
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+
+  .loading-overlay {
+    height: 88.5%;
+  }
+}

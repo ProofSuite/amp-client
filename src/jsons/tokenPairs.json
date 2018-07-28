@@ -1,0 +1,358 @@
+{
+  "pairs": [
+    "BNB_WETH",
+    "BNB_DAI",
+    "OMG_WETH",
+    "OMG_DAI",
+    "ZRX_WETH",
+    "ZRX_DAI",
+    "AE_WETH",
+    "AE_DAI",
+    "TRX_WETH",
+    "TRX_DAI",
+    "MKR_WETH",
+    "MKR_DAI",
+    "BAT_WETH",
+    "BAT_DAI",
+    "REP_WETH",
+    "REP_DAI",
+    "BTM_WETH",
+    "BTM_DAI",
+    "NPXS_WETH",
+    "NPXS_DAI",
+    "WTC_WETH",
+    "WTC_DAI",
+    "KCS_WETH",
+    "KCS_DAI",
+    "GNT_WETH",
+    "GNT_DAI",
+    "PPT_WETH",
+    "PPT_DAI",
+    "SNT_WETH",
+    "SNT_DAI",
+    "DGX_WETH",
+    "DGX_DAI",
+    "MITH_WETH",
+    "MITH_DAI",
+    "AION_WETH",
+    "AION_DAI",
+    "LRC_WETH",
+    "LRC_DAI",
+    "FUN_WETH",
+    "FUN_DAI",
+    "KNC_WETH",
+    "KNC_DAI",
+    "LOOM_WETH",
+    "LOOM_DAI"
+  ],
+  "byPair": {
+    "BNB_WETH": {
+      "pair": "BNB_WETH",
+      "baseTokenSymbol": "BNB",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "BNB_DAI": {
+      "pair": "BNB_DAI",
+      "baseTokenSymbol": "BNB",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "OMG_WETH": {
+      "pair": "OMG_WETH",
+      "baseTokenSymbol": "OMG",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "OMG_DAI": {
+      "pair": "OMG_DAI",
+      "baseTokenSymbol": "OMG",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "ZRX_WETH": {
+      "pair": "ZRX_WETH",
+      "baseTokenSymbol": "ZRX",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "ZRX_DAI": {
+      "pair": "ZRX_DAI",
+      "baseTokenSymbol": "ZRX",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "AE_WETH": {
+      "pair": "AE_WETH",
+      "baseTokenSymbol": "AE",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "AE_DAI": {
+      "pair": "AE_DAI",
+      "baseTokenSymbol": "AE",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "TRX_WETH": {
+      "pair": "TRX_WETH",
+      "baseTokenSymbol": "TRX",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xf230b790e05390fc8295f4d3f60332c93bed42e2",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "TRX_DAI": {
+      "pair": "TRX_DAI",
+      "baseTokenSymbol": "TRX",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xf230b790e05390fc8295f4d3f60332c93bed42e2",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "MKR_WETH": {
+      "pair": "MKR_WETH",
+      "baseTokenSymbol": "MKR",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "MKR_DAI": {
+      "pair": "MKR_DAI",
+      "baseTokenSymbol": "MKR",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "BAT_WETH": {
+      "pair": "BAT_WETH",
+      "baseTokenSymbol": "BAT",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "BAT_DAI": {
+      "pair": "BAT_DAI",
+      "baseTokenSymbol": "BAT",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "REP_WETH": {
+      "pair": "REP_WETH",
+      "baseTokenSymbol": "REP",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x1985365e9f78359a9B6AD760e32412f4a445E862",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "REP_DAI": {
+      "pair": "REP_DAI",
+      "baseTokenSymbol": "REP",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x1985365e9f78359a9B6AD760e32412f4a445E862",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "BTM_WETH": {
+      "pair": "BTM_WETH",
+      "baseTokenSymbol": "BTM",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "BTM_DAI": {
+      "pair": "BTM_DAI",
+      "baseTokenSymbol": "BTM",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "NPXS_WETH": {
+      "pair": "NPXS_WETH",
+      "baseTokenSymbol": "NPXS",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "NPXS_DAI": {
+      "pair": "NPXS_DAI",
+      "baseTokenSymbol": "NPXS",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "WTC_WETH": {
+      "pair": "WTC_WETH",
+      "baseTokenSymbol": "WTC",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "WTC_DAI": {
+      "pair": "WTC_DAI",
+      "baseTokenSymbol": "WTC",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "KCS_WETH": {
+      "pair": "KCS_WETH",
+      "baseTokenSymbol": "KCS",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x039b5649a59967e3e936d7471f9c3700100ee1ab",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "KCS_DAI": {
+      "pair": "KCS_DAI",
+      "baseTokenSymbol": "KCS",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x039b5649a59967e3e936d7471f9c3700100ee1ab",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "GNT_WETH": {
+      "pair": "GNT_WETH",
+      "baseTokenSymbol": "GNT",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xa74476443119A942dE498590Fe1f2454d7D4aC0d",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "GNT_DAI": {
+      "pair": "GNT_DAI",
+      "baseTokenSymbol": "GNT",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xa74476443119A942dE498590Fe1f2454d7D4aC0d",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "PPT_WETH": {
+      "pair": "PPT_WETH",
+      "baseTokenSymbol": "PPT",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "PPT_DAI": {
+      "pair": "PPT_DAI",
+      "baseTokenSymbol": "PPT",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "SNT_WETH": {
+      "pair": "SNT_WETH",
+      "baseTokenSymbol": "SNT",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "SNT_DAI": {
+      "pair": "SNT_DAI",
+      "baseTokenSymbol": "SNT",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "DGX_WETH": {
+      "pair": "DGX_WETH",
+      "baseTokenSymbol": "DGX",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "DGX_DAI": {
+      "pair": "DGX_DAI",
+      "baseTokenSymbol": "DGX",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "MITH_WETH": {
+      "pair": "MITH_WETH",
+      "baseTokenSymbol": "MITH",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "MITH_DAI": {
+      "pair": "MITH_DAI",
+      "baseTokenSymbol": "MITH",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "AION_WETH": {
+      "pair": "AION_WETH",
+      "baseTokenSymbol": "AION",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "AION_DAI": {
+      "pair": "AION_DAI",
+      "baseTokenSymbol": "AION",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "LRC_WETH": {
+      "pair": "LRC_WETH",
+      "baseTokenSymbol": "LRC",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xef68e7c694f40c8202821edf525de3782458639f",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "LRC_DAI": {
+      "pair": "LRC_DAI",
+      "baseTokenSymbol": "LRC",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xef68e7c694f40c8202821edf525de3782458639f",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "FUN_WETH": {
+      "pair": "FUN_WETH",
+      "baseTokenSymbol": "FUN",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "FUN_DAI": {
+      "pair": "FUN_DAI",
+      "baseTokenSymbol": "FUN",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "KNC_WETH": {
+      "pair": "KNC_WETH",
+      "baseTokenSymbol": "KNC",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "KNC_DAI": {
+      "pair": "KNC_DAI",
+      "baseTokenSymbol": "KNC",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    },
+    "LOOM_WETH": {
+      "pair": "LOOM_WETH",
+      "baseTokenSymbol": "LOOM",
+      "quoteTokenSymbol": "WETH",
+      "baseTokenAddress": "0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0",
+      "quoteTokenAddress": "0x2eb24432177e82907de24b7c5a6e0a5c03226135"
+    },
+    "LOOM_DAI": {
+      "pair": "LOOM_DAI",
+      "baseTokenSymbol": "LOOM",
+      "quoteTokenSymbol": "DAI",
+      "baseTokenAddress": "0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0",
+      "quoteTokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+    }
+  }
+}

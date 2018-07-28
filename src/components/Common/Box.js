@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-import { space, width } from 'styled-system';
+import { space, width, margin, padding } from 'styled-system';
 
 const Box = styled.div`
-  ${space} ${width};
+  ${space}
+  ${width}
+  ${margin}
+  ${padding}
 `;
 
 export default Box;

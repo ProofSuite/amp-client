@@ -9,13 +9,14 @@ import orderHistoryActionTypes from './actions/orderHistory';
 import orderFromActionTypes from './actions/orderForm';
 import depthChartActionTypes from './actions/depthChart';
 import ohlcvActionTypes from './actions/ohlcv';
-import coinSearcherActionTypes from './actions/coinSearcher';
+import tokenSearcherActionTypes from './actions/tokenSearcher';
 import tokensActionTypes from './actions/tokens';
 import accountActionTypes from './actions/account';
 import depositFormActionTypes from './actions/depositForm';
 import settingsActionTypes from './actions/settings';
 import createWalletActionTypes from './actions/createWallet';
 import walletPageActionTypes from './actions/walletPage';
+import tradingPageActionTypes from './actions/tradingPage';
 import loginPageActionTypes from './actions/loginPage';
 import logoutPageActionTypes from './actions/logoutPage';
 import signerSettingsActionTypes from './actions/signerSettings';
@@ -30,7 +31,6 @@ import * as tradeHistoryEvents from './domains/tradeHistory';
 import * as orderHistoryEvents from './domains/orderHistory';
 import * as orderFormEvents from './domains/orderForm';
 import * as depthChartEvents from './domains/depthChart';
-import * as coinSearcherEvents from './domains/coinSearcher';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
@@ -181,20 +181,6 @@ export const depthChart = createReducer(action => {
   }
 });
 
-export const coinSearcher = createReducer(action => {
-  const { type, payload } = action;
-  switch (type) {
-    case coinSearcherActionTypes.saveData:
-      return coinSearcherEvents.dataSaved(payload.data);
-
-    case coinSearcherActionTypes.toggleStar:
-      return coinSearcherEvents.toggleStar(payload.data);
-
-    default:
-      return coinSearcherEvents.initialized();
-  }
-});
-
 export const tradeHistory = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
@@ -214,6 +200,22 @@ export const tokens = createReducer(action => {
       return tokensEvents.tokenRemoved(payload.symbol);
     default:
       return tokensEvents.initialized();
+  }
+});
+
+export const tokenPairs = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case tokensActionTypes.updateTokens:
+      return tokenPairsEvents.tokenPairUpdated(payload);
+    case tokensActionTypes.removeTokens:
+      return tokenPairsEvents.tokenPairRemoved(payload);
+    case tokenSearcherActionTypes.updateFavorite:
+      return tokenPairsEvents.tokenPairFavorited(payload.code, payload.favorite);
+    case tradingPageActionTypes.updateTokenPairData:
+      return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData);
+    default:
+      return tokenPairsEvents.initialized();
   }
 });
 
@@ -268,18 +270,6 @@ export const settings = createReducer(action => {
       return settingsEvents.defaultGasPriceSet();
     default:
       return settingsEvents.initialized();
-  }
-});
-
-export const tokenPairs = createReducer(action => {
-  const { type, payload } = action;
-  switch (type) {
-    case tokensActionTypes.updateTokens:
-      return tokenPairsEvents.tokenPairUpdated(payload);
-    case tokensActionTypes.removeTokens:
-      return tokenPairsEvents.tokenPairRemoved(payload);
-    default:
-      return tokenPairsEvents.initialized();
   }
 });
 

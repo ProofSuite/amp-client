@@ -1,13 +1,8 @@
 import getTokenDomain, * as eventCreators from './tokens';
+import { tokensBySymbol, tokenSymbols } from '../../config/tokens';
+import { objectWithoutKey } from '../../helpers/utils';
 
 const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
-
-const tokensBySymbol = {
-  ETH: { symbol: 'ETH', address: '0x0' },
-  EOS: { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-  WETH: { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
-  ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
-};
 
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
@@ -17,7 +12,7 @@ function getDomain(events) {
 it('handles initialized event properly', () => {
   const tokenDomain = getDomain([eventCreators.initialized()]);
 
-  expect(tokenDomain.symbols()).toEqual(symbols);
+  expect(tokenDomain.symbols()).toEqual(tokenSymbols);
   expect(tokenDomain.bySymbol()).toEqual(tokensBySymbol);
 });
 
@@ -26,23 +21,11 @@ it('handles update tokens event properly', () => {
     symbol: 'PRFT',
     address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
   };
-  const expectedTokensBySymbol = {
-    ETH: { symbol: 'ETH', address: '0x0' },
-    EOS: { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-    WETH: { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
-    ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
-    PRFT: { symbol: 'PRFT', address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144' },
-  };
 
-  const expectedTokens = [
-    { symbol: 'ETH', address: '0x0' },
-    { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-    { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
-    { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
-    { symbol: 'PRFT', address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144' },
-  ];
+  const expectedSymbols = tokenSymbols.concat('PRFT');
+  const expectedTokensBySymbol = { ...tokensBySymbol, ['PRFT']: newToken };
+  const expectedTokens = Object.values(expectedTokensBySymbol);
 
-  const expectedSymbols = ['ETH', 'EOS', 'WETH', 'ZRX', 'PRFT'];
   const tokenDomain = getDomain([
     eventCreators.initialized(),
     eventCreators.tokenUpdated(newToken.symbol, newToken.address),
@@ -58,28 +41,10 @@ it('handles update and remove tokens events properly', () => {
     symbol: 'PRFT',
     address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
   };
-  const expectedTokensBySymbols = {
-    ETH: { symbol: 'ETH', address: '0x0' },
-    EOS: { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-    WETH: { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
-    PRFT: { symbol: 'PRFT', address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144' },
-  };
 
-  const expectedTokens = [
-    { symbol: 'ETH', address: '0x0' },
-    { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-    { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
-    { symbol: 'PRFT', address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144' },
-  ];
-
-  const expectedRankedTokens = [
-    { rank: 1, symbol: 'ETH', address: '0x0' },
-    { rank: 2, symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-    { rank: 3, symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
-    { rank: 4, symbol: 'PRFT', address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144' },
-  ];
-
-  const expectedSymbols = ['ETH', 'EOS', 'WETH', 'PRFT'];
+  const expectedSymbols = tokenSymbols.concat('PRFT').filter(elem => elem !== 'ZRX');
+  const expectedTokensBySymbol = objectWithoutKey({ ...tokensBySymbol, ['PRFT']: newToken }, 'ZRX');
+  const expectedTokens = Object.values(expectedTokensBySymbol);
 
   const tokenDomain = getDomain([
     eventCreators.initialized(),
@@ -88,7 +53,6 @@ it('handles update and remove tokens events properly', () => {
   ]);
 
   expect(tokenDomain.symbols()).toEqual(expectedSymbols);
-  expect(tokenDomain.bySymbol()).toEqual(expectedTokensBySymbols);
+  expect(tokenDomain.bySymbol()).toEqual(expectedTokensBySymbol);
   expect(tokenDomain.tokens()).toEqual(expectedTokens);
-  expect(tokenDomain.rankedTokens()).toEqual(expectedRankedTokens);
 });

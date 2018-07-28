@@ -1,11 +1,9 @@
 import accountDomain from './account';
 import accountBalancesDomain from './accountBalances';
-import coinSearcherDomain from './coinSearcher';
 import depositFormDomain from './depositForm';
 import depthChartDomain from './depthChart';
 import etherBalanceDomain from './etherBalance';
 import etherTxDomain from './etherTx';
-import homePageDomain from './homePage';
 import loginPageDomain from './loginPage';
 import ohlcvDomain from './ohlcv';
 import orderBookDomain from './orderBook';
@@ -20,12 +18,10 @@ import walletsDomain from './wallets';
 
 export const getAccountDomain = state => accountDomain(state.account);
 export const getAccountBalancesDomain = state => accountBalancesDomain(state.accountBalances);
-export const getCoinSearcherDomain = state => coinSearcherDomain(state.coinSearcher);
 export const getDepositFormDomain = state => depositFormDomain(state.depositForm);
 export const getDepthChartDomain = state => depthChartDomain(state.depthChart);
 export const getEtherBalanceDomain = state => etherBalanceDomain(state.etherBalance);
 export const getEtherTxDomain = state => etherTxDomain(state.etherTx);
-export const getHomePageDomain = state => homePageDomain(state.homePage);
 export const getLoginPageDomain = state => loginPageDomain(state.loginPage);
 export const getOhlcvDomain = state => ohlcvDomain(state.ohlcv);
 export const getOrderBookDomain = state => orderBookDomain(state.orderBook);
