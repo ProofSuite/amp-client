@@ -33,7 +33,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
   };
   render() {
     const {
-      props: { ohlcvData, pair, updateTimeLine, pairId, hideOrderBook, toggleOrderBook },
+      props: { ohlcvData, pair, updateTimeLine, pairId, toggleRight, toggleLeft, showRight, showLeft },
       state: { expandedChard },
       toggleExpand,
       reset,
@@ -45,8 +45,10 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           ohlcvData={ohlcvData}
           pair={pair}
           pairId={pairId}
-          hideOrderBook={hideOrderBook}
-          toggleOrderBook={toggleOrderBook}
+          toggleRight={toggleRight}
+          toggleLeft={toggleLeft}
+          showRight={showRight}
+          showLeft={showLeft}
           toggleExpand={toggleExpand}
           expandedChard={expandedChard}
         />
@@ -55,8 +57,10 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           ohlcvData={ohlcvData}
           pair={pair}
           pairId={pairId}
-          hideOrderBook={hideOrderBook}
-          toggleOrderBook={toggleOrderBook}
+          toggleRight={toggleRight}
+          toggleLeft={toggleLeft}
+          showRight={showRight}
+          showLeft={showLeft}
           expandedChard={expandedChard}
           toggleExpand={toggleExpand}
         />

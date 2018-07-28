@@ -6,6 +6,7 @@
   }
 }
 .Buy.order-book {
+  margin-top: 20px;
   .price {
     color: $green5;
   }
@@ -14,7 +15,6 @@
   margin: 10px 10px 0px 0px;
 }
 .order-book {
-  padding: 20px;
   text-align: left;
   //width: 380px;
   height: 500px;
@@ -29,6 +29,12 @@
     border-bottom: 1px solid $light-gray1;
     padding-bottom: 5px;
     text-align: left;
+  }
+  .order-book-renderer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
   .list-container {
     height: 95%;
@@ -96,5 +102,42 @@
   }
   .loading-overlay {
     height: 91%;
+  }
+}
+
+@media only screen and (max-width: 1780px) {
+  .order-book {
+    ul {
+      li {
+        span.price, span.amount, span.total {
+          min-width: 70px;
+          width: 75px;
+          word-wrap: break-word;
+        }
+      ;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1530px) {
+  .order-book-chart-container {
+    margin: 0px -10px 0 10px;
+    .pt-tab-panel {
+      margin-top: 5px;
+    }
+    .order-book-renderer {
+      display: flex;
+      justify-content: space-between;
+      .Buy {
+        margin: 10px 0px 0px 10px;
+      }
+      .order-book{
+        width: 300px;
+        margin: 10px 0px 0px 0px;
+        .list-container {
+          height: 92%;
+        }
+      }
+    }
   }
 }
