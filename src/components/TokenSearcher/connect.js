@@ -1,15 +1,16 @@
 // @flow
 import { connect } from 'react-redux';
-import getCoinSearcherModel, { toggleStar } from '../../store/models/coinSearcher';
+import { updateFavorite } from '../../store/actions/tokenSearcher';
+import tokenSearcherSelector from '../../store/models/tokenSearcher';
 
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
-  return getCoinSearcherModel(state).getState();
+  return tokenSearcherSelector(state);
 };
 
 export const mapDispatchToProps = {
-  toggleStar,
+  updateFavorite,
 };
 
 export default connect(
