@@ -10,9 +10,8 @@ import type { TradingState } from './tradingPage';
 import type { TradeHistoryState } from './tradeHistory';
 import type { DepthChartState } from './depthChart';
 import type { OrderHistoryState } from './orderHistory';
-import type { CoinSearcherState } from './coinSearcher';
 import type { OrderFormState } from './orderForm';
-import type { TokenState, TokenAction, TokenEvent } from './tokens';
+import type { TokenState, TokenPairState, TokenAction, TokenEvent, TokenPairEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
 import type { LoginPageState, LoginPageAction, LoginPageEvent } from './loginPage';
 import type { LogoutPageAction } from './logoutPage';
@@ -41,6 +40,7 @@ export type Event =
   | EtherBalanceEvent
   | EtherTxEvent
   | TokenEvent
+  | TokenPairEvent
   | AccountBalancesEvent
   | AccountEvent
   | DepositFormEvent
@@ -53,7 +53,6 @@ export type ActionHandler = Action => Event;
 export type State = {
   loginPage: LoginPageState,
   tradingPage: TradingState,
-  provider: ProviderState,
   homePage: HomeState,
   signer: SignerState,
   etherBalance: EtherBalanceState,
@@ -65,9 +64,9 @@ export type State = {
   orderHistory: OrderHistoryState,
   orderForm: OrderFormState,
   depthChart: DepthChartState,
-  coinSearcher: CoinSearcherState,
   etherTx: EtherTxState,
   tokens: TokenState,
+  tokenPairs: TokenPairState,
   account: AccountState,
   depositForm: DepositFormState,
   settings: SettingsState,
