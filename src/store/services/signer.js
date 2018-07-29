@@ -1,8 +1,7 @@
 // @flow
-import { Wallet, providers } from 'ethers';
-import { getPrivateKeyFromSessionStorage } from './wallet';
+import { providers, Wallet } from 'ethers';
 
-import type { UpdateSignerParams, SignerSettings } from '../../types/signer';
+import type { UpdateSignerParams } from '../../types/signer';
 
 export const createSigner = async (params: UpdateSignerParams): any => {
   try {

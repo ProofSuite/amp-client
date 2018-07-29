@@ -1,6 +1,7 @@
 import createStore from '../../store/configureStore';
 
-import createWalletModalSelector, * as actionCreators from './createWalletModal';
+import createWalletModalSelector from './createWalletModal';
+import * as actionCreators from './createWalletModal';
 import * as walletService from '../services/wallet';
 
 jest.mock('../services/wallet');

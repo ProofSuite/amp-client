@@ -1,11 +1,11 @@
 // @flow
 import { Contract } from 'ethers';
 import {
-  getTokenDomain,
-  getAccountDomain,
-  getSignerDomain,
-  getDepositFormDomain,
   getAccountBalancesDomain,
+  getAccountDomain,
+  getDepositFormDomain,
+  getSignerDomain,
+  getTokenDomain,
 } from '../domains';
 
 import * as actionCreators from '../actions/accountBalances';

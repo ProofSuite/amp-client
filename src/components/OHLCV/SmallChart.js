@@ -31,8 +31,6 @@ type Props = {
   ohlcvData: Array<Object>,
   pairId: string,
   pair: string,
-  toggleExpand: () => void,
-  expandedChard: boolean,
   updateTimeLine: SendTimelineParams => void,
 };
 type State = {

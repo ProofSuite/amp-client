@@ -1,8 +1,8 @@
 import React from 'react';
 import CoinSearcherRenderer from './CoinSearcherRenderer';
-import { Card, Icon, Tab, Tabs } from '@blueprintjs/core';
-import { RowSpcBtwn, ColEnd } from '../HTMLElements';
-import { filterer, getObjectFromProperty, sortArray } from '../../utils/helpers';
+import { Icon, Tab, Tabs } from '@blueprintjs/core';
+import { ColumnEnd, RowSpaceBetween } from '../Common';
+import { filterer, sortArray } from '../../utils/helpers';
 
 type Props = {
   loading: boolean,
@@ -165,14 +165,14 @@ export default SmallCoinSearcher;
 
 const SelectedCoin = ({ selectedCoin }) => (
   <div className="selected-coin">
-    <RowSpcBtwn>
+    <RowSpaceBetween>
       <p className="pair">{selectedCoin.pair}</p>
-      <ColEnd>
+      <ColumnEnd>
         <p className="price">{selectedCoin.lastPrice} / $0.08</p>
         <p>{selectedCoin.volume}</p>
-      </ColEnd>
-    </RowSpcBtwn>
-    <RowSpcBtwn>
+      </ColumnEnd>
+    </RowSpaceBetween>
+    <RowSpaceBetween>
       <p>
         <span className="label">High: </span>
         {selectedCoin.high}
@@ -181,6 +181,6 @@ const SelectedCoin = ({ selectedCoin }) => (
         <span className="label">Low: </span>
         {selectedCoin.low}
       </p>
-    </RowSpcBtwn>
+    </RowSpaceBetween>
   </div>
 );

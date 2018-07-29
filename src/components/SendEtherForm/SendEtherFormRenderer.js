@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { InputGroup, Button, ControlGroup, Label } from '@blueprintjs/core';
+import { Button, ControlGroup, InputGroup, Label } from '@blueprintjs/core';
 import TokenSelect from '../TokenSelect';
 import GasSettings from '../GasSettings';
 import TxNotification from '../TxNotification';

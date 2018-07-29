@@ -1,11 +1,11 @@
 import React from 'react';
 import { round, toDate } from '../../utils/converters';
-import Loading from '../Loading';
+import { Loading } from '../Common';
 import { Colors } from '@blueprintjs/core';
 import styled from 'styled-components';
-import type { ListRow, TradeListContainerTypes, TradeListTypes } from '../../types/tradeHistory';
+import type Props, { TradeListProps, TradeProps } from '../../types/tradeHistory';
 
-const TradeHistory = (props: TradeListContainerTypes) => {
+const TradeHistory = (props: Props) => {
   const { decimals, tradeHistory } = props;
   const tradeSize = Object.keys(tradeHistory[0]).length;
   return tradeHistory.length < 2 && tradeSize < 1 ? (
@@ -16,7 +16,7 @@ const TradeHistory = (props: TradeListContainerTypes) => {
 };
 export default TradeHistory;
 
-const HistroyList = (props: TradeListTypes) => {
+const HistroyList = (props: TradeListProps) => {
   const { decimals, tradeHistory } = props;
   return (
     <div className="list-container pt-dark">
@@ -36,7 +36,7 @@ const HistroyList = (props: TradeListTypes) => {
   );
 };
 
-const Row = ({ props }: ListRow) => {
+const Row = ({ props }: TradeProps) => {
   const { trade, decimals, index } = props;
   return (
     <li className="not-heading">

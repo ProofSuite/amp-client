@@ -1,7 +1,7 @@
 import React from 'react';
 import CoinSearcherRenderer from './CoinSearcherRenderer';
-import { Card, Icon, Tab, Tabs } from '@blueprintjs/core';
-import { filterer, getObjectFromProperty, sortArray } from '../../utils/helpers';
+import { Icon, Tab, Tabs } from '@blueprintjs/core';
+import { filterer, sortArray } from '../../utils/helpers';
 
 type Props = {
   loading: boolean,

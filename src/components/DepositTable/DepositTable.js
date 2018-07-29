@@ -1,8 +1,6 @@
 import React from 'react';
 import DepositTableRenderer from './DepositTableRenderer';
 
-import styled from 'styled-components';
-
 type Props = {
   depositData: Array<Object>,
 };

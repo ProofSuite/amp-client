@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import { Card } from '@blueprintjs/core';
-import Loading from '../Loading';
+import { Loading } from '../Common';
 import DepthChartRenderer from './DepthChartRenderer';
 var AmCharts = require('@amcharts/amcharts3-react');
 

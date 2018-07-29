@@ -4,28 +4,12 @@ import { OrderBookRenderer } from './OrderBookRenderer';
 import * as orderList from '../../jsons/ordersList.json';
 
 it('renders without crashing', () => {
-  shallow(
-    <OrderBookRenderer
-      orderList={orderList.list}
-      bookName="Buy"
-      loading={false}
-      baseToken="ETH"
-      quoteToken="BAT"
-      decimals={5}
-    />
-  );
+  shallow(<OrderBookRenderer orderList={orderList.list} bookName="Buy" baseToken="ETH" quoteToken="BAT" />);
 });
 
 it('verifies Book Type', () => {
   const wrapper = shallow(
-    <OrderBookRenderer
-      orderList={orderList.list}
-      bookName="Buy"
-      loading={false}
-      baseToken="ETH"
-      quoteToken="BAT"
-      decimals={5}
-    />
+    <OrderBookRenderer orderList={orderList.list} bookName="Buy" baseToken="ETH" quoteToken="BAT" />
   );
   let heading = wrapper.find('h5');
   expect(heading.text()).toEqual('Buy');
@@ -37,14 +21,7 @@ it('verifies Book Type', () => {
 
 it('checks Loading State', () => {
   const wrapper = shallow(
-    <OrderBookRenderer
-      orderList={orderList.list}
-      bookName="Buy"
-      loading={false}
-      baseToken="ETH"
-      quoteToken="BAT"
-      decimals={5}
-    />
+    <OrderBookRenderer orderList={orderList.list} bookName="Buy" baseToken="ETH" quoteToken="BAT" />
   );
   let heading = wrapper.find('h5');
   expect(heading.text()).toEqual('Buy');

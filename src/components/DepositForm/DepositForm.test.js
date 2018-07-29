@@ -2,9 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import DepositForm from './DepositForm';
-import * as walletService from '../../store/services/wallet';
 
-import { mockAddress, mockTokens, mockAllowTxState, mockConvertTxState } from '../../mockData';
+import { mockAddress, mockAllowTxState, mockConvertTxState, mockTokens } from '../../mockData';
 
 jest.mock('../../store/services/wallet');
 

@@ -69,18 +69,6 @@ function calculateData(inputData) {
 }
 
 class OHLCVChart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.saveNode = this.saveNode.bind(this);
-    this.resetXDomain = this.resetXDomain.bind(this);
-  }
-
-  saveNode(node) {
-    this.node = node;
-  }
-  resetXDomain() {
-    this.node.resetXDomain();
-  }
   render() {
     const {
       type,
@@ -111,9 +99,7 @@ class OHLCVChart extends React.Component {
 
     return (
       <div>
-        <p onClick={this.resetXDomain}>reset</p>
         <ChartCanvas
-          ref={this.saveNode}
           height={chartHeight + indicatorHeight + 50}
           width={width}
           ratio={ratio}

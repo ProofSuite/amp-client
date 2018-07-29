@@ -1,5 +1,6 @@
 import createStore from '../../store/configureStore';
-import loginPageSelector, * as actionCreators from './loginPage';
+import loginPageSelector from './loginPage';
+import * as actionCreators from './loginPage';
 import getAccountDomain from '../domains/account';
 import getWalletDomain from '../domains/wallets';
 import * as walletService from '../services/wallet';

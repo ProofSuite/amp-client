@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import Form from './Form';
+import OrderFormRenderer from './OrderFormRenderer';
 import { Card, Tab, Tabs } from '@blueprintjs/core';
 import { round } from '../../utils/converters';
 
@@ -16,6 +16,7 @@ type Props = {
   handleLimit: any => void,
   handleStopLimit: any => void,
 };
+
 type State = {
   portion: number,
   priceType: string,
@@ -249,6 +250,7 @@ class OrderForm extends React.PureComponent<Props, State> {
     } else if (selectedTabId === 'stop') {
     }
   };
+
   render() {
     const {
       state: { selectedTabId },
@@ -257,7 +259,6 @@ class OrderForm extends React.PureComponent<Props, State> {
       changeTab,
       handleTxClick,
     } = this;
-    console.log(this.props);
     return (
       <Card className="pt-dark order-form">
         <h5>
@@ -268,7 +269,7 @@ class OrderForm extends React.PureComponent<Props, State> {
             id="limit"
             title="Limit"
             panel={
-              <Form
+              <OrderFormRenderer
                 formName={formName}
                 baseToken={baseToken}
                 quoteToken={quoteToken}
@@ -283,7 +284,7 @@ class OrderForm extends React.PureComponent<Props, State> {
             id="stop"
             title="Stop Limit"
             panel={
-              <Form
+              <OrderFormRenderer
                 formName={formName}
                 baseToken={baseToken}
                 quoteToken={quoteToken}

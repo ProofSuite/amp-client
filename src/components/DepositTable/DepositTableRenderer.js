@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Button } from '@blueprintjs/core';
+import { Button, Switch } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 const DepositTableRenderer = (props: Props) => {

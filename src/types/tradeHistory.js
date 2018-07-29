@@ -1,16 +1,17 @@
 //@flow
-export type TradeHistoryState = {
+type Props = {
   +tradeHistory: Array<Object>,
 };
-export type TradeListContainerTypes = {
-  tradeHistory: Array<Object>,
+export default Props;
+export type TradeHistoryProps = {
+  +tradeHistory: Array<Object>,
 };
-export type TradeListTypes = {
+export type TradeListProps = {
   decimals: number,
   tradeHistory: Array<Object>,
 };
 
-export type ListRow = {
+export type TradeProps = {
   trade: Object,
   index: number,
   decimals: number,

@@ -1,4 +1,5 @@
-import depositFormDomain, * as eventCreators from './depositForm';
+import depositFormDomain from './depositForm';
+import * as eventCreators from './depositForm';
 import {
   mockFailedTxReceipt,
   mockFailedTxReceipt2,

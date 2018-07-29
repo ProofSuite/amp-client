@@ -1,4 +1,5 @@
-import getTokenDomain, * as eventCreators from './tokens';
+import getTokenDomain from './tokens';
+import * as eventCreators from './tokens';
 
 const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
 

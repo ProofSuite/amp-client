@@ -1,6 +1,7 @@
 import createStore from '../../store/configureStore';
 import { getSigner } from '../services/signer';
-import getEtherTxModel, * as actionCreators from './etherTx';
+import getEtherTxModel from './etherTx';
+import * as actionCreators from './etherTx';
 import { mockEtherTxParams } from '../../mockData';
 
 import { Contract } from 'ethers';

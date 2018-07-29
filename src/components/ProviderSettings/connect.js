@@ -1,7 +1,8 @@
 // @flow
 import { connect } from 'react-redux';
-import getProviderModel, * as providerActionCreators from '../../store/models/provider';
-import type { State, Dispatch } from '../../types';
+import getProviderModel from '../../store/models/provider';
+import * as providerActionCreators from '../../store/models/provider';
+import type { Dispatch, State } from '../../types';
 import type { ProviderOptions } from '../../types/provider';
 
 export function mapStateToProps(state: State) {

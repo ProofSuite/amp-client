@@ -1,15 +1,13 @@
 // @flow
 import { connect } from 'react-redux';
-import getDepositFormModel from '../../store/models/depositForm';
-
-import {
-  subscribeBalance,
-  queryBalances,
+import getDepositFormModel, {
   confirmEtherDeposit,
   confirmTokenDeposit,
+  queryBalances,
+  subscribeBalance,
 } from '../../store/models/depositForm';
 
-import type { State, Dispatch } from '../../types';
+import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
   const depositFormModel = getDepositFormModel(state);

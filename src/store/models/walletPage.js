@@ -1,5 +1,5 @@
 // @flow
-import { getTokenDomain, getAccountBalancesDomain, getAccountDomain } from '../domains';
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains';
 import * as actionCreators from '../actions/walletPage';
 import * as accountBalancesService from '../services/accountBalances';
 

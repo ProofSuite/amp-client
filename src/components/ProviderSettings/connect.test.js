@@ -2,8 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
-import connect, { mapStateToProps, mapDispatchToProps } from './connect';
-import providerModel, * as providerActionCreators from '../../store/models/provider';
+import connect, { mapDispatchToProps, mapStateToProps } from './connect';
+import providerModel from '../../store/models/provider';
+import * as providerActionCreators from '../../store/models/provider';
 
 jest.mock('../../store/models/provider');
 

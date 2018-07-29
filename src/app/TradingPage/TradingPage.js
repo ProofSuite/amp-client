@@ -1,16 +1,13 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { RowSpcBtwn } from '../../components/HTMLElements';
+import { RowSpaceBetween } from '../../components/Common';
 import OHLCV from '../../components/OHLCV';
-import OrderBook from '../../components/OrderBook';
 import OrderHistory from '../../components/OrderHistory';
 import OrderForm from '../../components/OrderForm';
 import TradeHistory from '../../components/TradeHistory';
-import DepthChart from '../../components/DepthChart';
 import CoinSearcher from '../../components/CoinSearcher';
 import OrderBookandChart from '../../components/OrderBookandChart';
-import { Button } from '@blueprintjs/core';
 
 import type { LoadDataParams } from '../../types/tradingPage';
 
@@ -22,6 +19,7 @@ export default class TradingPage extends React.PureComponent<Props> {
   state = {
     hide: false,
   };
+
   componentDidMount() {
     this.props.loadData({ tokenId: 'token_id' });
   }
@@ -49,10 +47,10 @@ export default class TradingPage extends React.PureComponent<Props> {
         </div>
         <div className={hide ? 'extended-charting' : 'small-charting'}>
           <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} />
-          <RowSpcBtwn>
+          <RowSpaceBetween>
             <OrderHistory />
             <TradeHistory />
-          </RowSpcBtwn>
+          </RowSpaceBetween>
         </div>
         <div className={hide ? 'hidden-order-book' : 'open-order-book'}>
           <OrderBookandChart />

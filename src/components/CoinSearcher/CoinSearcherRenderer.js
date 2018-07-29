@@ -3,7 +3,7 @@ import React from 'react';
 import { Colors, Icon } from '@blueprintjs/core';
 import styled from 'styled-components';
 import { round } from '../../utils/converters';
-import Loading from '../Loading';
+import { Loading } from '../Common';
 import type { CoinRowTypes, CoinSearchTypes, HeaderTypes } from '../../types/coinSearcher';
 
 const CoinSearchRenderer = (props: CoinSearchTypes) => {

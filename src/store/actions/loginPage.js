@@ -1,9 +1,9 @@
 //@flow
 import type {
   CreateWalletAction,
-  LoginWithWalletAction,
-  LoginWithMetamaskAction,
   LoginErrorAction,
+  LoginWithMetamaskAction,
+  LoginWithWalletAction,
   RequestLoginAction,
 } from '../../types/loginPage';
 

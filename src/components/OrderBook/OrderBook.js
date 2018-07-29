@@ -3,13 +3,7 @@ import React from 'react';
 import { OrderBookRenderer } from './OrderBookRenderer';
 import styled from 'styled-components';
 import { sortArray } from '../../utils/helpers';
-
-type Props = {
-  sellOrderList: Array<Object>,
-  buyOrderList: Array<Object>,
-  quoteToken: string,
-  baseToken: string,
-};
+import type Props from '../../types/orderBook';
 
 export default class OrderBook extends React.PureComponent<Props> {
   static defaultProps = {

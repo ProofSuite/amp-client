@@ -3,7 +3,6 @@ import React from 'react';
 import DepositFormRenderer from './DepositFormRenderer';
 
 import type { Token } from '../../types/tokens';
-import type { TxReceipt } from '../../types/common';
 import type { AccountBalance } from '../../types/accountBalances';
 
 type Step = 'waiting' | 'convert' | 'confirm';

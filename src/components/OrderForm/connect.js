@@ -1,7 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
 import orderFormModel, { handleLimit, handleStopLimit } from '../../store/models/orderForm';
-
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {

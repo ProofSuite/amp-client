@@ -1,7 +1,6 @@
 import React from 'react';
-import CoinSearcherRenderer from './CoinSearcherRenderer';
-import { Card, Icon, Tab, Tabs } from '@blueprintjs/core';
-import { filterer, getObjectFromProperty, sortArray } from '../../utils/helpers';
+import { Card } from '@blueprintjs/core';
+import { filterer, sortArray } from '../../utils/helpers';
 import SmallCoinSearcher from './SmallCoinSearcher';
 import LargeCoinSearcher from './LargeCoinSearcher';
 type Props = {

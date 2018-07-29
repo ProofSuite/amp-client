@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { shallow } from 'enzyme';
 import createStore from '../../store/configureStore';
-import connect, { mapStateToProps, mapDispatchToProps } from './connect';
+import connect, { mapStateToProps } from './connect';
 import * as walletPage from '../../store/models/walletPage';
 
 jest.mock('../../store/models/walletPage');

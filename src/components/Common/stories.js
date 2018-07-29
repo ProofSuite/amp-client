@@ -1,12 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, withKnobs } from '@storybook/addon-knobs/react';
+import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import Colors from './Colors';
 import { Intent } from '@blueprintjs/core';
 import Text, { EmphasizedText, LargeText } from './Text';
 import Heading from './Heading';
-import Divider from './Divider';
 
 storiesOf('Text', module)
   .addDecorator(withKnobs)

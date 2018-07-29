@@ -1,23 +1,11 @@
 //@flow
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Tab, Tabs, Button, Colors } from '@blueprintjs/core';
-import Loading from '../Loading';
+import { Button, Card, Colors, Tab, Tabs } from '@blueprintjs/core';
+import { Loading } from '../Common';
+import type { Order, OrderHistoryListContainerProps, OrderHistoryTableProps } from '../../types/orderHistory';
 
-type OrderListContainerProps = {
-  selectedTabId: string,
-  onChange: string => void,
-  authenticated: boolean,
-  orderHistory: Array<Object>,
-  userOrderHistory: Array<Object>,
-};
-
-type OrderHistoryTableProps = {
-  requireAuthentication: boolean,
-  orderHistory: Array<Object>,
-};
-
-const OrderHistoryRenderer = (props: OrderListContainerProps) => {
+const OrderHistoryRenderer = (props: OrderHistoryListContainerProps) => {
   const { selectedTabId, onChange, authenticated, orderHistory, userOrderHistory } = props;
   return (
     <Card className="pt-dark trade-history order-history">
@@ -49,7 +37,7 @@ const OrderHistoryTable = (props: OrderHistoryTableProps) => {
   );
 };
 
-const OrderHistoryList = (props: { orderHistory: Array<Object> }) => {
+const OrderHistoryList = (props: { orderHistory: Order }) => {
   const { orderHistory } = props;
   return (
     <div className="list-container">
@@ -69,7 +57,7 @@ const OrderHistoryList = (props: { orderHistory: Array<Object> }) => {
   );
 };
 
-const Row = (props: { order: Object, index: number }) => {
+const Row = (props: { order: Order, index: number }) => {
   const { order, index } = props;
   return (
     <li className="not-heading">

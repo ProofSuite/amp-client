@@ -1,12 +1,12 @@
 //@flow
-export type Order = {
-  time: number,
-  type: string,
-  amount: number,
-  price: number,
-};
 
-export type DepthChartState = {
+type Props = {
+  data: Array<Object>,
+  loading: boolean,
+  title: string,
+};
+export default Props;
+export type DepthChartProps = {
   data: Array<Object>,
   loading: boolean,
   title: string,

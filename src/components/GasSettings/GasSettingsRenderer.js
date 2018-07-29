@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, InputGroup, Button } from '@blueprintjs/core';
+import { Button, Collapse, InputGroup } from '@blueprintjs/core';
 
 import styled from 'styled-components';
 

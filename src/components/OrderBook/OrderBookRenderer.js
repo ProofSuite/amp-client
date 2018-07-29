@@ -1,20 +1,17 @@
 // @flow
 import React from 'react';
 import { Card } from '@blueprintjs/core';
-import Loading from '../Loading';
+import { Loading } from '../Common';
 import { round } from '../../utils/converters';
-import type { OrderListTypes, SingleOrderTypes } from '../../types/orderBook';
+import type { OrderListPropsTypes, SingleOrderPropsTypes } from '../../types/orderBook';
 
-type ListTypes = OrderListTypes;
-type SingleOrderProps = SingleOrderTypes;
-
-export const OrderBookRenderer = (props: ListTypes) => {
+export const OrderBookRenderer = (props: OrderListPropsTypes) => {
   const { bookName, quoteToken, baseToken, decimals, orderList } = props;
   return (
-    <Card className={bookName + ' order-book inner pt-dark'}>
+    <Card className={bookName + ' order-book'}>
       <h5>{bookName}</h5>
-      {orderList.length < 1 && <Loading />}
-      {orderList.length > 0 && (
+      {orderList.length < 2 && <Loading />}
+      {orderList.length > 1 && (
         <div className="list-container">
           <ul className="pt-list-unstyled heading">
             <li className="heading">
@@ -35,7 +32,7 @@ export const OrderBookRenderer = (props: ListTypes) => {
   );
 };
 
-const SingleOrder = (props: SingleOrderProps) => {
+const SingleOrder = (props: SingleOrderPropsTypes) => {
   const { order, index, decimals } = props;
   return (
     <li className="not-heading">

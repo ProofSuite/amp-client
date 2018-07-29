@@ -1,8 +1,5 @@
 // @flow
 import type { CoinSearcherState } from '../../types/coinSearcher';
-import { getObjectFromProperty } from '../../utils/helpers';
-import getCoinSearcherModel from '../models/coinSearcher';
-import type { State } from '../../types';
 
 const initialState: CoinSearcherState = {
   coinsList: { btc: [{}] },

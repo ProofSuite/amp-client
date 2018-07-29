@@ -1,9 +1,9 @@
 //@flow
 import type {
-  SignerErrorAction,
-  UpdateSignerParams,
   RequestSignerAction,
+  SignerErrorAction,
   UpdateSignerAction,
+  UpdateSignerParams,
 } from '../../types/signer';
 
 const actionTypes = {

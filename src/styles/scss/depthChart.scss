@@ -15,7 +15,7 @@
         image {
           color: $primary;
         }
-        text,image  {
+        text, image {
           fill: $primary;
         }
       }
@@ -32,6 +32,7 @@
     }
   }
 }
+
 .depth-chart-container.loading {
   height: 500px;
   background-color: #31404c;

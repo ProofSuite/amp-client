@@ -6,14 +6,15 @@ import { mockFailedTxReceipt, mockFailedTxReceipt2, mockTokens, mockTxReceipt, m
 import * as accountBalancesService from '../services/accountBalances';
 
 import {
-  getTokenDomain,
-  getAccountDomain,
-  getSignerDomain,
-  getDepositFormDomain,
   getAccountBalancesDomain,
+  getAccountDomain,
+  getDepositFormDomain,
+  getSignerDomain,
+  getTokenDomain,
 } from '../domains';
 import getSignerSettingsModel from './signerSettings';
-import DepositFormSelector, * as actionCreators from './depositForm';
+import DepositFormSelector from './depositForm';
+import * as actionCreators from './depositForm';
 
 jest.mock('../services/accountBalances');
 jest.mock('../services/signer');

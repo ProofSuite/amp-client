@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Spinner, Intent } from '@blueprintjs/core';
+import { Intent, Spinner } from '@blueprintjs/core';
 import TxSuccessNotification from './TxSuccessNotification';
 import TxErrorNotification from './TxErrorNotification';
 import TxPendingNotification from './TxPendingNotification';
