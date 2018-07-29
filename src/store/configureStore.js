@@ -23,18 +23,19 @@ const rootReducer = combineReducers(reducers);
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const configureStore = preloadedState => {
-  let store = createStore(persistedReducer, preloadedState, storeEnhancer);
-  let persistor = persistStore(store);
+  let store = createStore(rootReducer, preloadedState, storeEnhancer);
+  // let persistor = persistStore(store);
 
   if (module.hot) {
     module.hot.accept(() => {
       const nextReducers = require('./reducers');
       const nextRootReducer = combineReducers(nextReducers);
-      store.replaceReducer(persistReducer(persistConfig, nextRootReducer));
+      // store.replaceReducer(persistReducer(persistConfig, nextRootReducer));
+      store.replaceReducer(nextRootReducer);
     });
   }
 
-  return { store, persistor };
+  return { store };
 };
 
 export default configureStore;

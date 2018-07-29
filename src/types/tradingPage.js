@@ -1,4 +1,10 @@
 //@flow
+import type { TokenPairDataMap } from './tokens';
+
+export type UpdateTokenPairDataAction = {
+  type: 'tradingPage/UPDATE_TOKEN_PAIR_DATA',
+  payload: { tokenPairData: TokenPairDataMap },
+};
 
 export type TradingState = {};
 
@@ -11,3 +17,5 @@ export type SingleOrderTypes = {
   index: number,
   decimals: number,
 };
+
+export type TradingPageAction = UpdateTokenPairDataAction;

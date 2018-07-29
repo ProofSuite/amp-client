@@ -72,10 +72,12 @@ const Row = (props: { order: Order, index: number }) => {
 
 const Sell = styled.span`
   color: ${Colors.RED4};
+  min-width: 35px;
 `;
 
 const Buy = styled.span`
   color: ${Colors.GREEN5};
+  min-width: 35px;
 `;
 
 const Login = () => <Button large={true} intent="primary" text="Login" />;

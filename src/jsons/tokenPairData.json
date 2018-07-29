@@ -1,0 +1,354 @@
+{
+  "BNB_WETH": {
+    "pair": "BNB_WETH",
+    "lastPrice": "7425.2945",
+    "change": "4.5421",
+    "high": "8782.7964",
+    "low": "6499.3696",
+    "volume": 720404
+  },
+  "BNB_DAI": {
+    "pair": "BNB_DAI",
+    "lastPrice": "6018.7886",
+    "change": "1.6589",
+    "high": "3876.8717",
+    "low": "4613.5315",
+    "volume": 68946
+  },
+  "OMG_WETH": {
+    "pair": "OMG_WETH",
+    "lastPrice": "398.8988",
+    "change": "3.7561",
+    "high": "9892.7954",
+    "low": "6884.7173",
+    "volume": 155839
+  },
+  "OMG_DAI": {
+    "pair": "OMG_DAI",
+    "lastPrice": "66.2789",
+    "change": "3.5460",
+    "high": "9211.5292",
+    "low": "4241.7509",
+    "volume": 912048
+  },
+  "ZRX_WETH": {
+    "pair": "ZRX_WETH",
+    "lastPrice": "8176.7874",
+    "change": "1.7811",
+    "high": "6165.0712",
+    "low": "2242.4298",
+    "volume": 752620
+  },
+  "ZRX_DAI": {
+    "pair": "ZRX_DAI",
+    "lastPrice": "7378.8467",
+    "change": "1.0410",
+    "high": "7755.4530",
+    "low": "2317.9722",
+    "volume": 786519
+  },
+  "AE_WETH": {
+    "pair": "AE_WETH",
+    "lastPrice": "6172.7999",
+    "change": "1.0545",
+    "high": "8110.5805",
+    "low": "1376.9231",
+    "volume": 372365
+  },
+  "AE_DAI": {
+    "pair": "AE_DAI",
+    "lastPrice": "8702.8278",
+    "change": "4.8559",
+    "high": "4451.6420",
+    "low": "2869.2692",
+    "volume": 125300
+  },
+  "TRX_WETH": {
+    "pair": "TRX_WETH",
+    "lastPrice": "8666.9840",
+    "change": "3.8521",
+    "high": "2971.2734",
+    "low": "4582.4632",
+    "volume": 234090
+  },
+  "TRX_DAI": {
+    "pair": "TRX_DAI",
+    "lastPrice": "2224.6056",
+    "change": "1.1602",
+    "high": "7577.5238",
+    "low": "2863.4040",
+    "volume": 675380
+  },
+  "MKR_WETH": {
+    "pair": "MKR_WETH",
+    "lastPrice": "2989.9693",
+    "change": "3.5680",
+    "high": "11382.4355",
+    "low": "3744.2262",
+    "volume": 526056
+  },
+  "MKR_DAI": {
+    "pair": "MKR_DAI",
+    "lastPrice": "1001.3618",
+    "change": "3.9451",
+    "high": "2956.6614",
+    "low": "3638.6667",
+    "volume": 842490
+  },
+  "BAT_WETH": {
+    "pair": "BAT_WETH",
+    "lastPrice": "8957.7420",
+    "change": "3.3946",
+    "high": "2462.5504",
+    "low": "5526.3301",
+    "volume": 76249
+  },
+  "BAT_DAI": {
+    "pair": "BAT_DAI",
+    "lastPrice": "739.7347",
+    "change": "2.1347",
+    "high": "1983.8929",
+    "low": "6153.8667",
+    "volume": 97646
+  },
+  "REP_WETH": {
+    "pair": "REP_WETH",
+    "lastPrice": "2691.2294",
+    "change": "1.2063",
+    "high": "8354.0811",
+    "low": "5674.0579",
+    "volume": 145816
+  },
+  "REP_DAI": {
+    "pair": "REP_DAI",
+    "lastPrice": "4383.1384",
+    "change": "2.2068",
+    "high": "5297.4985",
+    "low": "767.7052",
+    "volume": 346014
+  },
+  "BTM_WETH": {
+    "pair": "BTM_WETH",
+    "lastPrice": "9843.9077",
+    "change": "2.1600",
+    "high": "9519.3407",
+    "low": "501.9432",
+    "volume": 601929
+  },
+  "BTM_DAI": {
+    "pair": "BTM_DAI",
+    "lastPrice": "9328.7163",
+    "change": "3.7263",
+    "high": "10986.1740",
+    "low": "389.0820",
+    "volume": 967867
+  },
+  "NPXS_WETH": {
+    "pair": "NPXS_WETH",
+    "lastPrice": "7253.4443",
+    "change": "3.9644",
+    "high": "10353.5486",
+    "low": "1713.7833",
+    "volume": 203299
+  },
+  "NPXS_DAI": {
+    "pair": "NPXS_DAI",
+    "lastPrice": "6236.2371",
+    "change": "3.3107",
+    "high": "7750.0165",
+    "low": "862.7100",
+    "volume": 885790
+  },
+  "WTC_WETH": {
+    "pair": "WTC_WETH",
+    "lastPrice": "8288.1892",
+    "change": "1.6542",
+    "high": "4478.5365",
+    "low": "5863.8473",
+    "volume": 821531
+  },
+  "WTC_DAI": {
+    "pair": "WTC_DAI",
+    "lastPrice": "5512.8271",
+    "change": "1.1347",
+    "high": "8354.6859",
+    "low": "1259.9921",
+    "volume": 101101
+  },
+  "KCS_WETH": {
+    "pair": "KCS_WETH",
+    "lastPrice": "7420.1847",
+    "change": "3.2866",
+    "high": "8288.3661",
+    "low": "4377.0166",
+    "volume": 290989
+  },
+  "KCS_DAI": {
+    "pair": "KCS_DAI",
+    "lastPrice": "6118.4318",
+    "change": "4.1027",
+    "high": "5296.7168",
+    "low": "6782.4287",
+    "volume": 364650
+  },
+  "GNT_WETH": {
+    "pair": "GNT_WETH",
+    "lastPrice": "9799.0233",
+    "change": "3.6850",
+    "high": "5700.4513",
+    "low": "1427.0510",
+    "volume": 716355
+  },
+  "GNT_DAI": {
+    "pair": "GNT_DAI",
+    "lastPrice": "4853.8966",
+    "change": "4.2794",
+    "high": "709.0427",
+    "low": "2275.3936",
+    "volume": 653566
+  },
+  "PPT_WETH": {
+    "pair": "PPT_WETH",
+    "lastPrice": "3408.8111",
+    "change": "3.8692",
+    "high": "10128.7329",
+    "low": "3381.5016",
+    "volume": 517543
+  },
+  "PPT_DAI": {
+    "pair": "PPT_DAI",
+    "lastPrice": "7732.1319",
+    "change": "4.2972",
+    "high": "2841.5468",
+    "low": "4666.0179",
+    "volume": 16275
+  },
+  "SNT_WETH": {
+    "pair": "SNT_WETH",
+    "lastPrice": "8401.5535",
+    "change": "4.6497",
+    "high": "2898.2408",
+    "low": "2009.4953",
+    "volume": 597422
+  },
+  "SNT_DAI": {
+    "pair": "SNT_DAI",
+    "lastPrice": "4888.7285",
+    "change": "2.2516",
+    "high": "10605.7503",
+    "low": "1302.8578",
+    "volume": 300034
+  },
+  "DGX_WETH": {
+    "pair": "DGX_WETH",
+    "lastPrice": "7547.0369",
+    "change": "3.0879",
+    "high": "6141.7311",
+    "low": "779.4598",
+    "volume": 369010
+  },
+  "DGX_DAI": {
+    "pair": "DGX_DAI",
+    "lastPrice": "9560.1709",
+    "change": "2.1111",
+    "high": "3646.7014",
+    "low": "386.4832",
+    "volume": 349433
+  },
+  "MITH_WETH": {
+    "pair": "MITH_WETH",
+    "lastPrice": "547.1340",
+    "change": "3.4600",
+    "high": "11908.6823",
+    "low": "7716.6933",
+    "volume": 927223
+  },
+  "MITH_DAI": {
+    "pair": "MITH_DAI",
+    "lastPrice": "4634.7064",
+    "change": "1.9061",
+    "high": "4297.2763",
+    "low": "5486.7656",
+    "volume": 100628
+  },
+  "AION_WETH": {
+    "pair": "AION_WETH",
+    "lastPrice": "8079.6783",
+    "change": "3.6167",
+    "high": "5335.7772",
+    "low": "2785.9503",
+    "volume": 477406
+  },
+  "AION_DAI": {
+    "pair": "AION_DAI",
+    "lastPrice": "8115.2955",
+    "change": "2.6452",
+    "high": "3643.3614",
+    "low": "1130.0279",
+    "volume": 826880
+  },
+  "LRC_WETH": {
+    "pair": "LRC_WETH",
+    "lastPrice": "2922.1319",
+    "change": "1.5925",
+    "high": "3080.3380",
+    "low": "108.0066",
+    "volume": 701201
+  },
+  "LRC_DAI": {
+    "pair": "LRC_DAI",
+    "lastPrice": "1440.3027",
+    "change": "3.1785",
+    "high": "4573.4596",
+    "low": "4130.2255",
+    "volume": 564390
+  },
+  "FUN_WETH": {
+    "pair": "FUN_WETH",
+    "lastPrice": "609.9581",
+    "change": "2.3820",
+    "high": "3415.3362",
+    "low": "7330.6504",
+    "volume": 105314
+  },
+  "FUN_DAI": {
+    "pair": "FUN_DAI",
+    "lastPrice": "5490.1962",
+    "change": "3.2336",
+    "high": "11240.3897",
+    "low": "1620.7639",
+    "volume": 718139
+  },
+  "KNC_WETH": {
+    "pair": "KNC_WETH",
+    "lastPrice": "2382.5857",
+    "change": "4.0154",
+    "high": "3058.4447",
+    "low": "2429.4116",
+    "volume": 923139
+  },
+  "KNC_DAI": {
+    "pair": "KNC_DAI",
+    "lastPrice": "1722.6273",
+    "change": "2.8258",
+    "high": "9444.2876",
+    "low": "2935.2349",
+    "volume": 252662
+  },
+  "LOOM_WETH": {
+    "pair": "LOOM_WETH",
+    "lastPrice": "4974.5057",
+    "change": "4.6277",
+    "high": "1536.8417",
+    "low": "4559.4887",
+    "volume": 209301
+  },
+  "LOOM_DAI": {
+    "pair": "LOOM_DAI",
+    "lastPrice": "5399.0007",
+    "change": "4.6869",
+    "high": "7056.1807",
+    "low": "1735.9767",
+    "volume": 4805
+  }
+}

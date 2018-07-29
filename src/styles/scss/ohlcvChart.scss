@@ -4,7 +4,8 @@
   margin: 10px 0px 0px 10px;
   .toolbar {
     width: 100%;
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
     .pt-icon {
       cursor: pointer;
       float: left;
@@ -12,6 +13,11 @@
     }
     .pt-icon.active {
       color: $hoverBlue;
+    }
+    .left {
+      button.pt-button {
+        margin-right: 25px;
+      }
     }
     .menu {
       position: relative;
@@ -72,6 +78,7 @@
   }
   .chart-container {
     text-align: left;
+    margin: 0px -10px 0px -20px;
     label, select {
       display: none !important;
     }
@@ -118,6 +125,16 @@
       height: 90%;
       overflow-y: scroll;
       overflow-x: hidden;
+    }
+  }
+}
+
+@media only screen and (max-width: 1530px) {
+  .main-chart {
+    .toolbar {
+      button.right-btn {
+        display: none;
+      }
     }
   }
 }

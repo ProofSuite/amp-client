@@ -103,7 +103,7 @@ export default class ExtendedChart extends React.Component<Props, State> {
 
   render() {
     const {
-      props: { expandedChard, toggleExpand, ohlcvData, hideOrderBook, toggleOrderBook },
+      props: { expandedChard, toggleExpand, ohlcvData, toggleRight, toggleLeft, showRight, showLeft },
       state: { indicators, chartHeight, indicatorHeight },
       changeTimeSpan,
       toogleChartIndicator,
@@ -119,8 +119,10 @@ export default class ExtendedChart extends React.Component<Props, State> {
             toogleChartIndicator={toogleChartIndicator}
             changeTimeSpan={changeTimeSpan}
             state={this.state}
-            hideOrderBook={hideOrderBook}
-            toggleOrderBook={toggleOrderBook}
+            toggleRight={toggleRight}
+            toggleLeft={toggleLeft}
+            showRight={showRight}
+            showLeft={showLeft}
           />
           <ChartLoadingScreen
             volume={indicators[0]}

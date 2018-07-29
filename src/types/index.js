@@ -7,14 +7,13 @@ import type { EtherTxAction, EtherTxEvent, EtherTxState } from './etherTx';
 import type { OHLCVState } from './ohlcv';
 import type { OrderBookProps } from './orderBook';
 import type { TradingState } from './tradingPage';
-import type { TradeHistoryProps } from './tradeHistory';
-import type { DepthChartProps } from './depthChart';
-import type { OrderHistoryProps } from './orderHistory';
-import type { CoinSearcherState } from './coinSearcher';
-import type OrderFormProps from './orderForm';
-import type { TokenAction, TokenEvent, TokenState } from './tokens';
-import type { AccountAction, AccountEvent, AccountState } from './account';
-import type { LoginPageAction, LoginPageEvent, LoginPageState } from './loginPage';
+import type { TradeHistoryState } from './tradeHistory';
+import type { DepthChartState } from './depthChart';
+import type { OrderHistoryState } from './orderHistory';
+import type { OrderFormState } from './orderForm';
+import type { TokenState, TokenPairState, TokenAction, TokenEvent, TokenPairEvent } from './tokens';
+import type { AccountState, AccountAction, AccountEvent } from './account';
+import type { LoginPageState, LoginPageAction, LoginPageEvent } from './loginPage';
 import type { LogoutPageAction } from './logoutPage';
 import type { DepositFormAction, DepositFormEvent, DepositFormState } from './depositForm';
 import type { SettingsAction, SettingsEvent, SettingsState } from './settings';
@@ -41,6 +40,7 @@ export type Event =
   | EtherBalanceEvent
   | EtherTxEvent
   | TokenEvent
+  | TokenPairEvent
   | AccountBalancesEvent
   | AccountEvent
   | DepositFormEvent
@@ -53,10 +53,8 @@ export type ActionHandler = Action => Event;
 export type State = {
   loginPage: LoginPageState,
   tradingPage: TradingState,
-  provider: ProviderState,
   homePage: HomeState,
   signer: SignerState,
-  provider: ProviderState,
   etherBalance: EtherBalanceState,
   accountBalances: AccountBalancesState,
   etherTx: EtherTxState,
@@ -66,9 +64,9 @@ export type State = {
   orderHistory: OrderHistoryProps,
   orderForm: OrderFormProps,
   depthChart: DepthChartProps,
-  coinSearcher: CoinSearcherState,
   etherTx: EtherTxState,
   tokens: TokenState,
+  tokenPairs: TokenPairState,
   account: AccountState,
   depositForm: DepositFormState,
   settings: SettingsState,

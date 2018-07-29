@@ -52,6 +52,10 @@
       span.price, span.amount, span.total {
         min-width: 80px !important;
       }
+      span.price {
+        margin-right: 0px;
+      }
+    ;
     }
     li.heading {
       margin: 5px auto 3px;
@@ -97,5 +101,25 @@
   }
   .loading-overlay {
     height: 100%;
+  }
+}
+
+@media only screen and (max-width: 1780px) {
+  .list-container {
+    ul {
+      span.price {
+        margin: 0px;
+      }
+      li.heading {
+        span {
+          font-size: 13px;
+        }
+      }
+      li.not-heading {
+        span {
+          font-size: 12px;
+        }
+      }
+    }
   }
 }

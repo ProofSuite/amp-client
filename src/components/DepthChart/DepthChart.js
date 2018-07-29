@@ -40,10 +40,10 @@ class DepthChart extends React.Component<Props> {
       toolTip,
     } = this;
     return (
-      <Card className={loading ? 'depth-chart-container loading' : 'depth-chart-container'}>
+      <div className={loading ? 'depth-chart-container loading' : 'depth-chart-container'}>
         {loading && <Loading />}
         {!loading && <DepthChartRenderer data={data} title={title} tootlTip={toolTip} />}
-      </Card>
+      </div>
     );
   }
 }

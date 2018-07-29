@@ -1,4 +1,5 @@
 export { default as Box } from './Box';
+export { default as Chevron } from './Chevron';
 export { default as Centered } from './Centered';
 export { default as Colors } from './Colors';
 export { default as Divider } from './Divider';
@@ -9,3 +10,5 @@ export { default as Text, EmphasizeText, LargeText } from './Text';
 export { default as RowCenter, RowSpaceAround, RowSpaceBetween } from './Row';
 export { default as ColumnEnd } from './Column';
 export { default as Loading } from './Loading';
+export { default as Collapse } from './Collapse';
+export { default as CollapseRight } from './CollapseRight';

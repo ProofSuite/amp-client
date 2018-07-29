@@ -37,7 +37,7 @@ class LoginPage extends React.PureComponent<Props, State> {
     const { view, metamaskStatus } = this.state;
 
     if (authenticated) {
-      return <Redirect to="/" />;
+      return <Redirect to="/wallet" />;
     }
     return (
       <LoginPageRenderer

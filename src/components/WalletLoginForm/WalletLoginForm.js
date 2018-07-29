@@ -56,13 +56,11 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       try {
         const walletFile = (reader.result: any);
         const address = JSON.parse(walletFile).address;
-        console.log('here');
         this.setState({ walletFile, walletFileStatus: 'valid' });
       } catch (e) {
         this.setState({ walletFile: '', walletFileStatus: 'invalid' });
       }
     };
-    console.log('here');
     reader.readAsText(file);
   };
 

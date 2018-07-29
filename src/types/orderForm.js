@@ -1,6 +1,6 @@
 //@flow
 
-type OrderFormProps = {
+export type OrderFormProps = {
   formName: string,
   askPrice: number,
   bidPrice: number,
@@ -24,5 +24,3 @@ export type InputFieldsProps = {
   baseToken: string,
   onInputChange: Object => void,
 };
-
-export default OrderFormProps;

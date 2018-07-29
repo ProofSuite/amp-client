@@ -109,7 +109,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { expandedChard, toggleExpand, ohlcvData, hideOrderBook, toggleOrderBook },
+      props: { expandedChard, toggleExpand, ohlcvData, toggleRight, toggleLeft, showRight, showLeft },
       state: { indicators, chartHeight, indicatorHeight },
       changeTimeSpan,
       toogleChartIndicator,
@@ -123,8 +123,10 @@ export default class SmallChart extends React.PureComponent<Props, State> {
           toogleChartIndicator={toogleChartIndicator}
           changeTimeSpan={changeTimeSpan}
           state={this.state}
-          hideOrderBook={hideOrderBook}
-          toggleOrderBook={toggleOrderBook}
+          toggleRight={toggleRight}
+          toggleLeft={toggleLeft}
+          showRight={showRight}
+          showLeft={showLeft}
         />
         <ChartLoadingScreen
           volume={indicators[0]}
@@ -144,36 +146,49 @@ export default class SmallChart extends React.PureComponent<Props, State> {
   }
 }
 
-const Toolbar = ({ state, toogleChartIndicator, changeTimeSpan, changeDuration, toggleOrderBook, hideOrderBook }) => (
+const Toolbar = ({
+  state,
+  toogleChartIndicator,
+  changeTimeSpan,
+  changeDuration,
+  toggleRight,
+  toggleLeft,
+  showRight,
+  showLeft,
+}) => (
   <div className="toolbar">
-    <div className="menu time-span">
-      <StandardSelect
-        items={state.timeSpans}
-        item={state.currentTimeSpan || timeSpans[0]}
-        handleChange={changeTimeSpan}
-        icon="series-add"
-      />
+    <div className="left">
+      {showLeft && <Button onClick={toggleLeft} icon="menu-closed" />}
+      {!showLeft && <Button onClick={toggleLeft} icon="menu-open" />}
+      <div className="menu time-span">
+        <StandardSelect
+          items={state.timeSpans}
+          item={state.currentTimeSpan || timeSpans[0]}
+          handleChange={changeTimeSpan}
+          icon="series-add"
+        />
+      </div>
+      <div className="menu">
+        <MultiSelect
+          items={state.indicators}
+          item={{ name: 'Indicators' }}
+          handleChange={toogleChartIndicator}
+          icon="series-search"
+        />
+      </div>
+      <div className="menu duration">
+        <Icon icon="time" />
+        <Button onClick={() => changeDuration('1 hr')} text="1h" />
+        <Button onClick={() => changeDuration('6 hr')} text="6h" />
+        <Button onClick={() => changeDuration('1 day')} text="1d" />
+        <Button onClick={() => changeDuration('3 days')} text="3d" />
+        <Button onClick={() => changeDuration('7 days')} text="7d" />
+        <Button onClick={() => changeDuration('1 month')} text="1m" />
+        <Button onClick={() => changeDuration('3 months')} text="3m" />
+        <Button onClick={() => changeDuration('6 months')} text="6m" />
+      </div>
     </div>
-    <div className="menu">
-      <MultiSelect
-        items={state.indicators}
-        item={{ name: 'Indicators' }}
-        handleChange={toogleChartIndicator}
-        icon="series-search"
-      />
-    </div>
-    <div className="menu duration">
-      <Icon icon="time" />
-      <Button onClick={() => changeDuration('1 hr')} text="1h" />
-      <Button onClick={() => changeDuration('6 hr')} text="6h" />
-      <Button onClick={() => changeDuration('1 day')} text="1d" />
-      <Button onClick={() => changeDuration('3 days')} text="3d" />
-      <Button onClick={() => changeDuration('7 days')} text="7d" />
-      <Button onClick={() => changeDuration('1 month')} text="1m" />
-      <Button onClick={() => changeDuration('3 months')} text="3m" />
-      <Button onClick={() => changeDuration('6 months')} text="6m" />
-    </div>
-    {hideOrderBook && <Button onClick={toggleOrderBook} icon="menu-closed" />}
-    {!hideOrderBook && <Button onClick={toggleOrderBook} icon="menu-open" />}
+    {showRight && <Button className="right-btn" onClick={toggleRight} icon="menu-open" />}
+    {!showRight && <Button className="right-btn" onClick={toggleRight} icon="menu-closed" />}
   </div>
 );

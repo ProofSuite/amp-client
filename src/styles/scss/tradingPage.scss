@@ -1,11 +1,30 @@
 @import "vars";
 
 .trading-page {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: inline-block;
+  width: 100%;
+  //justify-content: space-between;
+  //align-items: flex-start;
+  .coin-searcher-order-form {
+    //width: 22%;
+    float: left;
+    transition: width .5s ease-in-out;
+  }
+  .order-book-chart-container {
+    display: none;
+  }
   .open-order-book {
-    width: 22%;
+    float: left;
+    transition: width .5s ease-in-out;
+    margin-left: 10px;
+    //width: 22%;
+  }
+  .middle-container {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    //width: 55%;
+    transition: width .5s ease-in-out;
   }
   button.open-menu {
     margin: 10px 0px 0px 0px;
@@ -13,12 +32,132 @@
   .hidden-order-book {
     width: 0px;
     overflow: hidden;
+    float: left;
     padding: 0px;
   }
-  .extended-charting {
+  .left-extended-charting {
     width: 77%;
   }
-  .small-charting {
+  .right-hidden-charting {
+    width: 77%;
+  }
+  .hidden-side {
+    width: 0px;
+  }
+  .left-side {
+    width: 22%;
+  }
+  .right-side {
+    width: 22%;
+  }
+  .both-hidden {
+    width: 99%;
+  }
+  .if-left-hidden {
+    width: 77%;
+  }
+  .if-right-hidden {
+    width: 77%;
+  }
+  .none-hidden {
     width: 55%;
+  }
+}
+
+@media only screen and (max-width: 1780px) {
+  .trading-page {
+
+    .hidden-side {
+      width: 0px;
+    }
+    .left-side {
+      width: 17%;
+    }
+    .right-side {
+      width: 21%;
+    }
+    .both-hidden {
+      width: 99%;
+    }
+    .if-left-hidden {
+      width: 78%;
+    }
+    .if-right-hidden {
+      width: 82%;
+    }
+    .none-hidden {
+      width: 61%;
+    }
+  }
+}
+@media only screen and (max-width: 1661px) {
+  .trading-page{
+    .left-side {
+      width: 18%;
+    }
+    .right-side {
+      width: 21%;
+    }
+    .both-hidden {
+      width: 99%;
+    }
+    .if-left-hidden {
+      width: 78%;
+    }
+    .if-right-hidden {
+      width: 81%;
+    }
+    .none-hidden {
+      width: 60%;
+    }
+  }
+}
+@media only screen and (min-width: 1530px) and (max-width: 1600px) {
+  .trading-page{
+    .left-side {
+      width: 18.5%;
+    }
+    .right-side {
+      width: 22%;
+    }
+    .both-hidden {
+      width: 99%;
+    }
+    .if-left-hidden {
+      width: 77%;
+    }
+    .if-right-hidden {
+      width: 80.5%;
+    }
+    .none-hidden {
+      width: 58.5%;
+    }
+  }
+}
+@media only screen and (max-width: 1530px) {
+  .trading-page{
+
+    .left-side {
+      width: 19.5%;
+    }
+    .right-side {
+      width: 0;
+      display: none;
+    }
+    .both-hidden {
+      width: 99%;
+    }
+    .if-left-hidden {
+      width: 99%;
+    }
+    .if-right-hidden {
+      width: 79.5%;
+    }
+    .none-hidden {
+      width: 79.5%;
+    }
+    .order-book-chart-container {
+      display: block;
+    }
   }
 }

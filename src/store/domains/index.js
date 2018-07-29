@@ -1,6 +1,5 @@
 import accountDomain from './account';
 import accountBalancesDomain from './accountBalances';
-import coinSearcherDomain from './coinSearcher';
 import depositFormDomain from './depositForm';
 import depthChartDomain from './depthChart';
 import etherBalanceDomain from './etherBalance';
@@ -20,7 +19,6 @@ import walletsDomain from './wallets';
 
 export const getAccountDomain = state => accountDomain(state.account);
 export const getAccountBalancesDomain = state => accountBalancesDomain(state.accountBalances);
-export const getCoinSearcherDomain = state => coinSearcherDomain(state.coinSearcher);
 export const getDepositFormDomain = state => depositFormDomain(state.depositForm);
 export const getDepthChartDomain = state => depthChartDomain(state.depthChart);
 export const getEtherBalanceDomain = state => etherBalanceDomain(state.etherBalance);
