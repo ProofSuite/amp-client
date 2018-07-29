@@ -3,20 +3,20 @@ import React from 'react';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
 import {
-  Card,
-  TextArea,
-  Radio,
-  RadioGroup,
   Button,
-  InputGroup,
-  Label,
-  Intent,
+  Card,
+  Checkbox,
   FormGroup,
   Icon,
-  Checkbox,
+  InputGroup,
+  Intent,
+  Label,
+  Radio,
+  RadioGroup,
+  TextArea,
 } from '@blueprintjs/core';
 
-import { OverlaySpinner, Text, Divider } from '../../components/Common';
+import { Divider, OverlaySpinner, Text } from '../../components/Common';
 
 type Status = 'incomplete' | 'valid' | 'invalid';
 

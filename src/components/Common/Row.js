@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const RowCenter = styled.div`
+export default styled.div`
   display: flex;
   justify-content: center;
 `;
-export const RowSpcBtwn = styled.div`
+export const RowSpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-export const RowSpcArnd = styled.div`
+export const RowSpaceAround = styled.div`
   display: flex;
   justify-content: space-around;
 `;

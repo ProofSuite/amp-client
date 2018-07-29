@@ -1,7 +1,7 @@
+import type { Node } from 'react';
 // @flow
 import React from 'react';
 import { Dialog } from '@blueprintjs/core';
-import type { Node } from 'react';
 
 type Props = {
   title: string,

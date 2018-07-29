@@ -2,15 +2,8 @@
 import React from 'react';
 import OrderHistoryRenderer from './OrderHistoryRenderer';
 import { reduceDecimals, toDate } from '../../utils/converters';
-import type { Order } from '../../types/orderHistory';
+import type Props from '../../types/orderHistory';
 import { sortArray } from '../../utils/helpers';
-
-type Props = {
-  orderHistory: Array<Order>,
-  userOrderHistory: Array<Order>,
-  authenticated: boolean,
-  decimals?: number,
-};
 
 type State = {
   selectedTabId: string,

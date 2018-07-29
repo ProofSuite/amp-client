@@ -4,6 +4,7 @@ import depositFormDomain from './depositForm';
 import depthChartDomain from './depthChart';
 import etherBalanceDomain from './etherBalance';
 import etherTxDomain from './etherTx';
+import tradingPageDomain from './tradingPage';
 import loginPageDomain from './loginPage';
 import ohlcvDomain from './ohlcv';
 import orderBookDomain from './orderBook';
@@ -22,6 +23,7 @@ export const getDepositFormDomain = state => depositFormDomain(state.depositForm
 export const getDepthChartDomain = state => depthChartDomain(state.depthChart);
 export const getEtherBalanceDomain = state => etherBalanceDomain(state.etherBalance);
 export const getEtherTxDomain = state => etherTxDomain(state.etherTx);
+export const getTradingPageDomain = state => tradingPageDomain(state.homePage);
 export const getLoginPageDomain = state => loginPageDomain(state.loginPage);
 export const getOhlcvDomain = state => ohlcvDomain(state.ohlcv);
 export const getOrderBookDomain = state => orderBookDomain(state.orderBook);

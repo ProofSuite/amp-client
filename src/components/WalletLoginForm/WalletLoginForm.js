@@ -3,8 +3,8 @@ import React from 'react';
 import { isJson } from '../../utils/helpers';
 
 import {
-  createWalletFromMnemonic,
   createWalletFromJSON,
+  createWalletFromMnemonic,
   createWalletFromPrivateKey,
 } from '../../store/services/wallet';
 

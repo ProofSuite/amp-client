@@ -55,6 +55,10 @@ export default class ExtendedChart extends React.Component<Props, State> {
     timeSpans: timeSpans,
     expandedChard: false,
   };
+  static defaultProps = {
+    toggleExpand: () => () => {},
+    expandedChard: false,
+  };
 
   getObjectFromArray = (arr: Array<Object>, name: string) => {
     let foundObj = {};

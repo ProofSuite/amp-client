@@ -1,13 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text } from '@storybook/addon-knobs/react';
+import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import SendEtherFormContainer from './index.js';
 import SendEtherFormRenderer from './SendEtherFormRenderer';
 import SendEtherForm from './SendEtherForm';
 import { Card } from '@blueprintjs/core';
-import { tokens, receipt, receiver } from '../../data';
+import { receipt, receiver, tokens } from '../../data';
 import README from './README.md';
 
 storiesOf('Send Ether/Tokens Form', module)

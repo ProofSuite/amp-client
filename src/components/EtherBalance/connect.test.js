@@ -2,8 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
-import connect, { mapStateToProps, mapDispatchToProps } from './connect';
-import getEtherBalance, * as etherBalanceActionCreators from '../../store/models/etherBalance';
+import connect, { mapDispatchToProps, mapStateToProps } from './connect';
+import getEtherBalance from '../../store/models/etherBalance';
+import * as etherBalanceActionCreators from '../../store/models/etherBalance';
 
 jest.mock('../../store/models/etherBalance');
 

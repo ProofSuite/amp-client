@@ -1,11 +1,11 @@
 // @flow
-import type { Store as ReduxStore, Dispatch as ReduxDispatch } from 'redux';
-import type { SignerState, SignerSettingsAction, SignerEvent } from './signer';
-import type { EtherBalanceState, EtherBalanceAction, EtherBalanceEvent } from './etherBalance';
-import type { AccountBalancesState, AccountBalancesEvent, AccountBalancesAction } from './accountBalances';
-import type { EtherTxState, EtherTxAction, EtherTxEvent } from './etherTx';
+import type { Dispatch as ReduxDispatch, Store as ReduxStore } from 'redux';
+import type { SignerEvent, SignerSettingsAction, SignerState } from './signer';
+import type { EtherBalanceAction, EtherBalanceEvent, EtherBalanceState } from './etherBalance';
+import type { AccountBalancesAction, AccountBalancesEvent, AccountBalancesState } from './accountBalances';
+import type { EtherTxAction, EtherTxEvent, EtherTxState } from './etherTx';
 import type { OHLCVState } from './ohlcv';
-import type { OrderBookState } from './orderBook';
+import type { OrderBookProps } from './orderBook';
 import type { TradingState } from './tradingPage';
 import type { TradeHistoryState } from './tradeHistory';
 import type { DepthChartState } from './depthChart';
@@ -15,9 +15,9 @@ import type { TokenState, TokenPairState, TokenAction, TokenEvent, TokenPairEven
 import type { AccountState, AccountAction, AccountEvent } from './account';
 import type { LoginPageState, LoginPageAction, LoginPageEvent } from './loginPage';
 import type { LogoutPageAction } from './logoutPage';
-import type { DepositFormState, DepositFormAction, DepositFormEvent } from './depositForm';
-import type { SettingsState, SettingsAction, SettingsEvent } from './settings';
-import type { WalletsState, WalletsAction, WalletsEvent } from './wallets';
+import type { DepositFormAction, DepositFormEvent, DepositFormState } from './depositForm';
+import type { SettingsAction, SettingsEvent, SettingsState } from './settings';
+import type { WalletsAction, WalletsEvent, WalletsState } from './wallets';
 
 export type ReduxInitAction = { type: '@@INIT' };
 
@@ -59,11 +59,11 @@ export type State = {
   accountBalances: AccountBalancesState,
   etherTx: EtherTxState,
   ohlcv: OHLCVState,
-  orderBook: OrderBookState,
-  tradeHistory: TradeHistoryState,
-  orderHistory: OrderHistoryState,
-  orderForm: OrderFormState,
-  depthChart: DepthChartState,
+  orderBook: OrderBookProps,
+  tradeHistory: TradeHistoryProps,
+  orderHistory: OrderHistoryProps,
+  orderForm: OrderFormProps,
+  depthChart: DepthChartProps,
   etherTx: EtherTxState,
   tokens: TokenState,
   tokenPairs: TokenPairState,

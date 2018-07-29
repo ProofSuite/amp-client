@@ -67,7 +67,7 @@
     }
     .menu {
       .pt-popover-target {
-        button{
+        button {
           width: 100%;
         }
       }
@@ -113,13 +113,14 @@
     }
   }
 }
+
 .chart-overlay {
   //width: 95%;
   //margin: 50px;
   .pt-card {
     height: 100%;
   }
-  .main-chart{
+  .main-chart {
     .chart-container {
       height: 90%;
       overflow-y: scroll;

@@ -1,29 +1,15 @@
 //@flow
 
-export type OrderFormState = {
+export type OrderFormProps = {
   formName: string,
   askPrice: number,
   bidPrice: number,
   totalQuoteBalance: number,
   totalBaseBalance: number,
-  loggedIn: boolean,
   baseToken: string,
   quoteToken: string,
-  decimals: number,
 };
-
-export type OrderFormRendererState = {
-  portion: number,
-  priceType: string,
-  selectedTabId: string,
-  price: number,
-  stopPrice: number,
-  limitPrice: number,
-  amount: number,
-  total: number,
-};
-
-export type FormTypes = {
+export type FormProps = {
   state: Object,
   quoteToken: string,
   baseToken: string,
@@ -32,7 +18,7 @@ export type FormTypes = {
   formName: string,
 };
 
-export type InputFieldsTypes = {
+export type InputFieldsProps = {
   props: Object,
   quoteToken: string,
   baseToken: string,

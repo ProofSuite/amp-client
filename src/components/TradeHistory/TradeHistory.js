@@ -2,10 +2,8 @@ import React from 'react';
 import TradeHistoryRenderer from './TradeHistoryRenderer';
 import { Button, Card, Tab, Tabs } from '@blueprintjs/core';
 import { sortArray } from '../../utils/helpers';
+import type Props from '../../types/tradeHistory';
 
-type Props = {
-  tradeHistory: Array<Object>,
-};
 type State = {
   selectedTabId: string,
 };

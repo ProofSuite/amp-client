@@ -2,16 +2,16 @@
 import React from 'react';
 import Download from '@axetroy/react-download';
 import {
+  Button,
+  Checkbox,
   ControlGroup,
+  Dialog,
   FormGroup,
+  Icon,
   InputGroup,
+  Intent,
   Label,
   ProgressBar,
-  Intent,
-  Icon,
-  Button,
-  Dialog,
-  Checkbox,
 } from '@blueprintjs/core';
 import Steps from 'rc-steps';
 import styled from 'styled-components';

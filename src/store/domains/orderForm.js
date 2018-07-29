@@ -1,7 +1,7 @@
 // @flow
-import type { OrderFormState } from '../../types/orderForm';
+import type OrderFormProps from '../../types/orderForm';
 
-const initialState: OrderFormState = {
+const initialState: OrderFormProps = {
   askPrice: 0,
   bidPrice: 0,
   totalQuoteBalance: 0,
@@ -12,12 +12,12 @@ const initialState: OrderFormState = {
 };
 
 export const initialized = () => {
-  const event = (state: OrderFormState = initialState) => state;
+  const event = (state: OrderFormProps = initialState) => state;
   return event;
 };
 
-export const dataSaved = (data: OrderFormState) => {
-  const event = (state: OrderFormState) => ({
+export const dataSaved = (data: OrderFormProps) => {
+  const event = (state: OrderFormProps) => ({
     ...state,
     askPrice: data.askPrice,
     bidPrice: data.bidPrice,
@@ -30,15 +30,15 @@ export const dataSaved = (data: OrderFormState) => {
   return event;
 };
 
-export const buyLimit = (data: OrderFormState) => {
-  const event = (state: OrderFormState) => ({
+export const buyLimit = (data: OrderFormProps) => {
+  const event = (state: OrderFormProps) => ({
     ...state,
     loading: false,
   });
   return event;
 };
 
-export default function model(state: OrderFormState) {
+export default function model(state: OrderFormProps) {
   return {
     getState: () => state,
     getAskPrice: () => state.askPrice,

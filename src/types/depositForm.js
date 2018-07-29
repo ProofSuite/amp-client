@@ -1,4 +1,4 @@
-import { TxStatus, TxReceipt } from './common';
+import { TxReceipt, TxStatus } from './common';
 import { AccountBalance, AccountBalances } from './accountBalances';
 
 export type DepositFormState = {

@@ -1,6 +1,6 @@
 // @flow
 
-import type { AccountBalance, AccountAllowance, AccountAllowances, AccountBalances } from './accountBalances';
+import type { AccountAllowance, AccountAllowances, AccountBalance, AccountBalances } from './accountBalances';
 
 export type UpdateAccountBalanceAction = {
   type: 'walletPage/UPDATE_BALANCE',

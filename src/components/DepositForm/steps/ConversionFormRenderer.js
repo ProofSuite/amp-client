@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Callout, Checkbox, Slider, Button, Icon } from '@blueprintjs/core';
+import { Button, Callout, Checkbox, Icon, Slider } from '@blueprintjs/core';
 
 type Props = {
   step: 'waiting' | 'convert' | 'confirm',

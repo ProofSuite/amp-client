@@ -1,7 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
 import tradingPageModel, { loadData } from '../../store/models/tradingPage';
-import {} from '../../store/models/tradingPage';
 
 import type { State } from '../../types';
 

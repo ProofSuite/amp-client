@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Icon, Card, Tabs, Tab, InputGroup } from '@blueprintjs/core';
-import { RowSpcBtwn, ColEnd } from '../HTMLElements';
+import { ColumnEnd, RowSpaceBetween } from '../Common';
 import { Colors, Centered, Chevron, OverlaySpinner } from '../Common';
 import styled from 'styled-components';
 import Loading from '../Loading';
@@ -132,7 +132,7 @@ const Panel = (props: PanelProps) => {
       <Header onChangeFilterName={onChangeFilterName} filterName={filterName} sortOrder={sortOrder} />
       <ul className="list">
         {tokenPairs.map((token, index) => (
-          <Row
+          <TokenRow
             key={index}
             index={index}
             token={token}
@@ -146,14 +146,14 @@ const Panel = (props: PanelProps) => {
   );
 };
 
-type RowProps = {
+type TokenRowProps = {
   index: number,
   token: Token,
   updateFavorite: (string, boolean) => void,
   changeSelectedToken: Object => void,
 };
 
-const Row = ({ index, token, updateFavorite, changeSelectedToken }: RowProps) => {
+const TokenRow = ({ index, token, updateFavorite, changeSelectedToken }: TokenRowProps) => {
   const { favorited, lastPrice, change, base, pair } = token;
 
   return (
@@ -218,9 +218,9 @@ const SelectedCoin = ({ selectedToken }) => {
   const { pair, lastPrice, volume, high, low, base, quote } = selectedToken;
   return (
     <SelectedCoinCard>
-      <RowSpcBtwn>
+      <RowSpaceBetween>
         <TokenPair>{pair}</TokenPair>
-        <ColEnd>
+        <ColumnEnd>
           <p className="lastPrice">
             Last Price: {lastPrice}/{quote}
           </p>
@@ -233,8 +233,8 @@ const SelectedCoin = ({ selectedToken }) => {
             <span className="label">Low: </span>
             {low}
           </p>
-        </ColEnd>
-      </RowSpcBtwn>
+        </ColumnEnd>
+      </RowSpaceBetween>
     </SelectedCoinCard>
   );
 };

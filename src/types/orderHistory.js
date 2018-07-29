@@ -6,8 +6,24 @@ export type Order = {
   price: number,
 };
 
-export type OrderHistoryState = {
+export type OrderHistoryProps = {
+  orderHistory: Array<Order>,
+  userOrderHistory: Array<Order>,
+};
+
+export type Props = {
+  orderHistory: Array<Order>,
+  userOrderHistory: Array<Order>,
+};
+
+export type OrderHistoryListContainerProps = {
+  selectedTabId: string,
+  onChange: string => void,
+  authenticated: boolean,
   orderHistory: Array<Object>,
   userOrderHistory: Array<Object>,
-  authenticated: boolean,
+};
+
+export type OrderHistoryTableProps = {
+  orderHistory: Array<Order>,
 };

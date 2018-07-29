@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text } from '@storybook/addon-knobs/react';
+import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { loginWithWallet } from '../../store/models/loginPage';
 import { action } from '@storybook/addon-actions';

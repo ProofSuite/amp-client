@@ -1,4 +1,5 @@
-import accountDomain, * as eventCreators from './account';
+import accountDomain from './account';
+import * as eventCreators from './account';
 
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);

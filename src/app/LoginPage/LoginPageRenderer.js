@@ -1,11 +1,11 @@
 import React from 'react';
 import { defineMessages, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Card, Callout, Spinner, Tag, Intent } from '@blueprintjs/core';
+import { Callout, Card, Intent, Spinner, Tag } from '@blueprintjs/core';
 import WalletLoginForm from '../../components/WalletLoginForm';
 import MetamaskIcon from '../../components/Icons/Metamask';
 import KeyIcon from '../../components/Icons/Key';
-import { Centered, LargeText, Divider } from '../../components/Common';
+import { Centered, Divider, LargeText } from '../../components/Common';
 
 import type { CreateWalletParams } from '../../types/createWallet';
 

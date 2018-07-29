@@ -1,5 +1,5 @@
 ```js
-import OrderForm from '../../components/OrderForm';
+import OrderForm from '../../components/OrderFormRenderer';
 ```
 
 #### Properties

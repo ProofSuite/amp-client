@@ -1,4 +1,4 @@
-import { providers, Wallet } from 'ethers';
+import { providers } from 'ethers';
 import * as signerService from './signer';
 
 jest.mock('ethers');

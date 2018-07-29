@@ -1,3 +1,4 @@
+import type { Node } from 'react';
 // @flow
 import React from 'react';
 import { IntlProvider } from 'react-intl';
@@ -5,18 +6,16 @@ import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   Alignment,
+  Button,
+  Menu,
+  MenuDivider,
   Navbar,
   NavbarDivider,
   NavbarGroup,
   NavbarHeading,
-  Button,
-  Menu,
-  MenuDivider,
   Popover,
   Position,
 } from '@blueprintjs/core';
-
-import type { Node } from 'react';
 
 type Props = {
   children?: Node,

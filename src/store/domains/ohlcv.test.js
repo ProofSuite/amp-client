@@ -1,4 +1,5 @@
-import model, * as eventCreators from './ohlcv';
+import model from './ohlcv';
+import * as eventCreators from './ohlcv';
 
 function getModel(events) {
   const state = events.reduce((state, event) => event(state), undefined);

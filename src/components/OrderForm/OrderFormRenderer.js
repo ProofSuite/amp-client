@@ -1,12 +1,9 @@
 // @flow
 import React from 'react';
-import { Button, FormGroup } from '@blueprintjs/core';
-import type { FormTypes, InputFieldsTypes } from '../../types/orderForm';
+import { Button, FormGroup, InputGroup } from '@blueprintjs/core';
+import type { FormProps, InputFieldsProps } from '../../types/orderForm';
 
-type FromTypes = FormTypes;
-type InputFields = InputFieldsTypes;
-
-const Form = (props: FromTypes) => {
+const OrderFormRenderer = (props: FormProps) => {
   const { state, quoteToken, onInputChange, loggedIn, formName, baseToken } = props;
   return (
     <div>
@@ -24,37 +21,31 @@ const Form = (props: FromTypes) => {
   );
 };
 
-export default Form;
+export default OrderFormRenderer;
 
-const LimitForm = (fieldsProps: InputFields) => {
+const LimitForm = (fieldsProps: InputFieldsProps) => {
   const { props, quoteToken, baseToken, onInputChange } = fieldsProps;
   return (
     <div className="column">
       <FormGroup label="Price" labelFor="text-input" required={true}>
-        <input
-          id="text-input"
+        <InputGroup
           name="price"
           onChange={evt => onInputChange({ evt, target: 'price' })}
           value={props.price}
           min="0"
-          className="pt-input"
           type="number"
-          placeholder="Input group"
-          dir="auto"
+          placeholder={'Price ' + { quoteToken }}
         />
         <span className="curr-name">{baseToken}</span>
       </FormGroup>
       <FormGroup label="Amount" labelFor="text-input" required={true}>
-        <input
-          id="text-input"
+        <InputGroup
           onKeyPress={() => onInputChange({ target: 'radio' })}
           onChange={evt => onInputChange({ evt, target: 'amount' })}
           value={props.amount}
           min="0"
-          className="pt-input"
           type="number"
-          placeholder="Input group"
-          dir="auto"
+          placeholder={'Amount ' + { quoteToken }}
         />
         <span className="curr-name">{quoteToken}</span>
       </FormGroup>
@@ -99,16 +90,13 @@ const LimitForm = (fieldsProps: InputFields) => {
         </div>
       </FormGroup>
       <FormGroup label="Total" labelFor="text-input" required={true}>
-        <input
-          id="text-input"
+        <InputGroup
           onKeyPress={() => onInputChange({ target: 'radio' })}
           onChange={evt => onInputChange({ evt, target: 'total' })}
           value={props.total}
           min="0"
-          className="pt-input"
           type="number"
-          placeholder="Input group"
-          dir="auto"
+          placeholder={'Total ' + { baseToken }}
         />
         <span className="curr-name">{baseToken}</span>
       </FormGroup>
@@ -116,7 +104,7 @@ const LimitForm = (fieldsProps: InputFields) => {
   );
 };
 
-const StopLimitForm = (fieldsProps: InputFields) => {
+const StopLimitForm = (fieldsProps: InputFieldsProps) => {
   const { props, quoteToken, baseToken, onInputChange } = fieldsProps;
   return (
     <div className="column">

@@ -1,7 +1,8 @@
 import createStore from '../../store/configureStore';
 import * as signerService from '../services/signer';
 
-import getSignerSettingsSelector, * as actionCreators from './signerSettings';
+import getSignerSettingsSelector from './signerSettings';
+import * as actionCreators from './signerSettings';
 import { getAccountDomain } from '../domains';
 
 jest.mock('../services/signer');

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import loginPageSelector, { loginWithWallet, loginWithMetamask } from '../../store/models/loginPage';
+import loginPageSelector, { loginWithMetamask, loginWithWallet } from '../../store/models/loginPage';
 
 export function mapStateToProps(state, props) {
   const selector = loginPageSelector(state);

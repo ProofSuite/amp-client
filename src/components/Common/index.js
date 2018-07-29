@@ -7,5 +7,8 @@ export { default as Heading } from './Heading';
 export { default as CenteredSpinner } from './CenteredSpinner';
 export { default as OverlaySpinner } from './OverlaySpinner';
 export { default as Text, EmphasizeText, LargeText } from './Text';
+export { default as RowCenter, RowSpaceAround, RowSpaceBetween } from './Row';
+export { default as ColumnEnd } from './Column';
+export { default as Loading } from './Loading';
 export { default as Collapse } from './Collapse';
 export { default as CollapseRight } from './CollapseRight';

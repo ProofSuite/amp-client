@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
-import connect, { mapStateToProps, mapDispatchToProps } from './connect';
-import getDepositFormModel, * as depositFormActionCreators from '../../store/models/depositForm';
+import connect, { mapStateToProps } from './connect';
+import getDepositFormModel from '../../store/models/depositForm';
 
 jest.mock('../../store/models/tokens');
 jest.mock('../../store/models/depositForm');
