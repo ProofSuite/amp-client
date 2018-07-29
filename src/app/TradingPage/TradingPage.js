@@ -6,7 +6,6 @@ import OHLCV from '../../components/OHLCV';
 import OrderBook from '../../components/OrderBook';
 import OrderHistory from '../../components/OrderHistory';
 import OrderForm from '../../components/OrderForm';
-import CoinSearcher from '../../components/CoinSearcher';
 import TradeHistory from '../../components/TradeHistory';
 import DepthChart from '../../components/DepthChart';
 import TokenSearcher from '../../components/TokenSearcher';
@@ -125,21 +124,21 @@ export default class TradingPage extends React.PureComponent<Props> {
     } = this;
     return (
       <div className="trading-page">
-{/*<<<<<<< HEAD*/}
+        {/*<<<<<<< HEAD*/}
         <div style={{ width: '22%' }} className="column">
           <Box m={1} p={1}>
             <TokenSearcher />
           </Box>
           <OrderForm />
           <OrderForm />
-{/*=======*/}
-        {/*<div*/}
+          {/*=======*/}
+          {/*<div*/}
           {/*className={*/}
-            {/*showLeft ? 'column coin-searcher-order-form left-side' : 'column coin-searcher-order-form hidden-side'*/}
+          {/*showLeft ? 'column coin-searcher-order-form left-side' : 'column coin-searcher-order-form hidden-side'*/}
           {/*}*/}
-        {/*>*/}
+          {/*>*/}
           {/*<Collapse showLeft={showLeft} />*/}
-{/*>>>>>>> completed layout for trading page*/}
+          {/*>>>>>>> completed layout for trading page*/}
         </div>
         <div className={'middle-container ' + middleWidth}>
           <OHLCV toggleRight={toggleRight} toggleLeft={toggleLeft} showRight={showRight} showLeft={showLeft} />

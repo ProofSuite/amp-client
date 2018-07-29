@@ -1,6 +1,6 @@
 import React from 'react';
 import OrderForm from '../OrderForm';
-import CoinSearcher from '../CoinSearcher';
+// import CoinSearcher from '../CoinSearcher';
 
 class Collapse extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class Collapse extends React.Component {
       <div className="wrap-collabsible">
         <div className={this.props.showLeft ? 'collapsible-content open' : 'collapsible-content'}>
           <div className="content-inner">
-            <CoinSearcher small={true} />
+            {/*<CoinSearcher small={true} />*/}
             <OrderForm />
             <OrderForm />
           </div>
