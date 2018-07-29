@@ -1,6 +1,6 @@
 import React from 'react';
 import Chart from './Chart';
-import Loading from '../Loading';
+import { Loading } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 
 export default class ChartLoadingScreen extends React.Component {

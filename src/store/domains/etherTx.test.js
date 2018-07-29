@@ -1,4 +1,5 @@
-import getEtherTxDomain, * as eventCreators from './etherTx';
+import getEtherTxDomain from './etherTx';
+import * as eventCreators from './etherTx';
 import { mockHash, mockReceipt } from '../../mockData';
 
 function getDomain(events) {

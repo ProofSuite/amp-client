@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const ColCenter = styled.div`
+export default styled.div`
   display: flex;
   flex-direction: column;
 `;
-export const ColEnd = styled.div`
+export const ColumnEnd = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `;
-export const ColSpcArnd = styled.div`
+export const ColumnSpaceAround = styled.div`
   display: flex;
   flex-direction: column;
 `;

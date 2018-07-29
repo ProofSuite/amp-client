@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import layoutSelector, * as actionCreators from '../../store/models/layout';
+import layoutSelector from '../../store/models/layout';
+import * as actionCreators from '../../store/models/layout';
 
 export function mapStateToProps(state, props) {
   const selector = layoutSelector(state);

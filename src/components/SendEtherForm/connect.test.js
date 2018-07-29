@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
-import connect, { mapStateToProps, mapDispatchToProps } from './connect';
-import etherTxModel, * as actionCreators from '../../store/models/etherTx';
+import connect, { mapStateToProps } from './connect';
+import etherTxModel from '../../store/models/etherTx';
 
 jest.mock('../../store/models/etherTx');
 

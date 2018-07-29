@@ -2,7 +2,7 @@
 import * as actionCreators from '../actions/loginPage';
 import { getAccountDomain, getLoginPageDomain } from '../domains';
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
-import { createMetamaskSigner, createLocalWalletSigner } from '../services/signer';
+import { createLocalWalletSigner, createMetamaskSigner } from '../services/signer';
 
 import type { State, ThunkAction } from '../../types';
 

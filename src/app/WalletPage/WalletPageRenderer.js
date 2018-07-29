@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Callout, Spinner } from '@blueprintjs/core';
+import { Card } from '@blueprintjs/core';
 import CenteredSpinner from '../../components/Common/CenteredSpinner';
 
 import DepositTable from '../../components/DepositTable';

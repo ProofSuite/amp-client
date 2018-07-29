@@ -1,6 +1,7 @@
 import createStore from '../../store/configureStore';
 import * as ether from '../services/ether';
-import getEtherBalanceModel, * as actionCreators from './etherBalance';
+import getEtherBalanceModel from './etherBalance';
+import * as actionCreators from './etherBalance';
 
 jest.mock('../services/ether');
 

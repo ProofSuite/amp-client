@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import NetworkSelect from '../NetworkSelect/NetworkSelect';
-import { Card, Radio, RadioGroup, Button, InputGroup, Label, Callout } from '@blueprintjs/core';
+import { Button, Callout, Card, InputGroup, Label, Radio, RadioGroup } from '@blueprintjs/core';
 
 import type { SignerSettings } from '../../types/signer';
 

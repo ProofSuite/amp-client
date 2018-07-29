@@ -1,10 +1,10 @@
 // @flow
 import { connect } from 'react-redux';
 import etherTxModel, {
-  validateEtherTx,
   sendEtherTx,
-  validateTransferTokensTx,
   sendTransferTokensTx,
+  validateEtherTx,
+  validateTransferTokensTx,
 } from '../../store/models/etherTx';
 
 import type { State } from '../../types';

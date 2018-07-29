@@ -1,6 +1,5 @@
 // @flow
 import type { SignerSettings, SignerState } from '../../types/signer';
-import type { State } from '../../types';
 
 const initialState = {
   loading: false,

@@ -2,20 +2,20 @@ import React from 'react';
 import README from './README.md';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text } from '@storybook/addon-knobs/react';
+import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { Card } from '@blueprintjs/core';
 
 import { tokens } from '../../data';
 import configureStore from '../../store/configureStore';
 import {
-  mockTxReceipt,
-  mockTxReceipt2,
+  mockAddress,
   mockFailedTxReceipt,
   mockFailedTxReceipt2,
   mockHash,
   mockHash2,
-  mockAddress,
+  mockTxReceipt,
+  mockTxReceipt2,
 } from '../../mockData';
 
 import DepositFormContainer from './index.js';

@@ -1,4 +1,5 @@
-import getLoginPageDomain, * as eventCreators from './loginPage';
+import getLoginPageDomain from './loginPage';
+import * as eventCreators from './loginPage';
 
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);

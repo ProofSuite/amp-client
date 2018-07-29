@@ -1,4 +1,5 @@
-import getWalletDomain, * as eventCreators from './wallets';
+import getWalletDomain from './wallets';
+import * as eventCreators from './wallets';
 import { mockSerializedWallet, mockSerializedWalletAddress } from '../../mockData';
 
 function getDomain(events) {

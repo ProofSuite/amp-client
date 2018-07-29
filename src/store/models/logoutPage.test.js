@@ -1,5 +1,6 @@
 import createStore from '../../store/configureStore';
-import logoutPageSelector, * as actionCreators from './logoutPage';
+import logoutPageSelector from './logoutPage';
+import * as actionCreators from './logoutPage';
 
 let unsubscribe = jest.fn();
 let selector;

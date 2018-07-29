@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import getEtherBalance, * as etherBalanceActionCreators from '../../store/models/etherBalance';
+import getEtherBalance from '../../store/models/etherBalance';
+import * as etherBalanceActionCreators from '../../store/models/etherBalance';
 
 export function mapStateToProps(state, props) {
   const etherBalance = getEtherBalance(state);

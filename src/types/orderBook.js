@@ -1,14 +1,19 @@
 //@flow
 
-export type OrderBookState = {
-  +loading: boolean,
-  +decimals: number,
+type Props = {
   +sellOrderList: Array<Object>,
   +buyOrderList: Array<Object>,
   +quoteToken: string,
   +baseToken: string,
 };
-export type OrderListTypes = {
+export type OrderBookProps = {
+  +sellOrderList: Array<Object>,
+  +buyOrderList: Array<Object>,
+  +quoteToken: string,
+  +baseToken: string,
+};
+
+export type OrderListPropsTypes = {
   orderList: Array<Object>,
   bookName: string,
   loading: boolean,
@@ -17,8 +22,10 @@ export type OrderListTypes = {
   decimals: number,
 };
 
-export type SingleOrderTypes = {
+export type SingleOrderPropsTypes = {
   order: Object,
   index: number,
   decimals: number,
 };
+
+export default Props;

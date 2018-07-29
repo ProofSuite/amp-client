@@ -2,7 +2,7 @@ import createStore from '../../store/configureStore';
 import * as accountBalancesService from '../services/accountBalances';
 
 import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains';
-import walletPageSelector, * as actionCreators from './walletPage';
+import * as actionCreators from './walletPage';
 
 jest.mock('../services/accountBalances');
 jest.mock('../services/signer');

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, ControlGroup, Spinner, Callout } from '@blueprintjs/core';
+import { Button, Callout, ControlGroup, Spinner } from '@blueprintjs/core';
 import TokenSuggest from '../../TokenSuggest';
 
 const WaitingFormRenderer = (props: Props) => {

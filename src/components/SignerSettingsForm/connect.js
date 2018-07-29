@@ -1,8 +1,9 @@
 // @flow
 import { connect } from 'react-redux';
-import getSignerSettingsModel, * as actionCreators from '../../store/models/signerSettings';
+import getSignerSettingsModel from '../../store/models/signerSettings';
+import * as actionCreators from '../../store/models/signerSettings';
 
-import type { State, Dispatch } from '../../types';
+import type { Dispatch, State } from '../../types';
 import type { UpdateSignerParams } from '../../types/signer';
 
 export function mapStateToProps(state: State) {

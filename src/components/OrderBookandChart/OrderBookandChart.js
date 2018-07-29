@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
-import { Card, Tab, Tabs, Button } from '@blueprintjs/core';
+import { Card, Tab, Tabs } from '@blueprintjs/core';
 import OrderBook from '../OrderBook';
 import DepthChart from '../DepthChart';
-import { RowSpcBtwn } from '../HTMLElements';
 
 class OrderBookandChart extends React.PureComponent {
   state = {
@@ -15,7 +14,6 @@ class OrderBookandChart extends React.PureComponent {
 
   render() {
     const {
-      props: { toggleOrderBook },
       state: { selectedTabId },
       changeTab,
     } = this;

@@ -2,10 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import { Provider } from 'react-redux';
-import TokenSearcher from './TokenSearcher';
 import ConnectedTokenSearcher from './index.js';
-import configureStore from '../../store/configureStore';
 import * as README from './README.md';
 
 storiesOf('TokenSearcher', module)
