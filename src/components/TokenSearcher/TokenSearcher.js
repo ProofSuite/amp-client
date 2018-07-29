@@ -99,7 +99,6 @@ class TokenSearcher extends React.PureComponent<Props, State> {
       });
 
       result['favorites'] = result['favorites'].concat(tokenPairsByQuoteToken[quote].filter(pair => pair.favorited));
-
       result[quote] = sortTable(result[quote], filterName, sortOrder);
     }
 
@@ -107,7 +106,6 @@ class TokenSearcher extends React.PureComponent<Props, State> {
   };
 
   changeSelectedToken = (token: Token) => {
-    console.log(token);
     this.setState({ selectedToken: token });
   };
 
@@ -125,7 +123,6 @@ class TokenSearcher extends React.PureComponent<Props, State> {
     const filteredPairs = this.filterTokens();
 
     //Temporary loading condition
-
     let loading = typeof selectedToken === 'undefined';
 
     return (
