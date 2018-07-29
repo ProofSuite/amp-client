@@ -1,65 +1,39 @@
+//@flow
 import { quoteTokens } from '../../config/quotes';
-import { tokens } from '../../data';
-import type { TokenPairState } from '../../types/tokens';
+import { tokens } from '../../config/tokens';
+import { parseJSONToFixed } from '../../utils/parsers';
+import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tokens';
 
-const getPairSymbol = (baseTokenSymbol, quoteTokenSymbol) => {
-  return `${baseTokenSymbol}_${quoteTokenSymbol}`;
+import type { Token, TokenPairState, TokenPairDataMap } from '../../types/tokens';
+
+const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens);
+
+const defaultInitialState = {
+  byPair: defaultTokenPairs,
+  data: {},
+  favorites: [],
 };
 
-const getBaseToken = pairSymbol => {
-  return pairSymbol.split('_')[0];
-};
-
-const getQuoteToken = pairSymbol => {
-  return pairSymbol.split('_')[1];
-};
-
-const createInitialState = (quoteTokens, tokens) => {
-  let pairs = [];
-  let byPair = {};
-
-  tokens.forEach(token => {
-    if (token.symbol === 'ETH') return;
-    quoteTokens.forEach(quoteToken => {
-      if (token.symbol !== quoteToken.symbol) {
-        let pairSymbol = getPairSymbol(token.symbol, quoteToken.symbol);
-        pairs.push(pairSymbol);
-        byPair[pairSymbol] = {
-          pair: pairSymbol,
-          baseTokenSymbol: token.symbol,
-          quoteTokenSymbol: quoteToken.symbol,
-          baseTokenAddress: token.address,
-          quoteTokenAddress: quoteToken.address,
-        };
-      }
-    });
-  });
-
-  return {
-    pairs,
-    byPair,
-  };
-};
-
-const initialState = createInitialState(quoteTokens, tokens);
-
-export const initialized = () => {
+//By default the application is started with a default create from tokens in a configuration file. To
+//create a tokenpair domain with less tokens, the initialized function can be called with a custom initial
+//token pair state (that can be created with the createInitialState function).
+export const initialized = (customInitialState?: Object) => {
+  let initialState = customInitialState || defaultInitialState;
   const event = (state: TokenPairState = initialState) => state;
   return event;
 };
 
-export const tokenPairUpdated = baseToken => {
+export const tokenPairUpdated = (baseToken: Token) => {
   const event = (state: TokenPairState) => {
     if (baseToken.symbol === 'ETH') return;
     let newState = quoteTokens.reduce(
       (result, quoteToken) => {
         if (quoteToken.symbol === baseToken.symbol) return result;
-        if (state.pairs.indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) {
+        if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) {
           return result;
         }
 
         let pairSymbol = getPairSymbol(baseToken.symbol, quoteToken.symbol);
-        result.pairs = [...result.pairs, pairSymbol];
         result.byPair[pairSymbol] = {
           pair: pairSymbol,
           baseTokenSymbol: baseToken.symbol,
@@ -69,11 +43,11 @@ export const tokenPairUpdated = baseToken => {
         };
         return result;
       },
-      { pairs: [], byPair: {} }
+      { byPair: {} }
     );
 
     return {
-      pairs: [...state.pairs, ...newState.pairs],
+      ...state,
       byPair: { ...state.byPair, ...newState.byPair },
     };
   };
@@ -81,9 +55,8 @@ export const tokenPairUpdated = baseToken => {
   return event;
 };
 
-export const tokenPairRemoved = baseToken => {
+export const tokenPairRemoved = (baseToken: Token) => {
   const event = (state: TokenPairState) => {
-    let newPairs = state.pairs.filter(elem => getBaseToken(elem) !== baseToken.symbol);
     let newByPair = Object.keys(state.byPair)
       .filter(key => getBaseToken(key) !== baseToken.symbol)
       .reduce((result, current) => {
@@ -92,8 +65,40 @@ export const tokenPairRemoved = baseToken => {
       }, {});
 
     return {
-      pairs: newPairs,
       byPair: newByPair,
+    };
+  };
+
+  return event;
+};
+
+export const tokenPairDataUpdated = (tokenPairData: TokenPairDataMap) => {
+  const event = (state: TokenPairDataMap) => {
+    let newState = {
+      ...state,
+      data: {
+        ...state.data,
+        ...tokenPairData,
+      },
+    };
+
+    return newState;
+  };
+
+  return event;
+};
+
+export const tokenPairFavorited = (tokenPair: string, favorited: boolean) => {
+  const event = (state: TokenPairState) => {
+    let newState;
+
+    favorited
+      ? (newState = [...state.favorites, tokenPair])
+      : (newState = state.favorites.filter(elem => elem !== tokenPair));
+
+    return {
+      ...state,
+      favorites: newState,
     };
   };
 
@@ -102,7 +107,10 @@ export const tokenPairRemoved = baseToken => {
 
 export default function getTokenPairsDomain(state: TokenPairState) {
   return {
-    getPairs: () => state.pairs,
-    getPairsBySymbol: () => state.byPair,
+    getPairs: (): any => Object.keys(state.byPair),
+    getPairsByCode: () => state.byPair,
+    getTokenPairsData: () => state.data,
+    getTokenPairsDataArray: () => Object.values(state.data),
+    getFavoritePairs: () => state.favorites,
   };
 }

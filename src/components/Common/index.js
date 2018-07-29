@@ -1,4 +1,5 @@
 export { default as Box } from './Box';
+export { default as Chevron } from './Chevron';
 export { default as Centered } from './Centered';
 export { default as Colors } from './Colors';
 export { default as Divider } from './Divider';
