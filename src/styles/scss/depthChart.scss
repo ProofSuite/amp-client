@@ -1,11 +1,13 @@
 @import "vars";
 
 .depth-chart-container {
+  height: 100%;
+  background-color: #31404c;
+  padding: 20px;
   margin: 0px -20px 0px -15px;
   .depth-chart {
     width: 100%;
     svg {
-      background: $secondary;
       g {
         path {
           stroke-width: 1;
@@ -24,7 +26,6 @@
       }
       g:hover > rect, g:hover > image, g:hover > text {
         background: red;
-
       }
     }
     a {
@@ -33,10 +34,7 @@
   }
 }
 
-.depth-chart-container.loading {
-  height: 500px;
-  background-color: #31404c;
-  padding: 20px;
+.depth-chart-container {
   .loading-overlay {
     height: 100%;
   }

@@ -1,28 +1,28 @@
-import type Props from '../../types/orderHistory';
+import type { OrderHistoryState } from '../../types/orderHistory';
 
 const initialState: Props = {
   orderHistory: [{}],
   userOrderHistory: [{}],
-  authenticated: false,
 };
 
 export const initialized = () => {
-  const event = (state: Props = initialState) => state;
+  const event = (state: OrderHistoryState = initialState) => state;
   return event;
 };
 
-export const dataSaved = (data: Props) => {
-  const event = (state: Props) => ({
+export const dataSaved = (data: OrderHistoryState) => {
+  const event = (state: OrderHistoryState) => ({
     ...state,
     orderHistory: data.orderHistory,
     userOrderHistory: data.userOrderHistory,
-    authenticated: data.authenticated,
   });
   return event;
 };
 
-export default function model(state: Props) {
+export default function model(state: OrderHistoryState) {
   return {
     getState: () => state,
+    getOrderHistory: () => state.orderHistory,
+    getUserOrderHistory: () => state.userOrderHistory,
   };
 }

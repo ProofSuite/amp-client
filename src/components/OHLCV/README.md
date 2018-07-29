@@ -1,8 +1,8 @@
 ```js
-import OHLCVRenderer from '../../components/OHLCVRenderer';
+import OHLCV from '../../components/OHLCV';
 ```
 
 #### Example
 ```js
-<OHLCVRenderer />
+<OHLCV />
 ```

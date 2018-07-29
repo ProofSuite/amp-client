@@ -1,10 +1,9 @@
 // @flow
 import React from 'react';
 import { Icon, Card, Tabs, Tab, InputGroup } from '@blueprintjs/core';
-import { ColumnEnd, RowSpaceBetween } from '../Common';
+import { ColumnEnd, RowSpaceBetween, Loading } from '../Common';
 import { Colors, Centered, Chevron, OverlaySpinner } from '../Common';
 import styled from 'styled-components';
-import Loading from '../Loading';
 
 type Token = {
   pair: string,
@@ -60,7 +59,7 @@ const TokenSearchRenderer = (props: Props) => {
         <OverlaySpinner visible={loading} transparent />
       ) : (
         <div>
-          <SearchInput large onChange={onChangeSearchFilter} value={searchFilter} placeholder="Search ..." />
+          <SearchInput onChange={onChangeSearchFilter} value={searchFilter} placeholder="Search ..." />
           <SelectedCoin selectedToken={selectedToken} />
           <TokenSearchTabs selectedTabId={selectedTabId} onChange={changeTab}>
             <Tab
@@ -264,7 +263,7 @@ const TokenPair = styled.h4`
 `;
 
 const SearchInput = styled(InputGroup)`
-  width: 150px;
+  width: 100%;
   padding-bottom: 10px;
 `;
 

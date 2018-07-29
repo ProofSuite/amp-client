@@ -2,13 +2,13 @@ import React from 'react';
 import TradeHistoryRenderer from './TradeHistoryRenderer';
 import { Button, Card, Tab, Tabs } from '@blueprintjs/core';
 import { sortArray } from '../../utils/helpers';
-import type Props from '../../types/tradeHistory';
+import type { TradeHistoryState } from '../../types/tradeHistory';
 
 type State = {
   selectedTabId: string,
 };
 
-class TradeHistory extends React.PureComponent<Props, State> {
+class TradeHistory extends React.PureComponent<TradeHistoryState, State> {
   static defaultProps = { decimals: 5, loggedIn: true };
 
   state = {
@@ -27,13 +27,14 @@ class TradeHistory extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { tradeHistory, decimals, loggedIn },
+      props: { marketTradeHistory, userTradeHistory, decimals, loggedIn },
       state: { selectedTabId },
       changeTab,
       sortTradeHistory,
     } = this;
 
-    const sortedTradeHistory = sortTradeHistory(tradeHistory);
+    const sortedMarketTradeHistory = sortTradeHistory(marketTradeHistory);
+    const sortedUserTradeHistory = sortTradeHistory(userTradeHistory);
 
     return (
       <Card className="pt-dark trade-history">
@@ -42,13 +43,13 @@ class TradeHistory extends React.PureComponent<Props, State> {
           <Tab
             id="all"
             title="Market"
-            panel={<TradeHistoryRenderer tradeHistory={sortedTradeHistory} decimals={decimals} />}
+            panel={<TradeHistoryRenderer tradeHistory={sortedMarketTradeHistory} decimals={decimals} />}
           />
           <Tab
             id="mine"
             title="Mine"
             panel={
-              loggedIn ? <TradeHistoryRenderer tradeHistory={sortedTradeHistory} decimals={decimals} /> : <Login />
+              loggedIn ? <TradeHistoryRenderer tradeHistory={sortedUserTradeHistory} decimals={decimals} /> : <Login />
             }
           />
         </Tabs>

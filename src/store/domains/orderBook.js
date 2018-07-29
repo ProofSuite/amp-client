@@ -1,36 +1,35 @@
 // @flow
-import type Props from '../../types/orderBook';
+import type { OrderBookState } from '../../types/orderBook';
 
-const initialState: Props = {
-  sellOrderList: [{ price: 0, amount: 0 }],
-  buyOrderList: [{ price: 0, amount: 0 }],
+const initialState: OrderBookState = {
+  orderList: [{ price: 0, amount: 0, type: '' }],
   quoteToken: '',
   baseToken: '',
+  bookName: '',
 };
 
 export const initialized = () => {
-  const event = (state: Props = initialState) => state;
+  const event = (state: OrderBookState = initialState) => state;
   return event;
 };
 
-export const dataSaved = (data: Props) => {
-  console.log('OrderBook data: ', data);
-  const event = (state: Props) => ({
+export const dataSaved = (data: OrderBookState) => {
+  const event = (state: OrderBookState) => ({
     ...state,
-    sellOrderList: data.sellOrderList,
-    buyOrderList: data.buyOrderList,
+    orderList: data.orderList,
     quoteToken: data.quoteToken,
     baseToken: data.baseToken,
+    bookName: data.bookName,
   });
   return event;
 };
 
-export default function model(state: Props) {
+export default function model(state: OrderBookState) {
   return {
     getState: () => state,
-    getSellOrderList: () => state.sellOrderList,
-    getBuyOrderList: () => state.buyOrderList,
+    getOrderList: () => state.orderList,
     getQuoteToken: () => state.quoteToken,
     getBaseToken: () => state.baseToken,
+    getBookName: () => state.bookName,
   };
 }

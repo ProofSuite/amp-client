@@ -1,6 +1,5 @@
 //@flow
 import React from 'react';
-import { Card } from '@blueprintjs/core';
 import { Loading } from '../Common';
 import DepthChartRenderer from './DepthChartRenderer';
 var AmCharts = require('@amcharts/amcharts3-react');
@@ -36,13 +35,13 @@ class DepthChart extends React.Component<Props> {
 
   render() {
     const {
-      props: { loading, data, title },
+      props: { data, title },
       toolTip,
     } = this;
     return (
-      <div className={loading ? 'depth-chart-container loading' : 'depth-chart-container'}>
-        {loading && <Loading />}
-        {!loading && <DepthChartRenderer data={data} title={title} tootlTip={toolTip} />}
+      <div className="depth-chart-container pt-dark">
+        {data.length < 2 && <Loading />}
+        {data.length > 1 && <DepthChartRenderer data={data} title={title} tootlTip={toolTip} />}
       </div>
     );
   }

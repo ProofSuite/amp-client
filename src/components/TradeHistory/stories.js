@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
+import TradeHistoryContainer from './index';
 import TradeHistory from './TradeHistory';
 import README from './README.md';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
@@ -9,20 +10,16 @@ import * as tradeHistory from '../../jsons/tradeHistory.json';
 storiesOf('TradeHistory', module)
   .addDecorator(withKnobs)
   .add(
-    'Loading state',
-    withInfo({ text: README, source: false })(() => (
-      <TradeHistory tradeHistory={tradeHistory.list} loggedIn={true} loading={true} decimals={7} />
-    ))
+    'Connected Provider Settings',
+    withInfo({
+      text: README,
+      propTablesExclude: [TradeHistoryContainer],
+      source: false,
+    })(() => <TradeHistoryContainer />)
   )
   .add(
-    'Not LoggedIn',
+    'Data Loaded',
     withInfo({ text: README, source: false })(() => (
-      <TradeHistory tradeHistory={tradeHistory.list} loggedIn={false} loading={false} decimals={7} />
-    ))
-  )
-  .add(
-    'LoggedIn',
-    withInfo({ text: README, source: false })(() => (
-      <TradeHistory tradeHistory={tradeHistory.list} loading={false} loggedIn={true} decimals={7} />
+      <TradeHistory marketTradeHistory={tradeHistory.list} userTradeHistory={tradeHistory.list} />
     ))
   );

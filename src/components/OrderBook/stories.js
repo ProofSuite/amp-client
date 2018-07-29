@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
+import OrderBookContainer from './index';
 import OrderBook from './OrderBook';
 import README from './README.md';
 import * as orderList from '../../jsons/ordersList.json';
@@ -9,14 +10,22 @@ import * as orderList from '../../jsons/ordersList.json';
 storiesOf('OrderBook', module)
   .addDecorator(withKnobs)
   .add(
-    'Loading state',
+    'Connected Provider Settings',
+    withInfo({
+      text: README,
+      propTablesExclude: [OrderBookContainer],
+      source: false,
+    })(() => <OrderBookContainer />)
+  )
+  .add(
+    'Sell Order Book',
     withInfo({ text: README, source: false })(() => (
-      <OrderBook buyOrderList={[]} sellOrderList={[]} baseToken="ETH" quoteToken="USDT" />
+      <OrderBook orderList={orderList.list} bookName="Sell" baseToken="ETH" quoteToken="USDT" />
     ))
   )
   .add(
-    'Loaded',
+    'Buy Order Book',
     withInfo({ text: README, source: false })(() => (
-      <OrderBook buyOrderList={orderList.list} sellOrderList={orderList.list} baseToken="ETH" quoteToken="USDT" />
+      <OrderBook orderList={orderList.list} bookName="Buy" baseToken="ETH" quoteToken="USDT" />
     ))
   );

@@ -1,6 +1,6 @@
 //@flow
 
-export type OrderFormProps = {
+export type OrderFormState = {
   formName: string,
   askPrice: number,
   bidPrice: number,

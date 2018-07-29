@@ -2,16 +2,17 @@
 import React from 'react';
 import OrderHistoryRenderer from './OrderHistoryRenderer';
 import { reduceDecimals, toDate } from '../../utils/converters';
-import type Props from '../../types/orderHistory';
+import type { OrderHistoryState } from '../../types/orderHistory';
 import { sortArray } from '../../utils/helpers';
 
 type State = {
   selectedTabId: string,
 };
 
-class OrderHistory extends React.PureComponent<Props, State> {
+class OrderHistory extends React.PureComponent<OrderHistoryState, State> {
   static defaultProps = {
     decimals: 5,
+    authenticated: true,
   };
   state = { selectedTabId: 'all' };
 
