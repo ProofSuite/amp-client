@@ -20,7 +20,7 @@ class OrderBookandChart extends React.PureComponent {
       changeTab,
     } = this;
     return (
-      <Card className="pt-dark order-book-chart">
+      <Card className="order-book-chart">
         <h5>Order Book</h5>
         <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={changeTab}>
           <Tab id="list" title="Order List" panel={<OrderBook />} />
