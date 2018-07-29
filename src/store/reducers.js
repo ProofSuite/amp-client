@@ -20,6 +20,7 @@ import tradingPageActionTypes from './actions/tradingPage';
 import loginPageActionTypes from './actions/loginPage';
 import logoutPageActionTypes from './actions/logoutPage';
 import signerSettingsActionTypes from './actions/signerSettings';
+import appActionTypes from './actions/app';
 
 import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
@@ -39,6 +40,7 @@ import * as settingsEvents from './domains/settings';
 import * as tokenPairsEvents from './domains/tokenPairs';
 import * as signerEvents from './domains/signer';
 import * as walletsEvents from './domains/wallets';
+import * as notificationEvents from './domains/notifications';
 
 export const tradingPage = createReducer(action => {
   const { type } = action;
@@ -300,5 +302,17 @@ export const etherBalance = createReducer(action => {
       return etherBalanceEvents.updated(payload.address, payload.balance);
     default:
       return etherBalanceEvents.initialized();
+  }
+});
+
+export const notifications = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case appActionTypes.addNotification:
+      return notificationEvents.notificationAdded(payload.options);
+    case appActionTypes.removeNotification:
+      return notificationEvents.notificationRemoved(payload.id);
+    default:
+      return notificationEvents.initialized();
   }
 });
