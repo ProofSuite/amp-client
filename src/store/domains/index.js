@@ -16,6 +16,7 @@ import tokenPairsDomain from './tokenPairs';
 import tokenDomain from './tokens';
 import tradeHistoryDomain from './tradeHistory';
 import walletsDomain from './wallets';
+import notificationsDomain from './notifications';
 
 export const getAccountDomain = state => accountDomain(state.account);
 export const getAccountBalancesDomain = state => accountBalancesDomain(state.accountBalances);
@@ -35,3 +36,4 @@ export const getTokenPairsDomain = state => tokenPairsDomain(state.tokenPairs);
 export const getTokenDomain = state => tokenDomain(state.tokens);
 export const getTradeHistoryDomain = state => tradeHistoryDomain(state.tradeHistory);
 export const getWalletsDomain = state => walletsDomain(state.wallets);
+export const getNotificationsDomain = state => notificationsDomain(state.notifications);
