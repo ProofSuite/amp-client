@@ -7,3 +7,5 @@ export { default as Heading } from './Heading';
 export { default as CenteredSpinner } from './CenteredSpinner';
 export { default as OverlaySpinner } from './OverlaySpinner';
 export { default as Text, EmphasizeText, LargeText } from './Text';
+export { default as Collapse } from './Collapse';
+export { default as CollapseRight } from './CollapseRight';
