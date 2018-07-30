@@ -1,85 +1,91 @@
 //@flow
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Card, Colors, Tab, Tabs } from '@blueprintjs/core';
-import { Loading } from '../Common';
-import type { Order, OrderHistoryListContainerProps, OrderHistoryTableProps } from '../../types/orderHistory';
+import { Button, Card, Tab, Tabs } from '@blueprintjs/core';
+import { Colors, Loading } from '../Common';
 
-const OrderHistoryRenderer = (props: OrderHistoryListContainerProps) => {
-  const { selectedTabId, onChange, authenticated, orderHistory, userOrderHistory } = props;
+type Order = {
+  time: number,
+  type: string,
+  amount: number,
+  price: number,
+};
+
+type Props = {
+  selectedTabId: string,
+  onChange: string => void,
+  orderHistory: Array<Order>,
+  userOrderHistory: Array<Order>,
+};
+
+const OrderHistoryRenderer = (props: Props) => {
+  const { selectedTabId, onChange, orderHistory, userOrderHistory } = props;
   return (
-    <Card className="pt-dark trade-history order-history">
-      <h5>Order History</h5>
-      <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={onChange}>
-        <Tab
-          id="all"
-          title="Market"
-          panel={<OrderHistoryTable orderHistory={orderHistory} requireAuthentication={false} />}
-        />
-        <Tab
-          id="mine"
-          title="Mine"
-          panel={<OrderHistoryTable orderHistory={userOrderHistory} requireAuthentication={!authenticated} />}
-        />
+    <Card className="order-history">
+      <Heading>Order History</Heading>
+      <Tabs selectedTabId={selectedTabId} onChange={onChange}>
+        <Tab id="24h" title="24H" panel={<OrderHistoryTable orderHistory={orderHistory} />} />
+        <Tab id="all" title="All" panel={<OrderHistoryTable orderHistory={userOrderHistory} />} />
       </Tabs>
     </Card>
   );
 };
 
-const OrderHistoryTable = (props: OrderHistoryTableProps) => {
-  const { orderHistory, requireAuthentication } = props;
-  return requireAuthentication ? (
-    <Login />
-  ) : orderHistory.length < 2 ? (
-    <Loading />
-  ) : (
-    <OrderHistoryList orderHistory={orderHistory} />
-  );
+type OrderHistoryTableProps = {
+  orderHistory: Array<Order>,
 };
 
-const OrderHistoryList = (props: { orderHistory: Order }) => {
+const OrderHistoryTable = (props: OrderHistoryTableProps) => {
+  const { orderHistory } = props;
+  return orderHistory.length < 2 ? <Loading /> : <OrderList orderHistory={orderHistory} />;
+};
+
+const OrderList = (props: { orderHistory: Array<Order> }) => {
   const { orderHistory } = props;
   return (
     <div className="list-container">
-      <ul className="pt-list-unstyled heading">
+      <ul className="heading">
         <li className="heading">
-          <span className="index">#</span>
-          <span className="time">Time</span>
-          <span className="type">Type</span>
-          <span className="amount">Amount</span>
-          <span className="price">Price</span>
+          <HeaderCell />
+          <HeaderCell>Type</HeaderCell>
+          <HeaderCell>Amount</HeaderCell>
+          <HeaderCell>Price</HeaderCell>
+          <HeaderCell>Time</HeaderCell>
         </li>
       </ul>
-      <ul className="pt-list-unstyled list">
-        {orderHistory.map((order, index) => <Row key={index} order={order} index={index} />)}
+      <ul className="list">
+        {orderHistory.map((order, index) => <OrderRow key={index} order={order} index={index} />)}
       </ul>
     </div>
   );
 };
 
-const Row = (props: { order: Order, index: number }) => {
+const OrderRow = (props: { order: Order, index: number }) => {
   const { order, index } = props;
   return (
-    <li className="not-heading">
-      <span className="index">{index + 1}</span>
-      <span className="time">{order.time}</span>
-      {order.type === 'sell' ? <Sell>{order.type}</Sell> : <Buy>{order.type}</Buy>}
-      <span className="amount">{order.amount.toString()}</span>
-      <span className="price">{order.price.toString()}</span>
+    <li className="row">
+      <Cell>{index + 1}</Cell>
+      <Cell type={order.type}>{order.type}</Cell>
+      <Cell>{order.amount}</Cell>
+      <Cell>{order.price}</Cell>
+      <Cell>{order.time}</Cell>
     </li>
   );
 };
 
-const Sell = styled.span`
-  color: ${Colors.RED4};
-  min-width: 35px;
+const Heading = styled.h5`
+  padding-bottom: 5px;
+  text-align: left;
 `;
 
-const Buy = styled.span`
-  color: ${Colors.GREEN5};
+const Cell = styled.span`
+  color: ${props => (props.type === 'BUY' ? Colors.BUY : props.type === 'SELL' ? Colors.SELL : Colors.WHITE)}
   min-width: 35px;
+  width: 20%;
 `;
 
-const Login = () => <Button large={true} intent="primary" text="Login" />;
+const HeaderCell = styled.span`
+  width: 20%;
+`;
 
 export default OrderHistoryRenderer;

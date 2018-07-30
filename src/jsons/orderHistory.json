@@ -2,147 +2,147 @@
   "list": [
     {
       "time": 1434716463888,
-      "type": "buy",
+      "type": "BUY",
       "pair": "BTC/EOS",
       "amount": 6217.999,
       "price": 0.0078
     },
     {
       "time": 1528187849204,
-      "type": "buy",
+      "type": "BUY",
       "pair": "LTC/SNT",
       "amount": 883.1347,
       "price": 0.0066
     },
     {
       "time": 1421846107737,
-      "type": "buy",
+      "type": "BUY",
       "pair": "XRP/FUN",
       "amount": 6755.889,
       "price": 0.0021
     },
     {
       "time": 1505247547791,
-      "type": "buy",
+      "type": "BUY",
       "pair": "NEO/USDT",
       "amount": 6161.2093,
       "price": 0.0017
     },
     {
       "time": 1299320727897,
-      "type": "buy",
+      "type": "BUY",
       "pair": "XZC/XVG",
       "amount": 8877.257,
       "price": 0.0037
     },
     {
       "time": 1393549055130,
-      "type": "buy",
+      "type": "BUY",
       "pair": "ZEC/EMC",
       "amount": 5284.4299,
       "price": 0.0045
     },
     {
       "time": 1352101367757,
-      "type": "sell",
+      "type": "SELL",
       "pair": "GNT/SYS",
       "amount": 1383.9184,
       "price": 0.0027
     },
     {
       "time": 1355718331752,
-      "type": "sell",
+      "type": "SELL",
       "pair": "MKR/XLM",
       "amount": 5734.8947,
       "price": 0.0017
     },
     {
       "time": 1316802399125,
-      "type": "buy",
+      "type": "BUY",
       "pair": "KMD/BTS",
       "amount": 8139.3547,
       "price": 0.0075
     },
     {
       "time": 1325302456250,
-      "type": "sell",
+      "type": "SELL",
       "pair": "NANO/BCN",
       "amount": 1260.3571,
       "price": 0.0064
     },
     {
       "time": 1351025017120,
-      "type": "sell",
+      "type": "SELL",
       "pair": "ARK/XMR",
       "amount": 8585.6045,
       "price": 0.0017
     },
     {
       "time": 1382305792395,
-      "type": "buy",
+      "type": "BUY",
       "pair": "QTUM/MAID",
       "amount": 2711.8663,
       "price": 0.0008
     },
     {
       "time": 1330868985012,
-      "type": "buy",
+      "type": "BUY",
       "pair": "BAT/MONA",
       "amount": 5767.8055,
       "price": 0.0022
     },
     {
       "time": 1461254338895,
-      "type": "buy",
+      "type": "BUY",
       "pair": "AE/DASH",
       "amount": 6733.67,
       "price": 0.003
     },
     {
       "time": 1289443938633,
-      "type": "buy",
+      "type": "BUY",
       "pair": "VERI/RDD",
       "amount": 4120.0956,
       "price": 0.0091
     },
     {
       "time": 1459470656331,
-      "type": "buy",
+      "type": "BUY",
       "pair": "MIOTA/DGB",
       "amount": 1190.8305,
       "price": 0.0074
     },
     {
       "time": 1514052900415,
-      "type": "buy",
+      "type": "BUY",
       "pair": "BNT/DOGE",
       "amount": 4911.3692,
       "price": 0.0077
     },
     {
       "time": 1524687231643,
-      "type": "buy",
+      "type": "BUY",
       "pair": "GXS/NXT",
       "amount": 9753.6754,
       "price": 0.0053
     },
     {
       "time": 1481293671729,
-      "type": "sell",
+      "type": "SELL",
       "pair": "FUN/XRP",
       "amount": 6744.0304,
       "price": 0.0059
     },
     {
       "time": 1354524660539,
-      "type": "buy",
+      "type": "BUY",
       "pair": "SNT/LTC",
       "amount": 3301.0634,
       "price": 0.003
     },
     {
       "time": 1449541939880,
-      "type": "sell",
+      "type": "SELL",
       "pair": "EOS/BTC",
       "amount": 1180.9973,
       "price": 0.001

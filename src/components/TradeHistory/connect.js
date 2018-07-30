@@ -11,6 +11,6 @@ export const mapStateToProps = (state: State) => {
 export const mapDispatchToProps = {};
 
 export default connect(
-  mapStateToProps
-  // mapDispatchToProps
+  mapStateToProps,
+  null
 );
