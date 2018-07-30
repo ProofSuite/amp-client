@@ -8,9 +8,7 @@ export const mapStateToProps = (state: State) => {
   return getOrderHistoryModel(state).getState();
 };
 
-export const mapDispatchToProps = {};
-
 export default connect(
-  mapStateToProps
-  // mapDispatchToProps
+  mapStateToProps,
+  null
 );

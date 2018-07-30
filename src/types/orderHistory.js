@@ -5,20 +5,3 @@ export type Order = {
   amount: number,
   price: number,
 };
-
-export type OrderHistoryState = {
-  orderHistory: Array<Order>,
-  userOrderHistory: Array<Order>,
-};
-
-export type OrderHistoryListContainerProps = {
-  selectedTabId: string,
-  onChange: string => void,
-  authenticated: boolean,
-  orderHistory: Array<Object>,
-  userOrderHistory: Array<Object>,
-};
-
-export type OrderHistoryTableProps = {
-  orderHistory: Array<Order>,
-};
