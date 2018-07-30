@@ -1,11 +1,18 @@
 // @flow
 import React from 'react';
 import { OrderBookRenderer } from './OrderBookRenderer';
-import styled from 'styled-components';
 import { sortArray } from '../../utils/helpers';
 import type { OrderBookState } from '../../types/orderBook';
 
-export default class OrderBook extends React.PureComponent<OrderBookState> {
+type Props = {
+  orderList: Array<Object>,
+  quoteToken: string,
+  baseToken: string,
+  bookName: string,
+  decimals: number,
+};
+
+export default class OrderBook extends React.PureComponent<Props> {
   static defaultProps = {
     decimals: 6,
   };

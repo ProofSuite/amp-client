@@ -42,7 +42,6 @@ const sorter = (a, b, wrt, order) => {
 
 //TODO remove this function
 export const sortArray = (array, wrt, sortOrder = 'asc') => {
-  console.log(array);
   return array.sort((a, b) => sorter(a, b, wrt, sortOrder));
 };
 

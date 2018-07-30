@@ -13,6 +13,7 @@ type Props = {
   baseToken: string,
   quoteToken: string,
   loggedIn?: boolean,
+  decimals?: number,
   handleLimit: any => void,
   handleStopLimit: any => void,
 };
@@ -273,7 +274,7 @@ class OrderForm extends React.PureComponent<Props, State> {
                 formName={formName}
                 baseToken={baseToken}
                 quoteToken={quoteToken}
-                loggedIn={loggedIn}
+                loggedIn={true}
                 state={this.state}
                 onInputChange={onInputChange}
                 handleTxClick={handleTxClick}
@@ -288,7 +289,7 @@ class OrderForm extends React.PureComponent<Props, State> {
                 formName={formName}
                 baseToken={baseToken}
                 quoteToken={quoteToken}
-                loggedIn={loggedIn}
+                loggedIn={true}
                 state={this.state}
                 onInputChange={onInputChange}
                 handleTxClick={handleTxClick}

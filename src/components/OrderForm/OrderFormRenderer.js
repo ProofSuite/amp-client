@@ -34,7 +34,7 @@ const LimitForm = (fieldsProps: InputFieldsProps) => {
           value={props.price}
           min="0"
           type="number"
-          placeholder={'Price ' + { quoteToken }}
+          placeholder={'Price ' + { quoteToken }.toString()}
         />
         <span className="curr-name">{baseToken}</span>
       </FormGroup>
@@ -45,7 +45,7 @@ const LimitForm = (fieldsProps: InputFieldsProps) => {
           value={props.amount}
           min="0"
           type="number"
-          placeholder={'Amount ' + { quoteToken }}
+          placeholder={'Amount ' + { quoteToken }.toString()}
         />
         <span className="curr-name">{quoteToken}</span>
       </FormGroup>
@@ -96,7 +96,7 @@ const LimitForm = (fieldsProps: InputFieldsProps) => {
           value={props.total}
           min="0"
           type="number"
-          placeholder={'Total ' + { baseToken }}
+          placeholder={'Total ' + { baseToken }.toString()}
         />
         <span className="curr-name">{baseToken}</span>
       </FormGroup>

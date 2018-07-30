@@ -5,3 +5,8 @@ export type Order = {
   amount: number,
   price: number,
 };
+
+export type OrderHistoryState = {
+  +userOrderHistory: Array<Object>,
+  +marketOrderHistory: Array<Object>,
+};

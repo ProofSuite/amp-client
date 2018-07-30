@@ -1,18 +1,18 @@
 // @flow
-import type Props from '../../types/depthChart';
+import type { DepthChartState } from '../../types/depthChart';
 
-const initialState: Props = {
+const initialState: DepthChartState = {
   data: [{}],
   title: '',
 };
 
 export const initialized = () => {
-  const event = (state: Props = initialState) => state;
+  const event = (state: DepthChartState = initialState) => state;
   return event;
 };
 
-export const saveData = (data: Props) => {
-  const event = (state: Props) => ({
+export const saveData = (data: DepthChartState) => {
+  const event = (state: DepthChartState) => ({
     ...state,
     data: data.data,
     title: data.title,
@@ -20,7 +20,7 @@ export const saveData = (data: Props) => {
   return event;
 };
 
-export default function model(state: Props) {
+export default function model(state: DepthChartState) {
   return {
     getState: () => state,
   };

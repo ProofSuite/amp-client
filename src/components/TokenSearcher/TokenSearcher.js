@@ -29,6 +29,7 @@ type State = {
   sortOrder: string,
   selectedTabId: string,
   orderChanged: boolean,
+  isOpen: boolean,
 };
 
 class TokenSearcher extends React.PureComponent<Props, State> {
@@ -40,6 +41,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
     sortOrder: 'asc',
     selectedTabId: '',
     orderChanged: false,
+    isOpen: true,
   };
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
@@ -84,6 +86,12 @@ class TokenSearcher extends React.PureComponent<Props, State> {
     this.setState({ sortOrder: value });
   };
 
+  toggleCollapse = () => {
+    this.setState(function(prevState) {
+      return { isOpen: !prevState.isOpen };
+    });
+  };
+
   changeTab = (tabId: string) => {
     this.setState({ selectedTabId: tabId });
   };
@@ -108,15 +116,19 @@ class TokenSearcher extends React.PureComponent<Props, State> {
   changeSelectedToken = (token: Token) => {
     this.setState({ selectedToken: token });
   };
+  changeSelectedToken = (token: Token) => {
+    this.setState({ selectedToken: token });
+  };
 
   render() {
     const {
-      state: { selectedTabId, searchFilter, selectedToken, sortOrder, filterName, quoteTokens },
+      state: { selectedTabId, searchFilter, selectedToken, sortOrder, filterName, quoteTokens, isOpen },
       props: { updateFavorite },
       onChangeSearchFilter,
       onChangeFilterName,
       onChangeSortOrder,
       changeTab,
+      toggleCollapse,
       changeSelectedToken,
     } = this;
 
@@ -134,6 +146,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
         // silence-error: couldn't resolve selectedToken === undefined case
         selectedToken={selectedToken}
         sortOrder={sortOrder}
+        isOpen={isOpen}
         filterName={filterName}
         filteredPairs={filteredPairs}
         updateFavorite={updateFavorite}
@@ -141,6 +154,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
         onChangeFilterName={onChangeFilterName}
         onChangeSortOrder={onChangeSortOrder}
         changeTab={changeTab}
+        toggleCollapse={toggleCollapse}
         changeSelectedToken={changeSelectedToken}
       />
     );

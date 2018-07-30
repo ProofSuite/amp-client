@@ -10,7 +10,6 @@ export type OrderBookState = {
 export type OrderListPropsTypes = {
   orderList: Array<Object>,
   bookName: string,
-  loading: boolean,
   baseToken: string,
   quoteToken: string,
   decimals: number,
@@ -21,5 +20,3 @@ export type SingleOrderPropsTypes = {
   index: number,
   decimals: number,
 };
-
-export default Props;

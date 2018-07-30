@@ -4,11 +4,16 @@ import { Card, Tab, Tabs } from '@blueprintjs/core';
 import OrderBook from '../OrderBook';
 import DepthChart from '../DepthChart';
 
-class OrderBookandChart extends React.PureComponent {
+type State = {
+  selectedTabId: string,
+};
+
+class OrderBookandChart extends React.Component<{}, State> {
   state = {
     selectedTabId: 'list',
   };
   changeTab = (tabId: string) => {
+    // silence-error: setState unknown Issue
     this.setState({ selectedTabId: tabId });
   };
 
