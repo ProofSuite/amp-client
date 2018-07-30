@@ -1,7 +1,7 @@
 import type { OrderHistoryState } from '../../types/orderHistory';
 
-const initialState: Props = {
-  orderHistory: [{}],
+const initialState: OrderHistoryState = {
+  marketOrderHistory: [{}],
   userOrderHistory: [{}],
 };
 
@@ -13,7 +13,7 @@ export const initialized = () => {
 export const dataSaved = (data: OrderHistoryState) => {
   const event = (state: OrderHistoryState) => ({
     ...state,
-    orderHistory: data.orderHistory,
+    marketOrderHistory: data.marketOrderHistory,
     userOrderHistory: data.userOrderHistory,
   });
   return event;
@@ -22,7 +22,7 @@ export const dataSaved = (data: OrderHistoryState) => {
 export default function model(state: OrderHistoryState) {
   return {
     getState: () => state,
-    getOrderHistory: () => state.orderHistory,
+    getMarketOrderHistory: () => state.marketOrderHistory,
     getUserOrderHistory: () => state.userOrderHistory,
   };
 }

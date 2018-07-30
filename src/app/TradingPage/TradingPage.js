@@ -9,18 +9,28 @@ import DepthChart from '../../components/DepthChart';
 import TokenSearcher from '../../components/TokenSearcher';
 import OrderBookandChart from '../../components/OrderBookandChart';
 import { Button } from '@blueprintjs/core';
-import { Box, Collapse, CollapseRight, RowSpaceBetween } from '../../components/Common';
+import { Box, ColumnCenter, CollapseRight, RowSpaceBetween, DownCollapse } from '../../components/Common';
 
 import type { LoadDataParams } from '../../types/tradingPage';
 
 type Props = {
   loadData: (params: LoadDataParams) => void,
 };
+type State = {
+  showLeft: boolean,
+  showRight: boolean,
+  hide: boolean,
+  middleWidth: string,
+  leftWidth: number,
+  rightWidth: number,
+  chartClass: string,
+};
 
-export default class TradingPage extends React.PureComponent<Props> {
+export default class TradingPage extends React.PureComponent<Props, State> {
   state = {
     showLeft: false,
     showRight: false,
+    hide: false,
     middleWidth: 'both-hidden',
     leftWidth: 0,
     rightWidth: 0,
@@ -114,41 +124,50 @@ export default class TradingPage extends React.PureComponent<Props> {
       }
     );
   };
+  handleLeft = () => {};
+  handleRight = () => {
+    console.log('handleRight ');
+    window.dispatchEvent(new Event('resize'));
+    this.setState(function(prevState) {
+      return {
+        middleWidth: 'none-hidden',
+        showRight: !prevState.showRight,
+      };
+    });
+  };
+  toggleOrderBook = () => {
+    window.dispatchEvent(new Event('resize'));
+    this.setState(function(prevState) {
+      return {
+        hide: !prevState.hide,
+      };
+    });
+  };
   render() {
     const {
-      state: { showLeft, showRight, middleWidth },
-      toggleRight,
-      toggleLeft,
+      state: { showLeft, showRight, middleWidth, hide },
+      toggleOrderBook,
     } = this;
     return (
       <div className="trading-page">
-        {/*<<<<<<< HEAD*/}
-        <div style={{ width: '22%' }} className="column">
-          <Box m={1} p={1}>
-            <TokenSearcher />
-          </Box>
+        <ColumnCenter>
+          <TokenSearcher />
           <OrderForm />
           <OrderForm />
-          {/*=======*/}
-          {/*<div*/}
-          {/*className={*/}
-          {/*showLeft ? 'column coin-searcher-order-form left-side' : 'column coin-searcher-order-form hidden-side'*/}
-          {/*}*/}
-          {/*>*/}
-          {/*<Collapse showLeft={showLeft} />*/}
-          {/*>>>>>>> completed layout for trading page*/}
-        </div>
-        <div className={'middle-container ' + middleWidth}>
-          <OHLCV toggleRight={toggleRight} toggleLeft={toggleLeft} showRight={showRight} showLeft={showLeft} />
-          <div className="order-book-chart-container">
-            <OrderBookandChart />
-          </div>
+        </ColumnCenter>
+
+        <ColumnCenter>
+          <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} />
           <RowSpaceBetween>
             <OrderHistory />
             <TradeHistory />
           </RowSpaceBetween>
+        </ColumnCenter>
+
+        <div>
+          <OrderBookandChart />
         </div>
-        <div className={showRight ? 'open-order-book right-side' : 'open-order-book hidden-side'}>
+        <div>
           <CollapseRight showRight={showRight} />
         </div>
       </div>
@@ -159,4 +178,3 @@ const Row = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-// (middleWidth == 99 ? "both-hidden" : middleWidth == 55 ? "none-hidden" : "one-hidden" )

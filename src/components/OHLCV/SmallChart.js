@@ -3,6 +3,7 @@ import React from 'react';
 import { MultiSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 import { Button, Card, Icon } from '@blueprintjs/core';
+import type { SendTimelineParams } from '../../types/ohlcv';
 
 const timeSpans: Array<Object> = [
   { name: '1 min' },
@@ -47,8 +48,6 @@ export default class SmallChart extends React.PureComponent<Props, State> {
   state = {
     chartHeight: 400,
     indicatorHeight: 150,
-    showIndicatorMenu: false,
-    showTimeSpanMenu: false,
     currentTimeSpan: timeSpans[0],
     currentDuration: '',
     indicators: indicators,
@@ -88,7 +87,6 @@ export default class SmallChart extends React.PureComponent<Props, State> {
       });
     }
     this.forceUpdate();
-    console.log(this.state.indicators);
   };
 
   changeDuration = (menu: string) => {
@@ -106,11 +104,10 @@ export default class SmallChart extends React.PureComponent<Props, State> {
     this.setState({ currentTimeSpan: e });
     this.props.updateTimeLine({ pair, pairId, time: e.name, duration: currentDuration });
   };
-
   render() {
     const {
-      props: { expandedChard, toggleExpand, ohlcvData, toggleRight, toggleLeft, showRight, showLeft },
-      state: { indicators, chartHeight, indicatorHeight },
+      props: { ohlcvData },
+      state: { indicators, chartHeight, indicatorHeight, expandedChard },
       changeTimeSpan,
       toogleChartIndicator,
       changeDuration,
@@ -119,14 +116,9 @@ export default class SmallChart extends React.PureComponent<Props, State> {
       <Card className="pt-dark main-chart">
         <Toolbar
           changeDuration={changeDuration}
-          toggleExpand={toggleExpand}
           toogleChartIndicator={toogleChartIndicator}
           changeTimeSpan={changeTimeSpan}
           state={this.state}
-          toggleRight={toggleRight}
-          toggleLeft={toggleLeft}
-          showRight={showRight}
-          showLeft={showLeft}
         />
         <ChartLoadingScreen
           volume={indicators[0]}
@@ -137,8 +129,8 @@ export default class SmallChart extends React.PureComponent<Props, State> {
           forceIndex={indicators[5]}
           indicatorHeight={indicatorHeight}
           chartHeight={chartHeight}
-          data={ohlcvData}
           expandedChard={expandedChard}
+          data={ohlcvData}
           width="100%"
         />
       </Card>
@@ -146,20 +138,11 @@ export default class SmallChart extends React.PureComponent<Props, State> {
   }
 }
 
-const Toolbar = ({
-  state,
-  toogleChartIndicator,
-  changeTimeSpan,
-  changeDuration,
-  toggleRight,
-  toggleLeft,
-  showRight,
-  showLeft,
-}) => (
+const Toolbar = ({ state, toogleChartIndicator, changeTimeSpan, changeDuration }) => (
   <div className="toolbar">
     <div className="left">
-      {showLeft && <Button onClick={toggleLeft} icon="menu-closed" />}
-      {!showLeft && <Button onClick={toggleLeft} icon="menu-open" />}
+      {/*{showLeft && <Button onClick={toggleLeft} icon="menu-closed" />}*/}
+      {/*{!showLeft && <Button onClick={toggleLeft} icon="menu-open" />}*/}
       <div className="menu time-span">
         <StandardSelect
           items={state.timeSpans}
@@ -188,7 +171,7 @@ const Toolbar = ({
         <Button onClick={() => changeDuration('6 months')} text="6m" />
       </div>
     </div>
-    {showRight && <Button className="right-btn" onClick={toggleRight} icon="menu-open" />}
-    {!showRight && <Button className="right-btn" onClick={toggleRight} icon="menu-closed" />}
+    {/*{showRight && <Button className="right-btn" onClick={toggleOrderBook} icon="menu-open" />}*/}
+    {/*{!showRight && <Button className="right-btn" onClick={toggleOrderBook} icon="menu-closed" />}*/}
   </div>
 );

@@ -10,21 +10,14 @@ type Props = {
   updateTimeLine: SendTimelineParams => void,
 };
 
-export default class OHLCV extends React.PureComponent<Props, State> {
+export default class OHLCV extends React.PureComponent<Props> {
   render() {
     const {
-      props: { ohlcvData, pair, updateTimeLine, pairId, hideOrderBook, toggleOrderBook },
+      props: { ohlcvData, pair, updateTimeLine, pairId },
     } = this;
     return (
       <React.Fragment>
-        <SmallChart
-          updateTimeLine={updateTimeLine}
-          ohlcvData={ohlcvData}
-          pair={pair}
-          pairId={pairId}
-          hideOrderBook={hideOrderBook}
-          toggleOrderBook={toggleOrderBook}
-        />
+        <SmallChart updateTimeLine={updateTimeLine} ohlcvData={ohlcvData} pair={pair} pairId={pairId} />
       </React.Fragment>
     );
   }

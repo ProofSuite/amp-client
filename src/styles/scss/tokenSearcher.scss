@@ -3,14 +3,13 @@
 .token-searcher {
   min-width: 400px;
   max-width: 700px;
-  height: 700px;
   width: 100%;
 
   .pt-tabs {
     height: 75%;
     .pt-tab-panel {
       margin-top: 0px;
-      height: 600px;
+      height: 300px;
     }
   }
 
@@ -86,7 +85,7 @@
   }
 
   ul.list {
-    height: 64%;
+    height: 96%;
     margin-bottom: 0px;
     margin-top: 0px;
     overflow-y: scroll;

@@ -75,3 +75,16 @@ input[type='checkbox'] {
   //border-bottom-right-radius: 7px;
   //padding: .5rem 1rem;
 }
+.horizontal-collapse.is-open {
+  button {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .pt-card {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+.horizontal-collapse.is-closed {
+  button {}
+}

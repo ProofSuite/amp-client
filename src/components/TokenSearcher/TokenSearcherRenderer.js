@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Icon, Card, Tabs, Tab, InputGroup } from '@blueprintjs/core';
+import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core';
 import { ColumnEnd, RowSpaceBetween, Loading } from '../Common';
 import { Colors, Centered, Chevron, OverlaySpinner } from '../Common';
 import styled from 'styled-components';
@@ -25,6 +25,7 @@ type Props = {
   selectedToken: Token,
   filterName: string,
   sortOrder: string,
+  isOpen: boolean,
   quoteTokens: Array<string>,
   onChangeSortOrder: string => void,
   changeTab: string => void,
@@ -33,6 +34,7 @@ type Props = {
   onChangeSearchFilter: (SyntheticInputEvent<>) => void,
   onChangeFilterName: (SyntheticInputEvent<>) => void,
   changeSelectedToken: Token => void,
+  toggleCollapse: () => void,
 };
 
 const TokenSearchRenderer = (props: Props) => {
@@ -42,6 +44,7 @@ const TokenSearchRenderer = (props: Props) => {
     quoteTokens,
     selectedTabId,
     searchFilter,
+    isOpen,
     selectedToken,
     sortOrder,
     filterName,
@@ -51,6 +54,7 @@ const TokenSearchRenderer = (props: Props) => {
     onChangeSortOrder,
     changeTab,
     changeSelectedToken,
+    toggleCollapse,
   } = props;
 
   return (
@@ -59,39 +63,23 @@ const TokenSearchRenderer = (props: Props) => {
         <OverlaySpinner visible={loading} transparent />
       ) : (
         <div>
-          <SearchInput onChange={onChangeSearchFilter} value={searchFilter} placeholder="Search ..." />
-          <SelectedCoin selectedToken={selectedToken} />
-          <TokenSearchTabs selectedTabId={selectedTabId} onChange={changeTab}>
-            <Tab
-              id="star"
-              title={<Icon icon="star" />}
-              panel={
-                <Panel
-                  tokenPairs={filteredPairs.favorites}
-                  filterName={filterName}
-                  sortOrder={sortOrder}
-                  searchFilter={searchFilter}
-                  selectedToken={selectedToken}
-                  changeSelectedToken={changeSelectedToken}
-                  updateFavorite={updateFavorite}
-                  onChangeSearchFilter={onChangeSearchFilter}
-                  onChangeFilterName={onChangeFilterName}
-                  onChangeSortOrder={onChangeSortOrder}
-                />
-              }
-            />
-            {quoteTokens.map(quote => (
+          <div style={{ display: 'flex', justifyContent: 'space-between', height: '30px' }}>
+            <SearchInput onChange={onChangeSearchFilter} value={searchFilter} placeholder="Search ..." />
+            <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} onClick={toggleCollapse} />
+          </div>
+          <Collapse isOpen={isOpen}>
+            <SelectedCoin selectedToken={selectedToken} />
+            <TokenSearchTabs selectedTabId={selectedTabId} onChange={changeTab}>
               <Tab
-                id={quote}
-                title={quote}
+                id="star"
+                title={<Icon icon="star" />}
                 panel={
                   <Panel
-                    tokenPairs={filteredPairs[quote]}
+                    tokenPairs={filteredPairs.favorites}
                     filterName={filterName}
                     sortOrder={sortOrder}
                     searchFilter={searchFilter}
                     selectedToken={selectedToken}
-                    filteredPairs={filteredPairs}
                     changeSelectedToken={changeSelectedToken}
                     updateFavorite={updateFavorite}
                     onChangeSearchFilter={onChangeSearchFilter}
@@ -100,8 +88,30 @@ const TokenSearchRenderer = (props: Props) => {
                   />
                 }
               />
-            ))}
-          </TokenSearchTabs>
+              {quoteTokens.map((quote, index) => (
+                <Tab
+                  id={quote}
+                  key={index}
+                  title={quote}
+                  panel={
+                    <Panel
+                      tokenPairs={filteredPairs[quote]}
+                      filterName={filterName}
+                      sortOrder={sortOrder}
+                      searchFilter={searchFilter}
+                      selectedToken={selectedToken}
+                      filteredPairs={filteredPairs}
+                      changeSelectedToken={changeSelectedToken}
+                      updateFavorite={updateFavorite}
+                      onChangeSearchFilter={onChangeSearchFilter}
+                      onChangeFilterName={onChangeFilterName}
+                      onChangeSortOrder={onChangeSortOrder}
+                    />
+                  }
+                />
+              ))}
+            </TokenSearchTabs>
+          </Collapse>
         </div>
       )}
     </TokenSearchCard>
@@ -263,7 +273,7 @@ const TokenPair = styled.h4`
 `;
 
 const SearchInput = styled(InputGroup)`
-  width: 100%;
+  width: 92%;
   padding-bottom: 10px;
 `;
 

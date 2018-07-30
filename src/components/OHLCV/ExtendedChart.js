@@ -1,4 +1,3 @@
-//@flow
 import React from 'react';
 import { MultiSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
