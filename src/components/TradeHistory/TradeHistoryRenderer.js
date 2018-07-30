@@ -1,60 +1,80 @@
+// @flow
 import React from 'react';
-import { round, toDate } from '../../utils/converters';
-import { Loading } from '../Common';
-import { Colors } from '@blueprintjs/core';
 import styled from 'styled-components';
-import type { TradeHistoryState, TradeListProps, TradeProps } from '../../types/tradeHistory';
+import { toDate } from '../../utils/converters';
+import { Loading, Colors } from '../Common';
+import { Card, Tabs, Tab } from '@blueprintjs/core';
 
-const TradeHistory = (props: TradeHistoryState) => {
-  const { decimals, tradeHistory } = props;
-  const tradeSize = Object.keys(tradeHistory[0]).length;
-  return tradeHistory.length < 2 && tradeSize < 1 ? (
-    <Loading />
-  ) : (
-    <HistroyList tradeHistory={tradeHistory} decimals={decimals} />
+type Trade = Object;
+
+type Props = {
+  selectedTabId: string,
+  onChange: string => void,
+  tradeHistory: Array<Trade>,
+  userTradeHistory: Array<Trade>,
+};
+
+const TradeHistoryRenderer = (props: Props) => {
+  const { selectedTabId, onChange, tradeHistory, userTradeHistory } = props;
+  return (
+    <Card className="trade-history">
+      <Heading>Trade History</Heading>
+      <Tabs selectedTabId={selectedTabId} onChange={onChange}>
+        <Tab id="24h" title="24H" panel={<TradeHistoryPanel trades={tradeHistory} />} />
+        <Tab id="all" title="All" panel={<TradeHistoryPanel trades={userTradeHistory} />} />
+      </Tabs>
+    </Card>
   );
 };
-export default TradeHistory;
 
-const HistroyList = (props: TradeListProps) => {
-  const { decimals, tradeHistory } = props;
-  return (
-    <div className="list-container pt-dark">
-      <ul className="pt-list-unstyled heading">
+const TradeHistoryPanel = (props: { trades: Array<Trade> }) => {
+  const { trades } = props;
+  const tradeSize = Object.keys(trades[0]).length;
+
+  return trades.length < 2 && tradeSize < 1 ? (
+    <Loading />
+  ) : (
+    <div className="list-container">
+      <ul className="heading">
         <li className="heading">
-          <span className="index">#</span>
-          <span className="time">Time</span>
-          <span className="type">Type</span>
-          <span className="amount">Amount</span>
-          <span className="price">Price</span>
+          <HeaderCell>#</HeaderCell>
+          <HeaderCell>Time</HeaderCell>
+          <HeaderCell>Type</HeaderCell>
+          <HeaderCell>Amount</HeaderCell>
+          <HeaderCell>Price</HeaderCell>
         </li>
       </ul>
-      <ul className="pt-list-unstyled list">
-        {tradeHistory.map((trade, index) => <Row key={index} props={{ trade, decimals: decimals, index }} />)}
-      </ul>
+      <ul className="list">{trades.map((trade, index) => <Row key={index} index={index} trade={trade} />)}</ul>
     </div>
   );
 };
 
-const Row = ({ props }: TradeProps) => {
-  const { trade, decimals, index } = props;
+const Row = (props: { index: number, trade: Trade }) => {
+  const { trade, index } = props;
   return (
-    <li className="not-heading">
-      <span className="index">{index + 1}</span>
-      <span className="time">{toDate(trade.time)}</span>
-      {trade.type === 'sell' ? <Sell>{trade.type}</Sell> : <Buy>{trade.type}</Buy>}
-      <span className="amount">{round(trade.amount, decimals)}</span>
-      <span className="price">{round(trade.price, decimals)}</span>
+    <li className="row">
+      <Cell>{index + 1}</Cell>
+      <Cell type={trade.type}>{trade.type}</Cell>
+      <Cell>{trade.amount}</Cell>
+      <Cell>{trade.price}</Cell>
+      <Cell>{toDate(trade.time)}</Cell>
     </li>
   );
 };
 
-const Sell = styled.span`
-  color: ${Colors.RED4};
-  min-width: 35px;
+const Heading = styled.h5`
+  padding-bottom: 5px;
+  text-align: left;
 `;
 
-const Buy = styled.span`
-  color: ${Colors.GREEN5};
+const Cell = styled.span`
+  color: ${props => (props.type === 'BUY' ? Colors.BUY : props.type === 'SELL' ? Colors.SELL : Colors.WHITE)}
   min-width: 35px;
+  width: 20%;
 `;
+
+const HeaderCell = styled.span`
+  width: 20%;
+`;
+
+export default TradeHistoryRenderer;

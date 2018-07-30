@@ -1,16 +1,18 @@
+// @flow
 import React from 'react';
 import TradeHistoryRenderer from './TradeHistoryRenderer';
-import { Button, Card, Tab, Tabs } from '@blueprintjs/core';
 import { sortArray } from '../../utils/helpers';
-import type { TradeHistoryState } from '../../types/tradeHistory';
 
 type State = {
   selectedTabId: string,
 };
 
-class TradeHistory extends React.PureComponent<TradeHistoryState, State> {
-  static defaultProps = { decimals: 5, loggedIn: true };
+type Props = {
+  marketTradeHistory: Array<Object>,
+  userTradeHistory: Array<Object>,
+};
 
+class TradeHistory extends React.PureComponent<Props, State> {
   state = {
     selectedTabId: 'all',
   };
@@ -27,7 +29,7 @@ class TradeHistory extends React.PureComponent<TradeHistoryState, State> {
 
   render() {
     const {
-      props: { marketTradeHistory, userTradeHistory, decimals, loggedIn },
+      props: { marketTradeHistory, userTradeHistory },
       state: { selectedTabId },
       changeTab,
       sortTradeHistory,
@@ -37,27 +39,14 @@ class TradeHistory extends React.PureComponent<TradeHistoryState, State> {
     const sortedUserTradeHistory = sortTradeHistory(userTradeHistory);
 
     return (
-      <Card className="pt-dark trade-history">
-        <h5>Trade History</h5>
-        <Tabs id="TabsExample" selectedTabId={selectedTabId} onChange={changeTab}>
-          <Tab
-            id="all"
-            title="Market"
-            panel={<TradeHistoryRenderer tradeHistory={sortedMarketTradeHistory} decimals={decimals} />}
-          />
-          <Tab
-            id="mine"
-            title="Mine"
-            panel={
-              loggedIn ? <TradeHistoryRenderer tradeHistory={sortedUserTradeHistory} decimals={decimals} /> : <Login />
-            }
-          />
-        </Tabs>
-      </Card>
+      <TradeHistoryRenderer
+        selectedTabId={selectedTabId}
+        onChange={changeTab}
+        tradeHistory={sortedMarketTradeHistory}
+        userTradeHistory={sortedUserTradeHistory}
+      />
     );
   }
 }
 
 export default TradeHistory;
-
-const Login = () => <Button large={true} intent="primary" text="Login" />;

@@ -132,6 +132,9 @@ export default {
   TEXT_DISABLED: rgba(Colors.GRAY5, 0.5),
   HEADING: Colors.LIGHT_GRAY5,
   LINK: Colors.BLUE5,
+
+  BUY: Colors.GREEN5,
+  SELL: Colors.RED4,
 };
 
 // TODO: include the following

@@ -15,11 +15,17 @@ storiesOf('TradeHistory', module)
       text: README,
       propTablesExclude: [TradeHistoryContainer],
       source: false,
-    })(() => <TradeHistoryContainer />)
+    })(() => (
+      <div className="pt-dark">
+        <TradeHistoryContainer />
+      </div>
+    ))
   )
   .add(
     'Data Loaded',
     withInfo({ text: README, source: false })(() => (
-      <TradeHistory marketTradeHistory={tradeHistory.list} userTradeHistory={tradeHistory.list} />
+      <div className="pt-dark">
+        <TradeHistory marketTradeHistory={tradeHistory.list} userTradeHistory={tradeHistory.list} />
+      </div>
     ))
   );
