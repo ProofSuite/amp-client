@@ -24,19 +24,14 @@ export default function getTradingPageModel(state: State) {
 }
 
 const orderBookData = {
-  buyOrderList: orderList.list,
-  sellOrderList: orderList.list,
+  orderList: orderList.list,
   baseToken: 'ETH',
   quoteToken: 'USDT',
-  loading: false,
-  decimals: 7,
 };
 
 const tradeHistoryData = {
-  tradeHistory: tradeHistory.list,
-  loading: false,
-  decimals: 7,
-  loggedIn: false,
+  userTradeHistory: tradeHistory.list,
+  marketTradeHistory: tradeHistory.list,
 };
 
 const orderHistoryData = {
@@ -46,7 +41,6 @@ const orderHistoryData = {
 
 const depthChartData = {
   data: bidAsk.list,
-  loading: false,
   title: 'ETJ/BTC',
 };
 

@@ -1,16 +1,10 @@
 //@flow
 
-type Props = {
-  +sellOrderList: Array<Object>,
-  +buyOrderList: Array<Object>,
+export type OrderBookState = {
+  +orderList: Array<Object>,
   +quoteToken: string,
   +baseToken: string,
-};
-export type OrderBookProps = {
-  +sellOrderList: Array<Object>,
-  +buyOrderList: Array<Object>,
-  +quoteToken: string,
-  +baseToken: string,
+  +bookName: string,
 };
 
 export type OrderListPropsTypes = {

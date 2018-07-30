@@ -8,19 +8,24 @@ function getModel(events) {
 
 it('handles initialized event properly', () => {
   const tradeHistoryData = {
-    tradeHistory: [{}],
+    marketTradeHistory: [{}],
+    userTradeHistory: [{}],
   };
 
   const tradeHistory = getModel([eventCreators.initialized()]);
 
-  expect(tradeHistory.getTradeHistory()).toEqual(tradeHistoryData.tradeHistory);
+  expect(tradeHistory.getMarketTradeHistory()).toEqual(tradeHistoryData.marketTradeHistory);
+  expect(tradeHistory.getUserTradeHistory()).toEqual(tradeHistoryData.userTradeHistory);
 });
 
 it('handles dataSaved event properly', () => {
   const tradeHistoryData = {
-    tradeHistory: [{ time: 63127631232, types: 'sell', amount: 200, price: 0.12 }],
+    marketTradeHistory: [{ time: 63127631232, types: 'sell', amount: 200, price: 0.12 }],
+    userTradeHistory: [{ time: 63127631232, types: 'buy', amount: 200, price: 0.12 }],
   };
 
   const tradeHistory = getModel([eventCreators.initialized(), eventCreators.dataSaved(tradeHistoryData)]);
-  expect(tradeHistory.getTradeHistory()).toEqual(tradeHistoryData.tradeHistory);
+
+  expect(tradeHistory.getMarketTradeHistory()).toEqual(tradeHistoryData.marketTradeHistory);
+  expect(tradeHistory.getUserTradeHistory()).toEqual(tradeHistoryData.userTradeHistory);
 });

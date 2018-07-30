@@ -8,7 +8,7 @@ import type { OrderListPropsTypes, SingleOrderPropsTypes } from '../../types/ord
 export const OrderBookRenderer = (props: OrderListPropsTypes) => {
   const { bookName, quoteToken, baseToken, decimals, orderList } = props;
   return (
-    <Card className={bookName + ' order-book'}>
+    <Card className={bookName + ' order-book pt-dark'}>
       <h5>{bookName}</h5>
       {orderList.length < 2 && <Loading />}
       {orderList.length > 1 && (

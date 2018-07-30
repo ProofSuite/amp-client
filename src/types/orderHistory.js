@@ -6,12 +6,7 @@ export type Order = {
   price: number,
 };
 
-export type OrderHistoryProps = {
-  orderHistory: Array<Order>,
-  userOrderHistory: Array<Order>,
-};
-
-export type Props = {
+export type OrderHistoryState = {
   orderHistory: Array<Order>,
   userOrderHistory: Array<Order>,
 };

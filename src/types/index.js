@@ -5,7 +5,7 @@ import type { EtherBalanceAction, EtherBalanceEvent, EtherBalanceState } from '.
 import type { AccountBalancesAction, AccountBalancesEvent, AccountBalancesState } from './accountBalances';
 import type { EtherTxAction, EtherTxEvent, EtherTxState } from './etherTx';
 import type { OHLCVState } from './ohlcv';
-import type { OrderBookProps } from './orderBook';
+import type { OrderBookState } from './orderBook';
 import type { TradingState } from './tradingPage';
 import type { TradeHistoryState } from './tradeHistory';
 import type { DepthChartState } from './depthChart';
@@ -59,11 +59,11 @@ export type State = {
   accountBalances: AccountBalancesState,
   etherTx: EtherTxState,
   ohlcv: OHLCVState,
-  orderBook: OrderBookProps,
-  tradeHistory: TradeHistoryProps,
-  orderHistory: OrderHistoryProps,
-  orderForm: OrderFormProps,
-  depthChart: DepthChartProps,
+  orderBook: OrderBookState,
+  tradeHistory: TradeHistoryState,
+  orderHistory: OrderHistoryState,
+  orderForm: OrderFormState,
+  depthChart: DepthChartState,
   etherTx: EtherTxState,
   tokens: TokenState,
   tokenPairs: TokenPairState,

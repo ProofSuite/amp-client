@@ -8,31 +8,30 @@ function getModel(events) {
 
 it('handles initialized event properly', () => {
   const orderBookData = {
-    buyOrderList: [{}],
-    sellOrderList: [{}],
+    orderList: [{}],
     baseToken: '',
     quoteToken: '',
   };
   const orderBook = getModel([eventCreators.initialized()]);
 
-  expect(orderBook.getBuyOrderList()).toEqual([{}]);
-  expect(orderBook.getSellOrderList()).toEqual([{}]);
+  expect(orderBook.getOrderList()).toEqual([{}]);
   expect(orderBook.getBaseToken()).toEqual('');
   expect(orderBook.getQuoteToken()).toEqual('');
+  expect(orderBook.getBookName()).toEqual('');
 });
 
 it('handles dataSaved event properly', () => {
   const orderBookData = {
-    buyOrderList: [{ price: 123, amount: 0.22 }],
-    sellOrderList: [{ price: 12.3, amount: 33 }],
+    orderList: [{ price: 123, amount: 0.22 }],
     baseToken: 'ETH',
     quoteToken: 'ZRX',
+    bookName: 'Sell',
   };
 
   const orderBook = getModel([eventCreators.initialized(), eventCreators.dataSaved(orderBookData)]);
 
-  expect(orderBook.getBuyOrderList()).toEqual([{ price: 123, amount: 0.22 }]);
-  expect(orderBook.getSellOrderList()).toEqual([{ price: 12.3, amount: 33 }]);
+  expect(orderBook.getOrderList()).toEqual([{ price: 123, amount: 0.22 }]);
   expect(orderBook.getBaseToken()).toEqual('ETH');
   expect(orderBook.getQuoteToken()).toEqual('ZRX');
+  expect(orderBook.getBookName()).toEqual('Sell');
 });

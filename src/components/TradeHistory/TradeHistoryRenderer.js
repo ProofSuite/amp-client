@@ -3,9 +3,9 @@ import { round, toDate } from '../../utils/converters';
 import { Loading } from '../Common';
 import { Colors } from '@blueprintjs/core';
 import styled from 'styled-components';
-import type Props, { TradeListProps, TradeProps } from '../../types/tradeHistory';
+import type { TradeHistoryState, TradeListProps, TradeProps } from '../../types/tradeHistory';
 
-const TradeHistory = (props: Props) => {
+const TradeHistory = (props: TradeHistoryState) => {
   const { decimals, tradeHistory } = props;
   const tradeSize = Object.keys(tradeHistory[0]).length;
   return tradeHistory.length < 2 && tradeSize < 1 ? (

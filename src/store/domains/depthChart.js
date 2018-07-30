@@ -3,7 +3,6 @@ import type Props from '../../types/depthChart';
 
 const initialState: Props = {
   data: [{}],
-  loading: true,
   title: '',
 };
 
@@ -15,7 +14,6 @@ export const initialized = () => {
 export const saveData = (data: Props) => {
   const event = (state: Props) => ({
     ...state,
-    loading: data.loading,
     data: data.data,
     title: data.title,
   });

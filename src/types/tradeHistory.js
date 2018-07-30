@@ -1,10 +1,7 @@
 //@flow
-type Props = {
-  +tradeHistory: Array<Object>,
-};
-export default Props;
-export type TradeHistoryProps = {
-  +tradeHistory: Array<Object>,
+export type TradeHistoryState = {
+  +userTradeHistory: Array<Object>,
+  +marketTradeHistory: Array<Object>,
 };
 export type TradeListProps = {
   decimals: number,

@@ -1,5 +1,5 @@
 ```js
-import CoinSearcherRenderer from '../../components/CoinSearcherRenderer';
+import TokenSearcher from '../../components/TokenSearcher';
 ```
 
 #### Properties
@@ -10,7 +10,7 @@ import CoinSearcherRenderer from '../../components/CoinSearcherRenderer';
 
 #### Example
 ```js
-<CoinSearcherRenderer
+<TokenSearcher
   coinsList={coinsList.list}
   loading={false}
   small={true}

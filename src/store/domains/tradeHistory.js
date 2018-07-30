@@ -1,26 +1,29 @@
 // @flow
-import type Props from '../../types/tradeHistory';
+import type { TradeHistoryState } from '../../types/tradeHistory';
 
-const initialState: Props = {
-  tradeHistory: [{}],
+const initialState: TradeHistoryState = {
+  marketTradeHistory: [{}],
+  userTradeHistory: [{}],
 };
 
 export const initialized = () => {
-  const event = (state: Props = initialState) => state;
+  const event = (state: TradeHistoryState = initialState) => state;
   return event;
 };
 
-export const dataSaved = (data: Props) => {
-  const event = (state: Props) => ({
+export const dataSaved = (data: TradeHistoryState) => {
+  const event = (state: TradeHistoryState) => ({
     ...state,
-    tradeHistory: data.tradeHistory,
+    marketTradeHistory: data.marketTradeHistory,
+    userTradeHistory: data.userTradeHistory,
   });
   return event;
 };
 
-export default function model(state: Props) {
+export default function model(state: TradeHistoryState) {
   return {
     getState: () => state,
-    getTradeHistory: () => state.tradeHistory,
+    getMarketTradeHistory: () => state.marketTradeHistory,
+    getUserTradeHistory: () => state.userTradeHistory,
   };
 }
