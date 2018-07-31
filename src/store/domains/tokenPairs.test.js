@@ -29,7 +29,7 @@ function getDomain(events) {
   return getTokenPairsDomain(state);
 }
 
-describe.only('Token Pair Domain', () => {
+describe('Token Pair Domain', () => {
   it('handles initialized event properly', () => {
     const tokenPairsDomain = getDomain([eventCreators.initialized(initialTokenPairState)]);
     const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI'];
