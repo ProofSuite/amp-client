@@ -134,7 +134,9 @@ export default {
   LINK: Colors.BLUE5,
 
   BUY: Colors.GREEN5,
+  BUY_MUTED: rgba('#3DCC91', 0.1),
   SELL: Colors.RED4,
+  SELL_MUTED: rgba('#F55656', 0.1),
 };
 
 // TODO: include the following
