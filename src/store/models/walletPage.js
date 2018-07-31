@@ -23,8 +23,6 @@ export function queryAccountData(): ThunkAction {
       let tokens = getTokenDomain(state).tokens();
       tokens = tokens.filter((token: Token) => token.symbol != 'ETH');
 
-      console.log(tokens);
-
       if (!accountAddress) throw new Error('Account address is not set');
 
       const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress);

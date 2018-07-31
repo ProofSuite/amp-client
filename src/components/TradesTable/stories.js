@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import TradesTableContainer from './index';
-import TradeTable from './TradeTable';
+import TradesTable from './TradesTable';
 import README from './README.md';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
 

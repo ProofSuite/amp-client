@@ -157,7 +157,7 @@ export default class TradingPage extends React.PureComponent<Props, State> {
         </ColumnCenter>
 
         <ColumnCenter>
-          <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} />
+          {/* <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} /> */}
           <RowSpaceBetween>
             <OrderHistory />
             <TradeHistory />
