@@ -2,7 +2,7 @@
 
 .trade-history {
   min-width: 500px;
-  width: 100%;
+  width: 2000px;
   height: 500px;
 
   .list-container {
@@ -21,13 +21,6 @@
   .pt-tab-panel {
     margin-top: 0;
     height: 88%;
-  }
-
-  .row {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
   }
 
   .heading {
@@ -50,21 +43,10 @@
         font-weight: 600;
       }
     }
-    li.row {
-      cursor: pointer;
-      margin: 0px !important;
-      border: 1px transparent;
-      border-radius: 2px;
-      box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
-      padding: 5px;
 
-    }
-    li.row:hover {
-      background-color: #5b656d;
+    .row:hover {
       z-index: 1;
       border-radius: 3px;
-      -webkit-box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
-      box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
     }
   }
   ul.list {

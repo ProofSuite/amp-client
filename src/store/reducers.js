@@ -28,8 +28,8 @@ import * as etherTxEvents from './domains/etherTx';
 import * as loginPageEvents from './domains/loginPage';
 import * as tradingPageEvents from './domains/tradingPage';
 import * as orderBookEvents from './domains/orderBook';
-import * as tradeHistoryEvents from './domains/tradeHistory';
-import * as orderHistoryEvents from './domains/orderHistory';
+import * as tradeEvents from './domains/trades';
+import * as orderEvents from './domains/orders';
 import * as orderFormEvents from './domains/orderForm';
 import * as depthChartEvents from './domains/depthChart';
 import * as ohlcvEvents from './domains/ohlcv';
@@ -150,14 +150,23 @@ export const orderBook = createReducer(action => {
   }
 });
 
-export const orderHistory = createReducer(action => {
+export const orders = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case orderHistoryActionTypes.saveData:
-      return orderHistoryEvents.dataSaved(payload.data);
-
+    case tradingPageActionTypes.updateOrdersTable:
+      return orderEvents.ordersUpdated(payload.orders);
     default:
-      return orderHistoryEvents.initialized();
+      return orderEvents.initialized();
+  }
+});
+
+export const trades = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case tradingPageActionTypes.updateTradesTable:
+      return tradeEvents.tradesUpdated(payload.trades);
+    default:
+      return tradeEvents.initialized();
   }
 });
 
@@ -180,16 +189,6 @@ export const depthChart = createReducer(action => {
 
     default:
       return depthChartEvents.initialized();
-  }
-});
-
-export const tradeHistory = createReducer(action => {
-  const { type, payload } = action;
-  switch (type) {
-    case tradeHistoryActionTypes.saveData:
-      return tradeHistoryEvents.dataSaved(payload.data);
-    default:
-      return tradeHistoryEvents.initialized();
   }
 });
 

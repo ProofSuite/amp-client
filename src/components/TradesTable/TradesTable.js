@@ -1,18 +1,20 @@
 // @flow
 import React from 'react';
-import TradeHistoryRenderer from './TradeHistoryRenderer';
+import TradesTableRenderer from './TradesTableRenderer';
 import { sortArray } from '../../utils/helpers';
+
+import type Trade from '../../types/trades';
 
 type State = {
   selectedTabId: string,
 };
 
 type Props = {
-  marketTradeHistory: Array<Object>,
-  userTradeHistory: Array<Object>,
+  trades: Array<Trade>,
+  trades: Array<Trade>,
 };
 
-class TradeHistory extends React.PureComponent<Props, State> {
+class TradesTable extends React.PureComponent<Props, State> {
   state = {
     selectedTabId: 'all',
   };
@@ -23,23 +25,18 @@ class TradeHistory extends React.PureComponent<Props, State> {
     });
   };
 
-  sortTradeHistory = (tradeHistory: any) => {
-    return sortArray(tradeHistory, 'time', 'desc');
-  };
-
   render() {
     const {
-      props: { marketTradeHistory, userTradeHistory },
+      props: { trades },
       state: { selectedTabId },
       changeTab,
-      sortTradeHistory,
     } = this;
 
-    const sortedMarketTradeHistory = sortTradeHistory(marketTradeHistory);
-    const sortedUserTradeHistory = sortTradeHistory(userTradeHistory);
+    const sortedMarketTradeHistory = trades;
+    const sortedUserTradeHistory = trades;
 
     return (
-      <TradeHistoryRenderer
+      <TradesTableRenderer
         selectedTabId={selectedTabId}
         onChange={changeTab}
         tradeHistory={sortedMarketTradeHistory}
@@ -49,4 +46,4 @@ class TradeHistory extends React.PureComponent<Props, State> {
   }
 }
 
-export default TradeHistory;
+export default TradesTable;

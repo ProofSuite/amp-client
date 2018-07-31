@@ -39,3 +39,36 @@ export const parseJSONToFixed = (obj, decimals = 2) => {
 
   return obj;
 };
+
+export const parseOrders = (orders, decimals = 2) => {
+  let parsed = orders.map(order => ({
+    time: order.createdAt,
+    amount: round(order.amount, decimals),
+    filled: round(order.amount, decimals),
+    price: round(order.price, decimals),
+    hash: order.hash,
+    side: order.side,
+    pair: order.pairName,
+    type: order.type,
+    status: order.status,
+  }));
+
+  return parsed;
+};
+
+export const parseTrades = (trades, decimals = 2) => {
+  let parsed = trades.map(trade => ({
+    time: trade.createdAt,
+    price: round(trade.price, decimals),
+    amount: round(trade.amount, decimals),
+    hash: trade.hash,
+    orderHash: trade.orderHash,
+    type: trade.type,
+    side: trade.side,
+    pair: trade.pairName,
+    maker: trade.maker,
+    taker: trade.taker,
+  }));
+
+  return parsed;
+};

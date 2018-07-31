@@ -2,9 +2,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import OHLCV from '../../components/OHLCV';
-import OrderHistory from '../../components/OrderHistory';
+import OrderHistory from '../../components/OrdersTable';
 import OrderForm from '../../components/OrderForm';
-import TradeHistory from '../../components/TradeHistory';
+import TradeHistory from '../../components/TradesTable';
 import DepthChart from '../../components/DepthChart';
 import TokenSearcher from '../../components/TokenSearcher';
 import OrderBookandChart from '../../components/OrderBookandChart';
@@ -157,7 +157,7 @@ export default class TradingPage extends React.PureComponent<Props, State> {
         </ColumnCenter>
 
         <ColumnCenter>
-          <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} />
+          {/* <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} /> */}
           <RowSpaceBetween>
             <OrderHistory />
             <TradeHistory />

@@ -15,24 +15,3 @@ storiesOf('TokenSearcher', module)
       </div>
     ))
   );
-
-// .add(
-//   'Loading',
-//   withInfo({ text: README, source: false })(() => (
-//     <TokenSearcher
-
-//     coinsList={{ btc: [{}] }} loading={true} />
-//   ))
-// )
-// .add(
-//   'Large TokenSearcher',
-//   withInfo({ text: README, source: false })(() => (
-//     <TokenSearcher coinsList={coinsList.list} loading={false} />
-//   ))
-// )
-// .add(
-//   'Small TokenSearcher',
-//   withInfo({ text: README, source: false })(() => (
-//     <TokenSearcher coinsList={coinsList.list} loading={false} />
-//   ))
-// );

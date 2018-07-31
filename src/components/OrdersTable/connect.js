@@ -1,14 +1,14 @@
 // @flow
 import { connect } from 'react-redux';
-import getTradeHistoryModel from '../../store/models/tradeHistory';
+import ordersTableSelector from '../../store/models/ordersTable';
 
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
-  return getTradeHistoryModel(state).getState();
+  return {
+    orders: ordersTableSelector(state).orders(),
+  };
 };
-
-export const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,

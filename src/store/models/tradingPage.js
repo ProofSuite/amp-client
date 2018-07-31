@@ -3,7 +3,7 @@ import TradingPageModel from '../domains/tradingPage';
 import type { LoadDataParams } from '../../types/tradingPage';
 import type { State, ThunkAction } from '../../types';
 import { getData } from '../services/homePage';
-import { getTokenPairData } from '../services/api';
+import { getTokenPairData, getOrders, getTrades } from '../services/api';
 
 import * as tradingPageActionCreators from '../actions/tradingPage';
 
@@ -62,9 +62,13 @@ export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
     let tokenPairData = await getTokenPairData();
     dispatch(tradingPageActionCreators.updateTokenPairData(tokenPairData));
 
+    let orders = await getOrders();
+    dispatch(tradingPageActionCreators.updateOrderTable(orders));
+
+    let trades = await getTrades();
+    dispatch(tradingPageActionCreators.udpateTradesTable(trades));
+
     dispatch(orderBookActionCreators.saveData(orderBookData));
-    dispatch(tradeHistoryActionCreators.saveData(tradeHistoryData));
-    dispatch(orderHistoryActionCreators.saveData(orderHistoryData));
     dispatch(depthChartActionCreators.saveData(depthChartData));
     dispatch(orderFormActionCreators.saveData(orderFormData));
   };
