@@ -2,6 +2,7 @@
 import React from 'react';
 import SmallChart from './SmallChart';
 import type { SendTimelineParams } from '../../types/ohlcv';
+import * as ohlcv from '../../jsons/ohlcvData.json';
 
 type Props = {
   ohlcvData: Array<Object>,
