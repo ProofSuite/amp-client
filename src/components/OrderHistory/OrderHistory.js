@@ -5,7 +5,7 @@ import { reduceDecimals, toDate } from '../../utils/converters';
 import { sortArray } from '../../utils/helpers';
 
 type Props = {
-  orderHistory: Array<Object>,
+  marketOrderHistory: Array<Object>,
   userOrderHistory: Array<Object>,
   authenticated: false,
 };
@@ -35,9 +35,9 @@ class OrderHistory extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { orderHistory, userOrderHistory, authenticated } = this.props;
+    const { marketOrderHistory, userOrderHistory, authenticated } = this.props;
     const { selectedTabId } = this.state;
-    const formattedOrderHistory = this.parseOrderHistory(orderHistory);
+    const formattedOrderHistory = this.parseOrderHistory(marketOrderHistory);
     const formattedUserOrderHistory = this.parseOrderHistory(userOrderHistory);
 
     return (

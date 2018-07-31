@@ -35,7 +35,7 @@ const tradeHistoryData = {
 };
 
 const orderHistoryData = {
-  orderHistory: orderHistory.list,
+  marketOrderHistory: orderHistory.list,
   userOrderHistory: orderHistory.list,
 };
 

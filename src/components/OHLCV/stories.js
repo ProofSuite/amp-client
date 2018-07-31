@@ -2,11 +2,11 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import { Card } from '@blueprintjs/core';
+import { LoadData } from '../Common';
 import OHLCVContainer from './index';
-import OHLCV from './index';
+import OHLCV from './OHLCV';
 import README from './README.md';
-import { getData } from '../../store/services/homePage';
+import { getMissingData } from '../../utils/ohlcvDataOperations';
 
 storiesOf('OHLCV', module)
   .addDecorator(withKnobs)
@@ -23,9 +23,5 @@ storiesOf('OHLCV', module)
     withInfo({
       text: README,
       source: false,
-    })(() => <OHLCV ohlcvData={data} />)
+    })(() => <LoadData>{data => <OHLCV ohlcvData={data} />}</LoadData>)
   );
-async function data() {
-  let ohlcvData = await getData();
-  return ohlcvData;
-}

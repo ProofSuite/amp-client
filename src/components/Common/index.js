@@ -13,3 +13,4 @@ export { default as Loading } from './Loading';
 export { default as Collapse } from './Collapse';
 export { default as CollapseRight } from './CollapseRight';
 export { default as DownCollapse } from './DownCollapse';
+export { default as LoadData } from './LoadData';
