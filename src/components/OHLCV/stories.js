@@ -24,18 +24,4 @@ storiesOf('OHLCV', module)
       text: README,
       source: false,
     })(() => <LoadData>{data => <OHLCV ohlcvData={data} />}</LoadData>)
-  )
-  .add(
-    'Chart with Missing Data Example 1',
-    withInfo({
-      text: README,
-      source: false,
-    })(() => <LoadData>{data => <OHLCV ohlcvData={getMissingData(data)} />}</LoadData>)
-  )
-  .add(
-    'Chart with Missing Data Example 1',
-    withInfo({
-      text: README,
-      source: false,
-    })(() => <LoadData>{data => <OHLCV ohlcvData={getMissingData(data)} />}</LoadData>)
   );
