@@ -1,3 +1,5 @@
+import { createVerticalLinearGradient, hexToRGBA } from 'react-stockcharts/lib/utils';
+
 // SAR Config
 export const accelerationFactor = 0.02;
 export const maxAccelerationFactor = 0.2;
@@ -59,3 +61,9 @@ export const theme = {
   redChilli: '#d62323',
   axis: '#fff',
 };
+
+export const canvasGradient = createVerticalLinearGradient([
+  { stop: 0, color: hexToRGBA('#b5d0ff', 0.2) },
+  { stop: 0.7, color: hexToRGBA('#6fa4fc', 0.4) },
+  { stop: 1, color: hexToRGBA('#4286f4', 0.8) },
+]);

@@ -8,7 +8,9 @@ import {
   CandlestickSeries,
   LineSeries,
   MACDSeries,
+  ScatterSeries,
   RSISeries,
+  CircleMarker,
   StraightLine,
 } from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
@@ -31,7 +33,8 @@ import {
 } from 'react-stockcharts/lib/tooltip';
 import { fitWidth } from 'react-stockcharts/lib/helper';
 import { last } from 'react-stockcharts/lib/utils';
-import { macdAppearance, mouseEdgeAppearance, theme } from './indicatorSettings';
+import { macdAppearance, mouseEdgeAppearance, theme, canvasGradient } from './indicatorSettings';
+import { curveMonotoneX } from 'd3-shape';
 
 import {
   atr14,
@@ -73,7 +76,6 @@ class OHLCVChart extends React.Component {
     const {
       type,
       data: initialData,
-      expandedChard,
       width,
       ratio,
       indicatorHeight,
@@ -84,6 +86,7 @@ class OHLCVChart extends React.Component {
       volume,
       chartHeight,
       forceIndex,
+      currentChart,
     } = this.props;
 
     let calculatedData = calculateData(initialData);
@@ -91,6 +94,7 @@ class OHLCVChart extends React.Component {
       return null;
     }
     const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date);
+
     const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData);
 
     const start = xAccessor(last(data));
@@ -112,99 +116,331 @@ class OHLCVChart extends React.Component {
           displayXAccessor={displayXAccessor}
           xExtents={xExtents}
         >
-          <Chart
-            id={1}
-            height={chartHeight}
-            yExtents={[d => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
-            padding={{ top: 10, bottom: 20 }}
-          >
-            <XAxis
-              axisAt="bottom"
-              orient="bottom"
-              showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
-              stroke={theme.axis}
-              fill={theme.axis}
-              tickStroke={theme.axis}
-              outerTickSize={0}
-            />
+          {currentChart.name === 'Candles' && (
+            <Chart
+              id={1}
+              height={chartHeight}
+              yExtents={[d => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
+              padding={{ top: 10, bottom: 20 }}
+            >
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
+                stroke={theme.axis}
+                fill={theme.axis}
+                tickStroke={theme.axis}
+                outerTickSize={0}
+              />
 
-            <YAxis
-              axisAt="right"
-              orient="right"
-              ticks={10}
-              stroke={theme.axis}
-              tickStroke={theme.axis}
-              fill={theme.axis}
-              outerTickSize={0}
-            />
+              <YAxis
+                axisAt="right"
+                orient="right"
+                ticks={10}
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                outerTickSize={0}
+              />
 
-            <CandlestickSeries
-              fill={d => {
-                return d.close > d.open ? theme.greenMint : theme.redDesire;
-              }}
-              opacity={1}
-              stroke={d => {
-                return d.close > d.open ? theme.greenNeon : theme.redChilli;
-              }}
-              wickStroke={d => {
-                return d.close > d.open ? theme.greenNeon : theme.redChilli;
-              }}
-            />
+              <CandlestickSeries
+                fill={d => {
+                  return d.close > d.open ? theme.greenMint : theme.redDesire;
+                }}
+                opacity={1}
+                stroke={d => {
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                }}
+                wickStroke={d => {
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                }}
+              />
 
-            <MouseCoordinateX
-              at="bottom"
-              orient="bottom"
-              displayFormat={timeFormat('%m-%d/%H:%M')}
-              rectRadius={5}
-              {...mouseEdgeAppearance}
-            />
+              <MouseCoordinateX
+                at="bottom"
+                orient="bottom"
+                displayFormat={timeFormat('%m-%d/%H:%M')}
+                rectRadius={5}
+                {...mouseEdgeAppearance}
+              />
 
-            <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
 
-            {line.active && (
-              <div>
-                <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()} />
-                <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()} />
+              {line.active && (
+                <div>
+                  <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()} />
+                  <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()} />
 
-                <CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
-                <CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
-              </div>
-            )}
+                  <CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
+                  <CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
+                </div>
+              )}
 
-            <EdgeIndicator
-              itemType="last"
-              orient="right"
-              edgeAt="right"
-              yAccessor={d => d.close}
-              fill={d => (d.close > d.open ? '#A2F5BF' : '#F9ACAA')}
-              stroke={d => (d.close > d.open ? '#0B4228' : '#6A1B19')}
-              textFill={d => (d.close > d.open ? '#0B4228' : '#420806')}
-              strokeOpacity={1}
-              strokeWidth={3}
-              arrowWidth={2}
-            />
+              <EdgeIndicator
+                itemType="last"
+                orient="right"
+                edgeAt="right"
+                yAccessor={d => d.close}
+                fill={d => (d.close > d.open ? '#A2F5BF' : '#F9ACAA')}
+                stroke={d => (d.close > d.open ? '#0B4228' : '#6A1B19')}
+                textFill={d => (d.close > d.open ? '#0B4228' : '#420806')}
+                strokeOpacity={1}
+                strokeWidth={3}
+                arrowWidth={2}
+              />
 
-            <OHLCTooltip origin={[-40, 0]} />
+              <OHLCTooltip origin={[-40, 0]} />
 
-            <MovingAverageTooltip
-              onClick={e => console.log(e)}
-              origin={[-38, 15]}
-              options={[
-                {
-                  yAccessor: ema26.accessor(),
-                  type: 'EMA',
-                  stroke: ema26.stroke(),
-                  windowSize: ema26.options().windowSize,
-                },
-                {
-                  yAccessor: ema12.accessor(),
-                  type: 'EMA',
-                  stroke: ema12.stroke(),
-                  windowSize: ema12.options().windowSize,
-                },
-              ]}
-            />
-          </Chart>
+              <MovingAverageTooltip
+                onClick={e => console.log(e)}
+                origin={[-38, 15]}
+                options={[
+                  {
+                    yAccessor: ema26.accessor(),
+                    type: 'EMA',
+                    stroke: ema26.stroke(),
+                    windowSize: ema26.options().windowSize,
+                  },
+                  {
+                    yAccessor: ema12.accessor(),
+                    type: 'EMA',
+                    stroke: ema12.stroke(),
+                    windowSize: ema12.options().windowSize,
+                  },
+                ]}
+              />
+            </Chart>
+          )}
+
+          {currentChart.name === 'Area' && (
+            <Chart id={0} yExtents={d => d.close} height={chartHeight}>
+              <defs>
+                <linearGradient id="MyGradient" x1="0" y1="100%" x2="0" y2="0%">
+                  <stop offset="0%" stopColor="#b5d0ff" stopOpacity={0.2} />
+                  <stop offset="70%" stopColor="#6fa4fc" stopOpacity={0.4} />
+                  <stop offset="100%" stopColor="#4286f4" stopOpacity={0.8} />
+                </linearGradient>
+              </defs>
+              <MouseCoordinateX
+                at="bottom"
+                orient="bottom"
+                displayFormat={timeFormat('%m-%d/%H:%M')}
+                rectRadius={5}
+                {...mouseEdgeAppearance}
+              />
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
+                stroke={theme.axis}
+                fill={theme.axis}
+                tickStroke={theme.axis}
+                outerTickSize={0}
+              />
+              <YAxis
+                axisAt="right"
+                orient="right"
+                ticks={10}
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                outerTickSize={0}
+              />
+              <AreaSeries
+                yAccessor={d => d.close}
+                fill="url(#MyGradient)"
+                strokeWidth={2}
+                interpolation={curveMonotoneX}
+                canvasGradient={canvasGradient}
+              />
+            </Chart>
+          )}
+
+          {currentChart.name === 'Line' && (
+            <Chart id={1} height={chartHeight} yExtents={d => [d.high, d.low]}>
+              <MouseCoordinateX
+                at="bottom"
+                orient="bottom"
+                displayFormat={timeFormat('%m-%d/%H:%M')}
+                rectRadius={5}
+                {...mouseEdgeAppearance}
+              />
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
+                stroke={theme.axis}
+                fill={theme.axis}
+                tickStroke={theme.axis}
+                outerTickSize={0}
+              />
+              <YAxis
+                axisAt="right"
+                orient="right"
+                ticks={10}
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                outerTickSize={0}
+              />
+              <LineSeries yAccessor={d => d.close} strokeDasharray="Solid" />
+              <ScatterSeries yAccessor={d => d.close} marker={CircleMarker} markerProps={{ r: 3 }} />
+              <OHLCTooltip forChart={1} origin={[-40, 0]} />
+            </Chart>
+          )}
+
+          {currentChart.name === 'Line' && (
+            <Chart id={1} height={chartHeight} yExtents={d => [d.high, d.low]}>
+              <MouseCoordinateX
+                at="bottom"
+                orient="bottom"
+                displayFormat={timeFormat('%m-%d/%H:%M')}
+                rectRadius={5}
+                {...mouseEdgeAppearance}
+              />
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
+                stroke={theme.axis}
+                fill={theme.axis}
+                tickStroke={theme.axis}
+                outerTickSize={0}
+              />
+              <YAxis
+                axisAt="right"
+                orient="right"
+                ticks={10}
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                outerTickSize={0}
+              />
+              <LineSeries yAccessor={d => d.close} strokeDasharray="Solid" />
+              <ScatterSeries yAccessor={d => d.close} marker={CircleMarker} markerProps={{ r: 3 }} />
+              <OHLCTooltip forChart={1} origin={[-40, 0]} />
+            </Chart>
+          )}
+
+          {currentChart.name === 'Heikin Ashi' && (
+            <Chart
+              id={0}
+              height={chartHeight}
+              yExtents={[d => [d.high, d.low], ema20.accessor(), ema50.accessor()]}
+              padding={{ top: 10, bottom: 20 }}
+            >
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
+                stroke={theme.axis}
+                fill={theme.axis}
+                tickStroke={theme.axis}
+                outerTickSize={0}
+              />
+              <YAxis
+                axisAt="right"
+                orient="right"
+                ticks={10}
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                outerTickSize={0}
+              />
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.1f')} />
+
+              <CandlestickSeries
+                fill={d => {
+                  return d.close > d.open ? theme.greenMint : theme.redDesire;
+                }}
+                opacity={1}
+                stroke={d => {
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                }}
+                wickStroke={d => {
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                }}
+              />
+
+              {line.active && (
+                <div>
+                  <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()} />
+                  <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()} />
+
+                  <CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
+                  <CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
+                </div>
+              )}
+
+              <EdgeIndicator
+                itemType="last"
+                orient="right"
+                edgeAt="right"
+                yAccessor={ema20.accessor()}
+                fill={ema20.fill()}
+              />
+              <EdgeIndicator
+                itemType="last"
+                orient="right"
+                edgeAt="right"
+                yAccessor={ema50.accessor()}
+                fill={ema50.fill()}
+              />
+              <EdgeIndicator
+                itemType="last"
+                orient="right"
+                edgeAt="right"
+                yAccessor={d => d.close}
+                fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')}
+              />
+              <EdgeIndicator
+                itemType="first"
+                orient="left"
+                edgeAt="left"
+                yAccessor={ema20.accessor()}
+                fill={ema20.fill()}
+              />
+              <EdgeIndicator
+                itemType="first"
+                orient="left"
+                edgeAt="left"
+                yAccessor={ema50.accessor()}
+                fill={ema50.fill()}
+              />
+              <EdgeIndicator
+                itemType="first"
+                orient="left"
+                edgeAt="left"
+                yAccessor={d => d.close}
+                fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')}
+              />
+
+              <OHLCTooltip origin={[-40, 0]} />
+              <MovingAverageTooltip
+                onClick={e => console.log(e)}
+                origin={[-38, 15]}
+                options={[
+                  {
+                    yAccessor: ema20.accessor(),
+                    type: 'EMA',
+                    stroke: ema20.stroke(),
+                    windowSize: ema20.options().windowSize,
+                  },
+                  {
+                    yAccessor: ema50.accessor(),
+                    type: 'EMA',
+                    stroke: ema50.stroke(),
+                    windowSize: ema50.options().windowSize,
+                  },
+                ]}
+              />
+            </Chart>
+          )}
+
           {volume.active && (
             <Chart
               id={2}
@@ -317,100 +553,98 @@ class OHLCVChart extends React.Component {
               <RSITooltip origin={[-38, 15]} yAccessor={d => d.rsi} options={rsiCalculator.options()} />
             </Chart>
           )}
-          {atr.active &&
-            expandedChard && (
-              <Chart
-                id={5}
-                yExtents={atr14.accessor()}
-                height={atr.height}
-                origin={(w, h) => [0, h - atr.height - (forceIndex.active ? forceIndex.height : 0)]}
-                padding={{ top: 10, bottom: 10 }}
-              >
-                <XAxis
-                  axisAt="bottom"
-                  orient="bottom"
-                  stroke={theme.axis}
-                  tickStroke={theme.axis}
-                  fill={theme.axis}
-                  outerTickSize={0}
-                  showTicks={!forceIndex.active}
-                />
-                <YAxis
-                  axisAt="right"
-                  orient="right"
-                  stroke={theme.axis}
-                  tickStroke={theme.axis}
-                  fill={theme.axis}
-                  ticks={2}
-                />
+          {atr.active && (
+            <Chart
+              id={5}
+              yExtents={atr14.accessor()}
+              height={atr.height}
+              origin={(w, h) => [0, h - atr.height - (forceIndex.active ? forceIndex.height : 0)]}
+              padding={{ top: 10, bottom: 10 }}
+            >
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                outerTickSize={0}
+                showTicks={!forceIndex.active}
+              />
+              <YAxis
+                axisAt="right"
+                orient="right"
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                ticks={2}
+              />
 
-                {!forceIndex.active && (
-                  <MouseCoordinateX
-                    at="bottom"
-                    orient="bottom"
-                    displayFormat={timeFormat('%Y-%m-%d')}
-                    {...mouseEdgeAppearance}
-                  />
-                )}
-                <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
-
-                <LineSeries yAccessor={atr14.accessor()} stroke={atr14.stroke()} />
-                <SingleValueTooltip
-                  yAccessor={atr14.accessor()}
-                  yLabel={`ATR (${atr14.options().windowSize})`}
-                  yDisplayFormat={format('.2f')}
-                  /* valueStroke={atr14.stroke()} - optional prop */
-                  /* labelStroke="#4682B4" - optional prop */
-                  origin={[-40, 15]}
-                />
-              </Chart>
-            )}
-
-          {forceIndex.active &&
-            expandedChard && (
-              <Chart
-                id={6}
-                height={150}
-                yExtents={fi.accessor()}
-                origin={(w, h) => [0, h - 150]}
-                padding={{ top: 30, right: 0, bottom: 10, left: 0 }}
-              >
-                <XAxis
-                  axisAt="bottom"
-                  orient="bottom"
-                  stroke={theme.axis}
-                  tickStroke={theme.axis}
-                  fill={theme.axis}
-                  outerTickSize={0}
-                />
-                <YAxis
-                  axisAt="right"
-                  orient="right"
-                  ticks={4}
-                  tickFormat={format('.2s')}
-                  stroke={theme.axis}
-                  tickStroke={theme.axis}
-                  fill={theme.axis}
-                />
+              {!forceIndex.active && (
                 <MouseCoordinateX
                   at="bottom"
                   orient="bottom"
                   displayFormat={timeFormat('%Y-%m-%d')}
                   {...mouseEdgeAppearance}
                 />
-                <MouseCoordinateY at="right" orient="right" displayFormat={format('.4s')} {...mouseEdgeAppearance} />
+              )}
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
 
-                <AreaSeries baseAt={scale => scale(0)} yAccessor={fi.accessor()} />
-                <StraightLine yValue={0} />
+              <LineSeries yAccessor={atr14.accessor()} stroke={atr14.stroke()} />
+              <SingleValueTooltip
+                yAccessor={atr14.accessor()}
+                yLabel={`ATR (${atr14.options().windowSize})`}
+                yDisplayFormat={format('.2f')}
+                /* valueStroke={atr14.stroke()} - optional prop */
+                /* labelStroke="#4682B4" - optional prop */
+                origin={[-40, 15]}
+              />
+            </Chart>
+          )}
 
-                <SingleValueTooltip
-                  yAccessor={fi.accessor()}
-                  yLabel="ForceIndex (1)"
-                  yDisplayFormat={format('.4s')}
-                  origin={[-40, 15]}
-                />
-              </Chart>
-            )}
+          {forceIndex.active && (
+            <Chart
+              id={6}
+              height={150}
+              yExtents={fi.accessor()}
+              origin={(w, h) => [0, h - 150]}
+              padding={{ top: 30, right: 0, bottom: 10, left: 0 }}
+            >
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+                outerTickSize={0}
+              />
+              <YAxis
+                axisAt="right"
+                orient="right"
+                ticks={4}
+                tickFormat={format('.2s')}
+                stroke={theme.axis}
+                tickStroke={theme.axis}
+                fill={theme.axis}
+              />
+              <MouseCoordinateX
+                at="bottom"
+                orient="bottom"
+                displayFormat={timeFormat('%Y-%m-%d')}
+                {...mouseEdgeAppearance}
+              />
+              <MouseCoordinateY at="right" orient="right" displayFormat={format('.4s')} {...mouseEdgeAppearance} />
+
+              <AreaSeries baseAt={scale => scale(0)} yAccessor={fi.accessor()} />
+              <StraightLine yValue={0} />
+
+              <SingleValueTooltip
+                yAccessor={fi.accessor()}
+                yLabel="ForceIndex (1)"
+                yDisplayFormat={format('.4s')}
+                origin={[-40, 15]}
+              />
+            </Chart>
+          )}
           <CrossHairCursor />
         </ChartCanvas>
       </div>

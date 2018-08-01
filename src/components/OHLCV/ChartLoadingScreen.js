@@ -1,12 +1,26 @@
+// @flow
 import React from 'react';
 import Chart from './Chart';
 import { Loading } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 
-export default class ChartLoadingScreen extends React.Component {
+type Props = {
+  macd: Object,
+  volume: Object,
+  chartHeight: number,
+  indicatorHeight: number,
+  rsi: Object,
+  line: Object,
+  currentChart: Object,
+  atr: Object,
+  forceIndex: Object,
+  data: Array<Object>,
+};
+
+export default class ChartLoadingScreen extends React.PureComponent<Props> {
   render() {
     const nullIndicator = { name: '', height: 0, active: false };
-    const { macd, volume, chartHeight, indicatorHeight, rsi, line, expandedChard, atr, forceIndex, data } = this.props;
+    const { macd, volume, chartHeight, currentChart, indicatorHeight, rsi, line, atr, forceIndex, data } = this.props;
 
     if (data.length < 1) {
       return <Loading />;
@@ -23,7 +37,7 @@ export default class ChartLoadingScreen extends React.Component {
               indicatorHeight={indicatorHeight}
               rsi={rsi}
               line={line}
-              expandedChard={expandedChard}
+              currentChart={currentChart}
               atr={atr ? atr : nullIndicator}
               forceIndex={forceIndex ? forceIndex : nullIndicator}
               data={data}

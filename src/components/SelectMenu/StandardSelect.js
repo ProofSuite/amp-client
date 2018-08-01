@@ -27,7 +27,7 @@ class StandardSelect extends Component {
         onItemSelect={handleChange}
         popoverProps={false}
       >
-        <Button icon={icon} text={item ? `${item.name}` : '(No selection)'} righticonname="double-caret-vertical" />
+        <Button icon={item.icon ? item.icon : icon} text={item.label} righticonname="double-caret-vertical" />
       </Select>
     );
   }

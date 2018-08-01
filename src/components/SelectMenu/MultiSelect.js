@@ -1,43 +1,62 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Button, MenuItem } from '@blueprintjs/core';
-import { Select } from '@blueprintjs/select';
+// @flow
+import React from 'react';
+import { MenuItem } from '@blueprintjs/core';
+import { MultiSelect } from '@blueprintjs/select';
 
-class MultiSelect extends Component {
-  renderItem(item, { handleClick, modifiers }) {
+type Props = {
+  indicators: Array<Object>,
+  updateProps: (Array<Object>) => void,
+  onChangeIndicator: Object => void,
+};
+type State = {
+  indicators: Array<Object>,
+};
+
+export default class CustMultiSelect extends React.PureComponent<Props, State> {
+  state = {
+    indicators: this.props.indicators,
+  };
+
+  // silence-error: couldn't resolve built-in Func params
+  itemRenderer(item: Object, { handleClick }) {
+    return <MenuItem icon={item.active ? 'tick' : ''} onClick={handleClick} text={`${item.name}`} key={item.rank} />;
+  }
+
+  tagRenderer(item: Object) {
+    return item.name;
+  }
+  onItemSelect = (e: Object) => {
+    const { indicators } = this.state;
+    this.props.onChangeIndicator(e);
+    let currentIndicator = indicators[e.rank];
+    currentIndicator.active = !currentIndicator.active;
+    this.props.updateProps(indicators);
+    this.forceUpdate();
+  };
+
+  getSelectedItem = () => {
+    const { indicators } = this.state;
+    return indicators.filter(item => item.active);
+  };
+
+  render() {
+    const {
+      props: { indicators },
+      getSelectedItem,
+      onItemSelect,
+      itemRenderer,
+      tagRenderer,
+    } = this;
     return (
-      <MenuItem
-        active={item.active}
-        disabled={modifiers.disabled}
-        onClick={rank => handleClick(item.rank)}
-        text={`${item.name}`}
-        key={item.rank}
+      <MultiSelect
+        tagInputProps={{ placeholder: 'Indicators' }}
+        itemRenderer={itemRenderer}
+        tagRenderer={tagRenderer}
+        items={indicators}
+        resetOnSelect={true}
+        selectedItems={getSelectedItem()}
+        onItemSelect={onItemSelect}
       />
     );
   }
-
-  render() {
-    const { items, item, icon, handleChange } = this.props;
-    return (
-      <Select
-        items={items}
-        filterable={false}
-        itemRenderer={this.renderItem}
-        noResults={<MenuItem disabled text="No results." />}
-        onItemSelect={handleChange}
-        popoverProps={false}
-      >
-        <Button icon={icon} text={item ? `${item.name}` : '(No selection)'} righticonname="double-caret-vertical" />
-      </Select>
-    );
-  }
 }
-
-MultiSelect.propTypes = {
-  item: PropTypes.object,
-  items: PropTypes.array,
-  onItemSelect: PropTypes.object,
-  handleChange: PropTypes.func,
-};
-
-export default MultiSelect;
