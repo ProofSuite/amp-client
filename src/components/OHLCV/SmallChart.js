@@ -1,9 +1,16 @@
 //@flow
 import React from 'react';
-import { MultiSelect, StandardSelect } from '../SelectMenu';
+import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 import { Card } from '@blueprintjs/core';
 import type { SendTimelineParams } from '../../types/ohlcv';
+
+type Indicator = {
+  name: string,
+  active: boolean,
+  height: number,
+  rank: number,
+};
 
 const timeSpans: Array<Object> = [
   { name: '1 min', label: '1 m' },
@@ -18,7 +25,7 @@ const timeSpans: Array<Object> = [
   { name: '1 month', label: '1 M' },
 ].map((p, index) => ({ ...p, rank: index }));
 
-const indicators: Array<Object> = [
+const indicators: Array<Indicator> = [
   { name: 'Volume', active: true, height: 0 },
   { name: 'Trendline', active: true, height: 0 },
   { name: 'MACD', active: true, height: 150 },
@@ -58,7 +65,7 @@ type State = {
   currentTimeSpan: Object,
   currentDuration: Object,
   currentChart: Object,
-  indicators: Array<Object>,
+  indicators: Array<Indicator>,
   timeSpans: Array<Object>,
   chartTypes: Array<Object>,
   duration: Array<Object>,
@@ -99,20 +106,22 @@ export default class SmallChart extends React.PureComponent<Props, State> {
     this.setState({ currentChart: e });
   };
 
-  updateProps = (indicators: Array<Object>) => {
-    this.setState({ indicators });
-  };
+  onUpdateIndicators = (indicator: Indicator, active: boolean) => {
+    const { indicators, indicatorHeight } = this.state;
+    let newIndicatorHeight;
 
-  onChangeIndicator = (indicator: Object) => {
-    const { indicators } = this.state;
+    active
+      ? (newIndicatorHeight = indicatorHeight + indicators[indicator.rank].height)
+      : (newIndicatorHeight = indicatorHeight - indicators[indicator.rank].height);
 
-    let indicatorTemp = indicators[indicator.rank];
-    if (indicatorTemp.active) {
-      this.state.indicatorHeight = this.state.indicatorHeight - indicatorTemp.height;
-    } else {
-      this.state.indicatorHeight = this.state.indicatorHeight + indicatorTemp.height;
-    }
-    this.forceUpdate();
+    this.setState({
+      indicators: [
+        ...indicators.slice(0, indicator.rank),
+        { ...indicators[indicator.rank], active },
+        ...indicators.slice(indicator.rank + 1),
+      ],
+      indicatorHeight: newIndicatorHeight,
+    });
   };
 
   render() {
@@ -120,19 +129,18 @@ export default class SmallChart extends React.PureComponent<Props, State> {
       props: { ohlcvData },
       state: { indicators, chartHeight, indicatorHeight, expandedChard, currentChart },
       changeTimeSpan,
-      updateProps,
-      onChangeIndicator,
+      onUpdateIndicators,
       changeDuration,
       changeChartType,
     } = this;
+
     return (
-      <Card className="pt-dark main-chart">
+      <Card className="main-chart">
         <Toolbar
           changeDuration={changeDuration}
-          onChangeIndicator={onChangeIndicator}
+          onUpdateIndicators={onUpdateIndicators}
           changeTimeSpan={changeTimeSpan}
           changeChartType={changeChartType}
-          updateProps={updateProps}
           state={this.state}
         />
         <ChartLoadingScreen
@@ -156,7 +164,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
 
 const Toolbar = ({
   state,
-  onChangeIndicator,
+  onUpdateIndicators,
   changeTimeSpan,
   updateProps,
   changeDuration,
@@ -193,7 +201,7 @@ const Toolbar = ({
         />
       </div>
       <div className="menu multi-select">
-        <MultiSelect indicators={state.indicators} updateProps={updateProps} onChangeIndicator={onChangeIndicator} />
+        <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import MultiSelect from './MultiSelect';
+import IndicatorSelect from './IndicatorSelect';
 import StandardSelect from './StandardSelect';
 
-export { MultiSelect, StandardSelect };
+export { IndicatorSelect, StandardSelect };

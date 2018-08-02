@@ -25,7 +25,7 @@ class StandardSelect extends Component {
         itemRenderer={this.renderItem}
         noResults={<MenuItem disabled text="No results." />}
         onItemSelect={handleChange}
-        popoverProps={false}
+        popoverProps={{ minimal: true }}
       >
         <Button icon={item.icon ? item.icon : icon} text={item.label} righticonname="double-caret-vertical" />
       </Select>
