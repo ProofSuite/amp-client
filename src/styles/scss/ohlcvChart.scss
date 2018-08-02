@@ -22,7 +22,7 @@
     .menu {
       position: relative;
       float: left;
-      width: 150px;
+      width: 100px;
       margin-right: 25px;
       display: flex;
       flex-direction: column;
@@ -41,6 +41,15 @@
       .pt-menu.closed {
         display: none;
       }
+    }
+    .menu.chart-type {
+      width: 30px;
+    }
+    .menu.time-span {
+      width: 85px;
+    }
+    .menu.multi-select {
+      width: auto;
     }
     .menu.duration {
       width: auto;
@@ -74,6 +83,12 @@
     }
     button {
       float: left;
+    }
+    button.pt-tag-remove {
+      svg {
+        float: right;
+        margin: 0px;
+      }
     }
   }
   .chart-container {
