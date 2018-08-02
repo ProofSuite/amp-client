@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import OrderFormRenderer from './OrderFormRenderer';
+import OrderForm from './OrderForm';
 
 it('renders without crashing', () => {
   shallow(
-    <OrderFormRenderer
+    <OrderForm
       askPrice={0.25}
       bidPrice={0.29}
       totalQuoteBalance={1000}
@@ -20,7 +20,7 @@ it('renders without crashing', () => {
 
 it('verifies Components Elements: h5 & Tabs', () => {
   const wrapper = shallow(
-    <OrderFormRenderer
+    <OrderForm
       askPrice={0.25}
       bidPrice={0.29}
       totalQuoteBalance={1000}
@@ -48,7 +48,7 @@ it('verifies Components Elements: h5 & Tabs', () => {
 
 it('verifies changeTab func', () => {
   const wrapper = shallow(
-    <OrderFormRenderer
+    <OrderForm
       askPrice={0.25}
       bidPrice={0.29}
       totalQuoteBalance={1000}
@@ -70,7 +70,7 @@ it('verifies changeTab func', () => {
 
 it('verifies changeTab func', () => {
   const wrapper = shallow(
-    <OrderFormRenderer
+    <OrderForm
       askPrice={0.25}
       bidPrice={0.29}
       totalQuoteBalance={1000}
@@ -92,7 +92,7 @@ it('verifies changeTab func', () => {
 
 it('verifies changeTab func', () => {
   const wrapper = shallow(
-    <OrderFormRenderer
+    <OrderForm
       askPrice={0.25}
       bidPrice={0.29}
       totalQuoteBalance={1000}

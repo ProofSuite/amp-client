@@ -2,14 +2,12 @@
 import React from 'react';
 import { OrderBookRenderer } from './OrderBookRenderer';
 import { sortArray } from '../../utils/helpers';
-import type { OrderBookState } from '../../types/orderBook';
 
 type Props = {
   orderList: Array<Object>,
   quoteToken: string,
   baseToken: string,
   bookName: string,
-  decimals: number,
 };
 
 export default class OrderBook extends React.PureComponent<Props> {
