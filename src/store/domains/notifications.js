@@ -32,7 +32,6 @@ export const notificationRemoved = id => {
 };
 
 export default function model(state: NotificationState) {
-  console.log(state);
   return {
     byId: () => state,
     last: () => state[state.length - 1],

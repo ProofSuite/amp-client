@@ -1,3 +1,4 @@
+// @flow
 const actionTypes = {
   saveData: 'ohlcv/SAVE_DATA',
 };

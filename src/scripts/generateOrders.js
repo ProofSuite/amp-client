@@ -12,8 +12,6 @@ let maxAmount = 10000;
 let minPrice = 100;
 let maxPrice = 100000;
 
-// console.log(format(new Date(maxTimeStamp), 'DD/MM/YYYY HH:MM:SS Z '))
-// console.log(format(new Date(minTimeStamp), 'DD/MM/YYYY HH:MM:SS Z '))
 const randomOrderSide = () => (randInt(0, 1) === 1 ? 'BUY' : 'SELL');
 const randomOrderType = () => ['MARKET', 'LIMIT'][randInt(0, 1)];
 const randomOrderStatus = () => ['EXECUTED', 'CANCELED', 'PARTIALLY_FILLED'][randInt(0, 2)];
