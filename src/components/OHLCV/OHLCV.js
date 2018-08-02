@@ -14,6 +14,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
     const {
       props: { ohlcvData, pair, updateTimeLine, pairId, hideOrderBook, toggleOrderBook },
     } = this;
+
     return (
       <React.Fragment>
         <SmallChart
@@ -24,7 +25,6 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           hideOrderBook={hideOrderBook}
           toggleOrderBook={toggleOrderBook}
         />
-        <SmallChart updateTimeLine={updateTimeLine} pair={pair} pairId={pairId} />
       </React.Fragment>
     );
   }

@@ -11,7 +11,7 @@ import { getMissingData } from '../../utils/ohlcvDataOperations';
 storiesOf('OHLCV', module)
   .addDecorator(withKnobs)
   .add(
-    'Connected Provider Settings',
+    'Connected OHLCV',
     withInfo({
       text: README,
       propTablesExclude: [OHLCVContainer],

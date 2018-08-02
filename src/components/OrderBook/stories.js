@@ -10,7 +10,7 @@ import * as orderList from '../../jsons/ordersList.json';
 storiesOf('OrderBook', module)
   .addDecorator(withKnobs)
   .add(
-    'Connected Provider Settings',
+    'Connected OrderBook',
     withInfo({
       text: README,
       propTablesExclude: [OrderBookContainer],
