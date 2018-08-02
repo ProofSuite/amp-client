@@ -19,7 +19,7 @@ const networks = [
 storiesOf('SignerSettingsForm', module)
   .addDecorator(withKnobs)
   .add(
-    'Connected Provider Settings',
+    'Connected Signer Settings',
     withInfo({
       text: README,
       propTablesExclude: [SignerSettingsFormContainer],
@@ -31,7 +31,7 @@ storiesOf('SignerSettingsForm', module)
     ))
   )
   .add(
-    'Provider Settings',
+    'Signer Settings',
     withInfo()(() => (
       <div className="pt-dark">
         <SignerSettingsForm

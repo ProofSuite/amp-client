@@ -4,18 +4,18 @@ import styled from 'styled-components';
 import { Card, Tab, Tabs } from '@blueprintjs/core';
 import { Colors, Loading, CenteredMessage } from '../Common';
 import { format } from 'date-fns';
-import { Orders, Order } from '../../types/orders';
+import { Order } from '../../types/orders';
 
 type Props = {
   loading: boolean,
   selectedTabId: string,
   onChange: string => void,
   orders: {
-    ALL: Orders,
-    OPEN: Orders,
-    PENDING: Orders,
-    EXECUTED: Orders,
-    CANCELED: Orders,
+    ALL: Array<Order>,
+    OPEN: Array<Order>,
+    PENDING: Array<Order>,
+    EXECUTED: Array<Order>,
+    CANCELED: Array<Order>,
   },
 };
 

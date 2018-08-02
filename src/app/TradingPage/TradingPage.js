@@ -8,20 +8,18 @@ import TradeHistory from '../../components/TradesTable';
 import DepthChart from '../../components/DepthChart';
 import TokenSearcher from '../../components/TokenSearcher';
 import OrderBookandChart from '../../components/OrderBookandChart';
-import { Button } from '@blueprintjs/core';
-import { Box, ColumnCenter, CollapseRight, RowSpaceBetween, DownCollapse } from '../../components/Common';
-
-import type { LoadDataParams } from '../../types/tradingPage';
+import { ColumnCenter, CollapseRight, RowSpaceBetween, DownCollapse } from '../../components/Common';
 
 type Props = {
-  loadData: (params: LoadDataParams) => void,
+  queryDefaultData: ({ code: string }) => void,
 };
 type State = {};
 
 export default class TradingPage extends React.PureComponent<Props, State> {
   componentDidMount() {
-    this.props.loadData({ tokenId: 'token_id' });
+    this.props.queryDefaultData({ code: 'WETH_DAI' });
   }
+
   render() {
     return (
       <div className="trading-page">

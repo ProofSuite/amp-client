@@ -2,6 +2,8 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
+import * as services from './services';
+
 import '../styles/css/index.css';
 import storage from 'redux-persist/lib/storage';
 
@@ -16,7 +18,7 @@ if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_C
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 }
 
-const middlewares = [thunk.withExtraArgument(window)];
+const middlewares = [thunk.withExtraArgument(services)];
 const enhancers = [applyMiddleware(...middlewares)];
 const storeEnhancer = composeEnhancers(...enhancers);
 const rootReducer = combineReducers(reducers);

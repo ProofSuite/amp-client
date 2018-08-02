@@ -1,23 +1,17 @@
 // @flow
 import TradingPageModel from '../domains/tradingPage';
-import type { LoadDataParams } from '../../types/tradingPage';
-import type { State, ThunkAction } from '../../types';
-import { getData } from '../services/homePage';
 import { getTokenPairData, getOrders, getTrades } from '../services/api';
 
-import * as tradingPageActionCreators from '../actions/tradingPage';
-
+import * as actionCreators from '../actions/tradingPage';
 import * as ohlcvActionCreators from '../actions/ohlcv';
 import * as orderBookActionCreators from '../actions/orderBook';
-import * as tradeHistoryActionCreators from '../actions/tradeHistory';
-import * as orderHistoryActionCreators from '../actions/orderHistory';
 import * as depthChartActionCreators from '../actions/depthChart';
 import * as orderFormActionCreators from '../actions/orderForm';
 
 import * as orderList from '../../jsons/ordersList.json';
-import * as tradeHistory from '../../jsons/tradeHistory.json';
-import * as orderHistory from '../../jsons/orderHistory.json';
 import * as bidAsk from '../../jsons/bidAsk.json';
+
+import type { State, ThunkAction } from '../../types';
 
 export default function getTradingPageModel(state: State) {
   return TradingPageModel(state.tradingPage);
@@ -27,16 +21,6 @@ const orderBookData = {
   orderList: orderList.list,
   baseToken: 'ETH',
   quoteToken: 'USDT',
-};
-
-const tradeHistoryData = {
-  userTradeHistory: tradeHistory.list,
-  marketTradeHistory: tradeHistory.list,
-};
-
-const orderHistoryData = {
-  marketOrderHistory: orderHistory.list,
-  userOrderHistory: orderHistory.list,
 };
 
 const depthChartData = {
@@ -54,23 +38,112 @@ const orderFormData = {
   baseToken: 'USD',
 };
 
-export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
-  return async (dispatch, getState) => {
-    let ohlcvData = await getData();
+export const queryDefaultData = (code: string): ThunkAction => {
+  return async (dispatch, getState, { api, trading }) => {
+    try {
+      let tokenPairData = await api.getTokenPairData();
+      dispatch(actionCreators.updateTokenPairData(tokenPairData));
 
-    dispatch(ohlcvActionCreators.saveData(ohlcvData));
+      let ohlcv = await trading.getData();
+      dispatch(ohlcvActionCreators.saveData(ohlcv));
 
-    let tokenPairData = await getTokenPairData();
-    dispatch(tradingPageActionCreators.updateTokenPairData(tokenPairData));
+      let orders = await api.getOrders();
+      dispatch(actionCreators.updateOrderTable(orders));
 
-    let orders = await getOrders();
-    dispatch(tradingPageActionCreators.updateOrderTable(orders));
+      let trades = await api.getTrades();
+      dispatch(actionCreators.updateTradesTable(trades));
 
-    let trades = await getTrades();
-    dispatch(tradingPageActionCreators.udpateTradesTable(trades));
-
-    dispatch(orderBookActionCreators.saveData(orderBookData));
-    dispatch(depthChartActionCreators.saveData(depthChartData));
-    dispatch(orderFormActionCreators.saveData(orderFormData));
+      dispatch(orderBookActionCreators.saveData(orderBookData));
+      dispatch(depthChartActionCreators.saveData(depthChartData));
+      dispatch(orderFormActionCreators.saveData(orderFormData));
+    } catch (e) {
+      console.log(e);
+    }
   };
 };
+
+export const queryPairData = (code: string): ThunkAction => {
+  return async (dispatch, getState, { trading }) => {
+    try {
+      let ohlcv = await trading.getData();
+      dispatch(ohlcvActionCreators.saveData(ohlcv));
+
+      let trades = await getTrades();
+      dispatch(actionCreators.updateTradesTable(trades));
+
+      dispatch(orderBookActionCreators.saveData(orderBookData));
+      dispatch(depthChartActionCreators.saveData(depthChartData));
+      dispatch(orderFormActionCreators.saveData(orderFormData));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export function subscribeChart(pair: string, increment: number): ThunkAction {
+  return (dispatch, getState, { trading }) => {
+    dispatch(actionCreators.subscribeChart(pair));
+
+    //add something to verify if the subscribtion is needed
+    const unsubscribe = trading.subscribeChart(pair, increment);
+
+    return () => {
+      dispatch(actionCreators.unsubscribeChart(pair));
+      unsubscribe();
+    };
+  };
+}
+
+export function subscribeOrderBook(pair: string): ThunkAction {
+  return (dispatch, getState, { trading }) => {
+    dispatch(actionCreators.subscribeOrderBook(pair));
+
+    const unsubscribe = trading.subscribeOrderBook(pair);
+
+    return () => {
+      dispatch(actionCreators.unsubscribeOrderBook(pair));
+      unsubscribe();
+    };
+  };
+}
+
+export function openConnection(): ThunkAction {
+  return (dispatch, getState, { trading }) => {
+    dispatch(actionCreators.startConnection());
+
+    const closeConnection = trading.openConnection(error => {
+      error ? actionCreators.connectionError() : actionCreators.openConnection();
+    });
+
+    trading.onMessage((type, data) => {
+      switch (type) {
+        case 'orderbook_init':
+          return actionCreators.initializeOrderBook({ data });
+        case 'orderbook_added':
+          return actionCreators.updateOrderBook({ data });
+        case 'orderbook_pending':
+          return actionCreators.updateOrderBook({ data });
+        case 'orderbook_executed':
+          return actionCreators.updateOrderBook({ data });
+        case 'orderbook_canceled':
+          return actionCreators.updateOrderBook({ data });
+        case 'trades_added':
+          actionCreators.updateTradesTable({ data });
+          return actionCreators.updateChart({ data });
+        case 'trades_removed':
+          actionCreators.updateTradesTable({ data });
+          return actionCreators.updateChart({ data });
+        case 'trade_canceled':
+          actionCreators.updateTradesTable({ data });
+          return actionCreators.updateChart({ data });
+        default:
+          break;
+      }
+
+      return () => {
+        closeConnection();
+        dispatch(actionCreators.closeConnection());
+      };
+    });
+  };
+}
