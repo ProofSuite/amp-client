@@ -8,7 +8,7 @@ export default class ChartLoadingScreen extends React.Component {
     const nullIndicator = { name: '', height: 0, active: false };
     const { macd, volume, chartHeight, indicatorHeight, rsi, line, expandedChard, atr, forceIndex, data } = this.props;
 
-    if (data.length < 1) {
+    if (!data || data.length < 1) {
       return <Loading />;
     }
     return (

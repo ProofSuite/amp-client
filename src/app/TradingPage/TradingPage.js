@@ -8,14 +8,12 @@ import TradeHistory from '../../components/TradesTable';
 import DepthChart from '../../components/DepthChart';
 import TokenSearcher from '../../components/TokenSearcher';
 import OrderBookandChart from '../../components/OrderBookandChart';
-import { Button } from '@blueprintjs/core';
-import { Box, ColumnCenter, CollapseRight, RowSpaceBetween, DownCollapse } from '../../components/Common';
-
-import type { LoadDataParams } from '../../types/tradingPage';
+import { ColumnCenter, CollapseRight, RowSpaceBetween, DownCollapse } from '../../components/Common';
 
 type Props = {
-  loadData: (params: LoadDataParams) => void,
+  queryDefaultData: ({ code: string }) => void,
 };
+
 type State = {
   showLeft: boolean,
   showRight: boolean,
@@ -38,7 +36,7 @@ export default class TradingPage extends React.PureComponent<Props, State> {
   };
 
   componentDidMount() {
-    this.props.loadData({ tokenId: 'token_id' });
+    this.props.queryDefaultData({ code: 'WETH_DAI' });
   }
 
   toggleRight = () => {
@@ -81,6 +79,7 @@ export default class TradingPage extends React.PureComponent<Props, State> {
       }
     );
   };
+
   toggleLeft = () => {
     this.setState(
       function(prevState) {
@@ -124,25 +123,24 @@ export default class TradingPage extends React.PureComponent<Props, State> {
       }
     );
   };
+
   handleLeft = () => {};
+
   handleRight = () => {
-    console.log('handleRight ');
     window.dispatchEvent(new Event('resize'));
-    this.setState(function(prevState) {
-      return {
-        middleWidth: 'none-hidden',
-        showRight: !prevState.showRight,
-      };
-    });
+    this.setState(prevState => ({
+      middleWidth: 'none-hidden',
+      showRight: !prevState.showRight,
+    }));
   };
+
   toggleOrderBook = () => {
     window.dispatchEvent(new Event('resize'));
-    this.setState(function(prevState) {
-      return {
-        hide: !prevState.hide,
-      };
-    });
+    this.setState(prevState => ({
+      hide: !prevState.hide,
+    }));
   };
+
   render() {
     const {
       state: { showLeft, showRight, middleWidth, hide },
@@ -157,7 +155,7 @@ export default class TradingPage extends React.PureComponent<Props, State> {
         </ColumnCenter>
 
         <ColumnCenter>
-          {/* <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} /> */}
+          <OHLCV toggleOrderBook={toggleOrderBook} hideOrderBook={hide} />
           <RowSpaceBetween>
             <OrderHistory />
             <TradeHistory />
