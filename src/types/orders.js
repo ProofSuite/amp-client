@@ -2,7 +2,7 @@ type OrdersState = {
   byTimestamp: { number: Order },
 };
 
-type Order = {
+export type Order = {
   time: number,
   amount: number,
   filled: number,

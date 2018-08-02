@@ -146,7 +146,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
           chartHeight={chartHeight}
           currentChart={currentChart}
           expandedChard={expandedChard}
-          data={ohlcvData}
+          data={ohlcvData || []}
           width="100%"
         />
       </Card>

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Card, Tab, Tabs } from '@blueprintjs/core';
 import { Colors, Loading, CenteredMessage } from '../Common';
 import { format } from 'date-fns';
-import { Orders } from '../../types/orders';
+import { Orders, Order } from '../../types/orders';
 
 type Props = {
   loading: boolean,

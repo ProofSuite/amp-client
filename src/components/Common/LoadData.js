@@ -7,6 +7,7 @@ export default class LoadData extends React.Component {
   };
   async componentDidMount() {
     const data = await getData();
+    console.log(data);
     this.setState({ data });
   }
   render() {

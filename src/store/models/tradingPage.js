@@ -57,6 +57,7 @@ const orderFormData = {
 export const loadData = ({ tokenId }: LoadDataParams): ThunkAction => {
   return async (dispatch, getState) => {
     let ohlcvData = await getData();
+
     dispatch(ohlcvActionCreators.saveData(ohlcvData));
 
     let tokenPairData = await getTokenPairData();
