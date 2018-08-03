@@ -1,3 +1,4 @@
+@import "vars";
 .wrap-collabsible {
   margin-bottom: 1.2rem 0;
 }
@@ -87,4 +88,21 @@ input[type='checkbox'] {
 }
 .horizontal-collapse.is-closed {
   button {}
+}
+
+.text-err {
+  color: $red4 !important;
+}
+.input-err {
+  input, textarea {
+    border: 1px solid $red4;
+    color: $red4;
+    box-shadow: none !important;
+  }
+  input:focus, textarea:focus {
+    box-shadow: none !important;
+  }
+  input::placeholder, textarea::placeholder {
+    color: $red4 !important;
+  }
 }

@@ -34,19 +34,27 @@ export const createRandomWallet = async () => {
  * @returns [Object] - Ethers.js wallet object
  */
 export const createWalletFromPrivateKey = privateKey => {
-  let wallet = new Wallet(privateKey);
-
-  return wallet;
+  let wallet;
+  try {
+    wallet = new Wallet(privateKey);
+  } catch (e) {}
+  return { wallet };
 };
 
 export const createWalletFromJSON = async (encryptedWallet, password) => {
-  let wallet = await Wallet.fromEncryptedWallet(encryptedWallet, password);
+  let wallet;
+  try {
+    wallet = await Wallet.fromEncryptedWallet(encryptedWallet, password);
+  } catch (e) {}
   return { wallet, encryptedWallet };
 };
 
 export const createWalletFromMnemonic = async mnemonic => {
-  let wallet = await Wallet.fromMnemonic(mnemonic);
-  return wallet;
+  let wallet;
+  try {
+    wallet = await Wallet.fromMnemonic(mnemonic);
+  } catch (e) {}
+  return { wallet };
 };
 
 /**

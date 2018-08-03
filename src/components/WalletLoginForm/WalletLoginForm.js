@@ -20,6 +20,7 @@ type State = {
   address: ?string,
   json: ?string,
   jsonStatus: Status,
+  walletAddress: string,
   walletFile: ?string,
   walletFileStatus: Status,
   privateKey: ?string,
@@ -39,14 +40,17 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     json: '',
     jsonStatus: 'incomplete',
     walletFile: '',
+    walletAddress: '',
     walletFileStatus: 'incomplete',
     privateKey: '',
     privateKeyStatus: 'incomplete',
     mnemonic: '',
     mnemonicStatus: 'incomplete',
     password: '',
+    passwordStatus: 'incomplete',
     storeWallet: true,
     storePrivateKey: true,
+    checkError: false,
   };
 
   onDrop = (acceptedFiles: *, rejectedFiles: *) => {
@@ -56,7 +60,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       try {
         const walletFile = (reader.result: any);
         const address = JSON.parse(walletFile).address;
-        this.setState({ walletFile, walletFileStatus: 'valid' });
+        this.setState({ walletFile, walletFileStatus: 'valid', walletAddress: address });
       } catch (e) {
         this.setState({ walletFile: '', walletFileStatus: 'invalid' });
       }
@@ -80,6 +84,11 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         break;
       case 'walletFile':
         break;
+      case 'password':
+        value.length === 0
+          ? this.setState({ passwordStatus: 'incomplete' })
+          : this.setState({ passwordStatus: 'valid' });
+        break;
       case 'mnemonic':
         value.length === 0
           ? this.setState({ mnemonicStatus: 'incomplete' })
@@ -94,35 +103,138 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
   handleChange = ({ target }: SyntheticInputEvent<>) => {
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [target.name]: value }, this.validate(target.name, value));
+    this.setState({ [target.name]: value, checkError: false }, this.validate(target.name, value));
+  };
+
+  validateForm = () => {
+    const {
+      method,
+      password,
+      passwordStatus,
+      privateKeyStatus,
+      jsonStatus,
+      mnemonicStatus,
+      walletFileStatus,
+    } = this.state;
+    switch (method) {
+      case 'privateKey':
+        if (privateKeyStatus !== 'valid') {
+          this.setState({ privateKeyStatus: 'invalid' });
+        } else {
+          return true;
+        }
+        break;
+
+      case 'json':
+        if (jsonStatus !== 'valid') {
+          this.setState({ jsonStatus: 'invalid' });
+        }
+        if (passwordStatus !== 'valid') {
+          this.setState({ passwordStatus: 'invalid' });
+        }
+        if (jsonStatus === 'valid' && passwordStatus === 'valid') {
+          return true;
+        }
+        break;
+
+      case 'walletFile':
+        if (walletFileStatus !== 'valid') {
+          this.setState({ jsonStatus: 'invalid' });
+        }
+        if (passwordStatus !== 'valid') {
+          this.setState({ passwordStatus: 'invalid' });
+        }
+        if (walletFileStatus === 'valid' && passwordStatus === 'valid') {
+          return true;
+        }
+        break;
+
+      case 'mnemonic':
+        if (mnemonicStatus !== 'valid') {
+          this.setState({ mnemonicStatus: 'invalid' });
+        }
+        if (mnemonicStatus === 'valid') {
+          return true;
+        }
+        break;
+
+      default:
+        return;
+    }
+    return false;
   };
 
   submit = async () => {
-    const { method, json, walletFile, privateKey, password, mnemonic, storeWallet, storePrivateKey } = this.state;
+    const {
+      method,
+      json,
+      walletFile,
+      privateKey,
+      password,
+      passwordStatus,
+      mnemonic,
+      storeWallet,
+      storePrivateKey,
+    } = this.state;
     const { loginWithWallet } = this.props;
-    var wallet, encryptedWallet;
 
-    this.setState({ loading: true });
+    if (!this.validateForm()) {
+      this.setState({ checkError: true });
+      return;
+    }
+
+    console.log(this.validateForm(), passwordStatus);
+    this.setState({ loading: true, checkError: true });
+
+    let invalidPassword = false;
+    let invalidKey = false;
+    let invalidJSON = false;
+    let invalidMnemonic = false;
 
     switch (method) {
       case 'privateKey':
-        wallet = await createWalletFromPrivateKey(privateKey);
+        var { wallet } = await createWalletFromPrivateKey(privateKey);
+        if (!wallet) {
+          invalidKey = true;
+        }
         break;
       case 'json':
         var { wallet, encryptedWallet } = await createWalletFromJSON(json, password);
+        if (!wallet) {
+          invalidPassword = true;
+          invalidJSON = true;
+        }
         break;
-      case 'jsonFile':
+      case 'walletFile':
         var { wallet, encryptedWallet } = await createWalletFromJSON(walletFile, password);
+        if (!wallet) {
+          invalidPassword = true;
+        }
         break;
       case 'mnemonic':
         var { wallet } = await createWalletFromMnemonic(mnemonic);
+        if (!wallet) {
+          invalidMnemonic = true;
+        }
         break;
       default:
         return;
     }
 
-    this.setState({ loading: false });
-    loginWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
+    if (wallet) {
+      this.setState({ loading: false });
+      loginWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
+    }
+    if (invalidJSON) {
+      this.setState({ loading: false, jsonStatus: 'invalid' });
+    }
+    if (invalidPassword) {
+      this.setState({ loading: false, passwordStatus: 'invalid' });
+    } else if (invalidMnemonic) {
+      this.setState({ loading: false, mnemonicStatus: 'invalid' });
+    } else if (invalidKey) {
+      this.setState({ loading: false, privateKeyStatus: 'invalid' });
+    }
   };
 
   render() {
@@ -134,16 +246,18 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       privateKey,
       privateKeyStatus,
       walletFile,
+      walletAddress,
       walletFileStatus,
       mnemonic,
       mnemonicStatus,
       password,
+      passwordStatus,
       storePrivateKey,
       storeWallet,
+      checkError,
     } = this.state;
 
     const saveEncryptedWalletDisabled = method === 'privateKey' || method === 'mnemonic';
-
     return (
       <WalletLoginFormRenderer
         loading={loading}
@@ -153,12 +267,15 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         json={json}
         jsonStatus={jsonStatus}
         walletFile={walletFile}
+        walletAddress={walletAddress}
         walletFileStatus={walletFileStatus}
         mnemonic={mnemonic}
         mnemonicStatus={mnemonicStatus}
         password={password}
+        passwordStatus={passwordStatus}
         storeWallet={storeWallet}
         storePrivateKey={storePrivateKey}
+        checkError={checkError}
         onDrop={this.onDrop}
         handleChange={this.handleChange}
         submit={this.submit}

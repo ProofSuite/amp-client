@@ -15,8 +15,8 @@ import {
   RadioGroup,
   TextArea,
 } from '@blueprintjs/core';
-
 import { Divider, OverlaySpinner, Text } from '../../components/Common';
+// TODO -> Intent issue is still to get fix this func () => `JSONFileInputForm`
 
 type Status = 'incomplete' | 'valid' | 'invalid';
 
@@ -61,6 +61,11 @@ const inputStatuses = {
     valid: 'Valid Mnemonic',
     invalid: 'Invalid Mnemonic. Mnemonic must be 12 words long',
   },
+  password: {
+    incomplete: '',
+    valid: '',
+    invalid: 'Invalid Password.',
+  },
 };
 
 const intents = {
@@ -79,36 +84,62 @@ const WalletLoginFormRenderer = (props: Props) => {
     json,
     jsonStatus,
     walletFile,
+    walletAddress,
     walletFileStatus,
     mnemonic,
     mnemonicStatus,
     password,
+    passwordStatus,
     onDrop,
     storeWallet,
     storePrivateKey,
     submit,
     saveEncryptedWalletDisabled,
+    checkError,
   } = props;
 
   const inputForms = {
     privateKey: (
-      <PrivateKeyInputForm privateKeyStatus={privateKeyStatus} privateKey={privateKey} handleChange={handleChange} />
+      <PrivateKeyInputForm
+        privateKeyStatus={privateKeyStatus}
+        privateKey={privateKey}
+        handleChange={handleChange}
+        checkError={checkError}
+      />
     ),
-    json: <JSONInputForm json={json} jsonStatus={jsonStatus} handleChange={handleChange} password={password} />,
+    json: (
+      <JSONInputForm
+        json={json}
+        jsonStatus={jsonStatus}
+        handleChange={handleChange}
+        password={password}
+        passwordStatus={passwordStatus}
+        checkError={checkError}
+      />
+    ),
     walletFile: (
       <JSONFileInputForm
         walletFile={walletFile}
+        walletAddress={walletAddress}
         walletFileStatus={walletFileStatus}
         handleChange={handleChange}
         onDrop={onDrop}
         password={password}
+        passwordStatus={passwordStatus}
+        checkError={checkError}
       />
     ),
     mnemonic: (
-      <MnemonicSentenceInputForm mnemonic={mnemonic} mnemonicStatus={mnemonicStatus} handleChange={handleChange} />
+      <MnemonicSentenceInputForm
+        mnemonic={mnemonic}
+        mnemonicStatus={mnemonicStatus}
+        handleChange={handleChange}
+        checkError={checkError}
+      />
     ),
   };
 
+  console.log(walletFileStatus, walletAddress, intents[walletFileStatus]);
   return (
     <Card elevation="1" style={{ width: '600px', position: 'relative' }}>
       <RadioGroup name="method" onChange={handleChange} selectedValue={method} label="Choose how to access your wallet">
@@ -139,7 +170,8 @@ const WalletLoginFormRenderer = (props: Props) => {
   );
 };
 
-const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus }: *) => {
+const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus, checkError }: *) => {
+  const error = privateKeyStatus !== 'valid' && checkError;
   return (
     <InputPadding>
       <FormGroup
@@ -149,6 +181,7 @@ const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus }: *) 
       >
         <InputGroup
           name="privateKey"
+          className={error ? 'input-err' : ''}
           placeholder="(must start with 0x)"
           intent={intents[privateKeyStatus]}
           onChange={handleChange}
@@ -159,7 +192,7 @@ const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus }: *) 
   );
 };
 
-const JSONInputForm = ({ handleChange, json, jsonStatus, password }: *) => {
+const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatus, checkError }: *) => {
   return (
     <div>
       <Label text="Input JSON File Text">
@@ -178,13 +211,14 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password }: *) => {
       </Label>
       <Label text="Input Password">
         <InputPadding>
-          <FormGroup>
+          <FormGroup helperText={inputStatuses['password'][passwordStatus]} intent={intents[passwordStatus]}>
             <InputGroup
               name="password"
+              intent={intents[passwordStatus]}
               type="password"
               label="password"
               disabled={json === null}
-              placeholder="(must start with 0x)"
+              placeholder="Password for JSON"
               onChange={handleChange}
               value={password}
             />
@@ -195,27 +229,66 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password }: *) => {
   );
 };
 
-const JSONFileInputForm = ({ onDrop, walletFileStatus }: *) => {
+const JSONFileInputForm = ({
+  onDrop,
+  walletFileStatus,
+  walletAddress,
+  handleChange,
+  password,
+  checkError,
+  passwordStatus,
+}: *) => {
+  const validWalletFile = walletFileStatus === 'valid';
+  const inValidWalletFile = walletFileStatus === 'invalid';
   return (
-    <Label text="Drag on Click on Container to load your JSON wallet">
-      <DropzoneContainer>
-        <Dropzone onDrop={onDrop} style={{ width: '150px', height: '150px' }}>
-          <DropzoneMessageContainer>
-            <Icon icon="inbox" iconSize={50} intent={Intent.PRIMARY} />
-          </DropzoneMessageContainer>
-          <Divider />
-          <Text intent={intents[walletFileStatus]}>{inputStatuses['walletFile'][walletFileStatus]}</Text>
-        </Dropzone>
-      </DropzoneContainer>
-    </Label>
+    <div>
+      <Label
+        className={inValidWalletFile ? 'text-err' : ''}
+        text="Drag on Click on Container to load your JSON wallet"
+        style={{ textAlign: 'center' }}
+      />
+      <Dropzone onDrop={onDrop} style={dropZoneStyles}>
+        <DropzoneMessageContainer style={{ width: '150px', height: '90px' }}>
+          <Icon icon="inbox" iconSize={50} intent={Intent.PRIMARY} />
+        </DropzoneMessageContainer>
+        <Divider style={{ margin: '15px' }} />
+
+        {validWalletFile && <Text style={{ marginBottom: '10px' }}>Address: {walletAddress}</Text>}
+        <Text intent={intents[walletFileStatus]}>
+          {validWalletFile && <Icon icon="tick-circle" />}
+          {inValidWalletFile && <Icon icon="delete" />}
+          {' ' + inputStatuses['walletFile'][walletFileStatus]}
+        </Text>
+      </Dropzone>
+      <Label text="Input Password">
+        <InputPadding>
+          <FormGroup helperText={inputStatuses['password'][passwordStatus]} intent={intents[passwordStatus]}>
+            <InputGroup
+              name="password"
+              intent={intents[passwordStatus]}
+              type="password"
+              label="password"
+              placeholder="Password for Wallet File"
+              onChange={handleChange}
+              value={password}
+            />
+          </FormGroup>
+        </InputPadding>
+      </Label>
+    </div>
   );
 };
 
-const MnemonicSentenceInputForm = ({ handleChange, mnemonic, mnemonicStatus }: *) => {
+const MnemonicSentenceInputForm = ({ handleChange, mnemonic, mnemonicStatus, checkError }: *) => {
+  const error = mnemonicStatus !== 'valid' && checkError;
   return (
     <Label text="Input Mnemonic Sentence">
       <InputPadding>
-        <FormGroup helperText={inputStatuses['mnemonic'][mnemonicStatus]} intent={intents[mnemonicStatus]}>
+        <FormGroup
+          helperText={inputStatuses['mnemonic'][mnemonicStatus]}
+          intent={intents[mnemonicStatus]}
+          className={error ? 'input-err' : ''}
+        >
           <TextArea
             name="mnemonic"
             large
@@ -229,6 +302,14 @@ const MnemonicSentenceInputForm = ({ handleChange, mnemonic, mnemonicStatus }: *
       </InputPadding>
     </Label>
   );
+};
+
+var dropZoneStyles = {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
 };
 
 const InputPadding = styled.div`

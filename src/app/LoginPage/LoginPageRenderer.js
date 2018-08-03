@@ -182,7 +182,7 @@ const MetamaskStatusTag = styled(Tag).attrs({
   intent: Intent.SUCCESS,
   interactive: true,
   minimal: true,
-  textAlign: 'center',
+  textalign: 'center',
 })``;
 
 const messages = defineMessages({
