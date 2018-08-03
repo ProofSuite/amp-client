@@ -113,6 +113,7 @@ export default {
   DANGER: Colors.RED3,
 
   primary: Colors.BLUE3,
+  valid: Colors.GREEN3,
   success: Colors.GREEN3,
   warning: Colors.ORANGE3,
   danger: Colors.RED3,

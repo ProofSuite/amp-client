@@ -1,5 +1,6 @@
 // @flow
 import * as actionCreators from '../actions/loginPage';
+import * as notifierActionCreators from '../actions/app';
 import { getAccountDomain, getLoginPageDomain } from '../domains';
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
 import { createLocalWalletSigner, createMetamaskSigner } from '../services/signer';
@@ -30,6 +31,9 @@ export function loginWithMetamask(): ThunkAction {
 
       try {
         let address = await createMetamaskSigner();
+        dispatch(
+          notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'LoggedIn Successfully!' })
+        );
         dispatch(actionCreators.loginWithMetamask(address));
       } catch (e) {
         return dispatch(actionCreators.loginError('Metamask account locked'));
@@ -53,6 +57,7 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
 
         await createLocalWalletSigner(wallet);
         dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
+        dispatch(notifierActionCreators.addNotification({ id: 1, message: 'Heelo' }));
         return dispatch(actionCreators.loginWithWallet(address));
       } catch (e) {
         return dispatch(actionCreators.loginError('Could not authenticate wallet'));

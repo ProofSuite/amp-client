@@ -16,6 +16,7 @@ import {
   Popover,
   Position,
 } from '@blueprintjs/core';
+import Notifier from '../../components/Notifier';
 
 type Props = {
   children?: Node,

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import LoginPageRenderer from './LoginPageRenderer';
+import Notifier from '../../components/Notifier';
 
 type Props = {
   authenticated: boolean,
@@ -32,6 +33,13 @@ class LoginPage extends React.PureComponent<Props, State> {
     this.setState({ view: 'wallet' });
   };
 
+  loginWithMetamask = () => {
+    // this.props.addNotification({ id: 1, message: 'Heelo' });
+    this.props.loginWithMetamask();
+  };
+
+  renderer = () => {};
+
   render() {
     const { loginWithMetamask, loginWithWallet, authenticated } = this.props;
     const { view, metamaskStatus } = this.state;
@@ -40,13 +48,16 @@ class LoginPage extends React.PureComponent<Props, State> {
       return <Redirect to="/wallet" />;
     }
     return (
-      <LoginPageRenderer
-        view={view}
-        metamaskStatus={metamaskStatus}
-        loginWithWallet={loginWithWallet}
-        loginWithMetamask={loginWithMetamask}
-        showWalletLoginForm={this.showWalletLoginForm}
-      />
+      <div>
+        <Notifier />
+        <LoginPageRenderer
+          view={view}
+          metamaskStatus={metamaskStatus}
+          loginWithWallet={loginWithWallet}
+          loginWithMetamask={loginWithMetamask}
+          showWalletLoginForm={this.showWalletLoginForm}
+        />
+      </div>
     );
   }
 }
