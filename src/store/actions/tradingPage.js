@@ -6,6 +6,7 @@ import type {
   UpdateTokenPairDataAction,
   UpdateOrdersTableAction,
   UpdateTradesTableAction,
+  UpdateOrderBookAction,
 } from '../../types/tradingPage';
 
 const actionTypes = {
@@ -17,13 +18,13 @@ const actionTypes = {
   updateTokenPairData: 'tradingPage/UPDATE_TOKEN_PAIR_DATA',
   updateTradesTable: 'tradingPage/UPDATE_TRADES_TABLE',
   updateOrdersTable: 'tradingPage/UPDATE_ORDERS_TABLE',
+  updateOrderBook: 'tradingPage/UPDATE_ORDERBOOK',
 
   subscribeChart: 'tradingPage/SUBSCRIBE_CHART',
   unsubscribeChart: 'tradingPage/UNSUBSCRIBE_CHART',
   subscribeOrderbook: 'tradingPage/SUBSCRIBE_ORDERBOOK',
   unsubscribeOrderbook: 'tradingPage/UNSUBSCRIBE_ORDERBOOK',
   initializeOrderBook: 'tradingPage/INITIALIZE_ORDERBOOK',
-  updateOrderBook: 'tradingPage/UPDATE_ORDERBOOK',
   initializeChart: 'tradingPage/INITIALIZE_CHART',
   updateChart: 'tradingPage/UPDATE_CHART',
 };
@@ -46,6 +47,13 @@ export function updateTradesTable(trades: Trades): UpdateTradesTableAction {
   return {
     type: actionTypes.updateTradesTable,
     payload: { trades },
+  };
+}
+
+export function updateOrderBook(bids: Array<Object>, asks: Array<Object>) {
+  return {
+    type: actionTypes.updateOrderBook,
+    payload: { bids, asks },
   };
 }
 
@@ -118,13 +126,6 @@ export function updateChart(data: Object) {
 export function initializeOrderBook(data: Object) {
   return {
     types: actionTypes.initializeOrderBook,
-    payload: { data },
-  };
-}
-
-export function updateOrderBook(data: Object) {
-  return {
-    types: actionTypes.updateOrderBook,
     payload: { data },
   };
 }

@@ -50,11 +50,15 @@ export const queryDefaultData = (code: string): ThunkAction => {
       let orders = await api.getOrders();
       dispatch(actionCreators.updateOrderTable(orders));
 
-      let trades = await api.getTrades();
+      // let trades = await api.getTrades();
+      // dispatch(actionCreators.updateTradesTable(trades));
+
+      let { bids, asks, trades } = await api.getOrderBookData();
+      dispatch(actionCreators.updateOrderBook(bids, asks));
       dispatch(actionCreators.updateTradesTable(trades));
 
-      dispatch(orderBookActionCreators.saveData(orderBookData));
-      dispatch(depthChartActionCreators.saveData(depthChartData));
+      // dispatch(orderBookActionCreators.saveData(orderBookData));
+      // dispatch(depthChartActionCreators.saveData(depthChartData));
       dispatch(orderFormActionCreators.saveData(orderFormData));
     } catch (e) {
       console.log(e);
@@ -120,13 +124,13 @@ export function openConnection(): ThunkAction {
         case 'orderbook_init':
           return actionCreators.initializeOrderBook({ data });
         case 'orderbook_added':
-          return actionCreators.updateOrderBook({ data });
+          return actionCreators.updateOrderBook(data.bids, data.asks);
         case 'orderbook_pending':
-          return actionCreators.updateOrderBook({ data });
+          return actionCreators.updateOrderBook(data.bids, data.asks);
         case 'orderbook_executed':
-          return actionCreators.updateOrderBook({ data });
+          return actionCreators.updateOrderBook(data.bids, data.asks);
         case 'orderbook_canceled':
-          return actionCreators.updateOrderBook({ data });
+          return actionCreators.updateOrderBook(data.bids, data.asks);
         case 'trades_added':
           actionCreators.updateTradesTable({ data });
           return actionCreators.updateChart({ data });

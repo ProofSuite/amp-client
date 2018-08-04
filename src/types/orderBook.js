@@ -1,10 +1,12 @@
 //@flow
 
 export type OrderBookState = {
-  +orderList: Array<Object>,
   +quoteToken: string,
   +baseToken: string,
-  +bookName: string,
+  +bids: Object,
+  +asks: Object,
+  +sortedBids: Array<number>,
+  +sortedAsks: Array<number>,
 };
 
 export type OrderListPropsTypes = {

@@ -1,11 +1,7 @@
 // @flow
-import OrderBookModel from '../domains/orderBook';
+import { getOrderBookDomain } from '../domains';
 import type { State, ThunkAction } from '../../types';
 
-export default function getOrderBookModel(state: State) {
-  return OrderBookModel(state.orderBook);
+export default function orderBookSelector(state: State): ThunkAction {
+  return getOrderBookDomain(state).getOrderBookData(25);
 }
-
-export const defaultFunction = (): ThunkAction => {
-  return async (dispatch, getState) => {};
-};

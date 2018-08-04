@@ -4,8 +4,6 @@ import etherBalanceActionTypes from './actions/etherBalance';
 import accountBalancesActionTypes from './actions/accountBalances';
 import etherTxActionTypes from './actions/etherTx';
 import orderBookActionTypes from './actions/orderBook';
-import tradeHistoryActionTypes from './actions/tradeHistory';
-import orderHistoryActionTypes from './actions/orderHistory';
 import orderFromActionTypes from './actions/orderForm';
 import depthChartActionTypes from './actions/depthChart';
 import ohlcvActionTypes from './actions/ohlcv';
@@ -143,8 +141,9 @@ export const ohlcv = createReducer(action => {
 export const orderBook = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case orderBookActionTypes.saveData:
-      return orderBookEvents.dataSaved(payload.data);
+    case tradingPageActionTypes.updateOrderBook:
+      console.log('receiving order book updated');
+      return orderBookEvents.orderBookUpdated(payload.bids, payload.asks);
     default:
       return orderBookEvents.initialized();
   }
