@@ -2,13 +2,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import OHLCV from '../../components/OHLCV';
-import OrderHistory from '../../components/OrdersTable';
+import OrdersTable from '../../components/OrdersTable';
 import OrderForm from '../../components/OrderForm';
-import TradeHistory from '../../components/TradesTable';
-import DepthChart from '../../components/DepthChart';
+import TradesTable from '../../components/TradesTable';
 import TokenSearcher from '../../components/TokenSearcher';
-import OrderBookandChart from '../../components/OrderBookandChart';
-import { ColumnCenter, CollapseRight, RowSpaceBetween, DownCollapse } from '../../components/Common';
+import OrderBook from '../../components/OrderBook';
+import { Grid, Cell } from 'styled-css-grid';
 
 type Props = {
   queryDefaultData: ({ code: string }) => void,
@@ -22,29 +21,38 @@ export default class TradingPage extends React.PureComponent<Props, State> {
 
   render() {
     return (
-      <div className="trading-page">
-        <OHLCV />
-        <ColumnCenter>
-          <TokenSearcher />
-          <OrderForm />
-          <OrderForm />
-        </ColumnCenter>
+      <TradingPageLayout>
+        <Cell area="leftColumn">
+          <Grid columns={1} alignContent="start">
+            <TokenSearcher />
+            <OrderForm />
+            <OrderForm />
+          </Grid>
+        </Cell>
 
-        <ColumnCenter>
-          <RowSpaceBetween>
-            <OrderHistory />
-            <TradeHistory />
-          </RowSpaceBetween>
-        </ColumnCenter>
-
-        <div>
-          <OrderBookandChart />
-        </div>
-      </div>
+        <Cell area="middleColumn">
+          <Grid columns={1} alignContent="start">
+            <OHLCV />
+            <OrdersTable />
+            <Grid columns={2} alignContent="start">
+              <OrderBook />
+              <TradesTable />
+            </Grid>
+          </Grid>
+        </Cell>
+      </TradingPageLayout>
     );
   }
 }
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const TradingPageLayout = styled(Grid).attrs({
+  columns: '1fr 4fr',
+  rows: 'fr',
+  areas: ['leftColumn middleColumn'],
+})`
+  padding: 10px;
 `;
