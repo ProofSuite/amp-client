@@ -72,3 +72,36 @@ export const parseTrades = (trades, decimals = 2) => {
 
   return parsed;
 };
+
+export const parseOrderBookData = (data, decimals = 2) => {
+  let { buys, sells, trades } = data;
+
+  let bids = buys.map(buy => ({
+    price: round(buy.price, decimals),
+    amount: round(buy.volume, decimals),
+  }));
+
+  let asks = sells.map(sell => ({
+    price: round(sell.price, decimals),
+    amount: round(sell.volume, decimals),
+  }));
+
+  trades = trades.map(trade => ({
+    time: trade.createdAt,
+    price: round(trade.price, decimals),
+    amount: round(trade.amount, decimals),
+    hash: trade.hash,
+    orderHash: trade.orderHash,
+    type: trade.type,
+    side: trade.side,
+    pair: trade.pairName,
+    maker: trade.maker,
+    taker: trade.taker,
+  }));
+
+  return {
+    bids,
+    asks,
+    trades,
+  };
+};

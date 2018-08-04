@@ -1,0 +1,3024 @@
+{
+  "buys": [
+    {
+      "price": "381.8041",
+      "volume": 59
+    },
+    {
+      "price": "383.5157",
+      "volume": 8
+    },
+    {
+      "price": "392.4154",
+      "volume": 43
+    },
+    {
+      "price": "399.9478",
+      "volume": 32
+    },
+    {
+      "price": "382.2960",
+      "volume": 7
+    },
+    {
+      "price": "396.3415",
+      "volume": 81
+    },
+    {
+      "price": "381.1055",
+      "volume": 96
+    },
+    {
+      "price": "385.4690",
+      "volume": 19
+    },
+    {
+      "price": "384.1613",
+      "volume": 32
+    },
+    {
+      "price": "382.8144",
+      "volume": 84
+    },
+    {
+      "price": "398.6784",
+      "volume": 84
+    },
+    {
+      "price": "396.1443",
+      "volume": 83
+    },
+    {
+      "price": "384.1426",
+      "volume": 60
+    },
+    {
+      "price": "383.2630",
+      "volume": 23.12
+    },
+    {
+      "price": "393.0649",
+      "volume": 9
+    },
+    {
+      "price": "384.2152",
+      "volume": 2
+    },
+    {
+      "price": "385.3359",
+      "volume": 63
+    },
+    {
+      "price": "383.2223",
+      "volume": 88
+    },
+    {
+      "price": "384.1867",
+      "volume": 66
+    },
+    {
+      "price": "383.3886",
+      "volume": 41.81
+    },
+    {
+      "price": "383.5033",
+      "volume": 27
+    },
+    {
+      "price": "394.2673",
+      "volume": 51
+    },
+    {
+      "price": "396.1200",
+      "volume": 8
+    },
+    {
+      "price": "390.5779",
+      "volume": 63
+    },
+    {
+      "price": "395.3516",
+      "volume": 45.04
+    },
+    {
+      "price": "397.3649",
+      "volume": 10
+    },
+    {
+      "price": "387.1826",
+      "volume": 92
+    },
+    {
+      "price": "389.0233",
+      "volume": 35
+    },
+    {
+      "price": "386.8709",
+      "volume": 60
+    },
+    {
+      "price": "391.2691",
+      "volume": 65
+    },
+    {
+      "price": "391.5125",
+      "volume": 82
+    },
+    {
+      "price": "382.1216",
+      "volume": 69
+    },
+    {
+      "price": "395.3655",
+      "volume": 46
+    },
+    {
+      "price": "395.6482",
+      "volume": 92.39
+    },
+    {
+      "price": "391.0722",
+      "volume": 34
+    },
+    {
+      "price": "388.3773",
+      "volume": 69
+    },
+    {
+      "price": "399.2941",
+      "volume": 27
+    },
+    {
+      "price": "394.1972",
+      "volume": 78
+    },
+    {
+      "price": "380.0985",
+      "volume": 14
+    },
+    {
+      "price": "385.5141",
+      "volume": 53
+    },
+    {
+      "price": "383.0074",
+      "volume": 31
+    },
+    {
+      "price": "392.2701",
+      "volume": 71
+    },
+    {
+      "price": "388.8074",
+      "volume": 27
+    },
+    {
+      "price": "382.9352",
+      "volume": 32
+    },
+    {
+      "price": "394.6729",
+      "volume": 43
+    },
+    {
+      "price": "399.5955",
+      "volume": 44
+    },
+    {
+      "price": "382.9497",
+      "volume": 10.5
+    },
+    {
+      "price": "397.5219",
+      "volume": 45
+    },
+    {
+      "price": "380.6104",
+      "volume": 9
+    },
+    {
+      "price": "394.4023",
+      "volume": 27.7
+    },
+    {
+      "price": "394.3235",
+      "volume": 70
+    },
+    {
+      "price": "381.5005",
+      "volume": 17
+    },
+    {
+      "price": "388.6836",
+      "volume": 47.22
+    },
+    {
+      "price": "380.3678",
+      "volume": 33.85
+    },
+    {
+      "price": "385.3358",
+      "volume": 1
+    },
+    {
+      "price": "391.1781",
+      "volume": 28
+    },
+    {
+      "price": "382.0539",
+      "volume": 20
+    },
+    {
+      "price": "383.8040",
+      "volume": 98
+    },
+    {
+      "price": "392.6085",
+      "volume": 89
+    },
+    {
+      "price": "395.0673",
+      "volume": 4
+    },
+    {
+      "price": "392.0709",
+      "volume": 11
+    },
+    {
+      "price": "391.9555",
+      "volume": 24
+    },
+    {
+      "price": "386.2561",
+      "volume": 35
+    },
+    {
+      "price": "395.4655",
+      "volume": 88.76
+    },
+    {
+      "price": "392.7392",
+      "volume": 2
+    },
+    {
+      "price": "396.9534",
+      "volume": 58
+    },
+    {
+      "price": "393.8634",
+      "volume": 61
+    },
+    {
+      "price": "389.4147",
+      "volume": 89
+    },
+    {
+      "price": "394.5936",
+      "volume": 23
+    },
+    {
+      "price": "392.3580",
+      "volume": 17
+    },
+    {
+      "price": "382.6439",
+      "volume": 67
+    },
+    {
+      "price": "388.7600",
+      "volume": 84
+    },
+    {
+      "price": "382.4887",
+      "volume": 48
+    },
+    {
+      "price": "384.9800",
+      "volume": 77
+    },
+    {
+      "price": "380.9898",
+      "volume": 63
+    },
+    {
+      "price": "397.8072",
+      "volume": 39
+    },
+    {
+      "price": "394.2874",
+      "volume": 65
+    },
+    {
+      "price": "392.3066",
+      "volume": 23.71
+    },
+    {
+      "price": "388.5547",
+      "volume": 81
+    },
+    {
+      "price": "384.4024",
+      "volume": 62
+    },
+    {
+      "price": "398.1821",
+      "volume": 49
+    },
+    {
+      "price": "391.2960",
+      "volume": 72
+    },
+    {
+      "price": "390.6114",
+      "volume": 79
+    },
+    {
+      "price": "386.5350",
+      "volume": 35
+    },
+    {
+      "price": "392.2525",
+      "volume": 8
+    },
+    {
+      "price": "386.0355",
+      "volume": 10.17
+    },
+    {
+      "price": "380.8714",
+      "volume": 68
+    },
+    {
+      "price": "398.1965",
+      "volume": 57
+    },
+    {
+      "price": "394.5325",
+      "volume": 56.02
+    },
+    {
+      "price": "397.8989",
+      "volume": 36.43
+    },
+    {
+      "price": "383.7715",
+      "volume": 80
+    },
+    {
+      "price": "398.0922",
+      "volume": 56.87
+    },
+    {
+      "price": "393.3284",
+      "volume": 25
+    },
+    {
+      "price": "390.7715",
+      "volume": 20
+    },
+    {
+      "price": "397.3247",
+      "volume": 51
+    },
+    {
+      "price": "387.4904",
+      "volume": 7
+    },
+    {
+      "price": "386.4328",
+      "volume": 87
+    },
+    {
+      "price": "386.1924",
+      "volume": 95
+    },
+    {
+      "price": "394.7393",
+      "volume": 83
+    },
+    {
+      "price": "394.0581",
+      "volume": 85
+    },
+    {
+      "price": "398.5198",
+      "volume": 14
+    },
+    {
+      "price": "396.2621",
+      "volume": 80
+    },
+    {
+      "price": "381.3386",
+      "volume": 29
+    },
+    {
+      "price": "388.2354",
+      "volume": 18
+    },
+    {
+      "price": "383.8894",
+      "volume": 59.59
+    },
+    {
+      "price": "392.5066",
+      "volume": 3
+    },
+    {
+      "price": "388.1146",
+      "volume": 13
+    },
+    {
+      "price": "399.8595",
+      "volume": 60
+    },
+    {
+      "price": "382.6801",
+      "volume": 5.13
+    },
+    {
+      "price": "380.2424",
+      "volume": 72
+    },
+    {
+      "price": "384.8984",
+      "volume": 20
+    },
+    {
+      "price": "388.0525",
+      "volume": 9
+    },
+    {
+      "price": "386.7943",
+      "volume": 23
+    },
+    {
+      "price": "386.6030",
+      "volume": 22
+    }
+  ],
+  "sells": [
+    {
+      "price": "401.0035",
+      "volume": 27
+    },
+    {
+      "price": "401.3239",
+      "volume": 17
+    },
+    {
+      "price": "404.8382",
+      "volume": 59
+    },
+    {
+      "price": "407.3873",
+      "volume": 80.87
+    },
+    {
+      "price": "418.4920",
+      "volume": 87
+    },
+    {
+      "price": "402.1083",
+      "volume": 45
+    },
+    {
+      "price": "415.6757",
+      "volume": 92
+    },
+    {
+      "price": "400.0680",
+      "volume": 46
+    },
+    {
+      "price": "407.7455",
+      "volume": 50
+    },
+    {
+      "price": "412.2640",
+      "volume": 21.57
+    },
+    {
+      "price": "406.1617",
+      "volume": 74
+    },
+    {
+      "price": "417.4775",
+      "volume": 35.12
+    },
+    {
+      "price": "402.9137",
+      "volume": 96
+    },
+    {
+      "price": "400.1158",
+      "volume": 56.28
+    },
+    {
+      "price": "407.8678",
+      "volume": 36
+    },
+    {
+      "price": "407.5466",
+      "volume": 100
+    },
+    {
+      "price": "415.4537",
+      "volume": 9
+    },
+    {
+      "price": "414.9246",
+      "volume": 33
+    },
+    {
+      "price": "407.0933",
+      "volume": 32
+    },
+    {
+      "price": "404.1143",
+      "volume": 33
+    },
+    {
+      "price": "418.5845",
+      "volume": 5
+    },
+    {
+      "price": "400.8143",
+      "volume": 65
+    },
+    {
+      "price": "417.0617",
+      "volume": 55
+    },
+    {
+      "price": "409.3778",
+      "volume": 69
+    },
+    {
+      "price": "407.4012",
+      "volume": 3
+    },
+    {
+      "price": "414.7232",
+      "volume": 96
+    },
+    {
+      "price": "418.5675",
+      "volume": 63
+    },
+    {
+      "price": "401.5107",
+      "volume": 50.15
+    },
+    {
+      "price": "414.0194",
+      "volume": 31
+    },
+    {
+      "price": "407.7581",
+      "volume": 14
+    },
+    {
+      "price": "407.7279",
+      "volume": 19
+    },
+    {
+      "price": "408.2502",
+      "volume": 8
+    },
+    {
+      "price": "410.8228",
+      "volume": 63
+    },
+    {
+      "price": "415.9062",
+      "volume": 58
+    },
+    {
+      "price": "401.1448",
+      "volume": 89
+    },
+    {
+      "price": "414.2579",
+      "volume": 25
+    },
+    {
+      "price": "404.0314",
+      "volume": 63
+    },
+    {
+      "price": "408.1379",
+      "volume": 100
+    },
+    {
+      "price": "418.0837",
+      "volume": 3
+    },
+    {
+      "price": "409.8268",
+      "volume": 22
+    },
+    {
+      "price": "403.2118",
+      "volume": 93
+    },
+    {
+      "price": "413.1989",
+      "volume": 96
+    },
+    {
+      "price": "415.9275",
+      "volume": 40
+    },
+    {
+      "price": "418.8020",
+      "volume": 18
+    },
+    {
+      "price": "410.3924",
+      "volume": 100
+    },
+    {
+      "price": "418.8940",
+      "volume": 68
+    },
+    {
+      "price": "413.6097",
+      "volume": 87
+    },
+    {
+      "price": "414.4615",
+      "volume": 37
+    },
+    {
+      "price": "411.5141",
+      "volume": 18
+    },
+    {
+      "price": "408.7387",
+      "volume": 14
+    },
+    {
+      "price": "418.9863",
+      "volume": 37
+    },
+    {
+      "price": "403.8723",
+      "volume": 64
+    },
+    {
+      "price": "408.3533",
+      "volume": 68
+    },
+    {
+      "price": "418.9636",
+      "volume": 48
+    },
+    {
+      "price": "401.2561",
+      "volume": 21
+    },
+    {
+      "price": "406.0944",
+      "volume": 80
+    },
+    {
+      "price": "412.6521",
+      "volume": 96
+    },
+    {
+      "price": "418.0258",
+      "volume": 59
+    },
+    {
+      "price": "416.6362",
+      "volume": 36
+    },
+    {
+      "price": "419.2475",
+      "volume": 43.51
+    },
+    {
+      "price": "405.8858",
+      "volume": 68
+    },
+    {
+      "price": "416.3282",
+      "volume": 6
+    },
+    {
+      "price": "415.6892",
+      "volume": 5
+    },
+    {
+      "price": "409.0760",
+      "volume": 9.95
+    },
+    {
+      "price": "416.9933",
+      "volume": 12
+    },
+    {
+      "price": "419.1601",
+      "volume": 95
+    },
+    {
+      "price": "409.9823",
+      "volume": 54
+    },
+    {
+      "price": "418.0437",
+      "volume": 36
+    },
+    {
+      "price": "403.9083",
+      "volume": 44
+    },
+    {
+      "price": "401.4564",
+      "volume": 6
+    },
+    {
+      "price": "409.3804",
+      "volume": 80.93
+    },
+    {
+      "price": "404.5009",
+      "volume": 25
+    },
+    {
+      "price": "416.9599",
+      "volume": 6
+    },
+    {
+      "price": "401.7624",
+      "volume": 49
+    },
+    {
+      "price": "401.4804",
+      "volume": 14
+    },
+    {
+      "price": "415.0256",
+      "volume": 12
+    },
+    {
+      "price": "416.6589",
+      "volume": 74.65
+    },
+    {
+      "price": "404.0784",
+      "volume": 75
+    },
+    {
+      "price": "415.5864",
+      "volume": 48
+    },
+    {
+      "price": "405.5061",
+      "volume": 18
+    },
+    {
+      "price": "410.8498",
+      "volume": 95
+    },
+    {
+      "price": "419.1386",
+      "volume": 22
+    },
+    {
+      "price": "403.8981",
+      "volume": 82
+    },
+    {
+      "price": "403.4467",
+      "volume": 54
+    },
+    {
+      "price": "410.9122",
+      "volume": 54
+    },
+    {
+      "price": "402.3843",
+      "volume": 76.85
+    },
+    {
+      "price": "404.4072",
+      "volume": 55.46
+    },
+    {
+      "price": "411.7282",
+      "volume": 97
+    },
+    {
+      "price": "405.1067",
+      "volume": 44
+    },
+    {
+      "price": "412.4069",
+      "volume": 28.62
+    },
+    {
+      "price": "407.7154",
+      "volume": 13
+    },
+    {
+      "price": "410.9786",
+      "volume": 3.46
+    },
+    {
+      "price": "407.4744",
+      "volume": 3
+    },
+    {
+      "price": "419.4449",
+      "volume": 99
+    },
+    {
+      "price": "410.7262",
+      "volume": 38
+    },
+    {
+      "price": "403.6928",
+      "volume": 55.36
+    },
+    {
+      "price": "414.0084",
+      "volume": 42
+    },
+    {
+      "price": "402.1857",
+      "volume": 74
+    },
+    {
+      "price": "409.1202",
+      "volume": 31
+    },
+    {
+      "price": "404.6810",
+      "volume": 11
+    },
+    {
+      "price": "408.9783",
+      "volume": 52
+    },
+    {
+      "price": "417.0240",
+      "volume": 34.73
+    },
+    {
+      "price": "400.0285",
+      "volume": 78
+    }
+  ],
+  "trades": [
+    {
+      "amount": 41,
+      "price": "411.2389",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x678c26e9e29488e60b63a6284edb4a53aa27011e6aef8d6c8857b020a7309910",
+      "orderHash": "0x2794ed16c6d3f607a9947a71f1b463a44a39127202d2dd4ef276eac3fd8ef638",
+      "taker": "0xc25af2a1bb015c72376f8742fb745d11cae61dcd",
+      "maker": "0x5366db6f389c6561791209ec1656cba822d3ccde",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999051402
+    },
+    {
+      "amount": 54,
+      "price": "413.7015",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xca9a9954c5d365262c450c98559a318a767840f4bcaeceef88b77325febdfd1f",
+      "orderHash": "0xe7e7a6008a4a3b40d145d26833381d689180c70642c66aac318594c692550a7e",
+      "taker": "0x9405b3bf10b983101ca628feb53e9ddf08fc322d",
+      "maker": "0xde26f60de36c04e182b25bc93eb80f1ec6ddcab4",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993853777
+    },
+    {
+      "amount": 2,
+      "price": "410.5583",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x9aa969ded43a052e3eb76101280141960f95edbab58c298afdee63a5a0063808",
+      "orderHash": "0x430e66188ecf2ac24cae033b29089b52c90ef4f6bf1793e2ff8e279c05c2bf63",
+      "taker": "0x2fb9f3d55c436be1815e9918a1b62ad3d81af6e2",
+      "maker": "0x480a5f95ecb432202b4c439a9e9fcd2b5b139860",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991902732
+    },
+    {
+      "amount": 20,
+      "price": "404.2301",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x838ac8a7ec7f5a16297f9231cefbe643d63721f2644f26a373eb52972aef5852",
+      "orderHash": "0x09f50f6c71febb8c6286510f22f5133a299c41e6159af18dfae1c3f994ce3e39",
+      "taker": "0x5b43d022135cfc4934e23f93a549e97f3b4f4499",
+      "maker": "0xba08b0323846bcb8d6cf09bdd86fece4ed9f5494",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991469757
+    },
+    {
+      "amount": 76,
+      "price": "404.7241",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x520696b9d9f90b08f6b263ecc86e3b7a1487ef511f89b3811bc796f2dfaa486f",
+      "orderHash": "0x109069e8474e240ba37db4ef2e7a8bcb402e340d76342248546eeb0bf2623a60",
+      "taker": "0xe34cb3077ad62746297459888e408349bfeaef35",
+      "maker": "0xafad0cc6b265ea0c113525464fc97cf68114029b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994472023
+    },
+    {
+      "amount": 30,
+      "price": "404.9407",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xe628f8a37c0f3d6ca002c8e4f5cae97f00e3c5be407aee77ca9b20ef3a07b80e",
+      "orderHash": "0x73baaaa0f704670d2468cbe571a726f5b19411aae7cdad15060d6c5d314cc379",
+      "taker": "0x865918743ae77969f99b162539e430d38b5c0426",
+      "maker": "0xa0eab5e51790c35c430a061ff6c842e421747236",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999271838
+    },
+    {
+      "amount": 92,
+      "price": "384.4701",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x277f7ea7aa93b45ba2feff7455073123c7e9b11a053a1729da3700555bc6079a",
+      "orderHash": "0x65e644eafece587529810593dc8e233876ae50b558394fecf37cd29f0d1427be",
+      "taker": "0xc3a56f33e91d32ebeaa5cf21c50f8f931cd76a28",
+      "maker": "0x4fd93b3f4272af2155c835d0ff1bc9bf7c9011b8",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998522306
+    },
+    {
+      "amount": 57,
+      "price": "389.3846",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x3bf5fb302936379fc1a54cf8baaba4dab9bfa7dc2c0f1f717d814de2902ae8d0",
+      "orderHash": "0xf98de8474d45c35ddfbf8ad98d4349325840af73ed76cee77315ef25876cbb72",
+      "taker": "0xb0f0750ef436a9b15e6f3b56f7a041977b3d027f",
+      "maker": "0xee3942ae4e0ad34166a981330cd168b9f6d0c196",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995073271
+    },
+    {
+      "amount": 91,
+      "price": "393.9548",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x841fbd5a1e97c4bb0c75a7b2f248518f8c3475dcabd979bf96d1859a728a272a",
+      "orderHash": "0x55b21a8479642a3ba6ba27e3e8e2d14112117ebf843c1465108ed4e31d499865",
+      "taker": "0x2947264f8bad8433a2801915f2cd78865e315360",
+      "maker": "0x220a8c73e5408e6ba06b4ecd7e75ae01ff3f2d20",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999076908
+    },
+    {
+      "amount": 47.47,
+      "price": "397.3715",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xabd2d162241c78b76222065d156b05b2d533f2c2702e499818f83ab54563455e",
+      "orderHash": "0xf0770cf60781721e5fb3b73f3eea5ec95a0cadcfd670cf900b8dca10f5d84ab6",
+      "taker": "0xf03e539238b34d69b83c15474777655ca6c78742",
+      "maker": "0xd3cc340c1ddd6d74947cec54396fbbdce77503ad",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991252459
+    },
+    {
+      "amount": 3,
+      "price": "417.1742",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x90fc815d32b2c31bdc2615ac55595f7b825e88373c2543112e334cb94e3ec50d",
+      "orderHash": "0x4b6d3f6b794511289ad469c778c36beecf159bda598ce3830847e711f9f5417a",
+      "taker": "0x857c10a331d2a6acde6956891ada02ad21501aa1",
+      "maker": "0x2d93cf61a4b2857d2a86a3859a1bd21c50867921",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992461758
+    },
+    {
+      "amount": 67,
+      "price": "409.0985",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xf8edec416c2026b522b848e1db77d9e4658b195a106f62cdd2ae20582ab2ac33",
+      "orderHash": "0x0f29b48df6d6326561db95b3588ec07d7d63b3ff57683221a0da61ca1fb05240",
+      "taker": "0x2066cc6fa94c7a883d88df0e22347f9af007ee7b",
+      "maker": "0xad8f1912156a9186b9c43d38ece21cdd0e0dac28",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993305088
+    },
+    {
+      "amount": 92,
+      "price": "387.1846",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x3c1c12da1cccdcc10e09979640a043d8ec7e74713008af9e1b65b5081f179ba4",
+      "orderHash": "0x68866fd56a4650d2d7462f66ca38b2034423b89a770f1a7d07f032999af8a2cb",
+      "taker": "0xac253eb037d18cb1aa4ca9256547691ab3de16ef",
+      "maker": "0xb91fd1c5723dc64fbab85eb692f5a38a83449074",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991255100
+    },
+    {
+      "amount": 91,
+      "price": "393.0253",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x6386e07024dd703bf1355b33d96868954dd871085459b47dbfafe2a99476ac37",
+      "orderHash": "0x35befe719427af564880acce0521c64e2f2d7bc43974c2c0edc3924324a2a973",
+      "taker": "0x4ab36dad37824c0277837b6ebbc1018f5d06f4a6",
+      "maker": "0x20b19d79961c9e9b4dce32748331eac4807b0365",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990995643
+    },
+    {
+      "amount": 52,
+      "price": "401.7494",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x92b6855502a98a39dfbf846477b57f8d701476d0a12457479724efde6efc0284",
+      "orderHash": "0x466c9f653b6bbc5659de7178e0b8bf914a4d2c84ef92c422e0ace50314ec6d64",
+      "taker": "0x67df66193552b3425002f7fac939babeeb5e604d",
+      "maker": "0xe4140dc0f3e9be2faa595e9b827ee89bce3bff36",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997739334
+    },
+    {
+      "amount": 64,
+      "price": "385.7678",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xe7b6a78f6a51a34de41369f5312f6a9e5a7db570ef388167147905d960249dfa",
+      "orderHash": "0x8da7614149a7e4d78318d21b815cf649a0818c3ad366d11718685f111b93029e",
+      "taker": "0x67ef164e629efedf98d941a96406d1fbe5ed9ca5",
+      "maker": "0xd36a94c252aeeb929ad3a6e7578077fc52ad937a",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993417034
+    },
+    {
+      "amount": 96,
+      "price": "409.9486",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x02ee0258e6c32cee3e2e003a34a31437b1246de6cab77043d5fc7fc0a414be6c",
+      "orderHash": "0x26ca6d2445c14ad923fe7ba61b250ffa4f6c7f6ebb6f8082555f4b0843c3b2b3",
+      "taker": "0x39c06616a81506081cbd2edba895ae8cb995d5f4",
+      "maker": "0x5b96d1df8e8576e6d3040beb5400e48b30014d81",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992442212
+    },
+    {
+      "amount": 49,
+      "price": "415.9558",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x05416d9c993509766737ea89d78ee5fb6ff70c2182db091f34dc42cf72eb1794",
+      "orderHash": "0xa23e6b770443689129d5bfa49bfd8128590c65c138338ff936ffd213a98415fb",
+      "taker": "0x78e8fe86297c0b969c8ab6315ba60f02b443951f",
+      "maker": "0x2f37f2c5e43378b10d6bd7acc21cec5c51a73a17",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995450752
+    },
+    {
+      "amount": 68,
+      "price": "415.8217",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xd642f7127fe021c1bf9bff7d395d3dda22bb4bb543094bd3fddabee499fb8b9a",
+      "orderHash": "0x49c472197e6fa1d11a2bfa22dd069b928d053772207ad8f702004f22aefd203c",
+      "taker": "0x0744247b3e3db56b2bd1840673a88656f704cc69",
+      "maker": "0xd81810a9ab0a4a2cb7ec3e1931f118cca462fe48",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993979916
+    },
+    {
+      "amount": 26.22,
+      "price": "385.6179",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xecaa3363b4dd2075f53e09c098afbfa416b7c43c3b27d4e70efac0c3c66d5851",
+      "orderHash": "0x5ccca036a07f99124ead56e6d69343c7076243f1504784285a0db1375782cec5",
+      "taker": "0x8fdb6726507e876b3a4995c7b44e324f4a76e374",
+      "maker": "0x4c35f2c7ccfa301543df044e78ac7f59297486b3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996650227
+    },
+    {
+      "amount": 35,
+      "price": "402.2672",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xa78fae4d49c707c29c666ee3a4d9df482d674054bf723288198fe9c29b209f45",
+      "orderHash": "0x4760b3b76feaa9004ee2f42fb96a5590628aa2ab0604d52066443f42c2bd0c35",
+      "taker": "0xc5c3a94cf7509cea7339a7c490771bf6804da0d7",
+      "maker": "0x334db2696f50a0b1352108ad8e208aa1227d2c5c",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993509477
+    },
+    {
+      "amount": 73,
+      "price": "405.0571",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x117a7610ae3b84788a832c628d57eaf316d8962433bb92167536ea3c41b3a351",
+      "orderHash": "0x6495129023f1c2f6280e0a79b5135cc459a271744b37b8e40f9a0ae5e91a3573",
+      "taker": "0x4d6b447e0a46fae72625bf76ea31cc4013156334",
+      "maker": "0x05dd11e69ce45aaba62352de2035c5c40e5d6458",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995958267
+    },
+    {
+      "amount": 65,
+      "price": "390.9017",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x366458e9b103353fece425355d8c0c63e1451d847e3c7de793d7c35df2cba8c3",
+      "orderHash": "0x910d8428701e9eb8a0def045786abf8c099fb7ae47626aa581b6947a7d13453f",
+      "taker": "0x2ff47538dc4e89e4e718243a1ffe07fae8cd6108",
+      "maker": "0x39a8c5b84508ad2e6f00e3e2f9622c4a50a4be73",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991186258
+    },
+    {
+      "amount": 43.34,
+      "price": "394.2087",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x64aa87a6451939f21c8a60487b2d6d198ef4ffd61f68e98ec737dde24a434e1e",
+      "orderHash": "0x300ae6c251da6afd96bab4e4a1bdebe7749f471d45013a63e422aba58e87ee66",
+      "taker": "0x14dd9a9ce86295d0f4ec928e05cbc601cfca161f",
+      "maker": "0xf7cafcf9e1b184d79199fefd452f96cc49e6198f",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998100595
+    },
+    {
+      "amount": 85,
+      "price": "388.7476",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x9574c22fe4af8734f46f43c82353a1d9ed463bf5e8c4fd7910fdf11a5a8b655f",
+      "orderHash": "0x61e18191c055a9998ae866cd2669882eb787c3fa0c9fa23c1413c1874c55f71b",
+      "taker": "0x6382c83279f741b298106ca65063231677c65ec2",
+      "maker": "0x80545f3912f0eade311829bfd448055d1903f5e3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994214299
+    },
+    {
+      "amount": 99.75,
+      "price": "380.3102",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x13e83f0c791a8400df6e5044b9262c7f1529a7ec2104c0e4c9d9e6e5e763a9ae",
+      "orderHash": "0xf2d57775eaa0b42a0439aeafcb7c2dc1cefe01dfcf0c51a3bf00d8038c6181bb",
+      "taker": "0x362240bac72a3cbbbcabac5b3ac4616a8ad17b4f",
+      "maker": "0x038b4f09e7b9b1f065749bcae93c3fa18666d08e",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992478024
+    },
+    {
+      "amount": 3,
+      "price": "386.2054",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x05fe3b85eda45e7ca6e54ff77bf9b63c39f3fe4fdd7f0d5ea198b66ee5df1925",
+      "orderHash": "0xf0ce8d3d8e47a7390e65a2ac26648b2b61233d2e8b24ad19b634676ece16461c",
+      "taker": "0x55ea7b0287078a3f7ba8ae0e1d2b853ae35908cb",
+      "maker": "0x8878fe3176f426824a1db03f159dab95eca58312",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994558100
+    },
+    {
+      "amount": 31,
+      "price": "409.7157",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x73fba623142905c727a1da9bbd936a04d14801d9f37279f0e5991359e346def1",
+      "orderHash": "0xb2578571430f3e6b989caf2fe5fc1cb9a762b3eab77ec9185cbecef48164200a",
+      "taker": "0x28f2da0b98e5fb5c664df4175e2e7c72455281ec",
+      "maker": "0xecc2e34698c8651ca0aaabb514935f7c7268e411",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990896183
+    },
+    {
+      "amount": 42.97,
+      "price": "419.7178",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xa5ee080f1d2bd771e345a5e601deea5c3b09d1f4a744c434aaabecac1d778155",
+      "orderHash": "0xf2ec367929a9daeb130d882cab44306461767805a3b3da436216fbf389e3b0a8",
+      "taker": "0x5fd7f7f7f6638e9fef5ccb19f9e59edf10f59b3b",
+      "maker": "0x3f48ac1ddb432554943ea48d10a706041c3d2bc8",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999458278
+    },
+    {
+      "amount": 73.47,
+      "price": "419.9351",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x470e66a56ed4b48eefc7c8490306ec706bc979a3da3fa56499335bf5e1f37a59",
+      "orderHash": "0x365bd16bbc0b13c4129ea7fc88dcf56dcdf6d71804668032a17b8fa9eff6cb40",
+      "taker": "0xa7231a2b9c94c786e42f58d360d463606d3fac39",
+      "maker": "0xfffeb3b10ddeecc564f97898dc0b51cac81b0096",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991868214
+    },
+    {
+      "amount": 45,
+      "price": "395.1066",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x6cff2c2be65343f6e608d4073d4bba5c74325e69f5b39524bc00d0ba5bd5063b",
+      "orderHash": "0x02daa334e9d4a203a4103b852d4f2cd73d9fc6f8be476cfc9dd87f61ac39169f",
+      "taker": "0x267c53a80cd67ffa850196d77ed841c96d4a3d80",
+      "maker": "0xe798742b84340b4bb71b7a2571496c4dc36c83d9",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998374606
+    },
+    {
+      "amount": 82,
+      "price": "395.6102",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x93ad44e71f46120a1fdd384f67cc66ec4dd310580fc5cea53ec8cfe28dd2e3bd",
+      "orderHash": "0xa9e1e7297a9183eaa34cf5c362badb5e6aab62a1c74fb50e2794ebd1c2916da3",
+      "taker": "0x4707eb174f1e515abc62ba0f9afef23f8b76fb4f",
+      "maker": "0xfa911abdb592b64a932c0f2d65c7b9da67693ab1",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997987067
+    },
+    {
+      "amount": 73,
+      "price": "414.6001",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x80d022d94b8960c3e095196d1722bed80725dc1ab3601744522906a1c50767eb",
+      "orderHash": "0x1eeaf1c74204ea851cce312b5b478580a26599971c87e43fa13058b12bc543d1",
+      "taker": "0x87c199130eb8a2d8009bbd400e574171f6efa216",
+      "maker": "0x23f05dad8f9aaefe8001afe31c03453dcc72ef05",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993015157
+    },
+    {
+      "amount": 57,
+      "price": "382.7321",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x0e6aa2fbaff2dc885ea6afcbceff31f146bb454286eae3fb9f2c097e73382d51",
+      "orderHash": "0xffb4551c320de6974c9884ea4233e49811729c34ca517fd4440e6786729d2634",
+      "taker": "0x29ef40899191cb6fe19938716bffb26f44000a34",
+      "maker": "0x386c72bd0a1b15941caa6a27d2524a1612caa7eb",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992675586
+    },
+    {
+      "amount": 91.08,
+      "price": "415.1297",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x2a7702624d26a4ff5373237655d1c21739726230ca7787a0b20a5f3a93b1696a",
+      "orderHash": "0x730f5e82d12dab5f2439a57d5aa07475a0f407058eea41f38a2a57534077ca76",
+      "taker": "0x574f189f65e09e074d58d45671b437101f997b1e",
+      "maker": "0x7c920a2eb3da0a274c0810d0f4b7ef0a9ab3a2d1",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993335313
+    },
+    {
+      "amount": 22,
+      "price": "400.1138",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x2f18c3db94d0986fedb74d17d0d09f62ebea8663da01655a7be497b35ef19179",
+      "orderHash": "0x1e15097f82a9f7b6feed663da61e0632a454a72008423e8b9f14a4e7292f3ab8",
+      "taker": "0x5764d5dcacc2c4f429bb89a3217ae9b88f4927f7",
+      "maker": "0x33cb8ee570d784b135f9b20ae5b2ba097c95fece",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998172000
+    },
+    {
+      "amount": 41,
+      "price": "389.8454",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xf8fac39cc80c541c2bcf888949f19f3b88a55a52a516164f85b071a914175bca",
+      "orderHash": "0x4388be68e726f156741727b2395bf3299121d73862c129772d5fdb5e10ba22c8",
+      "taker": "0x3701a134a9b869aa16d0fd9bf0af5d12f79070d3",
+      "maker": "0xebd13891ec4d29e061d0d67f625c2b438854d192",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995448631
+    },
+    {
+      "amount": 60,
+      "price": "392.5932",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xbb6892b438b35cc90e6f03bafaa5a0f87a6fe439f2bd191b32a7c45282fe4659",
+      "orderHash": "0xc4245a334327f74314311be4a1265a9593e68ba2e208a5459faecb8001b61e4d",
+      "taker": "0x7215be49a15e713c0ec79ac192d73cdff20fa193",
+      "maker": "0x78cc208cf660a5eda52d71988e3af20f9c75b408",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996634802
+    },
+    {
+      "amount": 53,
+      "price": "414.5554",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xfabe4b88f25b652413d41671ff981c038b11426e1e49eda409ebdec9a2f6a6f5",
+      "orderHash": "0x1cd12146ca9bb4627d85b3b92dd33b0d7973a67bdf9003f8c87c3fc82b573082",
+      "taker": "0xe613ecad67ff521cacb29235bc1290d9a9365177",
+      "maker": "0xe44dba5bfb5dce1119d449309d2599f4cb960937",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994393108
+    },
+    {
+      "amount": 97,
+      "price": "382.6082",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x0d2aee5f8a1fd64c9c9d0a3d34f3d7929f613bd0988784d76488933cf85f9e3a",
+      "orderHash": "0x415a6c4b4f6412c1d1036f0557bbe5894b62aa2142a43fb021c7427f3ac6cb0b",
+      "taker": "0xd9221d4c450551e14bf2ad1bbda73c84ad292201",
+      "maker": "0x6b7e18b99c95e9bfeaee4ef5232bbd0dca336b9b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994434890
+    },
+    {
+      "amount": 53,
+      "price": "398.3250",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x4e9092454528657e3ef319dc0824333b00aa506629a5b2f70779fd51dd968320",
+      "orderHash": "0xd5a19ae2fa7f284eee741664eeaeae82cbc9fd0e2798c60d84d8d7ab88b55a2f",
+      "taker": "0xc697616215ad7674c673d89f87619a78e1107a09",
+      "maker": "0x5d182ee2d42b4a8ce08529d7be0ab669471b9348",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993296289
+    },
+    {
+      "amount": 95,
+      "price": "386.3710",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x2f2212c08ec909960889cc19105cb508de129d68b996dfd2ad228f6ac45ae8d6",
+      "orderHash": "0x2c2a3858c7ef53aaa632c35e7e4870d6887b2c5d943984b25d22f055f266590b",
+      "taker": "0x33ca0dc8b8b101b5c8fdb5961241a213d622f9fb",
+      "maker": "0xfe554426315b865f03fd9dc275f9c96da83f6762",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995454545
+    },
+    {
+      "amount": 44.17,
+      "price": "381.9113",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x6f899edf5b21161c23801a077e63337dd38c5ae973afc1aac14534ac10d01e29",
+      "orderHash": "0x1c3c9ec736a6966525d907a329bb4287c4e38bbbdcac47caa3ba686170cb7fbe",
+      "taker": "0x87533f5564aeed698a1169810db846c3a3410d82",
+      "maker": "0x2a190e144f479cbe76d066ae0940505c123e19fc",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996732237
+    },
+    {
+      "amount": 66,
+      "price": "413.5070",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x700a6963266fe29a8b7e80dfcc6a39a34f38098761bf1a533e46af81136a0df9",
+      "orderHash": "0xe62e53148f359a9ceaf63f6ec262d5dfe9b2fd012079007c99ed57b1093e47e2",
+      "taker": "0x223d5c5e4b557ef880c93df9abd4700a9572327c",
+      "maker": "0x9d8cb327a406e868b57c88d97ae938f52b509f49",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993618601
+    },
+    {
+      "amount": 69,
+      "price": "393.6619",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x032ae4277fd8177a35e6b0d5596e6866526c63e21fee4a87286bd01f8ccfcf55",
+      "orderHash": "0x77eaa9844d1c3068ff0f068fd6be7691c31ba24d6f53c9b755cd7c317bd44937",
+      "taker": "0x4bfbacbed2942496f97519d3cef7657ed6a783de",
+      "maker": "0x79f8e0bfafd6bddf7e752675de43c9ed321e9f32",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996707436
+    },
+    {
+      "amount": 95,
+      "price": "419.9749",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xb4643b1114c4f534537ead853fb76b721c22bd6560691d3ab19176bf33251b79",
+      "orderHash": "0x8003f0978a36da01bfa24e182ddad36009069f48513f1449b3ca0dbeba157d94",
+      "taker": "0xf9e1a21b12aa7b1739afcebeb1ab09f3874a28cf",
+      "maker": "0x29796c74a479fb2456fcd6e50beb8c59bcdd2614",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994786724
+    },
+    {
+      "amount": 20.21,
+      "price": "387.5975",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x042f28d7ab53f64302ddf69dfce7c17cf6d50dc92c91df28d246f38a9b0c5824",
+      "orderHash": "0x8d2282594c5a9ff2fe8646b21e8bdaa9abc6eed7c25890093b741bf63ad7df59",
+      "taker": "0x02171310ab756e5fefb34e7e418037a65e1d50ff",
+      "maker": "0xf575d998990746f02637576df792325e35abbb79",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999803430
+    },
+    {
+      "amount": 70,
+      "price": "404.9960",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x6e42c62c1900d1adf240f271365ac74e50c43f677e612bf0063243c146dc7fe8",
+      "orderHash": "0xa54eba300ffe0687cf790bc1629a643b26801f036fe8e6c1a78534fec8f75965",
+      "taker": "0xc02d70de20cb11a05121b55b11990ab76fbfb1a5",
+      "maker": "0x0058980594adb81a75b89e6cdd43dfb171b5f0c3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997958865
+    },
+    {
+      "amount": 51,
+      "price": "417.8296",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xeedff97ccbd8d2afa65cfb900cb6cf2f0394915e6516fd24a5e1d4670f36994d",
+      "orderHash": "0x7db0ea10cded49c5eb4d89abff1cae1e1784e4f4e46106be428be782adc11dcd",
+      "taker": "0xf6427a197031482d2af4f171e77e06fa83395389",
+      "maker": "0xc6dfedc152bcf10d679675da94e83e3fce1aee93",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996804766
+    },
+    {
+      "amount": 72,
+      "price": "404.7080",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x00533e5487307db92bcdd160d13d7adecd042292498faf53936b99526e0f815d",
+      "orderHash": "0xfe34fea934967ca1516676074ce9b86cc3ce74d41f06c6f690f11899af0f6c1f",
+      "taker": "0x0264c8d49b368336a56b1087386eb93d14aa7b58",
+      "maker": "0x01b7c322f47b035b593b9e7cded1111f54f52bc1",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992041443
+    },
+    {
+      "amount": 99,
+      "price": "417.6260",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x1af2a7b71522f7bde4bfda1bd85913a8003036ab6d46b8d7013b7dfa4c00bef4",
+      "orderHash": "0x74b812ec1902cf7ddb2b0d40162bae0cc167c47d838d745844afcb07a9407a6d",
+      "taker": "0x2ce15585334e11921dd6b9a1433ecf0634fe37d3",
+      "maker": "0xa31a35d3e011311d428af4304c339b058a6a9633",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991961063
+    },
+    {
+      "amount": 77,
+      "price": "418.8782",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x434e9b9df7a7405284a11082acb8118ebe6884634c6c7b18295d099fb9d2131d",
+      "orderHash": "0x3784921b65852b9e206f48284bb5feee548e8c5805c9b7fd0dc1b4b45b5d5e20",
+      "taker": "0xf8b8c5f14224fc0f513f520c82154ce89ad6fb40",
+      "maker": "0x153270696b7480c60edfc1cc2dd7155126180a67",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990885023
+    },
+    {
+      "amount": 68,
+      "price": "411.5821",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x7eedb2210a0e116f8aafa5815c8becc0dc25b54b72d4e6e3f26aafc8e8fea186",
+      "orderHash": "0xfbb25d5a1102ff7997b49d197ea46752de7bf7d5804f2d2ec7c0c7523373f967",
+      "taker": "0x822f175e067ecbe620c11853f1201a416b6d0726",
+      "maker": "0x937047dbe55fba7a6ec7517dd60597e596e5b92b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999096075
+    },
+    {
+      "amount": 48.42,
+      "price": "418.5591",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x4dda4902c138a1b7d6655d027a4acba4f348ffda8783d0c235bb1010244da2ef",
+      "orderHash": "0xdab5ccd4c326012b6e2e109416ff30c6c8592ff8d8f714c8bc820ede433c2679",
+      "taker": "0xfba8759c416f910e7156abff34f2ba908e20a659",
+      "maker": "0x8ea1a7d10cb92e30f09ffd47b4f598a008b2b281",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993673067
+    },
+    {
+      "amount": 78,
+      "price": "392.0334",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xfd2ec99cfacd109bc06d0130e45f23b9dc5ed6480ccc6fba67111bf4cd61e7e9",
+      "orderHash": "0xd7d4a496e68eab3fa6194e08dc58c8f1b53692895fb18973b68d52152e82e520",
+      "taker": "0xd76b6bbbae4f6c5fbf3df53e932e5b25d5e9892b",
+      "maker": "0xf62f6c47497108e8270e33bfb4a7e1f900d83bec",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990246624
+    },
+    {
+      "amount": 23,
+      "price": "380.0787",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x4663fc346d9d82836812c9ef587c57c236b94aa4041d05426d8615d825838433",
+      "orderHash": "0xe3306e2cca047d70984f6692f850c4fce64d8164b3199359a4aa8bf835b84711",
+      "taker": "0x8251bb496da3a823b63a7fe0bf80d3fe6b805db1",
+      "maker": "0x4c4e35bdc5696f2fceb496aa9e7896899b030225",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998875911
+    },
+    {
+      "amount": 38,
+      "price": "388.2683",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xff12bdb3ce5c1b3e6e532aabbc8b47aafd2ab2db1ecaab8c45cb4f12c5d31c21",
+      "orderHash": "0x9296340bfa4a102a8a6dd3ef62cbc90ffbe3b1875df65d2aa5736ca6a65eec5c",
+      "taker": "0x3c33a74a8aae409052d9e70d7829f84d1f73fa95",
+      "maker": "0x1bda1a31398a961029fde233a5d0573273c6f2f5",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999822805
+    },
+    {
+      "amount": 97.06,
+      "price": "384.7427",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x17aae08b93696125167a0b1594eca3f4f9b1a846ce26125c9c8433389886eb9e",
+      "orderHash": "0x2b7b69215917589e023befd6a2422953290f8608f2fc1456b084e277cc1c82e7",
+      "taker": "0x1c6fd53abc7aaddadc179cfd09bc485af1fa4c81",
+      "maker": "0x488c8f5ddf9510ca7ef5bfd7d6a77734e6faf373",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990994566
+    },
+    {
+      "amount": 88.67,
+      "price": "406.5052",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x23c5f0a7710d4e39685aa1728aaf5d55e122532d26cb0e992a4bd7638ccaabc4",
+      "orderHash": "0xd9f9a8fc058ce95fe10c1fe3f92f319b26a36cd37f9c831dfab376877eedda0f",
+      "taker": "0x39ef8842d50eea19c136786f0ce8f32efd7d25f4",
+      "maker": "0xddbb33cbd6bb3a080ab1a8cf98360b20bfefe444",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992903271
+    },
+    {
+      "amount": 31,
+      "price": "402.7853",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xd1d3a40130630b167f50b2f521b5bb0e2ed7efc23c1862797ad423e35b022f04",
+      "orderHash": "0x1369befb77aec99c758faa7da7596a98a9e13a9244887d905e774d033481897f",
+      "taker": "0x6a09b80a5cbcd495681eca3593ac5188dc62e9eb",
+      "maker": "0xa8bd4b205b2fa481e1bb7b775afb858ed844e6e5",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997651548
+    },
+    {
+      "amount": 40,
+      "price": "419.7855",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xc79cd94c65f6a297b89ce6cda113fd6731c53fc389a630606be0ff93feb42ebc",
+      "orderHash": "0xd2dee86c8fc9bb146d645f4d48122d6dd03f3d827d7c10c3e08b731d874ade5c",
+      "taker": "0xeaceb15474a97643824eff4f8b5d11059b3f7870",
+      "maker": "0xa885890dc860f6babcefb7788fcc0c5ce709005b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993450445
+    },
+    {
+      "amount": 47,
+      "price": "392.2056",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xdbf70918e9b9e26c2834faa4792b53240271a297e1a7f47f285f67123ae42216",
+      "orderHash": "0xffa2638c7c18c228f4637725ae9b7b921d2997d0a5b139d22018b5c8b9e7c490",
+      "taker": "0x7684a10bb6be242e6b4bf6749fd1d73fb45e8f21",
+      "maker": "0x8ab9648cc42d303b71db1aff5ea064fa0dc7dfd9",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999114789
+    },
+    {
+      "amount": 56,
+      "price": "402.1943",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xf7748b996cbc6b94ad12a51af150ffb92bd35b820ec5dc2dbb3e76184db4d0bf",
+      "orderHash": "0x99faee1d4e6fd19787351a2e119103968e794b3800407d1dceda416d34f54d08",
+      "taker": "0x9c527632be323f45a49498a8bfa989bc2c47b9f5",
+      "maker": "0xe264f539478e575a02469cd0c7a1429489f8a3af",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991911102
+    },
+    {
+      "amount": 84,
+      "price": "418.2751",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xf389ae3e67738e784b2dde67a88335e406c716d4308332162e4e9b48c20e79e9",
+      "orderHash": "0x880231b434cd4a207e31340f94ef515b73e645dab8695eb006aedc9a58bd3dab",
+      "taker": "0x75cb6e3d2eedd313304f57001715c5cd41bf99e6",
+      "maker": "0x80fba5971718b1c509d9a8fd791f2260533dcdf3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995959965
+    },
+    {
+      "amount": 97,
+      "price": "415.4936",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xb209f419a7e7de8ad6676b8aac47d0b6e769bd32c0c59dce2d7fb2856c6b24b9",
+      "orderHash": "0x2dc9d6f7850cbb630477aaa2e89d78bd14dd6ff0b6ee57a7670a581a25e1e01b",
+      "taker": "0x5db3ff9ccf0a31372b4ba2d6e1873efd7e2ab453",
+      "maker": "0x5c4ce44a9886f9098d058a2f7b420b89cfcf6573",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990448352
+    },
+    {
+      "amount": 60,
+      "price": "398.9375",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x9df694427f8fb24d37e9bb217fb12fe98bbcbc5286c46e140454eb5ddb235b9a",
+      "orderHash": "0x3ed0be4d313303eea633ab1fbf5adb2e5bf07d84174bbb5115797aa9ce25de75",
+      "taker": "0xb09ce16da095e2320003823612eb8a4b8bc28e56",
+      "maker": "0xe48a2cea99b781dd38de9b3ef49a730f50a7edd5",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997481295
+    },
+    {
+      "amount": 59,
+      "price": "403.5324",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x36839b10e1bd380449d14e4de70b95040d819a08526f180ad59363928e0b8ef8",
+      "orderHash": "0x1371cd904829f18ce017c803c3ee00006c38bc635bd4e7db3d84ba0ed82ddb8f",
+      "taker": "0x70af7720be7a4edb1bd72ffae1720dae98101fef",
+      "maker": "0x6bec0fed83301b4102d8cc47437c91f8636a3af4",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996690325
+    },
+    {
+      "amount": 61,
+      "price": "387.6054",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x2335df454c5cb7871e42fc771a054f879a251f4bf82c8bf367010a3fc62fa05d",
+      "orderHash": "0xd4c26934623ae022e0964c0ed026d1f0ba301426c90e7fa7c15dce7c2e715cea",
+      "taker": "0xe164cbf35f8dd97d8470cd65cb0e16ae5b05e144",
+      "maker": "0xf39ed78bd50df13955bc8bc5acbc8047ba44cdfd",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998033322
+    },
+    {
+      "amount": 11,
+      "price": "403.0350",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x1947f7ddf6e8e955235449baf0b9499cb64811571c659095f5daeb7e43659ad2",
+      "orderHash": "0x45405b40fde80c5bc16fa43b04226b074716b96f9c3c39898565503efeb07df4",
+      "taker": "0xc3446d03424345cafe49d306780a920a193b4070",
+      "maker": "0xf93d7862d47030f79b9824b4eac2e067f53be57a",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999687734
+    },
+    {
+      "amount": 32,
+      "price": "399.9827",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x0135a50f1bc7c50ae307a048f0201aa6c3b57c898d18441c4064cedf0358bc16",
+      "orderHash": "0x1b063d1aa421ddad23a33e91e2333f49ee9afe73db3f6966868b4f98adfee58d",
+      "taker": "0x58752fa1f48cde222a68768e9827d320ca802b75",
+      "maker": "0xb02e77f0e756261a154e25c7ac760dcf538771f2",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990046010
+    },
+    {
+      "amount": 57.36,
+      "price": "411.3293",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x94cf6261200fd8a43f686fbc92fc0a313e99119cf21190b0794971addc10583b",
+      "orderHash": "0x34ace19778d2796e6000990ecbbd16bc39a9f80fed15a0d52660b3fbaa0692cb",
+      "taker": "0x6589e3eb068d9d8778394dba5588243a400ab4b2",
+      "maker": "0x0b481e7c0251af6730877decf2939cca48eb0176",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998279594
+    },
+    {
+      "amount": 41,
+      "price": "410.3606",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x133646e76268d4157763e42018f5a74c420d314eee0921ae9e8ceb6bb0a2dab4",
+      "orderHash": "0xedd0da3d61b50cb3d32f4e96c07ce174c6f3d45cca011cf82a6ac62186245124",
+      "taker": "0x684881807e7078f41296b752257192958601d592",
+      "maker": "0x31f8d4087317c8758c83a0051f2b71328afaf2e5",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992494574
+    },
+    {
+      "amount": 24,
+      "price": "402.4507",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xd6c9f824c498c4312492b352aeba9d45b0da39298e1af754a0aa6b1ac4ffa8e4",
+      "orderHash": "0x6201f3203bcf45f2e5a508ae6f71db092e64634e5b28ac69473f394028be0b0b",
+      "taker": "0x712fb2942b6e4551c4c8ecd104d10941b0845c25",
+      "maker": "0x8bf40bbf63e084c8e70fbe3ca1a225df7ee79f47",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992443873
+    },
+    {
+      "amount": 58,
+      "price": "419.6134",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x834f96fd4cd2ab02fd3c69ed2a3d3a0cf8a97203729f9546fb337ac15f02a06a",
+      "orderHash": "0xe7851f39292c494552259c5f148e6cbe3d195a98ccf0903734a57fa835c69b2a",
+      "taker": "0x6ad130cfca177495ab1d5aeb56897829519f2502",
+      "maker": "0xaedb2095771d4d54b48a8bdb0ef5ead095ce10cc",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996864832
+    },
+    {
+      "amount": 35.74,
+      "price": "390.1169",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x27e67a84e6c84bf64db749e6120847873da16e96bba8fa89b3fe44fd149afb02",
+      "orderHash": "0x7ffe59542e27723100b6ef260854db324a4f5c775cba6573aacbf24649b6af5b",
+      "taker": "0x3054bf3b8a1fa9277e5d0dbe8ec436fb48be8001",
+      "maker": "0x25753f17e0ae3a92ab4fde573910f579d791f575",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994888072
+    },
+    {
+      "amount": 39,
+      "price": "418.1763",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x97d42c5cacecb4a6fe29bd6b6222e996f913c6348c143cb2a3a16eb361f95c77",
+      "orderHash": "0x422036552156ae28c254a182795f41b548f81ec81b477df58b00e1049866a906",
+      "taker": "0xa849d9007f9ef289617b6f32e054d70a1cae4646",
+      "maker": "0x51e9982c894819863485f477473f1acef149d8f9",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990250056
+    },
+    {
+      "amount": 93,
+      "price": "381.5939",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xd4c2eb5d0a8327b8c4926a734c9309cbf432ddf4ef4e4044a56403de7016ea40",
+      "orderHash": "0x55136816a2c485a2ca1a384f3f0d507034de20f39b692881304f2470cf0dc843",
+      "taker": "0xf603b7837a0f33e1bc655b450bea403a297e1e11",
+      "maker": "0x19d8c5c1370c3495ee05b3b909404d7813d70234",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999473733
+    },
+    {
+      "amount": 96.22,
+      "price": "385.2128",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x30cb8c938eff863c2a242878d9efafc4b3eba56fc9bdf1a8c63229a5ffc292ee",
+      "orderHash": "0x312ba9e00e19bed3f074ca919db74d57c42b7ae0f32f0cae3d4a4d29457e8da5",
+      "taker": "0xf6f162c767607c02baf397fba4c28df97f5386f3",
+      "maker": "0xebbb2a00f0fc04001d42ebf012752ea4dd6f2627",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993068089
+    },
+    {
+      "amount": 53.75,
+      "price": "389.8328",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x7c1f4c1f1c7ae0703520a020eb3700b58e4f0de20dd6818ee61a2b85c8b62836",
+      "orderHash": "0x7b81b406b9a5ce3bf22c05cad4a2a125df44251e7bec5adc887dbe9db5c8703a",
+      "taker": "0x183278ac6fe40fac02ea10e49e6644ebea6fdfbc",
+      "maker": "0x29d86fe5dd26352cd2907595c1c56f7360f06777",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997923990
+    },
+    {
+      "amount": 28,
+      "price": "385.6822",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x216a880f96c694930f105dd4098384a33292722d1c9ed1497ffd4f342eddf4ec",
+      "orderHash": "0x8538befea0a4c08ae3b75feaa8f447f933916c6877d995297b6887907e24873d",
+      "taker": "0x837b5be363877072cb1e1a22737166d461fe6bd0",
+      "maker": "0x7eb82caaf166f5820b1c6e84f43e1d8bc70f9abc",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999231415
+    },
+    {
+      "amount": 83,
+      "price": "409.5484",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xb34c213ad771422ddfebda4dba389dda638ad64513b7c713ea37081098eac00a",
+      "orderHash": "0xb779749ddc0f798329194c6690cd6273733cbfa3f413a1c8a3015ce2fd048e99",
+      "taker": "0x258a26c77ddea62f79b944d9593e21743ce02199",
+      "maker": "0x7320ebf6f4943e2bb5576dcd0c88fc9b600cf38f",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991951894
+    },
+    {
+      "amount": 5,
+      "price": "390.3273",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x80ce37a7485b57ac92bfc2807e5753e8383ebe5d0a7e39d08996068e080eab9b",
+      "orderHash": "0x8d4e89cd087e5f53e23f9b0d500c9735250f00015a59adbaba0629d5a3fb9806",
+      "taker": "0x8ba916f5585cca02aaf4545c7e038113f90dccb8",
+      "maker": "0xd7df697ac2a50a7488946a15328157e5b83f6701",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997094137
+    },
+    {
+      "amount": 91,
+      "price": "408.1058",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xfcc17d1af2e4e2c0e607c78248d61a86e88d72e30f296a796015d31ea6c964c6",
+      "orderHash": "0xd83a3ae04458ed3bde9b0cd9a86b0a865cdf32140315fb34618807c4ceb27c94",
+      "taker": "0x4a0f2f858a99d59d477101c6f04c22d88cab50f7",
+      "maker": "0x774d2c9bf038bd1492b0e505a5994fb3d3e12ef6",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995811900
+    },
+    {
+      "amount": 98,
+      "price": "419.6319",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xbcf8bcf466157a0b20cdce42484bc28f521b5964073a6e905186d2791ab3cfc3",
+      "orderHash": "0x34b223770f96a61f215097365e59a7863f7d682e1902c5b7566bed2f41e08a35",
+      "taker": "0xc89c9c656760a7b58f1c694f1372349f5e67b8df",
+      "maker": "0xa22e76f20cf1546a97d6f892f9d2257c691d2158",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991875033
+    },
+    {
+      "amount": 74,
+      "price": "418.9829",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xf86e1b06171494aaaf69b1e293a271eafaa19ced630992f207da67dd25656bb0",
+      "orderHash": "0x8b2b4acc8ed17084af12ca9dc9867fae8f6e9a783a0c819f22816f2eedb67f52",
+      "taker": "0xbe1ad3928984a8db0f28d023fecec9189f8e7291",
+      "maker": "0xc8ed46af170f9904b708e3eca05e5611e5489ec3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991829196
+    },
+    {
+      "amount": 11,
+      "price": "414.8291",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x9b92e8be8b8c88bae6ce165944f3dfc868bb2f549817af3ea2357e42da4be110",
+      "orderHash": "0x31ead7d7ff8042c588189bfb1ab84c1b5ad73f2184deafe23ebf978cbb37357d",
+      "taker": "0xe55d0fbd7fceca894f67712585fd01cb93a0fb1f",
+      "maker": "0xbbae4ba500d26dc1d82434b03ca432f6e78370ba",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991329048
+    },
+    {
+      "amount": 16,
+      "price": "391.4166",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x2d0899791d84a5ac64bddaf3ba33ef52abd694ac74d71d144a94aa05ec20a3c4",
+      "orderHash": "0xc216bd89f0bef88e5cc790c5d2e1a662f99aa8fff580fdd9ab681dcd6e8b609d",
+      "taker": "0x0fe1d8015fda665bce1b7d257e2c98990f222b6b",
+      "maker": "0x894e28a4a84c8da4e4969ff49264a478304b07f7",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998152850
+    },
+    {
+      "amount": 32.38,
+      "price": "387.2536",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x420ac28fb3edd8ec496c7766f65953135c0a7d70759ba15d385e6b1998fe46c1",
+      "orderHash": "0x8876c33de0c10e1f9b6d4dd3703daa1a904d372f644abda5c72ec5108549b0a2",
+      "taker": "0xf4b64b5318cac3e4d5fc36c4cd11baebf95e52e0",
+      "maker": "0xb7a1ea5b143d4dc5548c86cd00387e4e7d52cdc8",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992435319
+    },
+    {
+      "amount": 95,
+      "price": "414.6658",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xbb35485ad3dc4cbe06be204eda1b4a4290f12bdaf045a5a39eb9faeeff4980cd",
+      "orderHash": "0x50a85089d7a356dda80d1c759dee2a21d6ade0707272a36f031901ce5c9caeb2",
+      "taker": "0x6c9f7a37a723e6dbffbda827ec68efb989884fd2",
+      "maker": "0x3fc0ac4ea29facd30c3b4d2f24b626a7fed72085",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990916946
+    },
+    {
+      "amount": 62,
+      "price": "388.8173",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x11f67ae2ec74c585281966a2e18690623576a5f2437d8ff9c0b5d8351f8019a2",
+      "orderHash": "0xe16f0aa7ba6f51bd6dc813a2b635c37693e59153407f120c1946a0b35c668698",
+      "taker": "0xec85a6a48740ea65b4d850f2eac41e91fbf2be01",
+      "maker": "0x480a1a19213b3b194024da3069a941fb8309ab03",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999673703
+    },
+    {
+      "amount": 74,
+      "price": "406.0632",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x3a2bbcfd2918090ca85f601708ff400c4fcaa0cbf558ada3e4ef9131ce641476",
+      "orderHash": "0x64be18f49b3a8c830562aa5e2ea9472ed886f5db033ae573cf4fff9c5a58cf3c",
+      "taker": "0xaaef16fa14f13e4d266415c5596cf81cb6dca742",
+      "maker": "0xaff223d6ff832051b75783ef8ef665ce27f87478",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991225961
+    },
+    {
+      "amount": 23,
+      "price": "409.0141",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x4853c957c9d33eb2e6ecaf74f6f9bdc160bbd9ebc6bb1ac36842a80e7b695fd0",
+      "orderHash": "0xe7a0bfb874b3fd82c2376e3fdfe6dc535f274f6b40d26a504a5894d083cf93d9",
+      "taker": "0x8f47c481c2fe8c94e28eccda54bb1531a4d8ec58",
+      "maker": "0x2dd448b4369893064c03e4dcce44b5693e9ab978",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991716764
+    },
+    {
+      "amount": 21,
+      "price": "417.3067",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xd38839a2fa82fa6f888e1252f357d1f680537a4651bfc96dbbf3f51ec0f681e1",
+      "orderHash": "0x1901f672b999a8ee3b5bf8ab03324d7f9a613e06f9dd775baa7cd1bdb78c3f9c",
+      "taker": "0xb28cefc75f55d5f1e6955b078663aa67aed85255",
+      "maker": "0x2c4297ae5caaca4f84d9b99300d7d5d65bc53e60",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994844133
+    },
+    {
+      "amount": 68,
+      "price": "399.2602",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x1337ac77fad5504dd5ffa13912cac2fdfb6b51872b84f8cd69baf72270a6978d",
+      "orderHash": "0x0a87d20f4751787088ed63f919ac017bd0db0be7e3535c59e1132502c796f563",
+      "taker": "0x8efbe22f6823b5e1ee08239e1c161e4aebb30201",
+      "maker": "0x82479dd871fcbe4a55fe4a03d07cdd98b2fa93be",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997517466
+    },
+    {
+      "amount": 75,
+      "price": "414.3029",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x5702a48b30ac085ccf6820b534495b2b2744813c9cd440682b9004073894149b",
+      "orderHash": "0x71cddb38ea9b3212b4060805aaec18102faa74b1ffc5c899260a09fdc6ad790f",
+      "taker": "0x2e3dcc391ac064dd80c5823615907da485fb2fd8",
+      "maker": "0x2774f437c265866ff6ff7a6ba36aa6ce918efe47",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993921920
+    },
+    {
+      "amount": 59,
+      "price": "405.9757",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x269d5b7d81645dea113a258ac1ab968e25e1aedb3c53be5e2b649beb8a4f3bf1",
+      "orderHash": "0x219be1929a547f40415f13476c4bd357eb0202c79de99f8101335cc6298b9d82",
+      "taker": "0xd421f708d71ef1947ffde4fc90c4df75350e5965",
+      "maker": "0x4e59fa9201dd9ffb3c118dbe880ac410ab5ec0a0",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993026469
+    },
+    {
+      "amount": 80,
+      "price": "396.7336",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x2c181e3ee7563c93a5dd77b2ea8efc44db9e881db992f04b46b5ec74a6755961",
+      "orderHash": "0xd2764fbdaf4ccb06506339b0e20bff70e43fbf1358e666b898fc6ada32f533e1",
+      "taker": "0x9d38d0d6551a9b1ac5ad012eb1185cc139421dea",
+      "maker": "0x5752d52e886503ba00f22cd35616c1c7aa7773a8",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996914237
+    },
+    {
+      "amount": 78.36,
+      "price": "407.6333",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x3213470c63c6c071dddcf65ec29e13f306c2a044afae39f0f761cac3030fc52e",
+      "orderHash": "0x391187a33bd1043212be42d25402b3c371e21bbe0b9c8130ae384f95a5c83c06",
+      "taker": "0xfc5cd73f60539575f52df8db71a4b5cd700b46f0",
+      "maker": "0xb6cf580769ab3dec27cdfb7c06205b9e1f810197",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995211204
+    },
+    {
+      "amount": 5,
+      "price": "409.4653",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x68f823c28f9639f7b845e79f6e541636938c18251fce51b06e3f329bf0fef359",
+      "orderHash": "0x0fa9d09a78dd81d997ecee33efc769fd92df7077c5956f81ee35847c3cb2e141",
+      "taker": "0x8325a9f357c2b5c94c428da493ec2334b661bb80",
+      "maker": "0x30df0d590293e612ac3c370e19a232bd5e3d7f34",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990055232
+    },
+    {
+      "amount": 1,
+      "price": "381.4505",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xfc2a811142ac98ebf0472ddd566a3a7f9b267b7a81c7fc671d83331ecd426a20",
+      "orderHash": "0x5ddadc04429ea36d677e2a0391e73e6041390a0a780262903170d3e1cd424cee",
+      "taker": "0x2e6b5d105ccf2796b6eee1a2cef6aceea55e0753",
+      "maker": "0x06307fe47e8a1ee150f199fedf659d40e191ef7d",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994922330
+    },
+    {
+      "amount": 72,
+      "price": "405.5844",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x7af3a89c5324105c70c3c93b5855772588dabb0f8d81362113827068406d78da",
+      "orderHash": "0x81f4334f4736ad399862924c2db2d2df67b222a0ca2c9b1f2a0cd3d3f7fb47ec",
+      "taker": "0xf8abefa4f07a4966f118e82507377bcebe7fea5b",
+      "maker": "0x3a74d0ec9be48cadba7174f1e2f5cbde4480489a",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992952728
+    },
+    {
+      "amount": 13.08,
+      "price": "381.0548",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x2ac40d93275a06be97095319963ffef6a5e26ee6e3f66e43d8387592f93d7016",
+      "orderHash": "0x3a666ccdfc95ccc115c7d53a89baa2163092ac657e5c65d4e0f59be823688644",
+      "taker": "0x686fa689d7e40258a4fac9b6832b364edbf1cc00",
+      "maker": "0xe149e393aa4bfd40a7d7f8ab25b156ac0dca4c06",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999725070
+    },
+    {
+      "amount": 8,
+      "price": "409.7484",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xacc30b5de880940c38c745648c614b208a4e443bd2c9b2773fbcf9c1e145b255",
+      "orderHash": "0xcc045dc7933f244768fdf356f1e59cad0943f94a5761e5dafe3d05e5d4b1fa55",
+      "taker": "0x481838ccd94bac3320c880855b77dc19c14b6fed",
+      "maker": "0x916e9c38b76625de1a473a3789e22b8f8759dcfe",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995654318
+    },
+    {
+      "amount": 42,
+      "price": "404.8823",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x1154b54e415ebeb03ce5ac444568b11c25db7b5e32ff853e674f3aa640ab78e7",
+      "orderHash": "0xd19a0ccb42e9283c7528584c75f706d8c78868e7ff5991bbc86f6074b7fc984a",
+      "taker": "0x65cbf66be8de162fb58a7a22f233cd831238a5ba",
+      "maker": "0x24c4e3085caedf80138a98d4f7dd59cb609f5e1c",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992436363
+    },
+    {
+      "amount": 67,
+      "price": "411.7579",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x2be068ac35a034963abe20f98269f8ced30498020794de0939fa0ceaad82e321",
+      "orderHash": "0x9f2c470aec75c20c96b7e6e6c8f84862a208dfc5a751ea6522ae3e4548ee182a",
+      "taker": "0x9ba326992edaebe12e4f970e38df31ad564e0b20",
+      "maker": "0xc007b439c1f8c11d93fd4dcd7d63d0ce1eec2bf7",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990187016
+    },
+    {
+      "amount": 33,
+      "price": "395.4163",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xbdd02c87de72aac09dbe10992dd96d88cfbdff19483d5ce56133a60d92928c9a",
+      "orderHash": "0x816d6d303ba2ee2234195fb9258b76b0de5591dec0e50f59c8cdece793470f4a",
+      "taker": "0x31d6368beb57910ecddde874e0c35621a26c242c",
+      "maker": "0xd76b1d2003ded365c5403a0f6540c8d05169f3ae",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993033818
+    },
+    {
+      "amount": 65,
+      "price": "406.8754",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x50c35fb6b7d6207d2ac07380c267b2d95e158871fd9c4ccc824e0fc4e0fb75c9",
+      "orderHash": "0x32a1583853d60d4717693da1c2167dfe5c9f3ac8b4d71b8088e8e87daf50242f",
+      "taker": "0xf8834caeb05080ddb8f83fd5d2a908f0cca27f85",
+      "maker": "0x5b1194504727b91469c47dd9e96cf27725ecbd9b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993421001
+    },
+    {
+      "amount": 90.85,
+      "price": "394.8966",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xab9765d9c5d32e5509754b3bcf6819529733bb8bb5b0a53242f432563f93337d",
+      "orderHash": "0xfb2c33dc0f4824161d72e9e177620f553c3ff188d9ffef6d7ac3121208b4b4a6",
+      "taker": "0x41899503700c2bf7a5affeeb44e30dc2a2fc97df",
+      "maker": "0x818edfa28cb8a8d4baf15df8352e1a7138e95a02",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999969777
+    },
+    {
+      "amount": 3,
+      "price": "387.9811",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xa6c3770c39aebcb53e30aaf3717ea9ba427e8724f8eec0648d3c9cc97faf0df2",
+      "orderHash": "0x1d53655c296508bac69b9619df58e1bba90dc610c0792900f432ce469ee506df",
+      "taker": "0x0ef431d0d2e35e7dfda0c058533b239f095f0d7d",
+      "maker": "0xf6e08b90c5da27008869e9cef000629e5907fb6d",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995368419
+    },
+    {
+      "amount": 8.09,
+      "price": "390.8976",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xfcacf5f457e701c74297fb3be8bbe16fca6c6b07c25298d3533a7f818db63bc4",
+      "orderHash": "0x2a978604b0caac479367b407bcd922085b7871498479ac17079462f15bc46018",
+      "taker": "0x00c435682abfdc31cc9f8133a5e8dd02800310bf",
+      "maker": "0x6b787a94f97392c149e6ae4ca3eb304d148493ed",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994674821
+    },
+    {
+      "amount": 62,
+      "price": "380.7764",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xb94eb5bf0168c0eea37341393fda27d082a57e6ef61c65016adcf1a822588722",
+      "orderHash": "0x999e4b57ab5550c40e5906dfa514a38f9b8f0a2fdd3861cc1005fc757619996f",
+      "taker": "0x4888a561dcb600dce341f484f00eab826564069e",
+      "maker": "0xd23adb97084890b34995bf39e274126fb4b9eea5",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997474462
+    },
+    {
+      "amount": 34,
+      "price": "391.8016",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x9b041a2127703561133854911655b118ded12f9f83f48e09a03f4104df7ead8c",
+      "orderHash": "0x247822fe468a379b66308b73069db524a72dd1320dc8b2ff36d4393f82ade11a",
+      "taker": "0xad2eee641ee41db50b551e64c7d6b3a0689aa2fd",
+      "maker": "0x668e3a79690a70b9002cf5e004b4dd6caddad957",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990862759
+    },
+    {
+      "amount": 92,
+      "price": "393.5798",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xb7864ad342d587c01b09d9c19c8a5b8e62b352d8beaa81ac18edd2eb15853afe",
+      "orderHash": "0xbf2c4f8999b68ed0a4e121ea895c25a6d6a19f80adafabdc7287e8be88b8e19e",
+      "taker": "0x0698f27677c8a6bfc55fe10cdca4b17bf33218ca",
+      "maker": "0xa40020b64524347cdab46d427e75dddc12d258f9",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994475764
+    },
+    {
+      "amount": 21,
+      "price": "400.3288",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x74d8aedf8893536f5e3a82ecfa81d156798e946c36a8b1306d076380f621dfc9",
+      "orderHash": "0xe67014ce7e911ade5bfed20ec0d51ffcf040a958f3ebda4ff3b5e43f67a79c3e",
+      "taker": "0x6b3585253f7c7a2430882ad2483278d4ba205649",
+      "maker": "0xad8dbc3e740c8136d24e8fa3b45e50eb35caff92",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992553811
+    },
+    {
+      "amount": 83,
+      "price": "414.1369",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x8e33d43fd7c66ea3e728a55ef04514c339796fa4ff81966fd713b7f9a706c43c",
+      "orderHash": "0x8bc0f8aef2f0b94496543b12f109b18130acc28a8b0ab2f92f6c1757950bc3cd",
+      "taker": "0xe84126e243ff49cb729695fa87e3470f25941351",
+      "maker": "0x6012b950f57174151c32b1aadb986e07a93696f5",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990165585
+    },
+    {
+      "amount": 59,
+      "price": "419.4826",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x0f80efac7624394c34e880c72e1a2826ceb9adbf96ef061359698231248c5624",
+      "orderHash": "0x056edcb5844652f7427a43eade15fa5086744619e4f1613296bce0ebf3426b55",
+      "taker": "0x34159370ddc1da1738ca413bfbd76003c43c045c",
+      "maker": "0xb084d380c156789a818b40f5d386f5b2a0462d20",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992316784
+    },
+    {
+      "amount": 27.76,
+      "price": "409.2645",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x4d320b7995e8c088e303b2fa1d7ed89371281c64a30a666e719e685bba982753",
+      "orderHash": "0x650ffb3370811280a1a139b6d29f4cd76c86ee9193725aef1cd651f79d09c2c4",
+      "taker": "0xf681ebad34b34350c3f07cab6516fd7ab9564c9c",
+      "maker": "0x6f195f0f3f5d6b32b773aeb7beb4a8cb9a5d9b72",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996736080
+    },
+    {
+      "amount": 59,
+      "price": "397.0017",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x2c5772ccdca3c4d13d57483d33c7568fdfe55f8498068d1cf705c890ca7ab38f",
+      "orderHash": "0x595ba107523e43b92377cc5c4cbff78a5e79a5da4589aadb477299306caa5103",
+      "taker": "0xedeeac3a72f4819f698846dac4faead29a487c37",
+      "maker": "0xe6f9176af8b4ada994a97a6792991fd1516badd3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992440688
+    },
+    {
+      "amount": 83,
+      "price": "391.8841",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xe857b57ecfbb4f1f7c0a88dc0b0ca2a025cc8c798c0096b8da0af323f985694b",
+      "orderHash": "0x0d8ba4cc9cad19ab23ec188ffa09909873c18dcf85c718cd187a8e9a0458c981",
+      "taker": "0xa4edd6f076f585e1e2f66b83788f7c328e59d0dc",
+      "maker": "0xb1ff286f8ece1e6eedcfc1826cedd0e120b4fbc4",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999256644
+    },
+    {
+      "amount": 22,
+      "price": "410.2243",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x6db7ce617b03d19b75fac2861eb484d956f69935403cd22c27f4156e1f6e9486",
+      "orderHash": "0x436c985886d70c0c4a077c5765aa0060872e2fd5648ae1615ef261daa92173f9",
+      "taker": "0xfe57885891d5a858f6748f59905f35405d52b243",
+      "maker": "0x96c5e8a8fa554912f79dd54496f3d3d6d5b05795",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997769957
+    },
+    {
+      "amount": 68,
+      "price": "381.6894",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xf51eaaeb80ac504ddc13e2ecae602746c26c0140e6996ffa58becc962ece4206",
+      "orderHash": "0xb40b276074800256f4ea0235eccf8e94e138d911360b5e368df3e6fc964d4bdd",
+      "taker": "0xa2b38c53ff1bd4cfa74edd418f024127c632d39f",
+      "maker": "0x81730230659ea7442690dbc46074318a727be12b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998780192
+    },
+    {
+      "amount": 65,
+      "price": "417.5196",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xd7a27daad358bdbcc6f8b394d0725370de1e58a3d3129a90956edcd7c7668d63",
+      "orderHash": "0x035277c6b6664c6284ff8275ddadb8e33ea0ea2b46ec7b73fc9f38798ebe69b6",
+      "taker": "0xd58675a4a1a1a4b2852efaeb31a3adf53b1f240b",
+      "maker": "0xd26b6849bb6f3226663461fbd2a7d3864526c32a",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997243595
+    },
+    {
+      "amount": 4,
+      "price": "414.2956",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x961401a8923045075a641448c7525c76a06df2026be1d51db5fbeaede9add804",
+      "orderHash": "0x3e0f01c1570490ce9de14d23b55bd1651159a1ee08509fb8eb6a30af2add9db8",
+      "taker": "0xe478c745f9736630090c4398e76049537278e060",
+      "maker": "0x7ed2dd7a862090638ace73c21579b4d9d67ad407",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997135822
+    },
+    {
+      "amount": 64,
+      "price": "383.2288",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x9ef8169928669a6324e0cc3ec8a7fb644c957e737e9cb520beb7e798c7bcc853",
+      "orderHash": "0xc6ce15fc2c96a3f5836d2ee589632534b77c89f5c7f3449e0ada62cb6c47ccb6",
+      "taker": "0x17959a208c36d99d9d56b27cb03ac5efe968534e",
+      "maker": "0x191c6d919f924c52ecb350164ae9ee248866c2bb",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999060463
+    },
+    {
+      "amount": 18,
+      "price": "398.7287",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x906c407a9d444e3c7dd303b3369026692899cdf052b87f5e11f051a2bfb757c0",
+      "orderHash": "0xf178fd94ad4136809b8e14716a3b3b37ec6c47fce368c8d06809711e85496ef7",
+      "taker": "0x83453a2f11005139425111222a79537f4fced7cc",
+      "maker": "0x32472080da08909afe2c2d684eb87fab43d595d6",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991719583
+    },
+    {
+      "amount": 94,
+      "price": "407.7349",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x92cc603dfad11a911fbb9196aa97b0c68f6701e62110551a66c04a02f3050b33",
+      "orderHash": "0xefebc153ec52ac697aa6cb8941841ae4178d03ddec4a0f60ee9c430c5818418f",
+      "taker": "0x3df8e52f3ee41cf9e7e7f36ce2b7e3b3d4ce85e0",
+      "maker": "0x73a10d9bf9fd026db0bcda74f9725361af586087",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998343472
+    },
+    {
+      "amount": 38.65,
+      "price": "391.7325",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x4bf210ce5184d0462357d88eeddd6379530d8154720e3531750d063c6c8a5ac1",
+      "orderHash": "0x8d793678a69de54ab55c212e6fc0a3bc53ccde86077c5dcc418c55d0ca2658fc",
+      "taker": "0x2132828d75aab1c520ff650b761e4d0b75bf21a0",
+      "maker": "0x995bb13d91d3f4da23d09e7d82a11cf3a9d34eec",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990180556
+    },
+    {
+      "amount": 55.98,
+      "price": "408.3007",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xfc2cbe2b0a2a8dba42acaac554527266706e8d093001fb7d95b6f18890e3736a",
+      "orderHash": "0x26e635e6504306354571bcdea7c98c1cabef9af1e7ab131ccaf7ca408bf6b3df",
+      "taker": "0xa554db6f6d0dba212eaac986eb3e505b41a7479d",
+      "maker": "0xf9e214d7a0d5006ed3919dee9e92e97091d3c602",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999674811
+    },
+    {
+      "amount": 16.82,
+      "price": "419.4556",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x899e75720dcad243bd6b7f3e3cba38b1bcc74bbee7a764c1a8202dce6bec8708",
+      "orderHash": "0x64dae71074424c32da59cd6ae4435e8dfbf0507229b4a62ca05ea74a5cd1117b",
+      "taker": "0x4d864e597ecaabfe3ee86649f3892947dc0d800b",
+      "maker": "0x5594df6b869571bd232655fba42161b7831d2e43",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990613000
+    },
+    {
+      "amount": 68.32,
+      "price": "384.6731",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x42737dbc0e36f0f26d36db762d5065504e446e40e9b99198a32b0c959aac3bc3",
+      "orderHash": "0xef58b6d8eb2322fd5b8122311f14add6cdedf260645406fc93badfe6db06d0fb",
+      "taker": "0x98f355531752f41bbef80b2a2ae547c911d3f6b7",
+      "maker": "0xdb9de6de9a6d8f82467c61984cb0ea995d9d0785",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995949581
+    },
+    {
+      "amount": 95,
+      "price": "393.0600",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x65d90efa436f643906ac763c0ee1988954facadf1a26b4a1bbf8fc142c2be394",
+      "orderHash": "0x6650086330f01d2fd3c34efe2a8ddcdf9c404c4c2bb571e90b483b47d21c999a",
+      "taker": "0x6bf8391e550fe2207eee939789347f25f68db6f1",
+      "maker": "0x58f39ff49216d705763ab6b6ad69ab5bb8340a2f",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990034980
+    },
+    {
+      "amount": 14.95,
+      "price": "389.1021",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xd6b10ff3f7e0c814025dca8cd3363299068b7ec958ed81c29b9ab6685692f77a",
+      "orderHash": "0x79c187388ca5c5cba2604660805e5e7c6b62239ec664e3f1f0e684a6c82f2054",
+      "taker": "0x2b246ea7f41820c85bad6b4119dc5e6e9083fc40",
+      "maker": "0xf05146761315a6e76a72cdb3f20db01abad36e66",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990673648
+    },
+    {
+      "amount": 90.14,
+      "price": "396.2466",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x1526b2d84b6d1803afe490e5ba4eec6029ccbf2c4cb523bc9078d92e1f646290",
+      "orderHash": "0x4c9d777dc2c377ead9abe9ecf471e12fb0fe0f4fcb1fb4cbd0784fec89d1d4f3",
+      "taker": "0x1ac3ca3347c54dbc4ed88692a2e8e564290b8d16",
+      "maker": "0xb6068bd0ae0b26c2bd5192ec8af395e322ab26bf",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997788537
+    },
+    {
+      "amount": 93,
+      "price": "388.8603",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xdcb2e61ff50a9aa495189228aadc609c22da148badc2591a22e91418b7cb202a",
+      "orderHash": "0x7ac29886379e63e55e41d7a456170fff6e69a743abd3e8952e334c3dbb50c269",
+      "taker": "0x9ff1a1e535b8790fb091caf38c2174eb9cb316e5",
+      "maker": "0x3a174e51a375c37f18b27abc34f44afa7f16509d",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995029083
+    },
+    {
+      "amount": 33.1,
+      "price": "406.7924",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x7162ffd6da4b8b38741355441a2bcfb87e3fb9829c113742ee29e3d5b5bc3d03",
+      "orderHash": "0x03e9ad62b64e2d861af4a3233aaf4095f87d0279e33cc73650732d598a47d55c",
+      "taker": "0x178ff23faa71a3cf3d61eae2305ee1b60ed5410b",
+      "maker": "0xda3c4bc022f3f706d9f2b42d24de956fc59552e3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997402291
+    },
+    {
+      "amount": 50,
+      "price": "405.4641",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x24885ad12d9f7d41fb7331ddbe4d75bc5c4b3fcf3a56d8bf2df0e0c95c9ad396",
+      "orderHash": "0x7e794dd5a580e1156ef02e4626bff43dbb95e5af69d81336edf6a6ad0fe0cfa6",
+      "taker": "0x4ed3d810a79d8c8e5f9eef638b57962c41a32070",
+      "maker": "0x7b0f4f9e4630ccefaf7f4acb53d4cb1870dc96d3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995685753
+    },
+    {
+      "amount": 78.45,
+      "price": "408.4741",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xca6a9600ae638cd8e841f3de8e47f9787761fefb3592819bd74cbe905e408e77",
+      "orderHash": "0x82ec9edfa1a6627ea8a5da6e46190d6793820ce270ba774ac8b4265149966df0",
+      "taker": "0x710efc78ab2107d0d8e3cef80653a361282ec2fb",
+      "maker": "0x1515faf22638ec0d5df1952202e5de4543159b23",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995203903
+    },
+    {
+      "amount": 73.79,
+      "price": "398.8699",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xfb65f027262e27df4ced86e496435e1bc5fe70a15bb7d68569e8cb7b3012b01b",
+      "orderHash": "0x0a31e82f44733ee43d9839a4632241d284b81a027aad86768a1e931eae6b9cb7",
+      "taker": "0x71fba38f2df17d7b627f5ff867cdd99b5111d63e",
+      "maker": "0xd9f1ee70895f991d7c1581002b83bac5744c798f",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995794890
+    },
+    {
+      "amount": 62,
+      "price": "408.5722",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x0b99a43364aacb57674a5bc2416480be99a5e3dbcc62118ee053c9d1af84122b",
+      "orderHash": "0x7d36a327e5025cbb8c25128c7917be564914a3bd523bce0f97dbd7d6fefc1652",
+      "taker": "0x15b75d2826ffd7d8c667d848a510b4757f6e4a4e",
+      "maker": "0x11a89d4489f658a6f093a47b23256921d392d2b6",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998723990
+    },
+    {
+      "amount": 70,
+      "price": "395.2157",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xafd0b0c6424ede066ca80bd2920325d2d566f416fd679d0d232839c6ddd9dbba",
+      "orderHash": "0x6732598e1d5dfe5a1f562c3f402f4a75dcea1c22f199af47267b31bf4f4679b8",
+      "taker": "0x5903c48bb23c5997973c95024d8efb8bdfa5eac8",
+      "maker": "0xec58f35dc999814a7c4bb020bd9486331bc52500",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997303711
+    },
+    {
+      "amount": 4,
+      "price": "410.2454",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x7e7606d297f686690af24726384a34a5c3132d509b7000dd77aa8be453a6bea6",
+      "orderHash": "0x9b6c4bd302e07e6b60a6fdb60d9ca58f5f83b01551586d088b118ebd2416ada8",
+      "taker": "0xb742aa2a7eaa069f5f18170b2080e2bc57079ea7",
+      "maker": "0x11aba2e1ac3a289bb9fbb92ffb0bb2fda36bd95d",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990853877
+    },
+    {
+      "amount": 2.16,
+      "price": "408.0872",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xbe0ba2cc69c2034a0ef839a0baadb842955f3ce9e9a440ef26778caf7bfe55d8",
+      "orderHash": "0x6aca2dc220ca67f0dec20c0dcfcffd41a38cd9679190c2a73e2067c6c07c766f",
+      "taker": "0x2041253dbdd80608712bbb15767171a015904cf9",
+      "maker": "0x75c2a03cc2a1605a336ed092d3e34cd5ca77cd7b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993631243
+    },
+    {
+      "amount": 44,
+      "price": "411.4199",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x72a6c12e1fbf7816e61036ec406e40e35bf12fce692c9d0831454cae4cef3352",
+      "orderHash": "0x6751367bbb79be5b53acf85fc66bee1d7797c107d08bfbcc62fbe5aaa238ccb9",
+      "taker": "0x3d42398ca38bc0844dd7fc2ca6d39553a6271ca8",
+      "maker": "0x00193d1859424e0de903cd417d79486771a62578",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991472908
+    },
+    {
+      "amount": 35,
+      "price": "393.1177",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x713be126bf0054247ddc6598c70e4ce8e8e1c41efd01a3e5670cf6df704d64b0",
+      "orderHash": "0x6eff4802ffdc092da2eb9f1396a1d1c6aef0fdd4ea0434e71d58b36fd25c8eb3",
+      "taker": "0xed6298a03a94eecb5cce0abf2e167cdfb78ecf82",
+      "maker": "0xe1dedd14de044d13eb0b9d484fc2cc118134a069",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990018200
+    },
+    {
+      "amount": 87,
+      "price": "398.9751",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xe4a7fd3ef235e129bec8cac3f3b4dda83955aed27f2f2f26198ce9a9522959f7",
+      "orderHash": "0xb445a412c0c75d68a909549f4a2ff41f42525df5743149609fec2a6a975b3eb6",
+      "taker": "0xc825cc006892c4aca6df17f5e19415d9f5085cf2",
+      "maker": "0xdadf16b926eac96966f3577eb8cae217f7955f3f",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990000667
+    },
+    {
+      "amount": 18.48,
+      "price": "392.0954",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x2af0380c23abd82084c667c986fc835ec5606656abce4d817ec1fb86160ea88a",
+      "orderHash": "0x2f9c4500233dacae664140f41fc980b594c5dd954de8ecd061eec8d94913e32c",
+      "taker": "0x081fe7160fefc60fcdbdcbfe0e5a56262a630088",
+      "maker": "0x0fcdb67776fb91a8e0e83155e34c844b9f3691fb",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995104807
+    },
+    {
+      "amount": 24,
+      "price": "414.5663",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xc754a0bc5f1603c4b362a5704af53ceb0ecb3f57239ae48c4ff3334b0564c86c",
+      "orderHash": "0x6e2c252d01c0f8b292f3a75740d3f9841004d697def4c7dfa7a47f1cc3e53258",
+      "taker": "0x9ce0c90712f8c7aab11edaed76fda816f7cf1dc6",
+      "maker": "0xc8d71926d2a12164c8082bc46713221c53c97220",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991068353
+    },
+    {
+      "amount": 84,
+      "price": "400.4534",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xbff066bb5482e9a80ccffbb5a4faa3cc6ae0f9279966a9dee8ca3522c3581b8d",
+      "orderHash": "0xa1f1afe00bab3bf9033f996ff39b6ce9f6482eba0a19e9c4c29849e112b039d7",
+      "taker": "0xbbcd8194ce4fc6455e30d7b6bd9466322d0becf5",
+      "maker": "0xaefa9cf1194ff4d60d6cb982268503c104c16fa7",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993747953
+    },
+    {
+      "amount": 70,
+      "price": "409.0842",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x5c1746016520b47261dc133150b0a75d5b3785543decf7f0d3635c3c7b643138",
+      "orderHash": "0xff8697ece8a33cb9db7c41ead27e63ef82f0b547ac94e8bb48e5fd29df2d49ab",
+      "taker": "0xa5e1f4b456c51cad3c998f4f0fc63340399c79c2",
+      "maker": "0xef28620578cec25a730e16803d16977cc8f3faea",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990342754
+    },
+    {
+      "amount": 3,
+      "price": "399.1630",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xbfd8f51a1cbd8d18f5ff8792cb304e576f6139e84aada511b19cdd0216917c53",
+      "orderHash": "0xee03f4a91dd750bd8d18e5b6d548e78c1f0ef218711c14c91dbfea05fd2a0532",
+      "taker": "0xd0b336fc1f16decca66e12ed1b80b3235b7dd0de",
+      "maker": "0x750c1face89c296632364cb7f45ed2eb5271f222",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999486065
+    },
+    {
+      "amount": 42,
+      "price": "386.6615",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x8d7ef753147d387d2f8f22cd40cd98b3ebd8e71d8891582e51f6202ea3e62d68",
+      "orderHash": "0x920a6d2f716555541b3402adf0d6d61201d6b68fc445f1e3f6d286b05ecf4957",
+      "taker": "0xdcfaf85e87c217835a4d1f5dfd5ad88e7b12fc41",
+      "maker": "0x7f2e4cb17165cf0ed7193b5ef6be86046e71d95c",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997997378
+    },
+    {
+      "amount": 20,
+      "price": "396.3379",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x4d8041e8b76f287bdfe1da67df54560c71d4b6941aa5e3a2f2aadf51422d5dab",
+      "orderHash": "0x176684599f3a0486222f3d8f58a2d11ff7d220f55b2a08ea98d702e9fa3a8064",
+      "taker": "0x6972d041a15f9457b1ee6592271f61c1b79949c4",
+      "maker": "0xf43f52d52d13f378b15e74c4c3048c30294d4553",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997458937
+    },
+    {
+      "amount": 40,
+      "price": "400.9592",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x4e64481b5521b40cf5e99d0d42669d20ddd4428f8299b6c286db407ddde446da",
+      "orderHash": "0x94d804fb9d833ddec6c7505ab3aab579990f630994b8c82fce90ee7eb89f3760",
+      "taker": "0x4ae0ca26aa62ee239c3e4e665482eeb1b5cd005e",
+      "maker": "0xd389f84663f710c364934b9529e7479c6a99163c",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992772710
+    },
+    {
+      "amount": 61,
+      "price": "409.7242",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x4a6acab60dac6a24caa24fec3093133687dcc1e07908312caf135490433feda3",
+      "orderHash": "0xa84bdf7e222c7ff5b1395c32961592e8d74c4d29636e597e469a67764f6aed75",
+      "taker": "0x95870eaf6d3c4f91911128ba3d22b9e1c9fd94f3",
+      "maker": "0x412b1920f16e1bbf1b3a56d9a524690effbcc549",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998986328
+    },
+    {
+      "amount": 31,
+      "price": "380.0947",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x0afe888681997b1d6520c29a3611343499211494e53a553bc5f58e6c382b3edd",
+      "orderHash": "0x2d84d82f309bcf730c404570883c92374ceff7cde0dc182f168a2852af66040f",
+      "taker": "0xf840b0fb7f3c675d34f1e6eebb12027ff6e0eaca",
+      "maker": "0xc4bd9f60ab3a702521bc88216098835c419a0b6b",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990350367
+    },
+    {
+      "amount": 65,
+      "price": "409.5809",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x00d41126885e5c5b5512e88904cbfd397ccd21c2c8ac96cce9bcefa31d0374fa",
+      "orderHash": "0x5cabea78162a25b548c6a32e4b968f3e4e6f8659dda6119d9a7f621b02409897",
+      "taker": "0x3b4a1ab8cd2aa692f84ed42996adbdc158b00a4c",
+      "maker": "0x8a3ffe5b2d4216d26a2a4c0706fa94a17046921d",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519994357422
+    },
+    {
+      "amount": 18,
+      "price": "403.2650",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xe26fa03d4694d5130a21b91fed04f41203f616d6dbc7220731999b470219b952",
+      "orderHash": "0xa5915a06b2217937122b55d3a331317be29f1638150b0a5b9d07003ea22161da",
+      "taker": "0xa771e3a5a2e17899b5fef74aeeee1c88eb9cbdd1",
+      "maker": "0xbb92a5f2e5be2b697b2ef0fc062a23632b92e842",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998780169
+    },
+    {
+      "amount": 97,
+      "price": "405.5041",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x61fa8bf6bad312efa29b0595af022030989ef6bd9dcbdafff6473fbb9b162de9",
+      "orderHash": "0x7fab018070589e8af78a65afa7c84e6d097c377f37f9cd20d76a6f33cfc009a2",
+      "taker": "0x037f028c4a84049ea08dd61a957c1b5ab98b4d06",
+      "maker": "0x8a8a1a3aba9fe33cd287145f78d991a3a99fb928",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991160625
+    },
+    {
+      "amount": 94,
+      "price": "418.7743",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0xb949dd80dc74fe45e73d744aa0c2c03d92f84d463cd4de0651b868183d138c87",
+      "orderHash": "0xb8ab1b53751a2a0884b36ecb516fa11a9fba283b7b12d0aa3fa74e645147aea2",
+      "taker": "0x1ab84eb6902dcf59f55c31cdd29fe2f0cf2618c8",
+      "maker": "0x36ebb1689c7e7385c5fc39eedae2fa249764b787",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996009001
+    },
+    {
+      "amount": 12,
+      "price": "396.6914",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xc0823f4c417737dd518b822fe3eddef0d01e9add6332b247d8972a2783c75ea2",
+      "orderHash": "0xebd2e5692cf047e027437f08110453fd7f6924e5c0e650a0e117397ba1b240a6",
+      "taker": "0x084d2e641bfc18284ac5830f6223be44e3424819",
+      "maker": "0x4b080fad95b9b98af415a2b4691738cab1695373",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999898772
+    },
+    {
+      "amount": 10,
+      "price": "385.7565",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x6dc6172ce1b84e24a46bd5be7dbc821309da6e2880614ba40df787809ec1146b",
+      "orderHash": "0xc38a42eeefd7ef2bfc408af511c083c34db76e8ac2824143a4d5322abdf57378",
+      "taker": "0x1313884aa9f18da7ce4f10ee6cc06c9dc08b94ab",
+      "maker": "0x4d60fc068f415e69f5e501a5ebfd0fcc49e8da5c",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997242093
+    },
+    {
+      "amount": 80,
+      "price": "415.4689",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x68deebdd216b4f5a2db7419a2ad5968d3824edd688bc83baac9cc8fa992a0289",
+      "orderHash": "0xf1124f72881a5dfc330461aca62c574d424b901dac0ae9b03112754d08a9cd42",
+      "taker": "0x45f90266b35835f0fe5275e9603625c70c768d14",
+      "maker": "0x59a361a29618eb1004afc4c5cead168cc76204a1",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999778298
+    },
+    {
+      "amount": 86,
+      "price": "414.1442",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x682c1c4c0238629e960212e4c1c65d95261d178e557ea1738f5c5e3b23462ebb",
+      "orderHash": "0x328e8acbbb84c784c1114039ef13c7d4d4f8f62cb0abfcdb4fd18a7066471736",
+      "taker": "0xafcbfd938682e7a68ba49561b6080b9c50f8c690",
+      "maker": "0xe020f6fd37b17d956d0d9c795553e2294de3c544",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990968138
+    },
+    {
+      "amount": 26,
+      "price": "414.5349",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xce6d589a268bc534fcc0564ae41dfab3cebb05eb1a19029f5caa961fae66272f",
+      "orderHash": "0xc5a7c152c9bd175e2258870b15402549ecd9855aa236fcaac5cf0b69049210b5",
+      "taker": "0x930c2558f06da36b8dc9d1d11a9b64606c915eb8",
+      "maker": "0xa8a3d06eaf468d9d834228e4fa7409011feac30d",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990123169
+    },
+    {
+      "amount": 93.6,
+      "price": "382.8065",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x7f7b05fe210683736e28909342f718e58f9e5ef7ae76e29543ea32b4ed597e84",
+      "orderHash": "0x347e75117c4d39d83fac19cedd097ba941b0294866006d581d9c333565bc7220",
+      "taker": "0x383095a35990c5eced3e2068d92a54fb24442fb0",
+      "maker": "0xd3f727aef2331710e76f55d8ab346d74ed08b4f1",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998888188
+    },
+    {
+      "amount": 80,
+      "price": "402.6666",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xf21fcbb08d703e98fa6152b2e07b87a542f0c7ed205a89c1ab19a2b6e00ec302",
+      "orderHash": "0xa903baf1bc26e3e2e1d3ff90641254494c887de51eef3416107b24bff1fcb0b1",
+      "taker": "0xfe853dd75d4b40231f35b3f730b676a9e4613971",
+      "maker": "0xb130e1adc5e86d058438f862e477179d1b2f0b95",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995743996
+    },
+    {
+      "amount": 53,
+      "price": "393.5194",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0xc64481979be569f36a47938007d608ca85226e0f51ce202193d75765b0e65d90",
+      "orderHash": "0x3dfbef9b73436c2c02c9d6bd0421563d16fcc4093c08c61154bd0c8f12e83640",
+      "taker": "0x1712036c107b462a428e4de3f39dd5b04e84476f",
+      "maker": "0xa8b203477b32548718abc4a73ebbab8620174b17",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992487332
+    },
+    {
+      "amount": 70,
+      "price": "419.5141",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xa8b2ff07d59d3468f5b434e64076ad9b25958b6f9495a520815e3ef2ea9de7da",
+      "orderHash": "0xb4ca84f0f5a2bb504fa05c603ee9a436e8180fde14822484de79fb9aa8c112c0",
+      "taker": "0x1a4faee4bc3b426e42e86ef06a932a0a926c2b2d",
+      "maker": "0x0b3fdcba05f4bea3d87fa05581ae2c12eef1db6e",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519991105441
+    },
+    {
+      "amount": 91,
+      "price": "380.5387",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xe25561d8205ec055108290dec18c6404d12a2a74f61b97b5f03c579d087e3001",
+      "orderHash": "0x71fb2d2385bbfbb25d7c9a61b9f9499bfd536d0d2010ed25efd612b9ce14930e",
+      "taker": "0xf6017c76dd83c12eaa48e952a22aea54ce61d519",
+      "maker": "0xf665c0bc09f7a0834bdaeeb0f41b6b0fa27bef88",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998075040
+    },
+    {
+      "amount": 85.58,
+      "price": "412.0836",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xcbebae3147dc4391e99f86c43569e50bfc67d8690239538467c5ddd9b195018b",
+      "orderHash": "0xd058148055d79ed615d5685d037c628ce302e77c1f2db9c79348665724ebf990",
+      "taker": "0xd893dd33fd3f02a4f02505c87b38a896d81979b3",
+      "maker": "0xf6c4df6fd2c8e70cb02ca36531d46f49322badaf",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519996585008
+    },
+    {
+      "amount": 2,
+      "price": "409.3061",
+      "type": "LIMIT",
+      "side": "BUY",
+      "hash": "0x62a766b6710f22eb6965d62509445f9ac6f67148ad845052c8961c329c0b9d03",
+      "orderHash": "0xa26f2318fa10a784fc55f44ee2e7c16a404bc52059b88d9c6ff84eed71cec756",
+      "taker": "0x713454dfb6be2e2d5ce0b8ba9c2d73047a6c882a",
+      "maker": "0xffdcd62b9a886ba7dfc4d6aa887fbe52e10c8ff5",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990703863
+    },
+    {
+      "amount": 96,
+      "price": "395.2477",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x2f1fa47f8d460f95701140f24a2bbd0ec54f863befcca8e3ac25717ce7c25d19",
+      "orderHash": "0xf9dc4279d4b517ec20ffefbb09edf513078eaa7ae1b510ece6cea38fee8b587b",
+      "taker": "0xb0721db1f22bcfcc960cb8182a91905e6df55041",
+      "maker": "0x71497d1af1815a0312afeb591b39fe9ab065d28e",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519998755614
+    },
+    {
+      "amount": 18,
+      "price": "397.7268",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xabbd8eaa76dac86b2ac0ea0a58d7aa8d5e68af4be249ed907d50bc0d3c4f5d4d",
+      "orderHash": "0xfe0273b32b07b38206d3a48fe9512be3907d70abf05865431e885a1aa4673cdb",
+      "taker": "0x63929b61018fff968399194c4adb67dcb3ddea1d",
+      "maker": "0xecae1101874a7d1c59cfd11b52c5b0be6ea1b6cb",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519999409532
+    },
+    {
+      "amount": 40,
+      "price": "398.0865",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0xa9408950ff78afafbe53246206ff36c13b74770c00d21db18bc974a3ac4a3de1",
+      "orderHash": "0x68be77c4d051534e015add1a1dd3d844215273fb858003d774d6a3a929c2fe62",
+      "taker": "0x85ed1a6008ff5cdcab8dc23231b8bcc4d1658825",
+      "maker": "0xcc92c739fb2726c5b9590cb96bf3817826a9a3c3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519993427612
+    },
+    {
+      "amount": 18,
+      "price": "384.3471",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0x6e23905866300dd063e9e21673aa9606fe0f73acf2ca582abec497e2d717008f",
+      "orderHash": "0x87549a3a5a9e310af3ce77aeb7a0fd5b2f72626d753026015fd29cfb99c63b7b",
+      "taker": "0x99b4ec5e759cd6519f4093125aefe302a5af1a0f",
+      "maker": "0xf5d53c5baee08e9b1252eebe113685fe34434e74",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997251021
+    },
+    {
+      "amount": 54.42,
+      "price": "386.9945",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x0857c94b3793b576c7d7c91a861364aaa9c2f4c1a48f8a106e84933c3c824955",
+      "orderHash": "0x6da7537c681502417301e459a007d4bd5d50d11f973e6b8f59dc3e03e13580fa",
+      "taker": "0x6238a637b6ec9945f0bb7cdd55f2ecf261b02d7a",
+      "maker": "0x51e4e89b7ba776f92eb1f6bfdfc175b120547632",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519992810093
+    },
+    {
+      "amount": 60,
+      "price": "400.6848",
+      "type": "MARKET",
+      "side": "BUY",
+      "hash": "0x67e0a7ad7c77f1e1e1fd80ec6be19c5a7ec1dbcff7c6ee05062fa6aa5a148a3c",
+      "orderHash": "0x2aa452b01fb03bcc86299a19a7f20ca7c104f5f81b25b965d941acef53416c5c",
+      "taker": "0x2cb6a7658a0928197facc7a616c26266c9a57506",
+      "maker": "0x5e0c7d088d67e33b6ec403901a48c889c51cbc06",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519997148215
+    },
+    {
+      "amount": 83,
+      "price": "380.2526",
+      "type": "LIMIT",
+      "side": "SELL",
+      "hash": "0xe2e9f9c8a5e87ec51a8d3d29645d0377f81dee4c6b48ad7b927fa74fb1f63312",
+      "orderHash": "0xc1351ead910a853e3b69431143c9efd2cba72c1250e95102134d7ce29e4cb51c",
+      "taker": "0x0e0a091f0898b1cf0cd4e2dd30bc20c3f7154e63",
+      "maker": "0x4329e217188dc28bc75fe14ecf582d5557367c99",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519990194898
+    },
+    {
+      "amount": 93.29,
+      "price": "383.2501",
+      "type": "MARKET",
+      "side": "SELL",
+      "hash": "0x86bd2a875288a7515f9651fa8e714b7386ed65f0d0a82fa44aeea1ed1b1c9f5e",
+      "orderHash": "0xe5cc73c5570c0a9c330e49e079c1adf374da5b0d4978b4c917f455e0967650ce",
+      "taker": "0xf1f0835d7c96da4d3f0807bec29552bcc6fe4827",
+      "maker": "0x1bc58bf4a3201c6d43e51bf840c6edc26876b2e3",
+      "pairName": "DAI_WETH",
+      "createdAt": 1519995556664
+    }
+  ]
+}

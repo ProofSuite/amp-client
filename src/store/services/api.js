@@ -1,8 +1,9 @@
 import tokenPairData from '../../jsons/tokenPairData.json';
 import orders from '../../jsons/orders.json';
 import trades from '../../jsons/trades.json';
+import orderBookData from '../../jsons/orderBookData.json';
 
-import { parseJSONToFixed, parseOrders, parseTrades } from '../../utils/parsers';
+import { parseJSONToFixed, parseOrders, parseTrades, parseOrderBookData } from '../../utils/parsers';
 
 function request(endpoint, options) {
   return fetch(`https://datoms.prftech.com${endpoint}`, {
@@ -117,5 +118,10 @@ export const getOrders = async () => {
 
 export const getTrades = async () => {
   const data = parseTrades(trades);
+  return data;
+};
+
+export const getOrderBookData = async () => {
+  const data = parseOrderBookData(orderBookData);
   return data;
 };
