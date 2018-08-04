@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Loading, Colors } from '../Common';
-import { Card, Tabs, Tab } from '@blueprintjs/core';
+import { Button, Card, Tabs, Tab, Collapse } from '@blueprintjs/core';
 import { format } from 'date-fns';
 
 type Trade = Object;
@@ -12,18 +12,27 @@ type Props = {
   onChange: string => void,
   tradeHistory: Array<Trade>,
   userTradeHistory: Array<Trade>,
+  toggleCollapse: (SyntheticEvent<>) => void,
+  isOpen: boolean,
 };
 
 const TradesTableRenderer = (props: Props) => {
-  const { selectedTabId, onChange, tradeHistory, userTradeHistory } = props;
+  const { isOpen, selectedTabId, onChange, tradeHistory, userTradeHistory, toggleCollapse } = props;
   return (
-    <Card className="trade-history">
-      <Heading>Trade History</Heading>
-      <Tabs selectedTabId={selectedTabId} onChange={onChange}>
-        <Tab id="24h" title="24H" panel={<Panel trades={tradeHistory} />} />
-        <Tab id="all" title="All" panel={<Panel trades={userTradeHistory} />} />
-      </Tabs>
-    </Card>
+    <div>
+      <Card className="trade-history">
+        <TradesTableHeader>
+          <Heading>Trades</Heading>
+          <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} minimal onClick={toggleCollapse} />
+        </TradesTableHeader>
+        <Collapse isOpen={isOpen}>
+          <Tabs selectedTabId={selectedTabId} onChange={onChange}>
+            <Tab id="24h" title="24H" panel={<Panel trades={tradeHistory} />} />
+            <Tab id="all" title="All" panel={<Panel trades={userTradeHistory} />} />
+          </Tabs>
+        </Collapse>
+      </Card>
+    </div>
   );
 };
 
@@ -61,7 +70,17 @@ const TradeTableRow = (props: { index: number, trade: Trade }) => {
   );
 };
 
-const Heading = styled.h4``;
+const TradesTableHeader = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  grid-gap: 10px;
+  align-items: center;
+`;
+
+const Heading = styled.h4`
+  margin: auto;
+`;
 
 const Row = styled.li.attrs({
   className: 'row',

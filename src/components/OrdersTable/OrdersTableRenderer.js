@@ -1,8 +1,8 @@
 //@flow
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Tab, Tabs } from '@blueprintjs/core';
-import { Colors, Loading, CenteredMessage } from '../Common';
+import { Card, Tab, Tabs, Collapse, Button } from '@blueprintjs/core';
+import { Colors, Loading, CenteredMessage, Text } from '../Common';
 import { format } from 'date-fns';
 import { Order } from '../../types/orders';
 
@@ -10,6 +10,8 @@ type Props = {
   loading: boolean,
   selectedTabId: string,
   onChange: string => void,
+  isOpen: boolean,
+  toggleCollapse: void => void,
   orders: {
     ALL: Array<Order>,
     OPEN: Array<Order>,
@@ -20,25 +22,30 @@ type Props = {
 };
 
 const OrdersTableRenderer = (props: Props) => {
-  const { loading, selectedTabId, onChange, orders } = props;
+  const { loading, selectedTabId, onChange, orders, isOpen, toggleCollapse } = props;
   return (
     <Card className="order-history">
-      <Heading>Order History</Heading>
-      <Tabs selectedTabId={selectedTabId} onChange={onChange}>
-        <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} />} />
-        <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} />} />
-        <Tab
-          id="canceled"
-          title="CANCELED"
-          panel={<OrdersTablePanel loading={loading} orders={orders['CANCELED']} />}
-        />
-        <Tab id="pending" title="PENDING" panel={<OrdersTablePanel loading={loading} orders={orders['PENDING']} />} />
-        <Tab
-          id="executed"
-          title="EXECUTED"
-          panel={<OrdersTablePanel loading={loading} orders={orders['EXECUTED']} />}
-        />
-      </Tabs>
+      <OrdersTableHeader>
+        <Heading>Orders</Heading>
+        <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} minimal onClick={toggleCollapse} />
+      </OrdersTableHeader>
+      <Collapse isOpen={isOpen}>
+        <Tabs selectedTabId={selectedTabId} onChange={onChange}>
+          <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} />} />
+          <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} />} />
+          <Tab
+            id="canceled"
+            title="CANCELED"
+            panel={<OrdersTablePanel loading={loading} orders={orders['CANCELED']} />}
+          />
+          <Tab id="pending" title="PENDING" panel={<OrdersTablePanel loading={loading} orders={orders['PENDING']} />} />
+          <Tab
+            id="executed"
+            title="EXECUTED"
+            panel={<OrdersTablePanel loading={loading} orders={orders['EXECUTED']} />}
+          />
+        </Tabs>
+      </Collapse>
     </Card>
   );
 };
@@ -84,6 +91,18 @@ const OrderRow = (props: { order: Order, index: number }) => {
   );
 };
 
+const OrdersTableHeader = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  grid-gap: 10px;
+  align-items: center;
+`;
+
+const Heading = styled.h4`
+  margin: auto;
+`;
+
 const Row = styled.li.attrs({
   className: 'row',
 })`
@@ -99,8 +118,6 @@ const Row = styled.li.attrs({
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
 `;
-
-const Heading = styled.h4``;
 
 const Cell = styled.span`
   color: ${props =>

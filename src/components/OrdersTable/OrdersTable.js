@@ -12,14 +12,24 @@ type Props = {
 
 type State = {
   selectedTabId: string,
+  isOpen: boolean,
 };
 
-class OrderHistory extends React.PureComponent<Props, State> {
+class OrdersTable extends React.PureComponent<Props, State> {
   static defaultProps = { authenticated: true };
-  state = { selectedTabId: 'all' };
+  state = {
+    selectedTabId: 'all',
+    isOpen: false,
+  };
 
   changeTab = (tabId: string) => {
     this.setState({ selectedTabId: tabId });
+  };
+
+  toggleCollapse = () => {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen,
+    }));
   };
 
   filterOrders = () => {
@@ -44,16 +54,17 @@ class OrderHistory extends React.PureComponent<Props, State> {
 
   render() {
     const { authenticated, orders } = this.props;
-    const { selectedTabId } = this.state;
-
+    const { selectedTabId, isOpen } = this.state;
     const filteredOrders = this.filterOrders();
     const loading = orders.length < 1;
 
     return (
       <OrdersTableRenderer
+        isOpen={isOpen}
         loading={loading}
         selectedTabId={selectedTabId}
         onChange={this.changeTab}
+        toggleCollapse={this.toggleCollapse}
         authenticated={authenticated}
         // silence-error: currently too many flow errors, waiting for rest to be resolved
         orders={filteredOrders}
@@ -62,4 +73,4 @@ class OrderHistory extends React.PureComponent<Props, State> {
   }
 }
 
-export default OrderHistory;
+export default OrdersTable;

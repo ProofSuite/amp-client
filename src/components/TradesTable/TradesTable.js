@@ -7,6 +7,7 @@ import type Trade from '../../types/trades';
 
 type State = {
   selectedTabId: string,
+  isOpen: boolean,
 };
 
 type Props = {
@@ -17,6 +18,7 @@ type Props = {
 class TradesTable extends React.PureComponent<Props, State> {
   state = {
     selectedTabId: 'all',
+    isOpen: true,
   };
 
   changeTab = (tabId: string) => {
@@ -25,11 +27,16 @@ class TradesTable extends React.PureComponent<Props, State> {
     });
   };
 
+  toggleCollapse = () => {
+    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+  };
+
   render() {
     const {
       props: { trades },
-      state: { selectedTabId },
+      state: { selectedTabId, isOpen },
       changeTab,
+      toggleCollapse,
     } = this;
 
     const sortedMarketTradeHistory = trades;
@@ -41,6 +48,8 @@ class TradesTable extends React.PureComponent<Props, State> {
         onChange={changeTab}
         tradeHistory={sortedMarketTradeHistory}
         userTradeHistory={sortedUserTradeHistory}
+        isOpen={isOpen}
+        toggleCollapse={toggleCollapse}
       />
     );
   }

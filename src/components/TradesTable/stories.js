@@ -25,7 +25,7 @@ storiesOf('Trades', module)
     'Data Loaded',
     withInfo({ text: README, source: false })(() => (
       <div className="pt-dark">
-        <TradesTable marketTradeHistory={tradeHistory.list} userTradeHistory={tradeHistory.list} />
+        <TradesTable trades={[]} />
       </div>
     ))
   );
