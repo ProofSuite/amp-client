@@ -22,11 +22,11 @@ type State = {
   portion: number,
   priceType: string,
   selectedTabId: string,
-  price: number,
-  stopPrice: number,
-  limitPrice: number,
-  amount: number,
-  total: number,
+  price: string,
+  stopPrice: string,
+  limitPrice: string,
+  amount: string,
+  total: string,
 };
 
 class OrderForm extends React.PureComponent<Props, State> {
@@ -38,11 +38,11 @@ class OrderForm extends React.PureComponent<Props, State> {
     portion: 0,
     priceType: 'null',
     selectedTabId: 'limit',
-    price: 0,
-    stopPrice: 0,
-    limitPrice: 0,
-    amount: 0,
-    total: 0,
+    price: '',
+    stopPrice: '',
+    limitPrice: '',
+    amount: '',
+    total: '',
   };
 
   componentDidMount() {
@@ -51,129 +51,114 @@ class OrderForm extends React.PureComponent<Props, State> {
     } = this;
 
     if (formName === 'Buy') {
-      this.setState({
-        price: askPrice,
-      });
+      // silence-error: couldn't resolve selectedToken === undefined case
+      this.setState({ price: askPrice });
     } else {
-      this.setState({
-        price: bidPrice,
-      });
+      // silence-error: couldn't resolve selectedToken === undefined case
+      this.setState({ price: bidPrice });
     }
   }
 
-  handlePortion = (e: SyntheticInputEvent<>) => {
-    console.log(e);
-
+  handlePortion = (value: string) => {
     const {
       state: { price },
       props: { formName, decimals, totalQuoteBalance, totalBaseBalance },
     } = this;
-    let portion = parseInt(e.target.value);
+    let portion = parseInt(value);
     let amount;
 
     if (formName === 'Sell') {
       amount = (totalQuoteBalance / 100) * portion;
-      let total = price * amount;
+      let total = parseFloat(price) * parseFloat(amount);
       this.setState({
         portion: portion,
-        amount: round(amount, decimals),
-        total: round(total, decimals),
+        amount: round(amount, decimals, 'string'),
+        total: round(total, decimals, 'string'),
       });
     } else {
       let total = (totalBaseBalance / 100) * portion;
-      amount = total / price;
+      amount = parseFloat(total) / parseFloat(price);
       this.setState({
         portion: portion,
-        amount: round(amount, decimals),
-        total: round(total, decimals),
+        amount: round(amount, decimals, 'string'),
+        total: round(total, decimals, 'string'),
       });
     }
   };
 
-  handlePriceChange = (e: Object) => {
+  handlePriceChange = (value: string) => {
     const {
       state: { amount },
       props: { decimals },
     } = this;
-    let targetValue = parseFloat(e.target.value),
-      total = amount * targetValue;
+    let targetValue = parseFloat(value),
+      total = parseFloat(amount) * parseFloat(targetValue);
 
     this.setState({
-      total: round(total, decimals),
-      price: targetValue,
+      total: round(total, decimals, 'string'),
+      price: targetValue.toString(),
     });
   };
 
-  handleLimitPriceChange = (e: SyntheticInputEvent<>) => {
-    let targetValue = parseFloat(e.target.value),
-      total = this.state.amount * targetValue;
+  handleLimitPriceChange = (value: string) => {
+    let targetValue = parseFloat(value),
+      total = parseFloat(this.state.amount) * parseFloat(targetValue);
 
     this.setState({
       // total: Math.floor(total * Math.pow(10, 7)) / Math.pow(10, 7),
-      limitPrice: targetValue,
+      limitPrice: targetValue.toString(),
     });
   };
 
-  handleStopPriceChange = (e: SyntheticInputEvent<>) => {
+  handleStopPriceChange = (value: string) => {
     const {
       state: { amount },
       props: { decimals },
     } = this;
-    let targetValue = parseFloat(e.target.value),
-      total = amount * targetValue;
+    let targetValue = parseFloat(value),
+      total = parseFloat(amount) * parseFloat(targetValue);
 
     this.setState({
-      total: round(total, decimals),
-      stopPrice: targetValue,
+      total: round(total, decimals, 'string'),
+      stopPrice: targetValue.toString(),
     });
   };
 
-  handleAmountChange = (e: SyntheticInputEvent<>) => {
+  handleAmountChange = (value: string) => {
     const {
       state: { price, selectedTabId, stopPrice },
       props: { decimals },
     } = this;
     let total,
-      targetValue = parseFloat(e.target.value);
+      targetValue = parseFloat(value);
 
     if (selectedTabId === 'stop') {
-      total = stopPrice * targetValue;
+      total = parseFloat(stopPrice) * parseFloat(targetValue);
     } else {
-      total = price * targetValue;
+      total = parseFloat(price) * targetValue;
     }
     this.setState({
-      total: round(total, decimals),
-      amount: targetValue,
+      total: round(total, decimals, 'string'),
+      amount: targetValue.toString(),
     });
   };
 
-  handleTotalChange = (e: SyntheticInputEvent<>) => {
+  handleTotalChange = (value: string) => {
     const {
       state: { price, selectedTabId, stopPrice },
       props: { decimals },
     } = this;
     let amount: number,
-      targetValue = parseFloat(e.target.value);
+      targetValue = parseFloat(value);
 
     if (selectedTabId === 'stop') {
-      amount = parseFloat(targetValue / stopPrice);
+      amount = parseFloat(targetValue) / parseFloat(stopPrice);
     } else {
-      amount = parseFloat(targetValue / price);
+      amount = parseFloat(targetValue) / parseFloat(price);
     }
     this.setState({
-      amount: round(amount, decimals),
-      total: parseFloat(e.target.value),
-    });
-  };
-
-  handlePriceType = (e: SyntheticInputEvent<>) => {
-    if (e.target.value === 'Bid') {
-      this.handlePriceChange({ target: { value: this.props.bidPrice } });
-    } else {
-      this.handlePriceChange({ target: { value: this.props.askPrice } });
-    }
-    this.setState({
-      priceType: e.target.value,
+      amount: round(amount, decimals, 'string'),
+      total: targetValue.toString(),
     });
   };
 
@@ -190,20 +175,18 @@ class OrderForm extends React.PureComponent<Props, State> {
       selectedTabId: tabId,
       portion: 0,
       priceType: 'null',
-      price: 0,
-      stopPrice: 0,
-      limitPrice: 0,
-      amount: 0,
-      total: 0,
+      price: '',
+      stopPrice: '',
+      limitPrice: '',
+      amount: '',
+      total: '',
     });
     if (tabId === 'limit' && formName === 'Buy') {
-      this.setState({
-        price: askPrice,
-      });
+      // silence-error: couldn't resolve selectedToken === undefined case
+      this.setState({ price: askPrice });
     } else if (tabId === 'limit') {
-      this.setState({
-        price: bidPrice,
-      });
+      // silence-error: couldn't resolve selectedToken === undefined case
+      this.setState({ price: bidPrice });
     }
   };
 
@@ -211,36 +194,35 @@ class OrderForm extends React.PureComponent<Props, State> {
     const {
       props: { loggedIn },
     } = this;
-
-    switch (props.target) {
+    const { target } = props;
+    switch (target.name) {
       case 'stopPrice':
-        this.handleStopPriceChange(props.evt);
+        this.handleStopPriceChange(target.value);
         break;
 
       case 'limitPrice':
-        this.handleLimitPriceChange(props.evt);
+        this.handleLimitPriceChange(target.value);
         break;
 
       case 'price':
-        this.handlePriceChange(props.evt);
+        this.handlePriceChange(target.value);
         break;
 
       case 'total':
-        this.handleTotalChange(props.evt);
+        this.handleTotalChange(target.value);
         break;
 
       case 'amount':
-        this.handleAmountChange(props.evt);
+        this.handleAmountChange(target.value);
         break;
 
       case 'portion':
         if (loggedIn) {
-          this.handlePortion(props.evt);
+          this.handlePortion(target.value);
         }
         break;
 
-      case 'radio':
-        this.resetRadios();
+      default:
         break;
     }
   };
