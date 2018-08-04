@@ -107,7 +107,7 @@ class OHLCVChart extends React.Component {
           height={chartHeight + indicatorHeight + 50}
           width={width}
           ratio={ratio}
-          margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
+          margin={{ left: 50, right: 50, top: 20, bottom: 40 }}
           type={type}
           seriesName="MSFT"
           data={data}

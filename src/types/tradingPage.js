@@ -18,6 +18,11 @@ export type UpdateTradesTableAction = {
   payload: { trades: Trades },
 };
 
+export type UpdateOrderBookAction = {
+  type: 'tradingPage/UPDATE_ORDERBOOK_ACTION',
+  payload: { bids: any, asks: any },
+};
+
 export type TradingState = {};
 
 export type SingleOrderTypes = {
@@ -26,4 +31,8 @@ export type SingleOrderTypes = {
   decimals: number,
 };
 
-export type TradingPageAction = UpdateTokenPairDataAction | UpdateOrdersTableAction | UpdateTradesTableAction;
+export type TradingPageAction =
+  | UpdateTokenPairDataAction
+  | UpdateOrdersTableAction
+  | UpdateTradesTableAction
+  | UpdateOrderBookAction;

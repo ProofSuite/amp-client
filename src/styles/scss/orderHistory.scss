@@ -2,20 +2,14 @@
 
 .order-history {
   width: 100%;
-  min-width: 500px;
-  height: 500px;
 
   .list-container {
     height: 100%;
-  }
-
-  .pt-tabs {
-    height: 95%;
-  }
-
-  .pt-tab-panel {
-    margin-top: 0;
-    height: 88%;
+    .list {
+      max-height: 500px;
+      height: 90%;
+      overflow-y: scroll;
+    }
   }
 
   .heading {
@@ -43,7 +37,7 @@
 
     .row:hover {
       cursor: pointer;
-      background-color: $BGHover;
+      background-color: rgba($pt-intent-primary, 0.30);
       z-index: 1;
       border-radius: 3px;
     }

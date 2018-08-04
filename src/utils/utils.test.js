@@ -1,4 +1,5 @@
-import { parseJSONData, parseJSONToFixed, parseOrders, parseTrades } from './parsers';
+import { parseJSONData, parseJSONToFixed, parseOrders, parseTrades, parseOrderBookData } from './parsers';
+import { sortedInserts } from './helpers';
 import tokenPairData from '../jsons/tokenPairData';
 import orders from '../jsons/orders';
 import trades from '../jsons/trades';
@@ -165,7 +166,7 @@ describe('Parsers', () => {
     expect(parsed).toEqual(expected);
   });
 
-  it('parse return correct data', () => {
+  it('parseTrades return correct data', () => {
     let data = [
       {
         amount: '3606.6333',
@@ -245,6 +246,157 @@ describe('Parsers', () => {
     ];
 
     let parsed = parseTrades(data, 2);
+    expect(parsed).toEqual(expected);
+  });
+
+  it('parseOrderBookData return correct data', () => {
+    let data = {
+      buys: [
+        {
+          price: '409.0390',
+          volume: 17,
+        },
+        {
+          price: '407.5885',
+          volume: 69,
+        },
+        {
+          price: '414.3982',
+          volume: 76.85,
+        },
+      ],
+      sells: [
+        {
+          price: '400.1586',
+          volume: 21,
+        },
+        {
+          price: '418.1707',
+          volume: 52,
+        },
+        {
+          price: '402.2414',
+          volume: 79,
+        },
+        {
+          price: '417.5532',
+          volume: 16,
+        },
+      ],
+      trades: [
+        {
+          amount: 79,
+          price: '405.8349',
+          type: 'LIMIT',
+          side: 'BUY',
+          hash: '0x2fc9b761817c1acb9577a42cc745e25239fc21d5398371931032d1d315a377be',
+          orderHash: '0xf7ee3f6681d72ba102bee52d4edffc5fbd8d8d48ea0533bb49874144f43e86d2',
+          taker: '0xa1b835b1cbd135b5b367846b65bd54af81a84bf8',
+          maker: '0xdd578bfd7b14c4bbc7d31931d2723beb9c9d359a',
+          pairName: 'DAI_WETH',
+          createdAt: 1519995559141,
+        },
+        {
+          amount: 49,
+          price: '406.6628',
+          type: 'LIMIT',
+          side: 'BUY',
+          hash: '0x9c91f704c80ac06a06fe7f182100eacbb823991f74860cc808c436f65f41af3b',
+          orderHash: '0x404f62f41708703b4a56763f98fc1c2df079ab9c9bef55a21a861d28be83558a',
+          taker: '0x8967673de6460b44f3ced4bca961904ef8f21e66',
+          maker: '0x1bcb505ddc3416521a5883c0602cc4709d0d15b1',
+          pairName: 'DAI_WETH',
+          createdAt: 1519997610972,
+        },
+        {
+          amount: 19,
+          price: '409.5400',
+          type: 'LIMIT',
+          side: 'BUY',
+          hash: '0xe20465049ad7f00464e73ea9b0957d9a06a54e144fbd7eb73c57e5b83d3d32f0',
+          orderHash: '0x75dcd563bed6f776aafd53d32dd1fe52ab8c5104052ef0222bebe6c9351b9c11',
+          taker: '0x2f4eabb99f204c147ee222844a52132182a78d8e',
+          maker: '0x342b846ba28d1fe6393233f6bec21d46403def14',
+          pairName: 'DAI_WETH',
+          createdAt: 1519995626620,
+        },
+      ],
+    };
+
+    let expected = {
+      bids: [
+        {
+          price: 409.04,
+          amount: 17,
+        },
+        {
+          price: 407.59,
+          amount: 69,
+        },
+        {
+          price: 414.4,
+          amount: 76.85,
+        },
+      ],
+      asks: [
+        {
+          price: 400.16,
+          amount: 21,
+        },
+        {
+          price: 418.17,
+          amount: 52,
+        },
+        {
+          price: 402.24,
+          amount: 79,
+        },
+        {
+          price: 417.55,
+          amount: 16,
+        },
+      ],
+      trades: [
+        {
+          amount: 79,
+          price: 405.83,
+          type: 'LIMIT',
+          side: 'BUY',
+          hash: '0x2fc9b761817c1acb9577a42cc745e25239fc21d5398371931032d1d315a377be',
+          orderHash: '0xf7ee3f6681d72ba102bee52d4edffc5fbd8d8d48ea0533bb49874144f43e86d2',
+          taker: '0xa1b835b1cbd135b5b367846b65bd54af81a84bf8',
+          maker: '0xdd578bfd7b14c4bbc7d31931d2723beb9c9d359a',
+          pair: 'DAI_WETH',
+          time: 1519995559141,
+        },
+        {
+          amount: 49,
+          price: 406.66,
+          type: 'LIMIT',
+          side: 'BUY',
+          hash: '0x9c91f704c80ac06a06fe7f182100eacbb823991f74860cc808c436f65f41af3b',
+          orderHash: '0x404f62f41708703b4a56763f98fc1c2df079ab9c9bef55a21a861d28be83558a',
+          taker: '0x8967673de6460b44f3ced4bca961904ef8f21e66',
+          maker: '0x1bcb505ddc3416521a5883c0602cc4709d0d15b1',
+          pair: 'DAI_WETH',
+          time: 1519997610972,
+        },
+        {
+          amount: 19,
+          price: 409.54,
+          type: 'LIMIT',
+          side: 'BUY',
+          hash: '0xe20465049ad7f00464e73ea9b0957d9a06a54e144fbd7eb73c57e5b83d3d32f0',
+          orderHash: '0x75dcd563bed6f776aafd53d32dd1fe52ab8c5104052ef0222bebe6c9351b9c11',
+          taker: '0x2f4eabb99f204c147ee222844a52132182a78d8e',
+          maker: '0x342b846ba28d1fe6393233f6bec21d46403def14',
+          pair: 'DAI_WETH',
+          time: 1519995626620,
+        },
+      ],
+    };
+
+    let parsed = parseOrderBookData(data, 2);
     expect(parsed).toEqual(expected);
   });
 });

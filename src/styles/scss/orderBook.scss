@@ -1,137 +1,61 @@
 @import "vars";
 
-.Sell.order-book {
-  .price {
-    color: $red4;
-  }
-}
-
-.Buy.order-book {
-  .price {
-    color: $green5;
-  }
-}
-
-.order-book-chart {
-  margin: 10px 10px 0px 0px;
+.order-book {
+  min-width: 500px;
+  width: 100%;
+  min-height: 50px;
 }
 
 .order-book {
-  text-align: left;
-  //width: 380px;
-  height: 500px;
-  background-color: $secondary;
-  .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  h5 {
-    border-bottom: 1px solid $light-gray1;
-    padding-bottom: 5px;
-    text-align: left;
-  }
-  .order-book-renderer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
   .list-container {
     height: 91%;
-    overflow-y: hidden;
+    width: 100%;
     .list {
       height: 90%;
       overflow-y: scroll;
-      margin-top: 3px;
     }
   }
+
   ul {
-    text-align: left;
     li {
-      display: inline-block;
-      padding: 3px 0;
-      font-size: 13px;
       width: 100%;
-      span {
-        float: left;
-        margin-right: 8px;
-        text-align: left;
-      }
-      span.index {
-        margin-left: 6px;
-        min-width: 15px;
-      }
-      span.price, span.amount, span.total {
-        width: 95px;
-      }
     }
-    li.heading {
-      margin: 5px auto 3px;
-      span {
-        font-weight: 600;
-      }
-    }
-    li.not-heading {
-      cursor: pointer;
-      margin: 0px !important;
-      border: 1px transparent;
-      border-radius: 2px;
-      display: inline-block;
-    }
-    li.not-heading:hover {
-      background-color: #5b656d;
-      position: relative;
-      z-index: 1;
-      border-radius: 3px;
-      -webkit-box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 10px 4px rgba(16, 22, 26, 0.1), 1px 18px 24px rgba(16, 22, 26, 0.2);
-      box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
-    }
-  }
-  ul.heading {
-    //box-shadow: 0px 4px 2px -1px $shadow;
-    span.price {
-      color: #fff;
-    }
-  }
-  .loading-overlay {
-    height: 91%;
   }
 }
 
-@media only screen and (max-width: 1780px) {
-  .order-book {
-    ul {
-      li {
-        span.price, span.amount, span.total {
-          min-width: 70px;
-          width: 75px;
-          word-wrap: break-word;
-        }
-      ;
-      }
-    }
-  }
-}
-@media only screen and (max-width: 1530px) {
-  .order-book-chart-container {
-    margin: 0px -10px 0 10px;
-    .pt-tab-panel {
-      margin-top: 5px;
-    }
-    .order-book-renderer {
-      display: flex;
-      justify-content: space-between;
-      .Buy {
-        margin: 10px 0px 0px 10px;
-      }
-      .order-book{
-        width: 300px;
-        margin: 10px 0px 0px 0px;
-        .list-container {
-          height: 92%;
-        }
-      }
-    }
-  }
-}
+// @media only screen and (max-width: 1780px) {
+//   .order-book {
+//     ul {
+//       li {
+//         span.price, span.amount, span.total {
+//           min-width: 70px;
+//           width: 75px;
+//           word-wrap: break-word;
+//         }
+//       ;
+//       }
+//     }
+//   }
+// }
+
+// @media only screen and (max-width: 1530px) {
+//   .order-book-chart-container {
+//     .pt-tab-panel {
+//       margin-top: 5px;
+//     }
+//     .order-book-renderer {
+//       display: flex;
+//       justify-content: space-between;
+//       .Buy {
+//         margin: 10px 0px 0px 10px;
+//       }
+//       .order-book{
+//         width: 300px;
+//         margin: 10px 0px 0px 0px;
+//         .list-container {
+//           height: 92%;
+//         }
+//       }
+//     }
+//   }
+// }

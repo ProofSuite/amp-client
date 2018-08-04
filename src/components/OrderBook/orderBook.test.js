@@ -1,17 +1,22 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import OrderBook from './index';
-import * as orderList from '../../jsons/ordersList.json';
-import { Provider } from 'react-redux';
-import createStore from '../../store/configureStore';
+import { mount } from 'enzyme';
+import OrderBook from './OrderBook';
 
-describe('renders', () => {
-  it('renders without crashing', () => {
-    const { store } = createStore();
-    shallow(
-      <Provider store={store}>
-        <OrderBook orderList={orderList.list} bookName="Sell" baseToken="ETH" quoteToken="USDT" />
-      </Provider>
-    );
+describe('Component methods', () => {
+  let wrapper, instance;
+
+  beforeEach(() => {
+    wrapper = mount(<OrderBook asks={[]} bids={[]} />);
+    instance = wrapper.instance();
+  });
+
+  it('changeTab modifies selectedTabId state', () => {
+    instance.changeTab('depth-chart');
+    expect(wrapper.state('selectedTabId')).toBe('depth-chart');
+  });
+
+  it('toggleCollapse modifies isOpen state', () => {
+    instance.toggleCollapse();
+    expect(wrapper.state('isOpen')).toBe(false);
   });
 });

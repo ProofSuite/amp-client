@@ -1,26 +1,15 @@
 @import "vars";
 
 .trade-history {
-  min-width: 500px;
-  width: 2000px;
-  height: 500px;
+  min-width: 580px;
+  width: 100%;
 
   .list-container {
-    height: 100%;
-  }
-
-  .pt-card {
-    padding-top: 0px;
-    box-shadow: none !important;
-  }
-
-  .pt-tabs {
-    height: 95%;
-  }
-
-  .pt-tab-panel {
-    margin-top: 0;
-    height: 88%;
+    .list {
+      max-height: 580px;
+      height: 90%;
+      overflow-y: scroll;
+    }
   }
 
   .heading {
@@ -48,13 +37,5 @@
       z-index: 1;
       border-radius: 3px;
     }
-  }
-  ul.list {
-    margin-top: 3px;
-    overflow-y: scroll;
-    height: 94%;
-  }
-  .loading-overlay {
-    height: 100%;
   }
 }

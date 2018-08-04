@@ -3,6 +3,7 @@ import React from 'react';
 import Chart from './Chart';
 import { Loading } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
+import AutoScaler from '../AutoScaler';
 
 type Props = {
   macd: Object,
@@ -15,12 +16,25 @@ type Props = {
   atr: Object,
   forceIndex: Object,
   data: Array<Object>,
+  width: string,
 };
 
 export default class ChartLoadingScreen extends React.PureComponent<Props> {
   render() {
     const nullIndicator = { name: '', height: 0, active: false };
-    const { macd, volume, chartHeight, currentChart, indicatorHeight, rsi, line, atr, forceIndex, data } = this.props;
+    const {
+      macd,
+      volume,
+      chartHeight,
+      currentChart,
+      indicatorHeight,
+      rsi,
+      line,
+      atr,
+      forceIndex,
+      data,
+      width,
+    } = this.props;
 
     if (!data || data.length < 1) {
       return <Loading />;
@@ -29,19 +43,24 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
       <div className="chart-container">
         <TypeChooser>
           {type => (
-            <Chart
-              type={type}
-              macd={macd}
-              volume={volume}
-              chartHeight={chartHeight}
-              indicatorHeight={indicatorHeight}
-              rsi={rsi}
-              line={line}
-              currentChart={currentChart}
-              atr={atr ? atr : nullIndicator}
-              forceIndex={forceIndex ? forceIndex : nullIndicator}
-              data={data}
-            />
+            <AutoScaler>
+              {({ width }) => (
+                <Chart
+                  width={width}
+                  type={type}
+                  macd={macd}
+                  volume={volume}
+                  chartHeight={chartHeight}
+                  indicatorHeight={indicatorHeight}
+                  rsi={rsi}
+                  line={line}
+                  currentChart={currentChart}
+                  atr={atr ? atr : nullIndicator}
+                  forceIndex={forceIndex ? forceIndex : nullIndicator}
+                  data={data}
+                />
+              )}
+            </AutoScaler>
           )}
         </TypeChooser>
       </div>

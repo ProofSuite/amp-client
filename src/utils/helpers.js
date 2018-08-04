@@ -88,3 +88,22 @@ export const isJson = text => {
       .replace(/(?:^|:|,)(?:\s*\[)+/g, '')
   );
 };
+
+export const sortedInserts = (arr, elems) => {
+  for (let elem of elems) {
+    if (arr.length === 0) {
+      arr = [elem];
+    } else if (arr.length === 1) {
+      arr.push(elem);
+    } else {
+      for (let i = 0, len = arr.length; i < len; i++) {
+        if (elem < arr[i]) {
+          arr.splice(i, 0, elem);
+          break;
+        }
+      }
+    }
+  }
+
+  return arr;
+};
