@@ -1,7 +1,6 @@
 @import "vars";
 
 .main-chart {
-  margin: 10px 0px 0px 10px;
   .toolbar {
     width: 100%;
     display: flex;
@@ -130,8 +129,6 @@
 }
 
 .chart-overlay {
-  //width: 95%;
-  //margin: 50px;
   .pt-card {
     height: 100%;
   }
