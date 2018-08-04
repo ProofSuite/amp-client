@@ -74,7 +74,7 @@ type State = {
 
 export default class SmallChart extends React.PureComponent<Props, State> {
   state = {
-    chartHeight: 400,
+    chartHeight: 500,
     indicatorHeight: 150,
     currentTimeSpan: timeSpans[0],
     currentDuration: duration[0],
