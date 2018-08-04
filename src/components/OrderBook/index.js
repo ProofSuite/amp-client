@@ -1,4 +1,3 @@
-// @flow
 import OrderBook from './OrderBook';
 import connect from './connect';
 
