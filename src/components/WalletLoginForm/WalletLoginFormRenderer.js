@@ -30,13 +30,16 @@ type Props = {
   json: ?string,
   jsonStatus: Status,
   walletFile: ?string,
+  walletAddress: ?string,
   walletFileStatus: Status,
   mnemonic: ?string,
   mnemonicStatus: Status,
   password: ?string,
+  passwordStatus: Status,
   storeWallet: boolean,
   storePrivateKey: boolean,
   submit: (SyntheticEvent<>) => Promise<void>,
+  showLoginMethods: () => void,
   saveEncryptedWalletDisabled: boolean,
 };
 
@@ -95,17 +98,12 @@ const WalletLoginFormRenderer = (props: Props) => {
     storePrivateKey,
     submit,
     saveEncryptedWalletDisabled,
-    checkError,
+    showLoginMethods,
   } = props;
 
   const inputForms = {
     privateKey: (
-      <PrivateKeyInputForm
-        privateKeyStatus={privateKeyStatus}
-        privateKey={privateKey}
-        handleChange={handleChange}
-        checkError={checkError}
-      />
+      <PrivateKeyInputForm privateKeyStatus={privateKeyStatus} privateKey={privateKey} handleChange={handleChange} />
     ),
     json: (
       <JSONInputForm
@@ -114,7 +112,6 @@ const WalletLoginFormRenderer = (props: Props) => {
         handleChange={handleChange}
         password={password}
         passwordStatus={passwordStatus}
-        checkError={checkError}
       />
     ),
     walletFile: (
@@ -126,20 +123,13 @@ const WalletLoginFormRenderer = (props: Props) => {
         onDrop={onDrop}
         password={password}
         passwordStatus={passwordStatus}
-        checkError={checkError}
       />
     ),
     mnemonic: (
-      <MnemonicSentenceInputForm
-        mnemonic={mnemonic}
-        mnemonicStatus={mnemonicStatus}
-        handleChange={handleChange}
-        checkError={checkError}
-      />
+      <MnemonicSentenceInputForm mnemonic={mnemonic} mnemonicStatus={mnemonicStatus} handleChange={handleChange} />
     ),
   };
 
-  console.log(walletFileStatus, walletAddress, intents[walletFileStatus]);
   return (
     <Card elevation="1" style={{ width: '600px', position: 'relative' }}>
       <RadioGroup name="method" onChange={handleChange} selectedValue={method} label="Choose how to access your wallet">
@@ -162,16 +152,20 @@ const WalletLoginFormRenderer = (props: Props) => {
           <strong>Save private key in session storage </strong>
         </Checkbox>
       </FormGroup>
-      <ButtonBox>
-        <Button intent="primary" text="Authenticate" onClick={submit} />
-      </ButtonBox>
+      <FooterWrapper>
+        <ButtonBox>
+          <Button intent="normal" minimal={true} icon="undo" onClick={showLoginMethods} />
+        </ButtonBox>
+        <ButtonBox>
+          <Button intent="primary" text="Authenticate" onClick={submit} />
+        </ButtonBox>
+      </FooterWrapper>
       <OverlaySpinner visible={loading} transparent />
     </Card>
   );
 };
 
-const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus, checkError }: *) => {
-  const error = privateKeyStatus !== 'valid' && checkError;
+const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus }: *) => {
   return (
     <InputPadding>
       <FormGroup
@@ -181,7 +175,6 @@ const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus, check
       >
         <InputGroup
           name="privateKey"
-          className={error ? 'input-err' : ''}
           placeholder="(must start with 0x)"
           intent={intents[privateKeyStatus]}
           onChange={handleChange}
@@ -192,7 +185,7 @@ const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus, check
   );
 };
 
-const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatus, checkError }: *) => {
+const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatus }: *) => {
   return (
     <div>
       <Label text="Input JSON File Text">
@@ -229,15 +222,7 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatu
   );
 };
 
-const JSONFileInputForm = ({
-  onDrop,
-  walletFileStatus,
-  walletAddress,
-  handleChange,
-  password,
-  checkError,
-  passwordStatus,
-}: *) => {
+const JSONFileInputForm = ({ onDrop, walletFileStatus, walletAddress, handleChange, password, passwordStatus }: *) => {
   const validWalletFile = walletFileStatus === 'valid';
   const inValidWalletFile = walletFileStatus === 'invalid';
   return (
@@ -279,16 +264,11 @@ const JSONFileInputForm = ({
   );
 };
 
-const MnemonicSentenceInputForm = ({ handleChange, mnemonic, mnemonicStatus, checkError }: *) => {
-  const error = mnemonicStatus !== 'valid' && checkError;
+const MnemonicSentenceInputForm = ({ handleChange, mnemonic, mnemonicStatus }: *) => {
   return (
     <Label text="Input Mnemonic Sentence">
       <InputPadding>
-        <FormGroup
-          helperText={inputStatuses['mnemonic'][mnemonicStatus]}
-          intent={intents[mnemonicStatus]}
-          className={error ? 'input-err' : ''}
-        >
+        <FormGroup helperText={inputStatuses['mnemonic'][mnemonicStatus]} intent={intents[mnemonicStatus]}>
           <TextArea
             name="mnemonic"
             large
@@ -327,6 +307,12 @@ const ButtonBox = styled.div`
 
 const InputFormBox = styled.div`
   position: relative;
+`;
+
+const FooterWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const DropzoneContainer = styled.div`

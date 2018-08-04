@@ -12,7 +12,10 @@ import WalletLoginFormRenderer from './WalletLoginFormRenderer';
 import type { CreateWalletParams } from '../../types/walletLoginForm';
 
 type Status = 'incomplete' | 'valid' | 'invalid';
-type Props = { loginWithWallet: CreateWalletParams => void };
+type Props = {
+  loginWithWallet: CreateWalletParams => void,
+  showLoginMethods: CreateWalletParams => void,
+};
 
 type State = {
   loading: boolean,
@@ -22,12 +25,14 @@ type State = {
   jsonStatus: Status,
   walletAddress: string,
   walletFile: ?string,
+  walletAddress: ?string,
   walletFileStatus: Status,
   privateKey: ?string,
   privateKeyStatus: Status,
   mnemonic: ?string,
   mnemonicStatus: Status,
   password: ?string,
+  passwordStatus: Status,
   storeWallet: boolean,
   storePrivateKey: boolean,
 };
@@ -50,11 +55,11 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     passwordStatus: 'incomplete',
     storeWallet: true,
     storePrivateKey: true,
-    checkError: false,
   };
 
   onDrop = (acceptedFiles: *, rejectedFiles: *) => {
     const file = acceptedFiles[0];
+    console.log(acceptedFiles[0]);
     const reader = new FileReader();
     reader.onload = () => {
       try {
@@ -103,19 +108,11 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
   handleChange = ({ target }: SyntheticInputEvent<>) => {
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [target.name]: value, checkError: false }, this.validate(target.name, value));
+    this.setState({ [target.name]: value }, this.validate(target.name, value));
   };
 
   validateForm = () => {
-    const {
-      method,
-      password,
-      passwordStatus,
-      privateKeyStatus,
-      jsonStatus,
-      mnemonicStatus,
-      walletFileStatus,
-    } = this.state;
+    const { method, passwordStatus, privateKeyStatus, jsonStatus, mnemonicStatus, walletFileStatus } = this.state;
     switch (method) {
       case 'privateKey':
         if (privateKeyStatus !== 'valid') {
@@ -165,27 +162,13 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
   };
 
   submit = async () => {
-    const {
-      method,
-      json,
-      walletFile,
-      privateKey,
-      password,
-      passwordStatus,
-      mnemonic,
-      storeWallet,
-      storePrivateKey,
-    } = this.state;
+    const { method, json, walletFile, privateKey, password, mnemonic, storeWallet, storePrivateKey } = this.state;
     const { loginWithWallet } = this.props;
-
     if (!this.validateForm()) {
-      this.setState({ checkError: true });
       return;
     }
 
-    console.log(this.validateForm(), passwordStatus);
-    this.setState({ loading: true, checkError: true });
-
+    this.setState({ loading: true });
     let invalidPassword = false;
     let invalidKey = false;
     let invalidJSON = false;
@@ -220,7 +203,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       default:
         return;
     }
-
     if (wallet) {
       this.setState({ loading: false });
       loginWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
@@ -239,24 +221,28 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      loading,
-      method,
-      json,
-      jsonStatus,
-      privateKey,
-      privateKeyStatus,
-      walletFile,
-      walletAddress,
-      walletFileStatus,
-      mnemonic,
-      mnemonicStatus,
-      password,
-      passwordStatus,
-      storePrivateKey,
-      storeWallet,
-      checkError,
-    } = this.state;
-
+      state: {
+        loading,
+        method,
+        json,
+        jsonStatus,
+        privateKey,
+        privateKeyStatus,
+        walletFile,
+        walletAddress,
+        walletFileStatus,
+        mnemonic,
+        mnemonicStatus,
+        password,
+        passwordStatus,
+        storePrivateKey,
+        storeWallet,
+      },
+      props: { showLoginMethods },
+      onDrop,
+      handleChange,
+      submit,
+    } = this;
     const saveEncryptedWalletDisabled = method === 'privateKey' || method === 'mnemonic';
     return (
       <WalletLoginFormRenderer
@@ -275,10 +261,10 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         passwordStatus={passwordStatus}
         storeWallet={storeWallet}
         storePrivateKey={storePrivateKey}
-        checkError={checkError}
-        onDrop={this.onDrop}
-        handleChange={this.handleChange}
-        submit={this.submit}
+        onDrop={onDrop}
+        handleChange={handleChange}
+        showLoginMethods={showLoginMethods}
+        submit={submit}
         saveEncryptedWalletDisabled={saveEncryptedWalletDisabled}
       />
     );

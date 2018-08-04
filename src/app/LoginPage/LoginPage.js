@@ -6,9 +6,12 @@ import Notifier from '../../components/Notifier';
 
 type Props = {
   authenticated: boolean,
-  loginWithMetamask: (SyntheticEvent<>) => void,
+  loginWithMetamask: () => void,
   loginWithWallet: (SyntheticEvent<>) => void,
+  removeNotification: any => void,
 };
+
+//TODO: Remove Notification handling
 
 type State = {
   view: string,
@@ -33,16 +36,21 @@ class LoginPage extends React.PureComponent<Props, State> {
     this.setState({ view: 'wallet' });
   };
 
+  showLoginMethods = () => {
+    this.setState({ view: 'loginMethods' });
+  };
+
   loginWithMetamask = () => {
-    // this.props.addNotification({ id: 1, message: 'Heelo' });
     this.props.loginWithMetamask();
   };
 
-  renderer = () => {};
-
   render() {
-    const { loginWithMetamask, loginWithWallet, authenticated } = this.props;
-    const { view, metamaskStatus } = this.state;
+    const {
+      props: { loginWithMetamask, loginWithWallet, authenticated },
+      state: { view, metamaskStatus },
+      showWalletLoginForm,
+      showLoginMethods,
+    } = this;
 
     if (authenticated) {
       return <Redirect to="/wallet" />;
@@ -55,7 +63,8 @@ class LoginPage extends React.PureComponent<Props, State> {
           metamaskStatus={metamaskStatus}
           loginWithWallet={loginWithWallet}
           loginWithMetamask={loginWithMetamask}
-          showWalletLoginForm={this.showWalletLoginForm}
+          showWalletLoginForm={showWalletLoginForm}
+          showLoginMethods={showLoginMethods}
         />
       </div>
     );

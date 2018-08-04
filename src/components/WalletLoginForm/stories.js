@@ -35,13 +35,16 @@ storiesOf('WalletLoginForm', module)
           json={''}
           jsonStatus={'incomplete'}
           walletFile={null}
+          walletAddress={''}
           walletFileStatus={'incomplete'}
           mnemonic={''}
           mnemonicStatus={'incomplete'}
           password={''}
+          passwordStatus={'incomplete'}
           storeWallet={true}
           storePrivateKey={true}
           onDrop={action('onDrop')}
+          showLoginMethods={action('showLoginMethods')}
           handleChange={action('onChange')}
           submit={action('submit')}
           saveEncryptedWalletDisabled={false}
@@ -61,14 +64,17 @@ storiesOf('WalletLoginForm', module)
           json={''}
           jsonStatus={'incomplete'}
           walletFile={null}
+          walletAddress={''}
           walletFileStatus={'incomplete'}
           mnemonic={''}
           mnemonicStatus={'incomplete'}
           password={''}
+          passwordStatus={'incomplete'}
           storeWallet={true}
           storePrivateKey={true}
           onDrop={action('onDrop')}
           handleChange={action('onChange')}
+          showLoginMethods={action('showLoginMethods')}
           submit={action('submit')}
           saveEncryptedWalletDisabled={false}
         />
