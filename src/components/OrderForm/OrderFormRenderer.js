@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Button, FormGroup, InputGroup } from '@blueprintjs/core';
+import { Button, FormGroup, InputGroup, Label } from '@blueprintjs/core';
 import type { FormProps, InputFieldsProps } from '../../types/orderForm';
 
 const OrderFormRenderer = (props: FormProps) => {
@@ -27,79 +27,68 @@ const LimitForm = (fieldsProps: InputFieldsProps) => {
   const { props, quoteToken, baseToken, onInputChange } = fieldsProps;
   return (
     <div className="column">
-      <FormGroup label="Price" labelFor="text-input" required={true}>
-        <InputGroup
-          name="price"
-          onChange={evt => onInputChange({ evt, target: 'price' })}
-          value={props.price}
-          min="0"
-          type="number"
-          placeholder={'Price ' + { quoteToken }.toString()}
-        />
-        <span className="curr-name">{baseToken}</span>
-      </FormGroup>
-      <FormGroup label="Amount" labelFor="text-input" required={true}>
-        <InputGroup
-          onKeyPress={() => onInputChange({ target: 'radio' })}
-          onChange={evt => onInputChange({ evt, target: 'amount' })}
-          value={props.amount}
-          min="0"
-          type="number"
-          placeholder={'Amount ' + { quoteToken }.toString()}
-        />
-        <span className="curr-name">{quoteToken}</span>
-      </FormGroup>
+      <FormField
+        props={{
+          label: 'Price',
+          onInputChange,
+          name: 'price',
+          value: props.price,
+          placeholder: 'Price',
+          spanValue: baseToken,
+        }}
+      />
+      <FormField
+        props={{
+          label: 'Amount',
+          onInputChange,
+          name: 'amount',
+          value: props.amount,
+          placeholder: 'Amount',
+          spanValue: quoteToken,
+        }}
+      />
       <FormGroup className="radio-btns-container">
         <div className="pt-input-group radio-buttons">
-          <label className={props.portion === 25 ? 'box active-box' : 'box'}>
-            25%
-            <input
-              type="radio"
-              onChange={evt => onInputChange({ evt, target: 'portion' })}
-              value={25}
-              checked={props.portion === 25}
-            />
-          </label>
-          <label className={props.portion === 50 ? 'box active-box' : 'box'}>
-            50%
-            <input
-              type="radio"
-              onChange={evt => onInputChange({ evt, target: 'portion' })}
-              value={50}
-              checked={props.portion === 50}
-            />
-          </label>
-          <label className={props.portion === 75 ? 'box active-box' : 'box'}>
-            75%
-            <input
-              type="radio"
-              onChange={evt => onInputChange({ evt, target: 'portion' })}
-              value={75}
-              checked={props.portion === 75}
-            />
-          </label>
-          <label className={props.portion === 100 ? 'box active-box' : 'box'}>
-            100%
-            <input
-              type="radio"
-              onChange={evt => onInputChange({ evt, target: 'portion' })}
-              value={100}
-              checked={props.portion === 100}
-            />
-          </label>
+          <RadioButton
+            props={{
+              value: 25,
+              portion: props.portion,
+              onInputChange: onInputChange,
+            }}
+          />
+          <RadioButton
+            props={{
+              value: 50,
+              portion: props.portion,
+              onInputChange: onInputChange,
+            }}
+          />
+          <RadioButton
+            props={{
+              value: 75,
+              portion: props.portion,
+              onInputChange: onInputChange,
+            }}
+          />
+          <RadioButton
+            props={{
+              value: 100,
+              portion: props.portion,
+              onInputChange: onInputChange,
+            }}
+          />
         </div>
       </FormGroup>
-      <FormGroup label="Total" labelFor="text-input" required={true}>
-        <InputGroup
-          onKeyPress={() => onInputChange({ target: 'radio' })}
-          onChange={evt => onInputChange({ evt, target: 'total' })}
-          value={props.total}
-          min="0"
-          type="number"
-          placeholder={'Total ' + { baseToken }.toString()}
-        />
-        <span className="curr-name">{baseToken}</span>
-      </FormGroup>
+      <FormField
+        props={{
+          label: 'Total',
+          onInputChange,
+          name: 'total',
+          value: props.total,
+          placeholder: 'Total',
+          spanValue: baseToken,
+        }}
+      />
     </div>
   );
 };
@@ -108,58 +97,66 @@ const StopLimitForm = (fieldsProps: InputFieldsProps) => {
   const { props, quoteToken, baseToken, onInputChange } = fieldsProps;
   return (
     <div className="column">
-      <FormGroup label="Stop Price" labelFor="text-input">
-        <input
-          id="text-input"
-          onChange={evt => onInputChange({ evt, target: 'stopPrice' })}
-          value={props.stopPrice}
-          min="0"
-          className="pt-input"
-          type="number"
-          placeholder="Input group"
-          dir="auto"
-        />
-        <span className="curr-name">{baseToken}</span>
-      </FormGroup>
-      <FormGroup label="Limit Price" labelFor="text-input">
-        <input
-          id="text-input"
-          onChange={evt => onInputChange({ evt, target: 'limitPrice' })}
-          value={props.limitPrice}
-          min="0"
-          className="pt-input"
-          type="number"
-          placeholder="Input group"
-          dir="auto"
-        />
-        <span className="curr-name">{baseToken}</span>
-      </FormGroup>
-      <FormGroup label="Amount" labelFor="text-input">
-        <input
-          id="text-input"
-          onChange={evt => onInputChange({ evt, target: 'amount' })}
-          value={props.amount}
-          min="0"
-          className="pt-input"
-          type="number"
-          placeholder="Input group"
-          dir="auto"
-        />
-        <span className="curr-name">{quoteToken}</span>
-      </FormGroup>
-      <FormGroup label="Total" labelFor="text-input">
-        <input
-          id="text-input"
-          onChange={evt => onInputChange({ evt, target: 'total' })}
-          value={props.total}
-          min="0"
-          className="pt-input"
-          type="number"
-          placeholder="Input group"
-          dir="auto"
-        />
-        <span className="curr-name">{baseToken}</span>
-      </FormGroup>
+      <FormField
+        props={{
+          label: 'Stop Price',
+          onInputChange,
+          name: 'stopPrice',
+          value: props.stopPrice,
+          placeholder: 'Stop Price',
+          spanValue: baseToken,
+        }}
+      />
+      <FormField
+        props={{
+          label: 'Limit Price',
+          onInputChange,
+          name: 'limitPrice',
+          value: props.limitPrice,
+          placeholder: 'Limit Price',
+          spanValue: baseToken,
+        }}
+      />
+      <FormField
+        props={{
+          label: 'Amount',
+          onInputChange,
+          name: 'amount',
+          value: props.amount,
+          placeholder: 'Amount',
+          spanValue: quoteToken,
+        }}
+      />
+      <FormField
+        props={{
+          label: 'Total',
+          onInputChange,
+          name: 'total',
+          value: props.total,
+          placeholder: 'Total',
+          spanValue: baseToken,
+        }}
+      />
     </div>
+  );
+};
+
+const FormField = ({ props }) => {
+  const { label, onInputChange, name, value, placeholder, spanValue } = props;
+  return (
+    <FormGroup label={label}>
+      <InputGroup name={name} onChange={onInputChange} value={value} min="0" type="number" placeholder={placeholder} />
+      <span className="curr-name">{spanValue}</span>
+    </FormGroup>
+  );
+};
+
+const RadioButton = ({ props }) => {
+  const { onInputChange, value, portion } = props;
+  return (
+    <Label className={portion === value ? 'box active-box' : 'box'}>
+      {value}%
+      <InputGroup name="portion" type="radio" onChange={onInputChange} value={value} />
+    </Label>
   );
 };

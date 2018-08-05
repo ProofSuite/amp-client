@@ -9,7 +9,6 @@ type Props = {
 class Notifier extends React.Component {
   show = notification => {
     let { id, intent, message } = notification;
-    console.log(notification);
     Notification.show({
       intent: intent || 'success',
       message: message,

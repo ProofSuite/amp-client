@@ -18,96 +18,62 @@ it('renders without crashing', () => {
   );
 });
 
-it('verifies Components Elements: h5 & Tabs', () => {
-  const wrapper = shallow(
-    <OrderForm
-      askPrice={0.25}
-      bidPrice={0.29}
-      totalQuoteBalance={1000}
-      totalBaseBalance={10}
-      formName="Sell"
-      quoteToken="ETH"
-      baseToken="BTC"
-      decimals={7}
-      loggedIn={false}
-    />
-  );
-  let heading = wrapper.find('h5');
-  expect(heading.text()).toEqual('Sell ETH');
+describe('tests Functions and state', () => {
+  let wrapper, instance;
 
-  wrapper.setProps({ formName: 'Buy' });
-  heading = wrapper.find('h5');
-  expect(heading.text()).toEqual('Buy ETH');
+  beforeEach(() => {
+    wrapper = shallow(
+      <OrderForm
+        askPrice={0.25}
+        bidPrice={0.29}
+        totalQuoteBalance={1000}
+        totalBaseBalance={10}
+        formName="Sell"
+        quoteToken="ETH"
+        baseToken="BTC"
+        decimals={7}
+        loggedIn={true}
+      />
+    );
 
-  const tab1 = wrapper.find('Tab#limit');
-  expect(tab1.props().title).toEqual('Limit');
+    instance = wrapper.instance();
+  });
 
-  const tab2 = wrapper.find('Tab#stop');
-  expect(tab2.props().title).toEqual('Stop Limit');
-});
+  it('changes Tab Successfully', () => {
+    expect(instance.state.selectedTabId).toEqual('limit');
+    instance.changeTab('stop');
+    expect(instance.state.selectedTabId).toEqual('stop');
+  });
 
-it('verifies changeTab func', () => {
-  const wrapper = shallow(
-    <OrderForm
-      askPrice={0.25}
-      bidPrice={0.29}
-      totalQuoteBalance={1000}
-      totalBaseBalance={10}
-      formName="Sell"
-      quoteToken="ETH"
-      baseToken="BTC"
-      decimals={7}
-      loggedIn={false}
-    />
-  );
-  // Default Tab
-  expect(wrapper.instance().state.selectedTabId).toEqual('limit');
+  it('verifies Prices', () => {
+    expect(instance.props.askPrice).toEqual(0.25);
+    expect(instance.props.bidPrice).toEqual(0.29);
+  });
 
-  // Changing Tab
-  wrapper.instance().changeTab('stop');
-  expect(wrapper.instance().state.selectedTabId).toEqual('stop');
-});
+  it('validates onAmountChange Func', () => {
+    instance.onInputChange({ target: { name: 'amount', value: '10' } });
+    expect(instance.state.total).toEqual('2.9');
+  });
 
-it('verifies changeTab func', () => {
-  const wrapper = shallow(
-    <OrderForm
-      askPrice={0.25}
-      bidPrice={0.29}
-      totalQuoteBalance={1000}
-      totalBaseBalance={10}
-      formName="Sell"
-      quoteToken="ETH"
-      baseToken="BTC"
-      decimals={7}
-      loggedIn={false}
-    />
-  );
-  // Default Tab
-  expect(wrapper.instance().state.selectedTabId).toEqual('limit');
+  it('validates onPriceChange Func', () => {
+    instance.onInputChange({ target: { name: 'price', value: '0.39' } });
+    instance.onInputChange({ target: { name: 'amount', value: '10' } });
+    expect(instance.state.total).toEqual('3.9');
+  });
 
-  // Changing Tab
-  wrapper.instance().changeTab('stop');
-  expect(wrapper.instance().state.selectedTabId).toEqual('stop');
-});
+  it('validates onTotalChange Func', () => {
+    instance.onInputChange({ target: { name: 'price', value: '0.25' } });
+    instance.onInputChange({ target: { name: 'total', value: '10' } });
+    expect(instance.state.amount).toEqual('40');
+  });
 
-it('verifies changeTab func', () => {
-  const wrapper = shallow(
-    <OrderForm
-      askPrice={0.25}
-      bidPrice={0.29}
-      totalQuoteBalance={1000}
-      totalBaseBalance={10}
-      formName="Sell"
-      quoteToken="ETH"
-      baseToken="BTC"
-      decimals={7}
-      loggedIn={false}
-    />
-  );
-  // Default Tab
-  expect(wrapper.instance().state.selectedTabId).toEqual('limit');
+  it('validates onPortionChange Func', () => {
+    instance.onInputChange({ target: { name: 'portion', value: 50 } });
+    expect(instance.state.amount).toEqual('500');
+  });
 
-  // Changing Tab
-  wrapper.instance().changeTab('stop');
-  expect(wrapper.instance().state.selectedTabId).toEqual('stop');
+  it('verifies resetRadios Func', () => {
+    instance.resetRadios();
+    expect(instance.state.portion).toEqual(0);
+  });
 });

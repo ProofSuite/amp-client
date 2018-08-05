@@ -12,12 +12,13 @@ import type { CreateWalletParams } from '../../types/createWallet';
 type Props = {
   view: string,
   showWalletLoginForm: CreateWalletParams => void,
+  showLoginMethods: () => void,
   loginWithMetamask: void => void,
   loginWithWallet: void => void,
 };
 
 const LoginPageRenderer = (props: Props) => {
-  const { view, loginWithMetamask, loginWithWallet, showWalletLoginForm, metamaskStatus } = props;
+  const { view, loginWithMetamask, loginWithWallet, showWalletLoginForm, metamaskStatus, showLoginMethods } = props;
 
   const views = {
     loginMethods: (
@@ -27,7 +28,7 @@ const LoginPageRenderer = (props: Props) => {
         metamaskStatus={metamaskStatus}
       />
     ),
-    wallet: <WalletLoginFormView loginWithWallet={loginWithWallet} />,
+    wallet: <WalletLoginFormView loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />,
     loading: <LoginLoadingView />,
   };
 
@@ -85,10 +86,10 @@ const LoginMethodsView = (props: Props) => {
 };
 
 const WalletLoginFormView = (props: Props) => {
-  const { loginWithWallet } = props;
+  const { loginWithWallet, showLoginMethods } = props;
   return (
     <WalletLoginViewWrapper>
-      <WalletLoginForm loginWithWallet={loginWithWallet} />
+      <WalletLoginForm loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />
     </WalletLoginViewWrapper>
   );
 };

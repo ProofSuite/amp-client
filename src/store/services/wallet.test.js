@@ -48,7 +48,7 @@ describe('wallet service (integration with ethers', () => {
     ethers.Wallet.fromMnemonic.mockImplementationOnce(require.requireActual('ethers').Wallet.fromMnemonic);
 
     let mnemonic = 'radar blur cabbage chef fix engine embark joy scheme fiction master release';
-    let wallet = await walletService.createWalletFromMnemonic(mnemonic);
+    let { wallet } = await walletService.createWalletFromMnemonic(mnemonic);
 
     expect(wallet.address.length).toEqual(42);
     expect(wallet.privateKey.length).toEqual(66);
