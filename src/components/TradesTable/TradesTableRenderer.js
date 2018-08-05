@@ -1,14 +1,16 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { Loading, Colors } from '../Common';
+import { Loading, Colors, Text } from '../Common';
 import { Button, Card, Tabs, Tab, Collapse } from '@blueprintjs/core';
 import { format } from 'date-fns';
 
-type Trade = Object;
+import type { Trade } from '../../types/trades';
+import type { TokenPair } from '../../types/tokens';
 
 type Props = {
   selectedTabId: string,
+  currentPair: TokenPair,
   onChange: string => void,
   tradeHistory: Array<Trade>,
   userTradeHistory: Array<Trade>,
@@ -17,12 +19,19 @@ type Props = {
 };
 
 const TradesTableRenderer = (props: Props) => {
-  const { isOpen, selectedTabId, onChange, tradeHistory, userTradeHistory, toggleCollapse } = props;
+  const { currentPair, isOpen, selectedTabId, onChange, tradeHistory, userTradeHistory, toggleCollapse } = props;
+
   return (
     <div>
       <Card className="trade-history">
         <TradesTableHeader>
-          <Heading>Trades</Heading>
+          <Heading>
+            Trades
+            <Text muted>
+              {' '}
+              ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
+            </Text>
+          </Heading>
           <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} minimal onClick={toggleCollapse} />
         </TradesTableHeader>
         <Collapse isOpen={isOpen}>

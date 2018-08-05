@@ -53,7 +53,7 @@ function Layout(props: Props) {
               </NavbarHeading>
               <NavbarDivider />
               <NavbarLink to="/wallet">Wallet</NavbarLink>
-              <NavbarLink to="/exchange">Exchange</NavbarLink>
+              <NavbarLink to="/trade">Exchange</NavbarLink>
               <NavbarLink to="/settings">Settings</NavbarLink>
             </NavbarGroup>
             <NavbarGroup align={Alignment.RIGHT}>

@@ -6,6 +6,7 @@ import type { State } from '../../types';
 export const mapStateToProps = (state: State) => {
   return {
     trades: tradesTableSelector(state).trades(),
+    currentPair: tradesTableSelector(state).currentPair(),
   };
 };
 

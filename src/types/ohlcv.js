@@ -1,9 +1,7 @@
 //@flow
 
 export type OHLCVState = {
-  +pair: string,
-  +pairId: string,
-  +ohlcvData: Array<Object>
+  +ohlcvData: Array<Object>,
 };
 
 export type SendTimelineParams = {

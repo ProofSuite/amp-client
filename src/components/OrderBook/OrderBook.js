@@ -2,8 +2,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card, Tab, Tabs, Collapse, Button } from '@blueprintjs/core';
+import { Text } from '../Common';
 import OrderListRenderer from './OrderListRenderer';
 import DepthChartRenderer from './DepthChartRenderer';
+
+import type { TokenPair } from '../../types/tokens';
 
 var AmCharts = require('@amcharts/amcharts3-react');
 
@@ -17,6 +20,7 @@ type Props = {
   loading: boolean,
   asks: Array<BidOrAsk>,
   bids: Array<BidOrAsk>,
+  currentPair: TokenPair,
 };
 
 type State = {
@@ -62,23 +66,25 @@ class OrderBook extends React.Component<Props, State> {
   };
 
   render() {
-    const { bids, asks } = this.props;
+    const { bids, asks, currentPair } = this.props;
     const { selectedTabId, isOpen } = this.state;
 
     return (
       <div>
         <Card className="order-book">
           <OrderBookHeader>
-            <Heading>Order Book</Heading>
-            <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} minimal onClick={this.toggleCollapse} />
+            <Heading>
+              Order Book
+              <Text muted>
+                {' '}
+                ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
+              </Text>
+            </Heading>
+            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={this.toggleCollapse} />
           </OrderBookHeader>
           <Collapse isOpen={isOpen} transitionDuration={100}>
             <Tabs selectedTabId={selectedTabId} onChange={this.changeTab}>
-              <Tab
-                id="list"
-                title="Order List"
-                panel={<OrderListRenderer bids={bids} asks={asks} baseToken="" quoteToken="" />}
-              />
+              <Tab id="list" title="Order List" panel={<OrderListRenderer bids={bids} asks={asks} />} />
               <Tab
                 id="depth-chart"
                 title="Depth Chart"

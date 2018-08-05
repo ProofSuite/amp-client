@@ -23,7 +23,10 @@ export type UpdateOrderBookAction = {
   payload: { bids: any, asks: any },
 };
 
-export type TradingState = {};
+export type UpdateCurrentPairAction = {
+  type: 'tradingPage/UPDATE_CURRENT_PAIR',
+  payload: { pair: string },
+};
 
 export type SingleOrderTypes = {
   order: Object,
@@ -35,4 +38,5 @@ export type TradingPageAction =
   | UpdateTokenPairDataAction
   | UpdateOrdersTableAction
   | UpdateTradesTableAction
-  | UpdateOrderBookAction;
+  | UpdateOrderBookAction
+  | UpdateCurrentPairAction;

@@ -46,6 +46,15 @@ export const tradesDeleted = (trades: Trades) => {
   return event;
 };
 
+export const tradesReset = () => {
+  const event = (state: TradesState) => ({
+    ...state,
+    byTimeStamp: {},
+  });
+
+  return event;
+};
+
 export default function tradesDomain(state: TradesState) {
   return {
     byTimestamp: () => state.byTimestamp,

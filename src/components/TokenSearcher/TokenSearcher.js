@@ -3,6 +3,8 @@ import React from 'react';
 import TokenSearcherRenderer from './TokenSearcherRenderer';
 import { sortTable } from '../../utils/helpers';
 
+import type { TokenPair } from '../../types/tokens';
+
 //TODO not sure exactly where to define this type.
 type Token = {
   pair: string,
@@ -19,6 +21,7 @@ type Token = {
 type Props = {
   tokenPairsByQuoteToken: { [string]: Array<Token> },
   updateFavorite: (string, boolean) => void,
+  updateCurrentPair: string => void,
 };
 
 type State = {
@@ -107,6 +110,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
       });
 
       result['favorites'] = result['favorites'].concat(tokenPairsByQuoteToken[quote].filter(pair => pair.favorited));
+
       result[quote] = sortTable(result[quote], filterName, sortOrder);
     }
 
@@ -115,9 +119,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
 
   changeSelectedToken = (token: Token) => {
     this.setState({ selectedToken: token });
-  };
-  changeSelectedToken = (token: Token) => {
-    this.setState({ selectedToken: token });
+    this.props.updateCurrentPair(token.pair);
   };
 
   render() {

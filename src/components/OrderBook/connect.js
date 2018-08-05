@@ -5,8 +5,8 @@ import orderBookSelector from '../../store/models/orderBook';
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
-  let { bids, asks } = orderBookSelector(state);
-  return { bids, asks };
+  let { bids, asks, currentPair } = orderBookSelector(state);
+  return { bids, asks, currentPair };
 };
 
 export const mapDispatchToProps = {};

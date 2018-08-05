@@ -6,12 +6,10 @@ import type { AccountBalancesAction, AccountBalancesEvent, AccountBalancesState 
 import type { EtherTxAction, EtherTxEvent, EtherTxState } from './etherTx';
 import type { OHLCVState } from './ohlcv';
 import type { OrderBookState } from './orderBook';
-import type { TradingState } from './tradingPage';
 import type { TradeHistoryState } from './tradeHistory';
-import type { DepthChartState } from './depthChart';
 import type { OrderHistoryState } from './orderHistory';
 import type { OrderFormState } from './orderForm';
-import type { TokenState, TokenPairState, TokenAction, TokenEvent, TokenPairEvent } from './tokens';
+import type { TokenState, TokenPairState, TokenEvent, TokenPairEvent } from './tokens';
 import type { AccountState, AccountAction, AccountEvent } from './account';
 import type { LoginPageState, LoginPageAction, LoginPageEvent } from './loginPage';
 import type { LogoutPageAction } from './logoutPage';
@@ -25,7 +23,6 @@ export type Action =
   | ReduxInitAction
   | EtherBalanceAction
   | EtherTxAction
-  | TokenAction
   | AccountBalancesAction
   | AccountAction
   | DepositFormAction
@@ -62,7 +59,6 @@ export type State = {
   tradeHistory: TradeHistoryState,
   orderHistory: OrderHistoryState,
   orderForm: OrderFormState,
-  depthChart: DepthChartState,
   etherTx: EtherTxState,
   tokens: TokenState,
   tokenPairs: TokenPairState,

@@ -4,15 +4,11 @@ import tradingPageModel, { queryDefaultData } from '../../store/models/tradingPa
 
 import type { State } from '../../types';
 
-export const mapStateToProps = (state: State) => {
-  return tradingPageModel(state).getState();
-};
-
 export const mapDispatchToProps = {
   queryDefaultData,
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 );

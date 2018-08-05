@@ -4,7 +4,7 @@ import Colors from './Colors';
 
 export default styled.span`
   color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
-  vertical-align: middle;
+  margin: auto;
   )}
 `;
 
