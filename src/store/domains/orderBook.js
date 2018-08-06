@@ -131,6 +131,8 @@ export default function domain(state: OrderBookState) {
       return { asks, bids };
     },
 
+    getBidPrice: () => (state.bids[state.sortedBids[0]] ? state.bids[state.sortedBids[0]].price : 0),
+    getAskPrice: () => (state.asks[state.sortedAsks[0]] ? state.asks[state.sortedAsks[0]].price : 0),
     getQuoteToken: () => state.quoteToken,
     getBaseToken: () => state.baseToken,
   };

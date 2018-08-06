@@ -49,7 +49,6 @@ export type ActionHandler = Action => Event;
 
 export type State = {
   loginPage: LoginPageState,
-  tradingPage: TradingState,
   signer: SignerState,
   etherBalance: EtherBalanceState,
   accountBalances: AccountBalancesState,

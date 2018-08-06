@@ -200,6 +200,8 @@ export const tokenPairs = createReducer(action => {
       return tokenPairsEvents.tokenPairRemoved(payload);
     case tokenSearcherActionTypes.updateFavorite:
       return tokenPairsEvents.tokenPairFavorited(payload.code, payload.favorite);
+    case tokenSearcherActionTypes.updateCurrentPair:
+      return tokenPairsEvents.currentPairUpdated(payload.pair);
     case tradingPageActionTypes.updateTokenPairData:
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData);
     default:
