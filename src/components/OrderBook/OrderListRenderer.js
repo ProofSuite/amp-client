@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const OrderBookRenderer = (props: Props) => {
-  const { quoteToken, baseToken, bids, asks } = props;
+  const { bids, asks } = props;
   return (
     <OrderBookBox>
       {!bids && <Loading />}

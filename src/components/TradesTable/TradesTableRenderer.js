@@ -32,7 +32,7 @@ const TradesTableRenderer = (props: Props) => {
               ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
             </Text>
           </Heading>
-          <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} minimal onClick={toggleCollapse} />
+          <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
         </TradesTableHeader>
         <Collapse isOpen={isOpen}>
           <Tabs selectedTabId={selectedTabId} onChange={onChange}>
