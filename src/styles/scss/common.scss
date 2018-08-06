@@ -90,50 +90,7 @@ input[type='checkbox'] {
   button {}
 }
 
-.footer {
-  background-color: $dark-gray4;
-  width: 100%;
-  color: $light-gray5;
-  .container {
-    width: 70%;
-    margin: 0px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    .top {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 40px 0px 30px;
-      border-bottom: 1px solid $gray2;
-      margin-bottom: 15px;
-      .logos {
-        width: 20%;
-      }
-      .content {
-        width: 75%;
-        display: flex;
-        justify-content: space-between;
-        li.head {
-          color: $gray2;
-        }
-        li {
-          margin: 10px auto;
-          a {
-            color: $light-gray5;
-          }
-          a:hover {
-            color: $blue4;
-          }
-        }
-      }
-    }
-    .bottom {
-      margin-bottom: 7px;
-    }
-  }
-}
+.footer {}
 
 
 

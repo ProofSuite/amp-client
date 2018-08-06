@@ -1,5 +1,5 @@
 import React from 'react';
-import { Colors, Button, Collapse, Text } from '@blueprintjs/core';
+import { Colors } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 const Footer = () => (
