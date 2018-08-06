@@ -25,8 +25,8 @@ export default class TradingPage extends React.PureComponent<Props, State> {
         <Cell area="leftColumn">
           <Grid columns={1} alignContent="start">
             <TokenSearcher />
-            <OrderForm />
-            <OrderForm />
+            <OrderForm formType="Buy" />
+            <OrderForm formType="Sell" />
           </Grid>
         </Cell>
 
@@ -44,10 +44,6 @@ export default class TradingPage extends React.PureComponent<Props, State> {
     );
   }
 }
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 const TradingPageLayout = styled(Grid).attrs({
   columns: '1fr 4fr',

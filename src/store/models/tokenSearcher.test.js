@@ -6,6 +6,10 @@ jest.mock('../domains');
 it('tokenSearcherSelector parses data correctly', () => {
   let getFavoritePairsMock = jest.fn(() => ['BNB_DAI', 'ZRX_WETH']);
 
+  let getCurrentPairMock = jest.fn(() => ({
+    pair: 'BNB_WETH',
+  }));
+
   let getTokenPairsDataArrayMock = jest.fn(() => [
     {
       pair: 'BNB_WETH',
@@ -114,8 +118,10 @@ it('tokenSearcherSelector parses data correctly', () => {
   domains.getTokenPairsDomain = jest.fn(() => ({
     getTokenPairsDataArray: getTokenPairsDataArrayMock,
     getFavoritePairs: getFavoritePairsMock,
+    getCurrentPair: getCurrentPairMock,
   }));
 
-  let { tokenPairsByQuoteToken } = tokenSearcherSelector();
+  let { tokenPairsByQuoteToken, currentPair } = tokenSearcherSelector();
   expect(tokenPairsByQuoteToken).toEqual(expectedTokenPairsByQuoteToken);
+  expect(currentPair).toEqual({ pair: 'BNB_WETH' });
 });

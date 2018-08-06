@@ -3,9 +3,7 @@ import createReducer from './createReducer';
 import etherBalanceActionTypes from './actions/etherBalance';
 import accountBalancesActionTypes from './actions/accountBalances';
 import etherTxActionTypes from './actions/etherTx';
-import orderBookActionTypes from './actions/orderBook';
 import orderFromActionTypes from './actions/orderForm';
-import depthChartActionTypes from './actions/depthChart';
 import ohlcvActionTypes from './actions/ohlcv';
 import tokenSearcherActionTypes from './actions/tokenSearcher';
 import tokensActionTypes from './actions/tokens';
@@ -24,12 +22,10 @@ import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
 import * as etherTxEvents from './domains/etherTx';
 import * as loginPageEvents from './domains/loginPage';
-import * as tradingPageEvents from './domains/tradingPage';
 import * as orderBookEvents from './domains/orderBook';
 import * as tradeEvents from './domains/trades';
 import * as orderEvents from './domains/orders';
 import * as orderFormEvents from './domains/orderForm';
-import * as depthChartEvents from './domains/depthChart';
 import * as ohlcvEvents from './domains/ohlcv';
 import * as tokensEvents from './domains/tokens';
 import * as accountEvents from './domains/account';
@@ -39,14 +35,6 @@ import * as tokenPairsEvents from './domains/tokenPairs';
 import * as signerEvents from './domains/signer';
 import * as walletsEvents from './domains/wallets';
 import * as notificationEvents from './domains/notifications';
-
-export const tradingPage = createReducer(action => {
-  const { type } = action;
-  switch (type) {
-    default:
-      return tradingPageEvents.initialized();
-  }
-});
 
 export const loginPage = createReducer(action => {
   const { type, payload } = action;
@@ -133,8 +121,24 @@ export const ohlcv = createReducer(action => {
   switch (type) {
     case ohlcvActionTypes.saveData:
       return ohlcvEvents.savedOHLCVData(payload.data);
+    case tokenSearcherActionTypes.updateCurrentPair:
+      return ohlcvEvents.ohlcvReset();
     default:
       return ohlcvEvents.initialized();
+  }
+});
+
+export const trades = createReducer(action => {
+  const { type, payload } = action;
+  switch (type) {
+    case tradingPageActionTypes.updateTradesTable:
+      return tradeEvents.tradesUpdated(payload.trades);
+    case tokenSearcherActionTypes.updateTradesTable:
+      return tradeEvents.tradesUpdated(payload.trades);
+    case tokenSearcherActionTypes.updateCurrentPair:
+      return tradeEvents.tradesReset();
+    default:
+      return tradeEvents.initialized();
   }
 });
 
@@ -142,8 +146,11 @@ export const orderBook = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case tradingPageActionTypes.updateOrderBook:
-      console.log('receiving order book updated');
       return orderBookEvents.orderBookUpdated(payload.bids, payload.asks);
+    case tokenSearcherActionTypes.updateOrderBook:
+      return orderBookEvents.orderBookUpdated(payload.bids, payload.asks);
+    case tokenSearcherActionTypes.updateCurrentPair:
+      return orderBookEvents.orderBookReset();
     default:
       return orderBookEvents.initialized();
   }
@@ -159,16 +166,6 @@ export const orders = createReducer(action => {
   }
 });
 
-export const trades = createReducer(action => {
-  const { type, payload } = action;
-  switch (type) {
-    case tradingPageActionTypes.updateTradesTable:
-      return tradeEvents.tradesUpdated(payload.trades);
-    default:
-      return tradeEvents.initialized();
-  }
-});
-
 export const orderForm = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
@@ -177,17 +174,6 @@ export const orderForm = createReducer(action => {
 
     default:
       return orderFormEvents.initialized();
-  }
-});
-
-export const depthChart = createReducer(action => {
-  const { type, payload } = action;
-  switch (type) {
-    case depthChartActionTypes.saveData:
-      return depthChartEvents.saveData(payload.data);
-
-    default:
-      return depthChartEvents.initialized();
   }
 });
 
@@ -206,12 +192,16 @@ export const tokens = createReducer(action => {
 export const tokenPairs = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
+    case tradingPageActionTypes.updateCurrentPair:
+      return tokenPairsEvents.currentPairUpdated(payload.pair);
     case tokensActionTypes.updateTokens:
       return tokenPairsEvents.tokenPairUpdated(payload);
     case tokensActionTypes.removeTokens:
       return tokenPairsEvents.tokenPairRemoved(payload);
     case tokenSearcherActionTypes.updateFavorite:
       return tokenPairsEvents.tokenPairFavorited(payload.code, payload.favorite);
+    case tokenSearcherActionTypes.updateCurrentPair:
+      return tokenPairsEvents.currentPairUpdated(payload.pair);
     case tradingPageActionTypes.updateTokenPairData:
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData);
     default:

@@ -12,6 +12,7 @@ const defaultInitialState = {
   byPair: defaultTokenPairs,
   data: {},
   favorites: [],
+  currentPair: (Object.values(defaultTokenPairs)[0]: any).pair,
 };
 
 //By default the application is started with a default create from tokens in a configuration file. To
@@ -20,6 +21,15 @@ const defaultInitialState = {
 export const initialized = (customInitialState?: Object) => {
   let initialState = customInitialState || defaultInitialState;
   const event = (state: TokenPairState = initialState) => state;
+  return event;
+};
+
+export const currentPairUpdated = (pair: string) => {
+  const event = (state: TokenPairState) => ({
+    ...state,
+    currentPair: pair,
+  });
+
   return event;
 };
 
@@ -112,5 +122,6 @@ export default function getTokenPairsDomain(state: TokenPairState) {
     getTokenPairsData: () => state.data,
     getTokenPairsDataArray: () => Object.values(state.data),
     getFavoritePairs: () => state.favorites,
+    getCurrentPair: () => state.byPair[state.currentPair],
   };
 }

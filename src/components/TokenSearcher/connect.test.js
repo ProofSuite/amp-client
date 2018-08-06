@@ -8,7 +8,6 @@ describe('connect(Component)', () => {
   it('injects a certain prop and renders without crashing', () => {
     const { store } = createStore();
     const ConnectedTestComponent = connect(props => {
-      console.log(props);
       expect(props).toBeDefined();
       expect(props).toHaveProperty('tokenPairsByQuoteToken');
       expect(props).toHaveProperty('updateFavorite');

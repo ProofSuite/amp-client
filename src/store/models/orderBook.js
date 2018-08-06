@@ -1,7 +1,14 @@
 // @flow
-import { getOrderBookDomain } from '../domains';
-import type { State, ThunkAction } from '../../types';
+import { getOrderBookDomain, getTokenPairsDomain } from '../domains';
+import type { State } from '../../types';
 
-export default function orderBookSelector(state: State): ThunkAction {
-  return getOrderBookDomain(state).getOrderBookData(25);
+export default function orderBookSelector(state: State) {
+  let { bids, asks } = getOrderBookDomain(state).getOrderBookData(25);
+  let currentPair = getTokenPairsDomain(state).getCurrentPair();
+
+  return {
+    bids,
+    asks,
+    currentPair,
+  };
 }

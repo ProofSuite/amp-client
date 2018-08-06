@@ -9,18 +9,3 @@ export type OrderFormState = {
   baseToken: string,
   quoteToken: string,
 };
-export type FormProps = {
-  state: Object,
-  quoteToken: string,
-  baseToken: string,
-  onInputChange: Object => void,
-  loggedIn: boolean,
-  formName: string,
-};
-
-export type InputFieldsProps = {
-  props: Object,
-  quoteToken: string,
-  baseToken: string,
-  onInputChange: Object => void,
-};

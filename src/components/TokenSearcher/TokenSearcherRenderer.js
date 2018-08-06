@@ -65,7 +65,7 @@ const TokenSearchRenderer = (props: Props) => {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', height: '30px' }}>
             <SearchInput onChange={onChangeSearchFilter} value={searchFilter} placeholder="Search ..." />
-            <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} onClick={toggleCollapse} minimal />
+            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal />
           </div>
           <Collapse isOpen={isOpen}>
             <SelectedCoin selectedToken={selectedToken} />

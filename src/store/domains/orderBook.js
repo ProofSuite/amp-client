@@ -65,6 +65,20 @@ export const orderBookUpdated = (bids: Array<Object>, asks: Array<Object>) => {
   return event;
 };
 
+export const orderBookReset = () => {
+  const event = (state: OrderBookState) => {
+    return {
+      ...state,
+      bids: {},
+      asks: {},
+      sortedBids: [],
+      sortedAsks: [],
+    };
+  };
+
+  return event;
+};
+
 export default function domain(state: OrderBookState) {
   return {
     getState: () => state,
@@ -117,6 +131,8 @@ export default function domain(state: OrderBookState) {
       return { asks, bids };
     },
 
+    getBidPrice: () => (state.bids[state.sortedBids[0]] ? state.bids[state.sortedBids[0]].price : 0),
+    getAskPrice: () => (state.asks[state.sortedAsks[0]] ? state.asks[state.sortedAsks[0]].price : 0),
     getQuoteToken: () => state.quoteToken,
     getBaseToken: () => state.baseToken,
   };

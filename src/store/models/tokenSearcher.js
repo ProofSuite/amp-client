@@ -1,6 +1,9 @@
 // @flow
-import type { State } from '../../types';
+import type { State, ThunkAction } from '../../types';
 import { getTokenPairsDomain } from '../domains';
+import * as actionCreators from '../actions/tokenSearcher';
+import * as ohlcvActionCreators from '../actions/ohlcv';
+
 import { getQuoteToken, getBaseToken } from '../../utils/tokens';
 import { quoteTokenSymbols as quotes } from '../../config/quotes';
 
@@ -25,7 +28,27 @@ export default function tokenSearcherSelector(state: State) {
       }));
   }
 
+  let currentPair = domain.getCurrentPair();
+
   return {
     tokenPairsByQuoteToken,
+    currentPair,
   };
 }
+
+export const updateCurrentPair = (pair: string): ThunkAction => {
+  return async (dispatch, getState, { api, trading }) => {
+    try {
+      dispatch(actionCreators.updateCurrentPair(pair));
+
+      let ohlcv = await trading.getData();
+      dispatch(ohlcvActionCreators.saveData(ohlcv));
+
+      let { bids, asks, trades } = await api.getOrderBookData();
+      dispatch(actionCreators.updateOrderBook(bids, asks));
+      dispatch(actionCreators.updateTradesTable(trades));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};

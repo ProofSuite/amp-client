@@ -12,12 +12,10 @@ type BidOrAsk = {
 type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
-  baseToken: string,
-  quoteToken: string,
 };
 
 export const OrderBookRenderer = (props: Props) => {
-  const { quoteToken, baseToken, bids, asks } = props;
+  const { bids, asks } = props;
   return (
     <OrderBookBox>
       {!bids && <Loading />}
@@ -25,9 +23,9 @@ export const OrderBookRenderer = (props: Props) => {
         <div className="list-container">
           <ListHeading>
             <HeaderRow>
-              <HeaderCell>TOTAL ({quoteToken})</HeaderCell>
-              <HeaderCell>AMOUNT ({baseToken})</HeaderCell>
-              <HeaderCell>PRICE ({quoteToken})</HeaderCell>
+              <HeaderCell>TOTAL</HeaderCell>
+              <HeaderCell>AMOUNT</HeaderCell>
+              <HeaderCell>PRICE</HeaderCell>
             </HeaderRow>
           </ListHeading>
           <ul className="pt-list-unstyled list">
@@ -39,9 +37,9 @@ export const OrderBookRenderer = (props: Props) => {
         <div className="list-container">
           <ListHeading>
             <HeaderRow>
-              <HeaderCell>PRICE ({quoteToken})</HeaderCell>
-              <HeaderCell>AMOUNT ({baseToken})</HeaderCell>
-              <HeaderCell>TOTAL ({quoteToken})</HeaderCell>
+              <HeaderCell>PRICE</HeaderCell>
+              <HeaderCell>AMOUNT</HeaderCell>
+              <HeaderCell>TOTAL</HeaderCell>
             </HeaderRow>
           </ListHeading>
           <ul className="pt-list-unstyled list">

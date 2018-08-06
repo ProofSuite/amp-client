@@ -6,6 +6,14 @@ export type Token = {
   symbol: string,
 };
 
+export type TokenPair = {
+  pair: string,
+  baseTokenSymbol: string,
+  quoteTokenSymbol: string,
+  baseTokenAddress: string,
+  quoteTokenAddress: string,
+};
+
 export type TokenPairState = {
   +byPair: {
     +[string]: {
@@ -27,6 +35,7 @@ export type TokenPairState = {
     },
   },
   +favorites: Array<string>,
+  +currentPair: string,
 };
 
 export type TokenPairData = {
@@ -49,16 +58,5 @@ export type TokenState = {
   +bySymbol: { [Symbol]: Token },
 };
 
-export type UpdateTokensAction = {
-  type: 'tokens/UPDATE_TOKENS',
-  payload: Token,
-};
-
-export type RemoveTokensAction = {
-  type: 'tokens/REMOVE_TOKENS',
-  payload: { [Symbol]: Symbol },
-};
-
 export type TokenEvent = any => TokenState => TokenState;
 export type TokenPairEvent = any => TokenPairState => TokenPairState;
-export type TokenAction = UpdateTokensAction | RemoveTokensAction;

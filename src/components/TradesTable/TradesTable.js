@@ -4,6 +4,7 @@ import TradesTableRenderer from './TradesTableRenderer';
 import { sortArray } from '../../utils/helpers';
 
 import type Trade from '../../types/trades';
+import type { TokenPair } from '../../types/tokens';
 
 type State = {
   selectedTabId: string,
@@ -12,7 +13,7 @@ type State = {
 
 type Props = {
   trades: Array<Trade>,
-  trades: Array<Trade>,
+  currentPair: TokenPair,
 };
 
 class TradesTable extends React.PureComponent<Props, State> {
@@ -33,7 +34,7 @@ class TradesTable extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { trades },
+      props: { trades, currentPair },
       state: { selectedTabId, isOpen },
       changeTab,
       toggleCollapse,
@@ -45,6 +46,7 @@ class TradesTable extends React.PureComponent<Props, State> {
     return (
       <TradesTableRenderer
         selectedTabId={selectedTabId}
+        currentPair={currentPair}
         onChange={changeTab}
         tradeHistory={sortedMarketTradeHistory}
         userTradeHistory={sortedUserTradeHistory}

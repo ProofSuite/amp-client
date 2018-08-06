@@ -1,11 +1,9 @@
 // @flow
-import TradingPageModel from '../domains/tradingPage';
 import { getTokenPairData, getOrders, getTrades } from '../services/api';
 
 import * as actionCreators from '../actions/tradingPage';
 import * as ohlcvActionCreators from '../actions/ohlcv';
 import * as orderBookActionCreators from '../actions/orderBook';
-import * as depthChartActionCreators from '../actions/depthChart';
 import * as orderFormActionCreators from '../actions/orderForm';
 
 import * as orderList from '../../jsons/ordersList.json';
@@ -14,19 +12,8 @@ import * as bidAsk from '../../jsons/bidAsk.json';
 import type { State, ThunkAction } from '../../types';
 
 export default function getTradingPageModel(state: State) {
-  return TradingPageModel(state.tradingPage);
+  return {};
 }
-
-const orderBookData = {
-  orderList: orderList.list,
-  baseToken: 'ETH',
-  quoteToken: 'USDT',
-};
-
-const depthChartData = {
-  data: bidAsk.list,
-  title: 'ETJ/BTC',
-};
 
 const orderFormData = {
   askPrice: 0.25,
@@ -38,7 +25,7 @@ const orderFormData = {
   baseToken: 'USD',
 };
 
-export const queryDefaultData = (code: string): ThunkAction => {
+export const queryDefaultData = (): ThunkAction => {
   return async (dispatch, getState, { api, trading }) => {
     try {
       let tokenPairData = await api.getTokenPairData();
@@ -50,15 +37,10 @@ export const queryDefaultData = (code: string): ThunkAction => {
       let orders = await api.getOrders();
       dispatch(actionCreators.updateOrderTable(orders));
 
-      // let trades = await api.getTrades();
-      // dispatch(actionCreators.updateTradesTable(trades));
-
       let { bids, asks, trades } = await api.getOrderBookData();
       dispatch(actionCreators.updateOrderBook(bids, asks));
       dispatch(actionCreators.updateTradesTable(trades));
 
-      // dispatch(orderBookActionCreators.saveData(orderBookData));
-      // dispatch(depthChartActionCreators.saveData(depthChartData));
       dispatch(orderFormActionCreators.saveData(orderFormData));
     } catch (e) {
       console.log(e);
@@ -66,17 +48,18 @@ export const queryDefaultData = (code: string): ThunkAction => {
   };
 };
 
-export const queryPairData = (code: string): ThunkAction => {
-  return async (dispatch, getState, { trading }) => {
+export const updateCurrentPair = (pair: string): ThunkAction => {
+  return async (dispatch, getState, { api, trading }) => {
     try {
+      dispatch(actionCreators.updateCurrentPair(pair));
+
       let ohlcv = await trading.getData();
       dispatch(ohlcvActionCreators.saveData(ohlcv));
 
-      let trades = await getTrades();
+      let { bids, asks, trades } = await api.getOrderBookData();
+      dispatch(actionCreators.updateOrderBook(bids, asks));
       dispatch(actionCreators.updateTradesTable(trades));
 
-      dispatch(orderBookActionCreators.saveData(orderBookData));
-      dispatch(depthChartActionCreators.saveData(depthChartData));
       dispatch(orderFormActionCreators.saveData(orderFormData));
     } catch (e) {
       console.log(e);

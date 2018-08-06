@@ -7,6 +7,7 @@ import type {
   UpdateOrdersTableAction,
   UpdateTradesTableAction,
   UpdateOrderBookAction,
+  UpdateCurrentPairAction,
 } from '../../types/tradingPage';
 
 const actionTypes = {
@@ -15,6 +16,7 @@ const actionTypes = {
   startConnection: 'tradingPage/START_CONNECTION',
   openConnection: 'tradingPage/OPEN_CONNECTION',
 
+  updateCurrentPair: 'tradingPage/UPDATE_CURRENT_PAIR',
   updateTokenPairData: 'tradingPage/UPDATE_TOKEN_PAIR_DATA',
   updateTradesTable: 'tradingPage/UPDATE_TRADES_TABLE',
   updateOrdersTable: 'tradingPage/UPDATE_ORDERS_TABLE',
@@ -28,6 +30,13 @@ const actionTypes = {
   initializeChart: 'tradingPage/INITIALIZE_CHART',
   updateChart: 'tradingPage/UPDATE_CHART',
 };
+
+export function updateCurrentPair(pair: string): UpdateCurrentPairAction {
+  return {
+    type: actionTypes.updateCurrentPair,
+    payload: { pair },
+  };
+}
 
 export function updateTokenPairData(tokenPairData: TokenPairDataMap): UpdateTokenPairDataAction {
   return {
