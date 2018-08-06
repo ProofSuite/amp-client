@@ -14,3 +14,4 @@ export { default as Collapse } from './Collapse';
 export { default as CenteredMessage } from './CenteredMessage';
 export { default as DownCollapse } from './DownCollapse';
 export { default as LoadData } from './LoadData';
+export { default as Footer } from './Footer';
