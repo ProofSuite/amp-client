@@ -6,7 +6,7 @@ export { default as Divider } from './Divider';
 export { default as Heading } from './Heading';
 export { default as CenteredSpinner } from './CenteredSpinner';
 export { default as OverlaySpinner } from './OverlaySpinner';
-export { default as Text, EmphasizeText, LargeText } from './Text';
+export { default as Text, EmphasizeText, LargeText, HeaderText, LabelText, MutedText } from './Text';
 export { default as RowCenter, RowSpaceAround, RowSpaceBetween } from './Row';
 export { default as ColumnCenter, ColumnEnd, ColumnSpaceAround } from './Column';
 export { default as Loading } from './Loading';

@@ -1,56 +1,13 @@
 @import "vars";
 
 .order-form {
-  //width: 315px;
-  width: 100%;
-  font-size: 13px;
-  padding: 20px;
   min-width: 240px;
-  h5 {
-    border-bottom: 1px solid $light-gray1;
-    padding-bottom: 5px;
-    text-align: left;
-  }
-  .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
 
-  .radio-btns-container {
-    label {
-      display: none;
-    }
-  }
-  .pt-form-group {
-    flex-direction: row;
-    align-items: flex-start;
-    label {
-      width: 95px;
-
-    }
-    input {
-      width: 100%;
-    }
-    .pt-form-content {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 100%;
-      .pt-input-group {
-        width: 100%;
-      }
-      span {
-        margin-left: -35px;
-        color: $gray3;
-      }
       .radio-buttons {
         width: 100%;
         display: flex;
         justify-content: flex-end;
-        label {
-          width: auto;
-        }
+
         .box {
           width: 45px;
           height: 30px;
@@ -79,13 +36,6 @@
           border: 1px solid transparent;
         }
       }
-    }
-  }
-  label {
-    text-align: left;
-  }
-  button {
-    width: 100%;
-    min-height: 35px !important;
-  }
+//     }
+//   }
 }

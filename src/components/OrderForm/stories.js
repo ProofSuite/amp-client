@@ -14,33 +14,41 @@ storiesOf('Order Form', module)
       text: README,
       propTablesExclude: [OrderFormContainer],
       source: false,
-    })(() => <OrderFormContainer />)
+    })(() => (
+      <div className="pt-dark">
+        <OrderFormContainer />
+      </div>
+    ))
   )
   .add(
     'Logged In state Sell Eth Form',
     withInfo({ text: README, source: false })(() => (
-      <OrderForm
-        askPrice={0.25}
-        bidPrice={0.29}
-        totalQuoteBalance={1000}
-        totalBaseBalance={10}
-        formName="Sell"
-        quoteToken="ETH"
-        baseToken="BTC"
-      />
+      <div className="pt-dark">
+        <OrderForm
+          askPrice={0.25}
+          bidPrice={0.29}
+          totalQuoteBalance={1000}
+          totalBaseBalance={10}
+          formType="Sell"
+          quoteToken="ETH"
+          baseToken="BTC"
+        />
+      </div>
     ))
   )
   .add(
     'Logged In state Buy Eth Form',
     withInfo({ text: README, source: false })(() => (
-      <OrderForm
-        askPrice={0.25}
-        bidPrice={0.29}
-        totalQuoteBalance={1000}
-        totalBaseBalance={10}
-        formName="Buy"
-        quoteToken="ETH"
-        baseToken="BTC"
-      />
+      <div className="pt-dark">
+        <OrderForm
+          askPrice={0.25}
+          bidPrice={0.29}
+          totalQuoteBalance={1000}
+          totalBaseBalance={10}
+          formType="Buy"
+          quoteToken="ETH"
+          baseToken="BTC"
+        />
+      </div>
     ))
   );

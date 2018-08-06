@@ -25,8 +25,8 @@ export default class TradingPage extends React.PureComponent<Props, State> {
         <Cell area="leftColumn">
           <Grid columns={1} alignContent="start">
             <TokenSearcher />
-            <OrderForm />
-            <OrderForm />
+            <OrderForm formType="Buy" />
+            <OrderForm formType="Sell" />
           </Grid>
         </Cell>
 

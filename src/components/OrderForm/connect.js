@@ -1,10 +1,10 @@
 // @flow
 import { connect } from 'react-redux';
-import orderFormModel, { handleLimit, handleStopLimit } from '../../store/models/orderForm';
+import orderFormSelector, { handleLimit, handleStopLimit } from '../../store/models/orderForm';
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
-  return orderFormModel(state).getState();
+  return orderFormSelector(state);
 };
 
 export const mapDispatchToProps = {
