@@ -7472,7 +7472,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-"proof-contracts-interfaces@https://github.com/ProofSuite/proof-contract-interfaces":
+"proof-contracts-interfaces@https://github.com/ProofSuite/proof-contract-interfaces#master":
   version "1.0.0"
   resolved "https://github.com/ProofSuite/proof-contract-interfaces#50a9b7e30aa7f722ef48ba0f13dd89dcb8b0b561"
 

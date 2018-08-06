@@ -7,12 +7,11 @@ it('renders without crashing', () => {
     <OrderForm
       askPrice={0.25}
       bidPrice={0.29}
-      totalQuoteBalance={1000}
-      totalBaseBalance={10}
-      formName="Sell"
-      quoteToken="ETH"
-      baseToken="BTC"
-      decimals={7}
+      quoteTokenBalance={1000}
+      baseTokenBalance={10}
+      formType="Sell"
+      quoteToken="WETH"
+      baseToken="DAI"
       loggedIn={false}
     />
   );
@@ -26,12 +25,11 @@ describe('tests Functions and state', () => {
       <OrderForm
         askPrice={0.25}
         bidPrice={0.29}
-        totalQuoteBalance={1000}
-        totalBaseBalance={10}
-        formName="Sell"
-        quoteToken="ETH"
-        baseToken="BTC"
-        decimals={7}
+        quoteTokenBalance={1000}
+        baseTokenBalance={10}
+        formType="Sell"
+        quoteToken="WETH"
+        baseToken="DAI"
         loggedIn={true}
       />
     );
@@ -39,10 +37,10 @@ describe('tests Functions and state', () => {
     instance = wrapper.instance();
   });
 
-  it('changes Tab Successfully', () => {
+  it('changes order form type Successfully', () => {
     expect(instance.state.selectedTabId).toEqual('limit');
-    instance.changeTab('stop');
-    expect(instance.state.selectedTabId).toEqual('stop');
+    instance.handleChangeOrderType('market');
+    expect(instance.state.selectedTabId).toEqual('market');
   });
 
   it('verifies Prices', () => {
@@ -52,28 +50,23 @@ describe('tests Functions and state', () => {
 
   it('validates onAmountChange Func', () => {
     instance.onInputChange({ target: { name: 'amount', value: '10' } });
-    expect(instance.state.total).toEqual('2.9');
+    expect(instance.state.total).toEqual('2.900');
   });
 
   it('validates onPriceChange Func', () => {
     instance.onInputChange({ target: { name: 'price', value: '0.39' } });
     instance.onInputChange({ target: { name: 'amount', value: '10' } });
-    expect(instance.state.total).toEqual('3.9');
+    expect(instance.state.total).toEqual('3.900');
   });
 
   it('validates onTotalChange Func', () => {
     instance.onInputChange({ target: { name: 'price', value: '0.25' } });
     instance.onInputChange({ target: { name: 'total', value: '10' } });
-    expect(instance.state.amount).toEqual('40');
+    expect(instance.state.amount).toEqual('40.000');
   });
 
   it('validates onPortionChange Func', () => {
     instance.onInputChange({ target: { name: 'portion', value: 50 } });
-    expect(instance.state.amount).toEqual('500');
-  });
-
-  it('verifies resetRadios Func', () => {
-    instance.resetRadios();
-    expect(instance.state.portion).toEqual(0);
+    expect(instance.state.amount).toEqual('5.000');
   });
 });

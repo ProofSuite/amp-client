@@ -10,8 +10,6 @@ export { default as Text, EmphasizeText, LargeText, HeaderText, LabelText, Muted
 export { default as RowCenter, RowSpaceAround, RowSpaceBetween } from './Row';
 export { default as ColumnCenter, ColumnEnd, ColumnSpaceAround } from './Column';
 export { default as Loading } from './Loading';
-export { default as Collapse } from './Collapse';
 export { default as CenteredMessage } from './CenteredMessage';
-export { default as DownCollapse } from './DownCollapse';
 export { default as LoadData } from './LoadData';
 export { default as Footer } from './Footer';

@@ -45,8 +45,6 @@ describe('mapStateToProps(state, props)', () => {
     const props = {};
     const result = mapStateToProps(state, props);
 
-    console.log('result: ', mapStateToProps(state, props));
-
     expect(result).toBeDefined();
     expect(result).toEqual({ depositTableData, isDefaultAccountSet: false, loading: false, authenticated: true });
   });

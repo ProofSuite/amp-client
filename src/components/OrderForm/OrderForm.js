@@ -87,7 +87,7 @@ class OrderForm extends React.PureComponent<Props, State> {
     let amount, total;
 
     if (formType === 'Sell') {
-      amount = (quoteTokenBalance / 100) * portion;
+      amount = (baseTokenBalance / 100) * portion;
       total = unformat(price) * amount;
 
       this.setState({
@@ -96,7 +96,7 @@ class OrderForm extends React.PureComponent<Props, State> {
         total: formatNumber(total, { precision: 3 }),
       });
     } else {
-      total = (baseTokenBalance / 100) * portion;
+      total = (quoteTokenBalance / 100) * portion;
       amount = total * unformat(price);
 
       this.setState({
@@ -208,10 +208,6 @@ class OrderForm extends React.PureComponent<Props, State> {
     } else if (tabId === 'market') {
       this.setState({ price: formatNumber(bidPrice, { precision: 3 }) });
     }
-  };
-
-  resetRadios = () => {
-    this.setState({ portion: 0 });
   };
 
   handleSubmit = () => {

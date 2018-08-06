@@ -10,11 +10,12 @@ jest.mock('../../store/models/tradesTable');
 describe('mapStateToProps(state, props)', () => {
   it('returns expected props', () => {
     const trades = jest.fn(() => 'test getTrades');
-    tradesTableSelector.mockReturnValue({ trades });
+    const currentPair = jest.fn(() => 'test getCurrentPair');
+    tradesTableSelector.mockReturnValue({ trades, currentPair });
 
     const state = {};
     const result = mapStateToProps({}, {});
-    const expected = { trades: 'test getTrades' };
+    const expected = { trades: 'test getTrades', currentPair: 'test getCurrentPair' };
 
     expect(result).toBeDefined();
     expect(result).toEqual(expected);

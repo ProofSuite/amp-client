@@ -7,8 +7,6 @@ import { createLocalWalletSigner, createMetamaskSigner } from '../services/signe
 
 import type { State, ThunkAction } from '../../types';
 
-//TODO: -> Line 84 Test is Failing
-
 type CreateWalletParams = {
   wallet: Object,
   encryptedWallet: string,
@@ -33,7 +31,6 @@ export function loginWithMetamask(): ThunkAction {
 
       try {
         let address = await createMetamaskSigner();
-        console.log('loginWithMetamask');
         dispatch(
           notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' })
         );
@@ -60,7 +57,6 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
 
         await createLocalWalletSigner(wallet);
         dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
-        console.log('loginWithWallet');
         dispatch(
           notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' })
         );

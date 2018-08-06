@@ -44,10 +44,6 @@ export default class TradingPage extends React.PureComponent<Props, State> {
     );
   }
 }
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 const TradingPageLayout = styled(Grid).attrs({
   columns: '1fr 4fr',
