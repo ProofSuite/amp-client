@@ -4,23 +4,31 @@ import styled from 'styled-components';
 
 const DepositTableRenderer = (props: Props) => {
   return (
-    <Table>
-      <TableHeader>
-        <TableHeaderCell>Token Name</TableHeaderCell>
-        <TableHeaderCell>Balances</TableHeaderCell>
-        <TableHeaderCell>Allowances</TableHeaderCell>
-        <TableHeaderCell>Allow trading</TableHeaderCell>
-        <TableHeaderCell />
-      </TableHeader>
-      <TableBody>
-        <RowRenderer {...props} />
-      </TableBody>
-    </Table>
+    <Wrapper>
+      <Table>
+        <TableHeader>
+          <TableHeaderCell>Token Name</TableHeaderCell>
+          <TableHeaderCell>Balances</TableHeaderCell>
+          <TableHeaderCell>Allowances</TableHeaderCell>
+          <TableHeaderCell>Allow trading</TableHeaderCell>
+        </TableHeader>
+        <TableBody>
+          <RowRenderer {...props} />
+        </TableBody>
+      </Table>
+      <HeadingMenu>
+        <h4>Heading</h4>
+        <p>Text .......</p>
+        <p>Text .......</p>
+        <p>Text .......</p>
+        <p>Text .......</p>
+      </HeadingMenu>
+    </Wrapper>
   );
 };
 
 const RowRenderer = (props: Props) => {
-  const { depositData = [], handleAllowance, handleDeposit, handleWithdraw } = props;
+  const { depositData, handleAllowance, handleDeposit, handleModalClose, handleWithdraw } = props;
 
   return depositData.map(({ symbol, balance, allowed }, index) => {
     return (
@@ -32,7 +40,7 @@ const RowRenderer = (props: Props) => {
         </Cell>
         <Cell>
           <ButtonWrapper>
-            <Button intent="primary" text="Deposit" onClick={handleDeposit} />
+            <Button style={{ marginRight: '10px' }} intent="primary" text="Deposit" onClick={handleModalClose} />
             <Button intent="primary" text="Withdraw" onClick={handleWithdraw} />
           </ButtonWrapper>
         </Cell>
@@ -44,11 +52,21 @@ const RowRenderer = (props: Props) => {
 const Table = styled.table.attrs({
   className: 'pt-html-table pt-interactive pt-html-table-striped',
 })`
-  width: 100%;
+  width: 60%;
 `;
 
 const Row = styled.tr`
   width: 100%;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const HeadingMenu = styled.div`
+  width: 39%;
 `;
 
 const TableBody = styled.tbody``;

@@ -56,7 +56,6 @@ const TokenSearchRenderer = (props: Props) => {
     changeSelectedToken,
     toggleCollapse,
   } = props;
-
   return (
     <TokenSearchCard>
       {loading ? (
@@ -79,6 +78,7 @@ const TokenSearchRenderer = (props: Props) => {
                     filterName={filterName}
                     sortOrder={sortOrder}
                     searchFilter={searchFilter}
+                    selectedTabId={selectedTabId}
                     selectedToken={selectedToken}
                     changeSelectedToken={changeSelectedToken}
                     updateFavorite={updateFavorite}
@@ -99,6 +99,7 @@ const TokenSearchRenderer = (props: Props) => {
                       filterName={filterName}
                       sortOrder={sortOrder}
                       searchFilter={searchFilter}
+                      selectedTabId={selectedTabId}
                       selectedToken={selectedToken}
                       filteredPairs={filteredPairs}
                       changeSelectedToken={changeSelectedToken}
@@ -124,6 +125,7 @@ type PanelProps = {
   filterName: string,
   sortOrder: string,
   searchFilter: string,
+  selectedTabId: string,
   selectedToken: Token,
   tokenPairs: Array<Token>,
   changeSelectedToken: Token => void,
@@ -134,17 +136,33 @@ type PanelProps = {
 };
 
 const Panel = (props: PanelProps) => {
-  const { filterName, tokenPairs, sortOrder, updateFavorite, onChangeFilterName, changeSelectedToken } = props;
+  const {
+    filterName,
+    tokenPairs,
+    sortOrder,
+    selectedTabId,
+    updateFavorite,
+    onChangeFilterName,
+    changeSelectedToken,
+  } = props;
+  const isFavoriteTokensList = selectedTabId === 'star';
 
   return (
     <TokenSearchPanelBox>
-      <Header onChangeFilterName={onChangeFilterName} filterName={filterName} sortOrder={sortOrder} />
+      <Header
+        onChangeFilterName={onChangeFilterName}
+        isFavoriteTokensList={isFavoriteTokensList}
+        filterName={filterName}
+        sortOrder={sortOrder}
+      />
       <ul className="list">
         {tokenPairs.map((token, index) => (
           <TokenRow
             key={index}
             index={index}
             token={token}
+            selectedTabId={selectedTabId}
+            isFavoriteTokensList={isFavoriteTokensList}
             updateFavorite={updateFavorite}
             changeSelectedToken={changeSelectedToken}
           />
@@ -158,20 +176,20 @@ const Panel = (props: PanelProps) => {
 type TokenRowProps = {
   index: number,
   token: Token,
+  isFavoriteTokensList: boolean,
   updateFavorite: (string, boolean) => void,
   changeSelectedToken: Object => void,
 };
 
-const TokenRow = ({ index, token, updateFavorite, changeSelectedToken }: TokenRowProps) => {
+const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSelectedToken }: TokenRowProps) => {
   const { favorited, lastPrice, change, base, pair } = token;
-
   return (
     <li key={pair} className="row">
       <span className="star">
         <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
       </span>
       <span className="base" onClick={() => changeSelectedToken(token)}>
-        {base}
+        {isFavoriteTokensList ? pair : base}
       </span>
       <span className="lastPrice" onClick={() => changeSelectedToken(token)}>
         {lastPrice}
@@ -187,15 +205,16 @@ type HeaderProps = {
   onChangeFilterName: (SyntheticInputEvent<>) => void,
   filterName: string,
   sortOrder: string,
+  isFavoriteTokensList: boolean,
 };
 
-const Header = ({ onChangeFilterName, filterName, sortOrder }: HeaderProps) => {
+const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensList }: HeaderProps) => {
   return (
     <ul>
       <li className="heading">
         <span className="star">&nbsp;</span>
         <span className="base" onClick={onChangeFilterName}>
-          Token
+          {isFavoriteTokensList ? 'Token Pair' : 'Token'}
           {filterName === 'base' && (
             <span className="icon">
               <Chevron direction={sortOrder} />

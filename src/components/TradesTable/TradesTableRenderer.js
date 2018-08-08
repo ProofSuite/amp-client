@@ -57,7 +57,7 @@ const Panel = (props: { trades: Array<Trade> }) => {
           <HeaderCell>AMOUNT</HeaderCell>
           <HeaderCell>PRICE</HeaderCell>
           <HeaderCell />
-          <HeaderCell>TIME</HeaderCell>
+          <HeaderCell cellName="time">TIME</HeaderCell>
         </li>
       </ul>
       <ul className="list">
@@ -74,7 +74,9 @@ const TradeTableRow = (props: { index: number, trade: Trade }) => {
       <Cell>{trade.amount}</Cell>
       <Cell>{trade.price}</Cell>
       <Cell side={trade.side}>{trade.side}</Cell>
-      <Cell muted>{format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}</Cell>
+      <Cell cellName="time" muted>
+        {format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}
+      </Cell>
     </Row>
   );
 };
@@ -118,11 +120,11 @@ const Cell = styled.span`
           : Colors.TEXT_MUTED}
 
   min-width: 35px;
-  width: 20%;
+  width: ${props => (props.cellName === 'time' ? '43%' : '12%')};
 `;
 
 const HeaderCell = styled.span`
-  width: 20%;
+  width: ${props => (props.cellName === 'time' ? '43%' : '12%')};
 `;
 
 export default TradesTableRenderer;

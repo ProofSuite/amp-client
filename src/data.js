@@ -39,6 +39,13 @@ export const tokensBySymbol = {
   ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
 };
 
+export const accountBalances = [
+  { symbol: 'ETH', balance: '121', allowance: true },
+  { symbol: 'EOS', balance: '234.213', allowance: false },
+  { symbol: 'WETH', balance: '0.0032', allowance: false },
+  { symbol: 'ZRX', balance: '12.453', allowance: true },
+];
+
 export const networks = [
   { name: 'Mainnet', id: 1 },
   { name: 'Ropsten', id: 3 },

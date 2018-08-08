@@ -3,37 +3,45 @@ import styled from 'styled-components';
 import { Card } from '@blueprintjs/core';
 import CenteredSpinner from '../../components/Common/CenteredSpinner';
 import DepositTable from '../../components/DepositTable';
+import CurrentWallet from '../../components/CurrentWallet';
 
 type Props = {
   queryAccountData: void => void,
 };
 
-const WalletPageRenderer = ({ loading, depositTableData }: Props) => {
+const WalletPageRenderer = ({ loading, depositTableData, accountAddress }: Props) => {
   return (
     <Wrapper>
-      <WalletPagePanel />
-      <WalletPageContent>{loading ? <CenteredSpinner /> : <DepositTable data={depositTableData} />}</WalletPageContent>
+      <RowWrapper>
+        <CurrentWallet accountAddress={accountAddress} />
+        <WalletPageContent>
+          {loading ? <CenteredSpinner /> : <DepositTable depositData={depositTableData} />}
+        </WalletPageContent>
+      </RowWrapper>
+      <p style={{ textAlign: 'center', marginTop: '15px' }}>
+        Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text
+        Footer Text Footer Text Footer Text Footer Text Footer Text
+      </p>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   padding-left: 0.5em;
   padding-right: 0.5em;
   padding-top: 0.5em;
 `;
 
-const WalletPagePanel = styled(Card)`
-  height: 92vh;
-  flex-grow: 1;
-  margin: 0.5em;
-`;
-
 const WalletPageContent = styled(Card)`
   height: 92vh;
-  flex-grow: 4;
+  width: 75%;
   margin: 0.5em;
 `;
 

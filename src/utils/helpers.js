@@ -107,3 +107,10 @@ export const sortedInserts = (arr, elems) => {
 
   return arr;
 };
+
+export function toPassowrdType(text) {
+  if (typeof text == 'string' || typeof text == 'number') {
+    return '*'.repeat(text.length);
+  }
+  return text;
+}

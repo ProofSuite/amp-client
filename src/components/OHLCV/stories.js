@@ -6,7 +6,7 @@ import { LoadData } from '../Common';
 import OHLCVContainer from './index';
 import OHLCV from './OHLCV';
 import README from './README.md';
-import { getMissingData } from '../../utils/ohlcvDataOperations';
+import { getData } from '../../store/services/homePage';
 
 storiesOf('OHLCV', module)
   .addDecorator(withKnobs)
@@ -23,5 +23,13 @@ storiesOf('OHLCV', module)
     withInfo({
       text: README,
       source: false,
-    })(() => <LoadData>{data => <OHLCV ohlcvData={data} />}</LoadData>)
+    })(() => (
+      <LoadData getData={getData}>
+        {data => (
+          <div className="pt-dark">
+            <OHLCV ohlcvData={data} />
+          </div>
+        )}
+      </LoadData>
+    ))
   );
