@@ -29,6 +29,7 @@ export function queryAccountData(): ThunkAction {
       const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens);
       const balances = [etherBalance].concat(tokenBalances);
 
+      // console.log('balances: ', balances);
       const allowances = await accountBalancesService.queryTokenAllowances(accountAddress, tokens);
 
       dispatch(actionCreators.updateBalances(balances));

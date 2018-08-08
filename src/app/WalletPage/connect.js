@@ -3,12 +3,13 @@ import getWalletPageSelector, { queryAccountData } from '../../store/models/wall
 import accountSelector from '../../store/models/layout';
 
 export function mapStateToProps(state, props) {
-  const { depositTableData } = getWalletPageSelector(state);
+  const { depositTableData, accountAddress } = getWalletPageSelector(state);
   const { authenticated } = accountSelector(state);
   const loading = !(depositTableData.length > 0);
 
   return {
     depositTableData: depositTableData,
+    accountAddress: accountAddress,
     loading: loading,
     isDefaultAccountSet: false,
     authenticated: authenticated,

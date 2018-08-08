@@ -1,11 +1,15 @@
 import React from 'react';
 import DepositTableRenderer from './DepositTableRenderer';
+import DepositModal from '../../components/DepositModal';
 
 type Props = {
   depositData: Array<Object>,
 };
 
 class DepositTable extends React.PureComponent<Props, State> {
+  state = {
+    isModalOpen: false,
+  };
   handleAllowance = () => {
     console.log('Log allowance');
   };
@@ -18,16 +22,28 @@ class DepositTable extends React.PureComponent<Props, State> {
     console.log('Log Withdraw');
   };
 
+  handleModalClose = () => {
+    this.setState(function(prevState) {
+      return {
+        isModalOpen: !prevState.isModalOpen,
+      };
+    });
+  };
+
   render() {
     const { depositData } = this.props;
-
+    const { isModalOpen } = this.state;
     return (
-      <DepositTableRenderer
-        depositData={depositData}
-        handleAllowance={this.handleAllowance}
-        handleDeposit={this.handleDeposit}
-        handleWithdraw={this.handleWithdraw}
-      />
+      <div>
+        <DepositTableRenderer
+          depositData={depositData}
+          handleModalClose={this.handleModalClose}
+          handleAllowance={this.handleAllowance}
+          handleDeposit={this.handleDeposit}
+          handleWithdraw={this.handleWithdraw}
+        />
+        <DepositModal isOpen={isModalOpen} handleClose={this.handleModalClose} />
+      </div>
     );
   }
 }

@@ -28,7 +28,7 @@ const timeSpans: Array<Object> = [
 const indicators: Array<Indicator> = [
   { name: 'Volume', active: true, height: 0 },
   { name: 'Trendline', active: true, height: 0 },
-  { name: 'MACD', active: true, height: 150 },
+  { name: 'MACD', active: true, height: 160 },
   { name: 'RSI', active: false, height: 150 },
   { name: 'ATR', active: false, height: 150 },
   { name: 'ForceIndex', active: false, height: 150 },

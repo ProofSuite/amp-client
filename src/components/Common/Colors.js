@@ -1,6 +1,57 @@
 // @flow
 import { Colors } from '@blueprintjs/core';
 import { rgba } from 'polished';
+
+export const INTENTS = {
+  PT_INTENT_PRIMARY: Colors.BLUE3,
+  PT_INTENT_SUCCESS: Colors.GREEN3,
+  PT_INTENT_WARNING: Colors.ORANGE3,
+  PT_INTENT_DANGET: Colors.RED3,
+};
+
+export const TextColors = {
+  PT_TEXT_COLOR: Colors.DARK_GRAY1,
+  PT_TEXT_COLOR_MUTED: Colors.GRAY1,
+  PT_TEXT_COLOR_DISABLED: rgba(Colors.GRAY1, 0.5),
+  PT_HEADING_COLOR: Colors.DARK_GRAY1,
+  PT_LINK_COLOR: Colors.BLUE2,
+  PT_DARK_TEXT_COLOR: Colors.LIGHT_GRAY5,
+  PT_DARK_TEXT_COLOR_MUTED: Colors.GRAY5,
+  PT_DARK_TEXT_COLOR_DISABLED: rgba(Colors.GRAY5, 0.5),
+  PT_DARK_HEADING_COLOR: Colors.LIGHT_GRAY5,
+  PT_DARK_LINK_COLOR: Colors.BLUE5,
+  PT_TEXT_SELECTION_COLOR: rgba(125, 188, 255, 0.6),
+};
+
+export const IconColors = {
+  PT_ICON_COLOR: TextColors.PT_TEXT_COLOR_MUTED,
+  PT_ICON_COLOR_HOVER: TextColors.PT_TEXT_COLOR,
+  PT_ICON_COLOR_DISABLED: INTENTS.PT_INTENT_PRIMARY,
+
+  PT_DARK_ICON_COLOR: TextColors.PT_DARK_TEXT_COLOR_MUTED,
+  PT_DARK_ICON_COLOR_HOVER: TextColors.PT_DARK_TEXT_COLOR,
+  PT_DARK_ICON_COLOR_DISABLED: TextColors.PT_DARK_TEXT_COLOR_DISABLED,
+  PT_DARK_ICON_COLOR_SELECTED: INTENTS.PT_INTENT_PRIMARY,
+};
+
+export const DividerColors = {
+  PT_DIVIDER_BLACK: rgba(Colors.BLACK, 0.15),
+  PT_DARK_DIVIDER_BLACK: rgba(Colors.BLACK, 0.15),
+  PT_DARK_DIVIDER_WHITE: rgba(Colors.WHITE, 0.15),
+};
+
+export const CodeColors = {
+  PT_CODE_TEXT_COLOR: TextColors.PT_TEXT_COLOR_MUTED,
+  PT_DARK_CODE_TEXT_COLOR: TextColors.PT_DARK_TEXT_COLOR_MUTED,
+  PT_CODE_BACKGROUND_COLOR: rgba(Colors.WHITE, 0.7),
+  PT_DARK_CODE_BACKGROUND_COLOR: rgba(Colors.BLACK, 0.3),
+};
+
+export const BackgroundColors = {
+  PT_APP_BACKGROUND_COLOR: Colors.LIGHT_GRAY5,
+  PT_DARK_APP_BACKGROUND_COLOR: Colors.LIGHT_GRAY3,
+};
+
 export default {
   BLACK: Colors.BLACK,
 
@@ -136,140 +187,48 @@ export default {
 
   BUY: Colors.GREEN5,
   SELL: Colors.RED4,
-  BUY_MUTED: rgba('#3DCC91', 0.2),
-  SELL_MUTED: rgba('#F55656', 0.2),
+
+  SELL_MUTED: rgba('#F55656', 0.1),
   BLUE_MUTED: rgba('#137CBD', 0.1),
 };
 
-// TODO: include the following
-// $pt-text-selection-color: rgba(125, 188, 255, 0.6) !default;
-// $pt-icon-color: $pt-text-color-muted !default;
-// $pt-icon-color-hover: $pt-text-color !default;
-// $pt-icon-color-disabled: $pt-text-color-disabled !default;
-// $pt-icon-color-selected: $pt-intent-primary !default;
-// $pt-dark-icon-color: $pt-dark-text-color-muted !default;
-// $pt-dark-icon-color-hover: $pt-dark-text-color !default;
-// $pt-dark-icon-color-disabled: $pt-dark-text-color-disabled !default;
-// $pt-dark-icon-color-selected: $pt-intent-primary !default;
-// $pt-divider-black: rgba($black, 0.15) !default;
-// $pt-dark-divider-black: rgba($black, 0.4) !default;
-// $pt-dark-divider-white: rgba($white, 0.15) !default;
-// $pt-code-text-color: $pt-text-color-muted !default;
-// $pt-dark-code-text-color: $pt-dark-text-color-muted !default;
-// $pt-code-background-color: rgba($white, 0.7) !default;
-// $pt-dark-code-background-color: rgba($black, 0.3) !default;
-// $pt-grid-size: 10px !default;
+export const Icons = {
+  ICONS16_FAMILY: 'Icons16',
+  ICONS20_FAMILY: 'Icons20',
 
-// // see https://bitsofco.de/the-new-system-font-stack/
-// $pt-font-family: -apple-system,
-//                  "BlinkMacSystemFont",
-//                  "Segoe UI",
-//                  "Roboto",
-//                  "Oxygen",
-//                  "Ubuntu",
-//                  "Cantarell",
-//                  "Open Sans",
-//                  "Helvetica Neue",
-//                  "Icons16", // support inline Palantir icons
-//                  sans-serif !default;
+  PT_ICON_SIZE_STANDARD: '16px',
+  PT_ICON_SIZE_LARGE: '20Ppx',
+};
 
-// $pt-font-family-monospace: monospace !default;
+export const Grids = {
+  PT_GRID_SIZE: 10,
+};
 
-// $pt-font-size: $pt-grid-size * 1.4 !default;
-// $pt-font-size-large: $pt-grid-size * 1.6 !default;
-// $pt-font-size-small: $pt-grid-size * 1.2 !default;
+export const Fonts = {
+  PT_FONT_FAMILY:
+    '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue',
+  PT_FONT_FAMILY_MONOSPACE: 'monospace',
 
-// // a little bit extra to ensure the height comes out to just over 18px (and browser rounds to 18px)
-// $pt-line-height: ($pt-grid-size * 1.8) / $pt-font-size + 0.0001 !default;
+  PT_FONT_SIZE: Grids.PT_GRID_SIZE * 1.4,
+  PT_FONT_SIZE_LARGE: Grids.PT_GRID_SIZE * 1.6,
+  PT_FONT_SIZE_SMALL: Grids.PT_GRID_SIZE * 1.2,
+};
 
-// // Icon variables
+export const Line = {
+  PT_LINE_HEIGHT: (Grids.PT_GRID_SIZE * 1.8) / Fonts.PT_FONT_SIZE + 0.0001,
+};
 
-// $icons16-family: "Icons16" !default;
-// $icons20-family: "Icons20" !default;
+export const Buttons = {
+  PT_BUTTON_HEIGHT: Grids.PT_GRID_SIZE * 3,
+  PT_BUTTON_HEIGHT_SMALL: Grids.PT_GRID_SIZE * 2.4,
+  PT_BUTTON_HEIGHT_LARGE: Grids.PT_GRID_SIZE * 4,
+};
 
-// $pt-icon-size-standard: 16px !default;
-// $pt-icon-size-large: 20px !default;
+export const Inputs = {
+  PT_INPUT_HEIGHT: Grids.PT_GRID_SIZE * 3,
+  PT_INPUT_HEIGHT_LARGE: Grids.PT_GRID_SIZE * 4,
+};
 
-// // Grids & dimensions
-
-// $pt-border-radius: floor($pt-grid-size / 3) !default;
-
-// // Buttons
-// $pt-button-height: $pt-grid-size * 3 !default;
-// $pt-button-height-small: $pt-grid-size * 2.4 !default;
-// $pt-button-height-large: $pt-grid-size * 4 !default;
-
-// // Inputs
-// $pt-input-height: $pt-grid-size * 3 !default;
-// $pt-input-height-large: $pt-grid-size * 4 !default;
-
-// // Others
-// $pt-navbar-height: $pt-grid-size * 5 !default;
-
-// // Z-indices
-// $pt-z-index-base: 0 !default;
-// $pt-z-index-content: $pt-z-index-base + 10 !default;
-// $pt-z-index-overlay: $pt-z-index-content + 10 !default;
-
-// // Shadow opacities
-// $pt-border-shadow-opacity: 0.1 !default;
-// $pt-drop-shadow-opacity: 0.2 !default;
-// $pt-dark-border-shadow-opacity: $pt-border-shadow-opacity * 2 !default;
-// $pt-dark-drop-shadow-opacity: $pt-drop-shadow-opacity * 2 !default;
-
-// // Elevations
-// // all shadow lists must be the same length to avoid flicker in transitions.
-// $pt-elevation-shadow-0: 0 0 0 1px $pt-divider-black,
-//                         0 0 0 rgba($black, 0),
-//                         0 0 0 rgba($black, 0) !default;
-// $pt-elevation-shadow-1: border-shadow($pt-border-shadow-opacity),
-//                         0 0 0 rgba($black, 0),
-//                         0 1px 1px rgba($black, $pt-drop-shadow-opacity) !default;
-// $pt-elevation-shadow-2: border-shadow($pt-border-shadow-opacity),
-//                         0 1px 1px rgba($black, $pt-drop-shadow-opacity),
-//                         0 2px 6px rgba($black, $pt-drop-shadow-opacity) !default;
-// $pt-elevation-shadow-3: border-shadow($pt-border-shadow-opacity),
-//                         0 2px 4px rgba($black, $pt-drop-shadow-opacity),
-//                         0 8px 24px rgba($black, $pt-drop-shadow-opacity) !default;
-// $pt-elevation-shadow-4: border-shadow($pt-border-shadow-opacity),
-//                         0 4px 8px rgba($black, $pt-drop-shadow-opacity),
-//                         0 18px 46px 6px rgba($black, $pt-drop-shadow-opacity) !default;
-
-// $pt-dark-elevation-shadow-0: 0 0 0 1px $pt-dark-divider-black,
-//                              0 0 0 rgba($black, 0),
-//                              0 0 0 rgba($black, 0) !default;
-// $pt-dark-elevation-shadow-1: border-shadow($pt-dark-border-shadow-opacity),
-//                              0 0 0 rgba($black, 0),
-//                              0 1px 1px rgba($black, $pt-dark-drop-shadow-opacity) !default;
-// $pt-dark-elevation-shadow-2: border-shadow($pt-dark-border-shadow-opacity),
-//                              0 1px 1px rgba($black, $pt-dark-drop-shadow-opacity),
-//                              0 2px 6px rgba($black, $pt-dark-drop-shadow-opacity) !default;
-// $pt-dark-elevation-shadow-3: border-shadow($pt-dark-border-shadow-opacity),
-//                              0 2px 4px rgba($black, $pt-dark-drop-shadow-opacity),
-//                              0 8px 24px rgba($black, $pt-dark-drop-shadow-opacity) !default;
-// $pt-dark-elevation-shadow-4: border-shadow($pt-dark-border-shadow-opacity),
-//                              0 4px 8px rgba($black, $pt-dark-drop-shadow-opacity),
-//                              0 18px 46px 6px rgba($black, $pt-dark-drop-shadow-opacity) !default;
-
-// // Transitions
-// $pt-transition-ease: cubic-bezier(0.4, 1, 0.75, 0.9) !default;
-// $pt-transition-ease-bounce: cubic-bezier(0.54, 1.12, 0.38, 1.11) !default;
-// $pt-transition-duration: 100ms !default;
-
-// // Light theme styles
-
-// $pt-input-box-shadow: inset border-shadow(0.15),
-//                       inset 0 1px 1px rgba($black, $pt-drop-shadow-opacity) !default;
-
-// $pt-dialog-box-shadow: $pt-elevation-shadow-4 !default;
-// $pt-popover-box-shadow: $pt-elevation-shadow-3 !default;
-// $pt-tooltip-box-shadow: $pt-popover-box-shadow !default;
-
-// // Dark theme styles
-
-// $pt-dark-input-box-shadow: inset border-shadow(0.3),
-//                            inset 0 1px 1px rgba($black, $pt-dark-drop-shadow-opacity) !default;
-
-// $pt-dark-dialog-box-shadow: $pt-dark-elevation-shadow-4 !default;
-// $pt-dark-popover-box-shadow: $pt-dark-elevation-shadow-3 !default;
-// $pt-dark-tooltip-box-shadow: $pt-dark-popover-box-shadow !default;
+export const NavBar = {
+  PT_NAVBAR_HEIGHT: Grids.PT_GRID_SIZE * 5,
+};

@@ -109,8 +109,11 @@ class TokenSearcher extends React.PureComponent<Props, State> {
         return pair.base.indexOf(searchFilter.toUpperCase()) > -1;
       });
 
-      result['favorites'] = result['favorites'].concat(tokenPairsByQuoteToken[quote].filter(pair => pair.favorited));
-
+      result['favorites'] = sortTable(
+        result['favorites'].concat(tokenPairsByQuoteToken[quote].filter(pair => pair.favorited)),
+        filterName,
+        sortOrder
+      );
       result[quote] = sortTable(result[quote], filterName, sortOrder);
     }
 

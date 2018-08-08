@@ -13,13 +13,13 @@ class WalletPage extends React.PureComponent<Props> {
     this.props.queryAccountData();
   }
   render() {
-    const { loading, depositTableData, authenticated } = this.props;
+    const { loading, depositTableData, authenticated, accountAddress } = this.props;
 
     if (!authenticated) {
       return <Redirect to="/login" />;
     }
 
-    return <WalletPageRenderer loading={loading} depositTableData={depositTableData} />;
+    return <WalletPageRenderer loading={loading} accountAddress={accountAddress} depositTableData={depositTableData} />;
   }
 }
 

@@ -5,7 +5,9 @@ import { withInfo } from '@storybook/addon-info';
 import TradesTableContainer from './index';
 import TradesTable from './TradesTable';
 import README from './README.md';
+import { LoadData } from '../Common';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
+import { getTrades } from '../../store/services/api';
 
 storiesOf('Trades', module)
   .addDecorator(withKnobs)
@@ -24,8 +26,12 @@ storiesOf('Trades', module)
   .add(
     'Data Loaded',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
-        <TradesTable trades={[]} />
-      </div>
+      <LoadData getData={getTrades}>
+        {data => (
+          <div className="pt-dark">
+            <TradesTable trades={data} />
+          </div>
+        )}
+      </LoadData>
     ))
   );

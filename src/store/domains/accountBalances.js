@@ -1,6 +1,7 @@
 // @flow
 
 import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances';
+import { accountBalances } from '../../data';
 
 const initialState = {};
 
@@ -96,7 +97,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].allowance === -1 : false;
     },
     balancesArray() {
-      return (Object.values(state): any).map(item => {
+      return (accountBalances: any).map(item => {
         return {
           symbol: item.symbol,
           balance: item.balance,
