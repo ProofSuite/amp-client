@@ -1,91 +1,83 @@
 export const tokensBySymbol = {
   BNB: {
     symbol: 'BNB',
-    address: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
+    address: '0xcd2d884b15e8ec9fc69f50a20a9a2ed0d5a94dc6',
   },
   OMG: {
     symbol: 'OMG',
-    address: '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07',
+    address: '0xaef30fe48e41de66a61cef3262d1b1db07473fda',
   },
   ZRX: {
     symbol: 'ZRX',
-    address: '0xe41d2489571d322189246dafa5ebde1f4699f498',
+    address: '0xe161cf5c796d60df49fec97d63efcf57d9312d41',
   },
   AE: {
     symbol: 'AE',
-    address: '0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d',
+    address: '0x74a5fda7e64046de22d7ddab4a690f1f48f31c2a',
   },
   TRX: {
     symbol: 'TRX',
-    address: '0xf230b790e05390fc8295f4d3f60332c93bed42e2',
+    address: '0x476f593d0d3c1ac64dea18205ebae2f20ff84ea1',
   },
   MKR: {
     symbol: 'MKR',
-    address: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
+    address: '0xc8bc0bed72333132991d754b8d6ca0f7423bef1c',
   },
   BAT: {
     symbol: 'BAT',
-    address: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
+    address: '0x440f017dad9ed2981f37ef9735b4f85ddf32ae15',
   },
   REP: {
     symbol: 'REP',
-    address: '0x1985365e9f78359a9B6AD760e32412f4a445E862',
+    address: '0xa7ffa554657370a9a7b8e7934c9b3b9dabd2f468',
   },
   BTM: {
     symbol: 'BTM',
-    address: '0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750',
+    address: '0xa3e64dd925e07695e7928557b16ef0141bf33e97',
   },
   NPXS: {
     symbol: 'NPXS',
-    address: '0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3',
+    address: '0x0bcd171f3f606c58870f830c8b367df41d7c4029',
   },
   WTC: {
     symbol: 'WTC',
-    address: '0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74',
+    address: '0x9130b304d05b35ce4a4d8f43bdd0d2602147a8e3',
   },
   KCS: {
     symbol: 'KCS',
-    address: '0x039b5649a59967e3e936d7471f9c3700100ee1ab',
+    address: '0xa0cbbdc6747030a8803691c2b7b80dcd418de32a',
   },
   GNT: {
     symbol: 'GNT',
-    address: '0xa74476443119A942dE498590Fe1f2454d7D4aC0d',
+    address: '0xc5860f4ab7325907b9822a30ef616d711d459b62',
   },
   PPT: {
     symbol: 'PPT',
-    address: '0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a',
+    address: '0x2bb1ed0936f7321e8a3b9e81d68fee76672a0f43',
   },
   SNT: {
     symbol: 'SNT',
-    address: '0x744d70fdbe2ba4cf95131626614a1763df805b9e',
+    address: '0x59c1a51e7226ea1328ff23da4284dd121bad3751',
   },
   DGX: {
     symbol: 'DGX',
-    address: '0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf',
+    address: '0xdd032748bccc205d23ded1efd43d3ab115f6c329',
   },
   MITH: {
     symbol: 'MITH',
-    address: '0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb',
+    address: '0x0baf0b8cc2cb2fa20c2533a2620cb3bb5989efbe',
   },
   AION: {
     symbol: 'AION',
-    address: '0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466',
-  },
-  LRC: {
-    symbol: 'LRC',
-    address: '0xef68e7c694f40c8202821edf525de3782458639f',
-  },
-  FUN: {
-    symbol: 'FUN',
-    address: '0x419d0d8bdd9af5e606ae2232ed285aff190e711b',
-  },
-  KNC: {
-    symbol: 'KNC',
-    address: '0xdd974d5c2e2928dea5f71b9825b8b646686bd200',
+    address: '0x1014d571ccb476876326f75183ca3f34c7ca9daf',
   },
   LOOM: {
     symbol: 'LOOM',
-    address: '0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0',
+    address: '0x46d6c4686646ef793bee36618780f8259d693297',
+  },
+  DAI: {
+    symbol: 'DAI',
+    address: '0x8daa913db90bd1c2804b4eb6d8f070de0d861bb5',
   },
 };
 
