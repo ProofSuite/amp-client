@@ -1,7 +1,3 @@
-type OrdersState = {
-  byTimestamp: { number: Order },
-};
-
 export type Order = {
   time: number,
   amount: number,
@@ -15,4 +11,10 @@ export type Order = {
   status: 'NEW' | 'OPEN' | 'CANCELLED' | 'FILLED' | 'PARTIALLY_FILLED',
 };
 
+// eslint-disable-next-line
 type Orders = Array<Order>;
+
+// eslint-disable-next-line
+type OrdersState = {
+  byTimestamp: { number: Order },
+};

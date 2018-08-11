@@ -121,24 +121,11 @@ const WalletLoginViewWrapper = styled.div`
   align-items: center;
 `;
 
-const WalletLoadingViewWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  align-contentmargin: auto;
-  width: 100%;
-`;
-
 const Announcement = styled.section``;
 
 const Heading = styled.h4`
   margin-top: 10px;
   margin-bottom: 10px;
-`;
-
-const Notes = styled.section`
-  margin: 10px;
 `;
 
 const Reminder = styled.div``;

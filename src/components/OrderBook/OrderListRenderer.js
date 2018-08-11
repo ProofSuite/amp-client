@@ -71,7 +71,7 @@ const BuyOrder = (props: SingleOrderProps) => {
 const SellOrder = (props: SingleOrderProps) => {
   const { order, index } = props;
   return (
-    <Row>
+    <Row key={index}>
       <SellRowBackGround amount={order.relativeTotal} />
       <Cell>{order.price}</Cell>
       <Cell>{order.amount}</Cell>
@@ -106,8 +106,11 @@ const Row = styled.li.attrs({
   &:hover {
     background-color: ${Colors.BLUE_MUTED};
     position: relative;
-    z-index: 1;
     border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 10px 4px rgba(16, 22, 26, 0.1),
+      1px 18px 24px rgba(16, 22, 26, 0.2);
+    box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
+    z-index: 1;
   }
 `;
 

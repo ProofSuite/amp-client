@@ -3,8 +3,6 @@ import React from 'react';
 import TokenSearcherRenderer from './TokenSearcherRenderer';
 import { sortTable } from '../../utils/helpers';
 
-import type { TokenPair } from '../../types/tokens';
-
 //TODO not sure exactly where to define this type.
 type Token = {
   pair: string,

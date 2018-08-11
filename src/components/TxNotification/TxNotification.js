@@ -38,6 +38,7 @@ const TxNotification = (props: Props) => {
   }
 };
 
+// eslint-disable-next-line
 const renderLoader = () => {
   return <Spinner intent={Intent.SUCCESS} />;
 };

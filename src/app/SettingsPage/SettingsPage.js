@@ -4,18 +4,15 @@ import { Footer } from '../../components/Common';
 
 class SettingsPage extends React.PureComponent {
   render() {
-    return <Footer />;
+    return (
+      <div>
+        <NonIdealState title="WORK IN PROGRESS" visual="wrench">
+          Setting Page
+        </NonIdealState>
+        <Footer />
+      </div>
+    );
   }
 }
 
 export default SettingsPage;
-
-{
-  /*<NonIdealState title="WORK IN PROGRESS" visual="wrench">*/
-}
-{
-  /*Setting Page*/
-}
-{
-  /*</NonIdealState>*/
-}

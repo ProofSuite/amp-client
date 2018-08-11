@@ -1,6 +1,7 @@
 import React from 'react';
 import { Position, Toaster } from '@blueprintjs/core';
 
+// eslint-disable-next-line
 type Props = {
   lastNotification: Object,
   removeNotification: number => void,
@@ -8,7 +9,7 @@ type Props = {
 
 class Notifier extends React.Component {
   show = notification => {
-    let { id, intent, message } = notification;
+    let { intent, message } = notification;
     Notification.show({
       intent: intent || 'success',
       message: message,
@@ -26,7 +27,9 @@ class Notifier extends React.Component {
 
   componentDidUpdate(prevProps) {
     let { lastNotification, removeNotification } = prevProps;
+
     if (lastNotification) {
+      console.log('lastNotification: ', lastNotification);
       removeNotification(lastNotification.id);
     }
   }

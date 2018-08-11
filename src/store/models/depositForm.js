@@ -107,10 +107,10 @@ export const confirmEtherDeposit = (
 
       if (shouldConvert) {
         if (shouldAllow) {
-          let convertTxParams = { value: 1000 };
+          // let convertTxParams = { value: 1000 };
           let convertTxPromise = weth.deposit();
 
-          let allowTxParams = {};
+          // let allowTxParams = {};
           let allowTxPromise = weth.approve(EXCHANGE_ADDRESS[network], -1, {});
 
           let [convertTx, allowTx] = await Promise.all([convertTxPromise, allowTxPromise]);
@@ -131,7 +131,7 @@ export const confirmEtherDeposit = (
             ? dispatch(depositFormActionCreators.revertAllowTx(allowTxReceipt))
             : dispatch(depositFormActionCreators.confirmAllowTx(allowTxReceipt));
         } else {
-          let convertTxParams = { value: 1000 };
+          // let convertTxParams = { value: 1000 };
           let convertTx = await weth.convert();
           dispatch(depositFormActionCreators.sendConvertTx(convertTx.hash));
           let convertTxReceipt = await signer.provider.waitForTransaction(convertTx.hash);
@@ -155,7 +155,7 @@ export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): T
       let token = new Contract(address, ERC20Token.abi, signer);
 
       if (shouldAllow) {
-        let allowTxParams = { value: 1000 };
+        // let allowTxParams = { value: 1000 };
         let allowTx = await token.approve(EXCHANGE_ADDRESS[network], -1);
         dispatch(depositFormActionCreators.sendAllowTx(allowTx.hash));
 

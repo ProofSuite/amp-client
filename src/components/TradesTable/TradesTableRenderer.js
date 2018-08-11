@@ -70,7 +70,7 @@ const Panel = (props: { trades: Array<Trade> }) => {
 const TradeTableRow = (props: { index: number, trade: Trade }) => {
   const { trade, index } = props;
   return (
-    <Row side={trade.side}>
+    <Row side={trade.side} key={index}>
       <Cell>{trade.amount}</Cell>
       <Cell>{trade.price}</Cell>
       <Cell side={trade.side}>{trade.side}</Cell>

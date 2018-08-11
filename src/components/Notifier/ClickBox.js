@@ -8,7 +8,7 @@ class ClickBox extends React.PureComponent<> {
     return (
       <Button
         intent="primary"
-        onClick={() => this.props.addNotification({ id: 1, message: 'Heelo' })}
+        onClick={() => this.props.addNotification({ id: 1, message: 'Heelo', intent: 'danger' })}
         text="Click to dispatch notification"
       />
     );

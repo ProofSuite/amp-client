@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Button } from '@blueprintjs/core';
+import { Card, Button } from '@blueprintjs/core';
 import styled from 'styled-components';
 import StartTxModal from '../../components/StartTxModal';
 import { toPassowrdType } from '../../utils/helpers';
@@ -15,7 +15,6 @@ const CurrentWalletRenderer = props => {
     accountAddress,
     balance,
     locked,
-    startTransaction,
   } = props;
   return (
     <WalletWrapper>

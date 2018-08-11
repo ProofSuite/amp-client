@@ -2,7 +2,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import LoginPageRenderer from './LoginPageRenderer';
-import Notifier from '../../components/Notifier';
 
 type Props = {
   authenticated: boolean,
@@ -44,6 +43,10 @@ class LoginPage extends React.PureComponent<Props, State> {
     this.props.loginWithMetamask();
   };
 
+  componentWillMount = () => {
+    // this.props.removeNotification({ id: 1 });
+  };
+
   render() {
     const {
       props: { loginWithMetamask, loginWithWallet, authenticated },
@@ -57,7 +60,6 @@ class LoginPage extends React.PureComponent<Props, State> {
     }
     return (
       <div>
-        <Notifier />
         <LoginPageRenderer
           view={view}
           metamaskStatus={metamaskStatus}

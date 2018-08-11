@@ -18,9 +18,9 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
   let balances;
   const provider = getProvider();
 
-  const balancePromises = tokens.map(token => {
+  const balancePromises = tokens.map(async token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider);
-    return contract.balanceOf(address);
+    return await contract.balanceOf(address);
   });
 
   balances = await Promise.all(balancePromises);

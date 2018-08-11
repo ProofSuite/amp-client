@@ -36,10 +36,12 @@ export const createSigner = async (params: UpdateSignerParams): any => {
           settings = { type };
           address = await createMetamaskSigner();
           return { settings, address };
+
         case 'rpc':
           settings = { type, url, networkId };
           address = await createRpcSigner(url, networkId);
           return { settings, address };
+
         case 'wallet':
           if (!wallet) throw new Error('Wallet not found');
           networkId = networkId || 8888;

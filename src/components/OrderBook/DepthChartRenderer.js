@@ -2,7 +2,6 @@ import React from 'react';
 import 'amcharts3/amcharts/amcharts';
 import 'amcharts3/amcharts/serial';
 import 'amcharts3/amcharts/themes/light';
-import { Colors } from '../Common';
 
 var AmCharts = require('@amcharts/amcharts3-react');
 

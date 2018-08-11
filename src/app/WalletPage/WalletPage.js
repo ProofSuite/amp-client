@@ -11,6 +11,7 @@ type Props = {
 class WalletPage extends React.PureComponent<Props> {
   componentDidMount() {
     this.props.queryAccountData();
+    // this.props.removeNotification(1);
   }
   render() {
     const { loading, depositTableData, authenticated, accountAddress } = this.props;

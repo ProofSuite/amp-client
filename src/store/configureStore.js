@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
 import * as services from './services';
@@ -22,6 +22,8 @@ const middlewares = [thunk.withExtraArgument(services)];
 const enhancers = [applyMiddleware(...middlewares)];
 const storeEnhancer = composeEnhancers(...enhancers);
 const rootReducer = combineReducers(reducers);
+
+// eslint-disable-next-line
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const configureStore = preloadedState => {

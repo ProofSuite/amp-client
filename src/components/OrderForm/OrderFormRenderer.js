@@ -224,7 +224,7 @@ const LimitOrderPanel = props => {
 };
 
 const StopLimitOrderPanel = (props: *) => {
-  const { stopPrice, limitPrice, formType, loggedIn, amount, total, quoteToken, baseToken, onInputChange } = props;
+  const { stopPrice, formType, loggedIn, amount, total, quoteToken, baseToken, onInputChange } = props;
 
   return (
     <div className="column">

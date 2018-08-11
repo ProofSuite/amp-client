@@ -52,7 +52,6 @@ export default class CurrentWallet extends React.PureComponent {
       state: { showPrivateKey, privateKey, balance, locked, isModalOpen },
       togglePrivateKey,
       toggleLock,
-      startTransaction,
       handleModalClose,
     } = this;
     return (

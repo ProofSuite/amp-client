@@ -11,6 +11,7 @@ export function addNotification(options) {
 }
 
 export function removeNotification(id) {
+  console.log('action, removeNotification: ', id);
   return {
     type: actionTypes.removeNotification,
     payload: { id },

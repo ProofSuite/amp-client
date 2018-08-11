@@ -1,8 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
-import tradingPageModel, { queryDefaultData } from '../../store/models/tradingPage';
-
-import type { State } from '../../types';
+import { queryDefaultData } from '../../store/models/tradingPage';
 
 export const mapDispatchToProps = {
   queryDefaultData,

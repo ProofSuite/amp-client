@@ -6,7 +6,6 @@ import type {
   UpdateTokenPairDataAction,
   UpdateOrdersTableAction,
   UpdateTradesTableAction,
-  UpdateOrderBookAction,
   UpdateCurrentPairAction,
 } from '../../types/tradingPage';
 

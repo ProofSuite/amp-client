@@ -36,7 +36,7 @@ export const ordersDeleted = (timestamps: Array<number>) => {
   const event = (state: OrdersState) => ({
     ...state,
     byTimestamp: Object.keys(state.byTimestamp)
-      .filter(key => timestamps.indexOf(key) == -1)
+      .filter(key => timestamps.indexOf(key) === -1)
       .reduce((result, current) => {
         result[current] = state.byTimestamp[current];
         return result;
