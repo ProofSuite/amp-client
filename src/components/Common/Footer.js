@@ -1,5 +1,5 @@
 import React from 'react';
-import { Colors } from '@blueprintjs/core';
+import Colors from './Colors';
 import styled from 'styled-components';
 
 const Footer = () => (
@@ -108,8 +108,8 @@ const HeadListItem = styled.li`
   color: ${Colors.GRAY2};
 `;
 const LinkText = styled.a`
-  color: ${Colors.LIGHT_GRAY5};
+  color: ${Colors.LIGHT_GRAY5} !important;
   &:hover {
-    color: ${Colors.BLUE4};
+    color: ${Colors.BLUE4} !important;
   }
 `;

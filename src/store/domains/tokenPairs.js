@@ -1,7 +1,6 @@
 //@flow
 import { quoteTokens } from '../../config/quotes';
 import { tokens } from '../../config/tokens';
-import { parseJSONToFixed } from '../../utils/parsers';
 import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tokens';
 
 import type { Token, TokenPairState, TokenPairDataMap } from '../../types/tokens';

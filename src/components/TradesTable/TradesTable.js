@@ -1,8 +1,6 @@
 // @flow
 import React from 'react';
 import TradesTableRenderer from './TradesTableRenderer';
-import { sortArray } from '../../utils/helpers';
-
 import type Trade from '../../types/trades';
 import type { TokenPair } from '../../types/tokens';
 

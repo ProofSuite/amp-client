@@ -1,5 +1,5 @@
-import type { Node } from 'react';
 // @flow
+import type { Node } from 'react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Link, NavLink } from 'react-router-dom';

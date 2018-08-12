@@ -210,9 +210,7 @@ class OrderForm extends React.PureComponent<Props, State> {
     }
   };
 
-  handleSubmit = () => {
-    const { selectedTabId } = this.state;
-  };
+  handleSubmit = () => {};
 
   render() {
     const {

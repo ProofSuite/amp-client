@@ -1,16 +1,10 @@
 // @flow
-import { getTokenPairData, getOrders, getTrades } from '../services/api';
-
 import * as actionCreators from '../actions/tradingPage';
 import * as ohlcvActionCreators from '../actions/ohlcv';
-import * as orderBookActionCreators from '../actions/orderBook';
 import * as orderFormActionCreators from '../actions/orderForm';
-
-import * as orderList from '../../jsons/ordersList.json';
-import * as bidAsk from '../../jsons/bidAsk.json';
-
 import type { State, ThunkAction } from '../../types';
 
+// eslint-disable-next-line
 export default function getTradingPageModel(state: State) {
   return {};
 }
@@ -48,6 +42,7 @@ export const queryDefaultData = (): ThunkAction => {
   };
 };
 
+// eslint-disable-next-line
 export const updateCurrentPair = (pair: string): ThunkAction => {
   return async (dispatch, getState, { api, trading }) => {
     try {
@@ -67,6 +62,7 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
   };
 };
 
+// eslint-disable-next-line
 export function subscribeChart(pair: string, increment: number): ThunkAction {
   return (dispatch, getState, { trading }) => {
     dispatch(actionCreators.subscribeChart(pair));
@@ -94,6 +90,7 @@ export function subscribeOrderBook(pair: string): ThunkAction {
   };
 }
 
+// eslint-disable-next-line
 export function openConnection(): ThunkAction {
   return (dispatch, getState, { trading }) => {
     dispatch(actionCreators.startConnection());

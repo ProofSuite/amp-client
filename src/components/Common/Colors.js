@@ -189,7 +189,8 @@ export default {
   SELL: Colors.RED4,
 
   SELL_MUTED: rgba('#F55656', 0.1),
-  BLUE_MUTED: rgba('#137CBD', 0.1),
+  BUY_MUTED: rgba('#15B371', 0.1),
+  BLUE_MUTED: rgba('#137CBD', 0.3),
 };
 
 export const Icons = {

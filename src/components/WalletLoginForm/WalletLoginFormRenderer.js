@@ -305,24 +305,10 @@ const ButtonBox = styled.div`
   padding-top: 20px;
 `;
 
-const InputFormBox = styled.div`
-  position: relative;
-`;
-
 const FooterWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-`;
-
-const DropzoneContainer = styled.div`
-  padding-top: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: auto;
 `;
 
 const DropzoneMessageContainer = styled(Card)`

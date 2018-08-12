@@ -59,7 +59,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
   onDrop = (acceptedFiles: *, rejectedFiles: *) => {
     const file = acceptedFiles[0];
-    console.log(acceptedFiles[0]);
     const reader = new FileReader();
     reader.onload = () => {
       try {
@@ -176,12 +175,14 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
     switch (method) {
       case 'privateKey':
+        // eslint-disable-next-line
         var { wallet } = await createWalletFromPrivateKey(privateKey);
         if (!wallet) {
           invalidKey = true;
         }
         break;
       case 'json':
+        // eslint-disable-next-line
         var { wallet, encryptedWallet } = await createWalletFromJSON(json, password);
         if (!wallet) {
           invalidPassword = true;
@@ -189,12 +190,14 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         }
         break;
       case 'walletFile':
+        // eslint-disable-next-line
         var { wallet, encryptedWallet } = await createWalletFromJSON(walletFile, password);
         if (!wallet) {
           invalidPassword = true;
         }
         break;
       case 'mnemonic':
+        // eslint-disable-next-line
         var { wallet } = await createWalletFromMnemonic(mnemonic);
         if (!wallet) {
           invalidMnemonic = true;

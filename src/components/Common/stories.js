@@ -5,7 +5,6 @@ import { withInfo } from '@storybook/addon-info';
 import { Intent } from '@blueprintjs/core';
 import Text, { EmphasizedText, LargeText } from './Text';
 import Heading from './Heading';
-import Collapse from './Collapse';
 import Loading from './Loading';
 import Footer from './Footer';
 import Divider from './Divider';
@@ -13,7 +12,6 @@ import Divider from './Divider';
 storiesOf('Text', module)
   .addDecorator(withKnobs)
   .add('Footer', withInfo({ source: false })(() => <Footer />))
-  .add('Collapse', withInfo({ source: false })(() => <Collapse>Hello</Collapse>))
   .add('Primary', withInfo({ source: false })(() => <Text intent={Intent.PRIMARY}>Hello</Text>))
   .add('Success', withInfo({ source: false })(() => <Text intent={Intent.SUCCESS}>Hello</Text>))
   .add('Emphasized', withInfo({ source: false })(() => <EmphasizedText>Hello</EmphasizedText>))

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import getWalletPageSelector, { queryAccountData } from '../../store/models/walletPage';
 import accountSelector from '../../store/models/layout';
+import { removeNotification } from '../../store/actions/app';
 
 export function mapStateToProps(state, props) {
   const { depositTableData, accountAddress } = getWalletPageSelector(state);
@@ -18,6 +19,7 @@ export function mapStateToProps(state, props) {
 
 export const mapDispatchToProps = {
   queryAccountData,
+  removeNotification,
 };
 
 export default connect(

@@ -7,10 +7,12 @@ const DepositTableRenderer = (props: Props) => {
     <Wrapper>
       <Table>
         <TableHeader>
-          <TableHeaderCell>Token Name</TableHeaderCell>
-          <TableHeaderCell>Balances</TableHeaderCell>
-          <TableHeaderCell>Allowances</TableHeaderCell>
-          <TableHeaderCell>Allow trading</TableHeaderCell>
+          <Row>
+            <TableHeaderCell>Token Name</TableHeaderCell>
+            <TableHeaderCell>Balances</TableHeaderCell>
+            <TableHeaderCell>Allowances</TableHeaderCell>
+            <TableHeaderCell>Allow trading</TableHeaderCell>
+          </Row>
         </TableHeader>
         <TableBody>
           <RowRenderer {...props} />
@@ -28,7 +30,7 @@ const DepositTableRenderer = (props: Props) => {
 };
 
 const RowRenderer = (props: Props) => {
-  const { depositData, handleAllowance, handleDeposit, handleModalClose, handleWithdraw } = props;
+  const { depositData, handleAllowance, handleModalClose, handleWithdraw } = props;
 
   return depositData.map(({ symbol, balance, allowed }, index) => {
     return (

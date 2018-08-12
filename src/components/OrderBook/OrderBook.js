@@ -53,7 +53,7 @@ class OrderBook extends React.Component<Props, State> {
 
   toolTip = (item: Object, graph: Object) => {
     let txt;
-    if (graph.id == 'asks') {
+    if (graph.id === 'asks') {
       txt = `Ask: <strong>${this.formatNumber(item.dataContext.price, graph.chart, 4)}</strong><br />
       Total volume: <strong>${this.formatNumber(item.dataContext.total, graph.chart, 4)}</strong><br />
       Volume: <strong>${this.formatNumber(item.dataContext.amount, graph.chart, 4)}</strong>`;

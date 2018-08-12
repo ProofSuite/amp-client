@@ -1,5 +1,5 @@
-import type { Node } from 'react';
 // @flow
+import type { Node } from 'react';
 import React from 'react';
 import { Dialog } from '@blueprintjs/core';
 

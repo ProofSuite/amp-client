@@ -23,25 +23,28 @@ let asks = [
   { price: 418.1707, amount: 52, total: 256, relativeTotal: 0.834283852044973 },
 ];
 
+let currentPair = {
+  baseTokenAddress: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
+  baseTokenSymbol: 'BNB',
+  pair: 'BNB_WETH',
+  quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+  quoteTokenSymbol: 'WETH',
+};
+
 storiesOf('OrderBook', module)
   .addDecorator(withKnobs)
-  .add(
-    'Connected OrderBook',
-    withInfo({
-      text: README,
-      propTablesExclude: [OrderBookContainer],
-      source: false,
-    })(() => (
-      <div className="pt-dark">
-        <OrderBookContainer />
-      </div>
-    ))
-  )
   .add(
     'Sell Order Book',
     withInfo({ text: README, source: false })(() => (
       <div className="pt-dark">
-        <OrderBook loading={false} asks={asks} bids={bids} baseToken="ETH" quoteToken="USDT" />
+        <OrderBook
+          loading={false}
+          asks={asks}
+          currentPair={currentPair}
+          bids={bids}
+          baseToken="ETH"
+          quoteToken="USDT"
+        />
       </div>
     ))
   );

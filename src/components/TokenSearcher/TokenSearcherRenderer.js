@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core';
-import { ColumnEnd, RowSpaceBetween, Loading } from '../Common';
+import { ColumnEnd, RowSpaceBetween } from '../Common';
 import { Colors, Centered, Chevron, OverlaySpinner } from '../Common';
 import styled from 'styled-components';
 
@@ -243,7 +243,7 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
 };
 
 const SelectedCoin = ({ selectedToken }) => {
-  const { pair, lastPrice, volume, high, low, base, quote } = selectedToken;
+  const { pair, lastPrice, volume, high, low, quote } = selectedToken;
   return (
     <SelectedCoinCard>
       <RowSpaceBetween>

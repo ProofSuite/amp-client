@@ -1,8 +1,7 @@
 // @flow
 
 import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances';
-import { accountBalances } from '../../data';
-
+// eslint-disable-next-line
 const initialState = {};
 
 export function initialized() {
@@ -97,7 +96,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].allowance === -1 : false;
     },
     balancesArray() {
-      return (accountBalances: any).map(item => {
+      return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
           balance: item.balance,

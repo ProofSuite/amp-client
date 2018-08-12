@@ -65,6 +65,7 @@ export function getObjectFromProperty(array, prop, value) {
     if (obj[prop] === value) {
       foundObject = obj;
     }
+    return obj;
   });
   if (foundObject) {
     return foundObject;
@@ -82,8 +83,8 @@ export const filterer = (filter, coin, wrt, filterValue) => {
 
 export const isJson = text => {
   return /^[\],:{}\s]*$/.test(
-    text
-      .replace(/\\["\\\/bfnrtu]/g, '@')
+    text // eslint-disable-next-line
+      .replace(/\\["\\\/bfnrtu]/g, '@') // eslint-disable-next-line
       .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
       .replace(/(?:^|:|,)(?:\s*\[)+/g, '')
   );
@@ -109,7 +110,7 @@ export const sortedInserts = (arr, elems) => {
 };
 
 export function toPassowrdType(text) {
-  if (typeof text == 'string' || typeof text == 'number') {
+  if (typeof text === 'string' || typeof text === 'number') {
     return '*'.repeat(text.length);
   }
   return text;

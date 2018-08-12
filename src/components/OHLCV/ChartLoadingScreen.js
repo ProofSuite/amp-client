@@ -22,19 +22,7 @@ type Props = {
 export default class ChartLoadingScreen extends React.PureComponent<Props> {
   render() {
     const nullIndicator = { name: '', height: 0, active: false };
-    const {
-      macd,
-      volume,
-      chartHeight,
-      currentChart,
-      indicatorHeight,
-      rsi,
-      line,
-      atr,
-      forceIndex,
-      data,
-      width,
-    } = this.props;
+    const { macd, volume, chartHeight, currentChart, indicatorHeight, rsi, line, atr, forceIndex, data } = this.props;
 
     if (!data || data.length < 1) {
       return <Loading />;

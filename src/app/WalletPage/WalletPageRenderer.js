@@ -4,6 +4,7 @@ import { Card } from '@blueprintjs/core';
 import CenteredSpinner from '../../components/Common/CenteredSpinner';
 import DepositTable from '../../components/DepositTable';
 import CurrentWallet from '../../components/CurrentWallet';
+import Notifier from '../../components/Notifier';
 
 type Props = {
   queryAccountData: void => void,
@@ -22,6 +23,7 @@ const WalletPageRenderer = ({ loading, depositTableData, accountAddress }: Props
         Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text
         Footer Text Footer Text Footer Text Footer Text Footer Text
       </p>
+      <Notifier />
     </Wrapper>
   );
 };

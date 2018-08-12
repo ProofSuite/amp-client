@@ -31,14 +31,15 @@ export function loginWithMetamask(): ThunkAction {
 
       try {
         let address = await createMetamaskSigner();
-        dispatch(
-          notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' })
-        );
+
+        // I think there's is no need to show a notifier on Successful Log In.
+        // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
         dispatch(actionCreators.loginWithMetamask(address));
       } catch (e) {
         return dispatch(actionCreators.loginError('Metamask account locked'));
       }
     } catch (e) {
+      dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'danger', message: 'Login Error occurred!' }));
       dispatch(actionCreators.loginError(e.message));
     }
   };
@@ -57,14 +58,15 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
 
         await createLocalWalletSigner(wallet);
         dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
-        dispatch(
-          notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' })
-        );
+
+        // I think there's is no need to show a notifier on Successful Log In.
+        // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
         return dispatch(actionCreators.loginWithWallet(address));
       } catch (e) {
         return dispatch(actionCreators.loginError('Could not authenticate wallet'));
       }
     } catch (e) {
+      dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'danger', message: 'Login Error occurred!' }));
       dispatch(actionCreators.loginError(e.message));
     }
   };

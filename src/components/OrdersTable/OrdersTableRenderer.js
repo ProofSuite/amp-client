@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card, Tab, Tabs, Collapse, Button } from '@blueprintjs/core';
-import { Colors, Loading, CenteredMessage, Text } from '../Common';
+import { Colors, Loading, CenteredMessage } from '../Common';
 import { format } from 'date-fns';
 import { Order } from '../../types/orders';
 
