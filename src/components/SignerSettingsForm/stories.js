@@ -25,7 +25,7 @@ storiesOf('SignerSettingsForm', module)
       propTablesExclude: [SignerSettingsFormContainer],
       source: false,
     })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <SignerSettingsFormContainer />
       </div>
     ))
@@ -33,7 +33,7 @@ storiesOf('SignerSettingsForm', module)
   .add(
     'Signer Settings',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <SignerSettingsForm
           loading={false}
           error=""
@@ -46,7 +46,7 @@ storiesOf('SignerSettingsForm', module)
   .add(
     'Renderer (Non expanded)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <SignerSettingsFormRenderer
           options={{ provider: 'metamask', type: '', url: '', networkId: 8888 }}
           currentSigner={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
@@ -61,7 +61,7 @@ storiesOf('SignerSettingsForm', module)
   .add(
     'Renderer (Non expanded) - Loading',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <SignerSettingsFormRenderer
           loading
           options={{ provider: 'metamask', type: '', url: '', networkId: 1 }}
@@ -78,7 +78,7 @@ storiesOf('SignerSettingsForm', module)
   .add(
     'Renderer (Custom - Expanded)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <SignerSettingsFormRenderer
           error=""
           type="wallet"
@@ -99,7 +99,7 @@ storiesOf('SignerSettingsForm', module)
   .add(
     'Renderer (Custom - Expanded - Error)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <SignerSettingsFormRenderer
           error="Invalid Json Response"
           type="wallet"

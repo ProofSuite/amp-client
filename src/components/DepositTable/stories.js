@@ -12,7 +12,7 @@ storiesOf('Deposit Table', module)
   .add(
     'Default Export',
     withInfo({ source: false })(() => (
-      <Card className="pt-dark">
+      <Card className="bp3-dark">
         <DepositTableRenderer depositData={mockDepositTableData} />
       </Card>
     ))

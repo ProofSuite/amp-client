@@ -19,7 +19,7 @@ storiesOf('Send Ether/Tokens Form', module)
       propTablesExclude: [SendEtherFormContainer],
       source: false,
     })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <SendEtherFormContainer />
         </Card>
@@ -29,7 +29,7 @@ storiesOf('Send Ether/Tokens Form', module)
   .add(
     'Send Ether/Tokens Form',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <SendEtherForm
             loading={false}
@@ -52,7 +52,7 @@ storiesOf('Send Ether/Tokens Form', module)
   .add(
     'Send Ether/Tokens Renderer (Transaction Confirmed)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <SendEtherFormRenderer
             loading={false}
@@ -78,7 +78,7 @@ storiesOf('Send Ether/Tokens Form', module)
   .add(
     'Send Ether/Tokens Renderer (Transaction Sent)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <SendEtherFormRenderer
             loading={false}
@@ -103,7 +103,7 @@ storiesOf('Send Ether/Tokens Form', module)
   .add(
     'Send Ether/Tokens Renderer (Transaction Valid)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <SendEtherFormRenderer
             loading={false}
@@ -129,7 +129,7 @@ storiesOf('Send Ether/Tokens Form', module)
   .add(
     'Send Ether/Tokens Renderer (Transaction Invalid)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <SendEtherFormRenderer
             loading={false}
@@ -154,7 +154,7 @@ storiesOf('Send Ether/Tokens Form', module)
   .add(
     'Send Ether/Tokens Renderer (Transaction Reverted)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <SendEtherFormRenderer
             loading={false}

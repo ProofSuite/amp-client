@@ -52,7 +52,7 @@ const RowRenderer = (props: Props) => {
 };
 
 const Table = styled.table.attrs({
-  className: 'pt-html-table pt-interactive pt-html-table-striped',
+  className: 'bp3-html-table bp3-interactive bp3-html-table-striped',
 })`
   width: 60%;
 `;

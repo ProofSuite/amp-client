@@ -10,7 +10,7 @@ storiesOf('TokenSearcher', module)
   .add(
     'Connected Component',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <ConnectedTokenSearcher />
       </div>
     ))

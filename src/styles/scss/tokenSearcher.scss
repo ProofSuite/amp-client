@@ -5,15 +5,15 @@
   max-width: 700px;
   width: 100%;
 
-  .pt-tabs {
+  .bp3-tabs {
     height: 75%;
-    .pt-tab-panel {
+    .bp3-tab-panel {
       margin-top: 0px;
       height: 300px;
     }
   }
 
-  .pt-tab {
+  .bp3-tab {
     font-weight: 600;
     svg {
       margin-top: 6px;
@@ -35,7 +35,6 @@
 
       span.star {
         cursor: pointer;
-        width: 30px;
         min-width: 30px;
         width: 10%;
       }

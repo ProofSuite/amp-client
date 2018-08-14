@@ -18,7 +18,7 @@ storiesOf('TxNotification', module)
   .add(
     'Valid',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <TxNotification
             loading={false}
@@ -35,7 +35,7 @@ storiesOf('TxNotification', module)
   .add(
     'Invalid',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <TxNotification
             loading={false}
@@ -51,7 +51,7 @@ storiesOf('TxNotification', module)
   .add(
     'Pending',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <TxNotification loading={false} hash={receipt.hash} receipt={receipt} status="sent" statusMessage="" />
         </Card>
@@ -61,7 +61,7 @@ storiesOf('TxNotification', module)
   .add(
     'Confirmed',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <TxNotification
             loading={false}
@@ -77,7 +77,7 @@ storiesOf('TxNotification', module)
   .add(
     'Reverted',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <TxNotification
             loading={false}
@@ -93,7 +93,7 @@ storiesOf('TxNotification', module)
   .add(
     'Error',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <TxNotification
             loading={false}

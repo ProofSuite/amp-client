@@ -75,7 +75,7 @@ function Layout(props: Props) {
 
 export default Layout;
 
-const Wrapper = styled.div.attrs({ className: 'pt-dark' })`
+const Wrapper = styled.div.attrs({ className: 'bp3-dark' })`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -88,20 +88,20 @@ const MainContent = styled.main`
 `;
 
 const NavbarHeaderLink = styled(Link).attrs({
-  className: 'pt-button pt-minimal pt-intent-primary',
+  className: 'bp3-button bp3-minimal bp3-intent-primary',
   role: 'button',
 })``;
 
 const NavbarLink = styled(NavLink).attrs({
-  activeClassName: 'pt-active',
-  className: 'pt-button pt-minimal',
+  activeClassName: 'bp3-active',
+  className: 'bp3-button bp3-minimal',
   role: 'button',
 })``;
 
 const MenuItem = styled.li``;
 
 const MenuItemLink = styled(NavLink).attrs({
-  activeClassName: 'pt-active',
-  className: props => `pt-menu-item pt-popover-dismiss pt-icon-${props.icon}`,
+  activeClassName: 'bp3-active',
+  className: props => `bp3-menu-item bp3-popover-dismiss bp3-icon-${props.icon}`,
   role: 'button',
 })``;

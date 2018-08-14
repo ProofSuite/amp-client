@@ -47,7 +47,7 @@ storiesOf('Deposit Form', module)
       text: README,
       source: false,
     })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormContainer />
         </Card>
@@ -60,7 +60,7 @@ storiesOf('Deposit Form', module)
       text: README,
       source: false,
     })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormContainer />
         </Card>
@@ -70,7 +70,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Waiting for deposit)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="waiting"
@@ -102,7 +102,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Waiting for conversion - Ether)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="convert"
@@ -134,7 +134,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Convert - Ether - No Conversion)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="convert"
@@ -167,7 +167,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Conversion - Token)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="convert"
@@ -200,7 +200,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Confirm - Ether)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="confirm"
@@ -230,7 +230,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Confirm - Pending Transaction)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="confirm"
@@ -265,7 +265,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Confirm - Transaction Failed)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="confirm"
@@ -300,7 +300,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Confirm - Transactions Failed/Pending)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="confirm"
@@ -335,7 +335,7 @@ storiesOf('Deposit Form', module)
   .add(
     'Deposit Ether/Tokens Form (Confirm - Transaction Successfull)',
     withInfo()(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <Card>
           <DepositFormRenderer
             step="confirm"

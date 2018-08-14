@@ -3,6 +3,7 @@ const actionTypes = {
 };
 
 export function saveData(data: any) {
+  console.log(data);
   return {
     type: actionTypes.saveData,
     payload: { data },

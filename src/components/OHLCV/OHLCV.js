@@ -4,26 +4,26 @@ import type { SendTimelineParams } from '../../types/ohlcv';
 
 type Props = {
   ohlcvData: Array<Object>,
-  pair: string,
-  pairId: string,
+  currentTimeSpan: Object,
+  currentDuration: Object,
   updateTimeLine: SendTimelineParams => void,
+  saveDuration: Object => void,
+  saveTimeSpan: Object => void,
 };
 
 export default class OHLCV extends React.PureComponent<Props, State> {
   render() {
-    const {
-      props: { ohlcvData, pair, updateTimeLine, pairId, hideOrderBook, toggleOrderBook },
-    } = this;
+    const { ohlcvData, currentDuration, currentTimeSpan, updateTimeLine, saveTimeSpan, saveDuration } = this.props;
 
     return (
       <React.Fragment>
         <SmallChart
           updateTimeLine={updateTimeLine}
           ohlcvData={ohlcvData}
-          pair={pair}
-          pairId={pairId}
-          hideOrderBook={hideOrderBook}
-          toggleOrderBook={toggleOrderBook}
+          currentTimeSpan={currentTimeSpan}
+          currentDuration={currentDuration}
+          saveDuration={saveDuration}
+          saveTimeSpan={saveTimeSpan}
         />
       </React.Fragment>
     );

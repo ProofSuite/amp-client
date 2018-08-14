@@ -16,19 +16,6 @@
   version "7.0.0-beta.53"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.53.tgz#1f45eb617bf9463d482b2c04d349d9e4edbf4892"
 
-"@blueprintjs/core@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-2.3.1.tgz#c998f8d22b02bfc9990b66b201f1ea095fb15450"
-  dependencies:
-    "@blueprintjs/icons" "^2.2.1"
-    "@types/dom4" "^2.0.0"
-    classnames "^2.2"
-    dom4 "^2.0.1"
-    normalize.css "^8.0.0"
-    popper.js "^1.14.1"
-    react-popper "^0.8.2"
-    tslib "^1.9.0"
-
 "@blueprintjs/core@^3.0.0":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.0.1.tgz#65d4d8b0e97cf12ff1ddc4bda073ccd02622505f"
@@ -44,7 +31,7 @@
     resize-observer-polyfill "^1.5.0"
     tslib "^1.9.0"
 
-"@blueprintjs/core@^3.2.0":
+"@blueprintjs/core@^3.1.0", "@blueprintjs/core@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.2.0.tgz#bdc783d84713de499f3e095c0560ffa37f3d19b5"
   dependencies:
@@ -59,13 +46,6 @@
     resize-observer-polyfill "^1.5.0"
     tslib "^1.9.0"
 
-"@blueprintjs/icons@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-2.2.1.tgz#1b4275fc67467218a8ffec6403c87c7af24532a5"
-  dependencies:
-    classnames "^2.2"
-    tslib "^1.9.0"
-
 "@blueprintjs/icons@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.0.0.tgz#2eed041dd52c9feed2758ca526f4505911813a31"
@@ -73,11 +53,11 @@
     classnames "^2.2"
     tslib "^1.9.0"
 
-"@blueprintjs/select@~2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-2.0.1.tgz#4746aff7ed534113b17d0663bf548b2867dc4b2a"
+"@blueprintjs/select@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.1.0.tgz#5ec50aa31cc852ff90fd1d3666c00b6c32c408ba"
   dependencies:
-    "@blueprintjs/core" "^2.3.1"
+    "@blueprintjs/core" "^3.1.0"
     classnames "^2.2"
     tslib "^1.9.0"
 
@@ -7075,7 +7055,7 @@ polished@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/polished/-/polished-1.9.3.tgz#d61b8a0c4624efe31e2583ff24a358932b6b75e1"
 
-popper.js@^1.12.9, popper.js@^1.14.1:
+popper.js@^1.14.1:
   version "1.14.3"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
@@ -7818,13 +7798,6 @@ react-modal@^3.3.2:
 react-onclickoutside@^6.5.0:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
-
-react-popper@^0.8.2:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.8.3.tgz#0f73333137c9fb0af6ec4074d2d0585a0a0461e1"
-  dependencies:
-    popper.js "^1.12.9"
-    prop-types "^15.6.0"
 
 react-popper@^1.0.0:
   version "1.0.0"

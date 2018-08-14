@@ -5,27 +5,24 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    .pt-icon {
+    .bp3-icon {
       cursor: pointer;
       float: left;
       margin-right: 15px;
     }
-    .pt-icon.active {
+    .bp3-icon.active {
       color: $hoverBlue;
     }
     .left {
-      button.pt-button {
-        margin-right: 25px;
-      }
+      width: 100%;
     }
     .menu {
       position: relative;
       float: left;
-      width: 100px;
       margin-right: 25px;
       display: flex;
       flex-direction: column;
-      .pt-menu {
+      .bp3-menu {
         z-index: 9;
         position: absolute;
         li {
@@ -33,11 +30,11 @@
         }
 
       }
-      .pt-menu.open {
+      .bp3-menu.open {
         display: block;
         top: 31px;
       }
-      .pt-menu.closed {
+      .bp3-menu.closed {
         display: none;
       }
     }
@@ -45,7 +42,6 @@
       width: 30px;
     }
     .menu.time-span {
-      width: 85px;
     }
     .menu.multi-select {
       width: auto;
@@ -74,16 +70,16 @@
       }
     }
     .menu {
-      .pt-popover-target {
+      .bp3-popover-target {
         button {
-          width: 100%;
+          width: auto;
         }
       }
     }
     button {
       float: left;
     }
-    button.pt-tag-remove {
+    button.bp3-tag-remove {
       svg {
         float: right;
         margin: 0px;
@@ -129,7 +125,7 @@
 }
 
 .chart-overlay {
-  .pt-card {
+  .bp3-card {
     height: 100%;
   }
   .main-chart {

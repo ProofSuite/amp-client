@@ -163,7 +163,7 @@ const MarketOrderPanel = (props: *) => {
         />
       </InputBox>
       <FormGroup className="radio-btns-container">
-        <div className="pt-input-group radio-buttons">
+        <div className="bp3-input-group radio-buttons">
           <RadioButton value={25} portion={portion} onInputChange={onInputChange} />
           <RadioButton value={50} portion={portion} onInputChange={onInputChange} />
           <RadioButton value={75} portion={portion} onInputChange={onInputChange} />
@@ -207,7 +207,7 @@ const LimitOrderPanel = props => {
         />
       </InputBox>
       <FormGroup className="radio-btns-container">
-        <div className="pt-input-group radio-buttons">
+        <div className="bp3-input-group radio-buttons">
           <RadioButton value={25} portion={portion} onInputChange={onInputChange} />
           <RadioButton value={50} portion={portion} onInputChange={onInputChange} />
           <RadioButton value={75} portion={portion} onInputChange={onInputChange} />
@@ -298,7 +298,7 @@ const ButtonRow = styled.span`
 `;
 
 const PriceInputGroup = styled(InputGroup).attrs({
-  className: 'pt-fill',
+  className: 'bp3-fill',
 })``;
 
 const InputBox = styled.div`

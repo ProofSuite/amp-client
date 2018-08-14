@@ -1,18 +1,21 @@
 // @flow
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains';
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getWalletsDomain } from '../domains';
 import * as actionCreators from '../actions/walletPage';
 import * as notifierActionCreators from '../actions/app';
 import * as accountBalancesService from '../services/accountBalances';
+import * as walletServices from '../services/wallet';
 
 import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
 
 export default function walletPageSelector(state: State) {
-  return {
+  let val = {
     depositTableData: getAccountBalancesDomain(state).balancesArray(),
     accountAddress: getAccountDomain(state).address(),
     tokens: getTokenDomain(state).tokens(),
+    currentBlock: getWalletsDomain(state).getCurrentBlock(),
   };
+  return val;
 }
 
 export function queryAccountData(): ThunkAction {
@@ -26,12 +29,15 @@ export function queryAccountData(): ThunkAction {
 
       const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress);
       const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens);
+      const currentBlock = await walletServices.getCurrentBlock();
+      console.log(currentBlock);
       const balances = [etherBalance].concat(tokenBalances);
 
       const allowances = await accountBalancesService.queryTokenAllowances(accountAddress, tokens);
 
       dispatch(actionCreators.updateBalances(balances));
       dispatch(actionCreators.updateAllowances(allowances));
+      dispatch(actionCreators.updateCurrentBlock(currentBlock));
     } catch (error) {
       dispatch(
         notifierActionCreators.addNotification({

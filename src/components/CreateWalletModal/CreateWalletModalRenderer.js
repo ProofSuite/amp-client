@@ -105,10 +105,10 @@ const CreateWalletWizardRenderer = (props: Props) => {
       isOpen={visible}
       onClose={hideModal}
       width={800}
-      className="pt-dark"
+      className="bp3-dark"
       style={{ width: '600px' }}
     >
-      <div className="pt-dialog-body">
+      <div className="bp3-dialog-body">
         <Steps current={currentStep}>
           <Steps.Step title="Choose password" />
           <Steps.Step title="Download Wallet" />
@@ -116,8 +116,8 @@ const CreateWalletWizardRenderer = (props: Props) => {
         </Steps>
         {content[currentStep]}
       </div>
-      <div className="pt-dialog-footer">
-        <div className="pt-dialog-footer-actions">
+      <div className="bp3-dialog-footer">
+        <div className="bp3-dialog-footer-actions">
           <Button key="Previous" text={buttons[currentStep].cancel} onClick={buttons[currentStep].onCancelClick} />
           <Button
             key="Next"
