@@ -17,8 +17,8 @@
   "dependencies": {
     "@amcharts/amcharts3-react": "^3.1.0",
     "@axetroy/react-download": "^1.1.1",
-    "@blueprintjs/core": "~2.3.1",
-    "@blueprintjs/select": "~2.0.1",
+    "@blueprintjs/core": "^3.2.0",
+    "@blueprintjs/select": "^3.1.0",
     "@blueprintjs/table": "^3.0.0",
     "accounting-js": "^1.1.1",
     "amcharts3": "^3.21.13",
@@ -38,6 +38,7 @@
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.13",
     "react-intl": "^2.4.0",
+    "react-popper": "^1.0.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",

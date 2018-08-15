@@ -2,11 +2,11 @@
 
 export type OHLCVState = {
   +ohlcvData: Array<Object>,
+  +currentTimeSpan: Object,
+  +currentDuration: Object,
 };
 
 export type SendTimelineParams = {
-  pair: string,
-  pairId: string,
   duration: string,
   time: string,
 };

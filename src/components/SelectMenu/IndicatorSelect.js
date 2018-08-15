@@ -44,16 +44,25 @@ export default class CustomMultiSelect extends React.PureComponent<Props, State>
     });
   };
 
-  handleTagRemove = (tag: string, index: number) => {
+  findTag = (tagName: string) => {
+    let foundIndicator = {};
     const { indicators } = this.state;
-    this.props.onUpdateIndicators(indicators[index], false);
+    indicators.map((indicator, index) => {
+      if (indicator.name === tagName) {
+        foundIndicator['indicator'] = indicator;
+        foundIndicator['index'] = index;
+      }
+    });
+    return foundIndicator;
+  };
 
+  handleTagRemove = (tag: string) => {
+    const { indicators } = this.state;
+    let { indicator: changedIndicator, index } = this.findTag(tag);
+    this.props.onUpdateIndicators(indicators[index], false);
+    changedIndicator.active = false;
     this.setState({
-      indicators: [
-        ...indicators.slice(0, index),
-        { ...indicators[index], active: false },
-        ...indicators.slice(index + 1),
-      ],
+      indicators: [...indicators.slice(0, index), changedIndicator, ...indicators.slice(index + 1)],
     });
   };
 

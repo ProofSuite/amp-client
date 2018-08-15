@@ -1,4 +1,5 @@
 import { Wallet } from 'ethers';
+import { getProvider } from './signer';
 
 export const getDefaultWalletAddress = () => {
   return '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47';
@@ -6,6 +7,12 @@ export const getDefaultWalletAddress = () => {
 
 export const getDefaultPrivateKey = () => {
   return '';
+};
+
+export const getCurrentBlock = async () => {
+  const provider = getProvider();
+  const block = await provider.getBlock();
+  return block.hash;
 };
 
 /**

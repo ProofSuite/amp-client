@@ -26,7 +26,7 @@ storiesOf('OHLCV', module)
     })(() => (
       <LoadData getData={getData}>
         {data => (
-          <div className="pt-dark">
+          <div className="bp3-dark">
             <OHLCV ohlcvData={data} />
           </div>
         )}

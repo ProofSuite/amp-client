@@ -110,8 +110,8 @@ export default class ExtendedChart extends React.Component<Props, State> {
     } = this;
 
     return (
-      <Overlay isOpen={expandedChard} className="pt-overlay-scroll-container chart-overlay">
-        <Card style={{ width: '100%' }} className="pt-dark main-chart">
+      <Overlay isOpen={expandedChard} className="bp3-overlay-scroll-container chart-overlay">
+        <Card style={{ width: '100%' }} className="bp3-dark main-chart">
           <Toolbar
             changeDuration={changeDuration}
             toggleExpand={toggleExpand}

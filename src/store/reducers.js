@@ -121,6 +121,10 @@ export const ohlcv = createReducer(action => {
   switch (type) {
     case ohlcvActionTypes.saveData:
       return ohlcvEvents.savedOHLCVData(payload.data);
+    case ohlcvActionTypes.saveDuration:
+      return ohlcvEvents.savedDuration(payload.data);
+    case ohlcvActionTypes.saveTimeSpan:
+      return ohlcvEvents.savedTimeSpan(payload.data);
     case tokenSearcherActionTypes.updateCurrentPair:
       return ohlcvEvents.ohlcvReset();
     default:
@@ -274,6 +278,8 @@ export const wallets = createReducer(action => {
       return walletsEvents.walletRemoved(payload);
     case loginPageActionTypes.createWallet:
       return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
+    case walletPageActionTypes.updateCurrentBlock:
+      return walletsEvents.currentBlockUpdated(payload.currentBlock);
     default:
       return walletsEvents.initialized();
   }

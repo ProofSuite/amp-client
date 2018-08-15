@@ -36,7 +36,7 @@ storiesOf('OrderBook', module)
   .add(
     'Sell Order Book',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <OrderBook
           loading={false}
           asks={asks}

@@ -1,0 +1,22 @@
+@import "vars";
+
+.standard-range-slider {
+  width: 350px;
+  float: left;
+  .bp3-slider-track, .bp3-slider-progress, span.bp3-slider-handle {
+    height: 17px;
+  }
+  .bp3-slider-track {
+    top: 0;
+  }
+  span.bp3-slider-handle {
+    width: 10px;
+    border-radius: 0px;
+  }
+}
+.width-100 {
+  width: 100%;
+  .standard-range-slider {
+    width: 100%;
+  }
+}

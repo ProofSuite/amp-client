@@ -15,7 +15,7 @@ storiesOf('Order Form', module)
       propTablesExclude: [OrderFormContainer],
       source: false,
     })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <OrderFormContainer />
       </div>
     ))
@@ -23,7 +23,7 @@ storiesOf('Order Form', module)
   .add(
     'Logged In state Sell Eth Form',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <OrderForm
           askPrice={0.25}
           bidPrice={0.29}
@@ -39,7 +39,7 @@ storiesOf('Order Form', module)
   .add(
     'Logged In state Buy Eth Form',
     withInfo({ text: README, source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <OrderForm
           askPrice={0.25}
           bidPrice={0.29}

@@ -1,9 +1,12 @@
 //@flow
 import React from 'react';
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
+import StandardRangeSlider from '../RangeSlider';
 import ChartLoadingScreen from './ChartLoadingScreen';
-import { Card } from '@blueprintjs/core';
+import { Card, Button } from '@blueprintjs/core';
+import { Colors } from '../Common';
 import type { SendTimelineParams } from '../../types/ohlcv';
+import styled from 'styled-components';
 
 type Indicator = {
   name: string,
@@ -13,16 +16,16 @@ type Indicator = {
 };
 
 const timeSpans: Array<Object> = [
-  { name: '1 min', label: '1 m' },
-  { name: '5 min', label: '5 m' },
-  { name: '15 min', label: '15 m' },
-  { name: '30 min', label: '30 m' },
-  { name: '1 hr', label: '1 h' },
-  { name: '4 hr', label: '4 h' },
-  { name: '12 hr', label: '12 h' },
-  { name: '1 day', label: '1 d' },
-  { name: '7 days', label: '7 d' },
-  { name: '1 month', label: '1 M' },
+  { name: '1 min', label: '1m' },
+  { name: '5 min', label: '5m' },
+  { name: '15 min', label: '15m' },
+  { name: '30 min', label: '30m' },
+  { name: '1 hr', label: '1h' },
+  { name: '4 hr', label: '4h' },
+  { name: '12 hr', label: '12h' },
+  { name: '1 day', label: '1d' },
+  { name: '7 days', label: '7d' },
+  { name: '1 month', label: '1M' },
 ].map((p, index) => ({ ...p, rank: index }));
 
 const indicators: Array<Indicator> = [
@@ -42,28 +45,30 @@ const chartTypes: Array<Object> = [
 ].map((p, index) => ({ ...p, rank: index }));
 
 const duration: Array<Object> = [
-  { name: '1 Hour', label: '1 h' },
-  { name: '6 Hour', label: '6 h' },
-  { name: '1 Day', label: '1 d' },
-  { name: '3 Days', label: '3 d' },
-  { name: '7 Days', label: '7 d' },
-  { name: '1 Month', label: '1 M' },
-  { name: '6 Month', label: '6 M' },
-  { name: '1 Year', label: '1 Y' },
-  { name: 'Lifetime', label: 'Lifetime' },
+  { name: '1 Hour', label: '1h' },
+  { name: '1 Hour', label: '4h' },
+  { name: '6 Hour', label: '12h' },
+  { name: '1 Day', label: '1d' },
+  { name: '3 Days', label: '3d' },
+  { name: '7 Days', label: '7d' },
+  { name: '1 Month', label: '1M' },
+  { name: '6 Month', label: '3M' },
+  { name: '6 Month', label: '6M' },
+  { name: '1 Year', label: '1Y' },
+  { name: 'All', label: 'All' },
 ].map((p, index) => ({ ...p, rank: index }));
 
 type Props = {
   ohlcvData: Array<Object>,
-  pairId: string,
-  pair: string,
+  currentTimeSpan: Object,
+  currentDuration: Object,
   updateTimeLine: SendTimelineParams => void,
+  saveDuration: Object => void,
+  saveTimeSpan: Object => void,
 };
 type State = {
   chartHeight: number,
   indicatorHeight: number,
-  currentTimeSpan: Object,
-  currentDuration: Object,
   currentChart: Object,
   indicators: Array<Indicator>,
   timeSpans: Array<Object>,
@@ -76,8 +81,6 @@ export default class SmallChart extends React.PureComponent<Props, State> {
   state = {
     chartHeight: 500,
     indicatorHeight: 150,
-    currentTimeSpan: timeSpans[0],
-    currentDuration: duration[0],
     currentChart: chartTypes[0],
     chartTypes: chartTypes,
     indicators: indicators,
@@ -86,20 +89,19 @@ export default class SmallChart extends React.PureComponent<Props, State> {
     expandedChard: true,
   };
 
-  changeDuration = (e: Object) => {
-    this.setState({ currentDuration: e });
-    const { currentTimeSpan } = this.state;
-    const { pair, pairId } = this.props;
+  changeDuration = (index: number) => {
+    const { duration } = this.state;
+    const { currentTimeSpan } = this.props;
 
-    this.props.updateTimeLine({ pair, pairId, time: currentTimeSpan.name, duration: e.name });
+    this.props.saveDuration(duration[index]);
+    this.props.updateTimeLine({ time: currentTimeSpan.label, duration: duration[index].label });
   };
 
   changeTimeSpan = (e: Object) => {
-    const { currentDuration } = this.state;
-    const { pair, pairId } = this.props;
+    const { currentDuration } = this.props;
 
-    this.setState({ currentTimeSpan: e });
-    this.props.updateTimeLine({ pair, pairId, time: e.name, duration: currentDuration.name });
+    this.props.saveTimeSpan(e);
+    this.props.updateTimeLine({ time: e.label, duration: currentDuration.label });
   };
 
   changeChartType = (e: Object) => {
@@ -126,14 +128,13 @@ export default class SmallChart extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { ohlcvData },
+      props: { ohlcvData, currentDuration, currentTimeSpan },
       state: { indicators, chartHeight, indicatorHeight, expandedChard, currentChart },
       changeTimeSpan,
       onUpdateIndicators,
       changeDuration,
       changeChartType,
     } = this;
-
     return (
       <Card className="main-chart">
         <Toolbar
@@ -141,6 +142,8 @@ export default class SmallChart extends React.PureComponent<Props, State> {
           onUpdateIndicators={onUpdateIndicators}
           changeTimeSpan={changeTimeSpan}
           changeChartType={changeChartType}
+          currentDuration={currentDuration}
+          currentTimeSpan={currentTimeSpan}
           state={this.state}
         />
         <ChartLoadingScreen
@@ -166,6 +169,8 @@ const Toolbar = ({
   state,
   onUpdateIndicators,
   changeTimeSpan,
+  currentTimeSpan,
+  currentDuration,
   updateProps,
   changeDuration,
   changeChartType,
@@ -176,7 +181,7 @@ const Toolbar = ({
       <div className="menu chart-type">
         <StandardSelect
           items={state.chartTypes}
-          item={state.currentChart || chartTypes[0]}
+          item={state.currentChart || state.chartTypes[0]}
           handleChange={changeChartType}
           icon="series-configuration"
           type="icon"
@@ -185,24 +190,48 @@ const Toolbar = ({
       <div className="menu time-span">
         <StandardSelect
           items={state.timeSpans}
-          item={state.currentTimeSpan || timeSpans[0]}
+          item={currentTimeSpan || state.timeSpans[0]}
           handleChange={changeTimeSpan}
           icon="series-add"
           type="text"
         />
       </div>
-      <div className="menu">
-        <StandardSelect
-          items={state.duration}
-          item={state.currentDuration || duration[0]}
-          handleChange={changeDuration}
-          icon="series-add"
-          type="text"
-        />
-      </div>
+
+      <DurationMenu duration={state.duration} currentDuration={currentDuration} changeDuration={changeDuration} />
+
       <div className="menu multi-select">
         <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
       </div>
     </div>
   </div>
 );
+
+const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
+  return (
+    <DurationWrapper>
+      {duration.map((dur, index) => {
+        const { label } = dur;
+        return (
+          <Button
+            key={index}
+            onClick={() => changeDuration(index)}
+            text={label}
+            minimal={true}
+            intent={currentDuration.label === label ? 'primary' : 'normal'}
+          />
+        );
+      })}
+    </DurationWrapper>
+  );
+};
+
+const DurationWrapper = styled.div.attrs({
+  className: 'duration-menu bp3-button menu',
+})`
+  display: flex;
+  padding: 0 !important;
+  flex-direction: row !important;
+  & button {
+    padding: 0;
+  }
+`;

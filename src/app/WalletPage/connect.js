@@ -4,7 +4,7 @@ import accountSelector from '../../store/models/layout';
 import { removeNotification } from '../../store/actions/app';
 
 export function mapStateToProps(state, props) {
-  const { depositTableData, accountAddress } = getWalletPageSelector(state);
+  const { depositTableData, accountAddress, currentBlock } = getWalletPageSelector(state);
   const { authenticated } = accountSelector(state);
   const loading = !(depositTableData.length > 0);
 
@@ -14,6 +14,7 @@ export function mapStateToProps(state, props) {
     loading: loading,
     isDefaultAccountSet: false,
     authenticated: authenticated,
+    currentBlock: currentBlock,
   };
 }
 

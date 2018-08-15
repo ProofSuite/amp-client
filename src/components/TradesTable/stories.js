@@ -18,7 +18,7 @@ storiesOf('Trades', module)
       propTablesExclude: [TradesTableContainer],
       source: false,
     })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <TradesTableContainer />
       </div>
     ))
@@ -28,7 +28,7 @@ storiesOf('Trades', module)
     withInfo({ text: README, source: false })(() => (
       <LoadData getData={getTrades}>
         {data => (
-          <div className="pt-dark">
+          <div className="bp3-dark">
             <TradesTable trades={data} />
           </div>
         )}

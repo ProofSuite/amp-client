@@ -2,6 +2,7 @@
 export type WalletsState = {
   +addresses: Array<string>,
   +byAddress: Object,
+  +currentBlock: string,
 };
 
 export type CreateWalletAction = {

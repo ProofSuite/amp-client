@@ -28,7 +28,7 @@ export const OrderBookRenderer = (props: Props) => {
               <HeaderCell>PRICE</HeaderCell>
             </HeaderRow>
           </ListHeading>
-          <ul className="pt-list-unstyled list">
+          <ul className="bp3-list-unstyled list">
             {bids.map((order, index) => <BuyOrder key={index} index={index} order={order} />)}
           </ul>
         </div>
@@ -42,7 +42,7 @@ export const OrderBookRenderer = (props: Props) => {
               <HeaderCell>TOTAL</HeaderCell>
             </HeaderRow>
           </ListHeading>
-          <ul className="pt-list-unstyled list">
+          <ul className="bp3-list-unstyled list">
             {asks.map((order, index) => <SellOrder key={index} index={index} order={order} />)}
           </ul>
         </div>

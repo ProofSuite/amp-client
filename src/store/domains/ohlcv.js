@@ -3,6 +3,8 @@ import type { OHLCVState } from '../../types/ohlcv';
 
 const initialState: OHLCVState = {
   ohlcvData: [],
+  currentTimeSpan: { name: '1 min', label: '1m' },
+  currentDuration: { name: '1 Hour', label: '1h' },
 };
 
 export const initialized = () => {
@@ -14,6 +16,22 @@ export const savedOHLCVData = (ohlcv: Array<Array<Object>>) => {
   const event = (state: OHLCVState) => ({
     ...state,
     ohlcvData: ohlcv,
+  });
+  return event;
+};
+
+export const savedTimeSpan = (currentTimeSpan: Object) => {
+  const event = (state: OHLCVState) => ({
+    ...state,
+    currentTimeSpan: currentTimeSpan,
+  });
+  return event;
+};
+
+export const savedDuration = (currentDuration: Object) => {
+  const event = (state: OHLCVState) => ({
+    ...state,
+    currentDuration: currentDuration,
   });
   return event;
 };

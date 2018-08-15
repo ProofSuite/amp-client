@@ -16,7 +16,7 @@ storiesOf('TokenSelect', module)
   .add(
     'Dark Theme',
     withInfo({ source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <TokenSelect tokens={tokens} token={tokens[0]} onChange={action('onChange')} />
       </div>
     ))

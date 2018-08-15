@@ -18,7 +18,7 @@ storiesOf('WalletLoginForm', module)
   .add(
     'Connected Component',
     withInfo({ source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <ConnectedWalletLoginForm />
       </div>
     ))
@@ -26,7 +26,7 @@ storiesOf('WalletLoginForm', module)
   .add(
     'Loading State',
     withInfo({ source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <WalletLoginFormRenderer
           loading={true}
           method={'privateKey'}
@@ -55,7 +55,7 @@ storiesOf('WalletLoginForm', module)
   .add(
     'Default State',
     withInfo({ source: false })(() => (
-      <div className="pt-dark">
+      <div className="bp3-dark">
         <WalletLoginFormRenderer
           loading={false}
           method={'privateKey'}
