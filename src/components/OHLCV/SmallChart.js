@@ -55,13 +55,14 @@ const duration: Array<Object> = [
   { name: '6 Month', label: '3M' },
   { name: '6 Month', label: '6M' },
   { name: '1 Year', label: '1Y' },
-  { name: 'All', label: 'All' },
+  { name: 'Full', label: 'Full' },
 ].map((p, index) => ({ ...p, rank: index }));
 
 type Props = {
   ohlcvData: Array<Object>,
   currentTimeSpan: Object,
   currentDuration: Object,
+  noOfCandles: number,
   updateTimeLine: SendTimelineParams => void,
   saveDuration: Object => void,
   saveTimeSpan: Object => void,
@@ -128,7 +129,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { ohlcvData, currentDuration, currentTimeSpan },
+      props: { ohlcvData, currentDuration, currentTimeSpan, noOfCandles },
       state: { indicators, chartHeight, indicatorHeight, expandedChard, currentChart },
       changeTimeSpan,
       onUpdateIndicators,
@@ -155,6 +156,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
           forceIndex={indicators[5]}
           indicatorHeight={indicatorHeight}
           chartHeight={chartHeight}
+          noOfCandles={noOfCandles}
           currentChart={currentChart}
           expandedChard={expandedChard}
           data={ohlcvData || []}
@@ -216,8 +218,9 @@ const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
             key={index}
             onClick={() => changeDuration(index)}
             text={label}
-            minimal={true}
-            intent={currentDuration.label === label ? 'primary' : 'normal'}
+            minimal
+            intent={currentDuration.label === label ? 'primary' : ''}
+            active={currentDuration.label === label}
           />
         );
       })}
@@ -232,6 +235,6 @@ const DurationWrapper = styled.div.attrs({
   padding: 0 !important;
   flex-direction: row !important;
   & button {
-    padding: 0;
+    padding: 0 5px !important;
   }
 `;

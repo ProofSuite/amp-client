@@ -125,6 +125,8 @@ export const ohlcv = createReducer(action => {
       return ohlcvEvents.savedDuration(payload.data);
     case ohlcvActionTypes.saveTimeSpan:
       return ohlcvEvents.savedTimeSpan(payload.data);
+    case ohlcvActionTypes.saveNoOfCandles:
+      return ohlcvEvents.savedNoOfCandles(payload.data);
     case tokenSearcherActionTypes.updateCurrentPair:
       return ohlcvEvents.ohlcvReset();
     default:

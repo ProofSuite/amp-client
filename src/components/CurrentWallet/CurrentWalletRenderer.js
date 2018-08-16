@@ -86,7 +86,7 @@ const CardTitle = styled.h3`
   float: left;
   margin-bottom: 15px;
 `;
-const Block = styled.p`
+const Block = styled.div`
   float: left;
   word-wrap: break-word;
 `;

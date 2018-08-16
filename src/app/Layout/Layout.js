@@ -93,7 +93,7 @@ const NavbarHeaderLink = styled(Link).attrs({
 })``;
 
 const NavbarLink = styled(NavLink).attrs({
-  activeClassName: 'bp3-active',
+  activeClassName: 'bp3-active bp3-intent-primary',
   className: 'bp3-button bp3-minimal',
   role: 'button',
 })``;
@@ -101,7 +101,7 @@ const NavbarLink = styled(NavLink).attrs({
 const MenuItem = styled.li``;
 
 const MenuItemLink = styled(NavLink).attrs({
-  activeClassName: 'bp3-active',
+  activeClassName: 'bp3-active bp3-intent-primary',
   className: props => `bp3-menu-item bp3-popover-dismiss bp3-icon-${props.icon}`,
   role: 'button',
 })``;

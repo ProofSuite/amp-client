@@ -6,6 +6,7 @@ type Props = {
   ohlcvData: Array<Object>,
   currentTimeSpan: Object,
   currentDuration: Object,
+  noOfCandles: number,
   updateTimeLine: SendTimelineParams => void,
   saveDuration: Object => void,
   saveTimeSpan: Object => void,
@@ -13,7 +14,15 @@ type Props = {
 
 export default class OHLCV extends React.PureComponent<Props, State> {
   render() {
-    const { ohlcvData, currentDuration, currentTimeSpan, updateTimeLine, saveTimeSpan, saveDuration } = this.props;
+    const {
+      ohlcvData,
+      currentDuration,
+      noOfCandles,
+      currentTimeSpan,
+      updateTimeLine,
+      saveTimeSpan,
+      saveDuration,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -24,6 +33,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           currentDuration={currentDuration}
           saveDuration={saveDuration}
           saveTimeSpan={saveTimeSpan}
+          noOfCandles={noOfCandles}
         />
       </React.Fragment>
     );

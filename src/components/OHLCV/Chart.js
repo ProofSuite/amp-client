@@ -87,6 +87,7 @@ class OHLCVChart extends React.Component {
       chartHeight,
       forceIndex,
       currentChart,
+      noOfCandles,
     } = this.props;
 
     let calculatedData = calculateData(initialData);
@@ -98,7 +99,7 @@ class OHLCVChart extends React.Component {
     const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData);
 
     const start = xAccessor(last(data));
-    const end = xAccessor(data[Math.max(0, data.length - 150)]);
+    const end = xAccessor(data[Math.max(0, data.length - noOfCandles)]);
     const xExtents = [start, end];
 
     const height = chartHeight + indicatorHeight + 42;
@@ -208,9 +209,9 @@ class OHLCVChart extends React.Component {
                 orient="right"
                 edgeAt="right"
                 yAccessor={d => d.close}
-                fill={d => (d.close > d.open ? '#A2F5BF' : '#F9ACAA')}
-                stroke={d => (d.close > d.open ? '#0B4228' : '#6A1B19')}
-                textFill={d => (d.close > d.open ? '#0B4228' : '#420806')}
+                fill={d => (d.close > d.open ? theme.green : theme.mehroon2)}
+                stroke={d => (d.close > d.open ? theme.green1 : theme.mehroon1)}
+                textFill={d => (d.close > d.open ? theme.green1 : theme.mehroon)}
                 strokeOpacity={1}
                 strokeWidth={3}
                 arrowWidth={2}
@@ -243,9 +244,9 @@ class OHLCVChart extends React.Component {
             <Chart id={0} yExtents={d => d.close} height={chartHeight}>
               <defs>
                 <linearGradient id="MyGradient" x1="0" y1="100%" x2="0" y2="0%">
-                  <stop offset="0%" stopColor="#b5d0ff" stopOpacity={0.2} />
-                  <stop offset="70%" stopColor="#6fa4fc" stopOpacity={0.4} />
-                  <stop offset="100%" stopColor="#4286f4" stopOpacity={0.8} />
+                  <stop offset="0%" stopColor={theme.skyBlue2} stopOpacity={0.2} />
+                  <stop offset="70%" stopColor={theme.skyBlue1} stopOpacity={0.4} />
+                  <stop offset="100%" stopColor={theme.skyBlue} stopOpacity={0.8} />
                 </linearGradient>
               </defs>
               <MouseCoordinateX
@@ -430,7 +431,7 @@ class OHLCVChart extends React.Component {
                 orient="right"
                 edgeAt="right"
                 yAccessor={d => d.close}
-                fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')}
+                fill={d => (d.close > d.open ? theme.green : '#FF0000')}
               />
               <EdgeIndicator
                 itemType="first"
@@ -451,7 +452,7 @@ class OHLCVChart extends React.Component {
                 orient="left"
                 edgeAt="left"
                 yAccessor={d => d.close}
-                fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')}
+                fill={d => (d.close > d.open ? theme.green : '#FF0000')}
               />
 
               <OHLCTooltip origin={[-40, 0]} />

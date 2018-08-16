@@ -11,9 +11,10 @@ export default function getOHLCVModel(state: State) {
 export const updateTimeLine = ({ duration, time }: SendTimelineParams): ThunkAction => {
   return async (dispatch, getState) => {
     let candles = getNoOfCandles(duration) / timeToMinutes(time);
-    let ohlcvData = await getData();
-
-    return dispatch(actionCreators.saveData(ohlcvData.slice(ohlcvData.length - candles)));
+    if (candles !== 0) {
+      console.log('No Of candles: ', candles);
+      return dispatch(actionCreators.saveNoOfCandles(candles));
+    }
   };
 };
 function timeToMinutes(time) {

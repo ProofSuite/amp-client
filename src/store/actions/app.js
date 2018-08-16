@@ -4,6 +4,7 @@ const actionTypes = {
 };
 
 export function addNotification(options) {
+  console.log('adding note: ', options.id);
   return {
     type: actionTypes.addNotification,
     payload: { options },
