@@ -20,10 +20,10 @@ export function saveDuration(data: Object) {
   };
 }
 
-export function saveNoOfCandles(data: Object) {
+export function saveNoOfCandles(data: number) {
   return {
     type: actionTypes.saveNoOfCandles,
-    payload: { data },
+    payload: data,
   };
 }
 

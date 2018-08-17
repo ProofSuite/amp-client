@@ -23,6 +23,7 @@ type Status = 'incomplete' | 'valid' | 'invalid';
 type Props = {
   loading: boolean,
   handleChange: (SyntheticInputEvent<>) => void,
+  onEnterKeyPress: Object => void,
   onDrop: (Array<Object>) => void,
   method: string,
   privateKey: ?string,
@@ -36,6 +37,7 @@ type Props = {
   mnemonicStatus: Status,
   password: ?string,
   passwordStatus: Status,
+  passwordHelpingText: ?string,
   storeWallet: boolean,
   storePrivateKey: boolean,
   submit: (SyntheticEvent<>) => Promise<void>,
@@ -81,6 +83,7 @@ const WalletLoginFormRenderer = (props: Props) => {
   const {
     loading,
     handleChange,
+    onEnterKeyPress,
     method,
     privateKey,
     privateKeyStatus,
@@ -93,6 +96,7 @@ const WalletLoginFormRenderer = (props: Props) => {
     mnemonicStatus,
     password,
     passwordStatus,
+    passwordHelpingText,
     onDrop,
     storeWallet,
     storePrivateKey,
@@ -103,7 +107,12 @@ const WalletLoginFormRenderer = (props: Props) => {
 
   const inputForms = {
     privateKey: (
-      <PrivateKeyInputForm privateKeyStatus={privateKeyStatus} privateKey={privateKey} handleChange={handleChange} />
+      <PrivateKeyInputForm
+        onEnterKeyPress={onEnterKeyPress}
+        privateKeyStatus={privateKeyStatus}
+        privateKey={privateKey}
+        handleChange={handleChange}
+      />
     ),
     json: (
       <JSONInputForm
@@ -111,7 +120,9 @@ const WalletLoginFormRenderer = (props: Props) => {
         jsonStatus={jsonStatus}
         handleChange={handleChange}
         password={password}
+        onEnterKeyPress={onEnterKeyPress}
         passwordStatus={passwordStatus}
+        passwordHelpingText={passwordHelpingText}
       />
     ),
     walletFile: (
@@ -120,13 +131,20 @@ const WalletLoginFormRenderer = (props: Props) => {
         walletAddress={walletAddress}
         walletFileStatus={walletFileStatus}
         handleChange={handleChange}
+        onEnterKeyPress={onEnterKeyPress}
         onDrop={onDrop}
         password={password}
         passwordStatus={passwordStatus}
+        passwordHelpingText={passwordHelpingText}
       />
     ),
     mnemonic: (
-      <MnemonicSentenceInputForm mnemonic={mnemonic} mnemonicStatus={mnemonicStatus} handleChange={handleChange} />
+      <MnemonicSentenceInputForm
+        onEnterKeyPress={onEnterKeyPress}
+        mnemonic={mnemonic}
+        mnemonicStatus={mnemonicStatus}
+        handleChange={handleChange}
+      />
     ),
   };
 
@@ -165,7 +183,7 @@ const WalletLoginFormRenderer = (props: Props) => {
   );
 };
 
-const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus }: *) => {
+const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus, onEnterKeyPress }: *) => {
   return (
     <InputPadding>
       <FormGroup
@@ -178,6 +196,7 @@ const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus }: *) 
           placeholder="(must start with 0x)"
           intent={intents[privateKeyStatus]}
           onChange={handleChange}
+          onKeyPress={onEnterKeyPress}
           value={privateKey}
         />
       </FormGroup>
@@ -185,7 +204,15 @@ const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus }: *) 
   );
 };
 
-const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatus }: *) => {
+const JSONInputForm = ({
+  handleChange,
+  json,
+  jsonStatus,
+  password,
+  passwordStatus,
+  passwordHelpingText,
+  onEnterKeyPress,
+}: *) => {
   return (
     <div>
       <Label text="Input JSON File Text">
@@ -196,6 +223,7 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatu
               intent={intents[jsonStatus]}
               onChange={handleChange}
               value={json}
+              onKeyPress={onEnterKeyPress}
               style={{ height: '100px' }}
               fill
             />
@@ -204,7 +232,7 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatu
       </Label>
       <Label text="Input Password">
         <InputPadding>
-          <FormGroup helperText={inputStatuses['password'][passwordStatus]} intent={intents[passwordStatus]}>
+          <FormGroup helperText={passwordHelpingText} intent={intents[passwordStatus]}>
             <InputGroup
               name="password"
               intent={intents[passwordStatus]}
@@ -212,6 +240,7 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatu
               label="password"
               disabled={json === null}
               placeholder="Password for JSON"
+              onKeyPress={onEnterKeyPress}
               onChange={handleChange}
               value={password}
             />
@@ -222,7 +251,16 @@ const JSONInputForm = ({ handleChange, json, jsonStatus, password, passwordStatu
   );
 };
 
-const JSONFileInputForm = ({ onDrop, walletFileStatus, walletAddress, handleChange, password, passwordStatus }: *) => {
+const JSONFileInputForm = ({
+  onDrop,
+  walletFileStatus,
+  walletAddress,
+  onEnterKeyPress,
+  handleChange,
+  password,
+  passwordStatus,
+  passwordHelpingText,
+}: *) => {
   const validWalletFile = walletFileStatus === 'valid';
   const inValidWalletFile = walletFileStatus === 'invalid';
   return (
@@ -247,7 +285,7 @@ const JSONFileInputForm = ({ onDrop, walletFileStatus, walletAddress, handleChan
       </Dropzone>
       <Label text="Input Password">
         <InputPadding>
-          <FormGroup helperText={inputStatuses['password'][passwordStatus]} intent={intents[passwordStatus]}>
+          <FormGroup helperText={passwordHelpingText} intent={intents[passwordStatus]}>
             <InputGroup
               name="password"
               intent={intents[passwordStatus]}
@@ -256,6 +294,7 @@ const JSONFileInputForm = ({ onDrop, walletFileStatus, walletAddress, handleChan
               placeholder="Password for Wallet File"
               onChange={handleChange}
               value={password}
+              onKeyPress={onEnterKeyPress}
             />
           </FormGroup>
         </InputPadding>

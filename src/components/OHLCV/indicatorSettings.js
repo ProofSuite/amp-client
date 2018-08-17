@@ -48,8 +48,20 @@ export const macdAppearance = {
     signal: theme.greenNeon,
   },
   fill: {
-    divergence: theme.skyBlue,
+    divergence: theme.skyBlue1,
   },
+};
+
+// ATR
+export const atrAppearance = {
+  stroke: theme.greenMint,
+};
+
+// Axis
+export const axisAppearance = {
+  stroke: theme.axis,
+  fill: theme.axis,
+  tickStroke: theme.axis,
 };
 
 // Mouse

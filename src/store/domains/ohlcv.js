@@ -57,6 +57,7 @@ export const ohlcvReset = () => {
 export default function model(state: OHLCVState) {
   return {
     getState: () => state,
+    getNoOfCandles: () => state.noOfCandles,
     getOHLCVData: () => state.ohlcvData,
   };
 }

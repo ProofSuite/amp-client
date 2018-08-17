@@ -33,7 +33,14 @@ import {
 } from 'react-stockcharts/lib/tooltip';
 import { fitWidth } from 'react-stockcharts/lib/helper';
 import { last } from 'react-stockcharts/lib/utils';
-import { macdAppearance, mouseEdgeAppearance, theme, canvasGradient } from './indicatorSettings';
+import {
+  macdAppearance,
+  atrAppearance,
+  axisAppearance,
+  mouseEdgeAppearance,
+  theme,
+  canvasGradient,
+} from './indicatorSettings';
 import { curveMonotoneX } from 'd3-shape';
 
 import {
@@ -154,28 +161,17 @@ class OHLCVChart extends React.Component {
                 orient="bottom"
                 {...xGrid}
                 showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
-                stroke={theme.axis}
-                fill={theme.axis}
-                tickStroke={theme.axis}
+                {...axisAppearance}
                 outerTickSize={0}
               />
 
-              <YAxis
-                axisAt="right"
-                orient="right"
-                ticks={10}
-                {...yGrid}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-                outerTickSize={0}
-              />
+              <YAxis axisAt="right" orient="right" ticks={10} {...yGrid} {...axisAppearance} outerTickSize={0} />
 
               <CandlestickSeries
+                opacity={1}
                 fill={d => {
                   return d.close > d.open ? theme.greenMint : theme.redDesire;
                 }}
-                opacity={1}
                 stroke={d => {
                   return d.close > d.open ? theme.greenNeon : theme.redChilli;
                 }}
@@ -209,9 +205,9 @@ class OHLCVChart extends React.Component {
                 orient="right"
                 edgeAt="right"
                 yAccessor={d => d.close}
-                fill={d => (d.close > d.open ? theme.green : theme.mehroon2)}
-                stroke={d => (d.close > d.open ? theme.green1 : theme.mehroon1)}
-                textFill={d => (d.close > d.open ? theme.green1 : theme.mehroon)}
+                fill={d => (d.close > d.open ? theme.green1 : theme.mehroon2)}
+                stroke={d => (d.close > d.open ? theme.green : theme.mehroon1)}
+                textFill={d => (d.close > d.open ? theme.green : theme.mehroon)}
                 strokeOpacity={1}
                 strokeWidth={3}
                 arrowWidth={2}
@@ -220,7 +216,7 @@ class OHLCVChart extends React.Component {
               <OHLCTooltip origin={[-30, 0]} />
 
               <MovingAverageTooltip
-                onClick={e => console.log(e)}
+                onClick={e => console.log()}
                 origin={[-28, 15]}
                 options={[
                   {
@@ -262,21 +258,10 @@ class OHLCVChart extends React.Component {
                 orient="bottom"
                 showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
                 {...xGrid}
-                stroke={theme.axis}
-                fill={theme.axis}
-                tickStroke={theme.axis}
+                {...axisAppearance}
                 outerTickSize={0}
               />
-              <YAxis
-                axisAt="right"
-                orient="right"
-                {...yGrid}
-                ticks={10}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-                outerTickSize={0}
-              />
+              <YAxis axisAt="right" orient="right" {...yGrid} ticks={10} {...axisAppearance} outerTickSize={0} />
               <AreaSeries
                 yAccessor={d => d.close}
                 fill="url(#MyGradient)"
@@ -302,21 +287,10 @@ class OHLCVChart extends React.Component {
                 orient="bottom"
                 {...xGrid}
                 showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
-                stroke={theme.axis}
-                fill={theme.axis}
-                tickStroke={theme.axis}
+                {...axisAppearance}
                 outerTickSize={0}
               />
-              <YAxis
-                axisAt="right"
-                orient="right"
-                ticks={10}
-                {...yGrid}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-                outerTickSize={0}
-              />
+              <YAxis axisAt="right" orient="right" ticks={10} {...yGrid} {...axisAppearance} outerTickSize={0} />
               <LineSeries yAccessor={d => d.close} strokeDasharray="Solid" />
               <ScatterSeries yAccessor={d => d.close} marker={CircleMarker} markerProps={{ r: 3 }} />
               <OHLCTooltip forChart={1} origin={[-40, 0]} />
@@ -338,21 +312,10 @@ class OHLCVChart extends React.Component {
                 orient="bottom"
                 {...xGrid}
                 showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
-                stroke={theme.axis}
-                fill={theme.axis}
-                tickStroke={theme.axis}
+                {...axisAppearance}
                 outerTickSize={0}
               />
-              <YAxis
-                axisAt="right"
-                orient="right"
-                ticks={10}
-                {...yGrid}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-                outerTickSize={0}
-              />
+              <YAxis axisAt="right" orient="right" ticks={10} {...yGrid} {...axisAppearance} outerTickSize={0} />
               <LineSeries yAccessor={d => d.close} strokeDasharray="Solid" />
               <ScatterSeries yAccessor={d => d.close} marker={CircleMarker} markerProps={{ r: 3 }} />
               <OHLCTooltip forChart={1} origin={[-40, 0]} />
@@ -372,21 +335,10 @@ class OHLCVChart extends React.Component {
                 orient="bottom"
                 {...xGrid}
                 showTicks={!macd.active && !rsi.active && !atr.active && !forceIndex.active}
-                stroke={theme.axis}
-                fill={theme.axis}
-                tickStroke={theme.axis}
+                {...axisAppearance}
                 outerTickSize={0}
               />
-              <YAxis
-                axisAt="right"
-                orient="right"
-                ticks={10}
-                {...yGrid}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-                outerTickSize={0}
-              />
+              <YAxis axisAt="right" orient="right" ticks={10} {...yGrid} {...axisAppearance} outerTickSize={0} />
               <MouseCoordinateY at="right" orient="right" displayFormat={format('.1f')} />
 
               <CandlestickSeries
@@ -509,21 +461,11 @@ class OHLCVChart extends React.Component {
               <XAxis
                 axisAt="bottom"
                 orient="bottom"
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
+                {...axisAppearance}
                 {...xGrid}
                 showTicks={!atr.active && !rsi.active}
               />
-              <YAxis
-                axisAt="right"
-                orient="right"
-                ticks={2}
-                stroke={theme.axis}
-                {...yGrid}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-              />
+              <YAxis axisAt="right" orient="right" ticks={2} {...yGrid} {...axisAppearance} />
 
               {!atr.active &&
                 !rsi.active && (
@@ -561,21 +503,11 @@ class OHLCVChart extends React.Component {
                 orient="bottom"
                 showTicks={!atr.active && !forceIndex.active}
                 {...xGrid}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
+                {...axisAppearance}
                 outerTickSize={0}
               />
 
-              <YAxis
-                axisAt="right"
-                orient="right"
-                tickValues={[30, 50, 70]}
-                stroke={theme.axis}
-                {...yGrid}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-              />
+              <YAxis axisAt="right" orient="right" tickValues={[30, 50, 70]} {...yGrid} {...axisAppearance} />
 
               {!atr.active &&
                 !forceIndex.active && (
@@ -604,22 +536,12 @@ class OHLCVChart extends React.Component {
               <XAxis
                 axisAt="bottom"
                 orient="bottom"
-                stroke={theme.axis}
                 {...xGrid}
-                tickStroke={theme.axis}
-                fill={theme.axis}
+                {...axisAppearance}
                 outerTickSize={0}
                 showTicks={!forceIndex.active}
               />
-              <YAxis
-                axisAt="right"
-                orient="right"
-                {...yGrid}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-                ticks={2}
-              />
+              <YAxis axisAt="right" orient="right" {...yGrid} {...axisAppearance} ticks={2} />
 
               {!forceIndex.active && (
                 <MouseCoordinateX
@@ -631,7 +553,7 @@ class OHLCVChart extends React.Component {
               )}
               <MouseCoordinateY at="right" orient="right" displayFormat={format('.2f')} {...mouseEdgeAppearance} />
 
-              <LineSeries yAccessor={atr14.accessor()} stroke={atr14.stroke()} />
+              <LineSeries yAccessor={atr14.accessor()} {...atrAppearance} />
               <SingleValueTooltip
                 yAccessor={atr14.accessor()}
                 yLabel={`ATR (${atr14.options().windowSize})`}
@@ -651,24 +573,14 @@ class OHLCVChart extends React.Component {
               origin={(w, h) => [0, h - 150]}
               padding={{ top: 30, right: 0, bottom: 10, left: 0 }}
             >
-              <XAxis
-                axisAt="bottom"
-                orient="bottom"
-                {...xGrid}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
-                outerTickSize={0}
-              />
+              <XAxis axisAt="bottom" orient="bottom" {...xGrid} {...axisAppearance} outerTickSize={0} />
               <YAxis
                 axisAt="right"
                 orient="right"
                 {...yGrid}
                 ticks={4}
                 tickFormat={format('.2s')}
-                stroke={theme.axis}
-                tickStroke={theme.axis}
-                fill={theme.axis}
+                {...axisAppearance}
               />
               <MouseCoordinateX
                 at="bottom"
