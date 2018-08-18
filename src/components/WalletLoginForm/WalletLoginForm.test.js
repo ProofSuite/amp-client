@@ -20,7 +20,6 @@ describe('Component methods', () => {
     wrapper = shallow(<WalletLoginForm loginWithWallet={loginWithWallet} />);
 
     instance = wrapper.instance();
-    // console.log(instance)
   });
 
   it('calls connect with wallet upon submit', async () => {
@@ -49,10 +48,10 @@ describe('Component methods', () => {
   it('validates Form correctly on Submit with Private Key', async () => {
     walletService.createWalletFromPrivateKey = jest.fn(() => Promise.resolve({ wallet: 'test wallet' }));
 
+    instance.handleChange({ target: { type: 'checkbox', checked: 'privateKey', name: 'method' } });
     instance.handleChange({
       target: { value: '0x7c78c6e2f65d0d84c44ac0f7b53d6e4dd7a82c35f51b251d387c2a69df712660', name: 'privateKey' },
     });
-    instance.handleChange({ target: { type: 'checkbox', checked: 'privateKey', name: 'method' } });
 
     expect(wrapper.state('privateKeyStatus')).toBe('valid');
     expect(wrapper.state('method')).toBe('privateKey');
@@ -64,8 +63,8 @@ describe('Component methods', () => {
   it('inValidates Form correctly on Submit with Private Key', async () => {
     walletService.createWalletFromPrivateKey = jest.fn(() => Promise.resolve({ wallet: 'test wallet' }));
 
-    instance.handleChange({ target: { value: 'wrong Private key', name: 'privateKey' } });
     instance.handleChange({ target: { type: 'checkbox', checked: 'privateKey', name: 'method' } });
+    instance.handleChange({ target: { value: 'wrong Private key', name: 'privateKey' } });
 
     expect(wrapper.state('privateKeyStatus')).toBe('invalid');
     expect(wrapper.state('method')).toBe('privateKey');
@@ -77,6 +76,7 @@ describe('Component methods', () => {
   it('Validates Form correctly on Submit with JSON', async () => {
     walletService.createWalletFromJSON = jest.fn(() => Promise.resolve({ wallet: 'test wallet' }));
 
+    instance.handleChange({ target: { type: 'checkbox', checked: 'json', name: 'method' } });
     instance.handleChange({
       target: {
         value:
@@ -85,7 +85,6 @@ describe('Component methods', () => {
       },
     });
     instance.handleChange({ target: { value: 'hassankhokhar', name: 'password' } });
-    instance.handleChange({ target: { type: 'checkbox', checked: 'json', name: 'method' } });
 
     expect(wrapper.state('jsonStatus')).toBe('valid');
     expect(wrapper.state('passwordStatus')).toBe('valid');
@@ -98,6 +97,7 @@ describe('Component methods', () => {
   it('invalidates Form correctly on Submit with JSON', async () => {
     walletService.createWalletFromJSON = jest.fn(() => Promise.resolve({ wallet: 'test wallet' }));
 
+    instance.handleChange({ target: { type: 'checkbox', checked: 'json', name: 'method' } });
     instance.handleChange({
       target: {
         value:
@@ -106,7 +106,6 @@ describe('Component methods', () => {
       },
     });
     instance.handleChange({ target: { value: 'wrongPassword', name: 'password' } });
-    instance.handleChange({ target: { type: 'checkbox', checked: 'json', name: 'method' } });
 
     expect(wrapper.state('jsonStatus')).toBe('invalid');
     expect(wrapper.state('passwordStatus')).toBe('valid');
@@ -116,16 +115,41 @@ describe('Component methods', () => {
     expect(walletService.createWalletFromJSON).toHaveBeenCalledTimes(0);
   });
 
+  //TODO: -----
+  it('checks Password Helping Text on Submitting Wrong Password with JSON', async () => {
+    walletService.createWalletFromJSON = jest.fn(() => Promise.resolve({ wallet: '' }));
+
+    instance.handleChange({ target: { type: 'checkbox', checked: 'json', name: 'method' } });
+    instance.handleChange({
+      target: {
+        value:
+          '{"version":3,"id":"c1ec0f2b-4aa0-4a71-81d3-4ca6390e1797","address":"1caa9b97a1dc31c561c211cf9351f488b43eebfb","Crypto":{"ciphertext":"e425297f5b77e95559f7370576f7f79b622805f552b66e8d9a3bcf84dab8f6d9","cipherparams":{"iv":"c8e4b0ab122130477572f8e4c48f2de2"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"68d926311a56439876566a821dfa733c323b0bea2707e8bd4c1a7ef04fd8d6ef","n":8192,"r":8,"p":1},"mac":"122ca80fe0521b561f419ed7df53c8b9f3e1c27c10c8f6be16d3bd371ae3b8d1"}}',
+        name: 'json',
+      },
+    });
+    instance.handleChange({ target: { value: '12', name: 'password' } });
+
+    expect(wrapper.state('jsonStatus')).toBe('valid');
+    expect(wrapper.state('passwordStatus')).toBe('valid');
+    expect(wrapper.state('passwordHelpingText')).toBe('');
+    expect(wrapper.state('method')).toBe('json');
+
+    await instance.submit();
+    // console.log(wrapper.state())
+    expect(walletService.createWalletFromJSON).toHaveBeenCalledTimes(1);
+    expect(wrapper.state('passwordHelpingText')).toBe('Invalid Password!');
+  });
+
   it('Validates Form correctly on Submit with Mnemonic', async () => {
     walletService.createWalletFromMnemonic = jest.fn(() => Promise.resolve({ wallet: 'test wallet' }));
 
+    instance.handleChange({ target: { type: 'checkbox', checked: 'mnemonic', name: 'method' } });
     instance.handleChange({
       target: {
         value: 'clown shiver class wheel this mixture create illness fatigue amateur talent bitter',
         name: 'mnemonic',
       },
     });
-    instance.handleChange({ target: { type: 'checkbox', checked: 'mnemonic', name: 'method' } });
 
     expect(wrapper.state('mnemonicStatus')).toBe('valid');
     expect(wrapper.state('method')).toBe('mnemonic');
@@ -137,14 +161,13 @@ describe('Component methods', () => {
   it('invalidates Form correctly on Submit with Mnemonic', async () => {
     walletService.createWalletFromMnemonic = jest.fn(() => Promise.resolve({ wallet: 'test wallet' }));
 
+    instance.handleChange({ target: { type: 'checkbox', checked: 'mnemonic', name: 'method' } });
     instance.handleChange({
       target: {
         value: 'shiver class wheel this mixture create illness fatigue amateur talent bitter',
         name: 'mnemonic',
       },
     });
-    instance.handleChange({ target: { type: 'checkbox', checked: 'mnemonic', name: 'method' } });
-
     expect(wrapper.state('mnemonicStatus')).toBe('invalid');
     expect(wrapper.state('method')).toBe('mnemonic');
 

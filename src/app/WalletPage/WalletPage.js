@@ -15,7 +15,6 @@ class WalletPage extends React.PureComponent<Props> {
   }
   render() {
     const { loading, depositTableData, authenticated, accountAddress } = this.props;
-    console.log(this.props);
     if (!authenticated) {
       return <Redirect to="/login" />;
     }

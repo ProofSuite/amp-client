@@ -33,6 +33,7 @@ type State = {
   mnemonicStatus: Status,
   password: ?string,
   passwordStatus: Status,
+  passwordHelpingText: string,
   storeWallet: boolean,
   storePrivateKey: boolean,
 };
@@ -53,6 +54,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     mnemonicStatus: 'incomplete',
     password: '',
     passwordStatus: 'incomplete',
+    passwordHelpingText: '',
     storeWallet: true,
     storePrivateKey: true,
   };
@@ -108,6 +110,26 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
   handleChange = ({ target }: SyntheticInputEvent<>) => {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [target.name]: value }, this.validate(target.name, value));
+    if (target.name === 'method') {
+      // console.log(target)
+      this.setState({
+        address: '',
+        json: '',
+        jsonStatus: 'incomplete',
+        walletFile: '',
+        walletAddress: '',
+        walletFileStatus: 'incomplete',
+        privateKey: '',
+        privateKeyStatus: 'incomplete',
+        mnemonic: '',
+        mnemonicStatus: 'incomplete',
+        password: '',
+        passwordStatus: 'incomplete',
+        passwordHelpingText: '',
+        storeWallet: true,
+        storePrivateKey: true,
+      });
+    }
   };
 
   validateForm = () => {
@@ -126,7 +148,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
           this.setState({ jsonStatus: 'invalid' });
         }
         if (passwordStatus !== 'valid') {
-          this.setState({ passwordStatus: 'invalid' });
+          this.setState({ passwordStatus: 'invalid', passwordHelpingText: 'No Password!' });
         }
         if (jsonStatus === 'valid' && passwordStatus === 'valid') {
           return true;
@@ -138,7 +160,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
           this.setState({ jsonStatus: 'invalid' });
         }
         if (passwordStatus !== 'valid') {
-          this.setState({ passwordStatus: 'invalid' });
+          this.setState({ passwordStatus: 'invalid', passwordHelpingText: 'No Password!' });
         }
         if (walletFileStatus === 'valid' && passwordStatus === 'valid') {
           return true;
@@ -160,6 +182,13 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     return false;
   };
 
+  onEnterKeyPress = (evt: Object) => {
+    if (evt.which === 13) {
+      evt.preventDefault();
+      this.submit();
+    }
+  };
+
   submit = async () => {
     const { method, json, walletFile, privateKey, password, mnemonic, storeWallet, storePrivateKey } = this.state;
     const { loginWithWallet } = this.props;
@@ -169,6 +198,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
     this.setState({ loading: true });
     let invalidPassword = false;
+    let text = '';
     let invalidKey = false;
     let invalidJSON = false;
     let invalidMnemonic = false;
@@ -214,7 +244,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       this.setState({ loading: false, jsonStatus: 'invalid' });
     }
     if (invalidPassword) {
-      this.setState({ loading: false, passwordStatus: 'invalid' });
+      this.setState({ loading: false, passwordStatus: 'invalid', passwordHelpingText: 'Invalid Password!' });
     } else if (invalidMnemonic) {
       this.setState({ loading: false, mnemonicStatus: 'invalid' });
     } else if (invalidKey) {
@@ -238,6 +268,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         mnemonicStatus,
         password,
         passwordStatus,
+        passwordHelpingText,
         storePrivateKey,
         storeWallet,
       },
@@ -245,6 +276,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       onDrop,
       handleChange,
       submit,
+      onEnterKeyPress,
     } = this;
     const saveEncryptedWalletDisabled = method === 'privateKey' || method === 'mnemonic';
     return (
@@ -262,12 +294,14 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         mnemonicStatus={mnemonicStatus}
         password={password}
         passwordStatus={passwordStatus}
+        passwordHelpingText={passwordHelpingText}
         storeWallet={storeWallet}
         storePrivateKey={storePrivateKey}
         onDrop={onDrop}
         handleChange={handleChange}
         showLoginMethods={showLoginMethods}
         submit={submit}
+        onEnterKeyPress={onEnterKeyPress}
         saveEncryptedWalletDisabled={saveEncryptedWalletDisabled}
       />
     );

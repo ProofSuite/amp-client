@@ -4,6 +4,23 @@ import { createVerticalLinearGradient, hexToRGBA } from 'react-stockcharts/lib/u
 export const accelerationFactor = 0.02;
 export const maxAccelerationFactor = 0.2;
 
+export const theme = {
+  greenMint: '#40944e',
+  redDesire: '#d62323',
+  greenNeon: '#25bb2e',
+  redChilli: '#d62323',
+  redHot: '#FF0000',
+  mehroon2: '#F9ACAA',
+  mehroon1: '#6A1B19',
+  mehroon: '#420806',
+  green1: '#A2F5BF',
+  green: '#0B4228',
+  skyBlue: '#4286f4',
+  skyBlue1: '#6fa4fc',
+  skyBlue2: '#b5d0ff',
+  axis: '#fff',
+};
+
 // Trenline
 export const trendlineApperance = {
   stroke: '#00DDFF',
@@ -11,8 +28,8 @@ export const trendlineApperance = {
   strokeWidth: 1,
   strokeDasharray: 'Solid',
   edgeStrokeWidth: 1,
-  edgeFill: '#FFFFFF',
-  edgeStroke: '#FF0000',
+  edgeFill: theme.axis,
+  edgeStroke: theme.redHot,
 };
 
 // Bollinger Band
@@ -22,17 +39,29 @@ export const bbStroke = {
   bottom: '#964B00',
 };
 
-export const bbFill = '#4682B4';
+export const bbFill = theme.skyBlue;
 
 // MACD
 export const macdAppearance = {
   stroke: {
-    macd: '#FF0000',
-    signal: '#00F300',
+    macd: theme.redChilli,
+    signal: theme.greenNeon,
   },
   fill: {
-    divergence: '#4682B4',
+    divergence: theme.skyBlue1,
   },
+};
+
+// ATR
+export const atrAppearance = {
+  stroke: theme.greenMint,
+};
+
+// Axis
+export const axisAppearance = {
+  stroke: theme.axis,
+  fill: theme.axis,
+  tickStroke: theme.axis,
 };
 
 // Mouse
@@ -42,7 +71,7 @@ export const mouseEdgeAppearance = {
   strokeOpacity: 1,
   strokeWidth: 3,
   arrowWidth: 5,
-  fill: '#BCDEFA',
+  fill: theme.skyBlue2,
 };
 
 export const stoAppearance = {
@@ -54,16 +83,8 @@ export const stoAppearance = {
     kLine: '#74D400',
   },
 };
-export const theme = {
-  greenMint: '#40944e',
-  redDesire: '#d62323',
-  greenNeon: '#25bb2e',
-  redChilli: '#d62323',
-  axis: '#fff',
-};
-
 export const canvasGradient = createVerticalLinearGradient([
-  { stop: 0, color: hexToRGBA('#b5d0ff', 0.2) },
-  { stop: 0.7, color: hexToRGBA('#6fa4fc', 0.4) },
-  { stop: 1, color: hexToRGBA('#4286f4', 0.8) },
+  { stop: 0, color: hexToRGBA(theme.skyBlue2, 0.2) },
+  { stop: 0.7, color: hexToRGBA(theme.skyBlue1, 0.4) },
+  { stop: 1, color: hexToRGBA(theme.skyBlue, 0.8) },
 ]);

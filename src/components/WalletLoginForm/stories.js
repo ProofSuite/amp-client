@@ -41,11 +41,13 @@ storiesOf('WalletLoginForm', module)
           mnemonicStatus={'incomplete'}
           password={''}
           passwordStatus={'incomplete'}
+          passwordHelpingText={''}
           storeWallet={true}
           storePrivateKey={true}
           onDrop={action('onDrop')}
           showLoginMethods={action('showLoginMethods')}
           handleChange={action('onChange')}
+          onEnterKeyPress={action('Key Press')}
           submit={action('submit')}
           saveEncryptedWalletDisabled={false}
         />
@@ -70,11 +72,13 @@ storiesOf('WalletLoginForm', module)
           mnemonicStatus={'incomplete'}
           password={''}
           passwordStatus={'incomplete'}
+          passwordHelpingText={''}
           storeWallet={true}
           storePrivateKey={true}
           onDrop={action('onDrop')}
           handleChange={action('onChange')}
           showLoginMethods={action('showLoginMethods')}
+          onEnterKeyPress={action('Key Press')}
           submit={action('submit')}
           saveEncryptedWalletDisabled={false}
         />

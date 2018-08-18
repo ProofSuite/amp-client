@@ -30,13 +30,12 @@ export function queryAccountData(): ThunkAction {
       const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress);
       const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens);
       const currentBlock = await walletServices.getCurrentBlock();
-      console.log(currentBlock);
       const balances = [etherBalance].concat(tokenBalances);
 
-      const allowances = await accountBalancesService.queryTokenAllowances(accountAddress, tokens);
-
+      // const allowances = await accountBalancesService.queryTokenAllowances(accountAddress, tokens);
+      console.log(balances);
       dispatch(actionCreators.updateBalances(balances));
-      dispatch(actionCreators.updateAllowances(allowances));
+      // dispatch(actionCreators.updateAllowances(allowances));
       dispatch(actionCreators.updateCurrentBlock(currentBlock));
     } catch (error) {
       dispatch(

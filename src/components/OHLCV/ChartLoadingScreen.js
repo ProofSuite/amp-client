@@ -16,13 +16,26 @@ type Props = {
   atr: Object,
   forceIndex: Object,
   data: Array<Object>,
+  noOfCandles: number,
   width: string,
 };
 
 export default class ChartLoadingScreen extends React.PureComponent<Props> {
   render() {
     const nullIndicator = { name: '', height: 0, active: false };
-    const { macd, volume, chartHeight, currentChart, indicatorHeight, rsi, line, atr, forceIndex, data } = this.props;
+    const {
+      macd,
+      volume,
+      noOfCandles,
+      chartHeight,
+      currentChart,
+      indicatorHeight,
+      rsi,
+      line,
+      atr,
+      forceIndex,
+      data,
+    } = this.props;
 
     if (!data || data.length < 1) {
       return <Loading />;
@@ -46,6 +59,7 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
                   atr={atr ? atr : nullIndicator}
                   forceIndex={forceIndex ? forceIndex : nullIndicator}
                   data={data}
+                  noOfCandles={noOfCandles}
                 />
               )}
             </AutoScaler>
