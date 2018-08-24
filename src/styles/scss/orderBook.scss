@@ -11,6 +11,7 @@
     height: 91%;
     width: 100%;
     .list {
+      max-height: 300px;
       height: 90%;
       overflow-y: scroll;
     }

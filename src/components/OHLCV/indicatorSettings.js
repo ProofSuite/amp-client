@@ -1,5 +1,5 @@
 import { createVerticalLinearGradient, hexToRGBA } from 'react-stockcharts/lib/utils';
-
+import { Colors } from "../Common";
 // SAR Config
 export const accelerationFactor = 0.02;
 export const maxAccelerationFactor = 0.2;
@@ -11,14 +11,21 @@ export const theme = {
   redChilli: '#d62323',
   redHot: '#FF0000',
   mehroon2: '#F9ACAA',
-  mehroon1: '#6A1B19',
-  mehroon: '#420806',
+  mehroon1: '#6A3126',
+  RED2: Colors.RED2,
+  RED4: Colors.RED5,
+  GREEN3: Colors.GREEN3,
+  GREEN5: Colors.GREEN5,
+  mehroon: '#6A1B19',
   green1: '#A2F5BF',
   green: '#0B4228',
+  green2: '#00421B',
   skyBlue: '#4286f4',
   skyBlue1: '#6fa4fc',
   skyBlue2: '#b5d0ff',
-  axis: '#fff',
+  edges: Colors.GRAY5,
+  axis: Colors.GRAY4,
+  black: Colors.BLACK,
 };
 
 // Trenline
@@ -64,14 +71,21 @@ export const axisAppearance = {
   tickStroke: theme.axis,
 };
 
+// Axis
+export const edgeIndicatorAppearance = {
+  strokeOpacity: 1,
+  strokeWidth: 1,
+  arrowWidth: 0,
+};
+
 // Mouse
 export const mouseEdgeAppearance = {
   textFill: '#542605',
   stroke: '#05233B',
   strokeOpacity: 1,
-  strokeWidth: 3,
-  arrowWidth: 5,
-  fill: theme.skyBlue2,
+  strokeWidth: 1,
+  arrowWidth: 0,
+  fill: theme.edges,
 };
 
 export const stoAppearance = {

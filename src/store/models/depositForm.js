@@ -103,6 +103,7 @@ export const confirmEtherDeposit = (
       dispatch(depositFormActionCreators.confirm());
       let signer = getSigner();
       let network = depositFormSelector(getState()).networkId();
+      console.log('network: ', network);
       let weth = new Contract(WETH_ADDRESS[network], WETH.abi, signer);
 
       if (shouldConvert) {
@@ -111,6 +112,7 @@ export const confirmEtherDeposit = (
           let convertTxPromise = weth.deposit();
 
           // let allowTxParams = {};
+          console.log('network: ', network);
           let allowTxPromise = weth.approve(EXCHANGE_ADDRESS[network], -1, {});
 
           let [convertTx, allowTx] = await Promise.all([convertTxPromise, allowTxPromise]);
@@ -156,6 +158,7 @@ export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): T
 
       if (shouldAllow) {
         // let allowTxParams = { value: 1000 };
+        console.log('confirmTokenDeposit: ', network);
         let allowTx = await token.approve(EXCHANGE_ADDRESS[network], -1);
         dispatch(depositFormActionCreators.sendAllowTx(allowTx.hash));
 
