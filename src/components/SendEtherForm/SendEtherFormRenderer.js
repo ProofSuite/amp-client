@@ -40,10 +40,10 @@ const SendEtherFormRenderer = (props: Props) => {
     handleTokenChange,
     handleSubmit,
   } = props;
-
+  console.log(loading, status, statusMessage, gas, gasPrice, hash, receipt, tokens, token, amount, receiver);
   return (
     <div>
-      <Label helperText="(in ether or in token decimals)" text="Amount to Send">
+      <Label helpertext="(in ether or in token decimals)" text="Amount to Send">
         <ControlGroup fill vertical={false}>
           <InputGroup
             icon="filter"

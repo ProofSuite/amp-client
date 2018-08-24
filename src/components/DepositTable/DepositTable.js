@@ -10,6 +10,7 @@ type Props = {
 class DepositTable extends React.PureComponent<Props, State> {
   state = {
     isModalOpen: false,
+    hideZeroBalanceToken: false,
     searchValue: '',
   };
   handleAllowance = () => {
@@ -36,6 +37,21 @@ class DepositTable extends React.PureComponent<Props, State> {
     this.setState({ searchValue: evt.target.value });
   };
 
+  toggleZeroBalanceToken = () => {
+    this.setState(prevState => {
+      return { hideZeroBalanceToken: !prevState.hideZeroBalanceToken };
+    });
+  };
+
+  filterZeroBalances = data => {
+    const { hideZeroBalanceToken } = this.state;
+    if (hideZeroBalanceToken) {
+      data = data.filter(token => {
+        return parseFloat(token.balance > 0);
+      });
+    }
+    return data;
+  };
   filterData = data => {
     const { searchValue } = this.state;
     if (searchValue) {
@@ -43,22 +59,24 @@ class DepositTable extends React.PureComponent<Props, State> {
         return token.symbol.indexOf(searchValue.toUpperCase()) > -1;
       });
     }
-    return data;
+    return this.filterZeroBalances(data);
   };
 
   render() {
     const { depositData } = this.props;
-    const { isModalOpen, searchValue } = this.state;
+    const { isModalOpen, searchValue, hideZeroBalanceToken } = this.state;
 
     return (
       <Wrapper>
         <DepositTableRenderer
           depositData={this.filterData(depositData)}
           searchValue={searchValue}
+          hideZeroBalanceToken={hideZeroBalanceToken}
           handleModalClose={this.handleModalClose}
           handleAllowance={this.handleAllowance}
           handleDeposit={this.handleDeposit}
           handleWithdraw={this.handleWithdraw}
+          toggleZeroBalanceToken={this.toggleZeroBalanceToken}
           handleSearchChange={this.handleSearchChange}
         />
         <DepositModal isOpen={isModalOpen} handleClose={this.handleModalClose} />

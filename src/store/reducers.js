@@ -228,6 +228,10 @@ export const account = createReducer(action => {
       return accountEvents.accountUpdated(payload.address);
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved();
+    case accountActionTypes.updateCurrentBlock:
+      return accountEvents.currentBlockUpdated(payload.currentBlock);
+    case accountActionTypes.updateCurrentProvider:
+      return accountEvents.currentProviderUpdated(payload.provider);
     default:
       return accountEvents.initialized();
   }
@@ -280,8 +284,6 @@ export const wallets = createReducer(action => {
       return walletsEvents.walletRemoved(payload);
     case loginPageActionTypes.createWallet:
       return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
-    case walletPageActionTypes.updateCurrentBlock:
-      return walletsEvents.currentBlockUpdated(payload.currentBlock);
     default:
       return walletsEvents.initialized();
   }

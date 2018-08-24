@@ -1,5 +1,6 @@
 // @flow
 import * as actionCreators from '../actions/loginPage';
+import * as accountActionCreators from '../actions/account';
 import * as notifierActionCreators from '../actions/app';
 import { getAccountDomain, getLoginPageDomain } from '../domains';
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
@@ -34,6 +35,7 @@ export function loginWithMetamask(): ThunkAction {
 
         // I think there's is no need to show a notifier on Successful Log In.
         // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
+        dispatch(accountActionCreators.updateCurrentProvider('MetaMask'));
         dispatch(actionCreators.loginWithMetamask(address));
       } catch (e) {
         return dispatch(actionCreators.loginError('Metamask account locked'));
@@ -58,7 +60,7 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
 
         await createLocalWalletSigner(wallet);
         dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
-
+        dispatch(accountActionCreators.updateCurrentProvider('Private Network:8888'));
         // I think there's is no need to show a notifier on Successful Log In.
         // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
         return dispatch(actionCreators.loginWithWallet(address));

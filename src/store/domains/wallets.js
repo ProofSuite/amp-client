@@ -4,7 +4,6 @@ import type { WalletsState } from '../../types/wallets';
 const initialState = {
   addresses: [],
   byAddress: {},
-  currentBlock: '2312',
 };
 
 export const initialized = () => {
@@ -38,15 +37,6 @@ export const walletRemoved = (address: string) => {
         result[current] = state.byAddress[current];
         return result;
       }, {}),
-  });
-
-  return event;
-};
-
-export const currentBlockUpdated = (currentBlock: string) => {
-  const event = (state: WalletsState) => ({
-    ...state,
-    currentBlock: currentBlock,
   });
 
   return event;

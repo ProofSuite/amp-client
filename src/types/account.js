@@ -1,6 +1,8 @@
 //@flow
 export type AccountState = {
   +address: ?string,
+  +currentBlock: ?string,
+  +provider: ?string,
 };
 
 export type UpdateAccountAction = {

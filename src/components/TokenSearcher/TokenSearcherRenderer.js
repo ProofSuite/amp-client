@@ -2,7 +2,7 @@
 import React from 'react';
 import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core';
 import { ColumnEnd, RowSpaceBetween } from '../Common';
-import { Colors, Centered, Chevron, OverlaySpinner } from '../Common';
+import { Colors, Centered, Chevron, OverlaySpinner, CryptoIcon } from '../Common';
 import styled from 'styled-components';
 
 type Token = {
@@ -193,6 +193,7 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
       <span className="star">
         <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
       </span>
+      <CryptoIcon name={base} />
       <span className="base" onClick={() => changeSelectedToken(token)}>
         {isFavoriteTokensList ? pair : base}
       </span>

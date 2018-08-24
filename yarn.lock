@@ -2681,6 +2681,10 @@ crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
 
+cryptocoins-icons@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/cryptocoins-icons/-/cryptocoins-icons-2.8.0.tgz#b718c06f32794f6ea6f03deed843f685854eca67"
+
 css-color-keywords@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"

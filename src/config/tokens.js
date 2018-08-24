@@ -1,3 +1,24 @@
+export const Symbols = [
+  'DAI',
+  'LOOM',
+  'AION',
+  'MITH',
+  'DGX',
+  'SNT',
+  'PPT',
+  'GNT',
+  'KCS',
+  'WTC',
+  'NPXS',
+  'BTM',
+  'BAT',
+  'REP',
+  'MKR',
+  'TRX',
+  'ZRX',
+  'OMG',
+  'BNB',
+];
 export const tokensBySymbol = {
   BNB: {
     symbol: 'BNB',
@@ -84,3 +105,21 @@ export const tokensBySymbol = {
 export const tokenSymbols = Object.keys(tokensBySymbol);
 
 export const tokens = Object.values(tokensBySymbol);
+
+export const TokenSymbol = [
+  'ADA',
+  'AEC',
+  'AEON',
+  'AMP',
+  'ANC',
+  'ARDR',
+  'ARK',
+  'AST',
+  'AUR',
+  'BANX',
+  'BY',
+  'BAY',
+  'BAT',
+  'BC',
+  'BCN',
+];

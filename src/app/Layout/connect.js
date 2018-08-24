@@ -8,6 +8,8 @@ export function mapStateToProps(state, props) {
   return {
     authenticated: selector.authenticated,
     address: selector.account,
+    provider: selector.provider,
+    currentBlock: selector.currentBlock,
   };
 }
 

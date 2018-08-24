@@ -18,10 +18,10 @@ const GasSettingsRenderer = (props: Props) => {
       <Button minimal text="Show Gas Settings" onClick={toggleVisible} />
       <Collapse isOpen={visible}>
         <InputGroupBox>
-          <InputGroup placeholder="Gas" value={gas} onChange={handleChange} />
+          <InputGroup placeholder="Gas" value={gas || ''} onChange={handleChange} />
         </InputGroupBox>
         <InputGroupBox>
-          <InputGroup placeholder="Gas Price" value={gasPrice} onChange={handleChange} />
+          <InputGroup placeholder="Gas Price" value={gasPrice || ''} onChange={handleChange} />
         </InputGroupBox>
       </Collapse>
     </div>

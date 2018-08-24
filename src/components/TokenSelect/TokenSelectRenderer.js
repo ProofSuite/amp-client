@@ -21,7 +21,7 @@ const TokenSelectRenderer = ({ item, items, onChange }: Props) => {
     >
       <Button
         text={item ? `${item.symbol}` : '(No selection)'}
-        rightIconName="double-caret-vertical"
+        righticonname="double-caret-vertical"
         fill={true}
         intent="primary"
       />
