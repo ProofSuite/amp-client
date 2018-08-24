@@ -11,7 +11,6 @@ export default function getOHLCVModel(state: State) {
 export const updateTimeLine = ({ duration, time }: SendTimelineParams): ThunkAction => {
   return async (dispatch, getState) => {
     let candles = getNoOfCandles(duration) / timeToMinutes(time);
-
     if (candles > 1) {
       return dispatch(actionCreators.saveNoOfCandles(parseInt(candles)));
     } else {
