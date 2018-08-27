@@ -1,6 +1,9 @@
 @import "vars";
 
 .main-chart {
+  height: 100%;
+  min-height: 775px;
+  padding: 20px 20px 0 20px;
   .toolbar {
     width: 100%;
     display: flex;
@@ -28,7 +31,6 @@
         li {
           margin: 2px auto;
         }
-
       }
       .bp3-menu.open {
         display: block;
@@ -68,7 +70,7 @@
   }
   .chart-container {
     text-align: left;
-    margin: 0px -10px 0px -20px;
+    margin: 10px -10px 0px -20px;
     label, select {
       display: none !important;
     }

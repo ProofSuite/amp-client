@@ -60,12 +60,12 @@ const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order> }) => 
     <div className="list-container">
       <ul className="heading">
         <li className="heading">
-          <HeaderCell>PAIR</HeaderCell>
-          <HeaderCell>AMOUNT</HeaderCell>
-          <HeaderCell>PRICE</HeaderCell>
-          <HeaderCell>STATUS</HeaderCell>
-          <HeaderCell>SIDE</HeaderCell>
-          <HeaderCell>TIME</HeaderCell>
+          <HeaderCell className="pair">PAIR</HeaderCell>
+          <HeaderCell className="amount">AMOUNT</HeaderCell>
+          <HeaderCell className="price">PRICE</HeaderCell>
+          <HeaderCell className="status">STATUS</HeaderCell>
+          <HeaderCell className="side">SIDE</HeaderCell>
+          <HeaderCell className="time">TIME</HeaderCell>
         </li>
       </ul>
       <ul className="list">{orders.map((order, index) => <OrderRow key={index} order={order} index={index} />)}</ul>
@@ -77,16 +77,24 @@ const OrderRow = (props: { order: Order, index: number }) => {
   const { order } = props;
   return (
     <Row>
-      <Cell muted>{order.pair}</Cell>
-      <Cell muted>{order.amount}</Cell>
-      <Cell muted>
+      <Cell className="pair" muted>
+        {order.pair}
+      </Cell>
+      <Cell className="amount" muted>
+        {order.amount}
+      </Cell>
+      <Cell className="price" muted>
         {order.price} ({order.type})
       </Cell>
-      <Cell muted>{order.status}</Cell>
-      <Cell side={order.side} muted>
+      <Cell className="status" muted>
+        {order.status}
+      </Cell>
+      <Cell className="side" side={order.side} muted>
         {order.side}
       </Cell>
-      <Cell muted>{format(order.time, 'DD/MM/YYYY HH:MM:SS Z')}</Cell>
+      <Cell className="time" muted>
+        {format(order.time, 'DD/MM/YYYY HH:MM:SS Z')}
+      </Cell>
     </Row>
   );
 };
@@ -119,7 +127,9 @@ const Row = styled.li.attrs({
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
 `;
 
-const Cell = styled.span`
+const Cell = styled.span.attrs({
+  className: props => props.className,
+})`
   color: ${props =>
     props.side === 'BUY'
       ? Colors.BUY

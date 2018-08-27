@@ -216,7 +216,7 @@ type HeaderProps = {
 
 const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensList }: HeaderProps) => {
   return (
-    <ul>
+    <ListHeader>
       <li className="heading">
         <span className="star">&nbsp;</span>
         <span className="base" onClick={onChangeFilterName}>
@@ -244,7 +244,7 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
           )}
         </span>
       </li>
-    </ul>
+    </ListHeader>
   );
 };
 
@@ -252,7 +252,7 @@ const SelectedCoin = ({ selectedToken }) => {
   const { pair, lastPrice, volume, high, low, quote } = selectedToken;
   return (
     <SelectedCoinCard>
-      <RowSpaceBetween>
+      <Row>
         <TokenPair>{pair}</TokenPair>
         <ColumnEnd>
           <p className="lastPrice">
@@ -268,7 +268,7 @@ const SelectedCoin = ({ selectedToken }) => {
             {low}
           </p>
         </ColumnEnd>
-      </RowSpaceBetween>
+      </Row>
     </SelectedCoinCard>
   );
 };
@@ -282,24 +282,32 @@ const TokenSearchCard = styled(Card).attrs({
 const TokenSearchTabs = styled(Tabs)`
   margin-bottom: 20px;
 `;
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const TokenSearchPanelBox = styled.div`
   height: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 const SelectedCoinCard = styled(Card)`
   margin: 15px 0px;
-  padding: 15px;
+  padding: 18px 18px 9px 18px !important;
 `;
 
-const TokenPair = styled.h4`
+const TokenPair = styled.h3`
   color: ${Colors.LINK} !important;
+  margin: 0;
 `;
 
 const SearchInput = styled(InputGroup)`
   width: 92%;
   padding-bottom: 10px;
+`;
+const ListHeader = styled.ul`
+  margin: 10px 0 7px;
 `;
 
 const Change24H = styled.span.attrs({ className: 'change' })`

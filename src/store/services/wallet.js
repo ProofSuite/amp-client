@@ -12,7 +12,7 @@ export const getDefaultPrivateKey = () => {
 export const getCurrentBlock = async () => {
   const provider = getProvider();
   const block = await provider.getBlock();
-  return block.hash;
+  return block.number;
 };
 
 /**

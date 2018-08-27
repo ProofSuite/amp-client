@@ -14,7 +14,6 @@ export const notificationAdded = options => {
     if (state.length > 0) {
       if (state.filter(notification => notification.id !== options.id).length > 0) {
         state = [
-          ...state,
           {
             id: options.id,
             message: options.message,
@@ -24,7 +23,6 @@ export const notificationAdded = options => {
       }
     } else {
       state = [
-        ...state,
         {
           id: options.id,
           message: options.message,

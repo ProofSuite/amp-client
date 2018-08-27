@@ -63,7 +63,7 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
         dispatch(accountActionCreators.updateCurrentProvider('Private Network:8888'));
         // I think there's is no need to show a notifier on Successful Log In.
         // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
-        return dispatch(actionCreators.loginWithWallet(address));
+        return dispatch(actionCreators.loginWithWallet(address, privateKey));
       } catch (e) {
         return dispatch(actionCreators.loginError('Could not authenticate wallet'));
       }

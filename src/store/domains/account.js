@@ -3,8 +3,9 @@ import type { AccountState } from '../../types/account';
 
 const initialState = {
   address: null,
+  privateKey: null,
   currentBlock: '',
-  provider: 'Not Connected',
+  provider: '',
 };
 
 export const initialized = () => {
@@ -12,10 +13,11 @@ export const initialized = () => {
   return event;
 };
 
-export const accountUpdated = (address: string) => {
+export const accountUpdated = (address: string, privateKey: string) => {
   const event = (state: AccountState) => ({
     ...state,
     address,
+    privateKey,
   });
   return event;
 };
@@ -48,6 +50,7 @@ export const currentProviderUpdated = (provider: string) => {
 export default function accountDomain(state: AccountState) {
   return {
     address: () => state.address,
+    privateKey: () => state.privateKey,
     currentBlock: () => state.currentBlock,
     provider: () => state.provider,
     authenticated: () => state.address !== null,

@@ -10,11 +10,11 @@ type Props = {
   queryAccountData: void => void,
 };
 
-const WalletPageRenderer = ({ loading, depositTableData, accountAddress }: Props) => {
+const WalletPageRenderer = ({ loading, depositTableData, accountAddress, accountPrivateKey }: Props) => {
   return (
     <Wrapper>
       <RowWrapper>
-        <CurrentWallet accountAddress={accountAddress} />
+        <CurrentWallet accountAddress={accountAddress} accountPrivateKey={accountPrivateKey} />
         <WalletPageContent>
           {loading ? <CenteredSpinner /> : <DepositTable depositData={depositTableData} />}
         </WalletPageContent>

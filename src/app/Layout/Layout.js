@@ -25,11 +25,12 @@ type Props = {
   address: string,
   locale: string,
   messages: string,
+  currentBlock?: string,
+  provider?: string,
 };
 
 function Layout(props: Props) {
   const { children, authenticated, address, locale, messages, provider, currentBlock } = props;
-  const connected = provider !== 'Not Connected';
   const menu = (
     <Menu>
       <MenuItem>
@@ -62,14 +63,9 @@ function Layout(props: Props) {
             <NavbarGroup align={Alignment.RIGHT}>
               {currentBlock && (
                 <Block>
+                  <span>Current Block: </span>
                   <a href={'https://etherscan.io/block/' + currentBlock} target="_blank">
-                    Current Block
-                    <SvgIcon
-                      style={{ marginRight: '17px', marginLeft: '5px' }}
-                      width="30px"
-                      icon="external-link"
-                      intent="primary"
-                    />
+                    {currentBlock}
                   </a>
                 </Block>
               )}
@@ -78,9 +74,9 @@ function Layout(props: Props) {
                   style={{ marginRight: '10px' }}
                   width="20px"
                   icon="connect-signal"
-                  intent={connected ? 'success' : 'error'}
+                  intent={provider ? 'success' : 'error'}
                 />
-                <p>{provider}</p>
+                <p>{provider ? provider : 'Not Connected'}</p>
               </ProviderStatus>
 
               {!authenticated ? (
@@ -124,14 +120,13 @@ const ProviderStatus = styled.div`
 `;
 
 const Block = styled.div`
-  float: left;
   word-wrap: break-word;
-  & a {
-    display: flex;
-    align-items: center;
-    & svg {
-      padding-top: 13px;
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+  & span {
+    margin-right: 5px;
   }
 `;
 const NavbarHeaderLink = styled(Link).attrs({

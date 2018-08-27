@@ -46,6 +46,7 @@ export default class TradingPage extends React.PureComponent<Props, State> {
 }
 
 const TradingPageLayout = styled(Grid).attrs({
+  className: 'trading-page-layout',
   columns: '1fr 4fr',
   rows: 'fr',
   areas: ['leftColumn middleColumn'],

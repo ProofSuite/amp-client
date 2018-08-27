@@ -24,20 +24,15 @@
   }
 }
 
-// @media only screen and (max-width: 1780px) {
-//   .order-book {
-//     ul {
-//       li {
-//         span.price, span.amount, span.total {
-//           min-width: 70px;
-//           width: 75px;
-//           word-wrap: break-word;
-//         }
-//       ;
-//       }
-//     }
-//   }
-// }
+ @media only screen and (max-width: 1600px) {
+   .order-book {
+     ul {
+       li {
+         padding-right: 15px;
+       }
+     }
+   }
+ }
 
 // @media only screen and (max-width: 1530px) {
 //   .order-book-chart-container {

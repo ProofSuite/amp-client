@@ -219,13 +219,13 @@ export const account = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case accountActionTypes.updateAccount:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, '');
     case signerSettingsActionTypes.updateSigner:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, '');
     case loginPageActionTypes.loginWithMetamask:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, '');
     case loginPageActionTypes.loginWithWallet:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, payload.privateKey);
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved();
     case accountActionTypes.updateCurrentBlock:

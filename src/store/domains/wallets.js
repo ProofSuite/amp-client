@@ -46,6 +46,5 @@ export default function walletDomain(state: WalletsState) {
   return {
     addresses: () => state.addresses,
     byAddress: () => state.byAddress,
-    getCurrentBlock: () => state.currentBlock,
   };
 }

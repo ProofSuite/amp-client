@@ -7,10 +7,10 @@ const actionTypes = {
   updateCurrentProvider: 'account/UPDATE_CURRENT_PROVIDER',
 };
 
-export function updateAccount(address: string): UpdateAccountAction {
+export function updateAccount(address: string, privateKey: string): UpdateAccountAction {
   return {
     type: actionTypes.updateAccount,
-    payload: { address },
+    payload: { address, privateKey },
   };
 }
 

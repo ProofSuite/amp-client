@@ -7,6 +7,7 @@
     height: 100%;
     .list {
       max-height: 300px;
+      margin-bottom: 0;
       height: 90%;
       overflow-y: scroll;
     }
@@ -51,5 +52,25 @@
 
   .loading-overlay {
     height: 100%;
+  }
+}
+@media only screen and (max-width: 1600px) {
+  .order-history {
+    ul {
+      li {
+        span.pair, span.side, span.amount {
+          width: 12%;
+        }
+        span.side {
+          width: 8%;
+        }
+        span.price, span.status {
+          width: 15%;
+        }
+        span.time {
+          width: 22%;
+        }
+      }
+    }
   }
 }

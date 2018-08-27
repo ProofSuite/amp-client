@@ -42,7 +42,9 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
       dispatch(actionCreators.updateCurrentPair(pair));
 
       let ohlcv = await trading.getData();
-      dispatch(ohlcvActionCreators.saveData(ohlcv));
+      setTimeout(function() {
+        dispatch(ohlcvActionCreators.saveData(ohlcv));
+      }, 1000);
 
       let { bids, asks, trades } = await api.getOrderBookData();
       dispatch(actionCreators.updateOrderBook(bids, asks));

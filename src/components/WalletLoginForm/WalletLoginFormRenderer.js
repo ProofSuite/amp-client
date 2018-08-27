@@ -16,13 +16,14 @@ import {
   TextArea,
 } from '@blueprintjs/core';
 import { Divider, OverlaySpinner, Text } from '../../components/Common';
+import WalletSelect from './WalletSelect';
 // TODO -> Intent issue is still to get fix this func () => `JSONFileInputForm`
 
 type Status = 'incomplete' | 'valid' | 'invalid';
 
 type Props = {
   loading: boolean,
-  handleChange: (SyntheticInputEvent<>) => void,
+  handleChange: Object => void,
   onEnterKeyPress: Object => void,
   onDrop: (Array<Object>) => void,
   method: string,
@@ -38,6 +39,8 @@ type Props = {
   password: ?string,
   passwordStatus: Status,
   passwordHelpingText: ?string,
+  localStorageWallets: ?Array<Object>,
+  sessionStorageWallets: ?Array<Object>,
   storeWallet: boolean,
   storePrivateKey: boolean,
   submit: (SyntheticEvent<>) => Promise<void>,
@@ -97,6 +100,8 @@ const WalletLoginFormRenderer = (props: Props) => {
     password,
     passwordStatus,
     passwordHelpingText,
+    sessionStorageWallets,
+    localStorageWallets,
     onDrop,
     storeWallet,
     storePrivateKey,
@@ -108,6 +113,7 @@ const WalletLoginFormRenderer = (props: Props) => {
   const inputForms = {
     privateKey: (
       <PrivateKeyInputForm
+        sessionStorageWallets={sessionStorageWallets}
         onEnterKeyPress={onEnterKeyPress}
         privateKeyStatus={privateKeyStatus}
         privateKey={privateKey}
@@ -120,6 +126,7 @@ const WalletLoginFormRenderer = (props: Props) => {
         jsonStatus={jsonStatus}
         handleChange={handleChange}
         password={password}
+        localStorageWallets={localStorageWallets}
         onEnterKeyPress={onEnterKeyPress}
         passwordStatus={passwordStatus}
         passwordHelpingText={passwordHelpingText}
@@ -146,6 +153,15 @@ const WalletLoginFormRenderer = (props: Props) => {
         handleChange={handleChange}
       />
     ),
+    savedWallet: (
+      <SavedWallet
+        handleChange={handleChange}
+        password={password}
+        onEnterKeyPress={onEnterKeyPress}
+        passwordStatus={passwordStatus}
+        passwordHelpingText={passwordHelpingText}
+      />
+    ),
   };
 
   return (
@@ -155,6 +171,7 @@ const WalletLoginFormRenderer = (props: Props) => {
         <Radio label="JSON" value="json" />
         <Radio label="Wallet File" value="walletFile" />
         <Radio label="Mnemonic Sentence" value="mnemonic" />
+        <Radio label="Saved Wallet" value="savedWallet" />
       </RadioGroup>
       <InputFormsBox>{inputForms[method]}</InputFormsBox>
       <FormGroup helperText="Learn more about different options here">
@@ -183,24 +200,46 @@ const WalletLoginFormRenderer = (props: Props) => {
   );
 };
 
-const PrivateKeyInputForm = ({ handleChange, privateKey, privateKeyStatus, onEnterKeyPress }: *) => {
+const PrivateKeyInputForm = ({
+  sessionStorageWallets,
+  handleChange,
+  privateKey,
+  privateKeyStatus,
+  onEnterKeyPress,
+}: *) => {
+  // silence-error: couldn't resolve
+  const walletsSaved = sessionStorageWallets.length > 1;
   return (
-    <InputPadding>
-      <FormGroup
-        helperText={inputStatuses['privateKey'][privateKeyStatus]}
-        label="Input Private Key"
-        intent={intents[privateKeyStatus]}
-      >
-        <InputGroup
-          name="privateKey"
-          placeholder="(must start with 0x)"
+    <div>
+      {walletsSaved && (
+        <InputPadding>
+          <WalletSelect
+            // silence-error: couldn't resolve
+            item={sessionStorageWallets[0]}
+            items={sessionStorageWallets}
+            handleChange={evt => handleChange({ target: { value: evt.key, name: 'privateKey' } })}
+            label="Select saved PrivateKey"
+          />
+        </InputPadding>
+      )}
+      <Label />
+      <InputPadding>
+        <FormGroup
+          helperText={inputStatuses['privateKey'][privateKeyStatus]}
+          label="Input Private Key"
           intent={intents[privateKeyStatus]}
-          onChange={handleChange}
-          onKeyPress={onEnterKeyPress}
-          value={privateKey}
-        />
-      </FormGroup>
-    </InputPadding>
+        >
+          <InputGroup
+            name="privateKey"
+            placeholder="(must start with 0x)"
+            intent={intents[privateKeyStatus]}
+            onChange={handleChange}
+            onKeyPress={onEnterKeyPress}
+            value={privateKey}
+          />
+        </FormGroup>
+      </InputPadding>
+    </div>
   );
 };
 
@@ -210,11 +249,26 @@ const JSONInputForm = ({
   jsonStatus,
   password,
   passwordStatus,
+  localStorageWallets,
   passwordHelpingText,
   onEnterKeyPress,
 }: *) => {
+  // silence-error: couldn't resolve
+  const walletsSaved = localStorageWallets.length > 1;
   return (
     <div>
+      {walletsSaved && (
+        <InputPadding>
+          <WalletSelect
+            // silence-error: couldn't resolve
+            item={localStorageWallets[0]}
+            items={localStorageWallets}
+            handleChange={evt => handleChange({ target: { value: evt.key, name: 'json' } })}
+            label="Select saved Wallet"
+          />
+        </InputPadding>
+      )}
+
       <Label text="Input JSON File Text">
         <InputPadding>
           <FormGroup helperText={inputStatuses['json'][jsonStatus]} intent={intents[jsonStatus]}>
@@ -246,6 +300,23 @@ const JSONInputForm = ({
             />
           </FormGroup>
         </InputPadding>
+      </Label>
+    </div>
+  );
+};
+
+const SavedWallet = ({
+  handleChange,
+  addresses,
+  password,
+  passwordStatus,
+  passwordHelpingText,
+  onEnterKeyPress,
+}: *) => {
+  return (
+    <div>
+      <Label text="Input JSON File Text">
+        <InputPadding />
       </Label>
     </div>
   );

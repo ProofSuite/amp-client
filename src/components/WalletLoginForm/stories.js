@@ -8,6 +8,7 @@ import { loginWithWallet } from '../../store/models/loginPage';
 import { action } from '@storybook/addon-actions';
 import WalletLoginForm from './index';
 import WalletLoginFormRenderer from './WalletLoginFormRenderer';
+import { getSessionStorageWallets, getLocalStorageWallets } from '../../utils/helpers';
 
 let ConnectedWalletLoginForm = connect(
   null,
@@ -42,6 +43,8 @@ storiesOf('WalletLoginForm', module)
           password={''}
           passwordStatus={'incomplete'}
           passwordHelpingText={''}
+          sessionStorageWallets={getSessionStorageWallets()}
+          localStorageWallets={getLocalStorageWallets()}
           storeWallet={true}
           storePrivateKey={true}
           onDrop={action('onDrop')}
@@ -73,6 +76,8 @@ storiesOf('WalletLoginForm', module)
           password={''}
           passwordStatus={'incomplete'}
           passwordHelpingText={''}
+          sessionStorageWallets={getSessionStorageWallets()}
+          localStorageWallets={getLocalStorageWallets()}
           storeWallet={true}
           storePrivateKey={true}
           onDrop={action('onDrop')}
