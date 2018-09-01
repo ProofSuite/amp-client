@@ -9,8 +9,6 @@ export default class CurrentWallet extends React.PureComponent {
     showPrivateKey: false,
     isModalOpen: false,
     locked: false,
-    privateKey: '0xssdfs232231sdhasjdhkasjhdkasjhkajsks384723h3hr338e2',
-    currentBlock: '0xCurrentBlocksdhasjdhkasjhdkasjhkajsks384723h3hr338e2',
     balance: '121.2312',
   };
 
@@ -49,8 +47,8 @@ export default class CurrentWallet extends React.PureComponent {
 
   render() {
     const {
-      props: { accountAddress },
-      state: { showPrivateKey, currentBlock, privateKey, balance, locked, isModalOpen },
+      props: { accountAddress, accountPrivateKey },
+      state: { showPrivateKey, currentBlock, balance, locked, isModalOpen },
       togglePrivateKey,
       toggleLock,
       handleModalClose,
@@ -58,7 +56,7 @@ export default class CurrentWallet extends React.PureComponent {
     return (
       <CurrentWalletRenderer
         showPrivateKey={showPrivateKey}
-        privateKey={privateKey}
+        privateKey={accountPrivateKey}
         balance={balance}
         locked={locked}
         isModalOpen={isModalOpen}

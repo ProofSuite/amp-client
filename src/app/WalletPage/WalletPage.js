@@ -14,12 +14,19 @@ class WalletPage extends React.PureComponent<Props> {
     // this.props.removeNotification(1);
   }
   render() {
-    const { loading, depositTableData, authenticated, accountAddress } = this.props;
+    const { loading, depositTableData, authenticated, accountAddress, accountPrivateKey } = this.props;
     if (!authenticated) {
       return <Redirect to="/login" />;
     }
 
-    return <WalletPageRenderer loading={loading} accountAddress={accountAddress} depositTableData={depositTableData} />;
+    return (
+      <WalletPageRenderer
+        loading={loading}
+        accountPrivateKey={accountPrivateKey}
+        accountAddress={accountAddress}
+        depositTableData={depositTableData}
+      />
+    );
   }
 }
 

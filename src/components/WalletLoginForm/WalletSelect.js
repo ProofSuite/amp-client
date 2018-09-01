@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 
-class StandardSelect extends Component {
+class WalletSelect extends React.Component {
   renderItem(item, { handleClick, modifiers }) {
     return (
       <MenuItem
         active={modifiers.active}
         disabled={modifiers.disabled}
         onClick={rank => handleClick(item.rank)}
-        text={`${item.name}`}
+        text={`${item.rank + 1}. ${item.address}`}
         key={item.rank}
       />
     );
   }
 
   render() {
-    const { items, item, icon, handleChange } = this.props;
+    const { items, item, icon, handleChange, label } = this.props;
     return (
       <Select
         items={items}
@@ -27,16 +27,16 @@ class StandardSelect extends Component {
         onItemSelect={handleChange}
         popoverProps={{ minimal: true }}
       >
-        <Button icon={item.icon ? item.icon : icon} text={item.label} righticonname="double-caret-vertical" />
+        <Button icon={item.icon ? item.icon : icon} text={label} righticonname="double-caret-vertical" />
       </Select>
     );
   }
 }
 
-StandardSelect.propTypes = {
+WalletSelect.propTypes = {
   item: PropTypes.object,
   items: PropTypes.array,
   handleChange: PropTypes.func,
 };
 
-export default StandardSelect;
+export default WalletSelect;

@@ -72,6 +72,7 @@ export const createLocalWalletSigner = async (wallet: Object, networkId: ?number
     chainId: networkId,
     name: 'unspecified',
   });
+
   let signer = new Wallet(wallet.privateKey, provider);
   window.signer = { instance: signer, type: 'wallet' };
   return wallet.address;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button } from '@blueprintjs/core';
 import styled from 'styled-components';
-import StartTxModal from '../../components/StartTxModal';
+import SendEtherModal from '../../components/SendEtherModal';
 import { toPassowrdType } from '../../utils/helpers';
 
 const CurrentWalletRenderer = props => {
@@ -45,12 +45,7 @@ const CurrentWalletRenderer = props => {
           <Button minimal="true" onClick={toggleLock} text={(locked ? 'Lock' : 'Unlock') + ' Private Key Display'} />
         </Row>
         <Row>
-          <Button
-            style={{ marginBottom: '8px' }}
-            onClick={handleModalClose}
-            text="Start Transaction"
-            intent="primary"
-          />
+          <Button style={{ marginBottom: '8px' }} onClick={handleModalClose} text="New Transaction" intent="primary" />
         </Row>
         <Row>
           <a
@@ -61,14 +56,8 @@ const CurrentWalletRenderer = props => {
             View Wallet on Etherscan
           </a>
         </Row>
-        <StartTxModal isOpen={isModalOpen} handleClose={handleModalClose} />
+        <SendEtherModal isOpen={isModalOpen} handleClose={handleModalClose} />
       </div>
-      <Block>
-        <h3>Current Block: </h3>
-        <a href={'https://etherscan.io/block/' + currentBlock} target="_blank">
-          {currentBlock}
-        </a>
-      </Block>
     </WalletWrapper>
   );
 };
@@ -85,10 +74,6 @@ const CardTitle = styled.h3`
   width: 100%;
   float: left;
   margin-bottom: 15px;
-`;
-const Block = styled.div`
-  float: left;
-  word-wrap: break-word;
 `;
 const Row = styled.div`
   display: block;

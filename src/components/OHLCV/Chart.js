@@ -40,6 +40,7 @@ import {
   mouseEdgeAppearance,
   theme,
   canvasGradient,
+  edgeIndicatorAppearance
 } from './indicatorSettings';
 import { curveMonotoneX } from 'd3-shape';
 
@@ -133,7 +134,6 @@ class OHLCVChart extends React.Component {
           tickStrokeWidth: 1,
         }
       : {};
-
     return (
       <div>
         <ChartCanvas
@@ -205,12 +205,10 @@ class OHLCVChart extends React.Component {
                 orient="right"
                 edgeAt="right"
                 yAccessor={d => d.close}
-                fill={d => (d.close > d.open ? theme.green1 : theme.mehroon2)}
-                stroke={d => (d.close > d.open ? theme.green : theme.mehroon1)}
-                textFill={d => (d.close > d.open ? theme.green : theme.mehroon)}
-                strokeOpacity={1}
-                strokeWidth={3}
-                arrowWidth={2}
+                fill={d => (d.close > d.open ? theme.GREEN5 : theme.RED4)}
+                stroke={d => (d.close > d.open ? theme.GREEN3 : theme.RED2)}
+                textFill={d => (d.close > d.open ? theme.black : theme.black)}
+                {...edgeIndicatorAppearance}
               />
 
               <OHLCTooltip origin={[-30, 0]} />

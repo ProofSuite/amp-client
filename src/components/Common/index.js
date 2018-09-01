@@ -12,4 +12,6 @@ export { default as Column, ColumnEnd, ColumnSpaceAround } from './Column';
 export { default as Loading } from './Loading';
 export { default as CenteredMessage } from './CenteredMessage';
 export { default as LoadData } from './LoadData';
+export { default as CryptoIcon } from './CryptoIcon';
 export { default as Footer } from './Footer';
+export { default as SvgIcon } from './SvgIcon';

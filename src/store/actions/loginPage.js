@@ -29,10 +29,10 @@ export function loginWithMetamask(address: string): LoginWithMetamaskAction {
   };
 }
 
-export function loginWithWallet(address: string): LoginWithWalletAction {
+export function loginWithWallet(address: string, privateKey: string): LoginWithWalletAction {
   return {
     type: actionTypes.loginWithWallet,
-    payload: { address },
+    payload: { address, privateKey },
   };
 }
 

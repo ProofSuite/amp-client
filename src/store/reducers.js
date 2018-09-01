@@ -126,7 +126,7 @@ export const ohlcv = createReducer(action => {
     case ohlcvActionTypes.saveTimeSpan:
       return ohlcvEvents.savedTimeSpan(payload.data);
     case ohlcvActionTypes.saveNoOfCandles:
-      return ohlcvEvents.savedNoOfCandles(payload.data);
+      return ohlcvEvents.savedNoOfCandles(payload);
     case tokenSearcherActionTypes.updateCurrentPair:
       return ohlcvEvents.ohlcvReset();
     default:
@@ -219,15 +219,19 @@ export const account = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case accountActionTypes.updateAccount:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, '');
     case signerSettingsActionTypes.updateSigner:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, '');
     case loginPageActionTypes.loginWithMetamask:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, '');
     case loginPageActionTypes.loginWithWallet:
-      return accountEvents.accountUpdated(payload.address);
+      return accountEvents.accountUpdated(payload.address, payload.privateKey);
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved();
+    case accountActionTypes.updateCurrentBlock:
+      return accountEvents.currentBlockUpdated(payload.currentBlock);
+    case accountActionTypes.updateCurrentProvider:
+      return accountEvents.currentProviderUpdated(payload.provider);
     default:
       return accountEvents.initialized();
   }
@@ -280,8 +284,6 @@ export const wallets = createReducer(action => {
       return walletsEvents.walletRemoved(payload);
     case loginPageActionTypes.createWallet:
       return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
-    case walletPageActionTypes.updateCurrentBlock:
-      return walletsEvents.currentBlockUpdated(payload.currentBlock);
     default:
       return walletsEvents.initialized();
   }

@@ -3,10 +3,10 @@
 .trade-history {
   min-width: 580px;
   width: 100%;
-
+  padding: 20px 20px 9px 20px;
   .list-container {
     .list {
-      max-height: 580px;
+      max-height: 300px;
       height: 90%;
       overflow-y: scroll;
     }

@@ -34,7 +34,7 @@ export const OrderBookRenderer = (props: Props) => {
         </div>
       )}
       {asks && (
-        <div className="list-container">
+        <div className="list-container left-list">
           <ListHeading>
             <HeaderRow>
               <HeaderCell>PRICE</HeaderCell>
@@ -93,12 +93,13 @@ const Row = styled.li.attrs({
   cursor: pointer;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   position: relative;
   width: 100%;
   margin: 0px !important;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
+  padding-left: 10px !important;
   border: 1px transparent;
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
@@ -145,11 +146,12 @@ const ListHeading = styled.ul`
   flex-direction: row;
   justify-content: space-around;
   margin-bottom: 5px;
+  padding-left: 10px !important;
 `;
 
 const HeaderRow = styled.li`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 0px !important;
   padding-bottom: 10px;
   width: 100%;

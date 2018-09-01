@@ -112,26 +112,14 @@
     }
   }
 }
-@media only screen and (min-width: 1530px) and (max-width: 1600px) {
-  .trading-page{
-    .left-side {
-      width: 18.5%;
-    }
-    .right-side {
-      width: 22%;
-    }
-    .both-hidden {
-      width: 99%;
-    }
-    .if-left-hidden {
-      width: 77%;
-    }
-    .if-right-hidden {
-      width: 80.5%;
-    }
-    .none-hidden {
-      width: 58.5%;
-    }
+@media only screen and (min-width: 1400px) and (max-width: 1600px) {
+  .trading-page-layout {
+    grid-template-columns: 0.7fr 2.35fr;
+  }
+}
+@media only screen and (min-width: 1330px) and (max-width: 1399px) {
+  .trading-page-layout {
+    grid-template-columns: 0.6fr 1.8fr;
   }
 }
 @media only screen and (max-width: 1530px) {

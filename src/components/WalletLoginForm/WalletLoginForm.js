@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { isJson } from '../../utils/helpers';
+import { isJson, getSessionStorageWallets, getLocalStorageWallets } from '../../utils/helpers';
 
 import {
   createWalletFromJSON,
@@ -34,6 +34,8 @@ type State = {
   password: ?string,
   passwordStatus: Status,
   passwordHelpingText: string,
+  localStorageWallets: Array<Object>,
+  sessionStorageWallets: Array<Object>,
   storeWallet: boolean,
   storePrivateKey: boolean,
 };
@@ -55,6 +57,8 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     password: '',
     passwordStatus: 'incomplete',
     passwordHelpingText: '',
+    sessionStorageWallets: getSessionStorageWallets(),
+    localStorageWallets: getLocalStorageWallets(),
     storeWallet: true,
     storePrivateKey: true,
   };
@@ -107,11 +111,10 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     }
   };
 
-  handleChange = ({ target }: SyntheticInputEvent<>) => {
+  handleChange = ({ target }: Object) => {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [target.name]: value }, this.validate(target.name, value));
     if (target.name === 'method') {
-      // console.log(target)
       this.setState({
         address: '',
         json: '',
@@ -269,6 +272,8 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         password,
         passwordStatus,
         passwordHelpingText,
+        sessionStorageWallets,
+        localStorageWallets,
         storePrivateKey,
         storeWallet,
       },
@@ -279,6 +284,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       onEnterKeyPress,
     } = this;
     const saveEncryptedWalletDisabled = method === 'privateKey' || method === 'mnemonic';
+
     return (
       <WalletLoginFormRenderer
         loading={loading}
@@ -295,6 +301,8 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         password={password}
         passwordStatus={passwordStatus}
         passwordHelpingText={passwordHelpingText}
+        sessionStorageWallets={sessionStorageWallets}
+        localStorageWallets={localStorageWallets}
         storeWallet={storeWallet}
         storePrivateKey={storePrivateKey}
         onDrop={onDrop}

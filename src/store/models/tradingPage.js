@@ -26,7 +26,9 @@ export const queryDefaultData = (): ThunkAction => {
       dispatch(actionCreators.updateTokenPairData(tokenPairData));
 
       let ohlcv = await trading.getData();
-      dispatch(ohlcvActionCreators.saveData(ohlcv));
+      setTimeout(function() {
+        dispatch(ohlcvActionCreators.saveData(ohlcv));
+      }, 2000);
 
       let orders = await api.getOrders();
       dispatch(actionCreators.updateOrderTable(orders));

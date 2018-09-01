@@ -53,12 +53,12 @@ const Panel = (props: { trades: Array<Trade> }) => {
   ) : (
     <div className="list-container">
       <ul className="heading">
-        <li className="heading">
+        <HeadingRow>
           <HeaderCell>AMOUNT</HeaderCell>
           <HeaderCell>PRICE</HeaderCell>
           <HeaderCell />
           <HeaderCell cellName="time">TIME</HeaderCell>
-        </li>
+        </HeadingRow>
       </ul>
       <ul className="list">
         {trades.map((trade, index) => <TradeTableRow key={index} index={index} trade={trade} />)}
@@ -89,8 +89,16 @@ const TradesTableHeader = styled.div`
   align-items: center;
 `;
 
-const Heading = styled.h4`
+const Heading = styled.h3`
   margin: auto;
+`;
+const HeadingRow = styled.li`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  justify-content: space-between;
+  padding-left: 10px;
 `;
 
 const Row = styled.li.attrs({
@@ -99,13 +107,14 @@ const Row = styled.li.attrs({
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   border: 1px transparent;
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
   padding: 7px;
+  padding-left: 10px !important;
   background-color: ${props => (props.side === 'BUY' ? Colors.BUY_MUTED : Colors.SELL_MUTED)};
 `;
 
