@@ -3,10 +3,10 @@ import { defineMessages, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { Callout, Card, Intent, Spinner, Tag } from '@blueprintjs/core';
 import WalletLoginForm from '../../components/WalletLoginForm';
+import CreateWalletModal from '../../components/CreateWalletModal';
 import MetamaskIcon from '../../components/Icons/Metamask';
-import KeyIcon from '../../components/Icons/Key';
-import { Centered, Divider, LargeText } from '../../components/Common';
-
+import { KeyIcon, WalletIcon } from '../../components/Icons';
+import { Centered, Divider, LargeText, Colors } from '../../components/Common';
 import type { CreateWalletParams } from '../../types/createWallet';
 
 type Props = {
@@ -18,17 +18,31 @@ type Props = {
 };
 
 const LoginPageRenderer = (props: Props) => {
-  const { view, loginWithMetamask, loginWithWallet, showWalletLoginForm, metamaskStatus, showLoginMethods } = props;
+  const {
+    view,
+    loginWithMetamask,
+    loginWithWallet,
+    showCreateWallet,
+    hideModal,
+    showWalletLoginForm,
+    metamaskStatus,
+    showLoginMethods,
+    walletCreated,
+  } = props;
 
   const views = {
     loginMethods: (
       <LoginMethodsView
         showWalletLoginForm={showWalletLoginForm}
         loginWithMetamask={loginWithMetamask}
+        showCreateWallet={showCreateWallet}
         metamaskStatus={metamaskStatus}
       />
     ),
     wallet: <WalletLoginFormView loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />,
+    createWallet: (
+      <CreateWalletModal createWallet={walletCreated} hideModal={hideModal} visible={view === 'createWallet'} />
+    ),
     loading: <LoginLoadingView />,
   };
 
@@ -36,7 +50,7 @@ const LoginPageRenderer = (props: Props) => {
 };
 
 const LoginMethodsView = (props: Props) => {
-  const { showWalletLoginForm, loginWithMetamask, metamaskStatus } = props;
+  const { showWalletLoginForm, loginWithMetamask, metamaskStatus, showCreateWallet } = props;
   return (
     <Wrapper>
       <Announcement>
@@ -77,6 +91,12 @@ const LoginMethodsView = (props: Props) => {
             <KeyIcon size={100} />
             <Heading>
               <FormattedMessage {...messages.wallet} />
+            </Heading>
+          </LoginCard>
+          <LoginCard onClick={showCreateWallet}>
+            <WalletIcon size={100} color={Colors.WHITE} />
+            <Heading>
+              <FormattedMessage {...messages.createWallet} />
             </Heading>
           </LoginCard>
         </LoginCards>
@@ -214,6 +234,10 @@ const messages = defineMessages({
   wallet: {
     id: 'loginPage.wallet',
     defaultMessage: 'Wallet',
+  },
+  createWallet: {
+    id: 'loginPage.createWallet',
+    defaultMessage: 'Create Wallet',
   },
 });
 

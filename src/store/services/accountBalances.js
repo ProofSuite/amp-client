@@ -32,13 +32,13 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
   return balances;
 }
 
-export async function queryTokenAllowances(address: string, tokens: Array<Token>) {
+export async function queryTokenAllowances(owner: string, spender: string, tokens: Array<Token>) {
   let allowances;
   const provider = getProvider();
 
   const allowancePromises = tokens.map(token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider);
-    return contract.allowance(address);
+    return contract.allowance(owner, spender);
   });
 
   allowances = await Promise.all(allowancePromises);

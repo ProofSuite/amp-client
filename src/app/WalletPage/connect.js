@@ -1,21 +1,26 @@
 import { connect } from 'react-redux';
 import getWalletPageSelector, { queryAccountData } from '../../store/models/walletPage';
+import settingsPageSelector from '../../store/models/settings';
 import accountSelector from '../../store/models/layout';
+import { sortTable } from '../../utils/helpers';
 import { removeNotification } from '../../store/actions/app';
 
 export function mapStateToProps(state, props) {
-  const { depositTableData, accountAddress, currentBlock, accountPrivateKey } = getWalletPageSelector(state);
+  const { depositTableData, accountAddress, currentBlock, provider, accountPrivateKey } = getWalletPageSelector(state);
   const { authenticated } = accountSelector(state);
   const loading = !(depositTableData.length > 0);
+  const { pvtKeyLocked } = settingsPageSelector(state);
 
   return {
-    depositTableData: depositTableData,
+    depositTableData: sortTable(depositTableData, 'symbol'),
     accountAddress: accountAddress,
     accountPrivateKey: accountPrivateKey,
     loading: loading,
     isDefaultAccountSet: false,
     authenticated: authenticated,
     currentBlock: currentBlock,
+    provider: provider,
+    pvtKeyLocked: pvtKeyLocked,
   };
 }
 

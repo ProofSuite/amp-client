@@ -27,7 +27,9 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
     currentStep: 0,
     password: '',
     address: '',
+    passwordStatus: 'incomplete',
     encryptedWallet: '',
+    showPassword: false,
     storeWallet: false,
     storePrivateKey: false,
     encryptionPercentage: 0,
@@ -64,15 +66,19 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   };
 
   goToDownloadWallet = async () => {
-    this.setState({ showEncryptionProgress: true });
-    let { encryptedWallet, address } = await createAndEncryptWallet(this.state.password, percent =>
-      this.updateProgressBar(percent)
-    );
-    this.setState({ address, encryptedWallet });
+    if (this.state.password) {
+      this.setState({ showEncryptionProgress: true });
+      let { encryptedWallet, address } = await createAndEncryptWallet(this.state.password, percent =>
+        this.updateProgressBar(percent)
+      );
+      this.setState({ address, encryptedWallet, passwordStatus: 'valid' });
+    } else {
+      this.setState({ passwordStatus: 'invalid' });
+    }
   };
 
   goBackToCreateWallet = () => {
-    this.setState({ currentStep: 0 });
+    this.setState({ currentStep: 0, showEncryptionProgress: false });
   };
 
   goBackToDownloadWallet = () => {
@@ -86,7 +92,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   complete = () => {
     const { createWallet, hideModal } = this.props;
     const { address, password, encryptedWallet, storeWallet, storePrivateKey } = this.state;
-
+    console.log(this.props);
     createWallet({ address, password, encryptedWallet, storeWallet, storePrivateKey });
     hideModal();
   };
@@ -96,33 +102,43 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
     this.setState({ [target.name]: value });
   };
 
+  togglePasswordView = () => {
+    this.setState(function(prevState) {
+      return { showPassword: !prevState.showPassword };
+    });
+  };
+
   render() {
     const { visible, hideModal } = this.props;
     const {
       currentStep,
       password,
+      showPassword,
       showEncryptionProgress,
       encryptionPercentage,
       address,
       encryptedWallet,
+      passwordStatus,
       storeWallet,
       storePrivateKey,
     } = this.state;
-
     return (
       <CreateWalletModalRenderer
         visible={visible}
         hideModal={hideModal}
         currentStep={currentStep}
         showEncryptionProgress={showEncryptionProgress}
+        showPassword={showPassword}
         encryptionPercentage={encryptionPercentage}
         address={address}
         encryptedWallet={encryptedWallet}
         password={password}
         storeWallet={storeWallet}
+        passwordStatus={passwordStatus}
         storePrivateKey={storePrivateKey}
         goToDownloadWallet={this.goToDownloadWallet}
         goBackToCreateWallet={this.goBackToCreateWallet}
+        togglePasswordView={this.togglePasswordView}
         goToComplete={this.goToComplete}
         goBackToDownloadWallet={this.goBackToDownloadWallet}
         complete={this.complete}

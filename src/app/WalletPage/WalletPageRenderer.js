@@ -10,13 +10,39 @@ type Props = {
   queryAccountData: void => void,
 };
 
-const WalletPageRenderer = ({ loading, depositTableData, accountAddress, accountPrivateKey }: Props) => {
+const WalletPageRenderer = ({
+  loading,
+  pvtKeyLocked,
+  provider,
+  depositTableData,
+  accountAddress,
+  accountPrivateKey,
+}: Props) => {
   return (
     <Wrapper>
       <RowWrapper>
-        <CurrentWallet accountAddress={accountAddress} accountPrivateKey={accountPrivateKey} />
+        <CurrentWallet
+          pvtKeyLocked={pvtKeyLocked}
+          accountAddress={accountAddress}
+          accountPrivateKey={accountPrivateKey}
+        />
         <WalletPageContent>
-          {loading ? <CenteredSpinner /> : <DepositTable depositData={depositTableData} />}
+          {loading ? (
+            <CenteredSpinner />
+          ) : (
+            <RightSection>
+              <DepositWrapper>
+                <DepositTable provider={provider} depositData={depositTableData} />
+              </DepositWrapper>
+              <HeadingMenu>
+                <h4>Heading</h4>
+                <p>Text .......</p>
+                <p>Text .......</p>
+                <p>Text .......</p>
+                <p>Text .......</p>
+              </HeadingMenu>
+            </RightSection>
+          )}
         </WalletPageContent>
       </RowWrapper>
       <p style={{ textAlign: 'center', marginTop: '15px' }}>
@@ -31,6 +57,21 @@ const WalletPageRenderer = ({ loading, depositTableData, accountAddress, account
 const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const HeadingMenu = styled.div`
+  width: 30%;
+`;
+
+const DepositWrapper = styled.div`
+  height: 100%;
+  width: 69%;
+`;
+const RightSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`

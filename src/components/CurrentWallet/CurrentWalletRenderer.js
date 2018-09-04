@@ -7,16 +7,15 @@ import { toPassowrdType } from '../../utils/helpers';
 const CurrentWalletRenderer = props => {
   const {
     showPrivateKey,
-    toggleLock,
     isModalOpen,
     handleModalClose,
     togglePrivateKey,
     privateKey,
     accountAddress,
     balance,
-    locked,
-    currentBlock,
+    pvtKeyLocked,
   } = props;
+  const displayPvtKey = showPrivateKey && !pvtKeyLocked;
   return (
     <WalletWrapper>
       <div>
@@ -32,7 +31,7 @@ const CurrentWalletRenderer = props => {
         <Row>
           <h3>Private Key: </h3>
           <p style={{ lineHeight: '1.6' }}>
-            {showPrivateKey ? (locked ? privateKey : toPassowrdType(privateKey)) : toPassowrdType(privateKey)}
+            {displayPvtKey ? privateKey : toPassowrdType(privateKey)}
             <Button
               minimal="true"
               style={{ marginLeft: '10px', cursor: 'pointer' }}
@@ -42,10 +41,13 @@ const CurrentWalletRenderer = props => {
           </p>
         </Row>
         <Row>
-          <Button minimal="true" onClick={toggleLock} text={(locked ? 'Lock' : 'Unlock') + ' Private Key Display'} />
-        </Row>
-        <Row>
-          <Button style={{ marginBottom: '8px' }} onClick={handleModalClose} text="New Transaction" intent="primary" />
+          <Button
+            fill={true}
+            style={{ marginBottom: '8px' }}
+            onClick={handleModalClose}
+            text="New Transaction"
+            intent="primary"
+          />
         </Row>
         <Row>
           <a
