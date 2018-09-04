@@ -3,7 +3,7 @@ import type { Node } from 'react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Link, NavLink } from 'react-router-dom';
-import { SvgIcon, Colors } from '../../components/Common';
+import { SvgIcon, Footer } from '../../components/Common';
 import styled from 'styled-components';
 import {
   Alignment,
@@ -34,7 +34,7 @@ function Layout(props: Props) {
   const menu = (
     <Menu>
       <MenuItem>
-        <MenuItemLink to="/">Current Account: ${address}</MenuItemLink>
+        <MenuItemLink to="/">Current Account: {address}</MenuItemLink>
       </MenuItem>
       <MenuDivider />
       <MenuItem>
@@ -90,6 +90,7 @@ function Layout(props: Props) {
           </Navbar>
         </Header>
         <MainContent>{children}</MainContent>
+        <Footer />
       </Wrapper>
     </IntlProvider>
   );
