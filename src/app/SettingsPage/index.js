@@ -1,3 +1,4 @@
 import Settings from './SettingsPage';
+import connect from './connect';
 
-export default Settings;
+export default connect(Settings);

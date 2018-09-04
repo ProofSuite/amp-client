@@ -1,69 +1,71 @@
 import React from 'react';
 import { Button, Switch, Icon, Checkbox, InputGroup } from '@blueprintjs/core';
-import { RowSpaceBetween } from '../Common';
+import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import styled from 'styled-components';
 
 const DepositTableRenderer = (props: Props) => {
-  const { hideZeroBalanceToken, toggleZeroBalanceToken } = props;
+  const { hideZeroBalanceToken, toggleZeroBalanceToken, provider } = props;
   return (
-    <Wrapper>
-      <TableSection>
-        <RowSpaceBetween style={{ marginBottom: '10px' }}>
-          <InputGroup
-            type="string"
-            leftIcon="search"
-            placeholder="Search Token ..."
-            value={props.searchValue}
-            onChange={props.handleSearchChange}
-          />
-          <HideTokenCheck checked={hideZeroBalanceToken} onChange={toggleZeroBalanceToken}>
-            Hide Tokens with 0 balance
-          </HideTokenCheck>
-        </RowSpaceBetween>
+    <TableSection>
+      <RowSpaceBetween style={{ marginBottom: '10px' }}>
+        <InputGroup
+          type="string"
+          leftIcon="search"
+          placeholder="Search Token ..."
+          value={props.searchValue}
+          onChange={props.handleSearchChange}
+        />
+        <HideTokenCheck checked={hideZeroBalanceToken} onChange={toggleZeroBalanceToken}>
+          Hide Tokens with 0 balance
+        </HideTokenCheck>
+      </RowSpaceBetween>
+      <Table>
+        <thead>
+          <TableHeader>
+            <TableHeaderCell>Token Name</TableHeaderCell>
+            <TableHeaderCell>Balances</TableHeaderCell>
+            <TableHeaderCell>Allowances</TableHeaderCell>
+            <TableHeaderCell style={{ width: '40%' }}>Allow trading</TableHeaderCell>
+          </TableHeader>
+        </thead>
+      </Table>
+      <TableBodyContainer>
         <Table>
-          <thead>
-            <TableHeader>
-              <TableHeaderCell>Token Name</TableHeaderCell>
-              <TableHeaderCell>Balances</TableHeaderCell>
-              <TableHeaderCell>Allowances</TableHeaderCell>
-              <TableHeaderCell style={{ width: '40%' }}>Allow trading</TableHeaderCell>
-            </TableHeader>
-          </thead>
+          <TableBody>
+            <RowRenderer {...props} />
+          </TableBody>
         </Table>
-        <TableBodyContainer>
-          <Table>
-            <TableBody>
-              <RowRenderer {...props} />
-            </TableBody>
-          </Table>
-          {props.depositData.length < 1 && <NoToken>No Token to show</NoToken>}
-        </TableBodyContainer>
-      </TableSection>
-      <HeadingMenu>
-        <h4>Heading</h4>
-        <p>Text .......</p>
-        <p>Text .......</p>
-        <p>Text .......</p>
-        <p>Text .......</p>
-      </HeadingMenu>
-    </Wrapper>
+        {props.depositData.length < 1 && <NoToken>No Token to show</NoToken>}
+      </TableBodyContainer>
+    </TableSection>
   );
 };
 
 const RowRenderer = (props: Props) => {
-  const { depositData, handleAllowance, handleModalClose, handleWithdraw } = props;
+  const { provider, depositData, handleAllowance, handleModalClose, handleWithdraw } = props;
   return depositData.map(({ symbol, balance, allowed }, index) => {
     return (
       <Row key={index}>
-        <Cell>{symbol}</Cell>
+        <Cell>
+          <TokenSymbol>
+            <ColoredCryptoIcon name={symbol} />
+            <span>{symbol}</span>
+          </TokenSymbol>
+        </Cell>
         <Cell>{balance}</Cell>
         <Cell>
           <Switch checked={allowed} onChange={handleAllowance} />
         </Cell>
         <Cell style={{ width: '40%' }}>
           <ButtonWrapper>
-            <Button style={{ marginRight: '10px' }} intent="primary" text="Deposit" onClick={handleModalClose} />
-            <Button intent="primary" text="Withdraw" onClick={handleWithdraw} />
+            <Button
+              disabled={!provider}
+              style={{ marginRight: '10px' }}
+              intent="primary"
+              text="Deposit"
+              onClick={handleModalClose}
+            />
+            <Button disabled={!provider} intent="primary" text="Withdraw" onClick={handleWithdraw} />
           </ButtonWrapper>
         </Cell>
       </Row>
@@ -99,11 +101,13 @@ const TableBodyContainer = styled.div`
   overflow-y: scroll;
 `;
 
-const Wrapper = styled.div`
+const TokenSymbol = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   height: 100%;
-  width: 100%;
+  & svg {
+    margin-right: 7px;
+  }
 `;
 
 const TableSection = styled.div`
@@ -111,11 +115,7 @@ const TableSection = styled.div`
   justify-content: space-between;
   flex-direction: column;
   height: 100%;
-  width: 60%;
-`;
-
-const HeadingMenu = styled.div`
-  width: 39%;
+  width: 99%;
 `;
 const SearchBar = styled.input.attrs({
   className: 'bp3-input',

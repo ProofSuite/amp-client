@@ -15,3 +15,4 @@ export { default as LoadData } from './LoadData';
 export { default as CryptoIcon } from './CryptoIcon';
 export { default as Footer } from './Footer';
 export { default as SvgIcon } from './SvgIcon';
+export { default as ColoredCryptoIcon } from './ColoredCryptoIcon';

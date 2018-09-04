@@ -15,7 +15,7 @@ import {
   RadioGroup,
   TextArea,
 } from '@blueprintjs/core';
-import { Divider, OverlaySpinner, Text } from '../../components/Common';
+import { Divider, OverlaySpinner, Text, Colors } from '../../components/Common';
 import WalletSelect from './WalletSelect';
 // TODO -> Intent issue is still to get fix this func () => `JSONFileInputForm`
 
@@ -108,6 +108,7 @@ const WalletLoginFormRenderer = (props: Props) => {
     submit,
     saveEncryptedWalletDisabled,
     showLoginMethods,
+    createWallet,
   } = props;
 
   const inputForms = {
@@ -153,12 +154,13 @@ const WalletLoginFormRenderer = (props: Props) => {
         handleChange={handleChange}
       />
     ),
-    savedWallet: (
-      <SavedWallet
+    createWallet: (
+      <CreateWalletWrap
         handleChange={handleChange}
         password={password}
         onEnterKeyPress={onEnterKeyPress}
         passwordStatus={passwordStatus}
+        createWallet={createWallet}
         passwordHelpingText={passwordHelpingText}
       />
     ),
@@ -171,7 +173,7 @@ const WalletLoginFormRenderer = (props: Props) => {
         <Radio label="JSON" value="json" />
         <Radio label="Wallet File" value="walletFile" />
         <Radio label="Mnemonic Sentence" value="mnemonic" />
-        <Radio label="Saved Wallet" value="savedWallet" />
+        <Radio label="Create New Wallet" value="createWallet" />
       </RadioGroup>
       <InputFormsBox>{inputForms[method]}</InputFormsBox>
       <FormGroup helperText="Learn more about different options here">
@@ -192,7 +194,11 @@ const WalletLoginFormRenderer = (props: Props) => {
           <Button intent="normal" minimal={true} icon="undo" onClick={showLoginMethods} />
         </ButtonBox>
         <ButtonBox>
-          <Button intent="primary" text="Authenticate" onClick={submit} />
+          {method === 'createWallet' ? (
+            <Button intent="primary" text="Create Wallet" onClick={createWallet} />
+          ) : (
+            <Button intent="primary" text="Authenticate" onClick={submit} />
+          )}
         </ButtonBox>
       </FooterWrapper>
       <OverlaySpinner visible={loading} transparent />
@@ -211,18 +217,6 @@ const PrivateKeyInputForm = ({
   const walletsSaved = sessionStorageWallets.length > 1;
   return (
     <div>
-      {walletsSaved && (
-        <InputPadding>
-          <WalletSelect
-            // silence-error: couldn't resolve
-            item={sessionStorageWallets[0]}
-            items={sessionStorageWallets}
-            handleChange={evt => handleChange({ target: { value: evt.key, name: 'privateKey' } })}
-            label="Select saved PrivateKey"
-          />
-        </InputPadding>
-      )}
-      <Label />
       <InputPadding>
         <FormGroup
           helperText={inputStatuses['privateKey'][privateKeyStatus]}
@@ -305,19 +299,40 @@ const JSONInputForm = ({
   );
 };
 
-const SavedWallet = ({
+const CreateWalletWrap = ({
   handleChange,
-  addresses,
   password,
   passwordStatus,
   passwordHelpingText,
   onEnterKeyPress,
+  createWallet,
 }: *) => {
   return (
     <div>
-      <Label text="Input JSON File Text">
-        <InputPadding />
-      </Label>
+      <InputPadding>
+        <FormGroup>
+          <InputGroup
+            name="password"
+            type="password"
+            label="password"
+            placeholder="Password for new Wallet"
+            onChange={handleChange}
+            value={password}
+          />
+        </FormGroup>
+      </InputPadding>
+      <HelperText>
+        <b>Do not lose it!</b> It cannot be recovered if you lose it.
+      </HelperText>
+      <HelperText>
+        <b>Do not share it!</b> Your funds will be stolen if you use this file on a malicious/phishing site.
+      </HelperText>
+      <HelperText>
+        <b>Make a backup!</b> Secure it like the millions of dollars it may one day be worth.
+      </HelperText>
+      <InputPadding>
+        <Button onClick={createWallet} text="Create New Wallet" />
+      </InputPadding>
     </div>
   );
 };
@@ -430,6 +445,11 @@ const DropzoneMessageContainer = styled(Card)`
   align-items: center;
   align-content: center;
   justify-items: center;
+`;
+const HelperText = styled.p`
+  color: ${Colors.GRAY5};
+  text-align: center;
+  padding: 0 40px;
 `;
 
 export default WalletLoginFormRenderer;

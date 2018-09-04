@@ -39,11 +39,24 @@ class LoginPage extends React.PureComponent<Props, State> {
     this.setState({ view: 'loginMethods' });
   };
 
+  showCreateWallet = () => {
+    this.setState({ view: 'createWallet' });
+  };
+
   loginWithMetamask = () => {
     this.props.loginWithMetamask();
   };
 
+  hideModal = () => {
+    this.setState({ view: 'loginMethods' });
+  };
+
   componentWillMount = () => {
+    // this.props.removeNotification({ id: 1 });
+  };
+
+  walletCreated = props => {
+    console.log(props);
     // this.props.removeNotification({ id: 1 });
   };
 
@@ -53,6 +66,9 @@ class LoginPage extends React.PureComponent<Props, State> {
       state: { view, metamaskStatus },
       showWalletLoginForm,
       showLoginMethods,
+      showCreateWallet,
+      hideModal,
+      walletCreated,
     } = this;
 
     if (authenticated) {
@@ -64,6 +80,9 @@ class LoginPage extends React.PureComponent<Props, State> {
           view={view}
           metamaskStatus={metamaskStatus}
           loginWithWallet={loginWithWallet}
+          showCreateWallet={showCreateWallet}
+          hideModal={hideModal}
+          walletCreated={walletCreated}
           loginWithMetamask={loginWithMetamask}
           showWalletLoginForm={showWalletLoginForm}
           showLoginMethods={showLoginMethods}

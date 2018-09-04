@@ -28,6 +28,7 @@ export function saveNoOfCandles(data: number) {
 }
 
 export function saveTimeSpan(data: Object) {
+  console.log('data: ', data);
   return {
     type: actionTypes.saveTimeSpan,
     payload: { data },

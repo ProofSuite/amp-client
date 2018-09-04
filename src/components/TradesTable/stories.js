@@ -9,27 +9,20 @@ import { LoadData } from '../Common';
 import * as tradeHistory from '../../jsons/tradeHistory.json';
 import { getTrades } from '../../store/services/api';
 
+const currentPair = {
+  baseTokenSymbol: 'BNB',
+  quoteTokenSymbol: 'ETH',
+};
+
 storiesOf('Trades', module)
   .addDecorator(withKnobs)
-  .add(
-    'Trades',
-    withInfo({
-      text: README,
-      propTablesExclude: [TradesTableContainer],
-      source: false,
-    })(() => (
-      <div className="bp3-dark">
-        <TradesTableContainer />
-      </div>
-    ))
-  )
   .add(
     'Data Loaded',
     withInfo({ text: README, source: false })(() => (
       <LoadData getData={getTrades}>
         {data => (
           <div className="bp3-dark">
-            <TradesTable trades={data} />
+            <TradesTable trades={data} currentPair={currentPair} />
           </div>
         )}
       </LoadData>

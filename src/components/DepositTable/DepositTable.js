@@ -47,7 +47,7 @@ class DepositTable extends React.PureComponent<Props, State> {
     const { hideZeroBalanceToken } = this.state;
     if (hideZeroBalanceToken) {
       data = data.filter(token => {
-        return parseFloat(token.balance > 0);
+        return parseFloat(token.balance) > 0;
       });
     }
     return data;
@@ -63,7 +63,7 @@ class DepositTable extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { depositData } = this.props;
+    const { depositData, provider } = this.props;
     const { isModalOpen, searchValue, hideZeroBalanceToken } = this.state;
 
     return (
@@ -71,6 +71,7 @@ class DepositTable extends React.PureComponent<Props, State> {
         <DepositTableRenderer
           depositData={this.filterData(depositData)}
           searchValue={searchValue}
+          provider={provider}
           hideZeroBalanceToken={hideZeroBalanceToken}
           handleModalClose={this.handleModalClose}
           handleAllowance={this.handleAllowance}

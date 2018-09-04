@@ -8,6 +8,12 @@ import OHLCV from './OHLCV';
 import README from './README.md';
 import { getData } from '../../store/services/homePage';
 
+const initialState = {
+  noOfCandles: 150,
+  currentTimeSpan: { name: '1 min', label: '1m' },
+  currentDuration: { name: '1 Hour', label: '1h' },
+};
+
 storiesOf('OHLCV', module)
   .addDecorator(withKnobs)
   .add(
@@ -16,7 +22,11 @@ storiesOf('OHLCV', module)
       text: README,
       propTablesExclude: [OHLCVContainer],
       source: false,
-    })(() => <OHLCVContainer />)
+    })(() => (
+      <div className="bp3-dark">
+        <OHLCVContainer />
+      </div>
+    ))
   )
   .add(
     'Chart',
@@ -25,11 +35,19 @@ storiesOf('OHLCV', module)
       source: false,
     })(() => (
       <LoadData getData={getData}>
-        {data => (
-          <div className="bp3-dark">
-            <OHLCV ohlcvData={data} />
-          </div>
-        )}
+        {data => {
+          console.log('data: ', data);
+          return (
+            <div className="bp3-dark">
+              <OHLCV
+                ohlcvData={data}
+                noOfCandles={initialState.noOfCandles}
+                currentDuration={initialState.currentDuration}
+                currentTimeSpan={initialState.currentTimeSpan}
+              />
+            </div>
+          );
+        }}
       </LoadData>
     ))
   );

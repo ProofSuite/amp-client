@@ -38,6 +38,7 @@ class OrderForm extends React.PureComponent<Props, State> {
 
   state = {
     portion: 0,
+    isOpen: true,
     priceType: 'null',
     selectedTabId: 'limit',
     price: '0.0',
@@ -212,13 +213,22 @@ class OrderForm extends React.PureComponent<Props, State> {
 
   handleSubmit = () => {};
 
+  toggleCollapse = () => {
+    this.setState(function(prevState) {
+      return {
+        isOpen: !prevState.isOpen,
+      };
+    });
+  };
+
   render() {
     const {
-      state: { selectedTabId, portion, priceType, price, stopPrice, limitPrice, amount, total },
+      state: { selectedTabId, portion, priceType, price, isOpen, stopPrice, limitPrice, amount, total },
       props: { formType, baseToken, loggedIn, quoteToken },
       onInputChange,
       handleChangeOrderType,
       handleSubmit,
+      toggleCollapse,
     } = this;
 
     return (
@@ -232,10 +242,12 @@ class OrderForm extends React.PureComponent<Props, State> {
         limitPrice={limitPrice}
         amount={amount}
         total={total}
+        isOpen={isOpen}
         baseToken={baseToken}
         quoteToken={quoteToken}
         loggedIn={loggedIn}
         onInputChange={onInputChange}
+        toggleCollapse={toggleCollapse}
         handleChangeOrderType={handleChangeOrderType}
         handleSubmit={handleSubmit}
       />

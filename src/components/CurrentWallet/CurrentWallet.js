@@ -14,26 +14,9 @@ export default class CurrentWallet extends React.PureComponent {
 
   togglePrivateKey = () => {
     this.setState(function(prevState) {
-      if (prevState.locked) {
-        return {
-          showPrivateKey: !prevState.showPrivateKey,
-        };
-      }
-    });
-  };
-
-  toggleLock = () => {
-    this.setState(function(prevState) {
-      if (!prevState.locked) {
-        return {
-          locked: !prevState.locked,
-        };
-      } else {
-        return {
-          showPrivateKey: false,
-          locked: !prevState.locked,
-        };
-      }
+      return {
+        showPrivateKey: !prevState.showPrivateKey,
+      };
     });
   };
 
@@ -47,10 +30,9 @@ export default class CurrentWallet extends React.PureComponent {
 
   render() {
     const {
-      props: { accountAddress, accountPrivateKey },
+      props: { accountAddress, pvtKeyLocked, accountPrivateKey },
       state: { showPrivateKey, currentBlock, balance, locked, isModalOpen },
       togglePrivateKey,
-      toggleLock,
       handleModalClose,
     } = this;
     return (
@@ -61,9 +43,9 @@ export default class CurrentWallet extends React.PureComponent {
         locked={locked}
         isModalOpen={isModalOpen}
         currentBlock={currentBlock}
+        pvtKeyLocked={pvtKeyLocked}
         accountAddress={accountAddress}
         togglePrivateKey={togglePrivateKey}
-        toggleLock={toggleLock}
         handleModalClose={handleModalClose}
       />
     );

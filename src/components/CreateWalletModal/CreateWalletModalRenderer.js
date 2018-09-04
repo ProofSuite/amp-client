@@ -36,6 +36,19 @@ type Props = {
   encryptedWallet: string,
 };
 
+const intents = {
+  invalid: Intent.DANGER,
+  valid: Intent.SUCCESS,
+  incomplete: Intent.PRIMARY,
+};
+const inputStatuses = {
+  password: {
+    incomplete: '',
+    valid: '',
+    invalid: 'Password is required.',
+  },
+};
+
 const CreateWalletWizardRenderer = (props: Props) => {
   const {
     address,
@@ -43,7 +56,9 @@ const CreateWalletWizardRenderer = (props: Props) => {
     hideModal,
     currentStep,
     password,
+    showPassword,
     encryptedWallet,
+    passwordStatus,
     showEncryptionProgress,
     encryptionPercentage,
     goToDownloadWallet,
@@ -52,6 +67,7 @@ const CreateWalletWizardRenderer = (props: Props) => {
     goBackToCreateWallet,
     complete,
     goBackToDownloadWallet,
+    togglePasswordView,
     handleChange,
     storeWallet,
     storePrivateKey,
@@ -82,7 +98,10 @@ const CreateWalletWizardRenderer = (props: Props) => {
     '0': (
       <WalletPasswordStep
         password={password}
+        showPassword={showPassword}
+        passwordStatus={passwordStatus}
         handleChange={handleChange}
+        togglePasswordView={togglePasswordView}
         showEncryptionProgress={showEncryptionProgress}
         encryptionPercentage={encryptionPercentage}
       />
@@ -97,7 +116,6 @@ const CreateWalletWizardRenderer = (props: Props) => {
       />
     ),
   };
-
   return (
     <Dialog
       title="Create Wallet Modal"
@@ -132,22 +150,33 @@ const CreateWalletWizardRenderer = (props: Props) => {
 };
 
 const WalletPasswordStep = props => {
-  const { password, handleChange, showEncryptionProgress, encryptionPercentage } = props;
-
+  const {
+    password,
+    showPassword,
+    handleChange,
+    showEncryptionProgress,
+    togglePasswordView,
+    encryptionPercentage,
+    passwordStatus,
+  } = props;
   return (
     <div>
       <PasswordInputBox>
-        <Label helperText="Input a secure password that will be used to encrypt your wallet">
-          <ControlGroup fill vertical={false}>
+        <Label helpertext="Input a secure password that will be used to encrypt your wallet">
+          {/*<ControlGroup fill vertical={false}>*/}
+          <FormGroup helperText={inputStatuses.password[passwordStatus]} intent={intents[passwordStatus]}>
             <InputGroup
               icon="password"
               placeholder="Input a secure password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               name="password"
               value={password}
+              rightElement={
+                <Button minimal="true" onClick={togglePasswordView} icon={showPassword ? 'eye-open' : 'eye-off'} />
+              }
               onChange={handleChange}
             />
-          </ControlGroup>
+          </FormGroup>
         </Label>
         <LinkBox>
           <a href="">Learn how to secure your wallet</a>

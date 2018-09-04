@@ -14,7 +14,15 @@ class WalletPage extends React.PureComponent<Props> {
     // this.props.removeNotification(1);
   }
   render() {
-    const { loading, depositTableData, authenticated, accountAddress, accountPrivateKey } = this.props;
+    const {
+      loading,
+      provider,
+      pvtKeyLocked,
+      depositTableData,
+      authenticated,
+      accountAddress,
+      accountPrivateKey,
+    } = this.props;
     if (!authenticated) {
       return <Redirect to="/login" />;
     }
@@ -23,6 +31,8 @@ class WalletPage extends React.PureComponent<Props> {
       <WalletPageRenderer
         loading={loading}
         accountPrivateKey={accountPrivateKey}
+        provider={provider}
+        pvtKeyLocked={pvtKeyLocked}
         accountAddress={accountAddress}
         depositTableData={depositTableData}
       />

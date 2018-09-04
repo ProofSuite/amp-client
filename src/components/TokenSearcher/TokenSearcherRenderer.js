@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core';
-import { ColumnEnd, RowSpaceBetween } from '../Common';
+import { ColumnEnd, RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import { Colors, Centered, Chevron, OverlaySpinner, CryptoIcon } from '../Common';
 import styled from 'styled-components';
 
@@ -193,7 +193,7 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
       <span className="star">
         <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
       </span>
-      <CryptoIcon name={base} />
+      <ColoredCryptoIcon name={base} />
       <span className="base" onClick={() => changeSelectedToken(token)}>
         {isFavoriteTokensList ? pair : base}
       </span>
@@ -249,10 +249,11 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
 };
 
 const SelectedCoin = ({ selectedToken }) => {
-  const { pair, lastPrice, volume, high, low, quote } = selectedToken;
+  const { pair, lastPrice, volume, high, low, quote, base } = selectedToken;
   return (
     <SelectedCoinCard>
       <Row>
+        <ColoredCryptoIcon name={base} />
         <TokenPair>{pair}</TokenPair>
         <ColumnEnd>
           <p className="lastPrice">

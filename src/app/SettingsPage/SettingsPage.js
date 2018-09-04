@@ -1,16 +1,27 @@
 import React from 'react';
-import { NonIdealState } from '@blueprintjs/core';
-import { Footer } from '../../components/Common';
+import SettingsPageRenderer from './SettingsPageRenderer';
+import { getLocalStorageWallets } from '../../utils/helpers';
 
 class SettingsPage extends React.PureComponent {
+  state = {
+    wallets: getLocalStorageWallets(),
+  };
+
+  removeWallet = () => {
+    console.log();
+  };
+
   render() {
+    const { pvtKeyLocked, togglePvtKeyLock } = this.props;
+    const { wallets } = this.state;
+
     return (
-      <div>
-        <NonIdealState title="WORK IN PROGRESS" visual="wrench">
-          Setting Page
-        </NonIdealState>
-        <Footer />
-      </div>
+      <SettingsPageRenderer
+        pvtKeyLocked={pvtKeyLocked}
+        wallets={wallets}
+        togglePvtKeyLock={togglePvtKeyLock}
+        removeWallet={this.removeWallet}
+      />
     );
   }
 }
