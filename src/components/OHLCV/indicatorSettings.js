@@ -1,5 +1,5 @@
 import { createVerticalLinearGradient, hexToRGBA } from 'react-stockcharts/lib/utils';
-import { Colors } from "../Common";
+import { Colors } from '../Common';
 // SAR Config
 export const accelerationFactor = 0.02;
 export const maxAccelerationFactor = 0.2;
@@ -26,6 +26,12 @@ export const theme = {
   edges: Colors.GRAY5,
   axis: Colors.GRAY4,
   black: Colors.BLACK,
+};
+
+//Volume Graph(Area)
+export const volumeAppearance = {
+  stroke: '#7aa4ea70',
+  fill: '#9dbaec70',
 };
 
 // Trenline
@@ -97,6 +103,7 @@ export const stoAppearance = {
     kLine: '#74D400',
   },
 };
+
 export const canvasGradient = createVerticalLinearGradient([
   { stop: 0, color: hexToRGBA(theme.skyBlue2, 0.2) },
   { stop: 0.7, color: hexToRGBA(theme.skyBlue1, 0.4) },

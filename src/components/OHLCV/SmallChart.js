@@ -15,7 +15,7 @@ type Indicator = {
   rank: number,
 };
 
-const timeSpans: Array<Object> = [
+export const timeSpans: Array<Object> = [
   { name: '1 min', label: '1m' },
   { name: '5 min', label: '5m' },
   { name: '15 min', label: '15m' },
@@ -44,10 +44,10 @@ const chartTypes: Array<Object> = [
   { name: 'Area', icon: 'timeline-area-chart' },
 ].map((p, index) => ({ ...p, rank: index }));
 
-const duration: Array<Object> = [
+export const duration: Array<Object> = [
   { name: '1 Hour', label: '1h' },
-  { name: '1 Hour', label: '4h' },
-  { name: '6 Hour', label: '12h' },
+  { name: '6 Hour', label: '6h' },
+  { name: '12 Hour', label: '12h' },
   { name: '1 Day', label: '1d' },
   { name: '3 Days', label: '3d' },
   { name: '7 Days', label: '7d' },
@@ -95,14 +95,14 @@ export default class SmallChart extends React.PureComponent<Props, State> {
     const { currentTimeSpan } = this.props;
 
     this.props.saveDuration(duration[index]);
-    this.props.updateTimeLine({ time: currentTimeSpan.label, duration: duration[index].label });
+    this.props.updateTimeLine({ updateWRT: 'duration', time: currentTimeSpan.label, duration: duration[index].label });
   };
 
   changeTimeSpan = (e: Object) => {
     const { currentDuration } = this.props;
 
     this.props.saveTimeSpan(e);
-    this.props.updateTimeLine({ time: e.label, duration: currentDuration.label });
+    this.props.updateTimeLine({ updateWRT: 'timespan', time: e.label, duration: currentDuration.label });
   };
 
   changeChartType = (e: Object) => {

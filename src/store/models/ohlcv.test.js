@@ -17,8 +17,8 @@ it('checks Initial Model return', async () => {
 
 it('check updateTimeLine on Duration/Time change', async () => {
   const { store } = createStore();
-  store.dispatch(updateTimeLine({ duration: '1d', time: '5m' }));
+  store.dispatch(updateTimeLine({ updateWRT: 'duration' }));
   const ohlcvDomain = getOhlcvDomain(store.getState()).getState();
 
-  expect(ohlcvDomain.noOfCandles).toEqual(288);
+  expect(ohlcvDomain.noOfCandles).toEqual(60);
 });

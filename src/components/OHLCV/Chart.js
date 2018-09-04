@@ -40,7 +40,8 @@ import {
   mouseEdgeAppearance,
   theme,
   canvasGradient,
-  edgeIndicatorAppearance
+  edgeIndicatorAppearance,
+  volumeAppearance,
 } from './indicatorSettings';
 import { curveMonotoneX } from 'd3-shape';
 
@@ -211,7 +212,7 @@ class OHLCVChart extends React.Component {
                 {...edgeIndicatorAppearance}
               />
 
-              <OHLCTooltip origin={[-30, 0]} />
+              <OHLCTooltip origin={[-30, 0]} {...mouseEdgeAppearance} />
 
               <MovingAverageTooltip
                 onClick={e => console.log()}
@@ -437,7 +438,7 @@ class OHLCVChart extends React.Component {
               <MouseCoordinateY at="left" orient="left" displayFormat={format('.4s')} {...mouseEdgeAppearance} />
 
               <BarSeries yAccessor={d => d.volume} fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')} />
-              <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()} />
+              <AreaSeries yAccessor={smaVolume50.accessor()} {...volumeAppearance} />
             </Chart>
           )}
 
