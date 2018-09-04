@@ -264,6 +264,8 @@ export const depositForm = createReducer(action => {
 export const settings = createReducer(action => {
   const { type } = action;
   switch (type) {
+    case settingsActionTypes.togglePvtKeyLock:
+      return settingsEvents.pvtKeyLockToggled();
     case settingsActionTypes.setDefaultGasLimit:
       return settingsEvents.defaultGasLimitSet();
     case settingsActionTypes.setDefaultGasPrice:

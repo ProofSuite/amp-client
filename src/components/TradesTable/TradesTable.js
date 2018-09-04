@@ -40,7 +40,7 @@ class TradesTable extends React.PureComponent<Props, State> {
 
     const sortedMarketTradeHistory = trades;
     const sortedUserTradeHistory = trades;
-
+    console.log('trades: ', trades);
     return (
       <TradesTableRenderer
         selectedTabId={selectedTabId}

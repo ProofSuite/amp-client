@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Tabs, Tab, Card, Button, FormGroup, InputGroup, Label, Colors } from '@blueprintjs/core';
+import { Tabs, Tab, Card, Button, FormGroup, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core';
 import { HeaderText, MutedText } from '../Common';
 import styled from 'styled-components';
 
@@ -16,9 +16,11 @@ type Props = {
   total: string,
   baseToken: string,
   quoteToken: string,
+  isOpen: boolean,
   loggedIn: boolean,
   onInputChange: Object => void,
   handleChangeOrderType: string => void,
+  toggleCollapse: (SyntheticEvent<>) => void,
   handleSubmit: (SyntheticEvent<>) => void,
 };
 
@@ -31,6 +33,7 @@ const OrderFormRenderer = (props: Props) => {
     price,
     stopPrice,
     limitPrice,
+    isOpen,
     amount,
     total,
     baseToken,
@@ -38,13 +41,17 @@ const OrderFormRenderer = (props: Props) => {
     loggedIn,
     onInputChange,
     handleChangeOrderType,
+    toggleCollapse,
     handleSubmit,
   } = props;
 
   return (
     <Card className="order-form">
       <OrderFormHeader>
-        <HeaderText text={`${formType} ${baseToken}`} />
+        <LeftHeader>
+          <HeaderText text={`${formType} ${baseToken}`} />
+          <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+        </LeftHeader>
         <ButtonRow>
           <Button
             text="Limit"
@@ -60,77 +67,72 @@ const OrderFormRenderer = (props: Props) => {
             active={selectedTabId === 'market'}
             intent={selectedTabId === 'market' ? 'primary' : ''}
           />
-          {/* <Button
-            text='Stop'
-            minimal
-            onClick={() => handleChangeOrderType('stop')}
-            active={selectedTabId === 'stop'}
-            intent={selectedTabId === 'stop' ? 'primary' : '' }
-          /> */}
         </ButtonRow>
       </OrderFormHeader>
-      <Tabs selectedTabId={selectedTabId}>
-        <Tab
-          id="limit"
-          panel={
-            <LimitOrderPanel
-              loggedIn={loggedIn}
-              formType={formType}
-              baseToken={baseToken}
-              quoteToken={quoteToken}
-              portion={portion}
-              priceType={priceType}
-              price={price}
-              stopPrice={stopPrice}
-              limitPrice={limitPrice}
-              amount={amount}
-              total={total}
-              onInputChange={onInputChange}
-              handleSubmit={handleSubmit}
-            />
-          }
-        />
-        <Tab
-          id="market"
-          panel={
-            <MarketOrderPanel
-              loggedIn={loggedIn}
-              formType={formType}
-              baseToken={baseToken}
-              quoteToken={quoteToken}
-              portion={portion}
-              priceType={priceType}
-              price={price}
-              stopPrice={stopPrice}
-              limitPrice={limitPrice}
-              amount={amount}
-              total={total}
-              onInputChange={onInputChange}
-              handleSubmit={handleSubmit}
-            />
-          }
-        />
-        <Tab
-          id="stop"
-          panel={
-            <StopLimitOrderPanel
-              loggedIn={loggedIn}
-              formType={formType}
-              baseToken={baseToken}
-              quoteToken={quoteToken}
-              portion={portion}
-              priceType={priceType}
-              price={price}
-              stopPrice={stopPrice}
-              limitPrice={limitPrice}
-              amount={amount}
-              total={total}
-              onInputChange={onInputChange}
-              handleSubmit={handleSubmit}
-            />
-          }
-        />
-      </Tabs>
+      <Collapse isOpen={isOpen}>
+        <Tabs selectedTabId={selectedTabId}>
+          <Tab
+            id="limit"
+            panel={
+              <LimitOrderPanel
+                loggedIn={loggedIn}
+                formType={formType}
+                baseToken={baseToken}
+                quoteToken={quoteToken}
+                portion={portion}
+                priceType={priceType}
+                price={price}
+                stopPrice={stopPrice}
+                limitPrice={limitPrice}
+                amount={amount}
+                total={total}
+                onInputChange={onInputChange}
+                handleSubmit={handleSubmit}
+              />
+            }
+          />
+          <Tab
+            id="market"
+            panel={
+              <MarketOrderPanel
+                loggedIn={loggedIn}
+                formType={formType}
+                baseToken={baseToken}
+                quoteToken={quoteToken}
+                portion={portion}
+                priceType={priceType}
+                price={price}
+                stopPrice={stopPrice}
+                limitPrice={limitPrice}
+                amount={amount}
+                total={total}
+                onInputChange={onInputChange}
+                handleSubmit={handleSubmit}
+              />
+            }
+          />
+          <Tab
+            id="stop"
+            panel={
+              <StopLimitOrderPanel
+                loggedIn={loggedIn}
+                formType={formType}
+                baseToken={baseToken}
+                quoteToken={quoteToken}
+                portion={portion}
+                priceType={priceType}
+                price={price}
+                stopPrice={stopPrice}
+                limitPrice={limitPrice}
+                amount={amount}
+                total={total}
+                onInputChange={onInputChange}
+                handleSubmit={handleSubmit}
+              />
+            }
+          />
+        </Tabs>
+      </Collapse>
     </Card>
   );
 };
@@ -311,6 +313,13 @@ const InputLabel = styled.div`
   height: 100%;
   margin: auto;
   width: 180px;
+`;
+
+const LeftHeader = styled.div`
+  display: flex;
+  & .bp3-button.bp3-minimal {
+    margin-left: 10px;
+  }
 `;
 
 const Total = styled.div`

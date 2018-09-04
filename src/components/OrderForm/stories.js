@@ -9,18 +9,6 @@ import * as README from './README.md';
 storiesOf('Order Form', module)
   .addDecorator(withKnobs)
   .add(
-    'Connected Provider Settings',
-    withInfo({
-      text: README,
-      propTablesExclude: [OrderFormContainer],
-      source: false,
-    })(() => (
-      <div className="bp3-dark">
-        <OrderFormContainer />
-      </div>
-    ))
-  )
-  .add(
     'Logged In state Sell Eth Form',
     withInfo({ text: README, source: false })(() => (
       <div className="bp3-dark">
