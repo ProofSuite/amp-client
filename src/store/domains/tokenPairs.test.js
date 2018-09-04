@@ -12,7 +12,7 @@ const symbols = ['ETH', 'EOS', 'WETH', 'ZRX'];
 const tokensBySymbol = {
   ETH: { symbol: 'ETH', address: '0x0' },
   EOS: { symbol: 'EOS', address: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95' },
-  WETH: { symbol: 'WETH', address: '0x2eb24432177e82907de24b7c5a6e0a5c03226135' },
+  WETH: { symbol: 'WETH', address: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6' },
   ZRX: { symbol: 'ZRX', address: '0xc73eec564e96e6653943d6d0e32121d455917653' },
 };
 
@@ -40,35 +40,35 @@ describe('Token Pair Domain', () => {
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       EOS_WETH: {
         pair: 'EOS_WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       ZRX_DAI: {
         pair: 'ZRX_DAI',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       ZRX_WETH: {
         pair: 'ZRX_WETH',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       WETH_DAI: {
         pair: 'WETH_DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
-        baseTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
     };
     expect(tokenPairsDomain.getPairs()).toEqual(expectedPairs);
@@ -94,49 +94,49 @@ describe('Token Pair Domain', () => {
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       EOS_WETH: {
         pair: 'EOS_WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       ZRX_DAI: {
         pair: 'ZRX_DAI',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       ZRX_WETH: {
         pair: 'ZRX_WETH',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       WETH_DAI: {
         pair: 'WETH_DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
-        baseTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       REQ_WETH: {
         pair: 'REQ_WETH',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       REQ_DAI: {
         pair: 'REQ_DAI',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
     };
 
@@ -147,7 +147,7 @@ describe('Token Pair Domain', () => {
   it('handles tokenPairUpdated event properly if the event is already if the token is a quote token', () => {
     const token = {
       symbol: 'DAI',
-      address: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+      address: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
     };
 
     const tokenPairsDomain = getDomain([
@@ -163,35 +163,35 @@ describe('Token Pair Domain', () => {
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       EOS_WETH: {
         pair: 'EOS_WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       ZRX_DAI: {
         pair: 'ZRX_DAI',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       ZRX_WETH: {
         pair: 'ZRX_WETH',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       WETH_DAI: {
         pair: 'WETH_DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
-        baseTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
     };
 
@@ -223,35 +223,35 @@ describe('Token Pair Domain', () => {
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       EOS_WETH: {
         pair: 'EOS_WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       WETH_DAI: {
         pair: 'WETH_DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
-        baseTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
       REQ_WETH: {
         pair: 'REQ_WETH',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
-        quoteTokenAddress: '0x2eb24432177e82907de24b7c5a6e0a5c03226135',
+        quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
       REQ_DAI: {
         pair: 'REQ_DAI',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
-        quoteTokenAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+        quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
     };
 
