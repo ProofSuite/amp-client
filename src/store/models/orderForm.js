@@ -4,7 +4,6 @@ import { getTokenPairsDomain, getOrderBookDomain, getAccountBalancesDomain } fro
 import type { State, ThunkAction } from '../../types';
 
 export default function getOrderFormModel(state: State) {
-  console.log(state);
   let tokenPairDomain = getTokenPairsDomain(state);
   let orderBookDomain = getOrderBookDomain(state);
   let accountBalancesDomain = getAccountBalancesDomain(state);

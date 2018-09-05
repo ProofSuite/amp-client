@@ -7,8 +7,9 @@ class SettingsPage extends React.PureComponent {
     wallets: getLocalStorageWallets(),
   };
 
-  removeWallet = () => {
-    console.log();
+  removeWallet = address => {
+    localStorage.removeItem(address);
+    this.setState({ wallets: getLocalStorageWallets() });
   };
 
   render() {

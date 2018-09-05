@@ -2,6 +2,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import LoginPageRenderer from './LoginPageRenderer';
+import { createWalletFromJSON } from '../../store/services/wallet';
 
 type Props = {
   authenticated: boolean,
@@ -33,6 +34,7 @@ class LoginPage extends React.PureComponent<Props, State> {
 
   showWalletLoginForm = () => {
     this.setState({ view: 'wallet' });
+    console.log(this.state.view);
   };
 
   showLoginMethods = () => {
@@ -55,8 +57,13 @@ class LoginPage extends React.PureComponent<Props, State> {
     // this.props.removeNotification({ id: 1 });
   };
 
-  walletCreated = props => {
-    console.log(props);
+  walletCreated = async props => {
+    const { address, password, encryptedWallet, storeWallet, storePrivateKey } = props;
+    var { wallet, encrypted } = await createWalletFromJSON(encryptedWallet, password);
+    console.log(wallet, encrypted);
+    if (wallet) {
+      this.props.loginWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
+    }
     // this.props.removeNotification({ id: 1 });
   };
 

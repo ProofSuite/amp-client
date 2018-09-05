@@ -64,6 +64,7 @@ const Wrapper = styled.div.attrs({
   background-color: ${Colors.DARK_GRAY4};
   width: 100%;
   color: ${Colors.LIGHT_GRAY5};
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 0 0 rgba(16, 22, 26, 0), 0 -1px 1px rgba(16, 22, 26, 0.4);
 `;
 
 const Container = styled.div`

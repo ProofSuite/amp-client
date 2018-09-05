@@ -10,7 +10,9 @@ type Props = {
 
 class WalletPage extends React.PureComponent<Props> {
   componentDidMount() {
-    this.props.queryAccountData();
+    if (this.props.authenticated) {
+      this.props.queryAccountData();
+    }
     // this.props.removeNotification(1);
   }
   render() {
