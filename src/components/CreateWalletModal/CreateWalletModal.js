@@ -8,7 +8,7 @@ import type { CreateWalletParams } from '../../types/wallets';
 type Props = {
   visible: boolean,
   hideModal: void => void,
-  createWallet: CreateWalletParams => void,
+  walletCreated: Object => void,
 };
 
 type State = {
@@ -90,10 +90,9 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   };
 
   complete = () => {
-    const { createWallet, hideModal } = this.props;
+    const { walletCreated, hideModal } = this.props;
     const { address, password, encryptedWallet, storeWallet, storePrivateKey } = this.state;
-    console.log(this.props);
-    createWallet({ address, password, encryptedWallet, storeWallet, storePrivateKey });
+    walletCreated({ address, password, encryptedWallet, storeWallet, storePrivateKey });
     hideModal();
   };
 
@@ -109,7 +108,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { visible, hideModal } = this.props;
+    const { visible, hideModal, testParent } = this.props;
     const {
       currentStep,
       password,
@@ -136,6 +135,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
         storeWallet={storeWallet}
         passwordStatus={passwordStatus}
         storePrivateKey={storePrivateKey}
+        testParent={testParent}
         goToDownloadWallet={this.goToDownloadWallet}
         goBackToCreateWallet={this.goBackToCreateWallet}
         togglePasswordView={this.togglePasswordView}

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ColoredCryptoIcon = ({ name }) => {
+const ColoredCryptoIcon = ({ name, size, style }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 32 32">
+    <svg style={style} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       <g fill="none" fillRule="evenodd">
         <GetIcon icon={name} />
       </g>

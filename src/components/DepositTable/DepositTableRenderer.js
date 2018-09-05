@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Switch, Icon, Checkbox, InputGroup } from '@blueprintjs/core';
-import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
+import { RowSpaceBetween, CryptoIcon } from '../Common';
 import styled from 'styled-components';
 
 const DepositTableRenderer = (props: Props) => {
@@ -22,6 +22,7 @@ const DepositTableRenderer = (props: Props) => {
       <Table>
         <thead>
           <TableHeader>
+            <TableHeaderCellForIcon style={{ width: '3.5%' }}> </TableHeaderCellForIcon>
             <TableHeaderCell>Token Name</TableHeaderCell>
             <TableHeaderCell>Balances</TableHeaderCell>
             <TableHeaderCell>Allowances</TableHeaderCell>
@@ -46,11 +47,11 @@ const RowRenderer = (props: Props) => {
   return depositData.map(({ symbol, balance, allowed }, index) => {
     return (
       <Row key={index}>
+        <CellForIcon>
+          <CryptoIcon name={symbol} />
+        </CellForIcon>
         <Cell>
-          <TokenSymbol>
-            <ColoredCryptoIcon name={symbol} />
-            <span>{symbol}</span>
-          </TokenSymbol>
+          <span>{symbol}</span>
         </Cell>
         <Cell>{balance}</Cell>
         <Cell>
@@ -128,9 +129,20 @@ const TableHeader = styled.tr``;
 const TableHeaderCell = styled.th`
   width: 19%;
 `;
+const TableHeaderCellForIcon = styled.th`
+  width: 5.5%;
+`;
 
 const Cell = styled.td`
   width: 19%;
+  vertical-align: middle !important;
+  & label {
+    margin: 0;
+  }
+`;
+const CellForIcon = styled.td`
+  width: 1%;
+  font-size: 25px;
   vertical-align: middle !important;
   & label {
     margin: 0;

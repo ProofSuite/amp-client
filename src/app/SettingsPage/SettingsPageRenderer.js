@@ -6,19 +6,13 @@ import styled from 'styled-components';
 const SettingsPageRenderer = props => {
   const { pvtKeyLocked, togglePvtKeyLock, wallets, removeWallet } = props;
   const lockBtnLabel = pvtKeyLocked ? 'Unlock ' : 'Lock ';
+  const walletsAreStored = wallets.slice(1).length > 0;
   return (
     <Wrapper>
-      <AccountInformation>
-        <p>
-          Name: UserName <Icon icon="badge" intent="primary" />
-        </p>
-        <p>Email: username@account.com</p>
-      </AccountInformation>
-
       <LockPrivateKey>
-        <Button minimal="true" text={lockBtnLabel + 'Private Key display on Wallet Page'} onClick={togglePvtKeyLock} />
+        <Heading>Private Key display on Wallet Page</Heading>
+        <Button minimal="true" text={lockBtnLabel} onClick={togglePvtKeyLock} />
       </LockPrivateKey>
-
       <ManageLocalStorageWallets>
         <Heading>Remove Wallets from Browser Storage</Heading>
         <Header>
@@ -32,14 +26,16 @@ const SettingsPageRenderer = props => {
           </ListItem>
         </Header>
         <List>
-          {wallets.slice(1).map(function(wallet) {
+          {wallets.slice(1).map(function(wallet, index) {
             return (
-              <ListItem>
-                {wallet.address} <Button minimal="true" onClick={removeWallet(wallet.address)} icon="cross" />
+              <ListItem key={index}>
+                {wallet.address}
+                <Button minimal="true" onClick={() => removeWallet(wallet.address)} icon="cross" />
               </ListItem>
             );
           })}
         </List>
+        {!walletsAreStored && <NotFound>No Wallet saved in Browser Storage.</NotFound>}
       </ManageLocalStorageWallets>
     </Wrapper>
   );
@@ -56,6 +52,10 @@ const AccountInformation = styled(Card)`
 const LockPrivateKey = styled(Card)`
   margin-bottom: 20px;
   width: 500px;
+`;
+const NotFound = styled.p`
+  color: ${Colors.GRAY4};
+  text-align: center;
 `;
 const Heading = styled.h3`
   color: ${Colors.GRAY4};

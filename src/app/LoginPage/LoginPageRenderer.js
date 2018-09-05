@@ -41,7 +41,7 @@ const LoginPageRenderer = (props: Props) => {
     ),
     wallet: <WalletLoginFormView loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />,
     createWallet: (
-      <CreateWalletModal createWallet={walletCreated} hideModal={hideModal} visible={view === 'createWallet'} />
+      <CreateWalletModal walletCreated={walletCreated} hideModal={hideModal} visible={view === 'createWallet'} />
     ),
     loading: <LoginLoadingView />,
   };
