@@ -6,7 +6,6 @@ import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tok
 import type { Token, TokenPairState, TokenPairDataMap } from '../../types/tokens';
 
 const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens);
-
 const defaultInitialState = {
   byPair: defaultTokenPairs,
   data: {},

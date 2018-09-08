@@ -5,6 +5,7 @@ import createStore from '../../store/configureStore';
 import connect, { mapStateToProps } from './connect';
 import * as walletPage from '../../store/models/walletPage';
 import * as layoutPage from '../../store/models/layout';
+import * as settingsPage from '../../store/models/settings';
 
 jest.mock('../../store/models/walletPage');
 jest.mock('../../store/models/layout');
@@ -26,6 +27,7 @@ describe('connect(Component)', () => {
       expect(props).toHaveProperty('depositTableSelector');
       expect(props).toHaveProperty('isDefaultAccountSet');
       expect(props).toHaveProperty('authenticated');
+      expect(props).toHaveProperty('pvtKeyLocked');
       return null;
     });
 
@@ -41,11 +43,18 @@ describe('mapStateToProps(state, props)', () => {
   it('returns expected props', () => {
     walletPage.default = jest.fn(() => ({ depositTableData }));
     layoutPage.default = jest.fn(() => ({ authenticated: true }));
+    settingsPage.default = jest.fn(() => ({ pvtKeyLocked: true }));
     const state = {};
     const props = {};
     const result = mapStateToProps(state, props);
 
     expect(result).toBeDefined();
-    expect(result).toEqual({ depositTableData, isDefaultAccountSet: false, loading: false, authenticated: true });
+    expect(result).toEqual({
+      depositTableData,
+      pvtKeyLocked: true,
+      isDefaultAccountSet: false,
+      loading: false,
+      authenticated: true,
+    });
   });
 });

@@ -1,5 +1,5 @@
 // @flow
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains';
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getEtherTxDomain } from '../domains';
 import * as actionCreators from '../actions/walletPage';
 import * as notifierActionCreators from '../actions/app';
 import * as accountActionTypes from '../actions/account';
@@ -14,12 +14,17 @@ import type { State, ThunkAction } from '../../types';
 
 export default function walletPageSelector(state: State) {
   let val = {
-    depositTableData: getAccountBalancesDomain(state).balancesArray(),
+    etherBalance: getAccountBalancesDomain(state).etherBalance(),
+    depositTableData: getAccountBalancesDomain(state)
+      .balancesArray()
+      .filter((token: Token) => token.symbol !== 'ETH'),
     accountAddress: getAccountDomain(state).address(),
     accountPrivateKey: getAccountDomain(state).privateKey(),
     tokens: getTokenDomain(state).tokens(),
     currentBlock: getAccountDomain(state).currentBlock(),
     provider: getAccountDomain(state).provider(),
+    gas: getEtherTxDomain(state).getGas(),
+    gasPrice: getEtherTxDomain(state).getGasPrice(),
   };
   return val;
 }
@@ -39,7 +44,6 @@ export function queryAccountData(): ThunkAction {
 
       const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress);
       const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens);
-
       const balances = [etherBalance].concat(sortTable(tokenBalances, 'symbol'));
       dispatch(actionCreators.updateBalances(balances));
 

@@ -32,39 +32,39 @@ function getDomain(events) {
 describe('Token Pair Domain', () => {
   it('handles initialized event properly', () => {
     const tokenPairsDomain = getDomain([eventCreators.initialized(initialTokenPairState)]);
-    const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI'];
+    const expectedPairs = ['EOS/WETH', 'EOS/DAI', 'WETH/DAI', 'ZRX/WETH', 'ZRX/DAI'];
 
     const expectedByPairsByCode = {
-      EOS_DAI: {
-        pair: 'EOS_DAI',
+      'EOS/DAI': {
+        pair: 'EOS/DAI',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      EOS_WETH: {
-        pair: 'EOS_WETH',
+      'EOS/WETH': {
+        pair: 'EOS/WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      ZRX_DAI: {
-        pair: 'ZRX_DAI',
+      'ZRX/DAI': {
+        pair: 'ZRX/DAI',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      ZRX_WETH: {
-        pair: 'ZRX_WETH',
+      'ZRX/WETH': {
+        pair: 'ZRX/WETH',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      WETH_DAI: {
-        pair: 'WETH_DAI',
+      'WETH/DAI': {
+        pair: 'WETH/DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
@@ -86,53 +86,53 @@ describe('Token Pair Domain', () => {
       eventCreators.tokenPairUpdated(token),
     ]);
 
-    const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI', 'REQ_WETH', 'REQ_DAI'];
+    const expectedPairs = ['EOS/WETH', 'EOS/DAI', 'WETH/DAI', 'ZRX/WETH', 'ZRX/DAI', 'REQ/WETH', 'REQ/DAI'];
 
     const expectedPairsBySymbol = {
-      EOS_DAI: {
-        pair: 'EOS_DAI',
+      'EOS/DAI': {
+        pair: 'EOS/DAI',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      EOS_WETH: {
-        pair: 'EOS_WETH',
+      'EOS/WETH': {
+        pair: 'EOS/WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      ZRX_DAI: {
-        pair: 'ZRX_DAI',
+      'ZRX/DAI': {
+        pair: 'ZRX/DAI',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      ZRX_WETH: {
-        pair: 'ZRX_WETH',
+      'ZRX/WETH': {
+        pair: 'ZRX/WETH',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      WETH_DAI: {
-        pair: 'WETH_DAI',
+      'WETH/DAI': {
+        pair: 'WETH/DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      REQ_WETH: {
-        pair: 'REQ_WETH',
+      'REQ/WETH': {
+        pair: 'REQ/WETH',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      REQ_DAI: {
-        pair: 'REQ_DAI',
+      'REQ/DAI': {
+        pair: 'REQ/DAI',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
@@ -155,39 +155,39 @@ describe('Token Pair Domain', () => {
       eventCreators.tokenPairUpdated(token),
     ]);
 
-    const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'ZRX_WETH', 'ZRX_DAI'];
+    const expectedPairs = ['EOS/WETH', 'EOS/DAI', 'WETH/DAI', 'ZRX/WETH', 'ZRX/DAI'];
 
     const expectedPairsBySymbol = {
-      EOS_DAI: {
-        pair: 'EOS_DAI',
+      'EOS/DAI': {
+        pair: 'EOS/DAI',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      EOS_WETH: {
-        pair: 'EOS_WETH',
+      'EOS/WETH': {
+        pair: 'EOS/WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      ZRX_DAI: {
-        pair: 'ZRX_DAI',
+      'ZRX/DAI': {
+        pair: 'ZRX/DAI',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      ZRX_WETH: {
-        pair: 'ZRX_WETH',
+      'ZRX/WETH': {
+        pair: 'ZRX/WETH',
         baseTokenSymbol: 'ZRX',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0xc73eec564e96e6653943d6d0e32121d455917653',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      WETH_DAI: {
-        pair: 'WETH_DAI',
+      'WETH/DAI': {
+        pair: 'WETH/DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
@@ -215,39 +215,39 @@ describe('Token Pair Domain', () => {
       eventCreators.tokenPairRemoved(token2),
     ]);
 
-    const expectedPairs = ['EOS_WETH', 'EOS_DAI', 'WETH_DAI', 'REQ_WETH', 'REQ_DAI'];
+    const expectedPairs = ['EOS/WETH', 'EOS/DAI', 'WETH/DAI', 'REQ/WETH', 'REQ/DAI'];
 
     const expectedPairsBySymbol = {
-      EOS_DAI: {
-        pair: 'EOS_DAI',
+      'EOS/DAI': {
+        pair: 'EOS/DAI',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      EOS_WETH: {
-        pair: 'EOS_WETH',
+      'EOS/WETH': {
+        pair: 'EOS/WETH',
         baseTokenSymbol: 'EOS',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8d0a722b76c0dcb91bf62334afd11f925c0adb95',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      WETH_DAI: {
-        pair: 'WETH_DAI',
+      'WETH/DAI': {
+        pair: 'WETH/DAI',
         baseTokenSymbol: 'WETH',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
         quoteTokenAddress: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       },
-      REQ_WETH: {
-        pair: 'REQ_WETH',
+      'REQ/WETH': {
+        pair: 'REQ/WETH',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'WETH',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
         quoteTokenAddress: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6',
       },
-      REQ_DAI: {
-        pair: 'REQ_DAI',
+      'REQ/DAI': {
+        pair: 'REQ/DAI',
         baseTokenSymbol: 'REQ',
         quoteTokenSymbol: 'DAI',
         baseTokenAddress: '0x8f8221afbb33998d8584a2b05749ba73c37a938a',
@@ -261,24 +261,24 @@ describe('Token Pair Domain', () => {
 
   it('handles updated event', () => {
     const tokenPairData = {
-      BNB_WETH: {
-        pair: 'BNB_WETH',
+      'BNB/WETH': {
+        pair: 'BNB/WETH',
         lastPrice: '7425.2945',
         change: '4.5421',
         high: '8782.7964',
         low: '6499.3696',
         volume: 720404,
       },
-      BNB_DAI: {
-        pair: 'BNB_DAI',
+      'BNB/DAI': {
+        pair: 'BNB/DAI',
         lastPrice: '6018.7886',
         change: '1.6589',
         high: '3876.8717',
         low: '4613.5315',
         volume: 68946,
       },
-      OMG_WETH: {
-        pair: 'OMG_WETH',
+      'OMG/WETH': {
+        pair: 'OMG/WETH',
         lastPrice: '398.8988',
         change: '3.7561',
         high: '9892.7954',
@@ -289,7 +289,7 @@ describe('Token Pair Domain', () => {
 
     const expectedTokenPairArray = [
       {
-        pair: 'BNB_WETH',
+        pair: 'BNB/WETH',
         lastPrice: '7425.2945',
         change: '4.5421',
         high: '8782.7964',
@@ -297,7 +297,7 @@ describe('Token Pair Domain', () => {
         volume: 720404,
       },
       {
-        pair: 'BNB_DAI',
+        pair: 'BNB/DAI',
         lastPrice: '6018.7886',
         change: '1.6589',
         high: '3876.8717',
@@ -305,7 +305,7 @@ describe('Token Pair Domain', () => {
         volume: 68946,
       },
       {
-        pair: 'OMG_WETH',
+        pair: 'OMG/WETH',
         lastPrice: '398.8988',
         change: '3.7561',
         high: '9892.7954',
@@ -321,24 +321,24 @@ describe('Token Pair Domain', () => {
 
   it('handles updated event twice', () => {
     const tokenPairData = {
-      BNB_WETH: {
-        pair: 'BNB_WETH',
+      'BNB/WETH': {
+        pair: 'BNB/WETH',
         lastPrice: '7425.2945',
         change: '4.5421',
         high: '8782.7964',
         low: '6499.3696',
         volume: 720404,
       },
-      BNB_DAI: {
-        pair: 'BNB_DAI',
+      'BNB/DAI': {
+        pair: 'BNB/DAI',
         lastPrice: '6018.7886',
         change: '1.6589',
         high: '3876.8717',
         low: '4613.5315',
         volume: 68946,
       },
-      OMG_WETH: {
-        pair: 'OMG_WETH',
+      'OMG/WETH': {
+        pair: 'OMG/WETH',
         lastPrice: '398.8988',
         change: '3.7561',
         high: '9892.7954',
@@ -348,24 +348,24 @@ describe('Token Pair Domain', () => {
     };
 
     const newTokenPairData = {
-      OMG_DAI: {
-        pair: 'OMG_DAI',
+      'OMG/DAI': {
+        pair: 'OMG/DAI',
         lastPrice: '66.2789',
         change: '3.5460',
         high: '9211.5292',
         low: '4241.7509',
         volume: 912048,
       },
-      ZRX_WETH: {
-        pair: 'ZRX_WETH',
+      'ZRX/WETH': {
+        pair: 'ZRX/WETH',
         lastPrice: '8176.7874',
         change: '1.7811',
         high: '6165.0712',
         low: '2242.4298',
         volume: 752620,
       },
-      ZRX_DAI: {
-        pair: 'ZRX_DAI',
+      'ZRX/DAI': {
+        pair: 'ZRX/DAI',
         lastPrice: '7378.8467',
         change: '1.0410',
         high: '7755.4530',
@@ -375,48 +375,48 @@ describe('Token Pair Domain', () => {
     };
 
     const expectedTokenPairData = {
-      BNB_WETH: {
-        pair: 'BNB_WETH',
+      'BNB/WETH': {
+        pair: 'BNB/WETH',
         lastPrice: '7425.2945',
         change: '4.5421',
         high: '8782.7964',
         low: '6499.3696',
         volume: 720404,
       },
-      BNB_DAI: {
-        pair: 'BNB_DAI',
+      'BNB/DAI': {
+        pair: 'BNB/DAI',
         lastPrice: '6018.7886',
         change: '1.6589',
         high: '3876.8717',
         low: '4613.5315',
         volume: 68946,
       },
-      OMG_WETH: {
-        pair: 'OMG_WETH',
+      'OMG/WETH': {
+        pair: 'OMG/WETH',
         lastPrice: '398.8988',
         change: '3.7561',
         high: '9892.7954',
         low: '6884.7173',
         volume: 155839,
       },
-      OMG_DAI: {
-        pair: 'OMG_DAI',
+      'OMG/DAI': {
+        pair: 'OMG/DAI',
         lastPrice: '66.2789',
         change: '3.5460',
         high: '9211.5292',
         low: '4241.7509',
         volume: 912048,
       },
-      ZRX_WETH: {
-        pair: 'ZRX_WETH',
+      'ZRX/WETH': {
+        pair: 'ZRX/WETH',
         lastPrice: '8176.7874',
         change: '1.7811',
         high: '6165.0712',
         low: '2242.4298',
         volume: 752620,
       },
-      ZRX_DAI: {
-        pair: 'ZRX_DAI',
+      'ZRX/DAI': {
+        pair: 'ZRX/DAI',
         lastPrice: '7378.8467',
         change: '1.0410',
         high: '7755.4530',
@@ -436,24 +436,24 @@ describe('Token Pair Domain', () => {
 
   it('handles updated event with overlapping data', () => {
     const tokenPairData = {
-      BNB_WETH: {
-        pair: 'BNB_WETH',
+      'BNB/WETH': {
+        pair: 'BNB/WETH',
         lastPrice: '7425.2945',
         change: '4.5421',
         high: '8782.7964',
         low: '6499.3696',
         volume: 720404,
       },
-      BNB_DAI: {
-        pair: 'BNB_DAI',
+      'BNB/DAI': {
+        pair: 'BNB/DAI',
         lastPrice: '6018.7886',
         change: '1.6589',
         high: '3876.8717',
         low: '4613.5315',
         volume: 68946,
       },
-      OMG_WETH: {
-        pair: 'OMG_WETH',
+      'OMG/WETH': {
+        pair: 'OMG/WETH',
         lastPrice: '398.8988',
         change: '3.7561',
         high: '9892.7954',
@@ -463,24 +463,24 @@ describe('Token Pair Domain', () => {
     };
 
     const newTokenPairData = {
-      OMG_DAI: {
-        pair: 'OMG_DAI',
+      'OMG/DAI': {
+        pair: 'OMG/DAI',
         lastPrice: '66.2789',
         change: '3.5460',
         high: '9211.5292',
         low: '4241.7509',
         volume: 912048,
       },
-      ZRX_WETH: {
-        pair: 'ZRX_WETH',
+      'ZRX/WETH': {
+        pair: 'ZRX/WETH',
         lastPrice: '8176.7874',
         change: '1.7811',
         high: '6165.0712',
         low: '2242.4298',
         volume: 752620,
       },
-      OMG_WETH: {
-        pair: 'OMG_WETH',
+      'OMG/WETH': {
+        pair: 'OMG/WETH',
         lastPrice: '398.888',
         change: '3.7561',
         high: '9892.7954',
@@ -490,40 +490,40 @@ describe('Token Pair Domain', () => {
     };
 
     const expectedTokenPairData = {
-      BNB_WETH: {
-        pair: 'BNB_WETH',
+      'BNB/WETH': {
+        pair: 'BNB/WETH',
         lastPrice: '7425.2945',
         change: '4.5421',
         high: '8782.7964',
         low: '6499.3696',
         volume: 720404,
       },
-      BNB_DAI: {
-        pair: 'BNB_DAI',
+      'BNB/DAI': {
+        pair: 'BNB/DAI',
         lastPrice: '6018.7886',
         change: '1.6589',
         high: '3876.8717',
         low: '4613.5315',
         volume: 68946,
       },
-      OMG_DAI: {
-        pair: 'OMG_DAI',
+      'OMG/DAI': {
+        pair: 'OMG/DAI',
         lastPrice: '66.2789',
         change: '3.5460',
         high: '9211.5292',
         low: '4241.7509',
         volume: 912048,
       },
-      ZRX_WETH: {
-        pair: 'ZRX_WETH',
+      'ZRX/WETH': {
+        pair: 'ZRX/WETH',
         lastPrice: '8176.7874',
         change: '1.7811',
         high: '6165.0712',
         low: '2242.4298',
         volume: 752620,
       },
-      OMG_WETH: {
-        pair: 'OMG_WETH',
+      'OMG/WETH': {
+        pair: 'OMG/WETH',
         lastPrice: '398.888',
         change: '3.7561',
         high: '9892.7954',
@@ -544,21 +544,21 @@ describe('Token Pair Domain', () => {
   it('handles tokenPairFavorited event', () => {
     const domain = getDomain([
       eventCreators.initialized(initialTokenPairState),
-      eventCreators.tokenPairFavorited('EOS_WETH', true),
+      eventCreators.tokenPairFavorited('EOS/WETH', true),
     ]);
 
-    expect(domain.getFavoritePairs()).toEqual(['EOS_WETH']);
+    expect(domain.getFavoritePairs()).toEqual(['EOS/WETH']);
   });
 
   it('handles tokenPairFavorited events', () => {
     const domain = getDomain([
       eventCreators.initialized(initialTokenPairState),
-      eventCreators.tokenPairFavorited('EOS_WETH', true),
-      eventCreators.tokenPairFavorited('EOS_DAI', true),
-      eventCreators.tokenPairFavorited('EOS_ZRX', true),
-      eventCreators.tokenPairFavorited('EOS_WETH', false),
+      eventCreators.tokenPairFavorited('EOS/WETH', true),
+      eventCreators.tokenPairFavorited('EOS/DAI', true),
+      eventCreators.tokenPairFavorited('EOS/ZRX', true),
+      eventCreators.tokenPairFavorited('EOS/WETH', false),
     ]);
 
-    expect(domain.getFavoritePairs()).toEqual(['EOS_DAI', 'EOS_ZRX']);
+    expect(domain.getFavoritePairs()).toEqual(['EOS/DAI', 'EOS/ZRX']);
   });
 });

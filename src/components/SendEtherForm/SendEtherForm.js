@@ -34,8 +34,8 @@ class SendEtherForm extends React.PureComponent<Props, State> {
     amount: 0,
     receiver: '',
     sender: '',
-    customGas: null,
-    customGasPrice: null,
+    customGas: '',
+    customGasPrice: '',
   };
 
   handleChange = (e: SyntheticInputEvent<>) => {
@@ -75,6 +75,7 @@ class SendEtherForm extends React.PureComponent<Props, State> {
     gas = customGas || gas;
     gasPrice = customGasPrice || gasPrice;
 
+    console.log(amount, receiver, gas, gasPrice, token);
     if (this.state.token.address === '0x0') {
       sendEtherTx({ amount, receiver, gas, gasPrice });
     } else {

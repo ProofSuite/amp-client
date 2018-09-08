@@ -108,7 +108,6 @@ const WalletLoginFormRenderer = (props: Props) => {
     submit,
     saveEncryptedWalletDisabled,
     showLoginMethods,
-    createWallet,
   } = props;
 
   const inputForms = {
@@ -154,16 +153,6 @@ const WalletLoginFormRenderer = (props: Props) => {
         handleChange={handleChange}
       />
     ),
-    createWallet: (
-      <CreateWalletWrap
-        handleChange={handleChange}
-        password={password}
-        onEnterKeyPress={onEnterKeyPress}
-        passwordStatus={passwordStatus}
-        createWallet={createWallet}
-        passwordHelpingText={passwordHelpingText}
-      />
-    ),
   };
 
   return (
@@ -173,7 +162,6 @@ const WalletLoginFormRenderer = (props: Props) => {
         <Radio label="JSON" value="json" />
         <Radio label="Wallet File" value="walletFile" />
         <Radio label="Mnemonic Sentence" value="mnemonic" />
-        <Radio label="Create New Wallet" value="createWallet" />
       </RadioGroup>
       <InputFormsBox>{inputForms[method]}</InputFormsBox>
       <FormGroup helperText="Learn more about different options here">
@@ -194,11 +182,7 @@ const WalletLoginFormRenderer = (props: Props) => {
           <Button intent="normal" minimal={true} icon="undo" onClick={showLoginMethods} />
         </ButtonBox>
         <ButtonBox>
-          {method === 'createWallet' ? (
-            <Button intent="primary" text="Create Wallet" onClick={createWallet} />
-          ) : (
-            <Button intent="primary" text="Authenticate" onClick={submit} />
-          )}
+          <Button intent="primary" text="Authenticate" onClick={submit} />
         </ButtonBox>
       </FooterWrapper>
       <OverlaySpinner visible={loading} transparent />
@@ -295,44 +279,6 @@ const JSONInputForm = ({
           </FormGroup>
         </InputPadding>
       </Label>
-    </div>
-  );
-};
-
-const CreateWalletWrap = ({
-  handleChange,
-  password,
-  passwordStatus,
-  passwordHelpingText,
-  onEnterKeyPress,
-  createWallet,
-}: *) => {
-  return (
-    <div>
-      <InputPadding>
-        <FormGroup>
-          <InputGroup
-            name="password"
-            type="password"
-            label="password"
-            placeholder="Password for new Wallet"
-            onChange={handleChange}
-            value={password}
-          />
-        </FormGroup>
-      </InputPadding>
-      <HelperText>
-        <b>Do not lose it!</b> It cannot be recovered if you lose it.
-      </HelperText>
-      <HelperText>
-        <b>Do not share it!</b> Your funds will be stolen if you use this file on a malicious/phishing site.
-      </HelperText>
-      <HelperText>
-        <b>Make a backup!</b> Secure it like the millions of dollars it may one day be worth.
-      </HelperText>
-      <InputPadding>
-        <Button onClick={createWallet} text="Create New Wallet" />
-      </InputPadding>
     </div>
   );
 };

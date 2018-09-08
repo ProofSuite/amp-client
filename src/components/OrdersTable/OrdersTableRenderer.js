@@ -107,7 +107,7 @@ const OrdersTableHeader = styled.div`
   align-items: center;
 `;
 
-const Heading = styled.h4`
+const Heading = styled.h3`
   margin: auto;
 `;
 

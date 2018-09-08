@@ -108,7 +108,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { visible, hideModal, testParent } = this.props;
+    const { visible, hideModal } = this.props;
     const {
       currentStep,
       password,
@@ -135,7 +135,6 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
         storeWallet={storeWallet}
         passwordStatus={passwordStatus}
         storePrivateKey={storePrivateKey}
-        testParent={testParent}
         goToDownloadWallet={this.goToDownloadWallet}
         goBackToCreateWallet={this.goBackToCreateWallet}
         togglePasswordView={this.togglePasswordView}

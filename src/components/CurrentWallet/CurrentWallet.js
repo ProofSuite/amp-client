@@ -9,7 +9,8 @@ export default class CurrentWallet extends React.PureComponent {
     showPrivateKey: false,
     isModalOpen: false,
     locked: false,
-    balance: '121.2312',
+    toWeth: false,
+    showEth: true,
   };
 
   togglePrivateKey = () => {
@@ -27,24 +28,47 @@ export default class CurrentWallet extends React.PureComponent {
       };
     });
   };
+  swapEthWeth = () => {
+    this.setState(function(prevState) {
+      return {
+        toWeth: !prevState.toWeth,
+      };
+    });
+  };
+
+  toggleBalance = () => {
+    this.setState(function(prevState) {
+      return {
+        showEth: !prevState.showEth,
+      };
+    });
+  };
 
   render() {
     const {
-      props: { accountAddress, pvtKeyLocked, accountPrivateKey },
-      state: { showPrivateKey, currentBlock, balance, locked, isModalOpen },
+      props: { accountAddress, gasPrice, gas, pvtKeyLocked, accountPrivateKey, etherBalance },
+      state: { showPrivateKey, showEth, currentBlock, toWeth, balance, locked, isModalOpen },
       togglePrivateKey,
       handleModalClose,
+      swapEthWeth,
+      toggleBalance,
     } = this;
     return (
       <CurrentWalletRenderer
         showPrivateKey={showPrivateKey}
         privateKey={accountPrivateKey}
-        balance={balance}
+        toWeth={toWeth}
+        showEth={showEth}
+        gasPrice={gasPrice}
+        gas={gas}
+        balance={etherBalance}
         locked={locked}
         isModalOpen={isModalOpen}
         currentBlock={currentBlock}
         pvtKeyLocked={pvtKeyLocked}
         accountAddress={accountAddress}
+        swapEthWeth={swapEthWeth}
+        toggleBalance={toggleBalance}
         togglePrivateKey={togglePrivateKey}
         handleModalClose={handleModalClose}
       />

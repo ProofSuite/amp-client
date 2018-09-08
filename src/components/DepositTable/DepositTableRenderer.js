@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Switch, Icon, Checkbox, InputGroup } from '@blueprintjs/core';
-import { RowSpaceBetween, CryptoIcon } from '../Common';
+import { Button, Switch, Checkbox, InputGroup } from '@blueprintjs/core';
+import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import styled from 'styled-components';
 
 const DepositTableRenderer = (props: Props) => {
@@ -22,7 +22,6 @@ const DepositTableRenderer = (props: Props) => {
       <Table>
         <thead>
           <TableHeader>
-            <TableHeaderCellForIcon style={{ width: '3.5%' }}> </TableHeaderCellForIcon>
             <TableHeaderCell>Token Name</TableHeaderCell>
             <TableHeaderCell>Balances</TableHeaderCell>
             <TableHeaderCell>Allowances</TableHeaderCell>
@@ -43,15 +42,15 @@ const DepositTableRenderer = (props: Props) => {
 };
 
 const RowRenderer = (props: Props) => {
-  const { provider, depositData, handleAllowance, handleModalClose, handleWithdraw } = props;
+  const { provider, depositData, handleAllowance, handleDepositClose, handleWithdraw } = props;
   return depositData.map(({ symbol, balance, allowed }, index) => {
     return (
       <Row key={index}>
-        <CellForIcon>
-          <CryptoIcon name={symbol} />
-        </CellForIcon>
         <Cell>
-          <span>{symbol}</span>
+          <TokenNameWrapper>
+            <ColoredCryptoIcon size={23} name={symbol} />
+            <span>{symbol}</span>
+          </TokenNameWrapper>
         </Cell>
         <Cell>{balance}</Cell>
         <Cell>
@@ -64,7 +63,7 @@ const RowRenderer = (props: Props) => {
               style={{ marginRight: '10px' }}
               intent="primary"
               text="Deposit"
-              onClick={handleModalClose}
+              onClick={handleDepositClose}
             />
             <Button disabled={!provider} intent="primary" text="Withdraw" onClick={handleWithdraw} />
           </ButtonWrapper>
@@ -82,6 +81,13 @@ const Table = styled.table.attrs({
 
 const Row = styled.tr`
   width: 100%;
+`;
+const TokenNameWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  & svg {
+    margin-right: 12px;
+  }
 `;
 const SingleRow = styled.tr`
   width: 100%;

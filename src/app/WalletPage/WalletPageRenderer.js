@@ -17,6 +17,9 @@ const WalletPageRenderer = ({
   depositTableData,
   accountAddress,
   accountPrivateKey,
+  etherBalance,
+  gasPrice,
+  gas,
 }: Props) => {
   return (
     <Wrapper>
@@ -25,6 +28,9 @@ const WalletPageRenderer = ({
           pvtKeyLocked={pvtKeyLocked}
           accountAddress={accountAddress}
           accountPrivateKey={accountPrivateKey}
+          etherBalance={etherBalance}
+          gasPrice={gasPrice}
+          gas={gas}
         />
         <WalletPageContent>
           {loading ? (
@@ -45,10 +51,6 @@ const WalletPageRenderer = ({
           )}
         </WalletPageContent>
       </RowWrapper>
-      <p style={{ textAlign: 'center', marginTop: '15px' }}>
-        Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text Footer Text
-        Footer Text Footer Text Footer Text Footer Text Footer Text
-      </p>
       <Notifier />
     </Wrapper>
   );

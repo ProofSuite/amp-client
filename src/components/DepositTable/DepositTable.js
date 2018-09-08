@@ -9,7 +9,7 @@ type Props = {
 
 class DepositTable extends React.PureComponent<Props, State> {
   state = {
-    isModalOpen: false,
+    isDepositModalOpen: false,
     hideZeroBalanceToken: false,
     searchValue: '',
   };
@@ -25,10 +25,10 @@ class DepositTable extends React.PureComponent<Props, State> {
     console.log('Log Withdraw');
   };
 
-  handleModalClose = () => {
+  handleDepositClose = () => {
     this.setState(function(prevState) {
       return {
-        isModalOpen: !prevState.isModalOpen,
+        isDepositModalOpen: !prevState.isDepositModalOpen,
       };
     });
   };
@@ -64,8 +64,7 @@ class DepositTable extends React.PureComponent<Props, State> {
 
   render() {
     const { depositData, provider } = this.props;
-    const { isModalOpen, searchValue, hideZeroBalanceToken } = this.state;
-
+    const { isDepositModalOpen, searchValue, hideZeroBalanceToken } = this.state;
     return (
       <Wrapper>
         <DepositTableRenderer
@@ -73,14 +72,14 @@ class DepositTable extends React.PureComponent<Props, State> {
           searchValue={searchValue}
           provider={provider}
           hideZeroBalanceToken={hideZeroBalanceToken}
-          handleModalClose={this.handleModalClose}
+          handleDepositClose={this.handleDepositClose}
           handleAllowance={this.handleAllowance}
           handleDeposit={this.handleDeposit}
           handleWithdraw={this.handleWithdraw}
           toggleZeroBalanceToken={this.toggleZeroBalanceToken}
           handleSearchChange={this.handleSearchChange}
         />
-        <DepositModal isOpen={isModalOpen} handleClose={this.handleModalClose} />
+        <DepositModal isOpen={isDepositModalOpen} handleClose={this.handleDepositClose} />
       </Wrapper>
     );
   }

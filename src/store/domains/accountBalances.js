@@ -86,6 +86,9 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     balances() {
       return state;
     },
+    etherBalance() {
+      return state['ETH'] ? state['ETH'].balance : null;
+    },
     get(symbol: string) {
       return state[symbol] ? state[symbol].balance : null;
     },

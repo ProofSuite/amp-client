@@ -24,7 +24,11 @@ class WalletPage extends React.PureComponent<Props> {
       authenticated,
       accountAddress,
       accountPrivateKey,
+      etherBalance,
+      gasPrice,
+      gas,
     } = this.props;
+
     if (!authenticated) {
       return <Redirect to="/login" />;
     }
@@ -32,6 +36,9 @@ class WalletPage extends React.PureComponent<Props> {
     return (
       <WalletPageRenderer
         loading={loading}
+        etherBalance={etherBalance}
+        gasPrice={gasPrice}
+        gas={gas}
         accountPrivateKey={accountPrivateKey}
         provider={provider}
         pvtKeyLocked={pvtKeyLocked}

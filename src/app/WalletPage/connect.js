@@ -6,7 +6,16 @@ import { sortTable } from '../../utils/helpers';
 import { removeNotification } from '../../store/actions/app';
 
 export function mapStateToProps(state, props) {
-  const { depositTableData, accountAddress, currentBlock, provider, accountPrivateKey } = getWalletPageSelector(state);
+  const {
+    depositTableData,
+    accountAddress,
+    currentBlock,
+    etherBalance,
+    provider,
+    accountPrivateKey,
+    gas,
+    gasPrice,
+  } = getWalletPageSelector(state);
   const { authenticated } = accountSelector(state);
   const loading = !(depositTableData.length > 0);
   const { pvtKeyLocked } = settingsPageSelector(state);
@@ -20,7 +29,10 @@ export function mapStateToProps(state, props) {
     authenticated: authenticated,
     currentBlock: currentBlock,
     provider: provider,
+    etherBalance: etherBalance,
     pvtKeyLocked: pvtKeyLocked,
+    gas,
+    gasPrice,
   };
 }
 

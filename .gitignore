@@ -86,3 +86,6 @@ package-lock.json
 # misc
 .DS_Store
 wallaby.js
+
+#To Kepp the chain state unchanged
+/chain
