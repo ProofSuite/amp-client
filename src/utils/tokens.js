@@ -1,13 +1,13 @@
 export const getPairSymbol = (baseTokenSymbol, quoteTokenSymbol) => {
-  return `${baseTokenSymbol}_${quoteTokenSymbol}`;
+  return `${baseTokenSymbol}/${quoteTokenSymbol}`;
 };
 
 export const getBaseToken = pairSymbol => {
-  return pairSymbol.split('_')[0];
+  return pairSymbol.split('/')[0];
 };
 
 export const getQuoteToken = pairSymbol => {
-  return pairSymbol.split('_')[1];
+  return pairSymbol.split('/')[1];
 };
 
 export const generateTokenPairs = (quoteTokens, tokens) => {

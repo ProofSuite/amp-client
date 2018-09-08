@@ -45,3 +45,7 @@ export function reduceDecimals(value, decimals, format = 'float') {
 export function toDate(timeStamp) {
   return new Date(timeStamp).toLocaleDateString().replace(/\//g, '-');
 }
+
+export function toWEI(number) {
+  return parseFloat(number) * 1000000000000000000;
+}

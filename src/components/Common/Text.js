@@ -13,7 +13,7 @@ export const LargeText = styled.h3`
   color: ${props => (props.intent ? Colors[props.intent] : Colors.HEADING)} !important;
 `;
 
-export const Header = styled.h4`
+export const Header = styled.h3`
   text-align: left;
   margin-bottom: auto;
   margin-top: auto;

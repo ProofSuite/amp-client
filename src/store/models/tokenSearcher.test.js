@@ -4,15 +4,15 @@ import * as domains from '../domains';
 jest.mock('../domains');
 
 it('tokenSearcherSelector parses data correctly', () => {
-  let getFavoritePairsMock = jest.fn(() => ['BNB_DAI', 'ZRX_WETH']);
+  let getFavoritePairsMock = jest.fn(() => ['BNB/DAI', 'ZRX/WETH']);
 
   let getCurrentPairMock = jest.fn(() => ({
-    pair: 'BNB_WETH',
+    pair: 'BNB/WETH',
   }));
 
   let getTokenPairsDataArrayMock = jest.fn(() => [
     {
-      pair: 'BNB_WETH',
+      pair: 'BNB/WETH',
       lastPrice: '7425.2945',
       change: '4.5421',
       high: '8782.7964',
@@ -20,7 +20,7 @@ it('tokenSearcherSelector parses data correctly', () => {
       volume: 720404,
     },
     {
-      pair: 'BNB_DAI',
+      pair: 'BNB/DAI',
       lastPrice: '6018.7886',
       change: '1.6589',
       high: '3876.8717',
@@ -28,7 +28,7 @@ it('tokenSearcherSelector parses data correctly', () => {
       volume: 68946,
     },
     {
-      pair: 'OMG_DAI',
+      pair: 'OMG/DAI',
       lastPrice: '66.2789',
       change: '3.5460',
       high: '9211.5292',
@@ -36,7 +36,7 @@ it('tokenSearcherSelector parses data correctly', () => {
       volume: 912048,
     },
     {
-      pair: 'ZRX_WETH',
+      pair: 'ZRX/WETH',
       lastPrice: '8176.7874',
       change: '1.7811',
       high: '6165.0712',
@@ -44,7 +44,7 @@ it('tokenSearcherSelector parses data correctly', () => {
       volume: 752620,
     },
     {
-      pair: 'OMG_WETH',
+      pair: 'OMG/WETH',
       lastPrice: '398.888',
       change: '3.7561',
       high: '9892.7954',
@@ -56,7 +56,7 @@ it('tokenSearcherSelector parses data correctly', () => {
   let expectedTokenPairsByQuoteToken = {
     WETH: [
       {
-        pair: 'BNB_WETH',
+        pair: 'BNB/WETH',
         lastPrice: '7425.2945',
         change: '4.5421',
         high: '8782.7964',
@@ -67,7 +67,7 @@ it('tokenSearcherSelector parses data correctly', () => {
         favorited: false,
       },
       {
-        pair: 'ZRX_WETH',
+        pair: 'ZRX/WETH',
         lastPrice: '8176.7874',
         change: '1.7811',
         high: '6165.0712',
@@ -78,7 +78,7 @@ it('tokenSearcherSelector parses data correctly', () => {
         favorited: true,
       },
       {
-        pair: 'OMG_WETH',
+        pair: 'OMG/WETH',
         lastPrice: '398.888',
         change: '3.7561',
         high: '9892.7954',
@@ -91,7 +91,7 @@ it('tokenSearcherSelector parses data correctly', () => {
     ],
     DAI: [
       {
-        pair: 'BNB_DAI',
+        pair: 'BNB/DAI',
         lastPrice: '6018.7886',
         change: '1.6589',
         high: '3876.8717',
@@ -102,7 +102,7 @@ it('tokenSearcherSelector parses data correctly', () => {
         favorited: true,
       },
       {
-        pair: 'OMG_DAI',
+        pair: 'OMG/DAI',
         lastPrice: '66.2789',
         change: '3.5460',
         high: '9211.5292',
@@ -123,5 +123,5 @@ it('tokenSearcherSelector parses data correctly', () => {
 
   let { tokenPairsByQuoteToken, currentPair } = tokenSearcherSelector();
   expect(tokenPairsByQuoteToken).toEqual(expectedTokenPairsByQuoteToken);
-  expect(currentPair).toEqual({ pair: 'BNB_WETH' });
+  expect(currentPair).toEqual({ pair: 'BNB/WETH' });
 });

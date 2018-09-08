@@ -48,10 +48,7 @@ const OrderFormRenderer = (props: Props) => {
   return (
     <Card className="order-form">
       <OrderFormHeader>
-        <LeftHeader>
-          <HeaderText text={`${formType} ${baseToken}`} />
-          <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
-        </LeftHeader>
+        <HeaderText text={`${formType} ${baseToken}`} />
         <ButtonRow>
           <Button
             text="Limit"
@@ -67,6 +64,7 @@ const OrderFormRenderer = (props: Props) => {
             active={selectedTabId === 'market'}
             intent={selectedTabId === 'market' ? 'primary' : ''}
           />
+          <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
         </ButtonRow>
       </OrderFormHeader>
       <Collapse isOpen={isOpen}>

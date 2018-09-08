@@ -19,8 +19,8 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
       let signer = getSigner();
 
       let tx = {
-        gasLimit: gas || 0,
-        gasPrice: gasPrice || 2 * 10e9,
+        gasLimit: parseFloat(gas) || 0,
+        gasPrice: parseFloat(gasPrice) || 2 * 10e9,
         to: receiver,
         value: ethers.utils.parseEther(amount),
       };
@@ -41,8 +41,8 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
       let signer = getSigner();
 
       let rawTx = {
-        gasLimit: gas || 0,
-        gasPrice: gasPrice || 2 * 10e9,
+        gasLimit: parseFloat(gas) || 0,
+        gasPrice: parseFloat(gasPrice) || 2 * 10e9,
         to: receiver,
         value: amount * 10 ** 18,
       };
@@ -86,8 +86,8 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       let token = new Contract(tokenAddress, ERC20Token.abi, signer);
 
       let txOpts = {
-        gasLimit: gas || 0,
-        gasPrice: gasPrice || 2 * 10e9,
+        gasLimit: parseFloat(gas) || 0,
+        gasPrice: parseFloat(gasPrice) || 2 * 10e9,
       };
       let tx = await token.transfer(receiver, amount, txOpts);
 

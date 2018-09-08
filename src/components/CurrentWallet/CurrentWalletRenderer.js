@@ -3,6 +3,9 @@ import { Card, Button } from '@blueprintjs/core';
 import styled from 'styled-components';
 import SendEtherModal from '../../components/SendEtherModal';
 import { toPassowrdType } from '../../utils/helpers';
+import { SvgIcon } from '../Common';
+import { toWEI } from '../../utils/converters';
+import numeral from 'numeral';
 
 const CurrentWalletRenderer = props => {
   const {
@@ -14,6 +17,12 @@ const CurrentWalletRenderer = props => {
     accountAddress,
     balance,
     pvtKeyLocked,
+    swapEthWeth,
+    toWeth,
+    gasPrice,
+    gas,
+    showEth,
+    toggleBalance,
   } = props;
   const displayPvtKey = showPrivateKey && !pvtKeyLocked;
   return (
@@ -22,8 +31,20 @@ const CurrentWalletRenderer = props => {
         <CardTitle>Current Wallet</CardTitle>
         <Row>
           <h3>Balance: </h3>
-          <h2>{balance} ETH</h2>
+          <BalancesWrapper>
+            {showEth && (
+              <Button style={{ marginRight: '13px' }} onClick={toggleBalance} icon="chevron-left" minimal="true" />
+            )}
+            <h2>
+              <p className={showEth ? 'hideLeft' : ''}>{balance} ETH</p>
+              <p className={showEth ? '' : 'hideRight'} style={{ marginTop: '-30px' }}>
+                {balance} WETH
+              </p>
+            </h2>
+            {!showEth && <Button onClick={toggleBalance} icon="chevron-right" minimal="true" />}
+          </BalancesWrapper>
         </Row>
+
         <Row>
           <h3>Address: </h3>
           <p>{accountAddress}</p>
@@ -58,7 +79,7 @@ const CurrentWalletRenderer = props => {
             View Wallet on Etherscan
           </a>
         </Row>
-        <SendEtherModal isOpen={isModalOpen} handleClose={handleModalClose} />
+        <SendEtherModal gas={gas} gasPrice={gasPrice} isOpen={isModalOpen} handleClose={handleModalClose} />
       </div>
     </WalletWrapper>
   );
@@ -76,6 +97,17 @@ const CardTitle = styled.h3`
   width: 100%;
   float: left;
   margin-bottom: 15px;
+`;
+const BalancesWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  & h2 {
+    overflow: hidden;
+  }
+  & p {
+    transition: all linear 300ms;
+  }
 `;
 const Row = styled.div`
   display: block;

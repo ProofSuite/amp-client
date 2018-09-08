@@ -10,8 +10,6 @@ import {
 
 import WalletLoginFormRenderer from './WalletLoginFormRenderer';
 import type { CreateWalletParams } from '../../types/walletLoginForm';
-// import keythereum from 'keythereum';
-import FileSaver from 'file-saver';
 
 type Status = 'incomplete' | 'valid' | 'invalid';
 type Props = {
@@ -45,7 +43,7 @@ type State = {
 class WalletLoginForm extends React.PureComponent<Props, State> {
   state = {
     loading: false,
-    method: 'createWallet',
+    method: 'walletFile',
     address: '',
     json: '',
     jsonStatus: 'incomplete',
@@ -257,24 +255,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     }
   };
 
-  createWallet = () => {
-    // var params = { keyBytes: 32, ivBytes: 16 };
-    // var dk = keythereum.create(params);
-    // var options = {
-    //   kdf: "pbkdf2",
-    //   cipher: "aes-128-ctr",
-    //   kdfparams: {
-    //     c: 262144,
-    //     dklen: 32,
-    //     prf: "hmac-sha256"
-    //   }
-    // };
-    //
-    // var keyObject = keythereum.dump(this.state.password, dk.privateKey, dk.salt, dk.iv, options);
-    // var blob = new Blob([keythereum.exportToFile(keyObject)], {type: "json/plain;charset=utf-8"});
-    // FileSaver.saveAs(blob,  "AMP-" + new Date(Date()).toISOString() + "-" + keyObject.address + ".json");
-  };
-
   render() {
     const {
       state: {
@@ -303,7 +283,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       submit,
       createWallet,
       onEnterKeyPress,
-      createNewWallet,
     } = this;
     const saveEncryptedWalletDisabled = method === 'privateKey' || method === 'mnemonic';
 

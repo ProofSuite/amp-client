@@ -9,11 +9,9 @@ import { quoteTokenSymbols as quotes } from '../../config/quotes';
 
 export default function tokenSearcherSelector(state: State) {
   let domain = getTokenPairsDomain(state);
-
   let tokenPairs = domain.getTokenPairsDataArray();
   let favoriteTokenPairs = domain.getFavoritePairs();
   let tokenPairsByQuoteToken = {};
-
   for (let quote of quotes) {
     tokenPairsByQuoteToken[quote] = tokenPairs
       .filter(({ pair }) => getQuoteToken(pair) === quote)

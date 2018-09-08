@@ -1,5 +1,17 @@
 @import "vars";
 
+.hideLeft {
+  transform: translate3d(-100%, 0%, 0);
+  transition: all linear 300ms;
+  opacity: 0;
+}
+.hideRight {
+  transform: translate3d(100%, 0%, 0);
+  transition: all linear 300ms;
+  opacity: 0;
+}
+
+
 .trading-page {
   display: inline-block;
   width: 100%;

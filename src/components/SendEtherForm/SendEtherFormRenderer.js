@@ -56,7 +56,7 @@ const SendEtherFormRenderer = (props: Props) => {
         </ControlGroup>
       </Label>
       <br />
-      <Label text="Receiver Address" helperText="(should start with 0x)">
+      <Label text="Receiver Address" helpertext="(should start with 0x)">
         <InputGroup placeholder="Receiver" name="receiver" value={receiver} onChange={handleChange} />
       </Label>
       <br />

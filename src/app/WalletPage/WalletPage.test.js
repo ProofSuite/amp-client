@@ -15,7 +15,14 @@ it('renders without crashing', () => {
 
 it('calls queryAccountData on mount', () => {
   const queryAccountData = jest.fn();
-  shallow(<WalletPage queryAccountData={queryAccountData} depositTableData={depositTableData} loading={false} />);
+  shallow(
+    <WalletPage
+      authenticated={true}
+      queryAccountData={queryAccountData}
+      depositTableData={depositTableData}
+      loading={false}
+    />
+  );
 
   expect(queryAccountData).toBeCalled();
 });

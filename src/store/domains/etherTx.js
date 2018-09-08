@@ -5,8 +5,8 @@ const initialState: EtherTxState = {
   loading: false,
   status: 'incomplete',
   statusMessage: null,
-  gas: null,
-  gasPrice: null,
+  gas: 21000,
+  gasPrice: 41000000000,
   hash: null,
   receipt: null,
 };
