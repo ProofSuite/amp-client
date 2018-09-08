@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Button, Icon } from '@blueprintjs/core';
-import { Footer, RowSpaceBetween, Colors } from '../../components/Common';
+import { Card, Button } from '@blueprintjs/core';
+import { Colors } from '../../components/Common';
 import styled from 'styled-components';
 
 const SettingsPageRenderer = props => {
@@ -45,9 +45,6 @@ export default SettingsPageRenderer;
 
 const Wrapper = styled.div`
   padding: 20px;
-`;
-const AccountInformation = styled(Card)`
-  margin-bottom: 20px;
 `;
 const LockPrivateKey = styled(Card)`
   margin-bottom: 20px;

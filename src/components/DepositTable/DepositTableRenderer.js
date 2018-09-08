@@ -4,7 +4,7 @@ import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import styled from 'styled-components';
 
 const DepositTableRenderer = (props: Props) => {
-  const { hideZeroBalanceToken, toggleZeroBalanceToken, provider } = props;
+  const { hideZeroBalanceToken, toggleZeroBalanceToken } = props;
   return (
     <TableSection>
       <RowSpaceBetween style={{ marginBottom: '10px' }}>
@@ -89,34 +89,11 @@ const TokenNameWrapper = styled.div`
     margin-right: 12px;
   }
 `;
-const SingleRow = styled.tr`
-  width: 100%;
-  height: 100%;
-`;
-const SingleCell = styled.td`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  vertical-align: middle;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-`;
 const TableBodyContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
 `;
-
-const TokenSymbol = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
-  & svg {
-    margin-right: 7px;
-  }
-`;
-
 const TableSection = styled.div`
   display: flex;
   justify-content: space-between;
@@ -124,31 +101,14 @@ const TableSection = styled.div`
   height: 100%;
   width: 99%;
 `;
-const SearchBar = styled.input.attrs({
-  className: 'bp3-input',
-})`
-  width: 100%;
-`;
 
 const TableBody = styled.tbody``;
 const TableHeader = styled.tr``;
 const TableHeaderCell = styled.th`
   width: 19%;
 `;
-const TableHeaderCellForIcon = styled.th`
-  width: 5.5%;
-`;
-
 const Cell = styled.td`
   width: 19%;
-  vertical-align: middle !important;
-  & label {
-    margin: 0;
-  }
-`;
-const CellForIcon = styled.td`
-  width: 1%;
-  font-size: 25px;
   vertical-align: middle !important;
   & label {
     margin: 0;
@@ -168,11 +128,6 @@ const NoToken = styled.p`
 const ButtonWrapper = styled.div`
   margin-left: 5px;
   margin-right: 5px;
-`;
-
-const HeadPanel = styled.div`
-  display: flex;
-  justify-con
 `;
 
 export default DepositTableRenderer;

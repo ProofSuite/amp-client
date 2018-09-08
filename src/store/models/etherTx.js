@@ -65,7 +65,7 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
 export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkAction => {
   return async (dispatch, getState) => {
     try {
-      let { receiver, amount, gas, gasPrice, tokenAddress } = params;
+      let { receiver, amount, tokenAddress } = params;
       let signer = getSigner();
       let token = new Contract(tokenAddress, ERC20Token.abi, signer);
 

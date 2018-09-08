@@ -4,6 +4,13 @@ export type LoginPageState = {
   +error: string,
 };
 
+export type LoginWithWallet = {
+  wallet: string,
+  encryptedWallet: string,
+  storeWallet: boolean,
+  storePrivateKey: boolean,
+};
+
 export type LoginPageEvent = any => LoginPageState => LoginPageState;
 
 export type CreateWalletAction = {

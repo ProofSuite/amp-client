@@ -3,11 +3,12 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import LoginPageRenderer from './LoginPageRenderer';
 import { createWalletFromJSON } from '../../store/services/wallet';
+import type { LoginWithWallet } from '../../types/loginPage';
 
 type Props = {
   authenticated: boolean,
   loginWithMetamask: () => void,
-  loginWithWallet: (SyntheticEvent<>) => void,
+  loginWithWallet: LoginWithWallet => void,
   removeNotification: any => void,
 };
 
@@ -57,14 +58,12 @@ class LoginPage extends React.PureComponent<Props, State> {
     // this.props.removeNotification({ id: 1 });
   };
 
-  walletCreated = async props => {
-    const { address, password, encryptedWallet, storeWallet, storePrivateKey } = props;
-    var { wallet, encrypted } = await createWalletFromJSON(encryptedWallet, password);
-    console.log(wallet, encrypted);
+  walletCreated = async (props: Object) => {
+    const { password, encryptedWallet, storeWallet, storePrivateKey } = props;
+    var { wallet } = await createWalletFromJSON(encryptedWallet, password);
     if (wallet) {
       this.props.loginWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
     }
-    // this.props.removeNotification({ id: 1 });
   };
 
   render() {

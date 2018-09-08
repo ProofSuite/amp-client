@@ -2,7 +2,6 @@
 import React from 'react';
 import SendEtherFormRenderer from './SendEtherFormRenderer';
 import { tokens } from '../../data';
-
 import type { EtherTxParams, TransferTokensTxParams } from '../../types/etherTx';
 
 type State = {
@@ -34,8 +33,8 @@ class SendEtherForm extends React.PureComponent<Props, State> {
     amount: 0,
     receiver: '',
     sender: '',
-    customGas: '',
-    customGasPrice: '',
+    customGas: null,
+    customGasPrice: null,
   };
 
   handleChange = (e: SyntheticInputEvent<>) => {

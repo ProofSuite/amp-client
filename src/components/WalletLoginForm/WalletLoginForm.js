@@ -201,7 +201,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
 
     this.setState({ loading: true });
     let invalidPassword = false;
-    let text = '';
     let invalidKey = false;
     let invalidJSON = false;
     let invalidMnemonic = false;
@@ -281,7 +280,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
       onDrop,
       handleChange,
       submit,
-      createWallet,
       onEnterKeyPress,
     } = this;
     const saveEncryptedWalletDisabled = method === 'privateKey' || method === 'mnemonic';
@@ -311,7 +309,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         showLoginMethods={showLoginMethods}
         submit={submit}
         onEnterKeyPress={onEnterKeyPress}
-        createWallet={createWallet}
         saveEncryptedWalletDisabled={saveEncryptedWalletDisabled}
       />
     );

@@ -126,6 +126,7 @@ export function getSessionStorageWallets() {
       wallets.push({ address: key, key: sessionStorage[key], rank: index });
       index++;
     }
+    return key;
   });
   return wallets;
 }
@@ -138,6 +139,7 @@ export function getLocalStorageWallets() {
       wallets.push({ address: key, key: localStorage[key], rank: index });
       index++;
     }
+    return key;
   });
   return wallets;
 }

@@ -8,8 +8,7 @@ export type OHLCVState = {
 };
 
 export type SendTimelineParams = {
-  duration: string,
-  time: string,
+  updateWRT: string,
 };
 
 export type SingleOrderTypes = {

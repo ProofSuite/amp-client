@@ -15,7 +15,7 @@ import {
   RadioGroup,
   TextArea,
 } from '@blueprintjs/core';
-import { Divider, OverlaySpinner, Text, Colors } from '../../components/Common';
+import { Divider, OverlaySpinner, Text } from '../../components/Common';
 import WalletSelect from './WalletSelect';
 // TODO -> Intent issue is still to get fix this func () => `JSONFileInputForm`
 
@@ -198,7 +198,6 @@ const PrivateKeyInputForm = ({
   onEnterKeyPress,
 }: *) => {
   // silence-error: couldn't resolve
-  const walletsSaved = sessionStorageWallets.length > 1;
   return (
     <div>
       <InputPadding>
@@ -391,11 +390,6 @@ const DropzoneMessageContainer = styled(Card)`
   align-items: center;
   align-content: center;
   justify-items: center;
-`;
-const HelperText = styled.p`
-  color: ${Colors.GRAY5};
-  text-align: center;
-  padding: 0 40px;
 `;
 
 export default WalletLoginFormRenderer;

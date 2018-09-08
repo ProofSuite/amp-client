@@ -3,8 +3,6 @@ import React from 'react';
 import { createAndEncryptWallet } from '../../store/services/wallet';
 import CreateWalletModalRenderer from './CreateWalletModalRenderer';
 
-import type { CreateWalletParams } from '../../types/wallets';
-
 type Props = {
   visible: boolean,
   hideModal: void => void,
@@ -14,11 +12,13 @@ type Props = {
 type State = {
   currentStep: number,
   password: string,
+  passwordStatus: string,
   showEncryptionProgress: boolean,
   encryptionPercentage: number,
   address: string,
   encryptedWallet: string,
   storeWallet: boolean,
+  showPassword: boolean,
   storePrivateKey: boolean,
 };
 
@@ -102,7 +102,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   };
 
   togglePasswordView = () => {
-    this.setState(function(prevState) {
+    this.setState(function(prevState: State) {
       return { showPassword: !prevState.showPassword };
     });
   };

@@ -1,6 +1,5 @@
 // @flow
 import * as actionCreators from '../actions/loginPage';
-import * as accountActionCreators from '../actions/account';
 import * as notifierActionCreators from '../actions/app';
 import { getAccountDomain, getLoginPageDomain } from '../domains';
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
