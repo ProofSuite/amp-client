@@ -54,10 +54,21 @@ export function allowancesUpdated(allowances: AccountAllowances) {
       };
       return result;
     }, {});
-
     return {
       ...state,
       ...newState,
+    };
+  };
+
+  return event;
+}
+
+export function singleAllowanceUpdated(payload: Object) {
+  const { allowance, tokenSymbol } = payload;
+  const event = (state: AccountBalancesState) => {
+    state[tokenSymbol].allowance = allowance;
+    return {
+      ...state,
     };
   };
 
@@ -103,7 +114,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         return {
           symbol: item.symbol,
           balance: item.balance,
-          allowed: item.allowance ? item.allowance === -1 : false,
+          allowed: parseFloat(item.allowance) > 0 ? item.allowance : false,
         };
       });
     },

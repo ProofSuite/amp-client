@@ -27,6 +27,8 @@ class WalletPage extends React.PureComponent<Props> {
       etherBalance,
       gasPrice,
       gas,
+      finishAllowance,
+      addAllowance,
     } = this.props;
 
     if (!authenticated) {
@@ -44,6 +46,8 @@ class WalletPage extends React.PureComponent<Props> {
         pvtKeyLocked={pvtKeyLocked}
         accountAddress={accountAddress}
         depositTableData={depositTableData}
+        addAllowance={addAllowance}
+        finishAllowance={finishAllowance}
       />
     );
   }

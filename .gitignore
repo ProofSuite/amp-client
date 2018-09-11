@@ -88,4 +88,4 @@ package-lock.json
 wallaby.js
 
 #To Kepp the chain state unchanged
-/chain
+chain/

@@ -54,7 +54,7 @@ const RowRenderer = (props: Props) => {
         </Cell>
         <Cell>{balance}</Cell>
         <Cell>
-          <Switch checked={allowed} onChange={handleAllowance} />
+          <Switch checked={allowed} onChange={() => handleAllowance(allowed, symbol)} />
         </Cell>
         <Cell style={{ width: '40%' }}>
           <ButtonWrapper>

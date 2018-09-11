@@ -13,8 +13,12 @@ class DepositTable extends React.PureComponent<Props, State> {
     hideZeroBalanceToken: false,
     searchValue: '',
   };
-  handleAllowance = () => {
-    console.log('Log allowance');
+  handleAllowance = (allowed, symbol) => {
+    if (allowed) {
+      this.props.finishAllowance(symbol);
+    } else {
+      this.props.addAllowance(symbol);
+    }
   };
 
   handleDeposit = () => {
@@ -63,8 +67,9 @@ class DepositTable extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { depositData, provider } = this.props;
+    const { depositData, provider, finishAllowance } = this.props;
     const { isDepositModalOpen, searchValue, hideZeroBalanceToken } = this.state;
+
     return (
       <Wrapper>
         <DepositTableRenderer
@@ -72,6 +77,7 @@ class DepositTable extends React.PureComponent<Props, State> {
           searchValue={searchValue}
           provider={provider}
           hideZeroBalanceToken={hideZeroBalanceToken}
+          finishAllowance={finishAllowance}
           handleDepositClose={this.handleDepositClose}
           handleAllowance={this.handleAllowance}
           handleDeposit={this.handleDeposit}

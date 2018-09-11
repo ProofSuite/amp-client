@@ -7,6 +7,8 @@
   .list-container {
     .list {
       height: 90%;
+      max-height: 491px;
+      overflow-y: scroll;
     }
   }
 

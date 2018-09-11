@@ -1,5 +1,11 @@
 // @flow
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getEtherTxDomain } from '../domains';
+import {
+  getAccountBalancesDomain,
+  getAccountDomain,
+  getNotificationsDomain,
+  getTokenDomain,
+  getEtherTxDomain,
+} from '../domains';
 import * as actionCreators from '../actions/walletPage';
 import * as notifierActionCreators from '../actions/app';
 import * as accountActionTypes from '../actions/account';
@@ -33,6 +39,7 @@ export function queryAccountData(): ThunkAction {
   return async (dispatch, getState) => {
     const state = getState();
     const accountAddress = getAccountDomain(state).address();
+    const lastNotification = getNotificationsDomain(state).last();
 
     let tokens = getTokenDomain(state).tokens();
     dispatch(actionCreators.updateBalances(tokens.map(token => ({ ...token, balance: 0.0 }))));
@@ -60,7 +67,7 @@ export function queryAccountData(): ThunkAction {
 
         const allowances = await accountBalancesService.queryTokenAllowances(
           accountAddress,
-          EXCHANGE_ADDRESS[provider.chainId].toString(),
+          EXCHANGE_ADDRESS['1000'].toString(),
           tokens
         );
         dispatch(actionCreators.updateAllowances(allowances));
@@ -73,7 +80,7 @@ export function queryAccountData(): ThunkAction {
         if (provider.chainId === 8888) {
           dispatch(
             notifierActionCreators.addNotification({
-              id: 2,
+              id: lastNotification ? lastNotification.id++ : 1,
               intent: 'danger',
               message: 'Not connected with Ethereum Network.',
             })
@@ -85,5 +92,55 @@ export function queryAccountData(): ThunkAction {
       }
       console.log('queryBalances', error.message, error.stack);
     }
+  };
+}
+
+export function finishAllowance(tokenSymbol): ThunkAction {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const tokens = getTokenDomain(state).bySymbol();
+    const lastNotification = getNotificationsDomain(state).last();
+    const tokenContractAddress = tokens[tokenSymbol].address;
+    const accountAddress = getAccountDomain(state).address();
+
+    const { allowance } = await accountBalancesService.finishAllownace(
+      tokenContractAddress,
+      EXCHANGE_ADDRESS['1000'].toString(),
+      accountAddress
+    );
+    dispatch(
+      notifierActionCreators.addNotification({
+        id: lastNotification ? lastNotification.id++ : 1,
+        intent: 'success',
+        message: "Allowance stopped successfully. You can' trade with this Token.",
+      })
+    );
+    dispatch(actionCreators.updateSingleAllowance(allowance, tokenSymbol));
+  };
+}
+
+export function addAllowance(tokenSymbol): ThunkAction {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const tokens = getTokenDomain(state).bySymbol();
+    const lastNotification = getNotificationsDomain(state).last();
+    const balances = getAccountBalancesDomain(state).balances();
+    const tokenContractAddress = tokens[tokenSymbol].address;
+    const accountAddress = getAccountDomain(state).address();
+    const tokenBalance = balances[tokenSymbol].balance;
+    const { allowance } = await accountBalancesService.addAllownace(
+      tokenContractAddress,
+      EXCHANGE_ADDRESS['1000'].toString(),
+      accountAddress,
+      tokenBalance
+    );
+    dispatch(
+      notifierActionCreators.addNotification({
+        id: lastNotification ? lastNotification.id++ : 1,
+        intent: 'success',
+        message: 'Allowed successfully. You can trade now with this Token.',
+      })
+    );
+    dispatch(actionCreators.updateSingleAllowance(allowance, tokenSymbol));
   };
 }

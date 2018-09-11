@@ -43,7 +43,7 @@ type State = {
 class WalletLoginForm extends React.PureComponent<Props, State> {
   state = {
     loading: false,
-    method: 'walletFile',
+    method: 'privateKey',
     address: '',
     json: '',
     jsonStatus: 'incomplete',

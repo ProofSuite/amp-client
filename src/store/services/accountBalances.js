@@ -1,7 +1,8 @@
 // @flow
 import { Contract, utils } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
-import { getProvider } from './signer';
+import { getProvider, getSigner } from './signer';
+import { toWEI } from '../../utils/converters';
 
 import type { Token, TokenBalances } from '../../types/common';
 
@@ -12,6 +13,24 @@ export async function queryEtherBalance(address: string) {
     symbol: 'ETH',
     balance: utils.formatEther(balance),
   };
+}
+
+export async function finishAllownace(tokenAddress: string, spender: string, address) {
+  const signer = getSigner();
+
+  const contract = new Contract(tokenAddress, ERC20Token.abi, signer);
+  await contract.approve(spender, 0);
+  const allowance = await contract.allowance(address, spender);
+  return { allowance: utils.formatEther(allowance) };
+}
+
+export async function addAllownace(tokenAddress: string, spender: string, address, balance) {
+  const signer = getSigner();
+
+  const contract = new Contract(tokenAddress, ERC20Token.abi, signer);
+  await contract.approve(spender, parseFloat(balance));
+  const allowance = await contract.allowance(address, spender);
+  return { allowance: utils.formatEther(allowance) };
 }
 
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
@@ -28,7 +47,6 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
     symbol: tokens[i].symbol,
     balance: utils.formatEther(balance),
   }));
-
   return balances;
 }
 

@@ -20,6 +20,8 @@ const WalletPageRenderer = ({
   etherBalance,
   gasPrice,
   gas,
+  finishAllowance,
+  addAllowance,
 }: Props) => {
   return (
     <Wrapper>
@@ -38,7 +40,12 @@ const WalletPageRenderer = ({
           ) : (
             <RightSection>
               <DepositWrapper>
-                <DepositTable provider={provider} depositData={depositTableData} />
+                <DepositTable
+                  addAllowance={addAllowance}
+                  finishAllowance={finishAllowance}
+                  provider={provider}
+                  depositData={depositTableData}
+                />
               </DepositWrapper>
               <HeadingMenu>
                 <h4>Heading</h4>

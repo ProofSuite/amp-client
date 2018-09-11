@@ -213,6 +213,7 @@ const PrivateKeyInputForm = ({
             onChange={handleChange}
             onKeyPress={onEnterKeyPress}
             value={privateKey}
+            autoFocus
           />
         </FormGroup>
       </InputPadding>
@@ -257,6 +258,7 @@ const JSONInputForm = ({
               onKeyPress={onEnterKeyPress}
               style={{ height: '100px' }}
               fill
+              autoFocus
             />
           </FormGroup>
         </InputPadding>
@@ -347,6 +349,7 @@ const MnemonicSentenceInputForm = ({ handleChange, mnemonic, mnemonicStatus }: *
             value={mnemonic}
             style={{ height: '100px' }}
             fill
+            autoFocus
           />
         </FormGroup>
       </InputPadding>
