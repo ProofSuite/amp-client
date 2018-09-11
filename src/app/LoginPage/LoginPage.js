@@ -35,7 +35,6 @@ class LoginPage extends React.PureComponent<Props, State> {
 
   showWalletLoginForm = () => {
     this.setState({ view: 'wallet' });
-    console.log(this.state.view);
   };
 
   showLoginMethods = () => {

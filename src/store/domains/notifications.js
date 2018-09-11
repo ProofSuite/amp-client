@@ -11,38 +11,22 @@ export const initialized = () => {
 
 export const notificationAdded = options => {
   const event = (state: NotificationState) => {
-    if (state.length > 0) {
-      if (state.filter(notification => notification.id !== options.id).length > 0) {
-        state = [
-          {
-            id: options.id,
-            message: options.message,
-            intent: options.intent,
-          },
-        ];
-      }
-    } else {
-      state = [
-        {
-          id: options.id,
-          message: options.message,
-          intent: options.intent,
-        },
-      ];
-    }
-    return state;
+    return [
+      ...state,
+      {
+        id: options.id,
+        message: options.message,
+        intent: options.intent,
+      },
+    ];
   };
 
   return event;
 };
 
 export const notificationRemoved = id => {
-  const event = state => {
-    if (Object.values(state) > 0 || typeof state === typeof []) {
-      state = state.filter(notification => notification.id !== id);
-      return state;
-    }
-    return state;
+  const event = (state: NotificationState) => {
+    return state.filter(notification => notification.id !== id);
   };
 
   return event;

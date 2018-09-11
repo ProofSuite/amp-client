@@ -24,6 +24,7 @@ type State = {
 
 class CreateWalletModal extends React.PureComponent<Props, State> {
   state = {
+    title: 'Create Wallet Modal',
     currentStep: 0,
     password: '',
     address: '',
@@ -49,6 +50,8 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
       });
     }, 500);
   };
+
+  componentDidMount() {}
 
   updateProgressBar = (percent: number) => {
     if (percent === 1) {
@@ -92,8 +95,8 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   complete = () => {
     const { walletCreated, hideModal } = this.props;
     const { address, password, encryptedWallet, storeWallet, storePrivateKey } = this.state;
+    this.setState({ currentStep: 'loading', title: 'Logging you In' });
     walletCreated({ address, password, encryptedWallet, storeWallet, storePrivateKey });
-    hideModal();
   };
 
   handleChange = ({ target }: SyntheticInputEvent<>) => {
@@ -110,6 +113,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   render() {
     const { visible, hideModal } = this.props;
     const {
+      title,
       currentStep,
       password,
       showPassword,
@@ -125,6 +129,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
       <CreateWalletModalRenderer
         visible={visible}
         hideModal={hideModal}
+        title={title}
         currentStep={currentStep}
         showEncryptionProgress={showEncryptionProgress}
         showPassword={showPassword}

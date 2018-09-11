@@ -6,6 +6,7 @@ import type { AccountAllowances, AccountBalances } from '../../types/accountBala
 const actionTypes = {
   updateBalances: 'walletPage/UPDATE_BALANCES',
   updateAllowances: 'walletPage/UPDATE_ALLOWANCES',
+  updateSingleAllowance: 'walletPage/UPDATE_SINGLE_ALLOWANCE',
 };
 
 export function updateBalances(balances: AccountBalances): UpdateAccountBalancesAction {
@@ -19,6 +20,13 @@ export function updateAllowances(allowances: AccountAllowances): UpdateAccountAl
   return {
     type: actionTypes.updateAllowances,
     payload: { allowances },
+  };
+}
+
+export function updateSingleAllowance(allowance: string, tokenSymbol: string): UpdateAccountAllowancesAction {
+  return {
+    type: actionTypes.updateSingleAllowance,
+    payload: { allowance, tokenSymbol },
   };
 }
 

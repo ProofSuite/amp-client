@@ -14,6 +14,7 @@ class Notifier extends React.Component {
       intent: intent || 'success',
       message: message,
     });
+    this.props.removeNotification(this.props.lastNotification.id);
   };
 
   render() {
@@ -27,9 +28,7 @@ class Notifier extends React.Component {
 
   componentDidUpdate(prevProps) {
     let { lastNotification, removeNotification } = prevProps;
-
     if (lastNotification) {
-      console.log('lastNotification: ', lastNotification);
       removeNotification(lastNotification.id);
     }
   }

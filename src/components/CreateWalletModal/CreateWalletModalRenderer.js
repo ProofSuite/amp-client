@@ -1,9 +1,22 @@
 // @flow
 import React from 'react';
 import Download from '@axetroy/react-download';
-import { Button, Checkbox, Dialog, FormGroup, Icon, InputGroup, Intent, Label, ProgressBar } from '@blueprintjs/core';
+import {
+  Button,
+  Spinner,
+  Checkbox,
+  Dialog,
+  FormGroup,
+  Icon,
+  InputGroup,
+  Intent,
+  Label,
+  ProgressBar,
+} from '@blueprintjs/core';
 import Steps from 'rc-steps';
 import styled from 'styled-components';
+import LoadData from '../Common/LoadData';
+import { Loading } from '../Common';
 
 type Props = {
   address: string,
@@ -43,6 +56,7 @@ const inputStatuses = {
 
 const CreateWalletWizardRenderer = (props: Props) => {
   const {
+    title,
     address,
     visible,
     hideModal,
@@ -79,7 +93,7 @@ const CreateWalletWizardRenderer = (props: Props) => {
       onCancelClick: goBackToCreateWallet,
     },
     {
-      ok: 'Complete',
+      ok: 'Complete & Login',
       cancel: 'Go back',
       onOkClick: complete,
       onCancelClick: goBackToDownloadWallet,
@@ -110,7 +124,7 @@ const CreateWalletWizardRenderer = (props: Props) => {
   };
   return (
     <Dialog
-      title="Create Wallet Modal"
+      title={title}
       icon="inbox"
       isOpen={visible}
       onClose={hideModal}
@@ -118,25 +132,31 @@ const CreateWalletWizardRenderer = (props: Props) => {
       className="bp3-dark"
       style={{ width: '600px' }}
     >
-      <div className="bp3-dialog-body">
-        <Steps current={currentStep}>
-          <Steps.Step title="Choose password" />
-          <Steps.Step title="Download Wallet" />
-          <Steps.Step title="Wallet Information" />
-        </Steps>
-        {content[currentStep]}
-      </div>
-      <div className="bp3-dialog-footer">
-        <div className="bp3-dialog-footer-actions">
-          <Button key="Previous" text={buttons[currentStep].cancel} onClick={buttons[currentStep].onCancelClick} />
-          <Button
-            key="Next"
-            text={buttons[currentStep].ok}
-            intent={Intent.PRIMARY}
-            onClick={buttons[currentStep].onOkClick}
-          />
+      {currentStep === 'loading' ? (
+        <LoadingState />
+      ) : (
+        <div>
+          <div className="bp3-dialog-body">
+            <Steps current={currentStep}>
+              <Steps.Step title="Choose password" />
+              <Steps.Step title="Download Wallet" />
+              <Steps.Step title="Wallet Information" />
+            </Steps>
+            {content[currentStep]}
+          </div>
+          <div className="bp3-dialog-footer">
+            <div className="bp3-dialog-footer-actions">
+              <Button key="Previous" text={buttons[currentStep].cancel} onClick={buttons[currentStep].onCancelClick} />
+              <Button
+                key="Next"
+                text={buttons[currentStep].ok}
+                intent={Intent.PRIMARY}
+                onClick={buttons[currentStep].onOkClick}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </Dialog>
   );
 };
@@ -166,6 +186,7 @@ const WalletPasswordStep = props => {
                 <Button minimal="true" onClick={togglePasswordView} icon={showPassword ? 'eye-open' : 'eye-off'} />
               }
               onChange={handleChange}
+              autoFocus
             />
           </FormGroup>
         </Label>
@@ -217,6 +238,14 @@ const WalletInformationStep = props => {
   );
 };
 
+const LoadingState = () => {
+  return (
+    <LoadingStateWrapper>
+      <Spinner intent="primary" />
+    </LoadingStateWrapper>
+  );
+};
+
 const PasswordInputBox = styled.div`
   padding-top: 40px;
   display: flex;
@@ -225,6 +254,12 @@ const PasswordInputBox = styled.div`
   align-items: stretch;
   width: 500px;
   margin: auto;
+`;
+const LoadingStateWrapper = styled.div`
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const WalletInformationBox = styled.div`

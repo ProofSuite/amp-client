@@ -16,6 +16,7 @@ import type { LogoutPageAction } from './logoutPage';
 import type { DepositFormAction, DepositFormEvent, DepositFormState } from './depositForm';
 import type { SettingsAction, SettingsEvent, SettingsState } from './settings';
 import type { WalletsAction, WalletsEvent, WalletsState } from './wallets';
+import type { NotificationState } from './notifications';
 
 export type ReduxInitAction = { type: '@@INIT' };
 
@@ -65,6 +66,7 @@ export type State = {
   depositForm: DepositFormState,
   settings: SettingsState,
   wallets: WalletsState,
+  notifications: NotificationState,
 };
 
 export type Store = ReduxStore<State, Action>;
