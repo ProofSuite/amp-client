@@ -9,7 +9,6 @@ export default class CurrentWallet extends React.PureComponent {
     showPrivateKey: false,
     isModalOpen: false,
     locked: false,
-    toWeth: false,
     showEth: true,
   };
 
@@ -28,14 +27,6 @@ export default class CurrentWallet extends React.PureComponent {
       };
     });
   };
-  swapEthWeth = () => {
-    this.setState(function(prevState) {
-      return {
-        toWeth: !prevState.toWeth,
-      };
-    });
-  };
-
   toggleBalance = () => {
     this.setState(function(prevState) {
       return {
@@ -47,17 +38,15 @@ export default class CurrentWallet extends React.PureComponent {
   render() {
     const {
       props: { accountAddress, gasPrice, gas, pvtKeyLocked, accountPrivateKey, etherBalance },
-      state: { showPrivateKey, showEth, currentBlock, toWeth, balance, locked, isModalOpen },
+      state: { showPrivateKey, showEth, currentBlock, locked, isModalOpen },
       togglePrivateKey,
       handleModalClose,
-      swapEthWeth,
       toggleBalance,
     } = this;
     return (
       <CurrentWalletRenderer
         showPrivateKey={showPrivateKey}
         privateKey={accountPrivateKey}
-        toWeth={toWeth}
         showEth={showEth}
         gasPrice={gasPrice}
         gas={gas}
@@ -67,7 +56,6 @@ export default class CurrentWallet extends React.PureComponent {
         currentBlock={currentBlock}
         pvtKeyLocked={pvtKeyLocked}
         accountAddress={accountAddress}
-        swapEthWeth={swapEthWeth}
         toggleBalance={toggleBalance}
         togglePrivateKey={togglePrivateKey}
         handleModalClose={handleModalClose}

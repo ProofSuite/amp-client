@@ -1,15 +1,14 @@
 // @flow
 import OHLCVModel from '../domains/ohlcv';
 import * as actionCreators from '../actions/ohlcv';
-import { getData } from '../services/trading';
-import { timeSpans, duration } from '../../components/OHLCV/SmallChart';
+import { timeSpans } from '../../components/OHLCV/SmallChart';
 import type { SendTimelineParams } from '../../types/ohlcv';
 import type { State, ThunkAction } from '../../types';
 
 export default function getOHLCVModel(state: State) {
   return OHLCVModel(state.ohlcv);
 }
-export const updateTimeLine = ({ updateWRT, duration, time }: SendTimelineParams): ThunkAction => {
+export const updateTimeLine = ({ updateWRT }: SendTimelineParams): ThunkAction => {
   return async (dispatch, getState) => {
     let currentDuration = getState().ohlcv.currentDuration.label;
     let currentTimeSpan = getState().ohlcv.currentTimeSpan.label;
@@ -17,14 +16,14 @@ export const updateTimeLine = ({ updateWRT, duration, time }: SendTimelineParams
     if (updateWRT === 'timespan') {
       let candles = byTimeSpan(currentDuration, currentTimeSpan);
       if (candles > 40) {
-        return dispatch(actionCreators.saveNoOfCandles(parseInt(candles)));
+        return dispatch(actionCreators.saveNoOfCandles(parseInt(candles, 10)));
       }
     } else {
       let { candles, time } = byDuration(currentDuration);
       if (time) {
         dispatch(actionCreators.saveTimeSpan(timeSpans[time]));
       }
-      return dispatch(actionCreators.saveNoOfCandles(parseInt(candles)));
+      return dispatch(actionCreators.saveNoOfCandles(parseInt(candles, 10)));
     }
   };
 };
@@ -61,7 +60,7 @@ function byDuration(duration) {
       return { time: 8, candles: 104 };
 
     default:
-      return { candles: 150 };
+      return { candles: 150, time: '' };
   }
 }
 

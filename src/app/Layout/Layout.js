@@ -9,7 +9,6 @@ import {
   Alignment,
   Button,
   Menu,
-  Icon,
   MenuDivider,
   Navbar,
   NavbarDivider,

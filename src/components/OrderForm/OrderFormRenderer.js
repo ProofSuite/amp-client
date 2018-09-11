@@ -295,6 +295,9 @@ const OrderFormHeader = styled.div`
 const ButtonRow = styled.span`
   display: flex;
   justify-content: flex-end;
+  & .bp3-button {
+    margin-left: 5px;
+  }
 `;
 
 const PriceInputGroup = styled(InputGroup).attrs({
@@ -311,13 +314,6 @@ const InputLabel = styled.div`
   height: 100%;
   margin: auto;
   width: 180px;
-`;
-
-const LeftHeader = styled.div`
-  display: flex;
-  & .bp3-button.bp3-minimal {
-    margin-left: 10px;
-  }
 `;
 
 const Total = styled.div`

@@ -52,6 +52,7 @@ export default class CustomMultiSelect extends React.PureComponent<Props, State>
         foundIndicator['indicator'] = indicator;
         foundIndicator['index'] = index;
       }
+      return indicator;
     });
     return foundIndicator;
   };

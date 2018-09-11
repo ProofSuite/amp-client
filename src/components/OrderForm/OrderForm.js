@@ -25,6 +25,7 @@ type State = {
   limitPrice: string,
   amount: string,
   total: string,
+  isOpen: boolean,
 };
 
 class OrderForm extends React.PureComponent<Props, State> {

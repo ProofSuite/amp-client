@@ -1,10 +1,8 @@
 //@flow
 import React from 'react';
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
-import StandardRangeSlider from '../RangeSlider';
 import ChartLoadingScreen from './ChartLoadingScreen';
 import { Card, Button } from '@blueprintjs/core';
-import { Colors } from '../Common';
 import type { SendTimelineParams } from '../../types/ohlcv';
 import styled from 'styled-components';
 

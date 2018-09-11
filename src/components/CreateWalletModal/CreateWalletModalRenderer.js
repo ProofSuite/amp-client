@@ -1,18 +1,7 @@
 // @flow
 import React from 'react';
 import Download from '@axetroy/react-download';
-import {
-  Button,
-  Checkbox,
-  ControlGroup,
-  Dialog,
-  FormGroup,
-  Icon,
-  InputGroup,
-  Intent,
-  Label,
-  ProgressBar,
-} from '@blueprintjs/core';
+import { Button, Checkbox, Dialog, FormGroup, Icon, InputGroup, Intent, Label, ProgressBar } from '@blueprintjs/core';
 import Steps from 'rc-steps';
 import styled from 'styled-components';
 
@@ -28,7 +17,10 @@ type Props = {
   complete: (SyntheticEvent<>) => void,
   cancel: (SyntheticEvent<>) => void,
   password: string,
+  passwordStatus: string,
   encryptionPercentage: number,
+  showPassword: boolean,
+  togglePasswordView: () => void,
   showEncryptionProgress: boolean,
   handleChange: (SyntheticInputEvent<>) => void,
   storeWallet: boolean,
@@ -163,7 +155,6 @@ const WalletPasswordStep = props => {
     <div>
       <PasswordInputBox>
         <Label helpertext="Input a secure password that will be used to encrypt your wallet">
-          {/*<ControlGroup fill vertical={false}>*/}
           <FormGroup helperText={inputStatuses.password[passwordStatus]} intent={intents[passwordStatus]}>
             <InputGroup
               icon="password"
