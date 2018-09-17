@@ -3,7 +3,6 @@ import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
 import * as services from './services';
-
 import '../styles/css/index.css';
 import storage from 'redux-persist/lib/storage';
 
