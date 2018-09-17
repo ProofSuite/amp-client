@@ -111,7 +111,6 @@ export const confirmEtherDeposit = (
           let convertTxPromise = weth.deposit();
 
           // let allowTxParams = {};
-          console.log('network: ', network);
           let allowTxPromise = weth.approve(EXCHANGE_ADDRESS[network], -1, {});
 
           let [convertTx, allowTx] = await Promise.all([convertTxPromise, allowTxPromise]);
