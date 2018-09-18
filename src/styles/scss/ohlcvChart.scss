@@ -1,76 +1,7 @@
 @import "vars";
 
 .main-chart {
-  height: 100%;
-  min-height: 775px;
-  padding: 20px 20px 0 20px;
-  .toolbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    .bp3-icon {
-      cursor: pointer;
-      float: left;
-      margin-right: 15px;
-    }
-    .bp3-icon.active {
-      color: $hoverBlue;
-    }
-    .left {
-      width: 100%;
-    }
-    .menu {
-      position: relative;
-      float: left;
-      margin-right: 25px;
-      display: flex;
-      flex-direction: column;
-      .bp3-menu {
-        z-index: 9;
-        position: absolute;
-        li {
-          margin: 2px auto;
-        }
-      }
-      .bp3-menu.open {
-        display: block;
-        top: 31px;
-      }
-      .bp3-menu.closed {
-        display: none;
-      }
-    }
-    .menu.chart-type {
-      width: 30px;
-    }
-    .menu.time-span {
-    }
-    .menu.multi-select {
-      width: auto;
-    }
-    .menu.duration-menu.bp3-button:active {
-      background-color: transparent;
-    }
-    .menu {
-      .bp3-popover-target {
-        button {
-          width: auto;
-        }
-      }
-    }
-    button {
-      float: left;
-    }
-    button.bp3-tag-remove {
-      svg {
-        float: right;
-        margin: 0px;
-      }
-    }
-  }
   .chart-container {
-    text-align: left;
-    margin: 10px -10px 0px -20px;
     label, select {
       display: none !important;
     }
@@ -102,19 +33,6 @@
           fill: #00F300;
         }
       }
-    }
-  }
-}
-
-.chart-overlay {
-  .bp3-card {
-    height: 100%;
-  }
-  .main-chart {
-    .chart-container {
-      height: 90%;
-      overflow-y: scroll;
-      overflow-x: hidden;
     }
   }
 }

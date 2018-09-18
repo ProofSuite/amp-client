@@ -17,37 +17,39 @@ type Props = {
 export const OrderBookRenderer = (props: Props) => {
   const { bids, asks } = props;
   return (
-    <OrderBookBox>
-      {!bids && <Loading />}
-      {bids && (
-        <div className="list-container">
-          <ListHeading>
-            <HeaderRow>
-              <HeaderCell>TOTAL</HeaderCell>
-              <HeaderCell>AMOUNT</HeaderCell>
-              <HeaderCell>PRICE</HeaderCell>
-            </HeaderRow>
-          </ListHeading>
-          <ul className="bp3-list-unstyled list">
-            {bids.map((order, index) => <BuyOrder key={index} index={index} order={order} />)}
-          </ul>
-        </div>
-      )}
-      {asks && (
-        <div className="list-container left-list">
-          <ListHeading>
-            <HeaderRow>
-              <HeaderCell>PRICE</HeaderCell>
-              <HeaderCell>AMOUNT</HeaderCell>
-              <HeaderCell>TOTAL</HeaderCell>
-            </HeaderRow>
-          </ListHeading>
-          <ul className="bp3-list-unstyled list">
-            {asks.map((order, index) => <SellOrder key={index} index={index} order={order} />)}
-          </ul>
-        </div>
-      )}
-    </OrderBookBox>
+    <div>
+      <OrderBookBox>
+        {!bids && <Loading />}
+        {bids && (
+          <ListContainer className="list-container">
+            <ListHeading>
+              <HeaderRow>
+                <HeaderCell>TOTAL</HeaderCell>
+                <HeaderCell>AMOUNT</HeaderCell>
+                <HeaderCell>PRICE</HeaderCell>
+              </HeaderRow>
+            </ListHeading>
+            <List className="bp3-list-unstyled list">
+              {bids.map((order, index) => <BuyOrder key={index} index={index} order={order} />)}
+            </List>
+          </ListContainer>
+        )}
+        {asks && (
+          <ListContainer className="list-container left-list">
+            <ListHeading>
+              <HeaderRow>
+                <HeaderCell>PRICE</HeaderCell>
+                <HeaderCell>AMOUNT</HeaderCell>
+                <HeaderCell>TOTAL</HeaderCell>
+              </HeaderRow>
+            </ListHeading>
+            <List className="bp3-list-unstyled list">
+              {asks.map((order, index) => <SellOrder key={index} index={index} order={order} />)}
+            </List>
+          </ListContainer>
+        )}
+      </OrderBookBox>
+    </div>
   );
 };
 
@@ -85,6 +87,15 @@ const OrderBookBox = styled.div.attrs({})`
   display: flex;
   flex-direction: row;
   justify-content: stretch;
+`;
+const ListContainer = styled.div`
+  height: 91%;
+  width: 100%;
+`;
+const List = styled.ul`
+  height: 90%;
+  max-height: 500px;
+  overflow-y: scroll;
 `;
 
 const Row = styled.li.attrs({
@@ -145,7 +156,7 @@ const ListHeading = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 5px;
+  margin: 0px;
   padding-left: 10px !important;
 `;
 

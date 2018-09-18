@@ -15,11 +15,10 @@ import {
 } from '@blueprintjs/core';
 import Steps from 'rc-steps';
 import styled from 'styled-components';
-import LoadData from '../Common/LoadData';
-import { Loading } from '../Common';
 
 type Props = {
   address: string,
+  title: string,
   visible: boolean,
   hideModal: void => void,
   currentStep: number,
@@ -132,7 +131,7 @@ const CreateWalletWizardRenderer = (props: Props) => {
       className="bp3-dark"
       style={{ width: '600px' }}
     >
-      {currentStep === 'loading' ? (
+      {currentStep === 3 ? (
         <LoadingState />
       ) : (
         <div>

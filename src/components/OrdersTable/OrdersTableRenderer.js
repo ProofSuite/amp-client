@@ -24,7 +24,7 @@ type Props = {
 const OrdersTableRenderer = (props: Props) => {
   const { loading, selectedTabId, onChange, orders, isOpen, toggleCollapse } = props;
   return (
-    <Card className="order-history">
+    <Wrapper className="order-history">
       <OrdersTableHeader>
         <Heading>Orders</Heading>
         <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} minimal onClick={toggleCollapse} />
@@ -46,7 +46,7 @@ const OrdersTableRenderer = (props: Props) => {
           />
         </Tabs>
       </Collapse>
-    </Card>
+    </Wrapper>
   );
 };
 
@@ -57,19 +57,21 @@ const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order> }) => 
   ) : orders.length < 1 ? (
     <CenteredMessage message="No orders" />
   ) : (
-    <div className="list-container">
-      <ul className="heading">
-        <li className="heading">
+    <ListContainer className="list-container">
+      <ListHeaderWrapper className="heading">
+        <ListHeader className="heading">
           <HeaderCell className="pair">PAIR</HeaderCell>
           <HeaderCell className="amount">AMOUNT</HeaderCell>
           <HeaderCell className="price">PRICE</HeaderCell>
           <HeaderCell className="status">STATUS</HeaderCell>
           <HeaderCell className="side">SIDE</HeaderCell>
           <HeaderCell className="time">TIME</HeaderCell>
-        </li>
-      </ul>
-      <ul className="list">{orders.map((order, index) => <OrderRow key={index} order={order} index={index} />)}</ul>
-    </div>
+        </ListHeader>
+      </ListHeaderWrapper>
+      <ListBodyWrapper className="list">
+        {orders.map((order, index) => <OrderRow key={index} order={order} index={index} />)}
+      </ListBodyWrapper>
+    </ListContainer>
   );
 };
 
@@ -106,9 +108,39 @@ const OrdersTableHeader = styled.div`
   grid-gap: 10px;
   align-items: center;
 `;
+const Wrapper = styled(Card)``;
 
 const Heading = styled.h3`
   margin: auto;
+`;
+const ListContainer = styled.div`
+  height: 100%;
+`;
+const ListHeaderWrapper = styled.ul`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0px;
+  margin-bottom: 10px;
+`;
+const ListBodyWrapper = styled.ul`
+  width: 100%;
+  max-height: 300px;
+  margin: 0;
+  height: 90%;
+  overflow-y: scroll;
+`;
+const ListHeader = styled.li`
+  width: 100%;
+  display: flex;
+  margin: 0px !important;
+  padding: 10px;
+  text-align: left;
+  padding: 0;
+  span {
+    font-weight: 600;
+  }
 `;
 
 const Row = styled.li.attrs({

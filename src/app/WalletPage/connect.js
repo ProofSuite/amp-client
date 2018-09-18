@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import getWalletPageSelector, { queryAccountData, finishAllowance, addAllowance } from '../../store/models/walletPage';
+import getWalletPageSelector, { queryAccountData, toggleAllowance } from '../../store/models/walletPage';
 import settingsPageSelector from '../../store/models/settings';
 import accountSelector from '../../store/models/layout';
 import { sortTable } from '../../utils/helpers';
@@ -39,8 +39,7 @@ export function mapStateToProps(state, props) {
 export const mapDispatchToProps = {
   queryAccountData,
   removeNotification,
-  finishAllowance,
-  addAllowance,
+  toggleAllowance,
 };
 
 export default connect(

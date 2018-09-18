@@ -53,7 +53,6 @@ export function queryAccountData(): ThunkAction {
       const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens);
       const balances = [etherBalance].concat(sortTable(tokenBalances, 'symbol'));
       dispatch(actionCreators.updateBalances(balances));
-
       const currentBlock = await getCurrentBlock();
       dispatch(accountActionTypes.updateCurrentBlock(currentBlock));
 
@@ -95,40 +94,20 @@ export function queryAccountData(): ThunkAction {
   };
 }
 
-export function finishAllowance(tokenSymbol): ThunkAction {
+export function toggleAllowance(tokenSymbol: string): ThunkAction {
   return async (dispatch, getState) => {
     const state = getState();
     const tokens = getTokenDomain(state).bySymbol();
     const lastNotification = getNotificationsDomain(state).last();
     const tokenContractAddress = tokens[tokenSymbol].address;
     const accountAddress = getAccountDomain(state).address();
-
-    const { allowance } = await accountBalancesService.finishAllownace(
-      tokenContractAddress,
-      EXCHANGE_ADDRESS['1000'].toString(),
-      accountAddress
-    );
-    dispatch(
-      notifierActionCreators.addNotification({
-        id: lastNotification ? lastNotification.id++ : 1,
-        intent: 'success',
-        message: "Allowance stopped successfully. You can' trade with this Token.",
-      })
-    );
-    dispatch(actionCreators.updateSingleAllowance(allowance, tokenSymbol));
-  };
-}
-
-export function addAllowance(tokenSymbol): ThunkAction {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const tokens = getTokenDomain(state).bySymbol();
-    const lastNotification = getNotificationsDomain(state).last();
     const balances = getAccountBalancesDomain(state).balances();
-    const tokenContractAddress = tokens[tokenSymbol].address;
-    const accountAddress = getAccountDomain(state).address();
-    const tokenBalance = balances[tokenSymbol].balance;
-    const { allowance } = await accountBalancesService.addAllownace(
+    const isAllowed = getAccountBalancesDomain(state).isAllowed(tokenSymbol);
+    let tokenBalance = balances[tokenSymbol].balance;
+    if (isAllowed) {
+      tokenBalance = '0';
+    }
+    const { allowance } = await accountBalancesService.updateAllowance(
       tokenContractAddress,
       EXCHANGE_ADDRESS['1000'].toString(),
       accountAddress,

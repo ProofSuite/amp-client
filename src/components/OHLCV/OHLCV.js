@@ -25,17 +25,15 @@ export default class OHLCV extends React.PureComponent<Props, State> {
     } = this.props;
 
     return (
-      <React.Fragment>
-        <SmallChart
-          updateTimeLine={updateTimeLine}
-          ohlcvData={ohlcvData}
-          currentTimeSpan={currentTimeSpan}
-          currentDuration={currentDuration}
-          saveDuration={saveDuration}
-          saveTimeSpan={saveTimeSpan}
-          noOfCandles={noOfCandles}
-        />
-      </React.Fragment>
+      <SmallChart
+        updateTimeLine={updateTimeLine}
+        ohlcvData={ohlcvData}
+        currentTimeSpan={currentTimeSpan}
+        currentDuration={currentDuration}
+        saveDuration={saveDuration}
+        saveTimeSpan={saveTimeSpan}
+        noOfCandles={noOfCandles}
+      />
     );
   }
 }

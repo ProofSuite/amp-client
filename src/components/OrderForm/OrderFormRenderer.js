@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Tabs, Tab, Card, Button, FormGroup, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core';
+import { Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core';
 import { HeaderText, MutedText } from '../Common';
 import styled from 'styled-components';
 
@@ -46,7 +46,7 @@ const OrderFormRenderer = (props: Props) => {
   } = props;
 
   return (
-    <Card className="order-form">
+    <Wrapper className="order-form">
       <OrderFormHeader>
         <HeaderText text={`${formType} ${baseToken}`} />
         <ButtonRow>
@@ -131,7 +131,7 @@ const OrderFormRenderer = (props: Props) => {
           />
         </Tabs>
       </Collapse>
-    </Card>
+    </Wrapper>
   );
 };
 
@@ -162,14 +162,12 @@ const MarketOrderPanel = (props: *) => {
           }
         />
       </InputBox>
-      <FormGroup className="radio-btns-container">
-        <div className="bp3-input-group radio-buttons">
-          <RadioButton value={25} portion={portion} onInputChange={onInputChange} />
-          <RadioButton value={50} portion={portion} onInputChange={onInputChange} />
-          <RadioButton value={75} portion={portion} onInputChange={onInputChange} />
-          <RadioButton value={100} portion={portion} onInputChange={onInputChange} />
-        </div>
-      </FormGroup>
+      <RadioButtonsWrapper>
+        <RadioButton value={25} portion={portion} onInputChange={onInputChange} />
+        <RadioButton value={50} portion={portion} onInputChange={onInputChange} />
+        <RadioButton value={75} portion={portion} onInputChange={onInputChange} />
+        <RadioButton value={100} portion={portion} onInputChange={onInputChange} />
+      </RadioButtonsWrapper>
       {loggedIn ? (
         <Button string="submit" intent={formType === 'Buy' ? 'success' : 'danger'} text={formType} fill />
       ) : (
@@ -206,14 +204,12 @@ const LimitOrderPanel = props => {
           }
         />
       </InputBox>
-      <FormGroup className="radio-btns-container">
-        <div className="bp3-input-group radio-buttons">
-          <RadioButton value={25} portion={portion} onInputChange={onInputChange} />
-          <RadioButton value={50} portion={portion} onInputChange={onInputChange} />
-          <RadioButton value={75} portion={portion} onInputChange={onInputChange} />
-          <RadioButton value={100} portion={portion} onInputChange={onInputChange} />
-        </div>
-      </FormGroup>
+      <RadioButtonsWrapper>
+        <RadioButton value={25} portion={portion} onInputChange={onInputChange} />
+        <RadioButton value={50} portion={portion} onInputChange={onInputChange} />
+        <RadioButton value={75} portion={portion} onInputChange={onInputChange} />
+        <RadioButton value={100} portion={portion} onInputChange={onInputChange} />
+      </RadioButtonsWrapper>
       {loggedIn ? (
         <Button string="submit" intent={formType === 'Buy' ? 'success' : 'danger'} text={formType} fill />
       ) : (
@@ -227,7 +223,7 @@ const StopLimitOrderPanel = (props: *) => {
   const { stopPrice, formType, loggedIn, amount, total, quoteToken, baseToken, onInputChange } = props;
 
   return (
-    <div className="column">
+    <React.Fragment>
       <InputBox>
         <InputLabel>
           Stop Price <MutedText>({quoteToken})</MutedText>
@@ -271,19 +267,19 @@ const StopLimitOrderPanel = (props: *) => {
       ) : (
         <Button string="button" large={true} intent="primary" text="Login" />
       )}
-    </div>
+    </React.Fragment>
   );
 };
 
 export default OrderFormRenderer;
 
 const RadioButton = props => {
-  const { onInputChange, value, portion } = props;
+  const { onInputChange, value } = props;
   return (
-    <Label className={portion === value ? 'box active-box' : 'box'}>
+    <Box>
       {value}%
       <InputGroup name="portion" type="radio" onChange={onInputChange} value={value} />
-    </Label>
+    </Box>
   );
 };
 
@@ -292,11 +288,45 @@ const OrderFormHeader = styled.div`
   justify-content: space-between;
 `;
 
+const Wrapper = styled(Card)`
+  min-width: 240px;
+`;
+
 const ButtonRow = styled.span`
   display: flex;
   justify-content: flex-end;
   & .bp3-button {
     margin-left: 5px;
+  }
+`;
+const RadioButtonsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+`;
+
+const Box = styled(Label)`
+  width: 45px;
+  height: 30px;
+  display: flex;
+  margin-left: 10px;
+  margin-bottom: 16px;
+  background: #27343d;
+  text-align: center;
+  padding: 8px 0;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #2584c1;
+  box-shadow: none;
+  border-radius: 3px;
+  input {
+    opacity: 0;
+    width: 0px;
+    margin: 0px;
+  }
+  .bp3-input-group {
+    width: 0px;
   }
 `;
 

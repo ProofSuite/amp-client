@@ -1,29 +1,5 @@
 @import "vars";
 
-.order-book {
-  min-width: 500px;
-  width: 100%;
-  min-height: 50px;
-}
-
-.order-book {
-  .list-container {
-    height: 91%;
-    width: 100%;
-    .list {
-      height: 90%;
-      max-height: 500px;
-      overflow-y: scroll;
-    }
-  }
-
-  ul {
-    li {
-      width: 100%;
-    }
-  }
-}
-
  @media only screen and (max-width: 1600px) {
    .order-book {
      ul {
@@ -33,25 +9,3 @@
      }
    }
  }
-
-// @media only screen and (max-width: 1530px) {
-//   .order-book-chart-container {
-//     .pt-tab-panel {
-//       margin-top: 5px;
-//     }
-//     .order-book-renderer {
-//       display: flex;
-//       justify-content: space-between;
-//       .Buy {
-//         margin: 10px 0px 0px 10px;
-//       }
-//       .order-book{
-//         width: 300px;
-//         margin: 10px 0px 0px 0px;
-//         .list-container {
-//           height: 92%;
-//         }
-//       }
-//     }
-//   }
-// }

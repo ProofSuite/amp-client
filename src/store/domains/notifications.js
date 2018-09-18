@@ -2,7 +2,7 @@ import type { NotificationState } from '../../types/notifications';
 
 // eslint-disable-next-line
 let id = 0;
-const initialState = {};
+const initialState = [];
 
 export const initialized = () => {
   const event = (state: SettingsState = initialState) => state;

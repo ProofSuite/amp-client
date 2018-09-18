@@ -11,6 +11,7 @@ type Props = {
 
 type State = {
   currentStep: number,
+  title: string,
   password: string,
   passwordStatus: string,
   showEncryptionProgress: boolean,
@@ -93,9 +94,9 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   };
 
   complete = () => {
-    const { walletCreated, hideModal } = this.props;
+    const { walletCreated } = this.props;
     const { address, password, encryptedWallet, storeWallet, storePrivateKey } = this.state;
-    this.setState({ currentStep: 'loading', title: 'Logging you In' });
+    this.setState({ currentStep: 3, title: 'Logging you In' });
     walletCreated({ address, password, encryptedWallet, storeWallet, storePrivateKey });
   };
 

@@ -26,6 +26,10 @@ export type UpdateAccountAllowancesAction = {
   type: 'walletPage/UPDATE_ALLOWANCES',
   payload: { allowances: AccountAllowances },
 };
+export type UpdateSingleAllowanceAction = {
+  type: 'walletPage/UPDATE_SINGLE_ALLOWANCE',
+  payload: { allowance: string, tokenSymbol: string },
+};
 
 export type ClearAccountBalancesAction = {
   type: 'walletPage/CLEAR_BALANCES',
@@ -36,4 +40,5 @@ export type WalletPageActions =
   | UpdateAccountBalancesAction
   | UpdateAccountAllowanceAction
   | UpdateAccountAllowancesAction
+  | UpdateSingleAllowanceAction
   | UnsubscribeAccountBalanceAction;

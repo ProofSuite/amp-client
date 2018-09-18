@@ -4,6 +4,7 @@ import Chart from './Chart';
 import { Loading } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 import AutoScaler from '../AutoScaler';
+import styled from 'styled-components';
 
 type Props = {
   macd: Object,
@@ -41,7 +42,7 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
       return <Loading />;
     }
     return (
-      <div className="chart-container">
+      <Wrapper className="chart-container">
         <TypeChooser>
           {type => (
             <AutoScaler>
@@ -65,7 +66,12 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
             </AutoScaler>
           )}
         </TypeChooser>
-      </div>
+      </Wrapper>
     );
   }
 }
+
+const Wrapper = styled.div`
+  text-align: left;
+  margin: 10px -10px 0px -20px;
+`;

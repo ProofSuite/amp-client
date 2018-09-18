@@ -34,17 +34,17 @@ it('handles updated event properly', () => {
   expect(domain.isSubscribed('TRX')).toEqual(false);
   expect(domain.isAllowed('REQ')).toEqual(false);
   expect(domain.isAllowed('TRX')).toEqual(false);
-  // expect(domain.balancesArray()).toEqual([
-  //   { symbol: 'REQ', balance: 1000, allowed: false },
-  //   { symbol: 'TRX', balance: 2000, allowed: false },
-  // ]);
+  expect(domain.balancesArray()).toEqual([
+    { symbol: 'REQ', balance: 1000, allowed: false },
+    { symbol: 'TRX', balance: 2000, allowed: false },
+  ]);
 });
 
 it('handles allowances event properly', () => {
   const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.updated([{ symbol: 'REQ', balance: 1000 }, { symbol: 'TRX', balance: 2000 }]),
-    eventCreators.allowancesUpdated([{ symbol: 'REQ', allowance: -1 }, { symbol: 'TRX', allowance: -1 }]),
+    eventCreators.allowancesUpdated([{ symbol: 'REQ', allowance: 100 }, { symbol: 'TRX', allowance: 100 }]),
   ]);
 
   expect(domain.get('REQ')).toEqual(1000);
@@ -53,10 +53,10 @@ it('handles allowances event properly', () => {
   expect(domain.isSubscribed('TRX')).toEqual(false);
   expect(domain.isAllowed('REQ')).toEqual(true);
   expect(domain.isAllowed('TRX')).toEqual(true);
-  // expect(domain.balancesArray()).toEqual([
-  //   { symbol: 'REQ', balance: 1000, allowed: true },
-  //   { symbol: 'TRX', balance: 2000, allowed: true },
-  // ]);
+  expect(domain.balancesArray()).toEqual([
+    { symbol: 'REQ', balance: 1000, allowed: true },
+    { symbol: 'TRX', balance: 2000, allowed: true },
+  ]);
 });
 
 it('handles unsubscribed event properly', () => {

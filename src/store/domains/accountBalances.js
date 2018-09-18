@@ -66,6 +66,7 @@ export function allowancesUpdated(allowances: AccountAllowances) {
 export function singleAllowanceUpdated(payload: Object) {
   const { allowance, tokenSymbol } = payload;
   const event = (state: AccountBalancesState) => {
+    console.log(state);
     state[tokenSymbol].allowance = allowance;
     return {
       ...state,
@@ -107,14 +108,14 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].subscribed : false;
     },
     isAllowed(symbol: string) {
-      return state[symbol] ? state[symbol].allowance === -1 : false;
+      return state[symbol] ? parseFloat(state[symbol].allowance) > 0 : false;
     },
     balancesArray() {
       return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
           balance: item.balance,
-          allowed: parseFloat(item.allowance) > 0 ? item.allowance : false,
+          allowed: parseFloat(item.allowance) > 0,
         };
       });
     },
