@@ -4,7 +4,7 @@ export default function createSelector(state) {
   return {
     authenticated: accountDomain(state.account).authenticated(),
     account: accountDomain(state.account).address(),
-    provider: accountDomain(state.account).provider(),
+    provider: 'Provider type',
     currentBlock: accountDomain(state.account).currentBlock(),
   };
 }
