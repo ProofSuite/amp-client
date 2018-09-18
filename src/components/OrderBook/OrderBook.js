@@ -71,7 +71,7 @@ class OrderBook extends React.Component<Props, State> {
 
     return (
       <div>
-        <Card className="order-book">
+        <Wrapper className="order-book">
           <OrderBookHeader>
             <Heading>
               Order Book
@@ -92,7 +92,7 @@ class OrderBook extends React.Component<Props, State> {
               />
             </Tabs>
           </Collapse>
-        </Card>
+        </Wrapper>
       </div>
     );
   }
@@ -105,9 +105,13 @@ const OrderBookHeader = styled.div`
   grid-gap: 10px;
   align-items: center;
 `;
-
 const Heading = styled.h3`
   margin: auto;
+`;
+const Wrapper = styled(Card)`
+  min-width: 500px;
+  width: 100%;
+  min-height: 50px;
 `;
 
 export default OrderBook;

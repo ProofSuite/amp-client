@@ -2,7 +2,6 @@
 import { Contract, utils } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
 import { getProvider, getSigner } from './signer';
-import { toWEI } from '../../utils/converters';
 
 import type { Token, TokenBalances } from '../../types/common';
 
@@ -15,18 +14,8 @@ export async function queryEtherBalance(address: string) {
   };
 }
 
-export async function finishAllownace(tokenAddress: string, spender: string, address) {
+export async function updateAllowance(tokenAddress: string, spender: string, address: string, balance: string) {
   const signer = getSigner();
-
-  const contract = new Contract(tokenAddress, ERC20Token.abi, signer);
-  await contract.approve(spender, 0);
-  const allowance = await contract.allowance(address, spender);
-  return { allowance: utils.formatEther(allowance) };
-}
-
-export async function addAllownace(tokenAddress: string, spender: string, address, balance) {
-  const signer = getSigner();
-
   const contract = new Contract(tokenAddress, ERC20Token.abi, signer);
   await contract.approve(spender, parseFloat(balance));
   const allowance = await contract.allowance(address, spender);
@@ -36,6 +25,7 @@ export async function addAllownace(tokenAddress: string, spender: string, addres
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
   let balances;
   const provider = getProvider();
+  console.log('provider: ', provider);
 
   const balancePromises = tokens.map(async token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider);
@@ -53,7 +43,6 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
 export async function queryTokenAllowances(owner: string, spender: string, tokens: Array<Token>) {
   let allowances;
   const provider = getProvider();
-
   const allowancePromises = tokens.map(token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider);
     return contract.allowance(owner, spender);

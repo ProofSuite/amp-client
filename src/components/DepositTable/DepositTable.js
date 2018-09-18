@@ -14,11 +14,7 @@ class DepositTable extends React.PureComponent<Props, State> {
     searchValue: '',
   };
   handleAllowance = (allowed, symbol) => {
-    if (allowed) {
-      this.props.finishAllowance(symbol);
-    } else {
-      this.props.addAllowance(symbol);
-    }
+    this.props.toggleAllowance(symbol);
   };
 
   handleDeposit = () => {

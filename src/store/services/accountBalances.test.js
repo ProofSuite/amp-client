@@ -13,6 +13,41 @@ beforeEach(() => {
   jest.resetAllMocks();
 });
 
+describe('updateAllowance', () => {
+  let allowance;
+  let address;
+  let approve = jest.fn();
+  let contractMock = jest.fn(() => ({ approve }));
+
+  beforeEach(() => {
+    Contract.mockImplementation(contractMock);
+    let signerMock = 'test Signer';
+    signerService.getSigner.mockImplementation(() => signerMock);
+    utils.formatEther.mockReturnValue(1000);
+    address = '0x4dc5790733b997f3db7fc49118ab013182d6ba9b';
+  });
+
+  // it('loads the current provider', async () => {
+  //   await accountBalancesService.queryEtherBalance(address);
+  //   expect(signerService.getProvider).toHaveBeenCalledTimes(1);
+  // });
+  //
+  // it('the provider returns the current ether balance', async () => {
+  //   await accountBalancesService.queryEtherBalance(address);
+  //
+  //   expect(getBalance).toHaveBeenCalledTimes(1);
+  //   expect(getBalance).toHaveBeenCalledWith('0x4dc5790733b997f3db7fc49118ab013182d6ba9b');
+  // });
+  //
+  // it('returns the formatted ether balance', async () => {
+  //   let result = await accountBalancesService.queryEtherBalance(address);
+  //
+  //   expect(utils.formatEther).toHaveBeenCalledTimes(1);
+  //   expect(utils.formatEther).toHaveBeenCalledWith('test getBalance');
+  //   expect(result).toEqual({ symbol: 'ETH', balance: 1000 });
+  // });
+});
+
 describe('queryEtherBalance', () => {
   let getBalance;
   let providerMock;
@@ -108,7 +143,9 @@ describe('queryBalances', () => {
 
 describe('queryTokenAllowances', () => {
   let allowance;
-  let providerMock, contractMock;
+  let providerMock,
+    contractMock,
+    exchangeAddress = '0xfb7b0fec4c692e1b9b53dab95083d1ee63751ccd';
   let tokens, address;
 
   beforeEach(() => {
@@ -126,12 +163,12 @@ describe('queryTokenAllowances', () => {
   });
 
   it('loads the current provider', async () => {
-    await accountBalancesService.queryTokenAllowances(address, tokens);
+    await accountBalancesService.queryTokenAllowances(address, exchangeAddress, tokens);
     expect(signerService.getProvider).toHaveBeenCalledTimes(1);
   });
 
   it('the provider returns the current ether balance', async () => {
-    await accountBalancesService.queryTokenAllowances(address, tokens);
+    await accountBalancesService.queryTokenAllowances(address, exchangeAddress, tokens);
 
     expect(contractMock).toHaveBeenCalledTimes(2);
     expect(contractMock.mock.calls[0][0]).toEqual('0x6e9a406696617ec5105f9382d33ba3360fcfabcc');
@@ -150,7 +187,7 @@ describe('queryTokenAllowances', () => {
     utils.formatEther.mockReturnValueOnce(1000);
     utils.formatEther.mockReturnValueOnce(2000);
 
-    let result = await accountBalancesService.queryTokenAllowances(address, tokens);
+    let result = await accountBalancesService.queryTokenAllowances(address, exchangeAddress, tokens);
 
     expect(utils.formatEther).toHaveBeenCalledTimes(2);
     expect(utils.formatEther.mock.calls[0][0]).toEqual('test REQ balance');

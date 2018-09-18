@@ -1,5 +1,9 @@
 // @flow
-import type { UpdateAccountAllowancesAction, UpdateAccountBalancesAction } from '../../types/walletPage';
+import type {
+  UpdateAccountAllowancesAction,
+  UpdateAccountBalancesAction,
+  UpdateSingleAllowanceAction,
+} from '../../types/walletPage';
 
 import type { AccountAllowances, AccountBalances } from '../../types/accountBalances';
 
@@ -23,7 +27,7 @@ export function updateAllowances(allowances: AccountAllowances): UpdateAccountAl
   };
 }
 
-export function updateSingleAllowance(allowance: string, tokenSymbol: string): UpdateAccountAllowancesAction {
+export function updateSingleAllowance(allowance: string, tokenSymbol: string): UpdateSingleAllowanceAction {
   return {
     type: actionTypes.updateSingleAllowance,
     payload: { allowance, tokenSymbol },

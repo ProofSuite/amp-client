@@ -135,7 +135,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
       changeChartType,
     } = this;
     return (
-      <Card className="main-chart">
+      <Wrapper className="main-chart">
         <Toolbar
           changeDuration={changeDuration}
           onUpdateIndicators={onUpdateIndicators}
@@ -160,7 +160,7 @@ export default class SmallChart extends React.PureComponent<Props, State> {
           data={ohlcvData || []}
           width="100%"
         />
-      </Card>
+      </Wrapper>
     );
   }
 }
@@ -176,39 +176,37 @@ const Toolbar = ({
   changeChartType,
   indicators,
 }) => (
-  <div className="toolbar">
-    <div className="left">
-      <div className="menu chart-type">
-        <StandardSelect
-          items={state.chartTypes}
-          item={state.currentChart || state.chartTypes[0]}
-          handleChange={changeChartType}
-          icon="series-configuration"
-          type="icon"
-        />
-      </div>
-      <div className="menu time-span">
-        <StandardSelect
-          items={state.timeSpans}
-          item={currentTimeSpan || state.timeSpans[0]}
-          handleChange={changeTimeSpan}
-          icon="series-add"
-          type="text"
-        />
-      </div>
+  <ToolbarWrapper>
+    <ChartTypeMenu>
+      <StandardSelect
+        items={state.chartTypes}
+        item={state.currentChart || state.chartTypes[0]}
+        handleChange={changeChartType}
+        icon="series-configuration"
+        type="icon"
+      />
+    </ChartTypeMenu>
+    <TimeSpanMenu>
+      <StandardSelect
+        items={state.timeSpans}
+        item={currentTimeSpan || state.timeSpans[0]}
+        handleChange={changeTimeSpan}
+        icon="series-add"
+        type="text"
+      />
+    </TimeSpanMenu>
 
-      <DurationMenu duration={state.duration} currentDuration={currentDuration} changeDuration={changeDuration} />
+    <DurationMenu duration={state.duration} currentDuration={currentDuration} changeDuration={changeDuration} />
 
-      <div className="menu multi-select">
-        <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
-      </div>
-    </div>
-  </div>
+    <TimeSpanMenu>
+      <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
+    </TimeSpanMenu>
+  </ToolbarWrapper>
 );
 
 const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
   return (
-    <DurationWrapper>
+    <DurationWrapper className="bp3-button">
       {duration.map((dur, index) => {
         const { label } = dur;
         return (
@@ -226,13 +224,47 @@ const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
   );
 };
 
-const DurationWrapper = styled.div.attrs({
-  className: 'duration-menu bp3-button menu',
-})`
+const DurationWrapper = styled.div`
+  position: relative;
+  float: left;
+  margin-right: 25px;
   display: flex;
   padding: 0 !important;
   flex-direction: row !important;
+  margin-right: 25px;
   & button {
     padding: 0 5px !important;
   }
+  &:active {
+    background-color: transparent !important;
+  }
+`;
+
+const ToolbarWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: start;
+`;
+
+const ChartTypeMenu = styled.div`
+  position: relative;
+  float: left;
+  margin-right: 25px;
+  display: flex;
+  width: 30px;
+  flex-direction: column;
+`;
+const Wrapper = styled(Card)`
+  height: 100%;
+  min-height: 775px;
+  padding: 20px 20px 0 20px;
+`;
+
+const TimeSpanMenu = styled.div`
+  position: relative;
+  float: left;
+  margin-right: 25px;
+  display: flex;
+  width: auto;
+  flex-direction: column;
 `;

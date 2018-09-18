@@ -23,7 +23,7 @@ const TradesTableRenderer = (props: Props) => {
 
   return (
     <div>
-      <Card className="trade-history">
+      <Wrapper className="trade-history">
         <TradesTableHeader>
           <Heading>
             Trades
@@ -40,7 +40,7 @@ const TradesTableRenderer = (props: Props) => {
             <Tab id="all" title="All" panel={<Panel trades={userTradeHistory} />} />
           </Tabs>
         </Collapse>
-      </Card>
+      </Wrapper>
     </div>
   );
 };
@@ -51,18 +51,18 @@ const Panel = (props: { trades: Array<Trade> }) => {
   return trades.length < 1 ? (
     <Loading />
   ) : (
-    <div className="list-container">
-      <ul className="heading">
+    <div>
+      <ListHeader className="heading">
         <HeadingRow>
           <HeaderCell>AMOUNT</HeaderCell>
           <HeaderCell>PRICE</HeaderCell>
           <HeaderCell />
           <HeaderCell cellName="time">TIME</HeaderCell>
         </HeadingRow>
-      </ul>
-      <ul className="list">
+      </ListHeader>
+      <ListBody className="list">
         {trades.map((trade, index) => <TradeTableRow key={index} index={index} trade={trade} />)}
-      </ul>
+      </ListBody>
     </div>
   );
 };
@@ -92,11 +92,27 @@ const TradesTableHeader = styled.div`
 const Heading = styled.h3`
   margin: auto;
 `;
+const Wrapper = styled(Card)`
+  margin: auto;
+`;
+const ListHeader = styled.ul`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0px;
+`;
+const ListBody = styled.ul`
+  height: 90%;
+  max-height: 491px;
+  overflow-y: scroll;
+  margin: 0;
+`;
 const HeadingRow = styled.li`
   width: 100%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   justify-content: space-between;
   padding-left: 10px;
 `;
