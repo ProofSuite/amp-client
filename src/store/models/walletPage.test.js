@@ -18,18 +18,19 @@ let model, tokenModel, accountBalancesDomain;
 const { store } = createStore();
 
 const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
-const exchangeAddress = '0x5d0e9f8d3f66bcb133e1f97aaa44937be5a48920';
 
 const ether = {
   address: '0x0',
   symbol: 'ETH',
   balance: 1000,
 };
+
 const req = {
   address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
   symbol: 'REQ',
   balance: 2000,
 };
+
 const zrx = {
   address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab145',
   symbol: 'ZRX',
@@ -42,7 +43,7 @@ beforeEach(() => {
     { symbol: 'REQ', balance: 2000 },
     { symbol: 'ZRX', balance: 2000 },
   ]);
-  accountBalancesService.queryTokenAllowances.mockReturnValue([
+  accountBalancesService.queryExchangeTokenAllowances.mockReturnValue([
     { symbol: 'REQ', allowance: 0 },
     { symbol: 'ZRX', allowance: 0 },
     { symbol: 'ETH', allowance: 0 },
@@ -55,11 +56,13 @@ beforeEach(() => {
 it('handles toggleAllowance Successfully', async () => {
   accountBalancesDomain = getAccountBalancesDomain(store.getState());
   const notificationsDomain = getNotificationsDomain(store.getState());
+
   const getTokenDomainMock = jest.fn(() => ({
     symbols: () => ['REQ', 'ETH', 'ZRX'],
     bySymbol: () => ({ REQ: req, ETH: ether, ZRX: zrx }),
     tokens: () => [zrx, ether, req],
   }));
+
   const getAccountBalancesDomainMock = jest.fn(() => ({
     balances: () => ({ REQ: req, ETH: ether, ZRX: zrx }),
     isAllowed: tokenSymbol => accountBalancesDomain.isAllowed(tokenSymbol),
@@ -99,7 +102,11 @@ it('handles queryAccountData properly', async () => {
 
   const getAccountDomainMock = jest.fn(() => ({ address: () => testAddress }));
 
-  const getNotificationsDomainMock = jest.fn(() => ({ last: () => 1 }));
+  const getNotificationsDomainMock = jest.fn(() => ({
+    last: () => {
+      id: 1;
+    },
+  }));
 
   const chainId = jest.fn().mockReturnValue(8888);
   const getBlock = jest.fn().mockReturnValue(938);
@@ -126,8 +133,8 @@ it('handles queryAccountData properly', async () => {
 
   expect(accountBalancesService.queryTokenBalances).toHaveBeenCalledTimes(1);
   expect(accountBalancesService.queryTokenBalances).toHaveBeenCalledWith(testAddress, [zrx, req]);
-  expect(accountBalancesService.queryTokenAllowances).toHaveBeenCalledTimes(1);
-  expect(accountBalancesService.queryTokenAllowances).toHaveBeenCalledWith(testAddress, exchangeAddress, [zrx, req]);
+  expect(accountBalancesService.queryExchangeTokenAllowances).toHaveBeenCalledTimes(1);
+  expect(accountBalancesService.queryExchangeTokenAllowances).toHaveBeenCalledWith(testAddress, [zrx, req]);
 
   accountBalancesDomain = getAccountBalancesDomain(store.getState());
   expect(accountBalancesDomain.isSubscribed('ETH')).toEqual(false);

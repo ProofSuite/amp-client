@@ -5,7 +5,6 @@ const initialState = {
   address: null,
   privateKey: null,
   currentBlock: '',
-  provider: '',
 };
 
 export const initialized = () => {
@@ -39,20 +38,11 @@ export const currentBlockUpdated = (currentBlock: string) => {
   return event;
 };
 
-export const currentProviderUpdated = (provider: string) => {
-  const event = (state: AccountState) => ({
-    ...state,
-    provider: provider,
-  });
-  return event;
-};
-
 export default function accountDomain(state: AccountState) {
   return {
     address: () => state.address,
     privateKey: () => state.privateKey,
     currentBlock: () => state.currentBlock,
-    provider: () => state.provider,
     authenticated: () => state.address !== null,
   };
 }

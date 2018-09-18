@@ -1,6 +1,7 @@
 // @flow
 import { Contract, utils } from 'ethers';
 import { ERC20Token } from 'proof-contracts-interfaces';
+import { EXCHANGE_ADDRESS } from '../../config/contracts';
 import { getProvider, getSigner } from './signer';
 
 import type { Token, TokenBalances } from '../../types/common';
@@ -25,7 +26,6 @@ export async function updateAllowance(tokenAddress: string, spender: string, add
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
   let balances;
   const provider = getProvider();
-  console.log('provider: ', provider);
 
   const balancePromises = tokens.map(async token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider);
@@ -37,7 +37,26 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
     symbol: tokens[i].symbol,
     balance: utils.formatEther(balance),
   }));
+
   return balances;
+}
+
+export async function queryExchangeTokenAllowances(owner: string, tokens: Array<Token>) {
+  const provider = getProvider();
+  const exchange = EXCHANGE_ADDRESS[provider.chainId];
+
+  const allowancePromises = tokens.map(token => {
+    const contract = new Contract(token.address, ERC20Token.abi, provider);
+    return contract.allowance(owner, exchange);
+  });
+
+  let allowances = await Promise.all(allowancePromises);
+  allowances = (allowances: TokenBalances).map((allowance, i) => ({
+    symbol: tokens[i].symbol,
+    allowance: utils.formatEther(allowance),
+  }));
+
+  return allowances;
 }
 
 export async function queryTokenAllowances(owner: string, spender: string, tokens: Array<Token>) {

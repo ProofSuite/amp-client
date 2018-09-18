@@ -235,8 +235,6 @@ export const account = createReducer(action => {
       return accountEvents.accountRemoved();
     case accountActionTypes.updateCurrentBlock:
       return accountEvents.currentBlockUpdated(payload.currentBlock);
-    case accountActionTypes.updateCurrentProvider:
-      return accountEvents.currentProviderUpdated(payload.provider);
     default:
       return accountEvents.initialized();
   }

@@ -29,17 +29,16 @@ export function loginWithMetamask(): ThunkAction {
       if (typeof window.web3 === 'undefined') throw new Error('Metamask not installed');
       if (typeof window.web3.eth.defaultAccount === 'undefined') throw new Error('Metamask account locked');
 
-      try {
-        let address = await createMetamaskSigner();
-
-        // I think there's is no need to show a notifier on Successful Log In.
-        // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
-        // dispatch(accountActionCreators.updateCurrentProvider('MetaMask'));
-        dispatch(actionCreators.loginWithMetamask(address));
-      } catch (e) {
-        return dispatch(actionCreators.loginError('Metamask account locked'));
-      }
+      let address = await createMetamaskSigner();
+      dispatch(actionCreators.loginWithMetamask(address));
+      // I think there's is no need to show a notifier on Successful Log In.
+      // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
+      // dispatch(accountActionCreators.updateCurrentProvider('MetaMask'));
     } catch (e) {
+      if (e.message === 'Metamask account locked')
+        return dispatch(actionCreators.loginError('Metamask account locked'));
+      if (e.message === 'Metamask not installed') return dispatch(actionCreators.loginError('Metamask not installed'));
+
       dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'danger', message: 'Login Error occurred!' }));
       dispatch(actionCreators.loginError(e.message));
     }

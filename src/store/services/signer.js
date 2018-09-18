@@ -12,8 +12,8 @@ export const createSigner = async (params: UpdateSignerParams): any => {
         case 'metamask':
           if (typeof window.web3 === 'undefined') throw new Error('Metamask not installed');
           if (typeof window.web3.eth.defaultAccount === 'undefined') throw new Error('Metamask account locked');
-          settings = { type: 'metamask' };
           address = await createMetamaskSigner();
+          settings = { type: 'metamask', networkId };
           return { settings, address };
         case 'rpc':
           settings = { type: 'rpc', url: 'http://127.0.0.1:8545', networkId: 8888 };
@@ -53,16 +53,26 @@ export const createSigner = async (params: UpdateSignerParams): any => {
       }
     }
   } catch (e) {
+    console.log(e);
     throw new Error(e.message);
   }
 };
 
 export const createMetamaskSigner = async () => {
-  let provider = new providers.Web3Provider(window.web3.currentProvider);
+  let networkId = Number(window.web3.version.network);
+  let provider = new providers.Web3Provider(window.web3.currentProvider, {
+    chainId: networkId,
+    name: 'unspecified',
+  });
+
   let accountAddresses = await provider.listAccounts();
   let signer = provider.getSigner(accountAddresses[0]);
 
-  window.signer = { instance: signer, type: 'metamask' };
+  window.signer = {
+    instance: signer,
+    type: 'metamask',
+  };
+
   return accountAddresses[0];
 };
 
@@ -74,7 +84,12 @@ export const createLocalWalletSigner = async (wallet: Object, networkId: ?number
   });
 
   let signer = new Wallet(wallet.privateKey, provider);
-  window.signer = { instance: signer, type: 'wallet' };
+
+  window.signer = {
+    instance: signer,
+    type: 'wallet',
+  };
+
   return wallet.address;
 };
 
@@ -82,7 +97,11 @@ export const createInfuraRinkebyWalletSigner = async (wallet: Object) => {
   let provider = new providers.InfuraProvider('rinkeby');
   let signer = new Wallet(wallet.key, provider);
 
-  window.signer = { instance: signer, type: 'wallet' };
+  window.signer = {
+    instance: signer,
+    type: 'wallet',
+  };
+
   return wallet.address;
 };
 
@@ -90,7 +109,11 @@ export const createInfuraWalletSigner = async (wallet: Object) => {
   let provider = new providers.InfuraProvider('homestead');
   let signer = new Wallet(wallet.key, provider);
 
-  window.signer = { instance: signer, type: 'wallet' };
+  window.signer = {
+    instance: signer,
+    type: 'wallet',
+  };
+
   return wallet.address;
 };
 
