@@ -11,10 +11,11 @@ type Props = {
   step: Step,
   balances: { [string]: AccountBalance },
   address: string,
+  token: Token,
   tokens: Array<Token>,
   queryBalances: void => void,
   subscribeBalance: Token => void,
-  confirmTokenDeposit: (boolean, Token) => void,
+  confirmTokenDeposit: (Token, boolean) => void,
   confirmEtherDeposit: (boolean, boolean, number) => void,
   allowTx: Object,
   convertTx: Object,
@@ -32,7 +33,7 @@ type State = {
 
 class DepositForm extends React.PureComponent<Props, State> {
   state = {
-    token: this.props.tokens[0],
+    token: this.props.token || this.props.tokens[0],
     inputToken: null,
     shouldConvert: true,
     shouldAllow: true,
@@ -83,7 +84,7 @@ class DepositForm extends React.PureComponent<Props, State> {
 
     token.symbol === 'ETH'
       ? confirmEtherDeposit(shouldConvert, shouldAllow, convertAmount)
-      : confirmTokenDeposit(shouldAllow, token);
+      : confirmTokenDeposit(token, shouldAllow);
   };
 
   toggleTokenSuggest = () => {
@@ -118,7 +119,6 @@ class DepositForm extends React.PureComponent<Props, State> {
   render() {
     const { step, balances, address, tokens, allowTx, convertTx } = this.props;
     const { shouldAllow, shouldConvert, convertAmount, inputToken, showTokenSuggest, token } = this.state;
-
     const balance = balances[token.symbol] ? balances[token.symbol].balance : null;
     const isEtherDeposit = token.symbol === 'ETH';
     const allowTradingCheckboxDisabled = isEtherDeposit && !shouldConvert;

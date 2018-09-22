@@ -18,6 +18,9 @@ type Token = {
 
 type Props = {
   tokenPairsByQuoteToken: { [string]: Array<Token> },
+  currentPair: Object,
+  baseTokenBalance: number,
+  quoteTokenBalance: number,
   updateFavorite: (string, boolean) => void,
   updateCurrentPair: string => void,
 };
@@ -25,7 +28,7 @@ type Props = {
 type State = {
   quoteTokens: Array<string>,
   searchFilter: string,
-  selectedToken: ?Token,
+  selectedPair: ?Token,
   filterName: string,
   sortOrder: string,
   selectedTabId: string,
@@ -37,7 +40,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
   state = {
     quoteTokens: [],
     searchFilter: '',
-    selectedToken: null,
+    selectedPair: null,
     filterName: 'symbol',
     sortOrder: 'asc',
     selectedTabId: '',
@@ -46,16 +49,18 @@ class TokenSearcher extends React.PureComponent<Props, State> {
   };
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-    let { tokenPairsByQuoteToken } = nextProps;
+    let { tokenPairsByQuoteToken, currentPair } = nextProps;
     const quoteTokens: Array<string> = Object.keys(tokenPairsByQuoteToken);
-    const defaultQuote = quoteTokens[0];
-    const defaultPairs = tokenPairsByQuoteToken[defaultQuote];
+    const defaultQuoteToken = quoteTokens[0];
+    const defaultPairs = tokenPairsByQuoteToken[defaultQuoteToken];
 
-    if (!prevState.selectedToken) {
+    const selectedPair = defaultPairs.filter(pair => pair.pair === currentPair.pair)[0];
+
+    if (!prevState.selectedPair) {
       return {
         quoteTokens: quoteTokens,
-        selectedToken: defaultPairs[0],
-        selectedTabId: defaultQuote,
+        selectedTabId: defaultQuoteToken,
+        selectedPair: selectedPair, // selectedPair: defaultPairs[0],
       };
     } else return null;
   }
@@ -88,9 +93,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
   };
 
   toggleCollapse = () => {
-    this.setState(function(prevState) {
-      return { isOpen: !prevState.isOpen };
-    });
+    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
   changeTab = (tabId: string) => {
@@ -119,14 +122,14 @@ class TokenSearcher extends React.PureComponent<Props, State> {
   };
 
   changeSelectedToken = (token: Token) => {
-    this.setState({ selectedToken: token });
+    this.setState({ selectedPair: token });
     this.props.updateCurrentPair(token.pair);
   };
 
   render() {
     const {
-      state: { selectedTabId, searchFilter, selectedToken, sortOrder, filterName, quoteTokens, isOpen },
-      props: { updateFavorite },
+      state: { selectedTabId, searchFilter, selectedPair, sortOrder, filterName, quoteTokens, isOpen },
+      props: { updateFavorite, baseTokenBalance, quoteTokenBalance },
       onChangeSearchFilter,
       onChangeFilterName,
       onChangeSortOrder,
@@ -138,7 +141,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
     const filteredPairs = this.filterTokens();
 
     //Temporary loading condition
-    let loading = typeof selectedToken === 'undefined';
+    let loading = typeof selectedPair === 'undefined';
 
     return (
       <TokenSearcherRenderer
@@ -146,8 +149,10 @@ class TokenSearcher extends React.PureComponent<Props, State> {
         quoteTokens={quoteTokens}
         selectedTabId={selectedTabId}
         searchFilter={searchFilter}
-        // silence-error: couldn't resolve selectedToken === undefined case
-        selectedToken={selectedToken}
+        baseTokenBalance={baseTokenBalance}
+        quoteTokenBalance={quoteTokenBalance}
+        // silence-error: couldn't resolve selectedPair === undefined case
+        selectedPair={selectedPair}
         sortOrder={sortOrder}
         isOpen={isOpen}
         filterName={filterName}

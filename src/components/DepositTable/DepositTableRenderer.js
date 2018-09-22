@@ -1,10 +1,32 @@
+// @flow
 import React from 'react';
 import { Button, Switch, Checkbox, InputGroup } from '@blueprintjs/core';
 import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+
+type Props = {
+  provider: string,
+  depositTableData: Object,
+  searchInput: string,
+  handleSearchInputChange: (SyntheticEvent<>) => void,
+  hideZeroBalanceToken: void => void,
+  openDepositModal: string => void,
+  openSendModal: string => void,
+  toggleAllowance: void => void,
+  toggleZeroBalanceToken: void => void,
+  redirectToTradingPage: string => void,
+};
 
 const DepositTableRenderer = (props: Props) => {
-  const { hideZeroBalanceToken, toggleZeroBalanceToken } = props;
+  const {
+    hideZeroBalanceToken,
+    toggleZeroBalanceToken,
+    depositTableData,
+    searchInput,
+    handleSearchInputChange,
+  } = props;
+
   return (
     <TableSection>
       <RowSpaceBetween style={{ marginBottom: '10px' }}>
@@ -12,22 +34,20 @@ const DepositTableRenderer = (props: Props) => {
           type="string"
           leftIcon="search"
           placeholder="Search Token ..."
-          value={props.searchValue}
-          onChange={props.handleSearchChange}
+          value={searchInput}
+          onChange={handleSearchInputChange}
         />
         <HideTokenCheck checked={hideZeroBalanceToken} onChange={toggleZeroBalanceToken}>
           Hide Tokens with 0 balance
         </HideTokenCheck>
       </RowSpaceBetween>
       <Table>
-        <thead>
-          <TableHeader>
-            <TableHeaderCell>Token Name</TableHeaderCell>
-            <TableHeaderCell>Balances</TableHeaderCell>
-            <TableHeaderCell>Allowances</TableHeaderCell>
-            <TableHeaderCell style={{ width: '40%' }}>Allow trading</TableHeaderCell>
-          </TableHeader>
-        </thead>
+        <TableHeader>
+          <TableHeaderCell>Token Name</TableHeaderCell>
+          <TableHeaderCell>Balances</TableHeaderCell>
+          <TableHeaderCell>Allowances</TableHeaderCell>
+          <TableHeaderCell style={{ width: '40%' }}>Allow trading</TableHeaderCell>
+        </TableHeader>
       </Table>
       <TableBodyContainer>
         <Table>
@@ -35,37 +55,38 @@ const DepositTableRenderer = (props: Props) => {
             <RowRenderer {...props} />
           </TableBody>
         </Table>
-        {props.depositData.length < 1 && <NoToken>No Token to show</NoToken>}
+        {depositTableData.length === 0 && <NoToken>No tokens</NoToken>}
       </TableBodyContainer>
     </TableSection>
   );
 };
 
 const RowRenderer = (props: Props) => {
-  const { provider, depositData, handleAllowance, handleDepositClose, handleWithdraw } = props;
-  return depositData.map(({ symbol, balance, allowed }, index) => {
+  const { provider, depositTableData, toggleAllowance, openDepositModal, openSendModal, redirectToTradingPage } = props;
+
+  return depositTableData.map(({ symbol, balance, allowed, allowancePending }, index) => {
     return (
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <ColoredCryptoIcon size={23} name={symbol} />
+            <ColoredCryptoIcon size={35} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
         <Cell>{balance}</Cell>
         <Cell>
-          <Switch checked={allowed} onChange={() => handleAllowance(allowed, symbol)} />
+          <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
+          {allowancePending && <span>Pending</span>}
         </Cell>
         <Cell style={{ width: '40%' }}>
           <ButtonWrapper>
-            <Button
-              disabled={!provider}
-              style={{ marginRight: '10px' }}
-              intent="primary"
-              text="Deposit"
-              onClick={handleDepositClose}
-            />
-            <Button disabled={!provider} intent="primary" text="Withdraw" onClick={handleWithdraw} />
+            <Button disabled={!provider} intent="primary" text="Deposit" onClick={() => openDepositModal(symbol)} />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button disabled={!provider} intent="primary" text="Send" onClick={() => openSendModal(symbol)} />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button disabled={!provider} intent="primary" text="Trade" onClick={() => redirectToTradingPage(symbol)} />
           </ButtonWrapper>
         </Cell>
       </Row>
@@ -79,31 +100,24 @@ const Table = styled.table.attrs({
   width: 100%;
 `;
 
-const Row = styled.tr`
-  width: 100%;
-`;
-const TokenNameWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  & svg {
-    margin-right: 12px;
-  }
-`;
 const TableBodyContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 80%;
   overflow-y: scroll;
 `;
+
 const TableSection = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   flex-direction: column;
   height: 100%;
   width: 99%;
 `;
 
 const TableBody = styled.tbody``;
+
 const TableHeader = styled.tr``;
+
 const TableHeaderCell = styled.th`
   width: 19%;
 `;
@@ -114,9 +128,23 @@ const Cell = styled.td`
     margin: 0;
   }
 `;
+
+const Row = styled.tr`
+  width: 100%;
+`;
+
+const TokenNameWrapper = styled.thead`
+  display: flex;
+  align-items: center;
+  & svg {
+    margin-right: 12px;
+  }
+`;
+
 const HideTokenCheck = styled(Checkbox)`
   margin: 0 !important;
 `;
+
 const NoToken = styled.p`
   height: 100%;
   display: flex;
@@ -125,9 +153,9 @@ const NoToken = styled.p`
   margin: 0;
 `;
 
-const ButtonWrapper = styled.div`
-  margin-left: 5px;
-  margin-right: 5px;
+const ButtonWrapper = styled.span`
+  margin-left: 10px !important;
+  margin-right: 10px !important;
 `;
 
-export default DepositTableRenderer;
+export default withRouter(DepositTableRenderer);

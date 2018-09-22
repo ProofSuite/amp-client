@@ -9,14 +9,14 @@ type Props = {
   step: 'waiting' | 'convert' | 'confirm',
   balance: ?number,
   address: string,
-  tokens: Array<Object>,
+  tokenData: Array<Object>,
   token: Object,
 };
 
 const DepositModal = (props: Props) => {
   return (
-    <Modal title="Send Ether or Tokens" icon="info-sign" isOpen={props.isOpen} onClose={props.handleClose}>
-      <DepositFormContainer />
+    <Modal title="Deposit Ether or Tokens" icon="info-sign" isOpen={props.isOpen} onClose={props.handleClose}>
+      <DepositFormContainer tokenData={props.tokenData} token={props.token} />
     </Modal>
   );
 };

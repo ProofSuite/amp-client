@@ -2,7 +2,18 @@
 import React from 'react';
 import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core';
 import {} from '../Common';
-import { Colors, Centered, Chevron, OverlaySpinner, CryptoIcon, ColumnEnd, ColoredCryptoIcon } from '../Common';
+import {
+  Box,
+  Colors,
+  Centered,
+  Chevron,
+  OverlaySpinner,
+  CryptoIcon,
+  ColumnEnd,
+  ColoredCryptoIcon,
+  RowStart,
+  ColumnStart,
+} from '../Common';
 import styled from 'styled-components';
 
 type Token = {
@@ -21,8 +32,10 @@ type Props = {
   loading: boolean,
   filteredPairs: any,
   selectedTabId: string,
+  baseTokenBalance: number,
+  quoteTokenBalance: number,
   searchFilter: string,
-  selectedToken: Token,
+  selectedPair: Token,
   filterName: string,
   sortOrder: string,
   isOpen: boolean,
@@ -30,7 +43,6 @@ type Props = {
   onChangeSortOrder: string => void,
   changeTab: string => void,
   updateFavorite: (string, boolean) => void,
-  changeSelectedToken: Object => void,
   onChangeSearchFilter: (SyntheticInputEvent<>) => void,
   onChangeFilterName: (SyntheticInputEvent<>) => void,
   changeSelectedToken: Token => void,
@@ -45,7 +57,7 @@ const TokenSearchRenderer = (props: Props) => {
     selectedTabId,
     searchFilter,
     isOpen,
-    selectedToken,
+    selectedPair,
     sortOrder,
     filterName,
     updateFavorite,
@@ -55,6 +67,8 @@ const TokenSearchRenderer = (props: Props) => {
     changeTab,
     changeSelectedToken,
     toggleCollapse,
+    baseTokenBalance,
+    quoteTokenBalance,
   } = props;
   return (
     <TokenSearchCard>
@@ -72,7 +86,11 @@ const TokenSearchRenderer = (props: Props) => {
             <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal />
           </div>
           <Collapse isOpen={isOpen}>
-            <SelectedCoin selectedToken={selectedToken} />
+            <SelectedPair
+              selectedPair={selectedPair}
+              baseTokenBalance={baseTokenBalance}
+              quoteTokenBalance={quoteTokenBalance}
+            />
             <TokenSearchTabs selectedTabId={selectedTabId} onChange={changeTab}>
               <Tab
                 id="star"
@@ -84,7 +102,7 @@ const TokenSearchRenderer = (props: Props) => {
                     sortOrder={sortOrder}
                     searchFilter={searchFilter}
                     selectedTabId={selectedTabId}
-                    selectedToken={selectedToken}
+                    selectedPair={selectedPair}
                     changeSelectedToken={changeSelectedToken}
                     updateFavorite={updateFavorite}
                     onChangeSearchFilter={onChangeSearchFilter}
@@ -105,7 +123,7 @@ const TokenSearchRenderer = (props: Props) => {
                       sortOrder={sortOrder}
                       searchFilter={searchFilter}
                       selectedTabId={selectedTabId}
-                      selectedToken={selectedToken}
+                      selectedPair={selectedPair}
                       filteredPairs={filteredPairs}
                       changeSelectedToken={changeSelectedToken}
                       updateFavorite={updateFavorite}
@@ -131,7 +149,7 @@ type PanelProps = {
   sortOrder: string,
   searchFilter: string,
   selectedTabId: string,
-  selectedToken: Token,
+  selectedPair: Token,
   tokenPairs: Array<Token>,
   changeSelectedToken: Token => void,
   updateFavorite: (string, boolean) => void,
@@ -190,9 +208,6 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
   const { favorited, lastPrice, change, base, pair } = token;
   return (
     <li key={pair} className="row">
-      <span className="star">
-        <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
-      </span>
       <CryptoIcon name={base} />
       <span className="base" onClick={() => changeSelectedToken(token)}>
         {isFavoriteTokensList ? pair : base}
@@ -203,6 +218,9 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
       <Change24H change={change} onClick={() => changeSelectedToken(token)}>
         {change}%
       </Change24H>
+      <span className="star">
+        <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
+      </span>
     </li>
   );
 };
@@ -218,7 +236,6 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
   return (
     <ListHeader>
       <li className="heading">
-        <span className="star">&nbsp;</span>
         <span className="base" onClick={onChangeFilterName}>
           {isFavoriteTokensList ? 'Token Pair' : 'Token'}
           {filterName === 'base' && (
@@ -243,18 +260,32 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
             </span>
           )}
         </span>
+        <span className="star">&nbsp;</span>
       </li>
     </ListHeader>
   );
 };
 
-const SelectedCoin = ({ selectedToken }) => {
-  const { pair, lastPrice, volume, high, low, quote, base } = selectedToken;
+const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => {
+  const { pair, lastPrice, volume, high, low, quote, base } = selectedPair;
+
   return (
-    <SelectedCoinCard>
+    <SelectedPairCard>
       <Row>
-        <ColoredCryptoIcon style={{ marginTop: '-5px' }} size={25} name={base} />
-        <TokenPair>{pair}</TokenPair>
+        <ColumnStart>
+          <RowStart>
+            <ColoredCryptoIcon size={60} name={base} />
+            <TokenPair>{pair}</TokenPair>
+          </RowStart>
+          <Box mt={3}>
+            <p>
+              {base} Balance: {baseTokenBalance}
+            </p>
+            <p>
+              {quote} Balance: {quoteTokenBalance}
+            </p>
+          </Box>
+        </ColumnStart>
         <ColumnEnd>
           <p className="lastPrice">
             Last Price: {lastPrice}/{quote}
@@ -270,7 +301,7 @@ const SelectedCoin = ({ selectedToken }) => {
           </p>
         </ColumnEnd>
       </Row>
-    </SelectedCoinCard>
+    </SelectedPairCard>
   );
 };
 
@@ -293,13 +324,16 @@ const TokenSearchPanelBox = styled.div`
   margin-top: 10px;
 `;
 
-const SelectedCoinCard = styled(Card)`
+const SelectedPairCard = styled(Card)`
   margin: 15px 0px;
   padding: 18px 18px 9px 18px !important;
 `;
 
 const TokenPair = styled.h3`
   color: ${Colors.LINK} !important;
+  font-size: 25px;
+  margin-top: 15px !important;
+  margin-left: 15px !important;
   margin: 0;
 `;
 
@@ -307,6 +341,7 @@ const SearchInput = styled(InputGroup)`
   width: 92%;
   padding-bottom: 10px;
 `;
+
 const ListHeader = styled.ul`
   margin: 10px 0 7px;
 `;
