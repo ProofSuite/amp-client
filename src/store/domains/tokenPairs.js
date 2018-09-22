@@ -3,7 +3,7 @@ import { quoteTokens } from '../../config/quotes';
 import { tokens } from '../../config/tokens';
 import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tokens';
 
-import type { Token, TokenPairState, TokenPairDataMap } from '../../types/tokens';
+import type { Token, TokenPair, TokenPairState, TokenPairDataMap } from '../../types/tokens';
 
 const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens);
 const defaultInitialState = {
@@ -92,7 +92,6 @@ export const tokenPairDataUpdated = (tokenPairData: TokenPairDataMap) => {
 
     return newState;
   };
-
   return event;
 };
 
@@ -120,6 +119,6 @@ export default function getTokenPairsDomain(state: TokenPairState) {
     getTokenPairsData: () => state.data,
     getTokenPairsDataArray: () => Object.values(state.data),
     getFavoritePairs: () => state.favorites,
-    getCurrentPair: () => state.byPair[state.currentPair],
+    getCurrentPair: (): TokenPair => state.byPair[state.currentPair],
   };
 }

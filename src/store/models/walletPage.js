@@ -1,105 +1,112 @@
 // @flow
-import {
-  getAccountBalancesDomain,
-  getAccountDomain,
-  getNotificationsDomain,
-  getTokenDomain,
-  getEtherTxDomain,
-} from '../domains';
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getSendEtherFormDomain } from '../domains';
 
 import * as actionCreators from '../actions/walletPage';
 import * as notifierActionCreators from '../actions/app';
 import * as accountActionTypes from '../actions/account';
 import * as accountBalancesService from '../services/accountBalances';
-import { EXCHANGE_ADDRESS } from '../../config/contracts';
+import { quoteTokens } from '../../config/quotes';
 import { getCurrentBlock } from '../services/wallet';
-import { sortTable } from '../../utils/helpers';
-
+import { push } from 'connected-react-router';
 import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
 
 export default function walletPageSelector(state: State) {
-  let val = {
-    etherBalance: getAccountBalancesDomain(state).etherBalance(),
-    depositTableData: getAccountBalancesDomain(state)
-      .balancesArray()
-      .filter((token: Token) => token.symbol !== 'ETH'),
-    accountAddress: getAccountDomain(state).address(),
-    accountPrivateKey: getAccountDomain(state).privateKey(),
-    tokens: getTokenDomain(state).tokens(),
-    currentBlock: getAccountDomain(state).currentBlock(),
-    provider: 'Provider type',
-    gas: getEtherTxDomain(state).getGas(),
-    gasPrice: getEtherTxDomain(state).getGasPrice(),
+  let accountBalancesDomain = getAccountBalancesDomain(state);
+  let accountDomain = getAccountDomain(state);
+  let tokenDomain = getTokenDomain(state);
+  let sendEtherFormDomain = getSendEtherFormDomain(state);
+  let tokens = tokenDomain.tokens().filter((token: Token) => token.symbol !== 'ETH');
+  let depositTableData = accountBalancesDomain.getBalancesAndAllowances(tokens);
+
+  return {
+    etherBalance: accountBalancesDomain.etherBalance(),
+    depositTableData: depositTableData,
+    accountAddress: accountDomain.address(),
+    accountPrivateKey: accountDomain.privateKey(),
+    tokens: tokenDomain.tokens(),
+    currentBlock: accountDomain.currentBlock(),
+    provider: 'Provider Type',
+    gas: sendEtherFormDomain.getGas(),
+    gasPrice: sendEtherFormDomain.getGasPrice(),
   };
-  return val;
 }
 
 export function queryAccountData(): ThunkAction {
   return async (dispatch, getState) => {
     const state = getState();
     const accountAddress = getAccountDomain(state).address();
-    const lastNotification = getNotificationsDomain(state).last();
 
     try {
       let tokens = getTokenDomain(state).tokens();
-      tokens = tokens.filter((token: Token) => token.symbol !== 'ETH');
+      let quotes = quoteTokens;
+
+      tokens = quotes.concat(tokens).filter((token: Token) => token.symbol !== 'ETH');
       if (!accountAddress) throw new Error('Account address is not set');
 
       const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress);
       const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens);
       const allowances = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens);
-      const balances = [etherBalance].concat(sortTable(tokenBalances, 'symbol'));
-
+      const balances = [etherBalance].concat(tokenBalances);
       const currentBlock = await getCurrentBlock();
 
       dispatch(accountActionTypes.updateCurrentBlock(currentBlock));
       dispatch(actionCreators.updateBalances(balances));
       dispatch(actionCreators.updateAllowances(allowances));
-    } catch (e) {
-      //TODO I rewrote this part because it was too specific to testing environment (if network = 8888).
-      //TODO It should working with whatever networkID from now on but i have not been
-      //TODO able to catch all possible exeptions. Instead nested try/catch, let's check
-      //TODO for error messages here and dispatch/console.log appropriate action/error message
-      dispatch(
-        notifierActionCreators.addNotification({
-          id: lastNotification ? lastNotification.id++ : 1,
-          intent: 'danger',
-          message: 'Could not connect to Ethereum Network',
-        })
+
+      await accountBalancesService.subscribeTokenBalances(accountAddress, tokens, balance =>
+        dispatch(actionCreators.updateBalance(balance))
       );
+
+      await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance =>
+        dispatch(actionCreators.updateAllowance(allowance))
+      );
+    } catch (e) {
+      dispatch(notifierActionCreators.addDangerNotification({ message: 'Could not connect to Ethereum network' }));
       console.log(e);
     }
   };
 }
 
+export function redirectToTradingPage(symbol: string): ThunkAction {
+  return async (dispatch, getState) => {
+    let defaultQuoteToken = quoteTokens[0];
+    let pair = `${symbol}/${defaultQuoteToken.symbol}`;
+
+    dispatch(actionCreators.updateCurrentPair(pair));
+    dispatch(push('/trade'));
+  };
+}
+
 export function toggleAllowance(tokenSymbol: string): ThunkAction {
   return async (dispatch, getState) => {
-    const state = getState();
-    const tokens = getTokenDomain(state).bySymbol();
-    const lastNotification = getNotificationsDomain(state).last();
-    const tokenContractAddress = tokens[tokenSymbol].address;
-    const accountAddress = getAccountDomain(state).address();
-    const balances = getAccountBalancesDomain(state).balances();
-    const isAllowed = getAccountBalancesDomain(state).isAllowed(tokenSymbol);
-    let tokenBalance = balances[tokenSymbol].balance;
-    if (isAllowed) {
-      tokenBalance = '0';
-    }
-    const { allowance } = await accountBalancesService.updateAllowance(
-      tokenContractAddress,
-      EXCHANGE_ADDRESS['1000'].toString(),
-      accountAddress,
-      tokenBalance
-    );
+    try {
+      const state = getState();
+      const tokens = getTokenDomain(state).bySymbol();
+      const accountAddress = getAccountDomain(state).address();
+      const isAllowed = getAccountBalancesDomain(state).isAllowed(tokenSymbol);
+      const isPending = getAccountBalancesDomain(state).isAllowancePending(tokenSymbol);
 
-    dispatch(
-      notifierActionCreators.addNotification({
-        id: lastNotification ? lastNotification.id++ : 1,
-        intent: 'success',
-        message: 'Allowed successfully. You can trade now with this Token.',
-      })
-    );
-    dispatch(actionCreators.updateSingleAllowance(allowance, tokenSymbol));
+      const tokenContractAddress = tokens[tokenSymbol].address;
+
+      if (isPending) throw new Error('Trading approval pending');
+
+      if (isAllowed) {
+        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0);
+      } else {
+        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, -1);
+      }
+
+      dispatch(actionCreators.updateAllowance({ symbol: tokenSymbol, allowance: 'pending' }));
+      dispatch(
+        notifierActionCreators.addSuccessNotification({
+          message: 'Allowance pending. You will be able to trade after transaction is validated',
+        })
+      );
+    } catch (e) {
+      if (e.message === 'Trading approval pending') {
+        dispatch(notifierActionCreators.addDangerNotification({ message: 'Trading approval pending' }));
+      }
+    }
   };
 }

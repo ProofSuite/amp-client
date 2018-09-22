@@ -5,13 +5,18 @@ import { EXCHANGE_ADDRESS } from '../../config/contracts';
 import { getProvider, getSigner } from './signer';
 
 import type { Token, TokenBalances } from '../../types/common';
+import type { AccountBalance, AccountAllowance } from '../../types/accountBalances';
 
 export async function queryEtherBalance(address: string) {
-  const provider = getProvider();
-  const balance = await provider.getBalance(address);
+  let balance;
+  let provider = getProvider();
+
+  balance = await provider.getBalance(address);
+  balance = Number(utils.formatEther(balance)).toFixed(4);
+
   return {
     symbol: 'ETH',
-    balance: utils.formatEther(balance),
+    balance: balance,
   };
 }
 
@@ -20,6 +25,17 @@ export async function updateAllowance(tokenAddress: string, spender: string, add
   const contract = new Contract(tokenAddress, ERC20Token.abi, signer);
   await contract.approve(spender, parseFloat(balance));
   const allowance = await contract.allowance(address, spender);
+  return { allowance: utils.formatEther(allowance) };
+}
+
+export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: number) {
+  const signer = getSigner();
+  const exchange = EXCHANGE_ADDRESS[signer.provider.chainId];
+  const contract = new Contract(tokenAddress, ERC20Token.abi, signer);
+
+  await contract.approve(exchange, parseFloat(balance));
+  const allowance = await contract.allowance(address, exchange);
+
   return { allowance: utils.formatEther(allowance) };
 }
 
@@ -96,7 +112,6 @@ export async function subscribeTokenBalance(address: string, token: Object, call
   const contract = new Contract(token.address, ERC20Token.abi, provider);
 
   const initialBalance = await contract.balanceOf(address);
-
   const handler = async (sender, receiver, tokens) => {
     if (receiver === address) {
       const balance = await contract.balanceOf(receiver);
@@ -108,5 +123,84 @@ export async function subscribeTokenBalance(address: string, token: Object, call
 
   return () => {
     provider.removeListener(address, handler);
+  };
+}
+
+export async function subscribeTokenBalances(address: string, tokens: Array<Token>, callback: AccountBalance => any) {
+  const provider = getProvider();
+  const handlers = [];
+
+  tokens.map(async token => {
+    const contract = new Contract(token.address, ERC20Token.abi, provider);
+    // const initialBalance = await contract.balanceOf(address)
+
+    const handler = async (sender, receiver, amount) => {
+      if (receiver === address || sender === address) {
+        const balance = await contract.balanceOf(address);
+        callback({
+          symbol: token.symbol,
+          balance: utils.formatEther(balance),
+        });
+      }
+    };
+
+    window.abi = ERC20Token.abi;
+
+    contract.ontransfer = handler;
+    handlers.push(handler);
+  });
+
+  return () => {
+    handlers.forEach(handler => provider.removeListener(address, handler));
+  };
+}
+
+export async function subscribeTokenAllowance(address: string, token: Object, callback: number => void) {
+  const provider = getProvider();
+  const exchange = EXCHANGE_ADDRESS[provider.chainId];
+  const contract = new Contract(token.address, ERC20Token.abi, provider);
+
+  const initialAllowance = await contract.allowance(exchange, address);
+  const handler = async (sender, receiver, tokens) => {
+    if (receiver === address) {
+      const allowance = await contract.allowance(exchange, receiver);
+      if (allowance !== initialAllowance) callback(utils.formatEther(allowance));
+    }
+  };
+
+  contract.onapprove = handler;
+
+  return () => {
+    provider.removeListener(address, handler);
+  };
+}
+
+export async function subscribeTokenAllowances(
+  address: string,
+  tokens: Array<Token>,
+  callback: AccountAllowance => any
+) {
+  const provider = getProvider();
+  const exchange = EXCHANGE_ADDRESS[provider.chainId];
+  const handlers = [];
+
+  tokens.map(async token => {
+    const contract = new Contract(token.address, ERC20Token.abi, provider);
+    const handler = async (owner, spender, amount) => {
+      if (owner === address && spender === exchange) {
+        const allowance = await contract.allowance(owner, exchange);
+        callback({
+          symbol: token.symbol,
+          allowance: utils.formatEther(allowance),
+        });
+      }
+    };
+
+    contract.onapproval = handler;
+    handlers.push(handler);
+  });
+
+  return () => {
+    handlers.forEach(handler => provider.removeListener(address, handler));
   };
 }

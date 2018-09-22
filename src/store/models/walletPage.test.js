@@ -3,6 +3,7 @@ import * as accountBalancesService from '../services/accountBalances';
 import * as signerService from '../services/signer';
 import * as walletService from '../services/wallet';
 import { Contract } from 'ethers';
+import { quoteTokens } from '../../config/quotes';
 
 import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getNotificationsDomain } from '../domains';
 import * as actionCreators from './walletPage';
@@ -36,18 +37,22 @@ const zrx = {
   symbol: 'ZRX',
   balance: 121,
 };
+
 beforeEach(() => {
   jest.resetAllMocks();
   accountBalancesService.queryEtherBalance.mockReturnValue({ symbol: 'ETH', balance: 1000 });
+
   accountBalancesService.queryTokenBalances.mockReturnValue([
     { symbol: 'REQ', balance: 2000 },
     { symbol: 'ZRX', balance: 2000 },
   ]);
+
   accountBalancesService.queryExchangeTokenAllowances.mockReturnValue([
     { symbol: 'REQ', allowance: 0 },
     { symbol: 'ZRX', allowance: 0 },
     { symbol: 'ETH', allowance: 0 },
   ]);
+
   accountBalancesService.updateAllowance.mockReturnValue(Promise.resolve({ allowance: 1000 }));
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
   getNotificationsDomain.mockImplementation(require.requireActual('../domains').getNotificationsDomain);
@@ -74,9 +79,10 @@ it('handles toggleAllowance Successfully', async () => {
   const chainId = jest.fn().mockReturnValue(8888);
   const getBlock = jest.fn().mockReturnValue(938);
   const providerMock = { chainId, getBlock };
-  signerService.getProvider = jest.fn(() => providerMock);
   const approve = jest.fn();
   const contractMock = jest.fn(() => ({ approve }));
+
+  signerService.getProvider = jest.fn(() => providerMock);
   Contract.mockImplementation(contractMock);
 
   getTokenDomain.mockImplementation(getTokenDomainMock);
@@ -101,16 +107,15 @@ it('handles queryAccountData properly', async () => {
   }));
 
   const getAccountDomainMock = jest.fn(() => ({ address: () => testAddress }));
-
   const getNotificationsDomainMock = jest.fn(() => ({
     last: () => {
       id: 1;
     },
   }));
-
   const chainId = jest.fn().mockReturnValue(8888);
   const getBlock = jest.fn().mockReturnValue(938);
   const providerMock = { chainId, getBlock };
+  const quotes = quoteTokens;
   signerService.getProvider = jest.fn(() => providerMock);
 
   getTokenDomain.mockImplementation(getTokenDomainMock);
@@ -128,19 +133,19 @@ it('handles queryAccountData properly', async () => {
 
   expect(accountBalancesService.queryEtherBalance).toHaveBeenCalledTimes(1);
   expect(accountBalancesService.queryEtherBalance).toHaveBeenCalledWith(testAddress);
-
   expect(walletService.getCurrentBlock).toHaveBeenCalledTimes(1);
-
   expect(accountBalancesService.queryTokenBalances).toHaveBeenCalledTimes(1);
-  expect(accountBalancesService.queryTokenBalances).toHaveBeenCalledWith(testAddress, [zrx, req]);
+  expect(accountBalancesService.queryTokenBalances).toHaveBeenCalledWith(testAddress, [...quotes, ...[zrx, req]]);
   expect(accountBalancesService.queryExchangeTokenAllowances).toHaveBeenCalledTimes(1);
-  expect(accountBalancesService.queryExchangeTokenAllowances).toHaveBeenCalledWith(testAddress, [zrx, req]);
+  expect(accountBalancesService.queryExchangeTokenAllowances).toHaveBeenCalledWith(testAddress, [
+    ...quotes,
+    ...[zrx, req],
+  ]);
 
   accountBalancesDomain = getAccountBalancesDomain(store.getState());
   expect(accountBalancesDomain.isSubscribed('ETH')).toEqual(false);
   expect(accountBalancesDomain.isAllowed('ETH')).toEqual(false);
   expect(accountBalancesDomain.get('ETH')).toEqual(1000);
-
   expect(accountBalancesDomain.get('REQ')).toEqual(2000);
   expect(accountBalancesDomain.isSubscribed('REQ')).toEqual(false);
   expect(accountBalancesDomain.isAllowed('REQ')).toEqual(false);

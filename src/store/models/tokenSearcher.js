@@ -1,6 +1,6 @@
 // @flow
 import type { State, ThunkAction } from '../../types';
-import { getTokenPairsDomain } from '../domains';
+import { getTokenPairsDomain, getAccountBalancesDomain } from '../domains';
 import * as actionCreators from '../actions/tokenSearcher';
 import * as ohlcvActionCreators from '../actions/ohlcv';
 
@@ -9,9 +9,12 @@ import { quoteTokenSymbols as quotes } from '../../config/quotes';
 
 export default function tokenSearcherSelector(state: State) {
   let domain = getTokenPairsDomain(state);
+  let accountBalancesDomain = getAccountBalancesDomain(state);
   let tokenPairs = domain.getTokenPairsDataArray();
   let favoriteTokenPairs = domain.getFavoritePairs();
+
   let tokenPairsByQuoteToken = {};
+
   for (let quote of quotes) {
     tokenPairsByQuoteToken[quote] = tokenPairs
       .filter(({ pair }) => getQuoteToken(pair) === quote)
@@ -27,10 +30,14 @@ export default function tokenSearcherSelector(state: State) {
   }
 
   let currentPair = domain.getCurrentPair();
+  let baseTokenBalance = accountBalancesDomain.tokenBalance(currentPair.baseTokenSymbol);
+  let quoteTokenBalance = accountBalancesDomain.tokenBalance(currentPair.quoteTokenSymbol);
 
   return {
     tokenPairsByQuoteToken,
     currentPair,
+    baseTokenBalance,
+    quoteTokenBalance,
   };
 }
 

@@ -172,13 +172,16 @@ describe('Create wallet (Integration Test)', () => {
   beforeEach(() => {
     localStorage.clear();
   });
+
   it('handles loginWithWallet (store encrypted wallet and private key', async () => {
     walletService.saveEncryptedWalletInLocalStorage.mockImplementationOnce(
       require.requireActual('../services/wallet').saveEncryptedWalletInLocalStorage
     );
+
     walletService.savePrivateKeyInSessionStorage.mockImplementationOnce(
       require.requireActual('../services/wallet').savePrivateKeyInSessionStorage
     );
+
     const { store } = createStore();
     const encryptedWallet =
       '{"version":3,"id":"1a7ab7f2-b8d5-4614-a9cd-5f527be0fd01","address":"17fe89190052827fb351e965c965e5fe1ee60080","Crypto":{"ciphertext":"fddc61ff55af178a9291488b4164d38e3e261323e10ea71e5ee723ca6081837a","cipherparams":{"iv":"7bdad18b98f6d30309d0c09342d8b9f1"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"19d3e088f5fc74702a74693ba47f01ab786f2828c2801143a2a5be5a6a99863e","n":8192,"r":8,"p":1},"mac":"fb36b7047161d90e3397de802c7b26e97810ee7528db7fb2427df9d6124f8d48"}}';

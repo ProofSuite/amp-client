@@ -1,12 +1,15 @@
 import accountBalancesDomain from './accountBalances';
 import * as eventCreators from './accountBalances';
 
+const MAX_ALLOWANCE = '115792089237316195423570985008687907853269984665640564039457.584007913129639935';
+
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
+
   return accountBalancesDomain(state);
 }
-//TODO: need to run Commented tests after solving Account Balances Issue @line 56 and 36
 
+//TODO: need to run Commented tests after solving Account Balances Issue @line 56 and 36
 it('handles initialized event properly', () => {
   const domain = getDomain([eventCreators.initialized()]);
 
@@ -44,7 +47,10 @@ it('handles allowances event properly', () => {
   const domain = getDomain([
     eventCreators.initialized(),
     eventCreators.updated([{ symbol: 'REQ', balance: 1000 }, { symbol: 'TRX', balance: 2000 }]),
-    eventCreators.allowancesUpdated([{ symbol: 'REQ', allowance: 100 }, { symbol: 'TRX', allowance: 100 }]),
+    eventCreators.allowancesUpdated([
+      { symbol: 'REQ', allowance: MAX_ALLOWANCE },
+      { symbol: 'TRX', allowance: MAX_ALLOWANCE },
+    ]),
   ]);
 
   expect(domain.get('REQ')).toEqual(1000);

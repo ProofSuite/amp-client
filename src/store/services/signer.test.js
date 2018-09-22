@@ -26,16 +26,20 @@ describe('createProvider', () => {
 
   it('create metamask provider', async () => {
     window.web3 = {
+      version: {
+        network: '8888',
+      },
       currentProvider: 'web3',
       eth: {
         defaultAccount: 'test defaultAccount',
       },
     };
+
     let params = { type: 'metamask', custom: false };
     let { settings, address } = await signerService.createSigner(params);
 
     expect(settings).toEqual({ type: 'metamask' });
-    expect(address).toEqual('test address');
+    expect(address).toEqual({ address: 'test address', networkId: 8888 });
     expect(providers.Web3Provider).toHaveBeenCalledTimes(1);
     expect(window.signer.instance).toBe('test signer');
     expect(window.signer.type).toEqual('metamask');
