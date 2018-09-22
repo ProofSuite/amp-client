@@ -1,6 +1,5 @@
 //@flow
-export type EtherTxStatus = 'incomplete' | 'valid' | 'invalid' | 'sent' | 'reverted' | 'confirmed' | 'error';
-
+export type TxStatus = 'incomplete' | 'valid' | 'invalid' | 'sent' | 'reverted' | 'confirmed' | 'error';
 export type Address = string;
 
 export type TxReceipt = {
@@ -10,9 +9,9 @@ export type TxReceipt = {
   hash: string,
 };
 
-export type EtherTxState = {
+export type SendEtherFormState = {
   +loading: boolean,
-  +status: EtherTxStatus,
+  +status: TxStatus,
   +statusMessage: ?string,
   +gas: ?number,
   +gasPrice: ?number,
@@ -35,64 +34,64 @@ export type TransferTokensTxParams = {
   tokenAddress: Address,
 };
 
-export type EtherTxNotification = {
-  status: EtherTxStatus,
+export type TxNotification = {
+  status: TxStatus,
   statusMessage: string,
   gas: number,
   receipt: TxReceipt,
 };
 
-export type EtherTxErrorAction = {
-  type: 'etherTx/ERROR',
+export type TxErrorAction = {
+  type: 'sendEtherForm/ERROR',
   payload: {
-    status: EtherTxStatus,
+    status: TxStatus,
     statusMessage: string,
   },
 };
 
-export type ValidateEtherTxAction = {
-  type: 'etherTx/VALIDATE',
+export type ValidateTxAction = {
+  type: 'sendEtherForm/VALIDATE',
   payload: {
     statusMessage: string,
     gas: number,
   },
 };
 
-export type InvalidateEtherTxAction = {
-  type: 'etherTx/INVALIDATE',
+export type InvalidateTxAction = {
+  type: 'sendEtherForm/INVALIDATE',
   payload: {
     statusMessage: string,
   },
 };
 
-export type SendEtherTxAction = {
-  type: 'etherTx/SEND',
+export type SendTxAction = {
+  type: 'sendEtherForm/SEND',
   payload: {
     hash: string,
   },
 };
 
-export type RevertEtherTxAction = {
-  type: 'etherTx/REVERT',
+export type RevertTxAction = {
+  type: 'sendEtherForm/REVERT',
   payload: {
     statusMessage: string,
     receipt: TxReceipt,
   },
 };
 
-export type ConfirmEtherTxAction = {
-  type: 'etherTx/CONFIRM',
+export type ConfirmTxAction = {
+  type: 'sendEtherForm/CONFIRM',
   payload: {
     receipt: TxReceipt,
   },
 };
 
-export type EtherTxEvent = any => EtherTxState => EtherTxState;
+export type SendEtherFormEvent = any => SendEtherFormState => SendEtherFormState;
 
-export type EtherTxAction =
-  | EtherTxErrorAction
-  | ValidateEtherTxAction
-  | InvalidateEtherTxAction
-  | SendEtherTxAction
-  | ConfirmEtherTxAction
-  | RevertEtherTxAction;
+export type SendEtherFormAction =
+  | TxErrorAction
+  | ValidateTxAction
+  | InvalidateTxAction
+  | SendTxAction
+  | ConfirmTxAction
+  | RevertTxAction;

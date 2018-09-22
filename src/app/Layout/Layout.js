@@ -25,11 +25,10 @@ type Props = {
   locale: string,
   messages: string,
   currentBlock?: string,
-  provider?: string,
 };
 
 function Layout(props: Props) {
-  const { children, authenticated, address, locale, messages, provider, currentBlock } = props;
+  const { children, authenticated, address, locale, messages, currentBlock } = props;
   const menu = (
     <Menu>
       <MenuItem>
@@ -68,14 +67,15 @@ function Layout(props: Props) {
                   </a>
                 </Block>
               )}
+
               <ProviderStatus>
                 <SvgIcon
                   style={{ marginRight: '10px' }}
                   width="20px"
                   icon="connect-signal"
-                  intent={provider ? 'success' : 'error'}
+                  intent={authenticated ? 'success' : 'error'}
                 />
-                <p>{provider ? provider : 'Not Connected'}</p>
+                <p>{authenticated ? 'Connected' : 'Not Connected'}</p>
               </ProviderStatus>
 
               {!authenticated ? (
@@ -129,6 +129,7 @@ const Block = styled.div`
     margin-right: 5px;
   }
 `;
+
 const NavbarHeaderLink = styled(Link).attrs({
   className: 'bp3-button bp3-minimal bp3-intent-primary',
   role: 'button',

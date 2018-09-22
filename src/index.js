@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
+import history from './store/history';
+import App from './app';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 
 const { store } = configureStore();
 
@@ -13,9 +14,9 @@ registerServiceWorker();
 const render = Component => {
   return ReactDOM.render(
     <Provider store={store}>
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <Component />
-      </BrowserRouter>
+      </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
   );

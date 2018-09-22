@@ -1,6 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
-import getDepositFormModel, {
+import getDepositFormSelector, {
   confirmEtherDeposit,
   confirmTokenDeposit,
   queryBalances,
@@ -9,16 +9,17 @@ import getDepositFormModel, {
 
 import type { State } from '../../types';
 
-export const mapStateToProps = (state: State) => {
-  const depositFormModel = getDepositFormModel(state);
+export const mapStateToProps = (state: State, ownProps: Object) => {
+  const depositFormSelector = getDepositFormSelector(state);
 
   return {
-    address: depositFormModel.accountAddress(),
-    tokens: depositFormModel.rankedTokens(),
-    balances: depositFormModel.balances(),
-    step: depositFormModel.getStep(),
-    convertTx: depositFormModel.getConvertTxState(),
-    allowTx: depositFormModel.getAllowTxState(),
+    token: ownProps.token,
+    tokens: depositFormSelector.rankedTokens(),
+    balances: depositFormSelector.balances(),
+    address: depositFormSelector.accountAddress(),
+    step: depositFormSelector.getStep(),
+    convertTx: depositFormSelector.getConvertTxState(),
+    allowTx: depositFormSelector.getAllowTxState(),
   };
 };
 

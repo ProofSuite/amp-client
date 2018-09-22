@@ -108,6 +108,6 @@ describe('Component methods', () => {
     wrapper.setState({ token: mockTokens[1], shouldAllow: true, shouldConvert: true, convertAmount: 50 });
     instance.handleConfirm();
     expect(unsubscribe).toHaveBeenCalledTimes(1);
-    expect(confirmTokenDeposit).toHaveBeenCalledWith(true, mockTokens[1]);
+    expect(confirmTokenDeposit).toHaveBeenCalledWith(mockTokens[1], true);
   });
 });

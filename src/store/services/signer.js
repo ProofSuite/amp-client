@@ -1,6 +1,5 @@
 // @flow
 import { providers, Wallet } from 'ethers';
-
 import type { UpdateSignerParams } from '../../types/signer';
 
 export const createSigner = async (params: UpdateSignerParams): any => {
@@ -73,7 +72,7 @@ export const createMetamaskSigner = async () => {
     type: 'metamask',
   };
 
-  return accountAddresses[0];
+  return { address: accountAddresses[0], networkId };
 };
 
 export const createLocalWalletSigner = async (wallet: Object, networkId: ?number) => {
@@ -127,5 +126,4 @@ export const createRpcSigner = async (url: ?string, networkId: ?number) => {
 };
 
 export const getSigner = () => window.signer.instance;
-
 export const getProvider = () => window.signer.instance.provider;

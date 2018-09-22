@@ -2,7 +2,7 @@
 import createReducer from './createReducer';
 import etherBalanceActionTypes from './actions/etherBalance';
 import accountBalancesActionTypes from './actions/accountBalances';
-import etherTxActionTypes from './actions/etherTx';
+import sendEtherFormActionTypes from './actions/sendEtherForm';
 import orderFromActionTypes from './actions/orderForm';
 import ohlcvActionTypes from './actions/ohlcv';
 import tokenSearcherActionTypes from './actions/tokenSearcher';
@@ -20,7 +20,7 @@ import appActionTypes from './actions/app';
 
 import * as etherBalanceEvents from './domains/etherBalance';
 import * as accountBalancesEvents from './domains/accountBalances';
-import * as etherTxEvents from './domains/etherTx';
+import * as sendEtherFormEvents from './domains/sendEtherForm';
 import * as loginPageEvents from './domains/loginPage';
 import * as orderBookEvents from './domains/orderBook';
 import * as tradeEvents from './domains/trades';
@@ -75,13 +75,12 @@ export const accountBalances = createReducer(action => {
       return accountBalancesEvents.updated(payload.balances);
     case walletPageActionTypes.updateBalances:
       return accountBalancesEvents.updated(payload.balances);
+    case walletPageActionTypes.updateBalance:
+      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }]);
     case walletPageActionTypes.updateAllowances:
       return accountBalancesEvents.allowancesUpdated(payload.allowances);
-    case walletPageActionTypes.updateSingleAllowance:
-      return accountBalancesEvents.singleAllowanceUpdated({
-        allowance: payload.allowance,
-        tokenSymbol: payload.tokenSymbol,
-      });
+    case walletPageActionTypes.updateAllowance:
+      return accountBalancesEvents.allowancesUpdated([{ symbol: payload.symbol, allowance: payload.allowance }]);
     default:
       return accountBalancesEvents.initialized();
   }
@@ -101,23 +100,23 @@ export const signer = createReducer(action => {
   }
 });
 
-export const etherTx = createReducer(action => {
+export const sendEtherForm = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
-    case etherTxActionTypes.etherTxError:
-      return etherTxEvents.etherTxError(payload.status, payload.statusMessage);
-    case etherTxActionTypes.validateEtherTx:
-      return etherTxEvents.etherTxValidated(payload.statusMessage, payload.gas);
-    case etherTxActionTypes.invalidateEtherTx:
-      return etherTxEvents.etherTxInvalidated(payload.statusMessage);
-    case etherTxActionTypes.revertEtherTx:
-      return etherTxEvents.etherTxReverted(payload.statusMessage, payload.receipt);
-    case etherTxActionTypes.sendEtherTx:
-      return etherTxEvents.etherTxSent(payload.hash);
-    case etherTxActionTypes.confirmEtherTx:
-      return etherTxEvents.etherTxConfirmed(payload.receipt);
+    case sendEtherFormActionTypes.txError:
+      return sendEtherFormEvents.txError(payload.status, payload.statusMessage);
+    case sendEtherFormActionTypes.validateTx:
+      return sendEtherFormEvents.txValidated(payload.statusMessage, payload.gas);
+    case sendEtherFormActionTypes.invalidateTx:
+      return sendEtherFormEvents.txInvalidated(payload.statusMessage);
+    case sendEtherFormActionTypes.revertTx:
+      return sendEtherFormEvents.txReverted(payload.statusMessage, payload.receipt);
+    case sendEtherFormActionTypes.sendTx:
+      return sendEtherFormEvents.txSent(payload.hash);
+    case sendEtherFormActionTypes.confirmTx:
+      return sendEtherFormEvents.txConfirmed(payload.receipt);
     default:
-      return etherTxEvents.initialized();
+      return sendEtherFormEvents.initialized();
   }
 });
 
@@ -204,6 +203,8 @@ export const tokenPairs = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case tradingPageActionTypes.updateCurrentPair:
+      return tokenPairsEvents.currentPairUpdated(payload.pair);
+    case walletPageActionTypes.updateCurrentPair:
       return tokenPairsEvents.currentPairUpdated(payload.pair);
     case tokensActionTypes.updateTokens:
       return tokenPairsEvents.tokenPairUpdated(payload);
@@ -312,6 +313,10 @@ export const notifications = createReducer(action => {
   const { type, payload } = action;
   switch (type) {
     case appActionTypes.addNotification:
+      return notificationEvents.notificationAdded(payload.options);
+    case appActionTypes.addSuccessNotification:
+      return notificationEvents.notificationAdded(payload.options);
+    case appActionTypes.addDangerNotification:
       return notificationEvents.notificationAdded(payload.options);
     case appActionTypes.removeNotification:
       return notificationEvents.notificationRemoved(payload.id);

@@ -1,16 +1,29 @@
 // @flow
 import ethers, { Contract } from 'ethers';
-import { getEtherTxDomain } from '../domains';
-import * as actionCreators from '../actions/etherTx';
+import { getSendEtherFormDomain, getTokenDomain } from '../domains';
+import * as actionCreators from '../actions/sendEtherForm';
 
-import type { EtherTxParams, TransferTokensTxParams } from '../../types/etherTx';
+import type { EtherTxParams, TransferTokensTxParams } from '../../types/sendEtherForm';
 import type { State, ThunkAction } from '../../types';
 
 import { getSigner } from '../services/signer';
 import { ERC20Token } from 'proof-contracts-interfaces';
 
-export default function getEtherTxSelector(state: State) {
-  return getEtherTxDomain(state);
+export default function sendEtherSelector(state: State) {
+  let tokenDomain = getTokenDomain(state);
+  let sendEtherFormDomain = getSendEtherFormDomain(state);
+
+  return {
+    getState: () => sendEtherFormDomain.getState(),
+    isLoading: () => sendEtherFormDomain.isLoading(),
+    getStatus: () => sendEtherFormDomain.getStatus(),
+    getStatusMessage: () => sendEtherFormDomain.getStatusMessage(),
+    getGas: () => sendEtherFormDomain.getGas(),
+    getGasPrice: () => sendEtherFormDomain.getGasPrice(),
+    getHash: () => sendEtherFormDomain.getHash(),
+    getReceipt: () => sendEtherFormDomain.getReceipt(),
+    tokens: () => tokenDomain.rankedTokens(),
+  };
 }
 
 export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams): ThunkAction => {
@@ -28,9 +41,9 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
       let estimatedGas = await signer.provider.estimateGas(tx);
       estimatedGas = estimatedGas.toNumber();
 
-      return dispatch(actionCreators.validateEtherTx('Transaction Valid', estimatedGas));
+      return dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
     } catch (error) {
-      return dispatch(actionCreators.invalidateEtherTx(error.message));
+      return dispatch(actionCreators.invalidateTx(error.message));
     }
   };
 };
@@ -48,16 +61,16 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
       };
 
       let tx = await signer.sendTransaction(rawTx);
-      dispatch(actionCreators.sendEtherTx(tx.hash));
+      dispatch(actionCreators.sendTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
       if (receipt.status === '0x0') {
-        return dispatch(actionCreators.revertEtherTx('Transaction Failed', receipt));
+        return dispatch(actionCreators.revertTx('Transaction Failed', receipt));
       } else {
-        return dispatch(actionCreators.confirmEtherTx(receipt));
+        return dispatch(actionCreators.confirmTx(receipt));
       }
     } catch (error) {
-      dispatch(actionCreators.etherTxError('error', error.message));
+      dispatch(actionCreators.txError('error', error.message));
     }
   };
 };
@@ -71,9 +84,9 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
 
       let estimatedGas = await token.estimate.transfer(receiver, amount);
       estimatedGas = estimatedGas.toNumber();
-      dispatch(actionCreators.validateEtherTx('Transaction Valid', estimatedGas));
+      dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
     } catch (error) {
-      dispatch(actionCreators.invalidateEtherTx(error.message));
+      dispatch(actionCreators.invalidateTx(error.message));
     }
   };
 };
@@ -91,15 +104,15 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       };
       let tx = await token.transfer(receiver, amount, txOpts);
 
-      dispatch(actionCreators.sendEtherTx(tx.hash));
+      dispatch(actionCreators.sendTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
 
       receipt.status === '0x0'
-        ? dispatch(actionCreators.revertEtherTx('Transaction Failed', receipt))
-        : dispatch(actionCreators.confirmEtherTx(receipt));
+        ? dispatch(actionCreators.revertTx('Transaction Failed', receipt))
+        : dispatch(actionCreators.confirmTx(receipt));
     } catch (error) {
-      dispatch(actionCreators.etherTxError('error', error.message));
+      dispatch(actionCreators.txError('error', error.message));
     }
   };
 };

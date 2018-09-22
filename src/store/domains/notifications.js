@@ -14,7 +14,7 @@ export const notificationAdded = options => {
     return [
       ...state,
       {
-        id: options.id,
+        id: ++id,
         message: options.message,
         intent: options.intent,
       },

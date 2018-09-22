@@ -1,5 +1,6 @@
 // @flow
 import * as actionCreators from '../actions/loginPage';
+
 import * as notifierActionCreators from '../actions/app';
 import { getAccountDomain, getLoginPageDomain } from '../domains';
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
@@ -31,15 +32,14 @@ export function loginWithMetamask(): ThunkAction {
 
       let address = await createMetamaskSigner();
       dispatch(actionCreators.loginWithMetamask(address));
-      // I think there's is no need to show a notifier on Successful Log In.
-      // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
-      // dispatch(accountActionCreators.updateCurrentProvider('MetaMask'));
+      dispatch(notifierActionCreators.addSuccessNotification({ message: 'Signed in with Metamask' }));
     } catch (e) {
       if (e.message === 'Metamask account locked')
         return dispatch(actionCreators.loginError('Metamask account locked'));
       if (e.message === 'Metamask not installed') return dispatch(actionCreators.loginError('Metamask not installed'));
+      if (process.env.NODE_ENV !== 'test') console.log(e);
 
-      dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'danger', message: 'Login Error occurred!' }));
+      dispatch(notifierActionCreators.addNotification({ message: 'Login error ' }));
       dispatch(actionCreators.loginError(e.message));
     }
   };
@@ -52,21 +52,17 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
       let { wallet, encryptedWallet, storeWallet, storePrivateKey } = params;
       let { address, privateKey } = wallet;
 
-      try {
-        if (storeWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
-        if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, privateKey });
+      if (storeWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
+      if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, privateKey });
 
-        await createLocalWalletSigner(wallet);
-        dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
-        // dispatch(accountActionCreators.updateCurrentProvider('Private Network:8888'));
-        // I think there's is no need to show a notifier on Successful Log In.
-        // dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'success', message: 'Logged In Successfully!' }));
-        return dispatch(actionCreators.loginWithWallet(address, privateKey));
-      } catch (e) {
-        return dispatch(actionCreators.loginError('Could not authenticate wallet'));
-      }
+      await createLocalWalletSigner(wallet);
+      dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
+      dispatch(actionCreators.loginWithWallet(address, privateKey));
+      dispatch(notifierActionCreators.addSuccessNotification({ message: `Signed in with ${address}` }));
     } catch (e) {
-      dispatch(notifierActionCreators.addNotification({ id: 1, intent: 'danger', message: 'Login Error occurred!' }));
+      console.log(e);
+      // dispatch(actionCreators.loginError('Could not authenticate wallet'));
+      dispatch(notifierActionCreators.addNotification({ message: 'Login Error' }));
       dispatch(actionCreators.loginError(e.message));
     }
   };

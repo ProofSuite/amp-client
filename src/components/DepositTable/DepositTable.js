@@ -1,87 +1,106 @@
+// @flow
 import React from 'react';
 import styled from 'styled-components';
 import DepositTableRenderer from './DepositTableRenderer';
 import DepositModal from '../../components/DepositModal';
+import SendEtherModal from '../../components/SendEtherModal';
+
+import type { Token } from '../../types/tokens';
 
 type Props = {
-  depositData: Array<Object>,
+  provider: string,
+  toggleAllowance: string => void,
+  depositTableData: Array<Object>,
+  redirectToTradingPage: string => void,
+};
+
+type State = {
+  isDepositModalOpen: boolean,
+  isSendModalOpen: boolean,
+  selectedToken: ?Token,
+  hideZeroBalanceToken: boolean,
+  searchInput: string,
 };
 
 class DepositTable extends React.PureComponent<Props, State> {
   state = {
     isDepositModalOpen: false,
+    isSendModalOpen: false,
+    selectedToken: null,
     hideZeroBalanceToken: false,
-    searchValue: '',
-  };
-  handleAllowance = (allowed, symbol) => {
-    this.props.toggleAllowance(symbol);
+    searchInput: '',
   };
 
-  handleDeposit = () => {
-    console.log('Log deposit');
-  };
+  openDepositModal = (symbol: string) => {
+    let selectedToken = this.props.depositTableData.filter(elem => elem.symbol === symbol)[0];
 
-  handleWithdraw = () => {
-    console.log('Log Withdraw');
-  };
-
-  handleDepositClose = () => {
-    this.setState(function(prevState) {
-      return {
-        isDepositModalOpen: !prevState.isDepositModalOpen,
-      };
+    this.setState({
+      isDepositModalOpen: true,
+      selectedToken: selectedToken,
     });
   };
 
-  handleSearchChange = (evt: SyntheticEvent<>) => {
-    this.setState({ searchValue: evt.target.value });
+  openSendModal = (symbol: string) => {
+    let selectedToken = this.props.depositTableData.filter(elem => elem.symbol === symbol)[0];
+
+    this.setState({
+      isSendModalOpen: true,
+      selectedToken: selectedToken,
+    });
+  };
+
+  closeDepositModal = () => {
+    this.setState({ isDepositModalOpen: false });
+  };
+
+  closeSendModal = () => {
+    this.setState({ isSendModalOpen: false });
+  };
+
+  handleSearchInputChange = (e: SyntheticInputEvent<>) => {
+    this.setState({ searchInput: e.target.value });
   };
 
   toggleZeroBalanceToken = () => {
-    this.setState(prevState => {
-      return { hideZeroBalanceToken: !prevState.hideZeroBalanceToken };
-    });
+    this.setState({ hideZeroBalanceToken: !this.state.hideZeroBalanceToken });
   };
 
-  filterZeroBalances = data => {
-    const { hideZeroBalanceToken } = this.state;
-    if (hideZeroBalanceToken) {
-      data = data.filter(token => {
-        return parseFloat(token.balance) > 0;
-      });
-    }
+  filterTokens = (data: Array<Object>) => {
+    const { searchInput, hideZeroBalanceToken } = this.state;
+
+    if (searchInput) data = data.filter(token => token.symbol.indexOf(searchInput.toUpperCase()) > -1);
+    if (hideZeroBalanceToken) data = data.filter(token => token.balance !== '0');
+
     return data;
-  };
-  filterData = data => {
-    const { searchValue } = this.state;
-    if (searchValue) {
-      data = data.filter(token => {
-        return token.symbol.indexOf(searchValue.toUpperCase()) > -1;
-      });
-    }
-    return this.filterZeroBalances(data);
   };
 
   render() {
-    const { depositData, provider, finishAllowance } = this.props;
-    const { isDepositModalOpen, searchValue, hideZeroBalanceToken } = this.state;
+    let { provider, depositTableData, toggleAllowance, redirectToTradingPage } = this.props;
+    let { isDepositModalOpen, isSendModalOpen, selectedToken, searchInput, hideZeroBalanceToken } = this.state;
+
+    depositTableData = this.filterTokens(depositTableData);
 
     return (
       <Wrapper>
         <DepositTableRenderer
-          depositData={this.filterData(depositData)}
-          searchValue={searchValue}
           provider={provider}
+          depositTableData={depositTableData}
+          searchInput={searchInput}
           hideZeroBalanceToken={hideZeroBalanceToken}
-          finishAllowance={finishAllowance}
-          handleDepositClose={this.handleDepositClose}
-          handleAllowance={this.handleAllowance}
-          handleDeposit={this.handleDeposit}
-          handleWithdraw={this.handleWithdraw}
+          openDepositModal={this.openDepositModal}
+          openSendModal={this.openSendModal}
           toggleZeroBalanceToken={this.toggleZeroBalanceToken}
-          handleSearchChange={this.handleSearchChange}
+          handleSearchInputChange={this.handleSearchInputChange}
+          toggleAllowance={toggleAllowance}
+          redirectToTradingPage={redirectToTradingPage}
         />
-        <DepositModal isOpen={isDepositModalOpen} handleClose={this.handleDepositClose} />
+        <DepositModal
+          isOpen={isDepositModalOpen}
+          handleClose={this.closeDepositModal}
+          token={selectedToken}
+          tokenData={depositTableData}
+        />
+        <SendEtherModal isOpen={isSendModalOpen} handleClose={this.closeSendModal} token={selectedToken} />
       </Wrapper>
     );
   }

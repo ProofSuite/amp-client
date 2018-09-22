@@ -9,6 +9,7 @@ const ColoredCryptoIcon = ({ name, size, style }) => {
     </svg>
   );
 };
+
 export default ColoredCryptoIcon;
 
 const GetIcon = ({ icon }) => {

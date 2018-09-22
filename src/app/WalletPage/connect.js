@@ -1,11 +1,17 @@
 import { connect } from 'react-redux';
-import getWalletPageSelector, { queryAccountData, toggleAllowance } from '../../store/models/walletPage';
+import walletPageSelector, {
+  queryAccountData,
+  toggleAllowance,
+  redirectToTradingPage,
+} from '../../store/models/walletPage';
 import settingsPageSelector from '../../store/models/settings';
 import accountSelector from '../../store/models/layout';
-import { sortTable } from '../../utils/helpers';
 import { removeNotification } from '../../store/actions/app';
 
 export function mapStateToProps(state, props) {
+  const { authenticated } = accountSelector(state);
+  const { pvtKeyLocked } = settingsPageSelector(state);
+
   const {
     depositTableData,
     accountAddress,
@@ -15,22 +21,21 @@ export function mapStateToProps(state, props) {
     accountPrivateKey,
     gas,
     gasPrice,
-  } = getWalletPageSelector(state);
-  const { authenticated } = accountSelector(state);
+  } = walletPageSelector(state);
+
   const loading = !(depositTableData.length > 0);
-  const { pvtKeyLocked } = settingsPageSelector(state);
 
   return {
-    depositTableData: sortTable(depositTableData, 'symbol'),
-    accountAddress: accountAddress,
-    accountPrivateKey: accountPrivateKey,
-    loading: loading,
+    depositTableData,
+    accountAddress,
+    accountPrivateKey,
+    loading,
     isDefaultAccountSet: false,
-    authenticated: authenticated,
-    currentBlock: currentBlock,
-    provider: provider,
-    etherBalance: etherBalance,
-    pvtKeyLocked: pvtKeyLocked,
+    authenticated,
+    currentBlock,
+    provider,
+    etherBalance,
+    pvtKeyLocked,
     gas,
     gasPrice,
   };
@@ -40,6 +45,7 @@ export const mapDispatchToProps = {
   queryAccountData,
   removeNotification,
   toggleAllowance,
+  redirectToTradingPage,
 };
 
 export default connect(

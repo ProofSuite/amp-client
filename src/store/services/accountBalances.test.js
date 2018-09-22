@@ -78,7 +78,7 @@ describe('queryEtherBalance', () => {
 
     expect(utils.formatEther).toHaveBeenCalledTimes(1);
     expect(utils.formatEther).toHaveBeenCalledWith('test getBalance');
-    expect(result).toEqual({ symbol: 'ETH', balance: 1000 });
+    expect(result).toEqual({ symbol: 'ETH', balance: '1000.0000' });
   });
 });
 

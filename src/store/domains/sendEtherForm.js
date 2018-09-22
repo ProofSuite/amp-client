@@ -1,7 +1,7 @@
 // @flow
-import type { EtherTxState, TxReceipt } from '../../types/etherTx';
+import type { SendEtherFormState, TxReceipt } from '../../types/sendEtherForm';
 
-const initialState: EtherTxState = {
+const initialState: SendEtherFormState = {
   loading: false,
   status: 'incomplete',
   statusMessage: null,
@@ -12,12 +12,12 @@ const initialState: EtherTxState = {
 };
 
 export const initialized = () => {
-  const event = (state: EtherTxState = initialState) => state;
+  const event = (state: SendEtherFormState = initialState) => state;
   return event;
 };
 
-export const etherTxValidated = (statusMessage: string, gas: number) => {
-  const event = (state: EtherTxState) => ({
+export const txValidated = (statusMessage: string, gas: number) => {
+  const event = (state: SendEtherFormState) => ({
     ...state,
     status: 'valid',
     statusMessage: statusMessage,
@@ -26,8 +26,8 @@ export const etherTxValidated = (statusMessage: string, gas: number) => {
   return event;
 };
 
-export const etherTxInvalidated = (statusMessage: string) => {
-  const event = (state: EtherTxState) => ({
+export const txInvalidated = (statusMessage: string) => {
+  const event = (state: SendEtherFormState) => ({
     ...state,
     status: 'invalid',
     statusMessage: statusMessage,
@@ -35,8 +35,8 @@ export const etherTxInvalidated = (statusMessage: string) => {
   return event;
 };
 
-export const etherTxSent = (hash: string) => {
-  const event = (state: EtherTxState) => ({
+export const txSent = (hash: string) => {
+  const event = (state: SendEtherFormState) => ({
     ...state,
     loading: false,
     status: 'sent',
@@ -47,8 +47,8 @@ export const etherTxSent = (hash: string) => {
   return event;
 };
 
-export const etherTxReverted = (statusMessage: string, receipt: TxReceipt) => {
-  const event = (state: EtherTxState) => ({
+export const txReverted = (statusMessage: string, receipt: TxReceipt) => {
+  const event = (state: SendEtherFormState) => ({
     ...state,
     loading: false,
     status: 'reverted',
@@ -58,8 +58,8 @@ export const etherTxReverted = (statusMessage: string, receipt: TxReceipt) => {
   return event;
 };
 
-export const etherTxError = (status: string, statusMessage: string) => {
-  const event = (state: EtherTxState) => ({
+export const txError = (status: string, statusMessage: string) => {
+  const event = (state: SendEtherFormState) => ({
     ...state,
     loading: false,
     status: status,
@@ -68,8 +68,8 @@ export const etherTxError = (status: string, statusMessage: string) => {
   return event;
 };
 
-export const etherTxConfirmed = (receipt: TxReceipt) => {
-  const event = (state: EtherTxState) => ({
+export const txConfirmed = (receipt: TxReceipt) => {
+  const event = (state: SendEtherFormState) => ({
     ...state,
     loading: false,
     status: 'confirmed',
@@ -78,7 +78,7 @@ export const etherTxConfirmed = (receipt: TxReceipt) => {
   return event;
 };
 
-export default function getEtherTxDomain(state: EtherTxState) {
+export default function sendEtherFormDomain(state: SendEtherFormState) {
   return {
     getState: () => state,
     isLoading: () => state.loading,

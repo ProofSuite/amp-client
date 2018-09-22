@@ -19,17 +19,23 @@ import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
 
 export default function depositFormSelector(state: State) {
+  let accountDomain = getAccountDomain(state);
+  let tokenDomain = getTokenDomain(state);
+  let accountBalancesDomain = getAccountBalancesDomain(state);
+  let signerDomain = getSignerDomain(state);
+  let depositFormDomain = getDepositFormDomain(state);
+
   return {
-    accountAddress: () => getAccountDomain(state).address(),
-    tokens: () => getTokenDomain(state).tokens(),
-    rankedTokens: () => getTokenDomain(state).rankedTokens(),
-    symbols: () => getTokenDomain(state).symbols(),
-    tokenIsSubscribed: (symbol: string) => getAccountBalancesDomain(state).isSubscribed(symbol),
-    balances: () => getAccountBalancesDomain(state).balances(),
-    networkId: () => getSignerDomain(state).getNetworkId(),
-    getStep: () => getDepositFormDomain(state).getStep(),
-    getAllowTxState: () => getDepositFormDomain(state).getAllowTxState(),
-    getConvertTxState: () => getDepositFormDomain(state).getConvertTxState(),
+    accountAddress: () => accountDomain.address(),
+    tokens: () => tokenDomain.tokens(),
+    rankedTokens: () => tokenDomain.rankedTokens(),
+    symbols: () => tokenDomain.symbols(),
+    tokenIsSubscribed: (symbol: string) => accountBalancesDomain.isSubscribed(symbol),
+    balances: () => accountBalancesDomain.balances(),
+    networkId: () => signerDomain.getNetworkId(),
+    getStep: () => depositFormDomain.getStep(),
+    getAllowTxState: () => depositFormDomain.getAllowTxState(),
+    getConvertTxState: () => depositFormDomain.getConvertTxState(),
   };
 }
 
@@ -151,12 +157,11 @@ export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): T
   return async (dispatch, getState) => {
     try {
       let signer = getSigner();
-      let network = depositFormSelector(getState()).networkId();
+      let exchange = EXCHANGE_ADDRESS[signer.provider.chainId];
       let token = new Contract(address, ERC20Token.abi, signer);
 
       if (shouldAllow) {
-        // let allowTxParams = { value: 1000 };
-        let allowTx = await token.approve(EXCHANGE_ADDRESS[network], -1);
+        let allowTx = await token.approve(exchange, -1);
         dispatch(depositFormActionCreators.sendAllowTx(allowTx.hash));
 
         let allowTxReceipt = await signer.provider.waitForTransaction(allowTx.hash);

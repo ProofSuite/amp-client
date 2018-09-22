@@ -8,7 +8,15 @@ it('tokenSearcherSelector parses data correctly', () => {
 
   let getCurrentPairMock = jest.fn(() => ({
     pair: 'BNB/WETH',
+    baseTokenSymbol: 'BNB',
+    quoteTokenSymbol: 'WETH',
   }));
+
+  let tokenBalanceMock = jest.fn(symbol => {
+    if (symbol === 'BNB') return '100.00';
+    if (symbol === 'WETH') return '10.00';
+    return;
+  });
 
   let getTokenPairsDataArrayMock = jest.fn(() => [
     {
@@ -121,7 +129,13 @@ it('tokenSearcherSelector parses data correctly', () => {
     getCurrentPair: getCurrentPairMock,
   }));
 
-  let { tokenPairsByQuoteToken, currentPair } = tokenSearcherSelector();
+  domains.getAccountBalancesDomain = jest.fn(() => ({
+    tokenBalance: tokenBalanceMock,
+  }));
+
+  let { tokenPairsByQuoteToken, currentPair, baseTokenBalance, quoteTokenBalance } = tokenSearcherSelector();
   expect(tokenPairsByQuoteToken).toEqual(expectedTokenPairsByQuoteToken);
-  expect(currentPair).toEqual({ pair: 'BNB/WETH' });
+  expect(currentPair).toEqual({ pair: 'BNB/WETH', baseTokenSymbol: 'BNB', quoteTokenSymbol: 'WETH' });
+  expect(baseTokenBalance).toEqual('100.00');
+  expect(quoteTokenBalance).toEqual('10.00');
 });

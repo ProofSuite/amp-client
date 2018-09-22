@@ -1,10 +1,10 @@
-import getEtherTxDomain from './etherTx';
-import * as eventCreators from './etherTx';
+import getSendEtherFormDomain from './sendEtherForm';
+import * as eventCreators from './sendEtherForm';
 import { mockHash, mockReceipt } from '../../mockData';
 
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
-  return getEtherTxDomain(state);
+  return getSendEtherFormDomain(state);
 }
 
 it('handles initialized event properly', () => {
@@ -19,8 +19,8 @@ it('handles initialized event properly', () => {
   expect(domain.getReceipt()).toEqual(null);
 });
 
-it('handles etherTxValidated event properly', () => {
-  const domain = getDomain([eventCreators.initialized(), eventCreators.etherTxValidated('Transaction Valid', 21000)]);
+it('handles txValidated event properly', () => {
+  const domain = getDomain([eventCreators.initialized(), eventCreators.txValidated('Transaction Valid', 21000)]);
 
   expect(domain.isLoading()).toEqual(false);
   expect(domain.getStatus()).toEqual('valid');
@@ -31,8 +31,8 @@ it('handles etherTxValidated event properly', () => {
   expect(domain.getReceipt()).toEqual(null);
 });
 
-it('handles etherTxInvalidated event properly', () => {
-  const domain = getDomain([eventCreators.initialized(), eventCreators.etherTxInvalidated('Address invalid')]);
+it('handles txInvalidated event properly', () => {
+  const domain = getDomain([eventCreators.initialized(), eventCreators.txInvalidated('Address invalid')]);
 
   expect(domain.isLoading()).toEqual(false);
   expect(domain.getStatus()).toEqual('invalid');
@@ -43,11 +43,11 @@ it('handles etherTxInvalidated event properly', () => {
   expect(domain.getReceipt()).toEqual(null);
 });
 
-it('handles etherTxSent event properly', () => {
+it('handles txSent event properly', () => {
   const domain = getDomain([
     eventCreators.initialized(),
-    eventCreators.etherTxValidated('Transaction Valid', 21000),
-    eventCreators.etherTxSent(mockHash),
+    eventCreators.txValidated('Transaction Valid', 21000),
+    eventCreators.txSent(mockHash),
   ]);
 
   expect(domain.isLoading()).toEqual(false);
@@ -59,12 +59,12 @@ it('handles etherTxSent event properly', () => {
   expect(domain.getReceipt()).toEqual(null);
 });
 
-it('handles etherTxReverted event properly', () => {
+it('handles txReverted event properly', () => {
   const domain = getDomain([
     eventCreators.initialized(),
-    eventCreators.etherTxValidated('Transaction Valid', 21000),
-    eventCreators.etherTxSent(mockHash),
-    eventCreators.etherTxReverted('Transaction Failed', mockReceipt),
+    eventCreators.txValidated('Transaction Valid', 21000),
+    eventCreators.txSent(mockHash),
+    eventCreators.txReverted('Transaction Failed', mockReceipt),
   ]);
 
   expect(domain.isLoading()).toEqual(false);
@@ -76,12 +76,12 @@ it('handles etherTxReverted event properly', () => {
   expect(domain.getReceipt()).toEqual(mockReceipt);
 });
 
-it('handles etherTxConfirmed event properly', () => {
+it('handles txConfirmed event properly', () => {
   const domain = getDomain([
     eventCreators.initialized(),
-    eventCreators.etherTxValidated('Transaction Valid', 21000),
-    eventCreators.etherTxSent(mockHash),
-    eventCreators.etherTxConfirmed(mockReceipt),
+    eventCreators.txValidated('Transaction Valid', 21000),
+    eventCreators.txSent(mockHash),
+    eventCreators.txConfirmed(mockReceipt),
   ]);
 
   expect(domain.isLoading()).toEqual(false);
@@ -93,12 +93,12 @@ it('handles etherTxConfirmed event properly', () => {
   expect(domain.getReceipt()).toEqual(mockReceipt);
 });
 
-it('handles etherTxError event properly', () => {
+it('handles txError event properly', () => {
   const domain = getDomain([
     eventCreators.initialized(),
-    eventCreators.etherTxValidated('Transaction Valid', 21000),
-    eventCreators.etherTxSent(mockHash),
-    eventCreators.etherTxError('error', 'Error during transaction'),
+    eventCreators.txValidated('Transaction Valid', 21000),
+    eventCreators.txSent(mockHash),
+    eventCreators.txError('error', 'Error during transaction'),
   ]);
 
   expect(domain.isLoading()).toEqual(false);

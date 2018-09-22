@@ -10,27 +10,21 @@ type Props = {
 class Notifier extends React.Component {
   show = notification => {
     let { intent, message } = notification;
-    Notification.show({
-      intent: intent || 'success',
-      message: message,
-    });
+    Notification.show({ intent: intent || 'success', message: message });
+
     this.props.removeNotification(this.props.lastNotification.id);
   };
 
   render() {
     let { lastNotification } = this.props;
-    if (lastNotification) {
-      lastNotification.id && this.show(lastNotification);
-    }
+    if (lastNotification) lastNotification.id && this.show(lastNotification);
 
     return null;
   }
 
   componentDidUpdate(prevProps) {
     let { lastNotification, removeNotification } = prevProps;
-    if (lastNotification) {
-      removeNotification(lastNotification.id);
-    }
+    if (lastNotification) removeNotification(lastNotification.id);
   }
 }
 

@@ -15,7 +15,7 @@ export type AccountBalance = {
 
 export type AccountAllowance = {
   symbol: string,
-  allowance: number,
+  allowance: number | 'pending',
 };
 
 export type AccountAllowances = Array<AccountAllowance>;

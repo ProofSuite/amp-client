@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import styled from 'styled-components';
 import { Card } from '@blueprintjs/core';
@@ -6,8 +7,21 @@ import DepositTable from '../../components/DepositTable';
 import CurrentWallet from '../../components/CurrentWallet';
 import Notifier from '../../components/Notifier';
 
+import type { TokenData } from '../../types/tokens';
+
 type Props = {
-  queryAccountData: void => void,
+  loading: boolean,
+  pvtKeyLocked: boolean,
+  accountAddress: string,
+  accountPrivateKey: string,
+  etherBalance: string,
+  gasPrice: number,
+  gas: number,
+  //Deposit table props
+  provider: string,
+  depositTableData: Array<TokenData>,
+  toggleAllowance: string => void,
+  redirectToTradingPage: string => void,
 };
 
 const WalletPageRenderer = ({
@@ -21,6 +35,7 @@ const WalletPageRenderer = ({
   gasPrice,
   gas,
   toggleAllowance,
+  redirectToTradingPage,
 }: Props) => {
   return (
     <Wrapper>
@@ -38,15 +53,16 @@ const WalletPageRenderer = ({
             <CenteredSpinner />
           ) : (
             <RightSection>
-              <DepositWrapper>
-                <DepositTable toggleAllowance={toggleAllowance} provider={provider} depositData={depositTableData} />
-              </DepositWrapper>
+              <DepositTableWrapper>
+                <DepositTable
+                  provider={provider}
+                  toggleAllowance={toggleAllowance}
+                  depositTableData={depositTableData}
+                  redirectToTradingPage={redirectToTradingPage}
+                />
+              </DepositTableWrapper>
               <HeadingMenu>
                 <h4>Heading</h4>
-                <p>Text .......</p>
-                <p>Text .......</p>
-                <p>Text .......</p>
-                <p>Text .......</p>
               </HeadingMenu>
             </RightSection>
           )}
@@ -61,12 +77,11 @@ const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;
 `;
-
 const HeadingMenu = styled.div`
   width: 30%;
 `;
 
-const DepositWrapper = styled.div`
+const DepositTableWrapper = styled.div`
   height: 100%;
   width: 69%;
 `;

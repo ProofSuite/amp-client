@@ -1,5 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { persistReducer } from 'redux-persist';
+import history from './history';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
 import * as services from './services';
@@ -17,7 +19,7 @@ if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_C
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 }
 
-const middlewares = [thunk.withExtraArgument(services)];
+const middlewares = [thunk.withExtraArgument(services), routerMiddleware(history)];
 const enhancers = [applyMiddleware(...middlewares)];
 const storeEnhancer = composeEnhancers(...enhancers);
 const rootReducer = combineReducers(reducers);
@@ -26,7 +28,7 @@ const rootReducer = combineReducers(reducers);
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const configureStore = preloadedState => {
-  let store = createStore(rootReducer, preloadedState, storeEnhancer);
+  let store = createStore(connectRouter(history)(rootReducer), preloadedState, storeEnhancer);
   // let persistor = persistStore(store);
 
   if (module.hot) {
@@ -34,7 +36,7 @@ const configureStore = preloadedState => {
       const nextReducers = require('./reducers');
       const nextRootReducer = combineReducers(nextReducers);
       // store.replaceReducer(persistReducer(persistConfig, nextRootReducer));
-      store.replaceReducer(nextRootReducer);
+      store.replaceReducer(connectRouter(history)(nextRootReducer));
     });
   }
 

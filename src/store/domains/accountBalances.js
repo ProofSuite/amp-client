@@ -1,8 +1,8 @@
 // @flow
-
 import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances';
 // eslint-disable-next-line
 const initialState = {};
+const MAX_ALLOWANCE = '115792089237316195423570985008687907853269984665640564039457.584007913129639935';
 
 export function initialized() {
   const initialState = {};
@@ -63,19 +63,6 @@ export function allowancesUpdated(allowances: AccountAllowances) {
   return event;
 }
 
-export function singleAllowanceUpdated(payload: Object) {
-  const { allowance, tokenSymbol } = payload;
-  const event = (state: AccountBalancesState) => {
-    console.log(state);
-    state[tokenSymbol].allowance = allowance;
-    return {
-      ...state,
-    };
-  };
-
-  return event;
-}
-
 export function unsubscribed(symbol: string) {
   const event = (state: AccountBalancesState) => ({
     ...state,
@@ -101,6 +88,9 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     etherBalance() {
       return state['ETH'] ? state['ETH'].balance : null;
     },
+    tokenBalance(symbol: string) {
+      return state[symbol] ? state[symbol].balance : null;
+    },
     get(symbol: string) {
       return state[symbol] ? state[symbol].balance : null;
     },
@@ -108,7 +98,30 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].subscribed : false;
     },
     isAllowed(symbol: string) {
-      return state[symbol] ? parseFloat(state[symbol].allowance) > 0 : false;
+      return state[symbol] ? state[symbol].allowance === MAX_ALLOWANCE : false;
+    },
+    isAllowancePending(symbol: string) {
+      return state[symbol] ? state[symbol].allowance === 'pending' : false;
+    },
+    getBalancesAndAllowances(tokens: Array<Object>) {
+      return (tokens: any).map(token => {
+        return {
+          ...token,
+          balance: state[token.symbol] ? state[token.symbol].balance : null,
+          allowed: state[token.symbol] && state[token.symbol].allowance === MAX_ALLOWANCE,
+          allowancePending: state[token.symbol] && state[token.symbol].allowance === 'pending',
+        };
+      });
+    },
+    depositTableData() {
+      return (Object.values(state): any).map(item => {
+        return {
+          symbol: item.symbol,
+          balance: item.balance,
+          allowed: item.allowance === MAX_ALLOWANCE,
+          allowancePending: item.allowance === 'pending',
+        };
+      });
     },
     balancesArray() {
       return (Object.values(state): any).map(item => {
