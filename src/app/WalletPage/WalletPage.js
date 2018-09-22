@@ -1,11 +1,24 @@
+// @flow
 import React from 'react';
 import WalletPageRenderer from './WalletPageRenderer';
 import { Redirect } from 'react-router-dom';
 
+import type { TokenData } from '../../types/tokens';
+
 type Props = {
   loading: boolean,
+  provider: string,
+  pvtKeyLocked: boolean,
+  accountAddress: string,
+  accountPrivateKey: string,
+  etherBalance: string,
+  gasPrice: number,
+  gas: number,
+  authenticated: boolean,
   queryAccountData: void => void,
-  depositTableData: Array<Object>,
+  depositTableData: Array<TokenData>,
+  redirectToTradingPage: string => void,
+  toggleAllowance: string => void,
 };
 
 class WalletPage extends React.PureComponent<Props> {
@@ -13,8 +26,8 @@ class WalletPage extends React.PureComponent<Props> {
     if (this.props.authenticated) {
       this.props.queryAccountData();
     }
-    // this.props.removeNotification(1);
   }
+
   render() {
     const {
       loading,
@@ -28,11 +41,10 @@ class WalletPage extends React.PureComponent<Props> {
       gasPrice,
       gas,
       toggleAllowance,
+      redirectToTradingPage,
     } = this.props;
 
-    if (!authenticated) {
-      return <Redirect to="/login" />;
-    }
+    if (!authenticated) return <Redirect to="/login" />;
 
     return (
       <WalletPageRenderer
@@ -46,6 +58,7 @@ class WalletPage extends React.PureComponent<Props> {
         accountAddress={accountAddress}
         depositTableData={depositTableData}
         toggleAllowance={toggleAllowance}
+        redirectToTradingPage={redirectToTradingPage}
       />
     );
   }

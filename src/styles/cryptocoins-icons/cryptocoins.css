@@ -9,6 +9,7 @@
 /* .cc:before { */
 .cc::before {
   font-family: 'cryptocoins';
+  font-size: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;
@@ -17,6 +18,10 @@
   /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
   text-decoration: none;
   text-transform: none;
+}
+
+.cc {
+  padding-right: 3px;
 }
 
 .cc.ADA-alt::before {

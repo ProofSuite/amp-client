@@ -7,11 +7,11 @@ export type Token = {
 };
 
 export type TokenPair = {
-  pair: string,
-  baseTokenSymbol: string,
-  quoteTokenSymbol: string,
-  baseTokenAddress: string,
-  quoteTokenAddress: string,
+  +pair: string,
+  +baseTokenSymbol: string,
+  +quoteTokenSymbol: string,
+  +baseTokenAddress: string,
+  +quoteTokenAddress: string,
 };
 
 export type TokenPairState = {
@@ -36,6 +36,13 @@ export type TokenPairState = {
   },
   +favorites: Array<string>,
   +currentPair: string,
+};
+
+export type TokenData = {
+  address: string,
+  symbol: string,
+  balance: string,
+  allowance: string,
 };
 
 export type TokenPairData = {

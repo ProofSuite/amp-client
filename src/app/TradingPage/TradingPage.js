@@ -10,13 +10,13 @@ import OrderBook from '../../components/OrderBook';
 import { Grid, Cell } from 'styled-css-grid';
 
 type Props = {
-  queryDefaultData: ({ code: string }) => void,
+  queryDefaultData: () => void,
 };
 type State = {};
 
 export default class TradingPage extends React.PureComponent<Props, State> {
   componentDidMount() {
-    this.props.queryDefaultData({ code: 'WETH_DAI' });
+    this.props.queryDefaultData();
   }
 
   render() {
