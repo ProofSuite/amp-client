@@ -3,9 +3,9 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
 import connect, { mapStateToProps } from './connect';
-import etherTxModel from '../../store/models/etherTx';
+import getSendEtherFormSelector from '../../store/models/sendEtherForm';
 
-jest.mock('../../store/models/etherTx');
+jest.mock('../../store/models/sendEtherForm');
 
 describe('mapStateToProps(state, props)', () => {
   let getState;
@@ -15,42 +15,54 @@ describe('mapStateToProps(state, props)', () => {
 
     getState = jest.fn(() => ({
       loading: 'test loading',
-      status: 'test incomplete',
+      status: 'test status',
       statusMessage: 'test statusMessage',
       gas: 'test gas',
       gasPrice: 'test gasPrice',
       hash: 'test hash',
       receipt: 'test receipt',
+      tokens: 'test tokens',
     }));
-    etherTxModel.mockReturnValue({ getState });
+
+    getSendEtherFormSelector.mockReturnValue({
+      isLoading: jest.fn(() => 'test loading'),
+      getStatus: jest.fn(() => 'test status'),
+      getStatusMessage: jest.fn(() => 'test statusMessage'),
+      getGas: jest.fn(() => 'test gas'),
+      getGasPrice: jest.fn(() => 'test gasPrice'),
+      getHash: jest.fn(() => 'test hash'),
+      getReceipt: jest.fn(() => 'test receipt'),
+      tokens: jest.fn(() => 'test tokens'),
+    });
   });
 
   it('returns component SendEtherForm props as expected', () => {
     const state = {};
-    const props = null;
+    const props = { token: { symbol: 'PRFT', address: '0x1' } };
     const result = mapStateToProps(state, props);
     const expected = {
+      token: { symbol: 'PRFT', address: '0x1' },
       loading: 'test loading',
-      status: 'test incomplete',
+      status: 'test status',
       statusMessage: 'test statusMessage',
       gas: 'test gas',
       gasPrice: 'test gasPrice',
       hash: 'test hash',
       receipt: 'test receipt',
+      tokens: 'test tokens',
     };
 
     expect(result).toBeDefined();
     expect(result).toEqual(expected);
   });
 
-  it('calls etherTxModel(state) and then ', () => {
+  it('calls sendEtherFormSelector(state) and then ', () => {
     const state = {};
-    const props = null;
+    const props = { token: { symbol: 'PRFT', address: '0x1' } };
     mapStateToProps(state, props);
 
-    expect(etherTxModel).toHaveBeenCalledTimes(1);
-    expect(etherTxModel).toBeCalledWith(state);
-    expect(getState).toHaveBeenCalledTimes(1);
+    expect(getSendEtherFormSelector).toHaveBeenCalledTimes(1);
+    expect(getSendEtherFormSelector).toBeCalledWith(state);
   });
 });
 
@@ -73,23 +85,3 @@ describe('connect(Component)', () => {
     );
   });
 });
-
-// import { connect } from 'react-redux';
-// import etherTxModel, { validateEtherTx, sendEtherTx } from '../../store/models/etherTx';
-// import { validateTransferTokensTx, sendTransferTokensTx } from '../../store/models/etherTokensTx';
-
-// const mapStateToProps = state => {
-//   return etherTxModel(state).getState();
-// };
-
-// const mapDispatchToProps = {
-//   validateEtherTx,
-//   sendEtherTx,
-//   validateTransferTokensTx,
-//   sendTransferTokensTx,
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// );
