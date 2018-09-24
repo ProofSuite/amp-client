@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { withRouter } from 'react-router-dom';
 import configureStore from './store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
 import history from './store/history';
@@ -22,12 +23,12 @@ const render = Component => {
   );
 };
 
-render(App);
+render(withRouter(App));
 
 if (module.hot) {
   module.hot.accept('./app', () => {
     const NextApp = require('./app').default;
-    render(NextApp);
+    render(withRouter(NextApp));
   });
 }
 

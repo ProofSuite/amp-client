@@ -13,6 +13,21 @@ import TradingPage from './TradingPage';
 import '../styles/css/index.css';
 
 function App(props) {
+  const { pathname } = props.location;
+
+  if (pathname === '/') {
+    return (
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/wallet" component={WalletPage} />
+        <Route path="/exchange" component={ExchangePage} />
+        <Route path="/settings" component={SettingsPage} />
+        <Route path="/logout" component={LogoutPage} />
+        <Route path="/trade" component={TradingPage} />
+      </Switch>
+    );
+  }
   return (
     <Layout>
       <Switch>

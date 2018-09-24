@@ -1,0 +1,628 @@
+@import "vars";
+
+
+.landing-page {
+
+  .head-wrap {
+    overflow: hidden;
+    position: relative;
+    .background {
+      min-height: 550px;
+      padding-bottom: 400px;
+      background-image: url("../../images/candles-bg.jpg") ;
+      background-position: center;
+      background-size: cover;
+      transition: linear 300ms;
+    }
+    &:hover .background {
+      transform: scale(1.05);
+    }
+    &::after {
+      width: 120%;
+      height: 160px;
+      left: -10%;
+      background: $white;
+      -webkit-transform: rotate(-4.5deg);
+      -ms-transform: rotate(-4.5deg);
+      transform: rotate(-4.5deg);
+      content: "";
+      position: absolute;
+      bottom: -80px;
+    }
+  }
+  .p-features {
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0px 210px;
+    &::after {
+      width: 120%;
+      height: 160px;
+      left: -10%;
+      background: $light-gray5;
+      -webkit-transform: rotate(-4.5deg);
+      -ms-transform: rotate(-4.5deg);
+      transform: rotate(-4.5deg);
+      content: "";
+      position: absolute;
+      bottom: -80px;
+    }
+  }
+  .e-tokens {
+    background-color: $light-gray5;
+    padding: 30px 0;
+  }
+  .d-financial {
+    padding: 160px 0px 210px;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+      width: 120%;
+      height: 160px;
+      left: -10%;
+      background: $light-gray5;
+      -webkit-transform: rotate(-4.5deg);
+      -ms-transform: rotate(-4.5deg);
+      transform: rotate(-4.5deg);
+      content: "";
+      position: absolute;
+      bottom: -75px;
+    }
+    &::before {
+      width: 120%;
+      height: 160px;
+      left: -10%;
+      background: $light-gray5;
+      -webkit-transform: rotate(-4.5deg);
+      -ms-transform: rotate(-4.5deg);
+      transform: rotate(-4.5deg);
+      content: "";
+      position: absolute;
+      top: -80px;
+    }
+  }
+
+  .stats {
+    overflow: hidden;
+    position: relative;
+    background: $light-gray5;
+    padding: 0;
+    .container {
+      display: flex;
+      justify-content: space-between;
+      .box {
+        background: $white;
+        box-shadow: 0px 2px 4px 2px #eeeeeea6;
+        border-radius: 100%;
+        width: 170px;
+        height: 170px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        h1, p {
+          text-align: center;
+        }
+        h1 {
+          //border: 1px solid #48aff0;
+          //padding-top: 46px;
+          //height: 130px;
+          //width: 130px;
+          //border-radius: 100%;
+          font-size: 50px;
+          color: $active;
+          align-items: center;
+          margin-bottom: 10px;
+          margin-top: 0px;
+        }
+        p {
+          color: $black;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  .upc-token {
+    overflow: hidden;
+    position: relative;
+    padding: 190px 0;
+    &::before {
+      width: 120%;
+      height: 160px;
+      left: -10%;
+      background: $light-gray5;
+      -webkit-transform: rotate(-4.5deg);
+      -ms-transform: rotate(-4.5deg);
+      transform: rotate(-4.5deg);
+      content: "";
+      position: absolute;
+      top: -80px;
+    }
+    &::after {
+      width: 120%;
+      height: 160px;
+      left: -10%;
+      background: $dark-gray4;
+      -webkit-transform: rotate(-4.5deg);
+      -ms-transform: rotate(-4.5deg);
+      transform: rotate(-4.5deg);
+      content: "";
+      position: absolute;
+      bottom: -80px;
+    }
+  }
+
+
+  svg {
+    width: 60px;
+    height: 60px;
+  }
+  p {
+    line-height: 1.4em;
+    text-align: justify;
+  }
+  ol, ul {
+    list-style: none;
+  }
+  ul li {
+    margin-bottom: 4px;
+  }
+  a {
+    text-decoration: none;
+  }
+  img {
+    max-width: 100%
+  }
+  button {
+    background-color: $blue5;
+    border: 0;
+    color: $white;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 13px 30px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  section {
+    background: $white;
+    padding: 50px 0;
+  }
+  .grid-25 {
+    width: 25%;
+    float: left;
+    padding: 0 15px;
+  }
+  .grid-33 {
+    width: 33.33333%;
+    float: left;
+    padding: 0 15px;
+  }
+  .grid-50 {
+    width: 49%;
+    float: left;
+    padding: 0 15px;
+  }
+  .grid-60 {
+    width: 60%;
+    float: left;
+    padding: 0 15px;
+  }
+  .grid-75 {
+    width: 75%;
+    float: left;
+    padding: 0 15px;
+  }
+  .grid-100 {
+    width: 100%;
+    float: left;
+    padding: 0 15px;
+  }
+  .divider-t-10 {
+    margin-top: 10px;
+  }
+  .divider-t-20 {
+    margin-top: 20px;
+  }
+  .divider-t-30 {
+    margin-top: 30px;
+  }
+  .divider-t-40 {
+    margin-top: 40px;
+  }
+  .divider-t-50 {
+    margin-top: 50px;
+  }
+  .divider-t-60 {
+    margin-top: 60px;
+  }
+  .divider-b-10 {
+    margin-bottom: 10px;
+  }
+  .divider-b-20 {
+    margin-bottom: 20px;
+  }
+  .divider-b-30 {
+    margin-bottom: 30px;
+  }
+  .divider-b-40 {
+    margin-bottom: 40px;
+  }
+  .divider-b-50 {
+    margin-bottom: 50px;
+  }
+  .divider-b-60 {
+    margin-bottom: 60px;
+  }
+  /** Mobile Bar **/
+
+  .toggle-nav {
+    display: none;
+  }
+  .mobile-bar {
+    z-index: 5;
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background-color: $body-background;
+    label {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      cursor: pointer;
+      -webkit-transition: -webkit-transform 500ms ease;
+      transition: -webkit-transform 500ms ease;
+      transition: transform 500ms ease;
+      transition: transform 500ms ease, -webkit-transform 500ms ease;
+    }
+    label:after {
+      content: "\2630";
+      font-size: 2em;
+      color: #eee;
+      line-height: 60px;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-transition: color 500ms ease;
+      transition: color 500ms ease;
+    }
+  }
+  /** Slide-Out Effect **/
+
+  .toggle-nav:checked ~ .push-menu { /** when the checkbox is checked the container slide-out **/
+    -webkit-transform: translateX(50%);
+    transform: translateX(50%);
+    -webkit-transform: translate3d(50%, 0, 0);
+    transform: translate3d(50%, 0, 0);
+  }
+  /** Label Effect (Menu Icon) **/
+
+  .toggle-nav:checked + .mobile-bar label {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  .toggle-nav:checked + .mobile-bar label:after {
+    color: $white;
+  }
+  /** Container **/
+
+  .container {
+    position: relative;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0px auto;
+    padding: 20px;
+  }
+  .push-menu {
+    -webkit-transition: -webkit-transform 500ms ease;
+    transition: -webkit-transform 500ms ease;
+    transition: transform 500ms ease;
+    transition: transform 500ms ease, -webkit-transform 500ms ease;
+  }
+  /** Header **/
+
+  .header {
+    position: absolute;
+    left: -50%;
+    width: 50%;
+    height: 100vh;
+    top: 0;
+    border-right: 1px solid #eeeeee2e;
+    background: transparent;
+    ul {
+      font-size: 1.2em;
+      font-weight: 500;
+      text-align: center;
+      margin: 0;
+      padding: 20px 0;
+    }
+    a {
+      display: block;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      color: #eee;
+      -webkit-transition: background-color 300ms;
+      transition: background-color 300ms;
+      font-family: 'Roboto', sans-serif;
+      &:hover {
+        font-weight: bold;
+        color: $active !important;
+      }
+    }
+    nav {
+      width: 60%;
+      float: left;
+    }
+    .logo {
+      width: 20%;
+      float: left;
+      padding: 20px 0;
+      a {
+        font-weight: 500;
+      }
+    }
+    .login {
+      width: 20%;
+      float: left;
+      padding: 20px 0;
+      text-align: right;
+      a {
+        font-weight: 500
+      }
+    }
+  }
+  .display-none {
+    display: block;
+  }
+  .display-block {
+    display: none;
+  }
+
+  a.head-sign-up {
+    border: 1px solid $white !important;
+    border-radius: 6px;
+  }
+  .clear-fix {
+    clear: both;
+  }
+  .head-banner {
+    text-align: center;
+    padding-top: 8rem;
+    color: $white;
+    p {
+      text-align: center;
+    }
+  }
+  h1 {
+    font-size: 36px;
+    margin-bottom: 1rem
+  }
+  form.email-input-form input[type="email"], form.email-input-form input[type="text"] {
+    width: 20%;
+  }
+  input[type="email"], input[type="text"] {
+    font-size: 16px;
+    font-weight: 400;
+    padding: 12px 10px;
+    border-radius: 4px;
+    border: 0;
+  }
+  form.email-input-form {
+    margin-top: 30px;
+  }
+  form input {
+    margin-right: .5em;
+  }
+  .text-center {
+    text-align: center
+  }
+  .learn-more {
+    color: $blue5;
+    font-weight: 700;
+  }
+  .bordered-icon {
+    border: 1px solid $blue5;
+    width: 100px;
+    margin: 0px auto;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .learn-more:hover {
+    border-bottom: 1px solid $blue5
+  }
+  .text-justify {
+    text-align: justify
+  }
+  section.news-letter {
+    background-color: $dark-gray4;
+    border-bottom: 1px solid $white;
+  }
+  section.news-letter input[type="email"] {
+    width: 30%;
+  }
+  .color-white {
+    color: $white;
+  }
+  .footer {
+    padding: 50px 0;
+    background-color: $dark-gray4;
+    color: $white;
+  }
+  .footer a {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .footer a:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  .logo a {
+    color: $white;
+    font-weight: 700;
+  }
+  .footer small {
+    display: block;
+    margin-top: 30px;
+  }
+  .grid-left {
+    width: 14%;
+    float: left;
+    margin-right: 1%;
+  }
+  .grid-right {
+    width: 85%;
+    float: left
+  }
+
+  /** Viewport >= 862 **/
+
+  @media (min-width: 862px) {
+    .display-block {
+      display: block;
+    }
+    .display-none {
+      display: none;
+    }
+    .mobile-bar {
+      display: none;
+    }
+    .toggle-nav:checked ~ .push-menu {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+    }
+    .push-menu {
+      -webkit-transition: none;
+      transition: none;
+    }
+    .header {
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: auto;
+    }
+    .header ul {
+      font-size: 1.1em;
+    }
+    .header li, .header a {
+      display: inline-block;
+    }
+    .header li {
+      margin-right: -6px;
+    }
+    .header a {
+      padding: 10px 15px;
+      border-bottom: none;
+    }
+  }
+
+  @media (max-width: 862px) {
+    .logo {
+      padding: 20px
+    }
+    .head-banner {
+      padding-top: 7rem;
+    }
+    input[type="email"], input[type="text"] {
+      width: 30%;
+    }
+    .header nav {
+      width: 100%;
+      float: left;
+    }
+    .header a {
+      font-size: 16px;
+      padding: 10px 15px;
+      border-bottom: 1px solid #eeeeee2e;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .grid-25 {
+      width: 100%;
+      float: none;
+      padding: 0 15px;
+    }
+    .grid-33 {
+      width: 100%;
+      float: none;
+      padding: 0 15px;
+      margin-bottom: 25px;
+    }
+    .grid-50 {
+      width: 100%;
+      float: none;
+      padding: 0 15px;
+      margin-bottom: 35px;
+    }
+    h1 br {
+      display: none;
+    }
+    .grid-60 {
+      width: 100%;
+      float: none;
+      padding: 0 15px;
+    }
+    .grid-75 {
+      width: 100%;
+      float: none;
+      padding: 0 15px;
+    }
+    section.news-letter input[type="email"] {
+      width: 70%;
+      margin-bottom: 20px;
+    }
+    form.email-input-form input[type="email"], form.email-input-form input[type="text"] {
+      width: 50%;
+      margin-bottom: 20px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .stats {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        min-height: 590px;
+        padding: 20px;
+      }
+    }
+  }
+  @media (max-width: 400px) {
+    form.email-input-form input[type="email"], form.email-input-form input[type="text"] {
+      width: 90%;
+      margin-bottom: 20px;
+      margin-right: 0;
+    }
+    button {
+      width: 90%;
+    }
+    section.news-letter input[type="email"] {
+      width: 90%;
+      margin-bottom: 20px;
+    }
+    .container {
+      padding: 0;
+    }
+    .grid-right {
+      width: 80%;
+    }
+    .grid-25 {
+      margin-bottom: 30px;
+    }
+    .grid-25.number a {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .p-features {
+      h2 {
+        margin-top: 0;
+      }
+    }
+    svg {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
