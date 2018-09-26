@@ -1,9 +1,9 @@
 // @flow
-import React from 'react';
-import WalletPageRenderer from './WalletPageRenderer';
-import { Redirect } from 'react-router-dom';
+import React from 'react'
+import WalletPageRenderer from './WalletPageRenderer'
+import { Redirect } from 'react-router-dom'
 
-import type { TokenData } from '../../types/tokens';
+import type { TokenData } from '../../types/tokens'
 
 type Props = {
   loading: boolean,
@@ -18,14 +18,15 @@ type Props = {
   queryAccountData: void => void,
   depositTableData: Array<TokenData>,
   redirectToTradingPage: string => void,
-  toggleAllowance: string => void,
-};
+  openConnection: void => void,
+  toggleAllowance: string => void
+}
 
 class WalletPage extends React.PureComponent<Props> {
   componentDidMount() {
-    if (this.props.authenticated) {
-      this.props.queryAccountData();
-    }
+    const { authenticated, queryAccountData } = this.props
+
+    if (authenticated) queryAccountData()
   }
 
   render() {
@@ -41,10 +42,10 @@ class WalletPage extends React.PureComponent<Props> {
       gasPrice,
       gas,
       toggleAllowance,
-      redirectToTradingPage,
-    } = this.props;
+      redirectToTradingPage
+    } = this.props
 
-    if (!authenticated) return <Redirect to="/login" />;
+    if (!authenticated) return <Redirect to="/login" />
 
     return (
       <WalletPageRenderer
@@ -60,8 +61,8 @@ class WalletPage extends React.PureComponent<Props> {
         toggleAllowance={toggleAllowance}
         redirectToTradingPage={redirectToTradingPage}
       />
-    );
+    )
   }
 }
 
-export default WalletPage;
+export default WalletPage

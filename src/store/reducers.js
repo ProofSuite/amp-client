@@ -1,326 +1,328 @@
 // @flow
-import createReducer from './createReducer';
-import etherBalanceActionTypes from './actions/etherBalance';
-import accountBalancesActionTypes from './actions/accountBalances';
-import sendEtherFormActionTypes from './actions/sendEtherForm';
-import orderFromActionTypes from './actions/orderForm';
-import ohlcvActionTypes from './actions/ohlcv';
-import tokenSearcherActionTypes from './actions/tokenSearcher';
-import tokensActionTypes from './actions/tokens';
-import accountActionTypes from './actions/account';
-import depositFormActionTypes from './actions/depositForm';
-import settingsActionTypes from './actions/settings';
-import createWalletActionTypes from './actions/createWallet';
-import walletPageActionTypes from './actions/walletPage';
-import tradingPageActionTypes from './actions/tradingPage';
-import loginPageActionTypes from './actions/loginPage';
-import logoutPageActionTypes from './actions/logoutPage';
-import signerSettingsActionTypes from './actions/signerSettings';
-import appActionTypes from './actions/app';
+import createReducer from './createReducer'
+import etherBalanceActionTypes from './actions/etherBalance'
+import accountBalancesActionTypes from './actions/accountBalances'
+import sendEtherFormActionTypes from './actions/sendEtherForm'
+import orderFromActionTypes from './actions/orderForm'
+import ohlcvActionTypes from './actions/ohlcv'
+import tokenSearcherActionTypes from './actions/tokenSearcher'
+import tokensActionTypes from './actions/tokens'
+import accountActionTypes from './actions/account'
+import depositFormActionTypes from './actions/depositForm'
+import settingsActionTypes from './actions/settings'
+import createWalletActionTypes from './actions/createWallet'
+import walletPageActionTypes from './actions/walletPage'
+import tradingPageActionTypes from './actions/tradingPage'
+import socketManagerActionTypes from './actions/socketManager'
+import loginPageActionTypes from './actions/loginPage'
+import logoutPageActionTypes from './actions/logoutPage'
+import signerSettingsActionTypes from './actions/signerSettings'
+import appActionTypes from './actions/app'
 
-import * as etherBalanceEvents from './domains/etherBalance';
-import * as accountBalancesEvents from './domains/accountBalances';
-import * as sendEtherFormEvents from './domains/sendEtherForm';
-import * as loginPageEvents from './domains/loginPage';
-import * as orderBookEvents from './domains/orderBook';
-import * as tradeEvents from './domains/trades';
-import * as orderEvents from './domains/orders';
-import * as orderFormEvents from './domains/orderForm';
-import * as ohlcvEvents from './domains/ohlcv';
-import * as tokensEvents from './domains/tokens';
-import * as accountEvents from './domains/account';
-import * as depositFormEvents from './domains/depositForm';
-import * as settingsEvents from './domains/settings';
-import * as tokenPairsEvents from './domains/tokenPairs';
-import * as signerEvents from './domains/signer';
-import * as walletsEvents from './domains/wallets';
-import * as notificationEvents from './domains/notifications';
+import * as etherBalanceEvents from './domains/etherBalance'
+import * as accountBalancesEvents from './domains/accountBalances'
+import * as sendEtherFormEvents from './domains/sendEtherForm'
+import * as loginPageEvents from './domains/loginPage'
+import * as orderBookEvents from './domains/orderBook'
+import * as tradeEvents from './domains/trades'
+import * as orderEvents from './domains/orders'
+import * as orderFormEvents from './domains/orderForm'
+import * as ohlcvEvents from './domains/ohlcv'
+import * as tokensEvents from './domains/tokens'
+import * as accountEvents from './domains/account'
+import * as depositFormEvents from './domains/depositForm'
+import * as settingsEvents from './domains/settings'
+import * as tokenPairsEvents from './domains/tokenPairs'
+import * as signerEvents from './domains/signer'
+import * as walletsEvents from './domains/wallets'
+import * as notificationEvents from './domains/notifications'
 
 export const loginPage = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case loginPageActionTypes.requestLogin:
-      return loginPageEvents.loginRequested();
+      return loginPageEvents.loginRequested()
     case loginPageActionTypes.loginError:
-      return loginPageEvents.loginFailed(payload.error);
+      return loginPageEvents.loginFailed(payload.error)
     case loginPageActionTypes.loginWithMetamask:
-      return loginPageEvents.authenticated();
+      return loginPageEvents.authenticated()
     case loginPageActionTypes.loginWithWallet:
-      return loginPageEvents.authenticated();
+      return loginPageEvents.authenticated()
     default:
-      return loginPageEvents.initialized();
+      return loginPageEvents.initialized()
   }
-});
+})
 
 export const accountBalances = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case accountBalancesActionTypes.subscribeBalance:
-      return accountBalancesEvents.subscribed(payload.symbol);
+      return accountBalancesEvents.subscribed(payload.symbol)
     case accountBalancesActionTypes.unsubscribeBalance:
-      return accountBalancesEvents.unsubscribed(payload.symbol);
+      return accountBalancesEvents.unsubscribed(payload.symbol)
     case accountBalancesActionTypes.updateBalance:
-      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }]);
+      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }])
     case accountBalancesActionTypes.updateBalances:
-      return accountBalancesEvents.updated(payload.balances);
+      return accountBalancesEvents.updated(payload.balances)
     case accountBalancesActionTypes.clearBalances:
-      return accountBalancesEvents.cleared();
+      return accountBalancesEvents.cleared()
     case depositFormActionTypes.subscribeBalance:
-      return accountBalancesEvents.subscribed(payload.symbol);
+      return accountBalancesEvents.subscribed(payload.symbol)
     case depositFormActionTypes.unsubscribeBalance:
-      return accountBalancesEvents.unsubscribed(payload.symbol);
+      return accountBalancesEvents.unsubscribed(payload.symbol)
     case depositFormActionTypes.updateBalance:
-      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }]);
+      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }])
     case depositFormActionTypes.updateBalances:
-      return accountBalancesEvents.updated(payload.balances);
+      return accountBalancesEvents.updated(payload.balances)
     case walletPageActionTypes.updateBalances:
-      return accountBalancesEvents.updated(payload.balances);
+      return accountBalancesEvents.updated(payload.balances)
     case walletPageActionTypes.updateBalance:
-      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }]);
+      return accountBalancesEvents.updated([{ symbol: payload.symbol, balance: payload.balance }])
     case walletPageActionTypes.updateAllowances:
-      return accountBalancesEvents.allowancesUpdated(payload.allowances);
+      return accountBalancesEvents.allowancesUpdated(payload.allowances)
     case walletPageActionTypes.updateAllowance:
-      return accountBalancesEvents.allowancesUpdated([{ symbol: payload.symbol, allowance: payload.allowance }]);
+      return accountBalancesEvents.allowancesUpdated([{ symbol: payload.symbol, allowance: payload.allowance }])
     default:
-      return accountBalancesEvents.initialized();
+      return accountBalancesEvents.initialized()
   }
-});
+})
 
 export const signer = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case signerSettingsActionTypes.requestSigner:
-      return signerEvents.signerRequested();
+      return signerEvents.signerRequested()
     case signerSettingsActionTypes.updateSigner:
-      return signerEvents.signerUpdated(payload.params);
+      return signerEvents.signerUpdated(payload.params)
     case signerSettingsActionTypes.error:
-      return signerEvents.signerError(payload.message);
+      return signerEvents.signerError(payload.message)
     default:
-      return signerEvents.initialized();
+      return signerEvents.initialized()
   }
-});
+})
 
 export const sendEtherForm = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case sendEtherFormActionTypes.txError:
-      return sendEtherFormEvents.txError(payload.status, payload.statusMessage);
+      return sendEtherFormEvents.txError(payload.status, payload.statusMessage)
     case sendEtherFormActionTypes.validateTx:
-      return sendEtherFormEvents.txValidated(payload.statusMessage, payload.gas);
+      return sendEtherFormEvents.txValidated(payload.statusMessage, payload.gas)
     case sendEtherFormActionTypes.invalidateTx:
-      return sendEtherFormEvents.txInvalidated(payload.statusMessage);
+      return sendEtherFormEvents.txInvalidated(payload.statusMessage)
     case sendEtherFormActionTypes.revertTx:
-      return sendEtherFormEvents.txReverted(payload.statusMessage, payload.receipt);
+      return sendEtherFormEvents.txReverted(payload.statusMessage, payload.receipt)
     case sendEtherFormActionTypes.sendTx:
-      return sendEtherFormEvents.txSent(payload.hash);
+      return sendEtherFormEvents.txSent(payload.hash)
     case sendEtherFormActionTypes.confirmTx:
-      return sendEtherFormEvents.txConfirmed(payload.receipt);
+      return sendEtherFormEvents.txConfirmed(payload.receipt)
     default:
-      return sendEtherFormEvents.initialized();
+      return sendEtherFormEvents.initialized()
   }
-});
+})
 
 export const ohlcv = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case ohlcvActionTypes.saveData:
-      return ohlcvEvents.savedOHLCVData(payload.data);
+      return ohlcvEvents.savedOHLCVData(payload.data)
     case ohlcvActionTypes.saveDuration:
-      return ohlcvEvents.savedDuration(payload.data);
+      return ohlcvEvents.savedDuration(payload.data)
     case ohlcvActionTypes.saveTimeSpan:
-      return ohlcvEvents.savedTimeSpan(payload.data);
+      return ohlcvEvents.savedTimeSpan(payload.data)
     case ohlcvActionTypes.saveNoOfCandles:
-      return ohlcvEvents.savedNoOfCandles(payload);
+      return ohlcvEvents.savedNoOfCandles(payload)
     case tokenSearcherActionTypes.updateCurrentPair:
-      return ohlcvEvents.ohlcvReset();
+      return ohlcvEvents.ohlcvReset()
     default:
-      return ohlcvEvents.initialized();
+      return ohlcvEvents.initialized()
   }
-});
+})
 
 export const trades = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case tradingPageActionTypes.updateTradesTable:
-      return tradeEvents.tradesUpdated(payload.trades);
     case tokenSearcherActionTypes.updateTradesTable:
-      return tradeEvents.tradesUpdated(payload.trades);
+    case socketManagerActionTypes.updateTradesTable:
+      return tradeEvents.tradesUpdated(payload.trades)
     case tokenSearcherActionTypes.updateCurrentPair:
-      return tradeEvents.tradesReset();
+      return tradeEvents.tradesReset()
     default:
-      return tradeEvents.initialized();
+      return tradeEvents.initialized()
   }
-});
+})
 
 export const orderBook = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case tradingPageActionTypes.updateOrderBook:
-      return orderBookEvents.orderBookUpdated(payload.bids, payload.asks);
     case tokenSearcherActionTypes.updateOrderBook:
-      return orderBookEvents.orderBookUpdated(payload.bids, payload.asks);
+    case socketManagerActionTypes.updateOrderBook:
+      return orderBookEvents.orderBookUpdated(payload.bids, payload.asks)
     case tokenSearcherActionTypes.updateCurrentPair:
-      return orderBookEvents.orderBookReset();
+      return orderBookEvents.orderBookReset()
     default:
-      return orderBookEvents.initialized();
+      return orderBookEvents.initialized()
   }
-});
+})
 
 export const orders = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case tradingPageActionTypes.updateOrdersTable:
-      return orderEvents.ordersUpdated(payload.orders);
+    case socketManagerActionTypes.updateOrdersTable:
+      return orderEvents.ordersUpdated(payload.orders)
     default:
-      return orderEvents.initialized();
+      return orderEvents.initialized()
   }
-});
+})
 
 export const orderForm = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case orderFromActionTypes.saveData:
-      return orderFormEvents.dataSaved(payload.data);
+      return orderFormEvents.dataSaved(payload.data)
 
     default:
-      return orderFormEvents.initialized();
+      return orderFormEvents.initialized()
   }
-});
+})
 
 export const tokens = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case tokensActionTypes.updateTokens:
-      return tokensEvents.tokenUpdated(payload.symbol, payload.address);
+      return tokensEvents.tokenUpdated(payload.symbol, payload.address)
     case tokensActionTypes.removeTokens:
-      return tokensEvents.tokenRemoved(payload.symbol);
+      return tokensEvents.tokenRemoved(payload.symbol)
     default:
-      return tokensEvents.initialized();
+      return tokensEvents.initialized()
   }
-});
+})
 
 export const tokenPairs = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case tradingPageActionTypes.updateCurrentPair:
-      return tokenPairsEvents.currentPairUpdated(payload.pair);
+      return tokenPairsEvents.currentPairUpdated(payload.pair)
     case walletPageActionTypes.updateCurrentPair:
-      return tokenPairsEvents.currentPairUpdated(payload.pair);
+      return tokenPairsEvents.currentPairUpdated(payload.pair)
     case tokensActionTypes.updateTokens:
-      return tokenPairsEvents.tokenPairUpdated(payload);
+      return tokenPairsEvents.tokenPairUpdated(payload)
     case tokensActionTypes.removeTokens:
-      return tokenPairsEvents.tokenPairRemoved(payload);
+      return tokenPairsEvents.tokenPairRemoved(payload)
     case tokenSearcherActionTypes.updateFavorite:
-      return tokenPairsEvents.tokenPairFavorited(payload.code, payload.favorite);
+      return tokenPairsEvents.tokenPairFavorited(payload.code, payload.favorite)
     case tokenSearcherActionTypes.updateCurrentPair:
-      return tokenPairsEvents.currentPairUpdated(payload.pair);
+      return tokenPairsEvents.currentPairUpdated(payload.pair)
     case tradingPageActionTypes.updateTokenPairData:
-      return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData);
+      return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
     default:
-      return tokenPairsEvents.initialized();
+      return tokenPairsEvents.initialized()
   }
-});
+})
 
 export const account = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case accountActionTypes.updateAccount:
-      return accountEvents.accountUpdated(payload.address, '');
+      return accountEvents.accountUpdated(payload.address, '')
     case signerSettingsActionTypes.updateSigner:
-      return accountEvents.accountUpdated(payload.address, '');
+      return accountEvents.accountUpdated(payload.address, '')
     case loginPageActionTypes.loginWithMetamask:
-      return accountEvents.accountUpdated(payload.address, '');
+      return accountEvents.accountUpdated(payload.address, '')
     case loginPageActionTypes.loginWithWallet:
-      return accountEvents.accountUpdated(payload.address, payload.privateKey);
+      return accountEvents.accountUpdated(payload.address, payload.privateKey)
     case logoutPageActionTypes.logout:
-      return accountEvents.accountRemoved();
+      return accountEvents.accountRemoved()
     case accountActionTypes.updateCurrentBlock:
-      return accountEvents.currentBlockUpdated(payload.currentBlock);
+      return accountEvents.currentBlockUpdated(payload.currentBlock)
     default:
-      return accountEvents.initialized();
+      return accountEvents.initialized()
   }
-});
+})
 
 export const depositForm = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case depositFormActionTypes.deposit:
-      return depositFormEvents.deposited();
+      return depositFormEvents.deposited()
     case depositFormActionTypes.confirm:
-      return depositFormEvents.confirmed();
+      return depositFormEvents.confirmed()
     case depositFormActionTypes.sendConvertTx:
-      return depositFormEvents.convertTxSent(payload.hash);
+      return depositFormEvents.convertTxSent(payload.hash)
     case depositFormActionTypes.revertConvertTx:
-      return depositFormEvents.convertTxReverted(payload.receipt);
+      return depositFormEvents.convertTxReverted(payload.receipt)
     case depositFormActionTypes.confirmConvertTx:
-      return depositFormEvents.convertTxConfirmed(payload.receipt);
+      return depositFormEvents.convertTxConfirmed(payload.receipt)
     case depositFormActionTypes.sendAllowTx:
-      return depositFormEvents.allowTxSent(payload.hash);
+      return depositFormEvents.allowTxSent(payload.hash)
     case depositFormActionTypes.revertAllowTx:
-      return depositFormEvents.allowTxReverted(payload.receipt);
+      return depositFormEvents.allowTxReverted(payload.receipt)
     case depositFormActionTypes.confirmAllowTx:
-      return depositFormEvents.allowTxConfirmed(payload.receipt);
+      return depositFormEvents.allowTxConfirmed(payload.receipt)
     default:
-      return depositFormEvents.initialized();
+      return depositFormEvents.initialized()
   }
-});
+})
 
 export const settings = createReducer(action => {
-  const { type } = action;
+  const { type } = action
   switch (type) {
     case settingsActionTypes.togglePvtKeyLock:
-      return settingsEvents.pvtKeyLockToggled();
+      return settingsEvents.pvtKeyLockToggled()
     case settingsActionTypes.setDefaultGasLimit:
-      return settingsEvents.defaultGasLimitSet();
+      return settingsEvents.defaultGasLimitSet()
     case settingsActionTypes.setDefaultGasPrice:
-      return settingsEvents.defaultGasPriceSet();
+      return settingsEvents.defaultGasPriceSet()
     default:
-      return settingsEvents.initialized();
+      return settingsEvents.initialized()
   }
-});
+})
 
 export const wallets = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case createWalletActionTypes.createWallet:
-      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
+      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet)
     case createWalletActionTypes.addWallet:
-      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
+      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet)
     case createWalletActionTypes.removeWallet:
-      return walletsEvents.walletRemoved(payload);
+      return walletsEvents.walletRemoved(payload)
     case loginPageActionTypes.createWallet:
-      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet);
+      return walletsEvents.walletAdded(payload.address, payload.encryptedWallet)
     default:
-      return walletsEvents.initialized();
+      return walletsEvents.initialized()
   }
-});
+})
 
 export const etherBalance = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case etherBalanceActionTypes.subscribeBalance:
-      return etherBalanceEvents.subscribed(payload.address);
+      return etherBalanceEvents.subscribed(payload.address)
     case etherBalanceActionTypes.unsubscribeBalance:
-      return etherBalanceEvents.unsubscribed(payload.address);
+      return etherBalanceEvents.unsubscribed(payload.address)
     case etherBalanceActionTypes.updateBalance:
-      return etherBalanceEvents.updated(payload.address, payload.balance);
+      return etherBalanceEvents.updated(payload.address, payload.balance)
     default:
-      return etherBalanceEvents.initialized();
+      return etherBalanceEvents.initialized()
   }
-});
+})
 
 export const notifications = createReducer(action => {
-  const { type, payload } = action;
+  const { type, payload } = action
   switch (type) {
     case appActionTypes.addNotification:
-      return notificationEvents.notificationAdded(payload.options);
+      return notificationEvents.notificationAdded(payload.options)
     case appActionTypes.addSuccessNotification:
-      return notificationEvents.notificationAdded(payload.options);
+      return notificationEvents.notificationAdded(payload.options)
     case appActionTypes.addDangerNotification:
-      return notificationEvents.notificationAdded(payload.options);
+      return notificationEvents.notificationAdded(payload.options)
     case appActionTypes.removeNotification:
-      return notificationEvents.notificationRemoved(payload.id);
+      return notificationEvents.notificationRemoved(payload.id)
     default:
-      return notificationEvents.initialized();
+      return notificationEvents.initialized()
   }
-});
+})

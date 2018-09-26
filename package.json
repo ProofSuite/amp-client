@@ -59,6 +59,7 @@
     "styled-components": "~3.3.3",
     "styled-css-grid": "^0.11.0",
     "styled-system": "^3.0.2",
+    "web3-utils": "^1.0.0-beta.36",
     "ws": "^5.2.2"
   },
   "devDependencies": {
@@ -71,6 +72,7 @@
     "@storybook/addons": "^3.4.8",
     "@storybook/react": "^3.4.8",
     "babel-core": "^6.26.3",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "flow-bin": "^0.75.0",
@@ -80,7 +82,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
-      "prettier --write",
+      "prettier --write --print-width 120 --no-semi --trailing-comma none",
       "git add"
     ]
   },
