@@ -1,4 +1,4 @@
-import * as api from './api';
-import * as trading from './trading';
+import * as api from './api'
+import * as socket from './socket'
 
-export { api, trading };
+export { api, socket }

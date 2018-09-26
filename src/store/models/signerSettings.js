@@ -1,25 +1,26 @@
 // @flow
-import { getSignerDomain } from '../domains';
+import { getSignerDomain } from '../domains'
 
-import { createSigner } from '../services/signer';
-import * as actionCreators from '../actions/signerSettings';
+import { createSigner } from '../services/signer'
+import * as actionCreators from '../actions/signerSettings'
 
-import type { UpdateSignerParams } from '../../types/signer';
-import type { State, ThunkAction } from '../../types/';
+import type { UpdateSignerParams } from '../../types/signer'
+import type { State, ThunkAction } from '../../types/'
 
 export default function signerSettingsSelector(state: State) {
-  return getSignerDomain(state);
+  return getSignerDomain(state)
 }
 
 export function updateSigner(params: UpdateSignerParams): ThunkAction {
   return async dispatch => {
     try {
-      dispatch(actionCreators.requestSigner());
-      let { settings, address } = await createSigner(params);
+      dispatch(actionCreators.requestSigner())
+      let { settings, address } = await createSigner(params)
 
-      dispatch(actionCreators.updateSigner(settings, address));
+      dispatch(actionCreators.updateSigner(settings, address))
     } catch (e) {
-      return dispatch(actionCreators.error(e.message));
+      console.log(e)
+      return dispatch(actionCreators.error(e.message))
     }
-  };
+  }
 }

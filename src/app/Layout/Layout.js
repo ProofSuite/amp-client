@@ -1,10 +1,11 @@
 // @flow
-import type { Node } from 'react';
-import React from 'react';
-import { IntlProvider } from 'react-intl';
-import { Link, NavLink } from 'react-router-dom';
-import { SvgIcon, Footer } from '../../components/Common';
-import styled from 'styled-components';
+import type { Node } from 'react'
+import React from 'react'
+import { IntlProvider } from 'react-intl'
+import { Link, NavLink } from 'react-router-dom'
+import { SvgIcon, Footer } from '../../components/Common'
+import Notifier from '../../components/Notifier'
+import styled from 'styled-components'
 import {
   Alignment,
   Button,
@@ -15,8 +16,8 @@ import {
   NavbarGroup,
   NavbarHeading,
   Popover,
-  Position,
-} from '@blueprintjs/core';
+  Position
+} from '@blueprintjs/core'
 
 type Props = {
   children?: Node,
@@ -24,11 +25,11 @@ type Props = {
   address: string,
   locale: string,
   messages: string,
-  currentBlock?: string,
-};
+  currentBlock?: string
+}
 
 function Layout(props: Props) {
-  const { children, authenticated, address, locale, messages, currentBlock } = props;
+  const { children, authenticated, address, locale, messages, currentBlock } = props
   const menu = (
     <Menu>
       <MenuItem>
@@ -41,11 +42,12 @@ function Layout(props: Props) {
         </MenuItemLink>
       </MenuItem>
     </Menu>
-  );
+  )
 
   return (
     <IntlProvider locale={locale} messages={messages}>
       <Wrapper>
+        <Notifier />
         <Header>
           <Navbar>
             <NavbarGroup align={Alignment.LEFT}>
@@ -92,22 +94,22 @@ function Layout(props: Props) {
         <Footer />
       </Wrapper>
     </IntlProvider>
-  );
+  )
 }
 
-export default Layout;
+export default Layout
 
 const Wrapper = styled.div.attrs({ className: 'bp3-dark' })`
   height: 100%;
   display: flex;
   flex-direction: column;
-`;
+`
 
-const Header = styled.header``;
+const Header = styled.header``
 
 const MainContent = styled.main`
   flex: 1;
-`;
+`
 
 const ProviderStatus = styled.div`
   display: flex;
@@ -117,7 +119,7 @@ const ProviderStatus = styled.div`
   & p {
     margin: 0;
   }
-`;
+`
 
 const Block = styled.div`
   word-wrap: break-word;
@@ -128,23 +130,23 @@ const Block = styled.div`
   & span {
     margin-right: 5px;
   }
-`;
+`
 
 const NavbarHeaderLink = styled(Link).attrs({
   className: 'bp3-button bp3-minimal bp3-intent-primary',
-  role: 'button',
-})``;
+  role: 'button'
+})``
 
 const NavbarLink = styled(NavLink).attrs({
   activeClassName: 'bp3-active bp3-intent-primary',
   className: 'bp3-button bp3-minimal',
-  role: 'button',
-})``;
+  role: 'button'
+})``
 
-const MenuItem = styled.li``;
+const MenuItem = styled.li``
 
 const MenuItemLink = styled(NavLink).attrs({
   activeClassName: 'bp3-active bp3-intent-primary',
   className: props => `bp3-menu-item bp3-popover-dismiss bp3-icon-${props.icon}`,
-  role: 'button',
-})``;
+  role: 'button'
+})``

@@ -1,14 +1,16 @@
 // @flow
-import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances';
+import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
+import { round } from '../../utils/helpers'
+import { utils } from 'ethers'
 // eslint-disable-next-line
-const initialState = {};
-const MAX_ALLOWANCE = '115792089237316195423570985008687907853269984665640564039457.584007913129639935';
+const initialState = {}
+const MAX_ALLOWANCE = '115792089237316195423570985008687907853269984665640564039457.584007913129639935'
 
 export function initialized() {
-  const initialState = {};
-  const event = (state: AccountBalancesState = initialState) => state;
+  const initialState = {}
+  const event = (state: AccountBalancesState = initialState) => state
 
-  return event;
+  return event
 }
 
 export function subscribed(symbol: string) {
@@ -17,10 +19,10 @@ export function subscribed(symbol: string) {
     [symbol]: {
       balance: state[symbol] ? state[symbol].balance : null,
       symbol: symbol,
-      subscribed: true,
-    },
-  });
-  return event;
+      subscribed: true
+    }
+  })
+  return event
 }
 
 export function updated(accountBalances: AccountBalances) {
@@ -30,18 +32,18 @@ export function updated(accountBalances: AccountBalances) {
         ...state[item.symbol],
         symbol: item.symbol,
         balance: item.balance,
-        subscribed: state[item.symbol] ? state[item.symbol].subscribed : false,
-      };
-      return result;
-    }, {});
+        subscribed: state[item.symbol] ? state[item.symbol].subscribed : false
+      }
+      return result
+    }, {})
 
     return {
       ...state,
-      ...newState,
-    };
-  };
+      ...newState
+    }
+  }
 
-  return event;
+  return event
 }
 
 export function allowancesUpdated(allowances: AccountAllowances) {
@@ -50,17 +52,17 @@ export function allowancesUpdated(allowances: AccountAllowances) {
       result[item.symbol] = {
         ...state[item.symbol],
         symbol: item.symbol,
-        allowance: item.allowance,
-      };
-      return result;
-    }, {});
+        allowance: item.allowance
+      }
+      return result
+    }, {})
     return {
       ...state,
-      ...newState,
-    };
-  };
+      ...newState
+    }
+  }
 
-  return event;
+  return event
 }
 
 export function unsubscribed(symbol: string) {
@@ -68,40 +70,57 @@ export function unsubscribed(symbol: string) {
     ...state,
     [symbol]: {
       ...state[symbol],
-      subscribed: false,
-    },
-  });
+      subscribed: false
+    }
+  })
 
-  return event;
+  return event
 }
 
 export function cleared() {
-  const event = (state: AccountBalancesState) => {};
-  return event;
+  const event = (state: AccountBalancesState) => {}
+  return event
 }
 
 export default function accountBalancesDomain(state: AccountBalancesState) {
   return {
     balances() {
-      return state;
+      return state
     },
     etherBalance() {
-      return state['ETH'] ? state['ETH'].balance : null;
+      return state['ETH'] ? state['ETH'].balance : null
     },
     tokenBalance(symbol: string) {
-      return state[symbol] ? state[symbol].balance : null;
+      return state[symbol] ? state[symbol].balance : null
+    },
+    getBigNumberBalance(symbol: string) {
+      if (!state[symbol]) return null
+
+      //The precision multiplier allows for rounding a decimal balance to a "point" number that
+      //can be converted into a bignumber. After the bignumber balance is computed, we divide by
+      //the precisionMultiplier to offset the initial multiplication by the precision multiplier
+      let precisionMultiplier = 1e4
+      let balancePoints = round(state[symbol].balance * precisionMultiplier, 0)
+
+      let etherMultiplier = utils.bigNumberify('1000000000000000000')
+      let balance = utils
+        .bigNumberify(balancePoints)
+        .mul(etherMultiplier)
+        .div(utils.bigNumberify(precisionMultiplier))
+
+      return balance
     },
     get(symbol: string) {
-      return state[symbol] ? state[symbol].balance : null;
+      return state[symbol] ? state[symbol].balance : null
     },
     isSubscribed(symbol: string) {
-      return state[symbol] ? state[symbol].subscribed : false;
+      return state[symbol] ? state[symbol].subscribed : false
     },
     isAllowed(symbol: string) {
-      return state[symbol] ? state[symbol].allowance === MAX_ALLOWANCE : false;
+      return state[symbol] ? state[symbol].allowance === MAX_ALLOWANCE : false
     },
     isAllowancePending(symbol: string) {
-      return state[symbol] ? state[symbol].allowance === 'pending' : false;
+      return state[symbol] ? state[symbol].allowance === 'pending' : false
     },
     getBalancesAndAllowances(tokens: Array<Object>) {
       return (tokens: any).map(token => {
@@ -109,9 +128,9 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
           ...token,
           balance: state[token.symbol] ? state[token.symbol].balance : null,
           allowed: state[token.symbol] && state[token.symbol].allowance === MAX_ALLOWANCE,
-          allowancePending: state[token.symbol] && state[token.symbol].allowance === 'pending',
-        };
-      });
+          allowancePending: state[token.symbol] && state[token.symbol].allowance === 'pending'
+        }
+      })
     },
     depositTableData() {
       return (Object.values(state): any).map(item => {
@@ -119,18 +138,18 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
           symbol: item.symbol,
           balance: item.balance,
           allowed: item.allowance === MAX_ALLOWANCE,
-          allowancePending: item.allowance === 'pending',
-        };
-      });
+          allowancePending: item.allowance === 'pending'
+        }
+      })
     },
     balancesArray() {
       return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
           balance: item.balance,
-          allowed: parseFloat(item.allowance) > 0,
-        };
-      });
-    },
-  };
+          allowed: parseFloat(item.allowance) > 0
+        }
+      })
+    }
+  }
 }
