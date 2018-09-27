@@ -42,13 +42,13 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let state = getState()
       let tokenPairDomain = getTokenPairsDomain(state)
       let accountBalancesDomain = getAccountBalancesDomain(state)
+      let pair = tokenPairDomain.getCurrentPair()
 
       let signer = getSigner()
       let userAddress = await signer.getAddress()
 
       let makeFee = '0'
       let takeFee = '0'
-      let pair = tokenPairDomain.getCurrentPair()
 
       let params = {
         side,

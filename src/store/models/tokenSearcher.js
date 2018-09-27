@@ -1,19 +1,19 @@
 // @flow
-import type { State, ThunkAction } from '../../types';
-import { getTokenPairsDomain, getAccountBalancesDomain } from '../domains';
-import * as actionCreators from '../actions/tokenSearcher';
-import * as ohlcvActionCreators from '../actions/ohlcv';
+import type { State, ThunkAction } from '../../types'
+import { getTokenPairsDomain, getAccountBalancesDomain } from '../domains'
+import * as actionCreators from '../actions/tokenSearcher'
+import * as ohlcvActionCreators from '../actions/ohlcv'
 
-import { getQuoteToken, getBaseToken } from '../../utils/tokens';
-import { quoteTokenSymbols as quotes } from '../../config/quotes';
+import { getQuoteToken, getBaseToken } from '../../utils/tokens'
+import { quoteTokenSymbols as quotes } from '../../config/quotes'
 
 export default function tokenSearcherSelector(state: State) {
-  let domain = getTokenPairsDomain(state);
-  let accountBalancesDomain = getAccountBalancesDomain(state);
-  let tokenPairs = domain.getTokenPairsDataArray();
-  let favoriteTokenPairs = domain.getFavoritePairs();
+  let domain = getTokenPairsDomain(state)
+  let accountBalancesDomain = getAccountBalancesDomain(state)
+  let tokenPairs = domain.getTokenPairsDataArray()
+  let favoriteTokenPairs = domain.getFavoritePairs()
 
-  let tokenPairsByQuoteToken = {};
+  let tokenPairsByQuoteToken = {}
 
   for (let quote of quotes) {
     tokenPairsByQuoteToken[quote] = tokenPairs
@@ -21,41 +21,43 @@ export default function tokenSearcherSelector(state: State) {
       .map(tokenPair => ({
         ...tokenPair,
         base: getBaseToken(tokenPair.pair),
-        quote: getQuoteToken(tokenPair.pair),
+        quote: getQuoteToken(tokenPair.pair)
       }))
       .map(tokenPair => ({
         ...tokenPair,
-        favorited: favoriteTokenPairs.indexOf(tokenPair.pair) > -1,
-      }));
+        favorited: favoriteTokenPairs.indexOf(tokenPair.pair) > -1
+      }))
   }
 
-  let currentPair = domain.getCurrentPair();
-  let baseTokenBalance = accountBalancesDomain.tokenBalance(currentPair.baseTokenSymbol);
-  let quoteTokenBalance = accountBalancesDomain.tokenBalance(currentPair.quoteTokenSymbol);
+  let currentPair = domain.getCurrentPair()
+  let baseTokenBalance = accountBalancesDomain.tokenBalance(currentPair.baseTokenSymbol)
+  let quoteTokenBalance = accountBalancesDomain.tokenBalance(currentPair.quoteTokenSymbol)
 
   return {
     tokenPairsByQuoteToken,
     currentPair,
     baseTokenBalance,
-    quoteTokenBalance,
-  };
+    quoteTokenBalance
+  }
 }
 
 export const updateCurrentPair = (pair: string): ThunkAction => {
   return async (dispatch, getState, { api, trading }) => {
     try {
-      dispatch(actionCreators.updateCurrentPair(pair));
+      let state = getState()
+      dispatch(actionCreators.updateCurrentPair(pair))
 
-      let ohlcv = await trading.getData();
-      setTimeout(function() {
-        dispatch(ohlcvActionCreators.saveData(ohlcv));
-      }, 1000);
+      let pairDomain = getTokenPairsDomain(state)
+      let { baseTokenAddress, quoteTokenAddress } = pairDomain.getPair(pair)
 
-      let { bids, asks, trades } = await api.getOrderBookData();
-      dispatch(actionCreators.updateOrderBook(bids, asks));
-      dispatch(actionCreators.updateTradesTable(trades));
+      let ohlcv = await api.getOHLCV(baseTokenAddress, quoteTokenAddress)
+      dispatch(ohlcvActionCreators.saveData(ohlcv))
+
+      let { bids, asks, trades } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
+      dispatch(actionCreators.updateOrderBook(bids, asks))
+      dispatch(actionCreators.updateTradesTable(trades))
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
-};
+  }
+}

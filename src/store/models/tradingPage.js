@@ -1,8 +1,10 @@
 // @flow
+import { getTokenPairsDomain } from '../domains'
 import * as actionCreators from '../actions/tradingPage'
 import * as ohlcvActionCreators from '../actions/ohlcv'
 import * as orderFormActionCreators from '../actions/orderForm'
 import type { State, ThunkAction } from '../../types'
+import { getSigner } from '../services/signer'
 
 // eslint-disable-next-line
 export default function getTradingPageModel(state: State) {
@@ -22,18 +24,26 @@ const orderFormData = {
 export const queryDefaultData = (): ThunkAction => {
   return async (dispatch, getState, { api }) => {
     try {
+      let state = getState()
+      let signer = getSigner()
+      let pairDomain = getTokenPairsDomain(state)
+
+      let userAddress = await signer.getAddress()
+      let currentPair = pairDomain.getCurrentPair()
+      let { baseTokenAddress, quoteTokenAddress } = currentPair
+
       let tokenPairData = await api.getTokenPairData()
       dispatch(actionCreators.updateTokenPairData(tokenPairData))
 
-      let ohlcv = await api.getData()
-      setTimeout(function() {
-        dispatch(ohlcvActionCreators.saveData(ohlcv))
-      }, 2000)
+      let ohlcv = await api.getOHLCV(baseTokenAddress, quoteTokenAddress)
+      dispatch(ohlcvActionCreators.saveData(ohlcv))
 
-      let orders = await api.getOrders()
+      let orders = await api.getOrders(userAddress)
       dispatch(actionCreators.updateOrdersTable(orders))
 
-      let { bids, asks, trades } = await api.getOrderBookData()
+      let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
+
+      let { asks, bids } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
       dispatch(actionCreators.updateOrderBook(bids, asks))
       dispatch(actionCreators.updateTradesTable(trades))
 
@@ -48,9 +58,13 @@ export const queryDefaultData = (): ThunkAction => {
 export const updateCurrentPair = (pair: string): ThunkAction => {
   return async (dispatch, getState, { api }) => {
     try {
+      let state = getState()
       dispatch(actionCreators.updateCurrentPair(pair))
 
-      let ohlcv = await api.getData()
+      let pairDomain = getTokenPairsDomain(state)
+      let { baseTokenAddress, quoteTokenAddress } = pairDomain.getPair(pair)
+
+      let ohlcv = await api.getOHLCV(baseTokenAddress, quoteTokenAddress)
       dispatch(ohlcvActionCreators.saveData(ohlcv))
 
       let { bids, asks, trades } = await api.getOrderBookData()
