@@ -1,7 +1,9 @@
 // @flow
-import tokenPairData from '../../../jsons/tokenPairData.json'
-import { parseJSONToFixed, parseOrders, parseTrades, parseOrderBookData } from '../../../utils/parsers'
+import { parseTokenPairData, parseOrders, parseTrades, parseOrderBookData } from '../../../utils/parsers'
 import fetch from 'isomorphic-fetch'
+
+import type { Orders } from '../../../types/orders'
+import type { Trades } from '../../../types/trades'
 
 const request = (endpoint, options) => {
   return fetch(`http://localhost:8081${endpoint}`, {
@@ -180,26 +182,35 @@ export const fetchRawOrderBook = async (baseToken: string, quoteToken: string) =
   }
 
   if (response.status !== 200) {
-    console.log(data)
     throw new Error('Server Error')
   }
 
   return data
 }
 
-export const getTokenPairData = async () => {
-  const data = parseJSONToFixed(tokenPairData)
+export const fetchTokenPairData = async () => {
+  const response = await request('/pairs/data')
+  const data = await response.json()
+
+  if (response.status === 400) {
+    throw new Error(data.error)
+  }
+
+  if (response.status !== 200) {
+    throw new Error('Server error')
+  }
+
   return data
 }
 
-export const getOrders = async (userAddress: string) => {
+export const getOrders = async (userAddress: string): Orders => {
   let orders = await fetchOrders(userAddress)
   let parsedOrders = parseOrders(orders)
 
   return parsedOrders
 }
 
-export const getTrades = async (baseToken: string, quoteToken: string) => {
+export const getTrades = async (baseToken: string, quoteToken: string): Trades => {
   let trades = await fetchTokenPairTrades(baseToken, quoteToken)
   let parsedTrades = parseTrades(trades)
 
@@ -208,30 +219,14 @@ export const getTrades = async (baseToken: string, quoteToken: string) => {
 
 export const getOrderBookData = async (baseToken: string, quoteToken: string) => {
   let orderbook = await fetchOrderBook(baseToken, quoteToken)
-
-  console.log(orderbook)
-
   let { asks, bids } = parseOrderBookData(orderbook)
 
   return { asks, bids }
 }
 
-// export const test = async () => {
-//   let orders = await fetchOrders("0xE8E84ee367BC63ddB38d3D01bCCEF106c194dc47")
-//   let parsed = parseOrders(orders)
+export const getTokenPairData = async () => {
+  let data = await fetchTokenPairData()
+  let parsedData = parseTokenPairData(data)
 
-//   console.log(parsed)
-
-//   return parsed
-// }
-
-// export const test2 = async () => {
-//   let trades = await fetchAddressTrades("0xE8E84ee367BC63ddB38d3D01bCCEF106c194dc47")
-//   let parsed = parseTrades(trades)
-
-//   console.log(trades)
-
-//   return parsed
-// }
-
-// test2()
+  return parsedData
+}

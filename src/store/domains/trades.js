@@ -1,4 +1,6 @@
 // @flow
+import { sortTable } from '../../utils/helpers'
+
 import type { Trades, TradesState } from '../../types/trades'
 
 const initialState = {
@@ -58,13 +60,14 @@ export const tradesReset = () => {
 export default function tradesDomain(state: TradesState) {
   return {
     byTimeStamp: () => state.byHash,
-
     all: () => Object.values(state.byHash),
 
     lastTrades: (n: number) => {
       let trades = Object.values(state.byHash)
-      let last = (trades: Trades).slice(Math.max(trades.length - n, 1))
-      return last
+      let sortedTrades = sortTable(trades, 'time', 'asc')
+      let lastTrades = (trades: Trades).slice(Math.max(sortedTrades.length - n, 1))
+
+      return lastTrades
     }
   }
 }

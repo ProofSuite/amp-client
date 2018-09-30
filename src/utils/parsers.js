@@ -64,7 +64,7 @@ export const parseOrders = (orders, decimals = 2) => {
 export const parseTrades = (trades, decimals = 2) => {
   let parsed = trades.map(trade => ({
     time: trade.createdAt,
-    price: round(trade.pricepoint, decimals),
+    price: round(trade.pricepoint / 100, decimals),
     amount: fromWeiToFloat(trade.amount, decimals),
     hash: trade.hash,
     orderHash: trade.orderHash,
@@ -82,16 +82,29 @@ export const parseOrderBookData = (data, decimals = 2) => {
   let { bids, asks } = data
 
   asks = asks.map(ask => ({
-    price: round(ask.pricepoint, decimals),
+    price: round(ask.pricepoint / 100, decimals),
     amount: fromWeiToFloat(ask.amount, decimals)
   }))
 
   bids = bids.map(bid => ({
-    price: round(bid.pricepoint, decimals),
+    price: round(bid.pricepoint / 100, decimals),
     amount: fromWeiToFloat(bid.amount, decimals)
   }))
 
   return { asks, bids }
+}
+
+export const parseTokenPairData = data => {
+  let parsed = data.map(datum => ({
+    pair: datum.pair.pairName,
+    lastPrice: round(datum.close / 100, 2),
+    change: datum.open ? round((datum.close - datum.open) / datum.open, 1) : null,
+    high: round(datum.high / 100, 2),
+    low: round(datum.low / 100, 2),
+    volume: fromWeiToFloat(datum.volume, 0)
+  }))
+
+  return parsed
 }
 
 // export const parseOrderBookData = (data, decimals = 2) => {

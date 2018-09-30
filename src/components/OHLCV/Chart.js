@@ -1,7 +1,7 @@
-import React from 'react';
-import { format } from 'd3-format';
-import { timeFormat } from 'd3-time-format';
-import { Chart, ChartCanvas } from 'react-stockcharts';
+import React from 'react'
+import { format } from 'd3-format'
+import { timeFormat } from 'd3-time-format'
+import { Chart, ChartCanvas } from 'react-stockcharts'
 import {
   AreaSeries,
   BarSeries,
@@ -11,28 +11,28 @@ import {
   ScatterSeries,
   RSISeries,
   CircleMarker,
-  StraightLine,
-} from 'react-stockcharts/lib/series';
-import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
+  StraightLine
+} from 'react-stockcharts/lib/series'
+import { XAxis, YAxis } from 'react-stockcharts/lib/axes'
 import {
   CrossHairCursor,
   CurrentCoordinate,
   EdgeIndicator,
   MouseCoordinateX,
-  MouseCoordinateY,
-} from 'react-stockcharts/lib/coordinates';
-import { elderRay } from 'react-stockcharts/lib/indicator';
+  MouseCoordinateY
+} from 'react-stockcharts/lib/coordinates'
+import { elderRay } from 'react-stockcharts/lib/indicator'
 
-import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale';
+import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale'
 import {
   MACDTooltip,
   MovingAverageTooltip,
   OHLCTooltip,
   RSITooltip,
-  SingleValueTooltip,
-} from 'react-stockcharts/lib/tooltip';
-import { fitWidth } from 'react-stockcharts/lib/helper';
-import { last } from 'react-stockcharts/lib/utils';
+  SingleValueTooltip
+} from 'react-stockcharts/lib/tooltip'
+import { fitWidth } from 'react-stockcharts/lib/helper'
+import { last } from 'react-stockcharts/lib/utils'
 import {
   macdAppearance,
   atrAppearance,
@@ -41,9 +41,9 @@ import {
   theme,
   canvasGradient,
   edgeIndicatorAppearance,
-  volumeAppearance,
-} from './indicatorSettings';
-import { curveMonotoneX } from 'd3-shape';
+  volumeAppearance
+} from './indicatorSettings'
+import { curveMonotoneX } from 'd3-shape'
 
 import {
   atr14,
@@ -60,11 +60,11 @@ import {
   sma20,
   smaVolume50,
   tma20,
-  wma20,
-} from './indicators';
+  wma20
+} from './indicators'
 
 function calculateData(inputData) {
-  const elder = elderRay();
+  const elder = elderRay()
   return ema20(
     wma20(
       tma20(
@@ -77,7 +77,7 @@ function calculateData(inputData) {
         )
       )
     )
-  );
+  )
 }
 
 class OHLCVChart extends React.Component {
@@ -96,45 +96,47 @@ class OHLCVChart extends React.Component {
       chartHeight,
       forceIndex,
       currentChart,
-      noOfCandles,
-    } = this.props;
+      noOfCandles
+    } = this.props
 
-    let calculatedData = calculateData(initialData);
+    console.log(initialData)
+
+    let calculatedData = calculateData(initialData)
     if (calculatedData.length <= 1) {
-      return null;
+      return null
     }
-    const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date);
+    const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date)
 
-    const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData);
+    const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData)
 
-    const start = xAccessor(last(data));
-    const end = xAccessor(data[Math.max(0, data.length - noOfCandles)]);
-    const xExtents = [start, end];
+    const start = xAccessor(last(data))
+    const end = xAccessor(data[Math.max(0, data.length - noOfCandles)])
+    const xExtents = [start, end]
 
-    const height = chartHeight + indicatorHeight + 42;
+    const height = chartHeight + indicatorHeight + 42
 
-    var margin = { left: 70, right: 70, top: 20, bottom: 30 };
-    var gridHeight = height - margin.top - margin.bottom;
-    var gridWidth = width - margin.left - margin.right + 42;
+    var margin = { left: 70, right: 70, top: 20, bottom: 30 }
+    var gridHeight = height - margin.top - margin.bottom
+    var gridWidth = width - margin.left - margin.right + 42
 
-    var showGrid = true;
+    var showGrid = true
 
     var yGrid = showGrid
       ? {
           innerTickSize: -1 * gridWidth,
           tickStrokeDasharray: 'Solid',
           tickStrokeOpacity: 0.2,
-          tickStrokeWidth: 1,
+          tickStrokeWidth: 1
         }
-      : {};
+      : {}
     var xGrid = showGrid
       ? {
           innerTickSize: -1 * gridHeight,
           tickStrokeDasharray: 'Solid',
           tickStrokeOpacity: 0.2,
-          tickStrokeWidth: 1,
+          tickStrokeWidth: 1
         }
-      : {};
+      : {}
     return (
       <div>
         <ChartCanvas
@@ -171,13 +173,13 @@ class OHLCVChart extends React.Component {
               <CandlestickSeries
                 opacity={1}
                 fill={d => {
-                  return d.close > d.open ? theme.greenMint : theme.redDesire;
+                  return d.close > d.open ? theme.greenMint : theme.redDesire
                 }}
                 stroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli
                 }}
                 wickStroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli
                 }}
               />
 
@@ -195,7 +197,6 @@ class OHLCVChart extends React.Component {
                 <div>
                   <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()} />
                   <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()} />
-
                   <CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
                   <CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
                 </div>
@@ -222,14 +223,14 @@ class OHLCVChart extends React.Component {
                     yAccessor: ema26.accessor(),
                     type: 'EMA',
                     stroke: ema26.stroke(),
-                    windowSize: ema26.options().windowSize,
+                    windowSize: ema26.options().windowSize
                   },
                   {
                     yAccessor: ema12.accessor(),
                     type: 'EMA',
                     stroke: ema12.stroke(),
-                    windowSize: ema12.options().windowSize,
-                  },
+                    windowSize: ema12.options().windowSize
+                  }
                 ]}
               />
             </Chart>
@@ -342,14 +343,14 @@ class OHLCVChart extends React.Component {
 
               <CandlestickSeries
                 fill={d => {
-                  return d.close > d.open ? theme.greenMint : theme.redDesire;
+                  return d.close > d.open ? theme.greenMint : theme.redDesire
                 }}
                 opacity={1}
                 stroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli
                 }}
                 wickStroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli;
+                  return d.close > d.open ? theme.greenNeon : theme.redChilli
                 }}
               />
 
@@ -415,14 +416,14 @@ class OHLCVChart extends React.Component {
                     yAccessor: ema20.accessor(),
                     type: 'EMA',
                     stroke: ema20.stroke(),
-                    windowSize: ema20.options().windowSize,
+                    windowSize: ema20.options().windowSize
                   },
                   {
                     yAccessor: ema50.accessor(),
                     type: 'EMA',
                     stroke: ema50.stroke(),
-                    windowSize: ema50.options().windowSize,
-                  },
+                    windowSize: ema50.options().windowSize
+                  }
                 ]}
               />
             </Chart>
@@ -453,7 +454,7 @@ class OHLCVChart extends React.Component {
                   macd.height -
                   (atr.active ? atr.height : 0) -
                   (rsi.active ? rsi.height : 0) -
-                  (forceIndex.active ? forceIndex.height : 0),
+                  (forceIndex.active ? forceIndex.height : 0)
               ]}
               padding={{ top: 35, bottom: 10 }}
             >
@@ -493,7 +494,7 @@ class OHLCVChart extends React.Component {
               height={rsi.height}
               origin={(w, h) => [
                 0,
-                h - rsi.height - (atr.active ? atr.height : 0) - (forceIndex.active ? forceIndex.height : 0),
+                h - rsi.height - (atr.active ? atr.height : 0) - (forceIndex.active ? forceIndex.height : 0)
               ]}
               padding={{ top: 10, bottom: 10 }}
             >
@@ -603,9 +604,9 @@ class OHLCVChart extends React.Component {
           <CrossHairCursor />
         </ChartCanvas>
       </div>
-    );
+    )
   }
 }
-OHLCVChart = fitWidth(OHLCVChart);
+OHLCVChart = fitWidth(OHLCVChart)
 
-export default OHLCVChart;
+export default OHLCVChart

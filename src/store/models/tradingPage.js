@@ -42,10 +42,10 @@ export const queryDefaultData = (): ThunkAction => {
       dispatch(actionCreators.updateOrdersTable(orders))
 
       let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
+      dispatch(actionCreators.updateTradesTable(trades))
 
       let { asks, bids } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
       dispatch(actionCreators.updateOrderBook(bids, asks))
-      dispatch(actionCreators.updateTradesTable(trades))
 
       dispatch(orderFormActionCreators.saveData(orderFormData))
     } catch (e) {
@@ -67,8 +67,10 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
       let ohlcv = await api.getOHLCV(baseTokenAddress, quoteTokenAddress)
       dispatch(ohlcvActionCreators.saveData(ohlcv))
 
-      let { bids, asks, trades } = await api.getOrderBookData()
+      let { bids, asks } = await api.getOrderBookData()
       dispatch(actionCreators.updateOrderBook(bids, asks))
+
+      let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
       dispatch(actionCreators.updateTradesTable(trades))
 
       dispatch(orderFormActionCreators.saveData(orderFormData))

@@ -100,8 +100,8 @@ const OrderRow = (props: { order: Order, index: number }) => {
       </Cell>
       <Cell className="cancel" muted>
         {order.status === 'OPEN' && (
-          <Button intent="danger" small>
-            <Icon icon="cross" intent="danger" /> Cancel
+          <Button intent="danger" minimal>
+            <Icon icon="cross" intent="danger" />&nbsp;&nbsp;Cancel
           </Button>
         )}
       </Cell>
@@ -121,9 +121,11 @@ const Wrapper = styled(Card)``
 const Heading = styled.h3`
   margin: auto;
 `
+
 const ListContainer = styled.div`
   height: 100%;
 `
+
 const ListHeaderWrapper = styled.ul`
   width: 100%;
   display: flex;
@@ -132,6 +134,7 @@ const ListHeaderWrapper = styled.ul`
   margin: 0px;
   margin-bottom: 10px;
 `
+
 const ListBodyWrapper = styled.ul`
   width: 100%;
   max-height: 300px;
@@ -139,6 +142,7 @@ const ListBodyWrapper = styled.ul`
   height: 90%;
   overflow-y: scroll;
 `
+
 const ListHeader = styled.li`
   width: 100%;
   display: flex;
@@ -151,25 +155,18 @@ const ListHeader = styled.li`
   }
 `
 
-const Row = styled.li.attrs({
-  className: 'row'
-})`
+const Row = styled.li.attrs({ className: 'row' })`
   width: 100%;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
-  padding: 7px;
   border: 1px transparent;
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
 `
 
-const Cell = styled.span.attrs({
-  className: props => props.className
-})`
+const Cell = styled.span.attrs({ className: props => props.className })`
   color: ${props =>
     props.side === 'BUY'
       ? Colors.BUY
@@ -180,11 +177,14 @@ const Cell = styled.span.attrs({
           : Colors.WHITE}
 
   min-width: 35px;
-  width: 20%;
+  display: flex;
+  align-items: center;
+  height: 40px !important;
+  width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
 `
 
-const HeaderCell = styled.span`
-  width: 20%;
+const HeaderCell = styled.span.attrs({ className: props => props.className })`
+  width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
 `
 
 export default OrdersTableRenderer

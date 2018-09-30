@@ -98,27 +98,61 @@ const handleOrderMessage = (dispatch, payload) => {
 
   switch (type) {
     case 'ORDER_ADDED':
-      return dispatch(appActionCreators.addSuccessNotification({ message: 'Order added' }))
+      return dispatch(handleOrderAdded(data.order))
     case 'ORDER_CANCELED':
-      return dispatch(appActionCreators.addSuccessNotification({ message: 'Order canceled' }))
-    case 'REQUEST_SIGNATURE':
-      dispatch(appActionCreators.addSuccessNotification({ message: 'Signing trade' }))
-      dispatch(handleRequestSignature(payload))
+      return dispatch(handleOrderCanceled(data.order))
     case 'ORDER_SUCCESS':
-      return dispatch(appActionCreators.addSuccessNotification({ message: 'Order success' }))
+      return dispatch(handleOrderSuccess(data.order))
     case 'ORDER_PENDING':
-      return dispatch(appActionCreators.addSuccessNotification({ message: 'Order executed' }))
+      return dispatch(handleOrderPending(data.order))
+    case 'REQUEST_SIGNATURE':
+      return dispatch(handleRequestSignature(payload))
     case 'ORDER_ERROR':
-      return dispatch(appActionCreators.addDangerNotification({ message: 'Order error' }))
+      return dispatch(handleOrderError(payload))
     default:
       console.log('Unknown')
       return
   }
 }
 
+function handleOrderAdded(order: RawOrder): ThunkAction {
+  return async (dispatch, getState, { socket }) => {
+    dispatch(appActionCreators.addSuccessNotification({ message: 'Order added' }))
+    return dispatch(actionCreators.updateOrdersTable([order]))
+  }
+}
+
+function handleOrderCanceled(order: RawOrder): ThunkAction {
+  return async (dispatch, getState, { socket }) => {
+    dispatch(appActionCreators.addSuccessNotification({ message: 'Order canceled' }))
+    return dispatch(actionCreators.updateOrdersTable([order]))
+  }
+}
+
+function handleOrderSuccess(order: RawOrder): ThunkAction {
+  return async (dispatch, getState, { socket }) => {
+    dispatch(appActionCreators.addSuccessNotification({ message: 'Order success' }))
+    return dispatch(actionCreators.updateOrdersTable([order]))
+  }
+}
+
+function handleOrderPending(order: RawOrder): ThunkAction {
+  return async (dispatch, getState, { socket }) => {
+    dispatch(appActionCreators.addSuccessNotification({ message: 'Order pending' }))
+    return dispatch(actionCreators.updateOrdersTable([order]))
+  }
+}
+
+function handleOrderError(order: RawOrder): ThunkAction {
+  return async dispatch => {
+    dispatch(appActionCreators.addSuccessNotification({ message: 'Order error' }))
+    return dispatch(actionCreators.updateOrdersTable([order]))
+  }
+}
+
 function handleRequestSignature(payload): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    let { data, hash, type } = payload
+    let { data, hash } = payload
     let signer = getSigner()
 
     if (data.matches != null) {
@@ -131,6 +165,7 @@ function handleRequestSignature(payload): ThunkAction {
       signer.signOrder(data.order)
     }
 
+    dispatch(appActionCreators.addSuccessNotification({ message: 'Signing trade' }))
     socket.sendNewSubmitSignatureMessage(hash, data.matches, data.order)
   }
 }

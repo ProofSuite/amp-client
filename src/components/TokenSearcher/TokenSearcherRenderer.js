@@ -1,7 +1,7 @@
 // @flow
-import React from 'react';
-import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core';
-import {} from '../Common';
+import React from 'react'
+import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
+import {} from '../Common'
 import {
   Box,
   Colors,
@@ -12,9 +12,9 @@ import {
   ColumnEnd,
   ColoredCryptoIcon,
   RowStart,
-  ColumnStart,
-} from '../Common';
-import styled from 'styled-components';
+  ColumnStart
+} from '../Common'
+import styled from 'styled-components'
 
 type Token = {
   pair: string,
@@ -25,8 +25,8 @@ type Token = {
   volume: string,
   base: string,
   quote: string,
-  favorited: boolean,
-};
+  favorited: boolean
+}
 
 type Props = {
   loading: boolean,
@@ -46,8 +46,8 @@ type Props = {
   onChangeSearchFilter: (SyntheticInputEvent<>) => void,
   onChangeFilterName: (SyntheticInputEvent<>) => void,
   changeSelectedToken: Token => void,
-  toggleCollapse: () => void,
-};
+  toggleCollapse: () => void
+}
 
 const TokenSearchRenderer = (props: Props) => {
   const {
@@ -68,8 +68,8 @@ const TokenSearchRenderer = (props: Props) => {
     changeSelectedToken,
     toggleCollapse,
     baseTokenBalance,
-    quoteTokenBalance,
-  } = props;
+    quoteTokenBalance
+  } = props
   return (
     <TokenSearchCard>
       {loading ? (
@@ -139,10 +139,10 @@ const TokenSearchRenderer = (props: Props) => {
         </div>
       )}
     </TokenSearchCard>
-  );
-};
+  )
+}
 
-export default TokenSearchRenderer;
+export default TokenSearchRenderer
 
 type PanelProps = {
   filterName: string,
@@ -155,8 +155,8 @@ type PanelProps = {
   updateFavorite: (string, boolean) => void,
   onChangeSearchFilter: (SyntheticInputEvent<>) => void,
   onChangeFilterName: (SyntheticInputEvent<>) => void,
-  onChangeSortOrder: string => void,
-};
+  onChangeSortOrder: string => void
+}
 
 const Panel = (props: PanelProps) => {
   const {
@@ -166,9 +166,9 @@ const Panel = (props: PanelProps) => {
     selectedTabId,
     updateFavorite,
     onChangeFilterName,
-    changeSelectedToken,
-  } = props;
-  const isFavoriteTokensList = selectedTabId === 'star';
+    changeSelectedToken
+  } = props
+  const isFavoriteTokensList = selectedTabId === 'star'
 
   return (
     <TokenSearchPanelBox>
@@ -193,19 +193,19 @@ const Panel = (props: PanelProps) => {
         {tokenPairs.length === 0 && <Centered>No Tokens to show</Centered>}
       </ul>
     </TokenSearchPanelBox>
-  );
-};
+  )
+}
 
 type TokenRowProps = {
   index: number,
   token: Token,
   isFavoriteTokensList: boolean,
   updateFavorite: (string, boolean) => void,
-  changeSelectedToken: Object => void,
-};
+  changeSelectedToken: Object => void
+}
 
 const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSelectedToken }: TokenRowProps) => {
-  const { favorited, lastPrice, change, base, pair } = token;
+  const { favorited, lastPrice, change, base, pair } = token
   return (
     <li key={pair} className="row">
       <CryptoIcon name={base} />
@@ -213,24 +213,24 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
         {isFavoriteTokensList ? pair : base}
       </span>
       <span className="lastPrice" onClick={() => changeSelectedToken(token)}>
-        {lastPrice}
+        {lastPrice ? lastPrice : 'N.A'}
       </span>
       <Change24H change={change} onClick={() => changeSelectedToken(token)}>
-        {change}%
+        {change ? `${change}%` : 'N.A'}
       </Change24H>
       <span className="star">
         <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
       </span>
     </li>
-  );
-};
+  )
+}
 
 type HeaderProps = {
   onChangeFilterName: (SyntheticInputEvent<>) => void,
   filterName: string,
   sortOrder: string,
-  isFavoriteTokensList: boolean,
-};
+  isFavoriteTokensList: boolean
+}
 
 const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensList }: HeaderProps) => {
   return (
@@ -263,11 +263,11 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
         <span className="star">&nbsp;</span>
       </li>
     </ListHeader>
-  );
-};
+  )
+}
 
 const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => {
-  const { pair, lastPrice, volume, high, low, quote, base } = selectedPair;
+  const { pair, lastPrice, volume, high, low, quote, base } = selectedPair
 
   return (
     <SelectedPairCard>
@@ -302,32 +302,32 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
         </ColumnEnd>
       </Row>
     </SelectedPairCard>
-  );
-};
+  )
+}
 
 const TokenSearchCard = styled(Card).attrs({
-  className: 'token-searcher',
+  className: 'token-searcher'
 })`
   position: relative;
-`;
+`
 
 const TokenSearchTabs = styled(Tabs)`
   margin-bottom: 20px;
-`;
+`
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-`;
+`
 
 const TokenSearchPanelBox = styled.div`
   height: 100%;
   margin-top: 10px;
-`;
+`
 
 const SelectedPairCard = styled(Card)`
   margin: 15px 0px;
   padding: 18px 18px 9px 18px !important;
-`;
+`
 
 const TokenPair = styled.h3`
   color: ${Colors.LINK} !important;
@@ -335,17 +335,17 @@ const TokenPair = styled.h3`
   margin-top: 15px !important;
   margin-left: 15px !important;
   margin: 0;
-`;
+`
 
 const SearchInput = styled(InputGroup)`
   width: 92%;
   padding-bottom: 10px;
-`;
+`
 
 const ListHeader = styled.ul`
   margin: 10px 0 7px;
-`;
+`
 
 const Change24H = styled.span.attrs({ className: 'change' })`
   color: ${props => (props.change > 0 ? Colors.GREEN5 : Colors.RED4)} !important;
-`;
+`
