@@ -1,9 +1,8 @@
 // @flow
-import { tsvParse } from 'd3-dsv'
-import { timeParse } from 'd3-time-format'
+const addMonths = require('date-fns/add_months')
 
 const request = (endpoint: string, options: Object) => {
-  return fetch(`https://localhost${endpoint}`, {
+  return fetch(`http://localhost:8081${endpoint}`, {
     headers: {
       'Access-Control-Allow-Origin': '*',
       Accept: 'application/json',
@@ -14,7 +13,7 @@ const request = (endpoint: string, options: Object) => {
   })
 }
 
-export const fetchOHLCV = async (
+export const getOHLCV = async (
   baseToken: string,
   quoteToken: string,
   from: number,
@@ -22,49 +21,33 @@ export const fetchOHLCV = async (
   duration: number,
   units: string
 ) => {
-  const response = await request(`/trades/ticks`, {
-    body: JSON.stringify({
-      pair: [
-        {
-          baseToken: baseToken,
-          quoteToken: quoteToken
-        }
-      ],
-      from: from,
-      to: to,
-      duration: duration,
-      units: units
-    }),
-    method: 'POST'
-  })
+  let now = Date.now()
+  duration = duration || 1
+  units = units || 'hour'
+  from = from || Math.floor(addMonths(new Date(now), -2).getTime() / 1000)
+  to = to || Math.floor(new Date(now).getTime() / 1000)
+
+  const response = await request(
+    `/ohlcv?baseToken=${baseToken}&quoteToken=${quoteToken}&duration=${duration}&units=${units}&from=${from}&to=${to}`,
+    {}
+  )
 
   if (response.status !== 200) {
     throw new Error('Error')
   }
 
-  const { data } = await response.json()
-  return data
-}
+  const data = await response.json()
 
-export function parseData(parse: any) {
-  return function(d: any) {
-    d.date = parse(d.date)
-    d.open = +d.open
-    d.high = +d.high
-    d.low = +d.low
-    d.close = +d.close
-    d.volume = +d.volume
-    return d
-  }
-}
+  let parsedData = data.map(datum => {
+    return {
+      date: new Date(datum.timestamp),
+      open: Number(datum.open),
+      high: Number(datum.high),
+      low: Number(datum.low),
+      close: Number(datum.close),
+      volume: datum.volume / 1000000000000000000
+    }
+  })
 
-export const parseDate = timeParse('%Y-%m-%d')
-
-export function getData() {
-  const ohlcv = fetch('http://rrag.github.io/react-stockcharts/data/MSFT_full.tsv')
-    .then(response => response.text())
-    .then(data => {
-      return tsvParse(data, parseData(parseDate))
-    })
-  return ohlcv
+  return parsedData
 }

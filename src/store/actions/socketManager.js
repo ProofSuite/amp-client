@@ -25,7 +25,7 @@ const actionTypes = {
   connectionError: 'socketManager/CONNECTION_ERROR',
   openConnection: 'socketManager/OPEN_CONNECTION',
 
-  initializeTradesTable: 'socketManager/UPDATE_TRADES_TABLE',
+  initializeTradesTable: 'socketManager/INIT_TRADES_TABLE',
   updateTradesTable: 'socketManager/UPDATE_TRADES_TABLE',
   initializeOrdersTable: 'socketManager/INIT_ORDERS_TABLE',
   updateOrdersTable: 'socketManager/UPDATE_ORDERS_TABLE',
@@ -114,14 +114,14 @@ export function unsubscribeChart(pair: string): UnsubscribeChartAction {
 
 export function initializeChart(data: Object): InitChartAction {
   return {
-    types: actionTypes.initializeChart,
+    type: actionTypes.initializeChart,
     payload: { data }
   }
 }
 
 export function updateChart(data: Object): UpdateChartAction {
   return {
-    types: actionTypes.updateChart,
+    type: actionTypes.updateChart,
     payload: { data }
   }
 }
@@ -143,7 +143,7 @@ export function unsubscribeOrderBook(pair: string): UnsubscribeOrderBookAction {
 
 export function initializeOrderBook(data: Object): InitOrderBookAction {
   return {
-    types: actionTypes.initializeOrderBook,
+    type: actionTypes.initializeOrderBook,
     payload: { data }
   }
 }

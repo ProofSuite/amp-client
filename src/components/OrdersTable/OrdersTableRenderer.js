@@ -1,10 +1,10 @@
 //@flow
-import React from 'react';
-import styled from 'styled-components';
-import { Card, Tab, Tabs, Collapse, Button } from '@blueprintjs/core';
-import { Colors, Loading, CenteredMessage } from '../Common';
-import { format } from 'date-fns';
-import { Order } from '../../types/orders';
+import React from 'react'
+import styled from 'styled-components'
+import { Card, Tab, Tabs, Collapse, Button, Icon } from '@blueprintjs/core'
+import { Colors, Loading, CenteredMessage } from '../Common'
+import { format } from 'date-fns'
+import { Order } from '../../types/orders'
 
 type Props = {
   loading: boolean,
@@ -17,12 +17,12 @@ type Props = {
     OPEN: Array<Order>,
     PENDING: Array<Order>,
     EXECUTED: Array<Order>,
-    CANCELED: Array<Order>,
-  },
-};
+    CANCELED: Array<Order>
+  }
+}
 
 const OrdersTableRenderer = (props: Props) => {
-  const { loading, selectedTabId, onChange, orders, isOpen, toggleCollapse } = props;
+  const { loading, selectedTabId, onChange, orders, isOpen, toggleCollapse } = props
   return (
     <Wrapper className="order-history">
       <OrdersTableHeader>
@@ -47,11 +47,11 @@ const OrdersTableRenderer = (props: Props) => {
         </Tabs>
       </Collapse>
     </Wrapper>
-  );
-};
+  )
+}
 
 const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order> }) => {
-  const { loading, orders } = props;
+  const { loading, orders } = props
   return loading ? (
     <Loading />
   ) : orders.length < 1 ? (
@@ -66,17 +66,18 @@ const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order> }) => 
           <HeaderCell className="status">STATUS</HeaderCell>
           <HeaderCell className="side">SIDE</HeaderCell>
           <HeaderCell className="time">TIME</HeaderCell>
+          <HeaderCell className="cancel" />
         </ListHeader>
       </ListHeaderWrapper>
       <ListBodyWrapper className="list">
         {orders.map((order, index) => <OrderRow key={index} order={order} index={index} />)}
       </ListBodyWrapper>
     </ListContainer>
-  );
-};
+  )
+}
 
 const OrderRow = (props: { order: Order, index: number }) => {
-  const { order } = props;
+  const { order } = props
   return (
     <Row>
       <Cell className="pair" muted>
@@ -95,11 +96,18 @@ const OrderRow = (props: { order: Order, index: number }) => {
         {order.side}
       </Cell>
       <Cell className="time" muted>
-        {format(order.time, 'DD/MM/YYYY HH:MM:SS Z')}
+        {format(order.time, 'DD/MM/YYYY HH:MM:SS')}
+      </Cell>
+      <Cell className="cancel" muted>
+        {order.status === 'OPEN' && (
+          <Button intent="danger" minimal>
+            <Icon icon="cross" intent="danger" />&nbsp;&nbsp;Cancel
+          </Button>
+        )}
       </Cell>
     </Row>
-  );
-};
+  )
+}
 
 const OrdersTableHeader = styled.div`
   display: grid;
@@ -107,15 +115,17 @@ const OrdersTableHeader = styled.div`
   justify-content: start;
   grid-gap: 10px;
   align-items: center;
-`;
-const Wrapper = styled(Card)``;
+`
+const Wrapper = styled(Card)``
 
 const Heading = styled.h3`
   margin: auto;
-`;
+`
+
 const ListContainer = styled.div`
   height: 100%;
-`;
+`
+
 const ListHeaderWrapper = styled.ul`
   width: 100%;
   display: flex;
@@ -123,14 +133,16 @@ const ListHeaderWrapper = styled.ul`
   justify-content: space-around;
   margin: 0px;
   margin-bottom: 10px;
-`;
+`
+
 const ListBodyWrapper = styled.ul`
   width: 100%;
   max-height: 300px;
   margin: 0;
   height: 90%;
   overflow-y: scroll;
-`;
+`
+
 const ListHeader = styled.li`
   width: 100%;
   display: flex;
@@ -141,27 +153,20 @@ const ListHeader = styled.li`
   span {
     font-weight: 600;
   }
-`;
+`
 
-const Row = styled.li.attrs({
-  className: 'row',
-})`
+const Row = styled.li.attrs({ className: 'row' })`
   width: 100%;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
-  padding: 7px;
   border: 1px transparent;
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
-`;
+`
 
-const Cell = styled.span.attrs({
-  className: props => props.className,
-})`
+const Cell = styled.span.attrs({ className: props => props.className })`
   color: ${props =>
     props.side === 'BUY'
       ? Colors.BUY
@@ -172,11 +177,14 @@ const Cell = styled.span.attrs({
           : Colors.WHITE}
 
   min-width: 35px;
-  width: 20%;
-`;
+  display: flex;
+  align-items: center;
+  height: 40px !important;
+  width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
+`
 
-const HeaderCell = styled.span`
-  width: 20%;
-`;
+const HeaderCell = styled.span.attrs({ className: props => props.className })`
+  width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
+`
 
-export default OrdersTableRenderer;
+export default OrdersTableRenderer
