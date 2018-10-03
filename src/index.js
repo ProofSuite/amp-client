@@ -5,19 +5,17 @@ import registerServiceWorker from './registerServiceWorker';
 import history from './store/history';
 import App from './app';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
 
 const { store } = configureStore();
 
 registerServiceWorker();
 
-const render = Component => {
+const render = (Component) => {
   return ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Component />
-      </ConnectedRouter>
-    </Provider>,
+      <Provider store={store}>
+          <Component history={history} />
+      </Provider>
+      ,
     document.getElementById('root')
   );
 };
@@ -26,6 +24,7 @@ render(App);
 
 if (module.hot) {
   module.hot.accept('./app', () => {
+    // render()
     const NextApp = require('./app').default;
     render(NextApp);
   });
