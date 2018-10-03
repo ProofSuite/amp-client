@@ -387,7 +387,7 @@ it('confirmTokenDeposit (transaction fails) updates the depositForm model correc
 
   let waitForTransaction = jest.fn(() => Promise.resolve(mockFailedTxReceipt));
   let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
-  let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction } }));
+  let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction, chainId: '8888' } }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve tx hash' }));
   let tokenContract = jest.fn(() => ({ approve }));
 

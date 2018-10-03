@@ -37,14 +37,15 @@ export const getOHLCV = async (
   }
 
   const data = await response.json()
+  const pricePointMultiplier = 1e4
 
   let parsedData = data.map(datum => {
     return {
       date: new Date(datum.timestamp),
-      open: Number(datum.open),
-      high: Number(datum.high),
-      low: Number(datum.low),
-      close: Number(datum.close),
+      open: Number(datum.open / pricePointMultiplier),
+      high: Number(datum.high / pricePointMultiplier),
+      low: Number(datum.low / pricePointMultiplier),
+      close: Number(datum.close / pricePointMultiplier),
       volume: datum.volume / 1000000000000000000
     }
   })

@@ -5,11 +5,11 @@ const networkID = process.env.REACT_APP_DEFAULT_NETWORK_ID || 'default';
 const quoteTokensTable = {
   '8888': [
     { symbol: 'WETH', address: addresses['8888']['WETH'] },
-    { symbol: 'MKR', address: addresses['8888']['MKR'] },
+    { symbol: 'DAI', address: addresses['8888']['DAI'] },
   ],
   '1000': [
     { symbol: 'WETH', address: addresses['1000']['WETH'] },
-    { symbol: 'MKR', address: addresses['1000']['MKR'] },
+    { symbol: 'DAI', address: addresses['1000']['DAI'] },
   ],
   default: [
     { symbol: 'WETH', address: '0x549638ff7b1038a1923f8e2c38b8c6fc50b8acb6' },
@@ -23,9 +23,9 @@ const quoteTokensBySymbolsTable = {
       symbol: 'WETH',
       address: addresses['8888']['WETH'],
     },
-    MKR: {
-      symbol: 'MKR',
-      address: addresses['8888']['MKR'],
+    DAI: {
+      symbol: 'DAI',
+      address: addresses['8888']['DAI'],
     },
   },
   '1000': {
@@ -33,9 +33,9 @@ const quoteTokensBySymbolsTable = {
       symbol: 'WETH',
       address: addresses['1000']['WETH'],
     },
-    MKR: {
-      symbol: 'MKR',
-      address: addresses['1000']['MKR'],
+    DAI: {
+      symbol: 'DAI',
+      address: addresses['1000']['DAI'],
     },
   },
   default: {

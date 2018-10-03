@@ -26,16 +26,18 @@ export const dataSaved = (data: OrderFormState) => {
     formName: data.formName,
     quoteToken: data.quoteToken,
     baseToken: data.baseToken,
-  });
-  return event;
+  })
+
+  return event
 };
 
 export const buyLimit = (data: OrderFormState) => {
   const event = (state: OrderFormState) => ({
     ...state,
     loading: false,
-  });
-  return event;
+  })
+
+  return event
 };
 
 export default function model(state: OrderFormState) {

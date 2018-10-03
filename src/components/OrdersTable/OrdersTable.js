@@ -7,7 +7,8 @@ import type { Order } from '../../types/Orders'
 
 type Props = {
   orders: Array<Order>,
-  authenticated: false
+  authenticated: false,
+  cancelOrder: string => void,
 }
 
 type State = {
@@ -28,15 +29,13 @@ class OrdersTable extends React.PureComponent<Props, State> {
   }
 
   toggleCollapse = () => {
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen
-    }))
+    this.setState(prevState => ({ isOpen: !prevState.isOpen }))
   }
 
   filterOrders = () => {
     const { orders } = this.props
     let result = { ALL: orders }
-    let filters = ['OPEN', 'CANCELED', 'PENDING', 'EXECUTED', 'PARTIALLY_FILLED']
+    let filters = ['OPEN', 'CANCELLED', 'PARTIALLY_FILLED', 'FILLED']
 
     for (let filter of filters) {
       // silence-error: currently too many flow errors, waiting for rest to be resolved
@@ -44,6 +43,9 @@ class OrdersTable extends React.PureComponent<Props, State> {
         return order.status === filter
       })
     }
+
+    //The partially filled orders are considered to be in the OPEN section
+    result['OPEN'] = result['OPEN'].concat(result['PARTIALLY_FILLED'])
 
     for (let filter of filters.concat('ALL')) {
       // silence-error: currently too many flow errors, waiting for rest to be resolved
@@ -54,10 +56,10 @@ class OrdersTable extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { authenticated, orders } = this.props
+    const { authenticated, orders, cancelOrder } = this.props
     const { selectedTabId, isOpen } = this.state
     const filteredOrders = this.filterOrders()
-    const loading = orders.length < 1
+    const loading = orders.length === []
 
     return (
       <OrdersTableRenderer
@@ -67,6 +69,7 @@ class OrdersTable extends React.PureComponent<Props, State> {
         onChange={this.changeTab}
         toggleCollapse={this.toggleCollapse}
         authenticated={authenticated}
+        cancelOrder={cancelOrder}
         // silence-error: currently too many flow errors, waiting for rest to be resolved
         orders={filteredOrders}
       />

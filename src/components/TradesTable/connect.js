@@ -4,9 +4,12 @@ import tradesTableSelector from '../../store/models/tradesTable';
 import type { State } from '../../types';
 
 export const mapStateToProps = (state: State) => {
+  let selector = tradesTableSelector(state)
+
   return {
-    trades: tradesTableSelector(state).trades(),
-    currentPair: tradesTableSelector(state).currentPair(),
+    trades: selector.trades(),
+    userTrades: selector.userTrades(),
+    currentPair: selector.currentPair(),
   };
 };
 

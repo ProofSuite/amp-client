@@ -24,6 +24,7 @@ export default function walletPageSelector(state: State) {
     depositTableData: depositTableData,
     accountAddress: accountDomain.address(),
     accountPrivateKey: accountDomain.privateKey(),
+    authenticated: accountDomain.authenticated(),
     tokens: tokenDomain.tokens(),
     currentBlock: accountDomain.currentBlock(),
     provider: 'Provider Type',

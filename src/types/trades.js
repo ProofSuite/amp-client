@@ -1,6 +1,6 @@
 type TradesState = {
-  byTimestamp: { number: Order },
-};
+  byTimestamp: { number: Order }
+}
 
 type Trade = {
   time: number,
@@ -8,11 +8,13 @@ type Trade = {
   amount: number,
   hash: string,
   orderHash: string,
+  takerOrderHash: string,
+  status: 'SUCCESS' | 'ERROR' | 'PENDING',
   type: 'MARKET' | 'LIMIT',
   side: 'BUY' | 'SELL',
   pair: string,
   maker: string,
-  taker: string,
-};
+  taker: string
+}
 
-type Trades = Array<Trade>;
+type Trades = Array<Trade>

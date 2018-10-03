@@ -54,10 +54,10 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
       dispatch(ohlcvActionCreators.saveData(ohlcv))
 
       let { bids, asks } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
-      dispatch(actionCreators.updateOrderBook(bids, asks))
+      dispatch(actionCreators.initOrderBook(bids, asks))
 
       let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
-      dispatch(actionCreators.updateTradesTable(trades))
+      dispatch(actionCreators.initTradesTable(trades))
     } catch (e) {
       console.log(e)
     }

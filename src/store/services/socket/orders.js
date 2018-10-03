@@ -3,10 +3,10 @@ export const sendNewOrderMessage = async orderPayload => {
 
   let message = JSON.stringify({
     channel: 'orders',
-    payload: {
+    event: {
       type: 'NEW_ORDER',
       hash: orderPayload.hash,
-      data: orderPayload
+      payload: orderPayload
     }
   })
 
@@ -18,10 +18,10 @@ export const sendNewOrderCancelMessage = orderCancelPayload => {
 
   let message = JSON.stringify({
     channel: 'orders',
-    payload: {
+    event: {
       type: 'CANCEL_ORDER',
       hash: orderCancelPayload.hash,
-      data: orderCancelPayload
+      payload: orderCancelPayload
     }
   })
 
@@ -33,14 +33,12 @@ export const sendNewSubmitSignatureMessage = (hash, matches, order) => {
 
   let message = JSON.stringify({
     channel: 'orders',
-    payload: {
+    event: {
       type: 'SUBMIT_SIGNATURE',
       hash: hash,
-      data: { order, matches }
+      payload: { order, matches }
     }
   })
-
-  console.log(message)
 
   window.socket.send(message)
 }

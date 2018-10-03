@@ -1,5 +1,5 @@
 import { utils } from 'ethers'
-import { getOrderHash, getTradeHash, getRandomNonce } from '../../../utils/crypto'
+import { getOrderHash, getOrderCancelHash, getTradeHash, getRandomNonce } from '../../../utils/crypto'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { round } from '../../../utils/helpers'
 
@@ -82,4 +82,16 @@ export const createRawOrder = async function(params) {
   order.signature = { R: r, S: s, V: v }
 
   return order
+}
+
+export const createOrderCancel = async function(orderHash) {
+  let orderCancel = {}
+  orderCancel.orderHash = orderHash
+  orderCancel.hash = getOrderCancelHash(orderCancel)
+
+  let signature = await this.signMessage(utils.arrayify(orderCancel.hash))
+  let { r, s, v } = utils.splitSignature(signature)
+  orderCancel.signature = { R: r, S: s, V: v }
+
+  return orderCancel
 }

@@ -55,7 +55,7 @@ describe('Order Domain', () => {
   //TODO replace with real order values or with test keys ?
   it('handles the orders updated event', () => {
     let expected = {
-      '1504567900560': {
+      '0x239c611ce10346eba1fe08dbc5542499a1e6bf5675070fa7ef809dc85d75f7c9': {
         amount: 3606.63,
         price: 53983.52,
         type: 'MARKET',
@@ -67,7 +67,7 @@ describe('Order Domain', () => {
         pair: 'OMG_WETH',
         time: 1504567900560,
       },
-      '1506911142876': {
+      '0x8c3122d67b7836f641a39e694b3b61f817ced9a9131d4287db30e1f05494f46a': {
         amount: 5765.64,
         price: 98517.23,
         type: 'MARKET',
@@ -79,7 +79,7 @@ describe('Order Domain', () => {
         pair: 'BNB_WETH',
         time: 1506911142876,
       },
-      '1511091286778': {
+      '0x5960fda2d7d3451272bca059a09e6d92b796bb9f8b5cc9d2a7d39f93e0c17346': {
         amount: 2885.5,
         price: 23798.09,
         type: 'LIMIT',

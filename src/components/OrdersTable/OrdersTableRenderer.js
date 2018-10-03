@@ -12,17 +12,18 @@ type Props = {
   onChange: string => void,
   isOpen: boolean,
   toggleCollapse: void => void,
+  cancelOrder: string => void,
   orders: {
     ALL: Array<Order>,
     OPEN: Array<Order>,
     PENDING: Array<Order>,
     EXECUTED: Array<Order>,
-    CANCELED: Array<Order>
+    CANCELLED: Array<Order>
   }
 }
 
 const OrdersTableRenderer = (props: Props) => {
-  const { loading, selectedTabId, onChange, orders, isOpen, toggleCollapse } = props
+  const { loading, selectedTabId, onChange, cancelOrder, orders, isOpen, toggleCollapse } = props
   return (
     <Wrapper className="order-history">
       <OrdersTableHeader>
@@ -31,27 +32,18 @@ const OrdersTableRenderer = (props: Props) => {
       </OrdersTableHeader>
       <Collapse isOpen={isOpen}>
         <Tabs selectedTabId={selectedTabId} onChange={onChange}>
-          <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} />} />
-          <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} />} />
-          <Tab
-            id="canceled"
-            title="CANCELED"
-            panel={<OrdersTablePanel loading={loading} orders={orders['CANCELED']} />}
-          />
-          <Tab id="pending" title="PENDING" panel={<OrdersTablePanel loading={loading} orders={orders['PENDING']} />} />
-          <Tab
-            id="executed"
-            title="EXECUTED"
-            panel={<OrdersTablePanel loading={loading} orders={orders['EXECUTED']} />}
-          />
+          <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} cancelOrder={cancelOrder} />} />
+          <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} cancelOrder={cancelOrder} />} />
+          <Tab id="cancelled" title="CANCELLED" panel={<OrdersTablePanel loading={loading} orders={orders['CANCELLED']} cancelOrder={cancelOrder} />} />
+          <Tab id="executed" title="EXECUTED" panel={<OrdersTablePanel loading={loading} orders={orders['FILLED']} cancelOrder={cancelOrder} />} />
         </Tabs>
       </Collapse>
     </Wrapper>
   )
 }
 
-const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order> }) => {
-  const { loading, orders } = props
+const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order>, cancelOrder: string => void }) => {
+  const { loading, orders, cancelOrder } = props
   return loading ? (
     <Loading />
   ) : orders.length < 1 ? (
@@ -70,14 +62,15 @@ const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order> }) => 
         </ListHeader>
       </ListHeaderWrapper>
       <ListBodyWrapper className="list">
-        {orders.map((order, index) => <OrderRow key={index} order={order} index={index} />)}
+        {orders.map((order, index) => <OrderRow key={index} order={order} index={index} cancelOrder={cancelOrder} />)}
       </ListBodyWrapper>
     </ListContainer>
   )
 }
 
-const OrderRow = (props: { order: Order, index: number }) => {
-  const { order } = props
+const OrderRow = (props: { order: Order, index: number, cancelOrder: string => void }) => {
+  const { order, cancelOrder } = props
+
   return (
     <Row>
       <Cell className="pair" muted>
@@ -100,7 +93,7 @@ const OrderRow = (props: { order: Order, index: number }) => {
       </Cell>
       <Cell className="cancel" muted>
         {order.status === 'OPEN' && (
-          <Button intent="danger" minimal>
+          <Button intent="danger" minimal onClick={() => cancelOrder(order.hash)} >
             <Icon icon="cross" intent="danger" />&nbsp;&nbsp;Cancel
           </Button>
         )}

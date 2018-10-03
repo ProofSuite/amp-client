@@ -17,6 +17,47 @@ export const initialized = () => {
   return event
 }
 
+export const orderBookInitialized = (bids: Array<Object>, asks: Array<Object>) => {
+  const event = (state: OrderBookState) => {
+    let newBids = bids.reduce((result, item) => {
+      result[item.price] = {
+        ...state[item.price],
+        ...item
+      }
+      return result
+    }, {})
+
+    let newAsks = asks.reduce((result, item) => {
+      result[item.price] = {
+        ...state[item.price],
+        ...item
+      }
+      return result
+    }, {})
+
+    let newSortedBids = new SortedArray([], (a, b) => b - a)
+    let newSortedAsks = new SortedArray([])
+
+    for (let bid in newBids) {
+      if (newSortedBids.search(bid) === -1) newSortedBids.insert(bid)
+    }
+
+    for (let ask in newAsks) {
+      if (newSortedAsks.search(ask) === -1) newSortedAsks.insert(ask)
+    }
+
+    return {
+      ...state,
+      bids: newBids,
+      asks: newAsks,
+      sortedBids: newSortedBids.array,
+      sortedAsks: newSortedAsks.array
+    }
+  }
+
+  return event
+}
+
 export const orderBookUpdated = (bids: Array<Object>, asks: Array<Object>) => {
   const event = (state: OrderBookState) => {
     let newBids = bids.reduce((result, item) => {
@@ -35,17 +76,15 @@ export const orderBookUpdated = (bids: Array<Object>, asks: Array<Object>) => {
       return result
     }, {})
 
-    let newSortedBids = new SortedArray(state.sortedBids, (a, b) => {
-      return b - a
-    })
+    let newSortedBids = new SortedArray(state.sortedBids, (a, b) => b - a)
     let newSortedAsks = new SortedArray(state.sortedAsks)
 
     for (let bid in newBids) {
-      newSortedBids.insert(bid)
+      if (newSortedBids.search(bid) === -1) newSortedBids.insert(bid)
     }
 
     for (let ask in newAsks) {
-      newSortedAsks.insert(ask)
+      if (newSortedAsks.search(ask) === -1) newSortedAsks.insert(ask)
     }
 
     return {
@@ -88,12 +127,14 @@ export default function domain(state: OrderBookState) {
     getOrderedBids: () => state.sortedBids.map(price => state.bids[price]),
     getOrderedAsks: () => state.sortedAsks.map(price => state.asks[price]),
     getOrderBookData: (ln: number) => {
+      ln = ln || 300
+
       let bids = state.sortedBids
-        .slice(0, ln)
+        .slice(0, Math.max(state.sortedBids.length, ln))
         .map(price => state.bids[price])
         .reduce((result, item) => {
           result.push({
-            price: round(item.price),
+            price: item.price,
             amount: item.amount,
             total: result.length > 0 ? round(result[result.length - 1].total + item.amount) : round(item.amount)
           })
@@ -102,11 +143,11 @@ export default function domain(state: OrderBookState) {
         }, [])
 
       let asks = state.sortedAsks
-        .slice(0, ln)
+        .slice(0, Math.max(state.sortedAsks.length, ln))
         .map(price => state.asks[price])
         .reduce((result, item) => {
           result.push({
-            price: round(item.price / 100),
+            price: item.price,
             amount: item.amount,
             total: result.length > 0 ? round(result[result.length - 1].total + item.amount) : round(item.amount)
           })

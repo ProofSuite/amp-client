@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 
 import type { TokenData } from '../../types/tokens'
 
-type Props = {
+export type Props = {
   loading: boolean,
   provider: string,
   pvtKeyLocked: boolean,
@@ -25,7 +25,6 @@ type Props = {
 class WalletPage extends React.PureComponent<Props> {
   componentDidMount() {
     const { authenticated, queryAccountData } = this.props
-
     if (authenticated) queryAccountData()
   }
 

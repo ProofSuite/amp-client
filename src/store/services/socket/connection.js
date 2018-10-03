@@ -24,58 +24,55 @@ export const openConnection = (listener: Listener) => {
 export const onMessage = (listener: Listener) => {
   if (!window.socket) throw new Error('Socket connection not established')
 
-  window.socket.onmessage = event => {
-    let message = JSON.parse(event.data)
-    console.log(message)
-
-    let { channel, payload } = message
-    return listener(channel, payload)
+  window.socket.onmessage = message => {
+    let { channel, event } = JSON.parse(message.data)
+    return listener({ channel, event })
   }
 }
 
-export const parseOrderMessages = (payload: Payload, listener: Listener) => {
-  let { msgType, data } = payload
+// export const parseOrderMessages = (payload: Payload, listener: Listener) => {
+//   let { msgType, data } = payload
 
-  switch (msgType) {
-    case 'ORDER_ADDED':
-      return listener(msgType, data)
-    case 'ORDER_CANCELED':
-      return listener(msgType, data)
-    case 'REQUEST_SIGNATURE':
-      return listener(msgType, data)
-    case 'ORDER_SUCCESS':
-      return listener(msgType, data)
-    case 'ORDER_PENDING':
-      return listener(msgType, data)
-    case 'ORDER_ERROR':
-      return listener(msgType, data)
-    default:
-      return
-  }
-}
+//   switch (msgType) {
+//     case 'ORDER_ADDED':
+//       return listener(msgType, data)
+//     case 'ORDER_CANCELED':
+//       return listener(msgType, data)
+//     case 'REQUEST_SIGNATURE':
+//       return listener(msgType, data)
+//     case 'ORDER_SUCCESS':
+//       return listener(msgType, data)
+//     case 'ORDER_PENDING':
+//       return listener(msgType, data)
+//     case 'ORDER_ERROR':
+//       return listener(msgType, data)
+//     default:
+//       return
+//   }
+// }
 
-export const parseOrderBookMessage = (payload: Payload, listener: Listener) => {
-  let { msgType, data } = payload
+// export const parseOrderBookMessage = (payload: Payload, listener: Listener) => {
+//   let { msgType, data } = payload
 
-  switch (msgType) {
-    case 'INIT':
-      return listener(msgType, data)
-    case 'UPDATE':
-      return listener(msgType, data)
-    default:
-      return
-  }
-}
+//   switch (msgType) {
+//     case 'INIT':
+//       return listener(msgType, data)
+//     case 'UPDATE':
+//       return listener(msgType, data)
+//     default:
+//       return
+//   }
+// }
 
-export const parseTradesMessage = (payload: Payload, listener: Listener) => {
-  let { msgType, data } = payload
+// export const parseTradesMessage = (payload: Payload, listener: Listener) => {
+//   let { msgType, data } = payload
 
-  switch (msgType) {
-    case 'INIT':
-      return listener(msgType, data)
-    case 'UPDATE':
-      return listener(msgType, data)
-    default:
-      return
-  }
-}
+//   switch (msgType) {
+//     case 'INIT':
+//       return listener(msgType, data)
+//     case 'UPDATE':
+//       return listener(msgType, data)
+//     default:
+//       return
+//   }
+// }

@@ -9276,6 +9276,12 @@ styled-css-grid@^0.11.0:
   dependencies:
     prop-types "^15.6.0"
 
+styled-system@^3.0.1:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-3.1.6.tgz#286448a62932b1f7ed98075d1a520afd52da97d1"
+  dependencies:
+    prop-types "^15.6.2"
+
 styled-system@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-3.0.2.tgz#2189a6d829117d212fb6ac8ebc4260fdb75d1109"
@@ -9371,6 +9377,12 @@ symbol.prototype.description@^1.0.0:
   resolved "https://registry.yarnpkg.com/symbol.prototype.description/-/symbol.prototype.description-1.0.0.tgz#6e355660eb1e44ca8ad53a68fdb72ef131ca4b12"
   dependencies:
     has-symbols "^1.0.0"
+
+system-components@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/system-components/-/system-components-3.0.1.tgz#a4e7d8a7b184aa0612245a4f1bd54b408132e0c0"
+  dependencies:
+    styled-system "^3.0.1"
 
 table@^4.0.1:
   version "4.0.3"

@@ -21,7 +21,6 @@ type State = {
   selectedTabId: string,
   price: string,
   stopPrice: string,
-  limitPrice: string,
   amount: string,
   total: string,
   isOpen: boolean
@@ -36,24 +35,26 @@ class OrderForm extends React.PureComponent<Props, State> {
     quoteTokenBalance: 0
   }
 
-  state = {
-    fraction: 0,
-    isOpen: true,
-    priceType: 'null',
-    selectedTabId: 'limit',
-    price: '0.0',
-    stopPrice: '0.0',
-    limitPrice: '0.0',
-    amount: '0.0',
-    total: '0.0'
-  }
+  constructor(props: Props) {
+    super(props)
 
-  componentDidMount() {
-    const { side, askPrice, bidPrice } = this.props
+    let price
+    //TODO: not quite sure whether the suggested price should be equal to
+    //the ask price, the bid price or somewhere in between
+    props.side === 'SELL'
+      ? price = this.props.bidPrice
+      : price = this.props.askPrice
 
-    side === 'BUY'
-      ? this.setState({ price: formatNumber(askPrice, { precision: 3 }) })
-      : this.setState({ price: formatNumber(bidPrice, { precision: 3 }) })
+    this.state = {
+      fraction: 0,
+      isOpen: true,
+      priceType: 'null',
+      selectedTabId: 'limit',
+      price: formatNumber(price, { precision: 3 }),
+      stopPrice: formatNumber(price, { precision: 3 }),
+      amount: '0.0',
+      total: '0.0'
+    }
   }
 
   onInputChange = ({ target }: Object) => {
@@ -61,9 +62,6 @@ class OrderForm extends React.PureComponent<Props, State> {
     switch (target.name) {
       case 'stopPrice':
         this.handleStopPriceChange(target.value)
-        break
-      case 'limitPrice':
-        this.handleLimitPriceChange(target.value)
         break
       case 'price':
         this.handlePriceChange(target.value)
@@ -87,7 +85,6 @@ class OrderForm extends React.PureComponent<Props, State> {
   handleSendOrder = () => {
     let { amount, price } = this.state
     let { side } = this.props
-    // const { side, baseToken, quoteToken, baseTokenBalance, quoteTokenBalance } = this.props
 
     amount = unformat(amount)
     price = unformat(price)
@@ -131,19 +128,6 @@ class OrderForm extends React.PureComponent<Props, State> {
       total: formatNumber(total, { precision: 3 }),
       amount: formatNumber(amount, { precision: 3 }),
       price: price
-    })
-  }
-
-  handleLimitPriceChange = (limitPrice: string) => {
-    let { amount, stopPrice } = this.state
-
-    amount = unformat(amount)
-    stopPrice = unformat(stopPrice)
-
-    this.setState({
-      amount: formatNumber(amount, { precision: 3 }),
-      stopPrice: formatNumber(stopPrice, { precision: 3 }),
-      limitPrice: limitPrice
     })
   }
 
@@ -208,7 +192,6 @@ class OrderForm extends React.PureComponent<Props, State> {
       priceType: 'null',
       price: '',
       stopPrice: '',
-      limitPrice: '',
       amount: '',
       total: ''
     })
@@ -224,21 +207,28 @@ class OrderForm extends React.PureComponent<Props, State> {
     }
   }
 
-  handleSubmit = () => {}
-
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }))
   }
 
   render() {
     const {
-      state: { selectedTabId, fraction, priceType, price, isOpen, stopPrice, limitPrice, amount, total },
-      props: { side, baseToken, loggedIn, quoteToken },
+      state: { selectedTabId, fraction, priceType, price, isOpen, amount, total },
+      props: { side, baseToken, loggedIn, quoteToken, baseTokenBalance, quoteTokenBalance },
       onInputChange,
       handleChangeOrderType,
-      handleSubmit,
       toggleCollapse
     } = this
+
+    let maxAmount
+    (price !== '0.000')
+    ? maxAmount = side === 'BUY'
+      ? formatNumber(quoteTokenBalance / unformat(price), { decimals: 3 })
+      : formatNumber(baseTokenBalance / unformat(price), { decimals: 3 })
+    : maxAmount = '0.0'
+
+
+    let insufficientBalance = (unformat(amount) > unformat(maxAmount))
 
     return (
       <OrderFormRenderer
@@ -247,18 +237,17 @@ class OrderForm extends React.PureComponent<Props, State> {
         fraction={fraction}
         priceType={priceType}
         price={price}
-        stopPrice={stopPrice}
-        limitPrice={limitPrice}
+        maxAmount={maxAmount}
         amount={amount}
         total={total}
         isOpen={isOpen}
         baseToken={baseToken}
         quoteToken={quoteToken}
+        insufficientBalance={insufficientBalance}
         loggedIn={loggedIn}
         onInputChange={onInputChange}
         toggleCollapse={toggleCollapse}
         handleChangeOrderType={handleChangeOrderType}
-        handleSubmit={handleSubmit}
       />
     )
   }
