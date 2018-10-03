@@ -1,12 +1,31 @@
 // @flow
 import type { Orders, OrdersState } from '../../types/orders'
+import { formatNumber } from 'accounting-js'
 
 const initialState = {
   byHash: {}
 }
 
+// file.only
+
 export const initialized = () => {
   const event = (state: OrdersState = initialState) => state
+  return event
+}
+
+export function ordersInitialized(orders: Orders) {
+  const event = (state: OrdersState) => {
+    let newState = orders.reduce((result, item) => {
+      result[item.hash] = {
+        ...state[item.hash],
+        ...item
+      }
+      return result
+    }, {})
+
+    return { byHash: newState }
+  }
+
   return event
 }
 
@@ -53,8 +72,14 @@ export default function ordersDomain(state: OrdersState) {
 
     lastOrders: (n: number) => {
       let orders = Object.values(state.byHash)
-      let last = (orders: Orders).slice(Math.max(orders.length - n, 1))
-      return last
+      orders = (orders: Orders).slice(Math.max(orders.length - n, 1))
+      orders = (orders: Orders).map(order => {
+        order.amount = formatNumber(order.amount, { precision: 2 })
+        order.price = formatNumber(order.price, { precision: 2 })
+        return order
+      })
+
+      return orders
     },
     history: () => {
       let orders = Object.values(state.byHash)

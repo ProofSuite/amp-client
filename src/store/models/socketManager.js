@@ -1,41 +1,17 @@
+//@flow
 import * as appActionCreators from '../actions/app'
 import * as actionCreators from '../actions/socketManager'
 import { getAccountDomain } from '../domains'
 import { getSigner } from '../services/signer'
 import { getRandomNonce } from '../../utils/crypto'
-import { signOrder } from '../services/signer/methods'
+import { parseOrder } from '../../utils/parsers'
+
+import type { State, ThunkAction } from '../../types/'
+import type { WebsocketEvent, WebsocketMessage } from '../../types/websocket'
 
 export default function socketManagerSelector(state: State) {
   return {
     authenticated: getAccountDomain(state).authenticated()
-  }
-}
-
-// eslint-disable-next-line
-export function subscribeChart(pair: string, increment: number): ThunkAction {
-  return (dispatch, getState, { socket }) => {
-    dispatch(actionCreators.subscribeChart(pair))
-
-    //add something to verify if the subscribtion is needed
-    const unsubscribe = socket.subscribeChart(pair, increment)
-
-    return () => {
-      dispatch(actionCreators.unsubscribeChart(pair))
-      unsubscribe()
-    }
-  }
-}
-
-export function subscribeOrderBook(pair: string): ThunkAction {
-  return (dispatch, getState, { socket }) => {
-    dispatch(actionCreators.subscribeOrderBook(pair))
-
-    const unsubscribe = socket.subscribeOrderBook(pair)
-
-    return () => {
-      dispatch(actionCreators.unsubscribeOrderBook(pair))
-      unsubscribe()
-    }
   }
 }
 
@@ -59,16 +35,18 @@ export function openConnection(): ThunkAction {
       }
     })
 
-    socket.onMessage((channel, payload) => {
+    socket.onMessage((message: WebsocketMessage) => {
+      let { channel, event } = message
+
       switch (channel) {
         case 'orders':
-          return handleOrderMessage(dispatch, payload)
+          return handleOrderMessage(dispatch, event)
         case 'orderbook':
-          return handleOrderBookMessage(dispatch, payload)
+          return handleOrderBookMessage(dispatch, event)
         case 'trades':
-          return handleTradesMessage(dispatch, payload)
+          return handleTradesMessage(dispatch, event)
         case 'ohlcv':
-          return handleOHLCVMessage(dispatch, payload)
+          return handleOHLCVMessage(dispatch, event)
         default:
           console.log('Receiving unknown message')
           break
@@ -93,95 +71,138 @@ const handleWebsocketErrorMessage = (dispatch, event, closeConnection) => {
   console.log(event)
 }
 
-const handleOrderMessage = (dispatch, payload) => {
-  const { type, hash, data } = payload
+const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
+  const { type } = event
 
   switch (type) {
     case 'ORDER_ADDED':
-      return dispatch(handleOrderAdded(data.order))
-    case 'ORDER_CANCELED':
-      return dispatch(handleOrderCanceled(data.order))
+      return dispatch(handleOrderAdded(event))
+    case 'ORDER_CANCELLED':
+      return dispatch(handleOrderCancelled(event))
     case 'ORDER_SUCCESS':
-      return dispatch(handleOrderSuccess(data.order))
+      return dispatch(handleOrderSuccess(event))
     case 'ORDER_PENDING':
-      return dispatch(handleOrderPending(data.order))
+      return dispatch(handleOrderPending(event))
     case 'REQUEST_SIGNATURE':
-      return dispatch(handleRequestSignature(payload))
+      return dispatch(handleRequestSignature(event))
     case 'ORDER_ERROR':
-      return dispatch(handleOrderError(payload))
+      return dispatch(handleOrderError(event))
     default:
-      console.log('Unknown')
+      console.log('Unknown', event)
       return
   }
 }
 
-function handleOrderAdded(order: RawOrder): ThunkAction {
+function handleOrderAdded(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
+    let order = parseOrder(event.payload)
+
     dispatch(appActionCreators.addSuccessNotification({ message: 'Order added' }))
-    return dispatch(actionCreators.updateOrdersTable([order]))
+    dispatch(actionCreators.updateOrdersTable([order]))
   }
 }
 
-function handleOrderCanceled(order: RawOrder): ThunkAction {
+function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    dispatch(appActionCreators.addSuccessNotification({ message: 'Order canceled' }))
-    return dispatch(actionCreators.updateOrdersTable([order]))
+    let order = parseOrder(event.payload)
+
+    dispatch(appActionCreators.addSuccessNotification({ message: 'Order cancelled' }))
+    dispatch(actionCreators.updateOrdersTable([order]))
   }
 }
 
-function handleOrderSuccess(order: RawOrder): ThunkAction {
+function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    dispatch(appActionCreators.addSuccessNotification({ message: 'Order success' }))
-    return dispatch(actionCreators.updateOrdersTable([order]))
+    try {
+      let order = parseOrder(event.payload.order)
+
+      dispatch(appActionCreators.addSuccessNotification({ message: 'Order success' }))
+      dispatch(actionCreators.updateOrdersTable([order]))
+    } catch(e) {
+      console.log(e)
+      dispatch(appActionCreators.addDangerNotification({ message: 'Unknown error' }))
+    }
   }
 }
 
-function handleOrderPending(order: RawOrder): ThunkAction {
+function handleOrderPending(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    dispatch(appActionCreators.addSuccessNotification({ message: 'Order pending' }))
-    return dispatch(actionCreators.updateOrdersTable([order]))
+    try {
+      let order = parseOrder(event.payload.order)
+      dispatch(appActionCreators.addSuccessNotification({ message: 'Order pending' }))
+      dispatch(actionCreators.updateOrdersTable([order]))
+
+    } catch (e) {
+      console.log(e)
+      dispatch(appActionCreators.addDangerNotification({ message: 'Unknown error '}))
+    }
   }
 }
 
-function handleOrderError(order: RawOrder): ThunkAction {
+function handleOrderError(event: WebsocketEvent): ThunkAction {
   return async dispatch => {
+    // let order = parseOrder(event.payload)
+
     dispatch(appActionCreators.addSuccessNotification({ message: 'Order error' }))
-    return dispatch(actionCreators.updateOrdersTable([order]))
+    // return dispatch(actionCreators.updateOrdersTable([order]))
   }
 }
 
-function handleRequestSignature(payload): ThunkAction {
+function handleRequestSignature(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    let { data, hash } = payload
+    let { payload, hash } = event
     let signer = getSigner()
 
-    if (data.matches != null) {
-      data.matches.map(match => (match.trade.tradeNonce = getRandomNonce()))
-      let promises = data.matches.map(match => signer.signTrade(match.trade))
+    if (payload.matches != null) {
+      payload.matches.map(match => (match.trade.tradeNonce = getRandomNonce()))
+      let promises = payload.matches.map(match => signer.signTrade(match.trade))
       await Promise.all(promises)
     }
 
-    if (data.order != null) {
-      signer.signOrder(data.order)
+    if (payload.order != null) {
+      signer.signOrder(payload.order)
     }
 
     dispatch(appActionCreators.addSuccessNotification({ message: 'Signing trade' }))
-    socket.sendNewSubmitSignatureMessage(hash, data.matches, data.order)
+    socket.sendNewSubmitSignatureMessage(hash, payload.matches, payload.order)
   }
 }
 
-const handleOrderBookMessage = payload => {
-  console.log('Receiving orderbook message', payload)
+const handleOrderBookMessage = (dispatch, event: WebsocketMessage) => {
+  switch (event.type) {
+    case 'INIT':
+      return dispatch(handleOrderAdded(event))
+    case 'UPDATE':
+      let { order } = event.payload
+      // return dispatch(actionCreators.updateOrderBookTable([order]))
+    default:
+      return
+  }
 }
 
-const handleTradesMessage = payload => {
-  console.log('Receiving trades message', payload)
+const handleTradesMessage = (dispatch, event: WebsocketMessage) => {
+    switch(event.type) {
+      case 'INIT':
+        console.log('INIT trades message received', event)
+      case 'UPDATE':
+        let { trade } = event.payload
+        return dispatch(actionCreators.updateTradesTable([trade]))
+      default:
+        return
+    }
 }
 
-const handleOHLCVMessage = payload => {
-  console.log('Receiving OHLCV message', payload)
+const handleOHLCVMessage = (dispatch, event: WebsocketMessage) => {
+    switch(event.type) {
+      case 'INIT':
+        return dispatch()
+      case 'UPDATE':
+        return dispatch()
+      default:
+        return
+    }
 }
 
-const handleRawOrdersMessage = payload => {
-  console.log('Receiving raw order message', payload)
+const handleRawOrdersMessage = (dispatch, event: WebsocketMessage) => {
+  console.log('Receiving raw order message', event)
 }

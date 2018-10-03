@@ -14,7 +14,7 @@ let maxPrice = 100000;
 
 const randomOrderSide = () => (randInt(0, 1) === 1 ? 'BUY' : 'SELL');
 const randomOrderType = () => ['MARKET', 'LIMIT'][randInt(0, 1)];
-const randomOrderStatus = () => ['EXECUTED', 'CANCELED', 'PARTIALLY_FILLED'][randInt(0, 2)];
+const randomOrderStatus = () => ['EXECUTED', 'CANCELLED', 'PARTIALLY_FILLED'][randInt(0, 2)];
 const randomPair = () => pairs[randInt(0, 5)];
 const randomFee = () => rand(10000, 100000);
 const randomAmount = () => rand(minAmount, maxAmount);
@@ -40,7 +40,7 @@ for (let i = 0; i < 200; i++) {
     createdAt: randomTimestamp(),
   };
 
-  if (order.status === 'CANCELED') {
+  if (order.status === 'CANCELLED') {
     order.filledAmount = 0;
   } else if (order.status === 'PARTIALLY_FILLED') {
     order.filledAmount = order.amount * randomRatio();

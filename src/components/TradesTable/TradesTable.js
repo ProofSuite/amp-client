@@ -11,19 +11,19 @@ type State = {
 
 type Props = {
   trades: Array<Trade>,
+  userTrades: Array<Trade>,
   currentPair: TokenPair,
 };
 
 class TradesTable extends React.PureComponent<Props, State> {
+
   state = {
-    selectedTabId: 'all',
+    selectedTabId: 'Market',
     isOpen: true,
   };
 
   changeTab = (tabId: string) => {
-    this.setState({
-      selectedTabId: tabId,
-    });
+    this.setState({ selectedTabId: tabId });
   };
 
   toggleCollapse = () => {
@@ -32,21 +32,19 @@ class TradesTable extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { trades, currentPair },
+      props: { trades, userTrades, currentPair },
       state: { selectedTabId, isOpen },
       changeTab,
       toggleCollapse,
     } = this;
 
-    const sortedMarketTradeHistory = trades;
-    const sortedUserTradeHistory = trades;
     return (
       <TradesTableRenderer
         selectedTabId={selectedTabId}
         currentPair={currentPair}
         onChange={changeTab}
-        tradeHistory={sortedMarketTradeHistory}
-        userTradeHistory={sortedUserTradeHistory}
+        trades={trades}
+        userTrades={userTrades}
         isOpen={isOpen}
         toggleCollapse={toggleCollapse}
       />
@@ -54,4 +52,4 @@ class TradesTable extends React.PureComponent<Props, State> {
   }
 }
 
-export default TradesTable;
+export default TradesTable

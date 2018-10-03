@@ -8,13 +8,15 @@ describe('createProvider', () => {
   let listAccounts
   let getBlockNumber
   let getSigner
+  let getAddress
 
   beforeEach(() => {
     jest.clearAllMocks()
 
     getBlockNumber = jest.fn(() => Promise.resolve('test blockNumber'))
     listAccounts = jest.fn(() => Promise.resolve(['test address']))
-    getSigner = jest.fn(() => 'test signer')
+    getAddress = jest.fn(() => Promise.resolve('test address'))
+    getSigner = jest.fn(() => ({ getAddress }))
     providerMock = { getBlockNumber, listAccounts, getSigner }
 
     providers.getDefaultProvider.mockReturnValue(providerMock)
@@ -40,7 +42,10 @@ describe('createProvider', () => {
     expect(settings).toEqual({ type: 'metamask' })
     expect(address).toEqual({ address: 'test address', networkId: 8888 })
     expect(providers.Web3Provider).toHaveBeenCalledTimes(1)
-    expect(window.signer.instance).toBe('test signer')
+    expect(window.signer.instance).toHaveProperty('signOrder')
+    expect(window.signer.instance).toHaveProperty('signTrade')
+    expect(window.signer.instance).toHaveProperty('createRawOrder')
+    expect(window.signer.instance).toHaveProperty('createOrderCancel')
     expect(window.signer.type).toEqual('metamask')
   })
 
@@ -56,7 +61,10 @@ describe('createProvider', () => {
       name: 'unspecified'
     })
 
-    expect(window.signer.instance).toBe('test signer')
+    expect(window.signer.instance).toHaveProperty('signOrder')
+    expect(window.signer.instance).toHaveProperty('signTrade')
+    expect(window.signer.instance).toHaveProperty('createRawOrder')
+    expect(window.signer.instance).toHaveProperty('createOrderCancel')
     expect(window.signer.type).toEqual('local')
   })
 })

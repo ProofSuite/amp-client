@@ -1,7 +1,8 @@
 // @flow
 import React from 'react'
 import { Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
-import { HeaderText, MutedText } from '../Common'
+import { HeaderText, MutedText, Box } from '../Common'
+import { formatNumber, unformat } from 'accounting-js'
 import styled from 'styled-components'
 
 type Props = {
@@ -10,18 +11,17 @@ type Props = {
   fraction: number,
   priceType: string,
   price: string,
-  stopPrice: string,
-  limitPrice: string,
   amount: string,
+  maxAmount: string,
   total: string,
   baseToken: string,
   quoteToken: string,
   isOpen: boolean,
+  insufficientBalance: boolean,
   loggedIn: boolean,
   onInputChange: Object => void,
   handleChangeOrderType: string => void,
   toggleCollapse: (SyntheticEvent<>) => void,
-  handleSubmit: (SyntheticEvent<>) => void
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -31,18 +31,17 @@ const OrderFormRenderer = (props: Props) => {
     fraction,
     priceType,
     price,
-    stopPrice,
-    limitPrice,
     isOpen,
     amount,
+    maxAmount,
     total,
     baseToken,
     quoteToken,
     loggedIn,
     onInputChange,
+    insufficientBalance,
     handleChangeOrderType,
     toggleCollapse,
-    handleSubmit
   } = props
 
   return (
@@ -80,12 +79,11 @@ const OrderFormRenderer = (props: Props) => {
                 fraction={fraction}
                 priceType={priceType}
                 price={price}
-                stopPrice={stopPrice}
-                limitPrice={limitPrice}
                 amount={amount}
+                maxAmount={maxAmount}
                 total={total}
+                insufficientBalance={insufficientBalance}
                 onInputChange={onInputChange}
-                handleSubmit={handleSubmit}
               />
             }
           />
@@ -100,12 +98,11 @@ const OrderFormRenderer = (props: Props) => {
                 fraction={fraction}
                 priceType={priceType}
                 price={price}
-                stopPrice={stopPrice}
-                limitPrice={limitPrice}
                 amount={amount}
+                maxAmount={maxAmount}
+                insufficientBalance={insufficientBalance}
                 total={total}
                 onInputChange={onInputChange}
-                handleSubmit={handleSubmit}
               />
             }
           />
@@ -120,12 +117,11 @@ const OrderFormRenderer = (props: Props) => {
                 fraction={fraction}
                 priceType={priceType}
                 price={price}
-                stopPrice={stopPrice}
-                limitPrice={limitPrice}
                 amount={amount}
+                insufficientBalance={insufficientBalance}
+                maxAmount={maxAmount}
                 total={total}
                 onInputChange={onInputChange}
-                handleSubmit={handleSubmit}
               />
             }
           />
@@ -136,7 +132,8 @@ const OrderFormRenderer = (props: Props) => {
 }
 
 const MarketOrderPanel = (props: *) => {
-  const { side, loggedIn, price, amount, fraction, total, quoteToken, baseToken, onInputChange } = props
+  const { side, price, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance } = props
+
 
   return (
     <React.Fragment>
@@ -147,19 +144,14 @@ const MarketOrderPanel = (props: *) => {
         <PriceInputGroup name="price" onChange={onInputChange} placeholder={price} disabled />
       </InputBox>
       <InputBox>
-        <InputLabel>
-          Amount <MutedText>({baseToken})</MutedText>
-        </InputLabel>
+        <InputLabel>Amount <MutedText>({baseToken})</MutedText></InputLabel>
         <PriceInputGroup
           name="amount"
           value={amount}
           placeholder="Amount"
           onChange={onInputChange}
-          rightElement={
-            <Total>
-              Total: ~{total} {quoteToken}
-            </Total>
-          }
+          intent={insufficientBalance ? 'danger' : null}
+          rightElement={insufficientBalance ? <Total>Insufficient Balance</Total> : null}
         />
       </InputBox>
       <RadioButtonsWrapper>
@@ -168,17 +160,15 @@ const MarketOrderPanel = (props: *) => {
         <RadioButton value={75} fraction={fraction} onInputChange={onInputChange} />
         <RadioButton value={100} fraction={fraction} onInputChange={onInputChange} />
       </RadioButtonsWrapper>
-      {loggedIn ? (
-        <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={onInputChange} fill />
-      ) : (
-        <Button large intent="primary" text="Login" />
-      )}
+      { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
+      { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
+      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={onInputChange} disabled={insufficientBalance} fill />
     </React.Fragment>
   )
 }
 
 const LimitOrderPanel = props => {
-  const { price, side, amount, loggedIn, fraction, total, quoteToken, baseToken, onInputChange } = props
+  const { price, side, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance } = props
 
   return (
     <React.Fragment>
@@ -197,11 +187,8 @@ const LimitOrderPanel = props => {
           onChange={onInputChange}
           value={amount}
           placeholder="Amount"
-          rightElement={
-            <Total>
-              Total: ~{total} {quoteToken}
-            </Total>
-          }
+          intent={insufficientBalance ? 'danger' : null}
+          rightElement={insufficientBalance ? <Total>Insufficient Balance</Total> : null}
         />
       </InputBox>
       <RadioButtonsWrapper>
@@ -210,17 +197,15 @@ const LimitOrderPanel = props => {
         <RadioButton value={75} fraction={fraction} onInputChange={onInputChange} />
         <RadioButton value={100} fraction={fraction} onInputChange={onInputChange} />
       </RadioButtonsWrapper>
-      {loggedIn ? (
-        <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} onClick={onInputChange} name="order" fill />
-      ) : (
-        <Button large intent="primary" text="Login" fill />
-      )}
+      { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
+      { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
+      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} onClick={onInputChange} disabled={insufficientBalance} name="order" fill />
     </React.Fragment>
   )
 }
 
 const StopLimitOrderPanel = (props: *) => {
-  const { stopPrice, side, loggedIn, amount, total, quoteToken, baseToken, onInputChange } = props
+  const { stopPrice, side, amount, maxAmount, total, quoteToken, baseToken, onInputChange, insufficientBalance } = props
 
   return (
     <React.Fragment>
@@ -239,11 +224,8 @@ const StopLimitOrderPanel = (props: *) => {
           onChange={onInputChange}
           value={amount}
           placeholder="Limit Price"
-          rightElement={
-            <Total>
-              Total: ~{total} {baseToken}
-            </Total>
-          }
+          intent={insufficientBalance ? 'danger' : null}
+          rightElement={insufficientBalance ? <Total>Insufficient Balance</Total> : null}
         />
       </InputBox>
       <InputBox>
@@ -255,18 +237,12 @@ const StopLimitOrderPanel = (props: *) => {
           onChange={onInputChange}
           value={amount}
           placeholder="Amount"
-          rightElement={
-            <Total>
-              Total: ~{total} {quoteToken}
-            </Total>
-          }
+          rightElement={<Total>Total: ~{total} {quoteToken}</Total>}
         />
       </InputBox>
-      {loggedIn ? (
-        <Button intent={side === 'BUY' ? 'success' : 'danger'} name="order" onClick={onInputChange} text={side} fill />
-      ) : (
-        <Button large intent="primary" text="Login" />
-      )}
+      <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount>
+      <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount>
+      <Button intent={side === 'BUY' ? 'success' : 'danger'} name="order" onClick={onInputChange} text={side} fill disabled={insufficientBalance} />
     </React.Fragment>
   )
 }
@@ -276,10 +252,10 @@ export default OrderFormRenderer
 const RadioButton = props => {
   const { onInputChange, value } = props
   return (
-    <Box>
+    <RadioButtonBox>
       {value}%
       <InputGroup name="fraction" type="radio" onChange={onInputChange} value={value} />
-    </Box>
+    </RadioButtonBox>
   )
 }
 
@@ -306,7 +282,7 @@ const RadioButtonsWrapper = styled.div`
   margin-top: 5px;
 `
 
-const Box = styled(Label)`
+const RadioButtonBox = styled(Label)`
   width: 45px;
   height: 30px;
   display: flex;
@@ -347,9 +323,17 @@ const InputLabel = styled.div`
 `
 
 const Total = styled.div`
-  color: ${Colors.GRAY3};
+  color: ${Colors.RED3};
   margin: auto;
   height: 100%;
   padding-top: 8px;
   padding-right: 4px;
 `
+
+const MaxAmount = styled.div`
+  display: flex;
+  color: ${Colors.GRAY3}
+  justify-content: flex-end;
+  padding-bottom: 5px;
+  `
+

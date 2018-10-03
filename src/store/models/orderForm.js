@@ -1,7 +1,6 @@
 // @flow
 import * as appActionCreators from '../actions/app'
 import { getTokenPairsDomain, getOrderBookDomain, getAccountBalancesDomain } from '../domains/'
-import * as orderService from '../services/orders'
 
 import { utils } from 'ethers'
 import type { State, ThunkAction } from '../../types'
@@ -61,7 +60,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       }
 
       let order = await signer.createRawOrder(params)
-
       let buyTokenSymbol = pair.baseTokenAddress === order.buyToken ? pair.baseTokenSymbol : pair.quoteTokenSymbol
       let sellTokenSymbol = pair.baseTokenAddress === order.sellToken ? pair.baseTokenSymbol : pair.quoteTokenSymbol
 

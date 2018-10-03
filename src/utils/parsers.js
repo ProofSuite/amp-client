@@ -1,4 +1,4 @@
-import { isFloat, isInteger, round } from './helpers'
+import { isFloat, isInteger, round, convertPricepointToPrice } from './helpers'
 import { fromWeiToFloat } from './bignumber'
 import { ether } from './constants'
 import { utils } from 'ethers'
@@ -43,6 +43,20 @@ export const parseJSONToFixed = (obj, decimals = 2) => {
   return obj
 }
 
+export const parseOrder = (order, decimals = 2) => ({
+  time: order.createdAt,
+  amount: fromWeiToFloat(order.amount, decimals),
+  buyAmount: fromWeiToFloat(order.buyAmount, decimals),
+  sellAmount: fromWeiToFloat(order.sellAmount, decimals),
+  filled: fromWeiToFloat(order.filledAmount, decimals),
+  price: convertPricepointToPrice(order.pricepoint),
+  hash: order.hash,
+  side: order.side,
+  pair: order.pairName,
+  type: 'LIMIT',
+  status: order.status
+})
+
 export const parseOrders = (orders, decimals = 2) => {
   let parsed = orders.map(order => ({
     time: order.createdAt,
@@ -50,7 +64,7 @@ export const parseOrders = (orders, decimals = 2) => {
     buyAmount: fromWeiToFloat(order.buyAmount, decimals),
     sellAmount: fromWeiToFloat(order.sellAmount, decimals),
     filled: fromWeiToFloat(order.filledAmount, decimals),
-    price: round(order.pricepoint, decimals),
+    price: convertPricepointToPrice(order.pricepoint),
     hash: order.hash,
     side: order.side,
     pair: order.pairName,
@@ -61,18 +75,33 @@ export const parseOrders = (orders, decimals = 2) => {
   return parsed
 }
 
+export const parseTrade = (trade, decimals = 2) => ({
+  time: trade.createdAt,
+  price: convertPricepointToPrice(trade.pricepoint),
+  amount: fromWeiToFloat(trade.amount, decimals),
+  hash: trade.hash,
+  orderHash: trade.orderHash,
+  type: trade.type || 'LIMIT',
+  side: trade.side,
+  pair: trade.pairName,
+  status: trade.status === 'SUCCESS' ? 'EXECUTED' : trade.status,
+  maker: utils.getAddress(trade.maker),
+  taker: utils.getAddress(trade.taker)
+})
+
 export const parseTrades = (trades, decimals = 2) => {
   let parsed = trades.map(trade => ({
     time: trade.createdAt,
-    price: round(trade.pricepoint / 100, decimals),
+    price: convertPricepointToPrice(trade.pricepoint),
     amount: fromWeiToFloat(trade.amount, decimals),
     hash: trade.hash,
     orderHash: trade.orderHash,
     type: trade.type || 'LIMIT',
     side: trade.side,
     pair: trade.pairName,
-    maker: trade.maker,
-    taker: trade.taker
+    status: trade.status === 'SUCCESS' ? 'EXECUTED' : trade.status,
+    maker: utils.getAddress(trade.maker),
+    taker: utils.getAddress(trade.taker)
   }))
 
   return parsed
@@ -82,12 +111,12 @@ export const parseOrderBookData = (data, decimals = 2) => {
   let { bids, asks } = data
 
   asks = asks.map(ask => ({
-    price: round(ask.pricepoint / 100, decimals),
+    price: convertPricepointToPrice(ask.pricepoint),
     amount: fromWeiToFloat(ask.amount, decimals)
   }))
 
   bids = bids.map(bid => ({
-    price: round(bid.pricepoint / 100, decimals),
+    price: convertPricepointToPrice(bid.pricepoint),
     amount: fromWeiToFloat(bid.amount, decimals)
   }))
 

@@ -13,7 +13,8 @@ import * as depositFormActionCreators from '../actions/depositForm';
 import * as accountBalancesService from '../services/accountBalances';
 import { getSigner } from '../services/signer';
 import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
-import { ERC20Token, WETH } from 'proof-contracts-interfaces';
+import { ERC20, WETH } from '../../config/abis';
+import contractsInterfaces from 'proof-contracts-interfaces'
 
 import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
@@ -109,7 +110,7 @@ export const confirmEtherDeposit = (
       dispatch(depositFormActionCreators.confirm());
       let signer = getSigner();
       let network = depositFormSelector(getState()).networkId();
-      let weth = new Contract(WETH_ADDRESS[network], WETH.abi, signer);
+      let weth = new Contract(WETH_ADDRESS[network], WETH, signer);
 
       if (shouldConvert) {
         if (shouldAllow) {
@@ -158,7 +159,7 @@ export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): T
     try {
       let signer = getSigner();
       let exchange = EXCHANGE_ADDRESS[signer.provider.chainId];
-      let token = new Contract(address, ERC20Token.abi, signer);
+      let token = new Contract(address, ERC20, signer);
 
       if (shouldAllow) {
         let allowTx = await token.approve(exchange, -1);

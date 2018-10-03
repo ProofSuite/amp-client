@@ -1,6 +1,8 @@
 import getSignerDomain from './signer';
 import * as eventCreators from './signer';
 
+
+
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
   return getSignerDomain(state);

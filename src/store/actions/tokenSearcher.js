@@ -1,13 +1,16 @@
-import { UpdateCurrentPairAction, UpdateTradesTableAction, UpdateOrderBookAction } from '../../types/tokenSearcher';
+// @flow
+import { actionTypes } from '../../types/tokenSearcher'
+import type { Orders } from '../../types/orders'
+import type { Trades } from '../../types/trades'
+import type {
+  UpdateCurrentPairAction,
+  UpdateFavoritePairAction,
+  UpdateTradesTableAction,
+  InitTradesTableAction,
+  InitOrdersTableAction,
+  InitOrderBookAction } from '../../types/tokenSearcher';
 
-const actionTypes = {
-  updateFavorite: 'tokenSearcher/UPDATE_FAVORITE',
-  updateCurrentPair: 'tokenSearcher/UPDATE_CURRENT_PAIR',
-  updateTradesTable: 'tokenSearcher/UPDATE_TRADES_TABLE',
-  updateOrderBook: 'tokenSearcher/UPDATE_ORDERBOOK',
-};
-
-export function updateFavorite(code: string, favorite: boolean) {
+export function updateFavorite(code: string, favorite: boolean): UpdateFavoritePairAction {
   return {
     type: actionTypes.updateFavorite,
     payload: { code, favorite },
@@ -19,6 +22,27 @@ export function updateCurrentPair(pair: string): UpdateCurrentPairAction {
     type: actionTypes.updateCurrentPair,
     payload: { pair },
   };
+}
+
+export function initTradesTable(trades: Trades): InitTradesTableAction {
+  return {
+    type: actionTypes.initTradesTable,
+    payload: { trades },
+  };
+}
+
+export function initOrderBook(bids: Array<Object>, asks: Array<Object>): InitOrderBookAction {
+  return {
+    type: actionTypes.initOrderBook,
+    payload: { bids, asks },
+  };
+}
+
+export function initOrdersTable(orders: Orders): InitOrdersTableAction {
+  return {
+    type: actionTypes.initOrdersTable,
+    payload: { orders }
+  }
 }
 
 export function updateTradesTable(trades: Trades): UpdateTradesTableAction {
@@ -35,4 +59,11 @@ export function updateOrderBook(bids: Array<Object>, asks: Array<Object>): Updat
   };
 }
 
-export default actionTypes;
+export function updateOrdersTable(orders: Orders): UpdateOrdersTableAction {
+  return {
+    type: actionTypes.updateOrdersTable,
+    payload: { orders }
+  }
+}
+
+export default actionTypes

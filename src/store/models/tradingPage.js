@@ -1,28 +1,21 @@
 // @flow
-import { getTokenPairsDomain } from '../domains'
+import { getTokenPairsDomain, getAccountDomain } from '../domains'
 import * as actionCreators from '../actions/tradingPage'
 import * as ohlcvActionCreators from '../actions/ohlcv'
-import * as orderFormActionCreators from '../actions/orderForm'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
 
 // eslint-disable-next-line
-export default function getTradingPageModel(state: State) {
-  return {}
-}
+export default function tradingPageSelector(state: State) {
+  let accountDomain = getAccountDomain(state)
 
-const orderFormData = {
-  askPrice: 0.25,
-  bidPrice: 0.1,
-  totalQuoteBalance: 100,
-  totalBaseBalance: 1000,
-  formName: 'Sell',
-  quoteToken: 'ETH',
-  baseToken: 'USD'
+  return {
+    authenticated: accountDomain.authenticated()
+  }
 }
 
 export const queryDefaultData = (): ThunkAction => {
-  return async (dispatch, getState, { api }) => {
+  return async (dispatch, getState, { api, socket }) => {
     try {
       let state = getState()
       let signer = getSigner()
@@ -39,15 +32,18 @@ export const queryDefaultData = (): ThunkAction => {
       dispatch(ohlcvActionCreators.saveData(ohlcv))
 
       let orders = await api.getOrders(userAddress)
-      dispatch(actionCreators.updateOrdersTable(orders))
+      dispatch(actionCreators.initOrdersTable(orders))
 
       let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
-      dispatch(actionCreators.updateTradesTable(trades))
+      dispatch(actionCreators.initTradesTable(trades))
 
       let { asks, bids } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
-      dispatch(actionCreators.updateOrderBook(bids, asks))
+      dispatch(actionCreators.initOrderBook(bids, asks))
 
-      dispatch(orderFormActionCreators.saveData(orderFormData))
+      let unsubscribeTrades = await socket.subscribeTrades(currentPair)
+      let unsubscribeOrderBook = await socket.subscribeOrderBook(currentPair)
+      // let unsubscribeOrderBook = await socket.subscribeOrderBook(currentPair)
+      // let unsubscribeChart = await socket.subscribeChart(currentPair)
     } catch (e) {
       console.log(e)
     }
@@ -56,24 +52,26 @@ export const queryDefaultData = (): ThunkAction => {
 
 // eslint-disable-next-line
 export const updateCurrentPair = (pair: string): ThunkAction => {
-  return async (dispatch, getState, { api }) => {
+  return async (dispatch, getState, { api, socket }) => {
     try {
       let state = getState()
-      dispatch(actionCreators.updateCurrentPair(pair))
-
       let pairDomain = getTokenPairsDomain(state)
-      let { baseTokenAddress, quoteTokenAddress } = pairDomain.getPair(pair)
+
+      dispatch(actionCreators.updateCurrentPair(pair))
+      let tokenPair = pairDomain.getPair(pair)
+      let { baseTokenAddress, quoteTokenAddress } = tokenPair
 
       let ohlcv = await api.getOHLCV(baseTokenAddress, quoteTokenAddress)
       dispatch(ohlcvActionCreators.saveData(ohlcv))
 
-      let { bids, asks } = await api.getOrderBookData()
-      dispatch(actionCreators.updateOrderBook(bids, asks))
+      let { bids, asks } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
+      dispatch(actionCreators.initOrderBook(bids, asks))
 
       let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
-      dispatch(actionCreators.updateTradesTable(trades))
+      dispatch(actionCreators.initTradesTable(trades))
 
-      dispatch(orderFormActionCreators.saveData(orderFormData))
+      let unsubscribeTrades = await socket.subscribeTrades(tokenPair)
+      let unsubscribeOrderBook = await socket.subscribeOrderBook(tokenPair)
     } catch (e) {
       console.log(e)
     }

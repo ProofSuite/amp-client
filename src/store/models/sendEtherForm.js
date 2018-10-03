@@ -7,7 +7,7 @@ import type { EtherTxParams, TransferTokensTxParams } from '../../types/sendEthe
 import type { State, ThunkAction } from '../../types';
 
 import { getSigner } from '../services/signer';
-import { ERC20Token } from 'proof-contracts-interfaces';
+import { ERC20 } from '../../config/abis';
 
 export default function sendEtherSelector(state: State) {
   let tokenDomain = getTokenDomain(state);
@@ -80,7 +80,7 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
     try {
       let { receiver, amount, tokenAddress } = params;
       let signer = getSigner();
-      let token = new Contract(tokenAddress, ERC20Token.abi, signer);
+      let token = new Contract(tokenAddress, ERC20.abi, signer);
 
       let estimatedGas = await token.estimate.transfer(receiver, amount);
       estimatedGas = estimatedGas.toNumber();
@@ -96,7 +96,7 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
     try {
       let { receiver, amount, gas, gasPrice, tokenAddress } = params;
       let signer = getSigner();
-      let token = new Contract(tokenAddress, ERC20Token.abi, signer);
+      let token = new Contract(tokenAddress, ERC20.abi, signer);
 
       let txOpts = {
         gasLimit: parseFloat(gas) || 0,

@@ -1,6 +1,6 @@
 // @flow
 import { providers, Wallet } from 'ethers'
-import { signOrder, signTrade, createRawOrder } from './methods'
+import { signOrder, signTrade, createRawOrder, createOrderCancel } from './methods'
 
 import type { UpdateSignerParams } from '../../../types/signer'
 
@@ -69,6 +69,7 @@ export const createMetamaskSigner = async () => {
   signer.signOrder = signOrder
   signer.signTrade = signTrade
   signer.createRawOrder = createRawOrder
+  signer.createOrderCancel = createOrderCancel
 
   window.signer = { instance: signer, type: 'metamask' }
 
@@ -83,6 +84,7 @@ export const createLocalWalletSigner = async (wallet: Object, networkId: ?number
   signer.signOrder = signOrder
   signer.signTrade = signTrade
   signer.createRawOrder = createRawOrder
+  signer.createOrderCancel = createOrderCancel
 
   window.signer = { instance: signer, type: 'wallet' }
 
@@ -96,6 +98,7 @@ export const createInfuraRinkebyWalletSigner = async (wallet: Object) => {
   signer.signOrder = signOrder
   signer.signTrade = signTrade
   signer.createRawOrder = createRawOrder
+  signer.createOrderCancel = createOrderCancel
 
   window.signer = { instance: signer, type: 'wallet' }
 
@@ -109,6 +112,7 @@ export const createInfuraWalletSigner = async (wallet: Object) => {
   signer.signOrder = signOrder
   signer.signTrade = signTrade
   signer.createRawOrder = createRawOrder
+  signer.createOrderCancel = createOrderCancel
 
   window.signer = { instance: signer, type: 'wallet' }
 
@@ -123,6 +127,7 @@ export const createRpcSigner = async (url: ?string, networkId: ?number) => {
   signer.signOrder = signOrder
   signer.signTrade = signTrade
   signer.createRawOrder = createRawOrder
+  signer.createOrderCancel = createOrderCancel
 
   window.signer = { instance: signer, type: 'local' }
   return accountAddresses[0]

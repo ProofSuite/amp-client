@@ -8,8 +8,10 @@ import TradesTable from '../../components/TradesTable'
 import TokenSearcher from '../../components/TokenSearcher'
 import OrderBook from '../../components/OrderBook'
 import { Grid, Cell } from 'styled-css-grid'
+import { Redirect } from 'react-router-dom'
 
 type Props = {
+  authenticated: boolean,
   queryDefaultData: () => void
 }
 
@@ -17,10 +19,15 @@ type State = {}
 
 export default class TradingPage extends React.PureComponent<Props, State> {
   componentDidMount() {
-    this.props.queryDefaultData()
+    const { authenticated, queryDefaultData } = this.props
+    if (authenticated) queryDefaultData()
   }
 
   render() {
+    const { authenticated } = this.props
+    if (!authenticated) return <Redirect to="/login" />
+
+
     return (
       <TradingPageLayout>
         <Cell area="leftColumn">

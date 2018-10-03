@@ -99,8 +99,6 @@ class OHLCVChart extends React.Component {
       noOfCandles
     } = this.props
 
-    console.log(initialData)
-
     let calculatedData = calculateData(initialData)
     if (calculatedData.length <= 1) {
       return null
