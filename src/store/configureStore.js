@@ -1,9 +1,9 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import { applyMiddleware, compose, createStore } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import history from './history'
 import thunk from 'redux-thunk'
-import * as reducers from './reducers'
 import * as services from './services'
+import rootReducer from './index.js'
 import '../styles/css/index.css'
 
 // import { persistReducer, persistStore } from 'redux-persist'
@@ -20,24 +20,14 @@ if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_C
 const middlewares = [thunk.withExtraArgument(services), routerMiddleware(history)]
 const enhancers = [applyMiddleware(...middlewares)]
 const storeEnhancer = composeEnhancers(...enhancers)
-const rootReducer = combineReducers(reducers)
 
-// eslint-disable-next-line
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const configureStore = preloadedState => {
   let store = createStore(connectRouter(history)(rootReducer), preloadedState, storeEnhancer)
-  // let store = createStore(connectRouter(history)(persistedReducer), preloadedState, storeEnhancer)
-  // let persistor = persistStore(store);
 
   if (module.hot) {
-    module.hot.accept(() => {
-      const nextReducers = require('./reducers')
-      const nextRootReducer = combineReducers(nextReducers)
-      // const persistedReducer = persistReducer(persistConfig, nextRootReducer)
-
-      store.replaceReducer(connectRouter(history)(nextRootReducer))
-      // store.replaceReducer(connectRouter(history)(persistedReducer))
+    module.hot.accept('./index.js', () => {
+      store.replaceReducer(connectRouter(history)(rootReducer))
     })
   }
 
@@ -45,3 +35,18 @@ const configureStore = preloadedState => {
 }
 
 export default configureStore
+
+
+
+// const rootReducer = combineReducers(reducers)
+
+// eslint-disable-next-line
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
+// let store = createStore(connectRouter(history)(persistedReducer), preloadedState, storeEnhancer)
+// let persistor = persistStore(store);
+// console.log('in configure store')
+// const nextReducers = require('./reducers')
+// const nextRootReducer = combineReducers(nextReducers)
+// const persistedReducer = persistReducer(persistConfig, nextRootReducer)
+// store.replaceReducer(connectRouter(history)(nextRootReducer))
+// store.replaceReducer(connectRouter(history)(persistedReducer))

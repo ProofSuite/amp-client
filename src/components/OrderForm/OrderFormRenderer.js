@@ -21,6 +21,7 @@ type Props = {
   loggedIn: boolean,
   onInputChange: Object => void,
   handleChangeOrderType: string => void,
+  handleSendOrder: void => void,
   toggleCollapse: (SyntheticEvent<>) => void,
 }
 
@@ -41,6 +42,7 @@ const OrderFormRenderer = (props: Props) => {
     onInputChange,
     insufficientBalance,
     handleChangeOrderType,
+    handleSendOrder,
     toggleCollapse,
   } = props
 
@@ -84,6 +86,7 @@ const OrderFormRenderer = (props: Props) => {
                 total={total}
                 insufficientBalance={insufficientBalance}
                 onInputChange={onInputChange}
+                handleSendOrder={handleSendOrder}
               />
             }
           />
@@ -103,6 +106,7 @@ const OrderFormRenderer = (props: Props) => {
                 insufficientBalance={insufficientBalance}
                 total={total}
                 onInputChange={onInputChange}
+                handleSendOrder={handleSendOrder}
               />
             }
           />
@@ -122,6 +126,7 @@ const OrderFormRenderer = (props: Props) => {
                 maxAmount={maxAmount}
                 total={total}
                 onInputChange={onInputChange}
+                handleSendOrder={handleSendOrder}
               />
             }
           />
@@ -132,7 +137,7 @@ const OrderFormRenderer = (props: Props) => {
 }
 
 const MarketOrderPanel = (props: *) => {
-  const { side, price, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance } = props
+  const { side, price, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance, handleSendOrder } = props
 
 
   return (
@@ -162,13 +167,13 @@ const MarketOrderPanel = (props: *) => {
       </RadioButtonsWrapper>
       { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
       { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
-      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={onInputChange} disabled={insufficientBalance} fill />
+      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
     </React.Fragment>
   )
 }
 
 const LimitOrderPanel = props => {
-  const { price, side, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance } = props
+  const { price, side, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance, handleSendOrder } = props
 
   return (
     <React.Fragment>
@@ -199,13 +204,13 @@ const LimitOrderPanel = props => {
       </RadioButtonsWrapper>
       { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
       { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
-      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} onClick={onInputChange} disabled={insufficientBalance} name="order" fill />
+      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
     </React.Fragment>
   )
 }
 
 const StopLimitOrderPanel = (props: *) => {
-  const { stopPrice, side, amount, maxAmount, total, quoteToken, baseToken, onInputChange, insufficientBalance } = props
+  const { stopPrice, side, amount, maxAmount, total, quoteToken, baseToken, onInputChange, insufficientBalance, handleSendOrder } = props
 
   return (
     <React.Fragment>
@@ -242,7 +247,7 @@ const StopLimitOrderPanel = (props: *) => {
       </InputBox>
       <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount>
       <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount>
-      <Button intent={side === 'BUY' ? 'success' : 'danger'} name="order" onClick={onInputChange} text={side} fill disabled={insufficientBalance} />
+      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
     </React.Fragment>
   )
 }

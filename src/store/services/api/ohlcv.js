@@ -1,3 +1,5 @@
+import { convertPricepointToPrice } from '../../../utils/helpers';
+
 // @flow
 const addMonths = require('date-fns/add_months')
 
@@ -37,15 +39,15 @@ export const getOHLCV = async (
   }
 
   const data = await response.json()
-  const pricePointMultiplier = 1e4
+  if (data === null) return []
 
   let parsedData = data.map(datum => {
     return {
       date: new Date(datum.timestamp),
-      open: Number(datum.open / pricePointMultiplier),
-      high: Number(datum.high / pricePointMultiplier),
-      low: Number(datum.low / pricePointMultiplier),
-      close: Number(datum.close / pricePointMultiplier),
+      open: convertPricepointToPrice(datum.open),
+      high: convertPricepointToPrice(datum.high),
+      low: convertPricepointToPrice(datum.low),
+      close: convertPricepointToPrice(datum.close),
       volume: datum.volume / 1000000000000000000
     }
   })

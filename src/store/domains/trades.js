@@ -2,7 +2,6 @@
 import { sortTable } from '../../utils/helpers'
 
 import type { Trade, Trades, TradesState } from '../../types/trades'
-import { formatNumber } from 'accounting-js'
 
 const initialState = {
   byHash: {}
@@ -65,42 +64,36 @@ export const tradesInitialized = (trades: Trades) => {
   return event
 }
 
+export const tradesReset = () => {
+  const event = (state: TradesState) => {
+    return {
+      ...state,
+      byHash: {}
+    }
+  }
+
+  return event
+}
+
+
 export default function tradesDomain(state: TradesState) {
   return {
-    byHash: () => state.byHash,
+    byTimeStamp: () => state.byHash,
     all: () => Object.values(state.byHash),
 
-    userTrades: (address: string) => {
+    userTrades: (address) => {
       let trades = Object.values(state.byHash)
-      let isUserTrade = (trade: Trade) => trade.taker === address || trade.maker === address
+      let isUserTrade = (trade: Trade) => (trade.taker === address || trade.maker === address)
       let userTrades = trades.filter(trade => isUserTrade(trade))
-      let sortedTrades = sortTable(userTrades, 'time', 'desc')
-
-      let formattedTrades = sortedTrades.map(trade => {
-        trade.price = formatNumber(trade.price, { precision: 2 })
-        trade.amount = formatNumber(trade.amount, { precision: 2 })
-
-        return trade
-      })
-
-      return formattedTrades
+      userTrades = sortTable(trades, 'time', 'desc')
+      return userTrades
     },
 
     lastTrades: (n: number) => {
       let trades = Object.values(state.byHash)
       let sortedTrades = sortTable(trades, 'time', 'desc')
       let lastTrades = (sortedTrades: Trades).slice(0, n)
-
-      lastTrades = lastTrades.map((trade, index) => {
-        let change = (trades[index + 1] && trade.price >= trades[index + 1].price) ? 'positive' : 'negative'
-        trade.change = change
-        trade.price = formatNumber(trade.price, { precision: 2 })
-        trade.amount = formatNumber(trade.amount, { precision: 2 })
-
-        return trade
-      })
-
       return lastTrades
-    }
+    },
   }
 }

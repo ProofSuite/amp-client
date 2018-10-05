@@ -170,15 +170,9 @@ class OHLCVChart extends React.Component {
 
               <CandlestickSeries
                 opacity={1}
-                fill={d => {
-                  return d.close > d.open ? theme.greenMint : theme.redDesire
-                }}
-                stroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli
-                }}
-                wickStroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli
-                }}
+                fill={d => { return d.close > d.open ? theme.GREEN3 : theme.RED2 }}
+                stroke={d => { return d.close > d.open ? theme.GREEN3 : theme.RED2 }}
+                wickStroke={d => { return d.close > d.open ? theme.GREEN3 : theme.RED2 }}
               />
 
               <MouseCoordinateX
@@ -205,9 +199,9 @@ class OHLCVChart extends React.Component {
                 orient="right"
                 edgeAt="right"
                 yAccessor={d => d.close}
-                fill={d => (d.close > d.open ? theme.GREEN5 : theme.RED4)}
+                fill={d => (d.close > d.open ? theme.GREEN3 : theme.RED2)}
                 stroke={d => (d.close > d.open ? theme.GREEN3 : theme.RED2)}
-                textFill={d => (d.close > d.open ? theme.black : theme.black)}
+                textFill={theme.white}
                 {...edgeIndicatorAppearance}
               />
 
@@ -340,23 +334,17 @@ class OHLCVChart extends React.Component {
               <MouseCoordinateY at="right" orient="right" displayFormat={format('.1f')} />
 
               <CandlestickSeries
-                fill={d => {
-                  return d.close > d.open ? theme.greenMint : theme.redDesire
-                }}
+                fill={d => d.close > d.open ? theme.GREEN3 : theme.RED2 }
                 opacity={1}
-                stroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli
-                }}
-                wickStroke={d => {
-                  return d.close > d.open ? theme.greenNeon : theme.redChilli
-                }}
+                stroke={d => d.close > d.open ? theme.GREEN3 : theme.RED2 }
+                widthRatio={0.8}
+                wickStroke={d => d.close > d.open ? theme.GREEN3 : theme.RED2 }
               />
 
               {line.active && (
                 <div>
                   <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()} />
                   <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()} />
-
                   <CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
                   <CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
                 </div>
@@ -368,6 +356,7 @@ class OHLCVChart extends React.Component {
                 edgeAt="right"
                 yAccessor={ema20.accessor()}
                 fill={ema20.fill()}
+                {...edgeIndicatorAppearance}
               />
               <EdgeIndicator
                 itemType="last"
@@ -375,6 +364,7 @@ class OHLCVChart extends React.Component {
                 edgeAt="right"
                 yAccessor={ema50.accessor()}
                 fill={ema50.fill()}
+                {...edgeIndicatorAppearance}
               />
               <EdgeIndicator
                 itemType="last"
@@ -382,6 +372,7 @@ class OHLCVChart extends React.Component {
                 edgeAt="right"
                 yAccessor={d => d.close}
                 fill={d => (d.close > d.open ? theme.green : '#FF0000')}
+                {...edgeIndicatorAppearance}
               />
               <EdgeIndicator
                 itemType="first"
@@ -389,6 +380,7 @@ class OHLCVChart extends React.Component {
                 edgeAt="left"
                 yAccessor={ema20.accessor()}
                 fill={ema20.fill()}
+                {...edgeIndicatorAppearance}
               />
               <EdgeIndicator
                 itemType="first"
@@ -396,6 +388,7 @@ class OHLCVChart extends React.Component {
                 edgeAt="left"
                 yAccessor={ema50.accessor()}
                 fill={ema50.fill()}
+                {...edgeIndicatorAppearance}
               />
               <EdgeIndicator
                 itemType="first"
@@ -403,11 +396,11 @@ class OHLCVChart extends React.Component {
                 edgeAt="left"
                 yAccessor={d => d.close}
                 fill={d => (d.close > d.open ? theme.green : '#FF0000')}
+                {...edgeIndicatorAppearance}
               />
 
               <OHLCTooltip origin={[-40, 0]} />
               <MovingAverageTooltip
-                onClick={e => console.log(e)}
                 origin={[-28, 15]}
                 options={[
                   {
@@ -435,7 +428,6 @@ class OHLCVChart extends React.Component {
               origin={(w, h) => [0, h - indicatorHeight - 150]}
             >
               <MouseCoordinateY at="left" orient="left" displayFormat={format('.4s')} {...mouseEdgeAppearance} />
-
               <BarSeries yAccessor={d => d.volume} fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')} />
               <AreaSeries yAccessor={smaVolume50.accessor()} {...volumeAppearance} />
             </Chart>
@@ -605,6 +597,7 @@ class OHLCVChart extends React.Component {
     )
   }
 }
+
 OHLCVChart = fitWidth(OHLCVChart)
 
 export default OHLCVChart

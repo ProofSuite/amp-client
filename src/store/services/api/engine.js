@@ -205,7 +205,9 @@ export const fetchTokenPairData = async () => {
 
 export const getOrders = async (userAddress: string): Orders => {
   let orders = await fetchOrders(userAddress)
-  let parsedOrders = parseOrders(orders)
+  let parsedOrders
+
+  if (orders) parsedOrders = parseOrders(orders)
 
   return parsedOrders
 }
