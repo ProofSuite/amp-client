@@ -2,35 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
-import history from './store/history';
+import { AppContainer } from 'react-hot-loader'
 import App from './app';
 import { Provider } from 'react-redux';
+
 
 const { store } = configureStore();
 
 registerServiceWorker();
 
-const render = (Component) => {
+const render = () => {
   return ReactDOM.render(
-      <Provider store={store}>
-          <Component history={history} />
-      </Provider>
+      <AppContainer>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </AppContainer>
       ,
     document.getElementById('root')
   );
 };
 
-render(App);
+render();
 
 if (module.hot) {
   module.hot.accept('./app', () => {
-    // render()
-    const NextApp = require('./app').default;
-    render(NextApp);
+    render();
   });
 }
 
 //TODO Reinclude PersistGate if needed:
+// const NextApp = require('./app').default;
 // import { PersistGate } from 'redux-persist/integration/react';
 // const { store, persistor } = configureStore();
 // <PersistGate loading={null} persistor={persistor}>

@@ -75,8 +75,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       case 'fraction':
         loggedIn && this.handleUpdateAmountFraction(target.value)
         break
-      case 'order':
-        this.handleSendOrder()
+
       default:
         break
     }
@@ -217,7 +216,8 @@ class OrderForm extends React.PureComponent<Props, State> {
       props: { side, baseToken, loggedIn, quoteToken, baseTokenBalance, quoteTokenBalance },
       onInputChange,
       handleChangeOrderType,
-      toggleCollapse
+      handleSendOrder,
+      toggleCollapse,
     } = this
 
     let maxAmount
@@ -248,6 +248,7 @@ class OrderForm extends React.PureComponent<Props, State> {
         onInputChange={onInputChange}
         toggleCollapse={toggleCollapse}
         handleChangeOrderType={handleChangeOrderType}
+        handleSendOrder={handleSendOrder}
       />
     )
   }

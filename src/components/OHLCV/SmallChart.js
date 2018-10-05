@@ -244,6 +244,11 @@ const ToolbarWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: start;
+
+  @media only screen and (max-width: 1200px) {
+    display: none;
+  }
+
 `;
 
 const ChartTypeMenu = styled.div`
@@ -254,6 +259,7 @@ const ChartTypeMenu = styled.div`
   width: 30px;
   flex-direction: column;
 `;
+
 const Wrapper = styled(Card)`
   height: 100%;
   min-height: 775px;

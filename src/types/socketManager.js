@@ -45,25 +45,25 @@ export type UpdateTradesTableAction = {
   payload: { trades: Trades }
 }
 
-// CHART ACTIONS
+// OHLCV ACTIONS
 
-export type SubscribeChartAction = {
-  type: 'socketManager/SUBSCRIBE_CHART',
+export type SubscribeOHLCVAction = {
+  type: 'socketManager/SUBSCRIBE_OHLCV',
   payload: { pair: any }
 }
 
-export type UnsubscribeChartAction = {
-  type: 'socketManager/UNSUBSCRIBE_CHART',
+export type UnsubscribeOHLCVAction = {
+  type: 'socketManager/UNSUBSCRIBE_OHLCV',
   payload: { pair: any }
 }
 
-export type InitChartAction = {
-  type: 'socketManager/INIT_CHART',
+export type InitOHLCVAction = {
+  type: 'socketManager/INIT_OHLCV',
   payload: { data: Object }
 }
 
-export type UpdateChartAction = {
-  type: 'socketManager/UPDATE_CHART',
+export type UpdateOHLCVAction = {
+  type: 'socketManager/UPDATE_OHLCV',
   payload: { data: Object }
 }
 
@@ -72,7 +72,7 @@ export type UpdateChartAction = {
 //Note: not sure if needed
 export type InitOrderBookAction = {
   type: 'socketManager/INIT_ORDERBOOK',
-  payload: { data: Object }
+  payload: { bids: any, asks: any }
 }
 
 export type UpdateOrderBookAction = {
@@ -99,10 +99,10 @@ export type SocketManagerAction =
   | UpdateOrdersTableAction
   | InitTradesTableAction
   | UpdateTradesTableAction
-  | SubscribeChartAction
-  | UnsubscribeChartAction
-  | InitChartAction
-  | UpdateChartAction
+  | SubscribeOHLCVAction
+  | UnsubscribeOHLCVAction
+  | InitOHLCVAction
+  | UpdateOHLCVAction
   | InitOrderBookAction
   | UpdateOrderBookAction
   | SubscribeOrderBookAction

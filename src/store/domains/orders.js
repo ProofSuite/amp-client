@@ -6,8 +6,6 @@ const initialState = {
   byHash: {}
 }
 
-// file.only
-
 export const initialized = () => {
   const event = (state: OrdersState = initialState) => state
   return event

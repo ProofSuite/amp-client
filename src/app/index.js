@@ -10,29 +10,39 @@ import SettingsPage from './SettingsPage'
 import LogoutPage from './LogoutPage'
 import TradingPage from './TradingPage'
 
+import { connect } from 'react-redux';
+
 import SocketManager from '../components/SocketManager'
 import { ConnectedRouter } from 'connected-react-router'
 
+import history from '../store/history'
+
+
 import '../styles/css/index.css'
 
-const App = ({ history }) => {
+const App = () => {
   return (
-    <ConnectedRouter history={history}>
-      <SocketManager>
-        <Layout>
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/wallet" component={WalletPage} />
-            <Route path="/exchange" component={ExchangePage} />
-            <Route path="/settings" component={SettingsPage} />
-            <Route path="/logout" component={LogoutPage} />
-            <Route path="/trade" component={TradingPage} />
-          </Switch>
-        </Layout>
-      </SocketManager>
-    </ConnectedRouter>
+      <ConnectedRouter history={history}>
+        <SocketManager>
+          <Layout>
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/wallet" component={WalletPage} />
+              <Route path="/exchange" component={ExchangePage} />
+              <Route path="/settings" component={SettingsPage} />
+              <Route path="/logout" component={LogoutPage} />
+              <Route path="/trade" component={TradingPage} />
+            </Switch>
+          </Layout>
+        </SocketManager>
+      </ConnectedRouter>
+
   )
 }
 
-export default App
+export default connect((state) => {
+  return {
+    location: state.router.location.pathname
+  }
+})(App)

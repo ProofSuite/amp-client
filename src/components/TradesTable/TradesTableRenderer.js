@@ -36,8 +36,8 @@ const TradesTableRenderer = (props: Props) => {
         </TradesTableHeader>
         <Collapse isOpen={isOpen}>
           <Tabs selectedTabId={selectedTabId} onChange={onChange}>
-            <Tab id="Market" title="Market" panel={<MarketTradesPanel trades={trades} />} />
-            <Tab id="Yours" title="Yours" panel={<UserTradesPanel trades={userTrades} />} />
+            <Tab id="Market" title="Market" panel={<Panel trades={trades} />} />
+            <Tab id="User" title="User" panel={<Panel trades={userTrades} />} />
           </Tabs>
         </Collapse>
       </Wrapper>
@@ -45,10 +45,10 @@ const TradesTableRenderer = (props: Props) => {
   );
 };
 
-const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
+const Panel = (props: { trades: Array<Trade> }) => {
   const { trades } = props;
-
   return trades.length < 1 ? (
+
     <Loading />
   ) : (
     <div>
@@ -56,62 +56,30 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
         <HeadingRow>
           <HeaderCell>AMOUNT</HeaderCell>
           <HeaderCell>PRICE</HeaderCell>
-          <HeaderCell>STATUS</HeaderCell>
+          <HeaderCell />
           <HeaderCell cellName="time">TIME</HeaderCell>
         </HeadingRow>
       </ListHeader>
       <ListBody className="list">
-        {trades.map((trade, index) => {
-          return (
-            <TradesPanelRow change={trade.change} key={index}>
-              <Cell>{trade.amount}</Cell>
-              <Cell>{trade.price}</Cell>
-              <Cell status={trade.status}>{trade.status}</Cell>
-              <Cell cellName="time" muted>
-                {format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}
-              </Cell>
-            </TradesPanelRow>
-          )
-        })}
+        {trades.map((trade, index) => <TradeTableRow key={index} index={index} trade={trade} />)}
       </ListBody>
     </div>
   );
 };
 
-const UserTradesPanel = (props: { trades: Array<Trade> }) => {
-  const { trades } = props;
-
-  return trades.length < 1 ? (
-    <Loading />
-  ) : (
-    <div>
-      <ListHeader className="heading">
-        <HeadingRow>
-          <HeaderCell>AMOUNT</HeaderCell>
-          <HeaderCell>PRICE</HeaderCell>
-          <HeaderCell>SIDE</HeaderCell>
-          <HeaderCell>STATUS</HeaderCell>
-          <HeaderCell cellName="time">TIME</HeaderCell>
-        </HeadingRow>
-      </ListHeader>
-      <ListBody className="list">
-        {trades.map((trade, index) => {
-          return (
-            <Row side={trade.side} key={index}>
-              <Cell>{trade.amount}</Cell>
-              <Cell>{trade.price}</Cell>
-              <Cell side={trade.side}>{trade.side}</Cell>
-              <Cell status={trade.status}>{trade.status}</Cell>
-              <Cell cellName="time" muted>
-                {format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}
-              </Cell>
-            </Row>
-          )
-        })}
-      </ListBody>
-    </div>
+const TradeTableRow = (props: { index: number, trade: Trade }) => {
+  const { trade, index } = props;
+  return (
+    <Row side={trade.side} key={index}>
+      <Cell>{trade.amount}</Cell>
+      <Cell>{trade.price}</Cell>
+      <Cell side={trade.side}>{trade.side}</Cell>
+      <Cell cellName="time" muted>
+        {format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}
+      </Cell>
+    </Row>
   );
-}
+};
 
 const TradesTableHeader = styled.div`
   display: grid;
@@ -124,11 +92,9 @@ const TradesTableHeader = styled.div`
 const Heading = styled.h3`
   margin: auto;
 `;
-
 const Wrapper = styled(Card)`
   margin: auto;
 `;
-
 const ListHeader = styled.ul`
   width: 100%;
   display: flex;
@@ -136,14 +102,12 @@ const ListHeader = styled.ul`
   justify-content: space-around;
   margin: 0px;
 `;
-
 const ListBody = styled.ul`
   height: 90%;
   max-height: 491px;
   overflow-y: scroll;
   margin: 0;
 `;
-
 const HeadingRow = styled.li`
   width: 100%;
   display: flex;
@@ -170,38 +134,15 @@ const Row = styled.li.attrs({
   background-color: ${props => (props.side === 'BUY' ? Colors.BUY_MUTED : Colors.SELL_MUTED)};
 `;
 
-const TradesPanelRow = styled.li.attrs({
-  className: 'row',
-})`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
-  border: 1px transparent;
-  border-radius: 2px;
-  box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
-  padding: 7px;
-  padding-left: 10px !important;
-  background-color: ${props => (props.change === 'positive' ? Colors.BUY_MUTED : Colors.SELL_MUTED)};
-`;
-
 const Cell = styled.span`
   color: ${props =>
-    props.side
-    ? props.side === 'BUY'
+    props.side === 'BUY'
       ? Colors.BUY
       : props.side === 'SELL'
         ? Colors.SELL
-        : Colors.TEXT_MUTED
-    : props.status
-      ? props.status === 'EXECUTED'
-        ? Colors.BUY
-        : props.status === 'ERROR'
-          ? Colors.SELL
-          : Colors.TEXT_MUTED
-      : Colors.TEXT_MUTED}
+        : props.muted
+          ? Colors.TEXT_MUTED
+          : Colors.TEXT_MUTED}
 
   min-width: 35px;
   width: ${props => (props.cellName === 'time' ? '43%' : '12%')};

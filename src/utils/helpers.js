@@ -14,7 +14,7 @@ export const isInteger = n => /^\+?\d+$/.test(n)
 
 export const round = (n, decimals = '2') => Math.round(n * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
-export const convertPricepointToPrice = (n, pricePointMultiplier = 1e6, decimals = '2') =>
+export const convertPricepointToPrice = (n, pricePointMultiplier = 1e6, decimals = '3') =>
   Math.round((n / pricePointMultiplier) * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
 export const sortTable = (table, column, order = 'asc') => {

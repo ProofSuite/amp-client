@@ -12,6 +12,7 @@ export const theme = {
   redHot: '#FF0000',
   mehroon2: '#F9ACAA',
   mehroon1: '#6A3126',
+  white: Colors.WHITE,
   RED2: Colors.RED2,
   RED4: Colors.RED5,
   GREEN3: Colors.GREEN3,
@@ -23,9 +24,11 @@ export const theme = {
   skyBlue: '#4286f4',
   skyBlue1: '#6fa4fc',
   skyBlue2: '#b5d0ff',
+  primary: Colors.PRIMARY,
   edges: Colors.GRAY5,
   axis: Colors.GRAY4,
   black: Colors.BLACK,
+  background: Colors.APP_BACKGROUND,
 };
 
 //Volume Graph(Area)
@@ -57,11 +60,11 @@ export const bbFill = theme.skyBlue;
 // MACD
 export const macdAppearance = {
   stroke: {
-    macd: theme.redChilli,
-    signal: theme.greenNeon,
+    macd: theme.RED2,
+    signal: theme.GREEN3,
   },
   fill: {
-    divergence: theme.skyBlue1,
+    divergence: theme.PRIMARY,
   },
 };
 
@@ -86,12 +89,12 @@ export const edgeIndicatorAppearance = {
 
 // Mouse
 export const mouseEdgeAppearance = {
-  textFill: '#542605',
-  stroke: '#05233B',
+  textFill: theme.white,
+  stroke: theme.primary,
   strokeOpacity: 1,
   strokeWidth: 1,
   arrowWidth: 0,
-  fill: theme.edges,
+  fill: theme.primary,
 };
 
 export const stoAppearance = {
@@ -108,4 +111,4 @@ export const canvasGradient = createVerticalLinearGradient([
   { stop: 0, color: hexToRGBA(theme.skyBlue2, 0.2) },
   { stop: 0.7, color: hexToRGBA(theme.skyBlue1, 0.4) },
   { stop: 1, color: hexToRGBA(theme.skyBlue, 0.8) },
-]);
+]);  

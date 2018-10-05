@@ -71,7 +71,7 @@ class OrderBook extends React.Component<Props, State> {
 
     return (
       <div>
-        <Wrapper className="order-book">
+        <Wrapper>
           <OrderBookHeader>
             <Heading>
               Order Book
@@ -112,6 +112,11 @@ const Wrapper = styled(Card)`
   min-width: 500px;
   width: 100%;
   min-height: 50px;
+  /* ul {
+       li {
+         padding-right: 15px;
+       }
+     } */
 `;
 
 export default OrderBook;

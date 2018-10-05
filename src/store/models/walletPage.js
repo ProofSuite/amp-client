@@ -38,6 +38,8 @@ export function queryAccountData(): ThunkAction {
     const state = getState()
     const accountAddress = getAccountDomain(state).address()
 
+    console.log(accountAddress, 'heeerrre')
+
     try {
       let tokens = getTokenDomain(state).tokens()
       let quotes = quoteTokens

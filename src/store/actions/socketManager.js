@@ -11,10 +11,10 @@ import type {
   UpdateOrdersTableAction,
   InitTradesTableAction,
   UpdateTradesTableAction,
-  SubscribeChartAction,
-  UnsubscribeChartAction,
-  InitChartAction,
-  UpdateChartAction,
+  SubscribeOHLCVAction,
+  UnsubscribeOHLCVAction,
+  InitOHLCVAction,
+  UpdateOHLCVAction,
   InitOrderBookAction,
   UpdateOrderBookAction
 } from '../../types/socketManager'
@@ -25,19 +25,19 @@ const actionTypes = {
   connectionError: 'socketManager/CONNECTION_ERROR',
   openConnection: 'socketManager/OPEN_CONNECTION',
 
-  initializeTradesTable: 'socketManager/INIT_TRADES_TABLE',
+  initTradesTable: 'socketManager/INIT_TRADES_TABLE',
   updateTradesTable: 'socketManager/UPDATE_TRADES_TABLE',
-  initializeOrdersTable: 'socketManager/INIT_ORDERS_TABLE',
+  initOrdersTable: 'socketManager/INIT_ORDERS_TABLE',
   updateOrdersTable: 'socketManager/UPDATE_ORDERS_TABLE',
 
-  subscribeChart: 'socketManager/SUBSCRIBE_CHART',
-  unsubscribeChart: 'socketManager/UNSUBSCRIBE_CHART',
-  initializeChart: 'socketManager/INIT_CHART',
-  updateChart: 'socketManager/UPDATE_CHART',
+  subscribeOHLCV: 'socketManager/SUBSCRIBE_OHLCV',
+  unsubscribeOHLCV: 'socketManager/UNSUBSCRIBE_OHLCV',
+  initOHLCV: 'socketManager/INIT_OHLCV',
+  updateOHLCV: 'socketManager/UPDATE_OHLCV',
 
   subscribeOrderbook: 'socketManager/SUBSCRIBE_ORDERBOOK',
   unsubscribeOrderbook: 'socketManager/UNSUBSCRIBE_ORDERBOOK',
-  initializeOrderBook: 'socketManager/INIT_ORDERBOOK',
+  initOrderBook: 'socketManager/INIT_ORDERBOOK',
   updateOrderBook: 'socketManager/UPDATE_ORDERBOOK'
 }
 
@@ -67,9 +67,9 @@ export function closeConnection(): CloseConnectionAction {
 
 // ORDERS TABLE ACTIONS
 // TODO add subscribtions ?
-export function initializeOrdersTable(orders: Orders): InitOrdersTableAction {
+export function initOrdersTable(orders: Orders): InitOrdersTableAction {
   return {
-    type: actionTypes.initializeOrdersTable,
+    type: actionTypes.initOrdersTable,
     payload: { orders }
   }
 }
@@ -83,9 +83,9 @@ export function updateOrdersTable(orders: Orders): UpdateOrdersTableAction {
 
 // TRADES TABLE ACTIONS
 // TODO add subscribtions ?
-export function initializeTradesTable(trades: Trades): InitTradesTableAction {
+export function initTradesTable(trades: Trades): InitTradesTableAction {
   return {
-    type: actionTypes.initializeTradesTable,
+    type: actionTypes.initTradesTable,
     payload: { trades }
   }
 }
@@ -98,30 +98,30 @@ export function updateTradesTable(trades: Trades): UpdateTradesTableAction {
 }
 
 // CHART ACTIONS
-export function subscribeChart(pair: string): SubscribeChartAction {
+export function subscribeOHLCV(pair: string): SubscribeOHLCVAction {
   return {
-    type: actionTypes.subscribeChart,
+    type: actionTypes.subscribeOHLCV,
     payload: { pair }
   }
 }
 
-export function unsubscribeChart(pair: string): UnsubscribeChartAction {
+export function unsubscribeOHLCV(pair: string): UnsubscribeOHLCVAction {
   return {
-    type: actionTypes.unsubscribeChart,
+    type: actionTypes.unsubscribeOHLCV,
     payload: { pair }
   }
 }
 
-export function initializeChart(data: Object): InitChartAction {
+export function initOHLCV(data: Object): InitOHLCVAction {
   return {
-    type: actionTypes.initializeChart,
+    type: actionTypes.initOHLCV,
     payload: { data }
   }
 }
 
-export function updateChart(data: Object): UpdateChartAction {
+export function updateOHLCV(data: Object): UpdateOHLCVAction {
   return {
-    type: actionTypes.updateChart,
+    type: actionTypes.updateOHLCV,
     payload: { data }
   }
 }
@@ -141,10 +141,10 @@ export function unsubscribeOrderBook(pair: string): UnsubscribeOrderBookAction {
   }
 }
 
-export function initializeOrderBook(data: Object): InitOrderBookAction {
+export function initOrderBook(bids: Array<Object>, asks: Array<Object>): InitOrderBookAction {
   return {
-    type: actionTypes.initializeOrderBook,
-    payload: { data }
+    type: actionTypes.initOrderBook,
+    payload: { bids, asks }
   }
 }
 

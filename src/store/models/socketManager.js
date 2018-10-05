@@ -1,10 +1,10 @@
-//@flow
 import * as appActionCreators from '../actions/app'
+//@flow
 import * as actionCreators from '../actions/socketManager'
 import { getAccountDomain } from '../domains'
 import { getSigner } from '../services/signer'
 import { getRandomNonce } from '../../utils/crypto'
-import { parseOrder } from '../../utils/parsers'
+import { parseOrder, parseTrades, parseOrderBookData, parseOHLCV } from '../../utils/parsers'
 
 import type { State, ThunkAction } from '../../types/'
 import type { WebsocketEvent, WebsocketMessage } from '../../types/websocket'
@@ -38,6 +38,8 @@ export function openConnection(): ThunkAction {
     socket.onMessage((message: WebsocketMessage) => {
       let { channel, event } = message
 
+      console.log(channel, event)
+
       switch (channel) {
         case 'orders':
           return handleOrderMessage(dispatch, event)
@@ -48,7 +50,7 @@ export function openConnection(): ThunkAction {
         case 'ohlcv':
           return handleOHLCVMessage(dispatch, event)
         default:
-          console.log('Receiving unknown message')
+          console.log(channel, event)
           break
       }
     })
@@ -150,58 +152,107 @@ function handleOrderError(event: WebsocketEvent): ThunkAction {
 
 function handleRequestSignature(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    let { payload, hash } = event
-    let signer = getSigner()
+    try {
+      let { payload, hash } = event
+      let signer = getSigner()
 
-    if (payload.matches != null) {
-      payload.matches.map(match => (match.trade.tradeNonce = getRandomNonce()))
-      let promises = payload.matches.map(match => signer.signTrade(match.trade))
-      await Promise.all(promises)
+      // signed every individual trade
+      if (payload.matches != null) {
+        payload.matches.map(match => (match.trade.tradeNonce = getRandomNonce()))
+        let promises = payload.matches.map(match => signer.signTrade(match.trade))
+        await Promise.all(promises)
+      }
+
+      // sign the remaining order in case the taker order was partially filled
+      if (payload.order != null) {
+        payload.order.nonce = getRandomNonce()
+        signer.signOrder(payload.order)
+      }
+
+      dispatch(appActionCreators.addSuccessNotification({ message: 'Signing trade' }))
+      socket.sendNewSubmitSignatureMessage(hash, payload.matches, payload.order)
+    } catch (e) {
+      console.log(e)
     }
-
-    if (payload.order != null) {
-      signer.signOrder(payload.order)
-    }
-
-    dispatch(appActionCreators.addSuccessNotification({ message: 'Signing trade' }))
-    socket.sendNewSubmitSignatureMessage(hash, payload.matches, payload.order)
   }
 }
 
 const handleOrderBookMessage = (dispatch, event: WebsocketMessage) => {
-  switch (event.type) {
-    case 'INIT':
-      return dispatch(handleOrderAdded(event))
-    case 'UPDATE':
-      let { order } = event.payload
-      // return dispatch(actionCreators.updateOrderBookTable([order]))
-    default:
-      return
+  var bids, asks
+
+  try {
+    switch (event.type) {
+      case 'INIT':
+        if (!event.payload) return
+        if (event.payload === []) return
+        var { bids, asks } = parseOrderBookData(event.payload)
+        dispatch(actionCreators.initOrderBook(bids, asks))
+        break;
+      case 'UPDATE':
+        if (!event.payload) return
+        if (event.payload === []) return
+        var { bids, asks } = parseOrderBookData(event.payload)
+        dispatch(actionCreators.updateOrderBook(bids, asks))
+        break;
+      default:
+        return
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
 
 const handleTradesMessage = (dispatch, event: WebsocketMessage) => {
+  let trades
+
+  try {
     switch(event.type) {
       case 'INIT':
-        console.log('INIT trades message received', event)
+        if (!event.payload) return
+        if (event.payload === []) return
+        trades = parseTrades(event.payload)
+        dispatch(actionCreators.initTradesTable(trades))
+        break;
       case 'UPDATE':
-        let { trade } = event.payload
-        return dispatch(actionCreators.updateTradesTable([trade]))
+        if (!event.payload) return
+        if (event.payload === []) return
+        trades = parseTrades(event.payload)
+        dispatch(actionCreators.updateTradesTable(trades))
+        break;
       default:
         return
     }
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 const handleOHLCVMessage = (dispatch, event: WebsocketMessage) => {
+  let ohlcv
+
+  try {
     switch(event.type) {
       case 'INIT':
-        return dispatch()
+        if (!event.payload) return
+        if (event.payload === []) return
+        ohlcv = parseOHLCV(event.payload)
+        dispatch(actionCreators.initOHLCV(ohlcv))
+        break
       case 'UPDATE':
-        return dispatch()
+        if (!event.payload) return
+        if (event.payload === []) return
+        ohlcv = parseOHLCV(event.payload)
+        dispatch(actionCreators.updateOHLCV(ohlcv))
+        break
+        // return dispatch()
       default:
         return
     }
+  } catch (e) {
+    console.log(e)
+  }
 }
+
 
 const handleRawOrdersMessage = (dispatch, event: WebsocketMessage) => {
   console.log('Receiving raw order message', event)

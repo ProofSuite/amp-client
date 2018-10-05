@@ -30,34 +30,56 @@ export default class TradingPage extends React.PureComponent<Props, State> {
 
     return (
       <TradingPageLayout>
-        <Cell area="leftColumn">
+        <SidePanel>
           <Grid columns={1} alignContent="start">
             <TokenSearcher />
             <OrderForm side="BUY" />
             <OrderForm side="SELL" />
           </Grid>
-        </Cell>
+        </SidePanel>
 
-        <Cell area="middleColumn">
+        <MainPanel>
           <Grid columns={1} alignContent="start">
             <OHLCV />
-            <OrdersTable />
-            <Grid columns={2} alignContent="start">
-              <OrderBook />
-              <TradesTable />
-            </Grid>
+            <OrdersTableBox />
+            <OrdersAndTradesTableBox>
+              <OrderBookBox />
+              <TradesTableBox />
+            </OrdersAndTradesTableBox>
           </Grid>
-        </Cell>
+        </MainPanel>
       </TradingPageLayout>
     )
   }
 }
 
-const TradingPageLayout = styled(Grid).attrs({
-  className: 'trading-page-layout',
-  columns: '1fr 4fr',
-  rows: 'fr',
-  areas: ['leftColumn middleColumn']
+const TradingPageLayout = styled.div.attrs({
+  className: 'trading-page-layout'
+})``
+
+const SidePanel = styled.div.attrs({
+  className: 'trading-page-side-panel'
+})``
+
+const MainPanel = styled.div.attrs({
+  className: 'trading-page-main-panel'
+})``
+
+const OrderBookBox = styled(OrderBook).attrs({
+  className: 'trading-page-orderbook'
 })`
-  padding: 10px;
 `
+
+const TradesTableBox = styled(TradesTable).attrs({
+  className: 'trading-page-tradestable'
+})`
+`
+
+const OrdersTableBox = styled(OrdersTable).attrs({
+  className: 'trading-page-orderstable'
+})``
+
+const OrdersAndTradesTableBox = styled.div.attrs({
+  className: 'trading-page-orders-and-trades-tables'
+})``
+

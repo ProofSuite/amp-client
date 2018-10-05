@@ -123,6 +123,7 @@ export const sendEtherForm = createReducer(action => {
 export const ohlcv = createReducer(action => {
   const { type, payload } = action
   switch (type) {
+    case socketManagerActionTypes.initOHLCV:
     case ohlcvActionTypes.saveData:
       return ohlcvEvents.savedOHLCVData(payload.data)
     case ohlcvActionTypes.saveDuration:
@@ -132,6 +133,7 @@ export const ohlcv = createReducer(action => {
     case ohlcvActionTypes.saveNoOfCandles:
       return ohlcvEvents.savedNoOfCandles(payload)
     case tokenSearcherActionTypes.updateCurrentPair:
+    case tradingPageActionTypes.updateCurrentPair:
       return ohlcvEvents.ohlcvReset()
     default:
       return ohlcvEvents.initialized()
@@ -145,9 +147,13 @@ export const trades = createReducer(action => {
     case tradingPageActionTypes.updateTradesTable:
     case tokenSearcherActionTypes.updateTradesTable:
       return tradeEvents.tradesUpdated(payload.trades)
+    case socketManagerActionTypes.initTradesTable:
     case tradingPageActionTypes.initTradesTable:
     case tokenSearcherActionTypes.initTradesTable:
       return tradeEvents.tradesInitialized(payload.trades)
+    case tradingPageActionTypes.updateCurrentPair:
+    case tokenSearcherActionTypes.updateCurrentPair:
+        return tradeEvents.tradesReset()
     default:
       return tradeEvents.initialized()
   }
@@ -162,7 +168,11 @@ export const orderBook = createReducer(action => {
       return orderBookEvents.orderBookUpdated(payload.bids, payload.asks)
     case tradingPageActionTypes.initOrderBook:
     case tokenSearcherActionTypes.initOrderBook:
+    case socketManagerActionTypes.initOrderBook:
       return orderBookEvents.orderBookInitialized(payload.bids, payload.asks)
+    case tradingPageActionTypes.updateCurrentPair:
+    case tokenSearcherActionTypes.updateCurrentPair:
+      return orderBookEvents.orderBookReset()
     default:
       return orderBookEvents.initialized()
   }

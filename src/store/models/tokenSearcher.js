@@ -42,24 +42,32 @@ export default function tokenSearcherSelector(state: State) {
 }
 
 export const updateCurrentPair = (pair: string): ThunkAction => {
-  return async (dispatch, getState, { api, trading }) => {
+  return async (dispatch, getState, { api, socket }) => {
     try {
+      socket.unsubscribeChart()
+      socket.unsubscribeOrderBook()
+      socket.unsubscribeTrades()
+
       let state = getState()
       dispatch(actionCreators.updateCurrentPair(pair))
 
       let pairDomain = getTokenPairsDomain(state)
-      let { baseTokenAddress, quoteTokenAddress } = pairDomain.getPair(pair)
+      let newPair = pairDomain.getPair(pair)
+      let { baseTokenAddress, quoteTokenAddress } = newPair
 
-      let ohlcv = await api.getOHLCV(baseTokenAddress, quoteTokenAddress)
-      dispatch(ohlcvActionCreators.saveData(ohlcv))
-
-      let { bids, asks } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
-      dispatch(actionCreators.initOrderBook(bids, asks))
-
-      let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
-      dispatch(actionCreators.initTradesTable(trades))
+      socket.subscribeTrades(newPair)
+      socket.subscribeOrderBook(newPair)
+      socket.subscribeChart(newPair)
     } catch (e) {
       console.log(e)
     }
   }
 }
+
+
+
+// let { bids, asks } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
+//       dispatch(actionCreators.initOrderBook(bids, asks))
+
+//       let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
+//       dispatch(actionCreators.initTradesTable(trades))

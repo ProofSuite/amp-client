@@ -4,6 +4,8 @@ import createWalletModalSelector from './createWalletModal';
 import * as actionCreators from './createWalletModal';
 import * as walletService from '../services/wallet';
 
+
+
 jest.mock('../services/wallet');
 
 let selector;
