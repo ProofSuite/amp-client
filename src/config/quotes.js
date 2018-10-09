@@ -1,6 +1,5 @@
+import { DEFAULT_NETWORK_ID } from './environment.js'
 import addresses from './addresses.json';
-
-const networkID = process.env.REACT_APP_DEFAULT_NETWORK_ID || 'default';
 
 const quoteTokensTable = {
   '8888': [
@@ -50,9 +49,9 @@ const quoteTokensBySymbolsTable = {
   },
 };
 
-export const quoteTokensBySymbols = quoteTokensBySymbolsTable[networkID];
+export const quoteTokensBySymbols = quoteTokensBySymbolsTable[DEFAULT_NETWORK_ID];
 export const quoteTokenSymbols = Object.keys(quoteTokensBySymbols);
-export const quoteTokens = quoteTokensTable[process.env.REACT_APP_DEFAULT_NETWORK_ID].map((m, index) => ({
+export const quoteTokens = quoteTokensTable[DEFAULT_NETWORK_ID].map((m, index) => ({
   ...m,
   rank: index + 1,
 }));

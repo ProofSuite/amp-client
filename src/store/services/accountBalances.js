@@ -30,9 +30,7 @@ export async function updateAllowance(tokenAddress: string, spender: string, add
 }
 
 export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: number) {
-  console.log('blsh')
   const signer = getSigner()
-  console.log('blsh')
   const exchange = EXCHANGE_ADDRESS[signer.provider.chainId]
   const contract = new Contract(tokenAddress, ERC20Token.abi, signer)
 
@@ -47,6 +45,8 @@ export async function updateExchangeAllowance(tokenAddress: string, address: str
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
   let balances
   const provider = getProvider()
+
+  console.log(provider)
 
   const balancePromises = tokens.map(async token => {
     const contract = new Contract(token.address, ERC20Token.abi, provider)

@@ -1,8 +1,10 @@
+import { ENGINE_WS_URL } from '../../../config/urls'
+
 export const createConnection = () => {
   let socket
 
   try {
-    window.socket = new WebSocket('ws://127.0.0.1:8081/socket')
+    window.socket = new WebSocket(`${ENGINE_WS_URL}/socket`)
     return socket
   } catch (error) {
     console.log(error)
@@ -29,50 +31,3 @@ export const onMessage = (listener: Listener) => {
     return listener({ channel, event })
   }
 }
-
-// export const parseOrderMessages = (payload: Payload, listener: Listener) => {
-//   let { msgType, data } = payload
-
-//   switch (msgType) {
-//     case 'ORDER_ADDED':
-//       return listener(msgType, data)
-//     case 'ORDER_CANCELED':
-//       return listener(msgType, data)
-//     case 'REQUEST_SIGNATURE':
-//       return listener(msgType, data)
-//     case 'ORDER_SUCCESS':
-//       return listener(msgType, data)
-//     case 'ORDER_PENDING':
-//       return listener(msgType, data)
-//     case 'ORDER_ERROR':
-//       return listener(msgType, data)
-//     default:
-//       return
-//   }
-// }
-
-// export const parseOrderBookMessage = (payload: Payload, listener: Listener) => {
-//   let { msgType, data } = payload
-
-//   switch (msgType) {
-//     case 'INIT':
-//       return listener(msgType, data)
-//     case 'UPDATE':
-//       return listener(msgType, data)
-//     default:
-//       return
-//   }
-// }
-
-// export const parseTradesMessage = (payload: Payload, listener: Listener) => {
-//   let { msgType, data } = payload
-
-//   switch (msgType) {
-//     case 'INIT':
-//       return listener(msgType, data)
-//     case 'UPDATE':
-//       return listener(msgType, data)
-//     default:
-//       return
-//   }
-// }

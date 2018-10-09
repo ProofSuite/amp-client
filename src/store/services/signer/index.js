@@ -1,6 +1,7 @@
 // @flow
 import { providers, Wallet } from 'ethers'
 import { signOrder, signTrade, createRawOrder, createOrderCancel } from './methods'
+import { ETHEREUM_NODE_HTTP_URL } from '../../../config/urls'
 
 import type { UpdateSignerParams } from '../../../types/signer'
 
@@ -17,13 +18,13 @@ export const createSigner = async (params: UpdateSignerParams): any => {
           settings = { type: 'metamask', networkId }
           return { settings, address }
         case 'rpc':
-          settings = { type: 'rpc', url: 'http://127.0.0.1:8545', networkId: 8888 }
+          settings = { type: 'rpc', url: ETHEREUM_NODE_HTTP_URL, networkId: 8888 }
           address = await createRpcSigner(settings.url, settings.networkId)
           return { settings, address }
         case 'wallet':
           if (!wallet) throw new Error('Wallet not found')
           networkId = networkId || 8888
-          settings = { type: 'wallet', url: 'http://127.0.0.1:8545', networkId: 8888 }
+          settings = { type: 'wallet', url: ETHEREUM_NODE_HTTP_URL, networkId: 8888 }
           address = await createLocalWalletSigner(wallet, networkId)
           return { settings, address }
         default:
@@ -78,7 +79,9 @@ export const createMetamaskSigner = async () => {
 
 export const createLocalWalletSigner = async (wallet: Object, networkId: ?number) => {
   networkId = networkId || 8888
-  let provider = new providers.JsonRpcProvider('http://127.0.0.1:8545', { chainId: networkId, name: 'unspecified' })
+  console.log(ETHEREUM_NODE_HTTP_URL)
+
+  let provider = new providers.JsonRpcProvider(ETHEREUM_NODE_HTTP_URL, { chainId: networkId, name: 'unspecified' })
   let signer = new Wallet(wallet.privateKey, provider)
 
   signer.signOrder = signOrder

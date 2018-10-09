@@ -38,7 +38,7 @@ export function queryAccountData(): ThunkAction {
     const state = getState()
     const accountAddress = getAccountDomain(state).address()
 
-    console.log(accountAddress, 'heeerrre')
+    window.processvars = process.env
 
     try {
       let tokens = getTokenDomain(state).tokens()
