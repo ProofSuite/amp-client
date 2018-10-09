@@ -1,5 +1,3 @@
-import ethereum_address from 'ethereum-address'
-
 export const rand = (min, max, decimals = 4) => {
   return (Math.random() * (max - min) + min).toFixed(decimals)
 }
@@ -58,10 +56,10 @@ export function getSessionStorageWallets() {
   let wallets = [{ address: 'Enter new...', key: '', rank: 0 }],
     index = 1
   Object.keys(sessionStorage).map(key => {
-    if (ethereum_address.isAddress(key)) {
+    // if (ethereum_address.isAddress(key)) {
       wallets.push({ address: key, key: sessionStorage[key], rank: index })
       index++
-    }
+    // }
     return key
   })
   return wallets
@@ -71,10 +69,10 @@ export function getLocalStorageWallets() {
   let wallets = [{ address: 'Enter new...', key: '', rank: 0 }],
     index = 1
   Object.keys(localStorage).map(key => {
-    if (ethereum_address.isAddress(key) && isJson(localStorage[key])) {
+    // if (ethereum_address.isAddress(key) && isJson(localStorage[key])) {
       wallets.push({ address: key, key: localStorage[key], rank: index })
       index++
-    }
+    // }
     return key
   })
   return wallets

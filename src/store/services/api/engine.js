@@ -1,4 +1,5 @@
 // @flow
+import { ENGINE_HTTP_URL, ENGINE_WS_URL } from '../../../config/urls'
 import { parseTokenPairData, parseOrders, parseTrades, parseOrderBookData } from '../../../utils/parsers'
 import fetch from 'isomorphic-fetch'
 
@@ -6,7 +7,7 @@ import type { Orders } from '../../../types/orders'
 import type { Trades } from '../../../types/trades'
 
 const request = (endpoint, options) => {
-  return fetch(`http://localhost:8081${endpoint}`, {
+  return fetch(`${ENGINE_HTTP_URL}${endpoint}`, {
     headers: {
       'Access-Control-Allow-Origin': '*',
       Accept: 'application/json',
