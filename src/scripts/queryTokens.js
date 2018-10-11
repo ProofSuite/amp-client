@@ -1,10 +1,3 @@
-// import fs from 'fs';
-// import process from 'process'
-// import path from 'path'
-// import { rand, randInt } from '../utils/helpers';
-// import tokenPairs from '../jsons/tokenPairs.json';
-// import { utils } from 'ethers';
-
 const fs = require('fs');
 const path = require('path');
 const utils = require('ethers').utils;

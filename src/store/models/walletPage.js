@@ -10,6 +10,7 @@ import { getCurrentBlock } from '../services/wallet'
 import { push } from 'connected-react-router'
 import type { Token } from '../../types/common'
 import type { State, ThunkAction } from '../../types'
+import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 
 export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
@@ -37,8 +38,6 @@ export function queryAccountData(): ThunkAction {
   return async (dispatch, getState) => {
     const state = getState()
     const accountAddress = getAccountDomain(state).address()
-
-    window.processvars = process.env
 
     try {
       let tokens = getTokenDomain(state).tokens()
@@ -97,7 +96,7 @@ export function toggleAllowance(tokenSymbol: string): ThunkAction {
       if (isAllowed) {
         await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0)
       } else {
-        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, -1)
+        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD)
       }
 
       dispatch(actionCreators.updateAllowance({ symbol: tokenSymbol, allowance: 'pending' }))

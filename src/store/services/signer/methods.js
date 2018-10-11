@@ -27,7 +27,7 @@ export const createRawOrder = async function(params) {
   let order = {}
   let { userAddress, side, pair, amount, price, makeFee, takeFee } = params
   let { baseTokenAddress, quoteTokenAddress } = pair
-  let exchangeAddress = EXCHANGE_ADDRESS[this.provider.chainId]
+  let exchangeAddress = EXCHANGE_ADDRESS[this.provider.network.chainId]
 
   // The amountPrecisionMultiplier and pricePrecisionMultiplier are temporary multipliers
   // that are used to turn decimal values into rounded integers that can be converted into

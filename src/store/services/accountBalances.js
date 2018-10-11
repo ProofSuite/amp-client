@@ -1,6 +1,6 @@
 // @flow
 import { Contract, utils } from 'ethers'
-import { ERC20Token } from 'proof-contracts-interfaces'
+import { ERC20 } from '../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../config/contracts'
 import { getProvider, getSigner } from './signer'
 
@@ -23,20 +23,18 @@ export async function queryEtherBalance(address: string) {
 export async function updateAllowance(tokenAddress: string, spender: string, address: string, balance: string) {
   const signer = getSigner()
 
-  const contract = new Contract(tokenAddress, ERC20Token.abi, signer)
+  const contract = new Contract(tokenAddress, ERC20, signer)
   await contract.approve(spender, parseFloat(balance))
   const allowance = await contract.allowance(address, spender)
   return { allowance: utils.formatEther(allowance) }
 }
 
-export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: number) {
+export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: Object) {
   const signer = getSigner()
-  const exchange = EXCHANGE_ADDRESS[signer.provider.chainId]
-  const contract = new Contract(tokenAddress, ERC20Token.abi, signer)
+  const exchange = EXCHANGE_ADDRESS[signer.provider.network.chainId]
+  const contract = new Contract(tokenAddress, ERC20, signer)
 
-  console.log(contract)
-
-  await contract.approve(exchange, parseFloat(balance))
+  await contract.approve(exchange, balance)
   const allowance = await contract.allowance(address, exchange)
 
   return { allowance: utils.formatEther(allowance) }
@@ -46,10 +44,8 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
   let balances
   const provider = getProvider()
 
-  console.log(provider)
-
   const balancePromises = tokens.map(async token => {
-    const contract = new Contract(token.address, ERC20Token.abi, provider)
+    const contract = new Contract(token.address, ERC20, provider)
     return await contract.balanceOf(address)
   })
 
@@ -64,10 +60,10 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
 
 export async function queryExchangeTokenAllowances(owner: string, tokens: Array<Token>) {
   const provider = getProvider()
-  const exchange = EXCHANGE_ADDRESS[provider.chainId]
+  const exchange = EXCHANGE_ADDRESS[provider.network.chainId]
 
   const allowancePromises = tokens.map(token => {
-    const contract = new Contract(token.address, ERC20Token.abi, provider)
+    const contract = new Contract(token.address, ERC20, provider)
     return contract.allowance(owner, exchange)
   })
 
@@ -84,7 +80,7 @@ export async function queryTokenAllowances(owner: string, spender: string, token
   let allowances
   const provider = getProvider()
   const allowancePromises = tokens.map(token => {
-    const contract = new Contract(token.address, ERC20Token.abi, provider)
+    const contract = new Contract(token.address, ERC20, provider)
     return contract.allowance(owner, spender)
   })
 
@@ -114,17 +110,18 @@ export async function subscribeEtherBalance(address: string, callback: number =>
 
 export async function subscribeTokenBalance(address: string, token: Object, callback: number => void) {
   const provider = getProvider()
-  const contract = new Contract(token.address, ERC20Token.abi, provider)
+  const contract = new Contract(token.address, ERC20, provider)
 
   const initialBalance = await contract.balanceOf(address)
   const handler = async (sender, receiver, tokens) => {
+
     if (receiver === address) {
       const balance = await contract.balanceOf(receiver)
       if (balance !== initialBalance) callback(utils.formatEther(balance))
     }
   }
 
-  contract.ontransfer = handler
+  contract.on("Transfer", handler)
 
   return () => {
     provider.removeListener(address, handler)
@@ -136,7 +133,7 @@ export async function subscribeTokenBalances(address: string, tokens: Array<Toke
   const handlers = []
 
   tokens.map(async token => {
-    const contract = new Contract(token.address, ERC20Token.abi, provider)
+    const contract = new Contract(token.address, ERC20, provider)
     // const initialBalance = await contract.balanceOf(address)
 
     const handler = async (sender, receiver, amount) => {
@@ -149,9 +146,7 @@ export async function subscribeTokenBalances(address: string, tokens: Array<Toke
       }
     }
 
-    window.abi = ERC20Token.abi
-
-    contract.ontransfer = handler
+    contract.on("Transfer", handler)
     handlers.push(handler)
   })
 
@@ -162,8 +157,8 @@ export async function subscribeTokenBalances(address: string, tokens: Array<Toke
 
 export async function subscribeTokenAllowance(address: string, token: Object, callback: number => void) {
   const provider = getProvider()
-  const exchange = EXCHANGE_ADDRESS[provider.chainId]
-  const contract = new Contract(token.address, ERC20Token.abi, provider)
+  const exchange = EXCHANGE_ADDRESS[provider.network.chainId]
+  const contract = new Contract(token.address, ERC20, provider)
 
   const initialAllowance = await contract.allowance(exchange, address)
   const handler = async (sender, receiver, tokens) => {
@@ -173,7 +168,7 @@ export async function subscribeTokenAllowance(address: string, token: Object, ca
     }
   }
 
-  contract.onapprove = handler
+  contract.on("Approval", handler)
 
   return () => {
     provider.removeListener(address, handler)
@@ -186,11 +181,11 @@ export async function subscribeTokenAllowances(
   callback: AccountAllowance => any
 ) {
   const provider = getProvider()
-  const exchange = EXCHANGE_ADDRESS[provider.chainId]
+  const exchange = EXCHANGE_ADDRESS[provider.network.chainId]
   const handlers = []
 
   tokens.map(async token => {
-    const contract = new Contract(token.address, ERC20Token.abi, provider)
+    const contract = new Contract(token.address, ERC20, provider)
     const handler = async (owner, spender, amount) => {
       if (owner === address && spender === exchange) {
         const allowance = await contract.allowance(owner, exchange)
@@ -201,7 +196,7 @@ export async function subscribeTokenAllowances(
       }
     }
 
-    contract.onapproval = handler
+    contract.on("Approval", handler)
     handlers.push(handler)
   })
 
