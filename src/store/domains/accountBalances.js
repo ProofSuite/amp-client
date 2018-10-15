@@ -148,7 +148,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         return {
           symbol: item.symbol,
           balance: item.balance,
-          allowed: parseFloat(item.allowance) > 0
+          allowed: item.allowance > ALLOWANCE_MINIMUM
         }
       })
     }

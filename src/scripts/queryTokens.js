@@ -1,11 +1,15 @@
+/**
+ * This scripts generates a list of currently deployed addresses in the addresses.json file
+ * It is useful for testing and queries the tokens that are deployed in the Exchange.sol
+ * contract
+ * The scripts the AMP_DEX_PATH to be set
+ */
 const fs = require('fs');
 const path = require('path');
 const utils = require('ethers').utils;
-const TRUFFLE_BUILD_PATH = path.resolve('../../../amp-dex/build/contracts');
-// process.argv[2] ||
+const TRUFFLE_BUILD_PATH = path.join(`${process.env.AMP_DEX_PATH}`, `/build/contracts`);
 
-console.log(TRUFFLE_BUILD_PATH);
-let contracts = { '8888': {}, '1000': {} };
+let contracts = { '8888': {}, '1000': {}, '4': {} };
 let files = fs.readdirSync(TRUFFLE_BUILD_PATH);
 
 files.forEach((file, index) => {
@@ -29,6 +33,15 @@ files.forEach((file, index) => {
       if (symbol === 'WETH9') symbol = 'WETH';
       address = json.networks['1000'].address;
       contracts['1000'][symbol] = utils.getAddress(address);
+    }
+  }
+
+  if (json.networks['4']) {
+    if (file !== 'Owned.json' && file !== 'Migrations.json' && file !== 'SafeMath.json') {
+      symbol = file.slice(0, -5);
+      if (symbol === 'WETH9') symbol = 'WETH';
+      address = json.networks['4'].address;
+      contracts['4'][symbol] = utils.getAddress(address);
     }
   }
 });
