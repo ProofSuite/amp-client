@@ -30,7 +30,7 @@
     "d3-shape": "^1.2.0",
     "d3-time-format": "^2.1.1",
     "date-fns": "^1.29.0",
-    "ethers": "git+https://github.com/ethers-io/ethers.js.git",
+    "ethers": "^4.0.4",
     "express": "^4.16.3",
     "jest-localstorage-mock": "^2.2.0",
     "nodemon": "^1.18.2",
@@ -57,13 +57,14 @@
     "redux-thunk": "^2.3.0",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
+    "sockjs-client": "^1.3.0",
     "sorted-array": "^2.0.2",
     "styled-components": "~3.3.3",
     "styled-css-grid": "^0.11.0",
     "styled-system": "^3.0.2",
     "system-components": "^3.0.1",
     "web3-utils": "^1.0.0-beta.36",
-    "ws": "^5.2.2"
+    "ws": "^6.1.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.8",

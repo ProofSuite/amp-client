@@ -29,6 +29,9 @@ export const queryDefaultData = (): ThunkAction => {
       let currentPair = pairDomain.getCurrentPair()
 
       let tokenPairData = await api.getTokenPairData()
+
+      console.log(tokenPairData)
+
       dispatch(actionCreators.updateTokenPairData(tokenPairData))
 
       let orders = await api.getOrders(userAddress)

@@ -158,7 +158,7 @@ export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): T
   return async (dispatch, getState) => {
     try {
       let signer = getSigner();
-      let exchange = EXCHANGE_ADDRESS[signer.provider.chainId];
+      let exchange = EXCHANGE_ADDRESS[signer.provider.network.chainId];
       let token = new Contract(address, ERC20, signer);
 
       if (shouldAllow) {

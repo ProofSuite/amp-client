@@ -5,7 +5,7 @@ export type Address = string;
 export type TxReceipt = {
   blockHash: string,
   blockNumber: string,
-  gasLimit: Object,
+  gasUsed: Object,
   hash: string,
 };
 

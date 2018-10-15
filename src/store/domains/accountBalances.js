@@ -2,9 +2,10 @@
 import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
 import { round } from '../../utils/helpers'
 import { utils } from 'ethers'
+import { ALLOWANCE_MINIMUM } from '../../utils/constants'
 // eslint-disable-next-line
 const initialState = {}
-const MAX_ALLOWANCE = '115792089237316195423570985008687907853269984665640564039457.584007913129639935'
+
 
 export function initialized() {
   const initialState = {}
@@ -117,7 +118,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].subscribed : false
     },
     isAllowed(symbol: string) {
-      return state[symbol] ? state[symbol].allowance === MAX_ALLOWANCE : false
+      return state[symbol] ? state[symbol].allowance > ALLOWANCE_MINIMUM : false
     },
     isAllowancePending(symbol: string) {
       return state[symbol] ? state[symbol].allowance === 'pending' : false
@@ -127,7 +128,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         return {
           ...token,
           balance: state[token.symbol] ? state[token.symbol].balance : null,
-          allowed: state[token.symbol] && state[token.symbol].allowance === MAX_ALLOWANCE,
+          allowed: state[token.symbol] && state[token.symbol].allowance > ALLOWANCE_MINIMUM,
           allowancePending: state[token.symbol] && state[token.symbol].allowance === 'pending'
         }
       })
@@ -137,7 +138,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         return {
           symbol: item.symbol,
           balance: item.balance,
-          allowed: item.allowance === MAX_ALLOWANCE,
+          allowed: item.allowance > ALLOWANCE_MINIMUM,
           allowancePending: item.allowance === 'pending'
         }
       })
@@ -147,7 +148,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         return {
           symbol: item.symbol,
           balance: item.balance,
-          allowed: parseFloat(item.allowance) > 0
+          allowed: item.allowance > ALLOWANCE_MINIMUM
         }
       })
     }

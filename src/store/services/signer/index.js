@@ -81,8 +81,10 @@ export const createLocalWalletSigner = async (wallet: Object, networkId: ?number
   networkId = networkId || 8888
   console.log(ETHEREUM_NODE_HTTP_URL)
 
-  let provider = new providers.JsonRpcProvider(ETHEREUM_NODE_HTTP_URL, { chainId: networkId, name: 'unspecified' })
+  let provider = new providers.JsonRpcProvider(ETHEREUM_NODE_HTTP_URL)
   let signer = new Wallet(wallet.privateKey, provider)
+
+  console.log(provider)
 
   signer.signOrder = signOrder
   signer.signTrade = signTrade
@@ -90,6 +92,8 @@ export const createLocalWalletSigner = async (wallet: Object, networkId: ?number
   signer.createOrderCancel = createOrderCancel
 
   window.signer = { instance: signer, type: 'wallet' }
+
+
 
   return wallet.address
 }
@@ -123,7 +127,7 @@ export const createInfuraWalletSigner = async (wallet: Object) => {
 }
 
 export const createRpcSigner = async (url: ?string, networkId: ?number) => {
-  let provider = new providers.JsonRpcProvider(url, { chainId: networkId, name: 'unspecified' })
+  let provider = new providers.JsonRpcProvider(url)
   let accountAddresses = await provider.listAccounts()
   let signer = provider.getSigner(accountAddresses[0])
 
