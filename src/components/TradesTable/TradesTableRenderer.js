@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { Loading, Colors, Text } from '../Common';
+import { Loading, Colors, Text, CenteredMessage } from '../Common';
 import { Button, Card, Tabs, Tab, Collapse } from '@blueprintjs/core';
 import { format } from 'date-fns';
 
@@ -47,6 +47,15 @@ const TradesTableRenderer = (props: Props) => {
 
 const Panel = (props: { trades: Array<Trade> }) => {
   const { trades } = props;
+
+  if (!trades) {
+    return <Loading />;
+  }
+
+  if (trades.length === 0) {
+    return <CenteredMessage message="No trades for this token pair" />
+  }
+
   return trades.length < 1 ? (
 
     <Loading />
@@ -92,9 +101,12 @@ const TradesTableHeader = styled.div`
 const Heading = styled.h3`
   margin: auto;
 `;
+
 const Wrapper = styled(Card)`
   margin: auto;
+  height: 100% !important;
 `;
+
 const ListHeader = styled.ul`
   width: 100%;
   display: flex;
@@ -102,12 +114,14 @@ const ListHeader = styled.ul`
   justify-content: space-around;
   margin: 0px;
 `;
+
 const ListBody = styled.ul`
   height: 90%;
   max-height: 491px;
   overflow-y: scroll;
   margin: 0;
 `;
+
 const HeadingRow = styled.li`
   width: 100%;
   display: flex;

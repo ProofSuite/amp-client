@@ -6,6 +6,7 @@ import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tok
 import type { Token, TokenPair, TokenPairState, TokenPairDataMap } from '../../types/tokens'
 
 const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens)
+
 const defaultInitialState = {
   byPair: defaultTokenPairs,
   data: {},
@@ -18,6 +19,9 @@ const defaultInitialState = {
 //token pair state (that can be created with the createInitialState function).
 export const initialized = (customInitialState?: Object) => {
   let initialState = customInitialState || defaultInitialState
+
+  console.log(initialState)
+
   const event = (state: TokenPairState = initialState) => state
   return event
 }
@@ -89,6 +93,8 @@ export const tokenPairDataUpdated = (tokenPairData: TokenPairDataMap) => {
         ...tokenPairData
       }
     }
+
+    console.log(tokenPairData)
 
     return newState
   }

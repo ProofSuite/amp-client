@@ -53,7 +53,6 @@ class TokenSearcher extends React.PureComponent<Props, State> {
     const quoteTokens: Array<string> = Object.keys(tokenPairsByQuoteToken);
     const defaultQuoteToken = quoteTokens[0];
     const defaultPairs = tokenPairsByQuoteToken[defaultQuoteToken];
-
     const selectedPair = defaultPairs.filter(pair => pair.pair === currentPair.pair)[0];
 
     if (!prevState.selectedPair) {

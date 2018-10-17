@@ -1,11 +1,14 @@
 //@flow
 import React from 'react';
 import styled from 'styled-components';
+import Box from './Box'
 
 const CenteredMessage = (props: { message: string }) => {
   return (
     <Wrapper>
-      <p>{props.message}</p>
+      <Box p={3}>
+        <p>{props.message}</p>
+      </Box>
     </Wrapper>
   );
 };

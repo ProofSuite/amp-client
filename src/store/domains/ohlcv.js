@@ -2,7 +2,7 @@
 import type { OHLCVState } from '../../types/ohlcv';
 
 const initialState: OHLCVState = {
-  ohlcvData: [],
+  ohlcvData: null,
   noOfCandles: 150,
   currentTimeSpan: { name: '1 min', label: '1m' },
   currentDuration: { name: '1 Hour', label: '1h' },
@@ -48,7 +48,7 @@ export const savedNoOfCandles = (noOfCandles: Object) => {
 export const ohlcvReset = () => {
   const event = (state: OHLCVState) => ({
     ...state,
-    ohlcvData: [],
+    ohlcvData: null,
   });
 
   return event;
