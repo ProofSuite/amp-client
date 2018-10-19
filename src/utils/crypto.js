@@ -2,8 +2,6 @@ import { utils } from 'ethers'
 import { randInt } from './helpers'
 
 export const getOrderHash = order => {
-  console.log(order)
-
   return utils.solidityKeccak256(
     ['bytes', 'bytes', 'bytes', 'bytes', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'],
     [

@@ -1,0 +1,1 @@
+const formatTokenPairData = (data: TokenPairDataMap) => {}

@@ -96,8 +96,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         )
       }
 
-      dispatch(appActionCreators.addSuccessNotification({ message: `Order valid` }))
-
       socket.sendNewOrderMessage(order)
     } catch (e) {
       console.log(e)

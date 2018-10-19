@@ -30,8 +30,6 @@ export const queryDefaultData = (): ThunkAction => {
 
       let tokenPairData = await api.getTokenPairData()
 
-      console.log(tokenPairData)
-
       dispatch(actionCreators.updateTokenPairData(tokenPairData))
 
       let orders = await api.getOrders(userAddress)

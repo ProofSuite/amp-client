@@ -3,6 +3,7 @@ import type { AccountAllowances, AccountBalances, AccountBalancesState } from '.
 import { round } from '../../utils/helpers'
 import { utils } from 'ethers'
 import { ALLOWANCE_MINIMUM } from '../../utils/constants'
+import { formatNumber } from 'accounting-js'
 // eslint-disable-next-line
 const initialState = {}
 
@@ -127,7 +128,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return (tokens: any).map(token => {
         return {
           ...token,
-          balance: state[token.symbol] ? state[token.symbol].balance : null,
+          balance: state[token.symbol] ? formatNumber(state[token.symbol].balance, { precision: 2 }) : null,
           allowed: state[token.symbol] && state[token.symbol].allowance > ALLOWANCE_MINIMUM,
           allowancePending: state[token.symbol] && state[token.symbol].allowance === 'pending'
         }
@@ -137,7 +138,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
-          balance: item.balance,
+          balance: formatNumber(item.balance, { precision: 2 }),
           allowed: item.allowance > ALLOWANCE_MINIMUM,
           allowancePending: item.allowance === 'pending'
         }
@@ -147,7 +148,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
-          balance: item.balance,
+          balance: formatNumber(item.balance, { precision: 2}),
           allowed: item.allowance > ALLOWANCE_MINIMUM
         }
       })

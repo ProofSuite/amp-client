@@ -56,21 +56,15 @@ export const createRawOrder = async function(params) {
   order.userAddress = userAddress
   order.exchangeAddress = exchangeAddress
   order.buyToken = side === 'BUY' ? baseTokenAddress : quoteTokenAddress
-  order.buyAmount =
-    side === 'BUY'
-      ? amountPoints.toString()
-      : amountPoints
-          .mul(pricePoints)
-          .div(priceMultiplier)
-          .toString()
+  order.buyAmount = side === 'BUY'
+    ? amountPoints.toString()
+    : amountPoints.mul(pricePoints).div(priceMultiplier).toString()
+
   order.sellToken = side === 'BUY' ? quoteTokenAddress : baseTokenAddress
-  order.sellAmount =
-    side === 'BUY'
-      ? amountPoints
-          .mul(pricePoints)
-          .div(priceMultiplier)
-          .toString()
-      : amountPoints.toString()
+  order.sellAmount = side === 'BUY'
+    ? amountPoints.mul(pricePoints).div(priceMultiplier).toString()
+    : amountPoints.toString()
+
   order.makeFee = makeFee
   order.takeFee = takeFee
   order.nonce = getRandomNonce()

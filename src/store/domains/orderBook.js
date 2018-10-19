@@ -20,18 +20,13 @@ export const initialized = () => {
 
 export const orderBookInitialized = (bids: Array<Object>, asks: Array<Object>) => {
   const event = (state: OrderBookState) => {
-    let newSortedBids = new SortedArray(state.sortedBids, (a, b) => b - a)
-    let newSortedAsks = new SortedArray(state.sortedAsks, (a, b) => a - b)
+    let newSortedBids = new SortedArray([], (a, b) => b - a)
+    let newSortedAsks = new SortedArray([], (a, b) => a - b)
 
     let newBids = bids.reduce((result, item) => {
       if (item.amount > 0) {
         result[item.price] = item
         if (newSortedBids.search(item.price) === -1) newSortedBids.insert(item.price)
-      }
-
-      if (item.amount <= 0) {
-        delete result[item.price]
-        if (newSortedBids.search(item.price) !== -1) newSortedBids.remove(item.price)
       }
 
       return result
@@ -41,11 +36,6 @@ export const orderBookInitialized = (bids: Array<Object>, asks: Array<Object>) =
       if (item.amount > 0) {
         result[item.price] = item
         if (newSortedAsks.search(item.price) === -1) newSortedAsks.insert(item.price)
-      }
-
-      if (item.amount <= 0) {
-        delete result[item.price]
-        if (newSortedAsks.search(item.price) !== -1) newSortedAsks.remove(item.price)
       }
 
       return result
@@ -76,7 +66,7 @@ export const orderBookUpdated = (bids: Array<Object>, asks: Array<Object>) => {
 
       if (item.amount <= 0) {
         delete result[item.price]
-        if (newSortedBids.search(item.price) !== -1) newSortedBids.remove(item.price)
+        newSortedBids.remove(item.price)
       }
 
       return result
@@ -90,7 +80,7 @@ export const orderBookUpdated = (bids: Array<Object>, asks: Array<Object>) => {
 
       if (item.amount <= 0) {
         delete result[item.price]
-        if (newSortedAsks.search(item.price) !== -1) newSortedAsks.remove(item.price)
+        newSortedAsks.remove(item.price)
       }
 
       return result
