@@ -1,5 +1,6 @@
-import * as appActionCreators from '../actions/app'
 //@flow
+
+import * as appActionCreators from '../actions/app'
 import * as actionCreators from '../actions/socketManager'
 import { getAccountDomain } from '../domains'
 import { getSigner } from '../services/signer'
@@ -87,7 +88,7 @@ const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
       return dispatch(handleOrderPending(event))
     case 'REQUEST_SIGNATURE':
       return dispatch(handleRequestSignature(event))
-    case 'ORDER_ERROR':
+    case 'ERROR':
       return dispatch(handleOrderError(event))
     default:
       console.log('Unknown', event)
@@ -97,32 +98,54 @@ const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
 
 function handleOrderAdded(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    let order = parseOrder(event.payload)
+    try {
+      console.log(event)
 
-    dispatch(appActionCreators.addSuccessNotification({ message: 'Order added' }))
-    dispatch(actionCreators.updateOrdersTable([order]))
+      let order = parseOrder(event.payload)
+
+      dispatch(appActionCreators.addSuccessNotification({ message: 'Order added' }))
+      dispatch(actionCreators.updateOrdersTable([order]))
+    } catch (e) {
+      console.log(e)
+      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+    }
+
   }
 }
 
 function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
-    let order = parseOrder(event.payload)
+    try {
+      let order = parseOrder(event.payload)
 
-    dispatch(appActionCreators.addSuccessNotification({ message: 'Order cancelled' }))
-    dispatch(actionCreators.updateOrdersTable([order]))
+      dispatch(appActionCreators.addSuccessNotification({ message: 'Order cancelled' }))
+      dispatch(actionCreators.updateOrdersTable([order]))
+    } catch (e) {
+      console.log(e)
+      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+    }
   }
 }
 
 function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
-      let order = parseOrder(event.payload.order)
+      //TODO handle logic differently depending depending on whether the user is the maker or the taker
+      let signer = getSigner()
+      let signerAddress = await signer.getAddress()
+      let matches = event.payload.matches
+      let orders = []
+
+      matches.map(match => {
+        let { order, trade } = match
+        if (order.userAddress === signerAddress) orders.push(parseOrder(order))
+      })
 
       dispatch(appActionCreators.addSuccessNotification({ message: 'Order success' }))
-      dispatch(actionCreators.updateOrdersTable([order]))
+      dispatch(actionCreators.updateOrdersTable(orders))
     } catch(e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: 'Unknown error' }))
+      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
     }
   }
 }
@@ -130,23 +153,29 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
 function handleOrderPending(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
-      let order = parseOrder(event.payload.order)
+      let signer = getSigner()
+      let signerAddress = await signer.getAddress()
+      let matches = event.payload.matches
+      let orders = []
+
+      matches.map(match => {
+        let { order, trade } = match
+        if (order.userAddress === signerAddress) orders.push(parseOrder(order))
+      })
+
+      dispatch(actionCreators.updateOrdersTable(orders))
       dispatch(appActionCreators.addSuccessNotification({ message: 'Order pending' }))
-      dispatch(actionCreators.updateOrdersTable([order]))
 
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: 'Unknown error '}))
+      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
     }
   }
 }
 
 function handleOrderError(event: WebsocketEvent): ThunkAction {
   return async dispatch => {
-    // let order = parseOrder(event.payload)
-
-    dispatch(appActionCreators.addSuccessNotification({ message: 'Order error' }))
-    // return dispatch(actionCreators.updateOrdersTable([order]))
+    dispatch(appActionCreators.addDangerNotification({ message: `Error: ${event.payload}` }))
   }
 }
 
@@ -154,24 +183,33 @@ function handleRequestSignature(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
       let { payload, hash } = event
+      let { order, remainingOrder, matches } = payload
       let signer = getSigner()
 
-      // signed every individual trade
-      if (payload.matches != null) {
-        payload.matches.map(match => (match.trade.tradeNonce = getRandomNonce()))
-        let promises = payload.matches.map(match => signer.signTrade(match.trade))
-        await Promise.all(promises)
+      // the order that was originally sent is added to the orders table
+      if (order) {
+        let parsedOrder = parseOrder(order)
+        dispatch(actionCreators.updateOrdersTable([parsedOrder]))
       }
 
       // sign the remaining order in case the taker order was partially filled
-      if (payload.order != null) {
-        payload.order.nonce = getRandomNonce()
-        signer.signOrder(payload.order)
+      if (remainingOrder) {
+        remainingOrder.nonce = getRandomNonce()
+        await signer.signOrder(remainingOrder)
+      }
+
+      // signed every individual trade
+      if (matches) {
+        matches.map(match => (match.trade.tradeNonce = getRandomNonce()))
+        let promises = matches.map(match => signer.signTrade(match.trade))
+
+        await Promise.all(promises)
       }
 
       dispatch(appActionCreators.addSuccessNotification({ message: 'Signing trade' }))
-      socket.sendNewSubmitSignatureMessage(hash, payload.matches, payload.order)
+      socket.sendNewSubmitSignatureMessage(hash, order, remainingOrder, matches)
     } catch (e) {
+      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
       console.log(e)
     }
   }
@@ -198,6 +236,7 @@ const handleOrderBookMessage = (dispatch, event: WebsocketMessage) => {
         return
     }
   } catch (e) {
+    dispatch(appActionCreators.addDangerNotification({ message: e.message }))
     console.log(e)
   }
 }
@@ -223,6 +262,7 @@ const handleTradesMessage = (dispatch, event: WebsocketMessage) => {
         return
     }
   } catch (e) {
+    dispatch(appActionCreators.addDangerNotification({ message: e.message }))
     console.log(e)
   }
 }
@@ -249,6 +289,7 @@ const handleOHLCVMessage = (dispatch, event: WebsocketMessage) => {
         return
     }
   } catch (e) {
+    dispatch(appActionCreators.addDangerNotification({ message: e.message }))
     console.log(e)
   }
 }

@@ -15,9 +15,6 @@ export default function tokenSearcherSelector(state: State) {
 
   let tokenPairsByQuoteToken = {}
 
-  console.log(quotes)
-  console.log(tokenPairs)
-
   for (let quote of quotes) {
     tokenPairsByQuoteToken[quote] = tokenPairs
       .filter(({ pair }) => getQuoteToken(pair) === quote)
