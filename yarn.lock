@@ -1593,7 +1593,7 @@ babel-preset-env@1.6.1:
     invariant "^2.2.2"
     semver "^5.3.0"
 
-babel-preset-env@^1.6.1:
+babel-preset-env@^1.6.1, babel-preset-env@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.7.0.tgz#dea79fa4ebeb883cd35dab07e260c1c9c04df77a"
   dependencies:
