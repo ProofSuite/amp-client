@@ -17,28 +17,28 @@ import type {
   UpdateOHLCVAction,
   InitOrderBookAction,
   UpdateOrderBookAction
-} from '../../types/socketManager'
+} from '../../types/socketController'
 
 const actionTypes = {
-  createConnection: 'socketManager/CREATE_CONNECTION',
-  closeConnection: 'socketManager/CLOSE_CONNECTION',
-  connectionError: 'socketManager/CONNECTION_ERROR',
-  openConnection: 'socketManager/OPEN_CONNECTION',
+  createConnection: 'socketController/CREATE_CONNECTION',
+  closeConnection: 'socketController/CLOSE_CONNECTION',
+  connectionError: 'socketController/CONNECTION_ERROR',
+  openConnection: 'socketController/OPEN_CONNECTION',
 
-  initTradesTable: 'socketManager/INIT_TRADES_TABLE',
-  updateTradesTable: 'socketManager/UPDATE_TRADES_TABLE',
-  initOrdersTable: 'socketManager/INIT_ORDERS_TABLE',
-  updateOrdersTable: 'socketManager/UPDATE_ORDERS_TABLE',
+  initTradesTable: 'socketController/INIT_TRADES_TABLE',
+  updateTradesTable: 'socketController/UPDATE_TRADES_TABLE',
+  initOrdersTable: 'socketController/INIT_ORDERS_TABLE',
+  updateOrdersTable: 'socketController/UPDATE_ORDERS_TABLE',
 
-  subscribeOHLCV: 'socketManager/SUBSCRIBE_OHLCV',
-  unsubscribeOHLCV: 'socketManager/UNSUBSCRIBE_OHLCV',
-  initOHLCV: 'socketManager/INIT_OHLCV',
-  updateOHLCV: 'socketManager/UPDATE_OHLCV',
+  subscribeOHLCV: 'socketController/SUBSCRIBE_OHLCV',
+  unsubscribeOHLCV: 'socketController/UNSUBSCRIBE_OHLCV',
+  initOHLCV: 'socketController/INIT_OHLCV',
+  updateOHLCV: 'socketController/UPDATE_OHLCV',
 
-  subscribeOrderbook: 'socketManager/SUBSCRIBE_ORDERBOOK',
-  unsubscribeOrderbook: 'socketManager/UNSUBSCRIBE_ORDERBOOK',
-  initOrderBook: 'socketManager/INIT_ORDERBOOK',
-  updateOrderBook: 'socketManager/UPDATE_ORDERBOOK'
+  subscribeOrderbook: 'socketController/SUBSCRIBE_ORDERBOOK',
+  unsubscribeOrderbook: 'socketController/UNSUBSCRIBE_ORDERBOOK',
+  initOrderBook: 'socketController/INIT_ORDERBOOK',
+  updateOrderBook: 'socketController/UPDATE_ORDERBOOK'
 }
 
 export function createConnection(): CreateConnectionAction {

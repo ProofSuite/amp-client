@@ -12,7 +12,7 @@ import TradingPage from './TradingPage'
 
 import { connect } from 'react-redux';
 
-import SocketManager from '../components/SocketManager'
+import socketController from '../components/socketController'
 import { ConnectedRouter } from 'connected-react-router'
 
 import history from '../store/history'
@@ -23,7 +23,7 @@ import '../styles/css/index.css'
 const App = () => {
   return (
       <ConnectedRouter history={history}>
-        <SocketManager>
+        <socketController>
           <Layout>
             <Switch>
               <Route exact path="/" component={LandingPage} />
@@ -35,7 +35,7 @@ const App = () => {
               <Route path="/trade" component={TradingPage} />
             </Switch>
           </Layout>
-        </SocketManager>
+        </socketController>
       </ConnectedRouter>
 
   )

@@ -1,7 +1,7 @@
 //@flow
 
 import * as appActionCreators from '../actions/app'
-import * as actionCreators from '../actions/socketManager'
+import * as actionCreators from '../actions/socketController'
 import { getAccountDomain } from '../domains'
 import { getSigner } from '../services/signer'
 import { getRandomNonce } from '../../utils/crypto'
@@ -10,7 +10,7 @@ import { parseOrder, parseTrades, parseOrderBookData, parseOHLCV } from '../../u
 import type { State, ThunkAction } from '../../types/'
 import type { WebsocketEvent, WebsocketMessage } from '../../types/websocket'
 
-export default function socketManagerSelector(state: State) {
+export default function socketControllerSelector(state: State) {
   return {
     authenticated: getAccountDomain(state).authenticated()
   }
