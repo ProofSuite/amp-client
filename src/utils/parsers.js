@@ -126,11 +126,11 @@ export const parseOrderBookData = (data, decimals = 2) => {
 export const parseTokenPairData = data => {
   let parsed = data.map(datum => ({
     pair: datum.pair.pairName,
-    lastPrice: convertPricepointToPrice(datum.close),
+    lastPrice: datum.close ? convertPricepointToPrice(datum.close) : null,
     change: datum.open ? round((datum.close - datum.open) / datum.open, 1) : null,
-    high: convertPricepointToPrice(datum.high),
-    low: convertPricepointToPrice(datum.low),
-    volume: fromWeiToFloat(datum.volume, 0)
+    high: datum.high ? convertPricepointToPrice(datum.high) : null,
+    low: datum.low ? convertPricepointToPrice(datum.low) : null,
+    volume: datum.volume ? fromWeiToFloat(datum.volume, 0) : null
   }))
 
   return parsed

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import socketManagerSelector, { openConnection } from '../../store/models/socketManager'
+import socketControllerSelector, { openConnection } from '../../store/models/socketController'
 
 export function mapStateToProps(state) {
-  const { authenticated } = socketManagerSelector(state)
+  const { authenticated } = socketControllerSelector(state)
 
   return { authenticated }
 }

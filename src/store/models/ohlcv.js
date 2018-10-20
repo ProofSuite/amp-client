@@ -16,14 +16,10 @@ export const updateTimeLine = ({ updateWRT }: SendTimelineParams): ThunkAction =
 
     if (updateWRT === 'timespan') {
       let candles = byTimeSpan(currentDuration, currentTimeSpan)
-      if (candles > 40) {
-        return dispatch(actionCreators.saveNoOfCandles(parseInt(candles, 10)))
-      }
+      if (candles > 40) return dispatch(actionCreators.saveNoOfCandles(parseInt(candles, 10)))
     } else {
       let { candles, time } = byDuration(currentDuration)
-      if (time) {
-        dispatch(actionCreators.saveTimeSpan(timeSpans[time]))
-      }
+      if (time) dispatch(actionCreators.saveTimeSpan(timeSpans[time]))
       return dispatch(actionCreators.saveNoOfCandles(parseInt(candles, 10)))
     }
   }
