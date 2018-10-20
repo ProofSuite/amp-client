@@ -12,7 +12,7 @@ import settingsActionTypes from './actions/settings'
 import createWalletActionTypes from './actions/createWallet'
 import walletPageActionTypes from './actions/walletPage'
 import tradingPageActionTypes from './actions/tradingPage'
-import socketManagerActionTypes from './actions/socketManager'
+import socketControllerActionTypes from './actions/socketController'
 import loginPageActionTypes from './actions/loginPage'
 import logoutPageActionTypes from './actions/logoutPage'
 import signerSettingsActionTypes from './actions/signerSettings'
@@ -123,7 +123,7 @@ export const sendEtherForm = createReducer(action => {
 export const ohlcv = createReducer(action => {
   const { type, payload } = action
   switch (type) {
-    case socketManagerActionTypes.initOHLCV:
+    case socketControllerActionTypes.initOHLCV:
     case ohlcvActionTypes.saveData:
       return ohlcvEvents.savedOHLCVData(payload.data)
     case ohlcvActionTypes.saveDuration:
@@ -143,11 +143,11 @@ export const ohlcv = createReducer(action => {
 export const trades = createReducer(action => {
   const { type, payload } = action
   switch (type) {
-    case socketManagerActionTypes.updateTradesTable:
+    case socketControllerActionTypes.updateTradesTable:
     case tradingPageActionTypes.updateTradesTable:
     case tokenSearcherActionTypes.updateTradesTable:
       return tradeEvents.tradesUpdated(payload.trades)
-    case socketManagerActionTypes.initTradesTable:
+    case socketControllerActionTypes.initTradesTable:
     case tradingPageActionTypes.initTradesTable:
     case tokenSearcherActionTypes.initTradesTable:
       return tradeEvents.tradesInitialized(payload.trades)
@@ -164,11 +164,11 @@ export const orderBook = createReducer(action => {
   switch (type) {
     case tradingPageActionTypes.updateOrderBook:
     case tokenSearcherActionTypes.updateOrderBook:
-    case socketManagerActionTypes.updateOrderBook:
+    case socketControllerActionTypes.updateOrderBook:
       return orderBookEvents.orderBookUpdated(payload.bids, payload.asks)
     case tradingPageActionTypes.initOrderBook:
     case tokenSearcherActionTypes.initOrderBook:
-    case socketManagerActionTypes.initOrderBook:
+    case socketControllerActionTypes.initOrderBook:
       return orderBookEvents.orderBookInitialized(payload.bids, payload.asks)
     case tradingPageActionTypes.updateCurrentPair:
     case tokenSearcherActionTypes.updateCurrentPair:
@@ -182,7 +182,7 @@ export const orders = createReducer(action => {
   const { type, payload } = action
   switch (type) {
     case tradingPageActionTypes.updateOrdersTable:
-    case socketManagerActionTypes.updateOrdersTable:
+    case socketControllerActionTypes.updateOrdersTable:
       return orderEvents.ordersUpdated(payload.orders)
     case tradingPageActionTypes.initOrdersTable:
     case tokenSearcherActionTypes.initOrdersTable:
