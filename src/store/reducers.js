@@ -1,6 +1,5 @@
 // @flow
 import createReducer from './createReducer'
-import etherBalanceActionTypes from './actions/etherBalance'
 import accountBalancesActionTypes from './actions/accountBalances'
 import sendEtherFormActionTypes from './actions/sendEtherForm'
 import ohlcvActionTypes from './actions/ohlcv'
@@ -16,16 +15,16 @@ import socketControllerActionTypes from './actions/socketController'
 import loginPageActionTypes from './actions/loginPage'
 import logoutPageActionTypes from './actions/logoutPage'
 import signerSettingsActionTypes from './actions/signerSettings'
+import convertTokensFormActionTypes from './actions/convertTokensForm'
 import appActionTypes from './actions/app'
 
-import * as etherBalanceEvents from './domains/etherBalance'
+
 import * as accountBalancesEvents from './domains/accountBalances'
 import * as sendEtherFormEvents from './domains/sendEtherForm'
 import * as loginPageEvents from './domains/loginPage'
 import * as orderBookEvents from './domains/orderBook'
 import * as tradeEvents from './domains/trades'
 import * as orderEvents from './domains/orders'
-import * as orderFormEvents from './domains/orderForm'
 import * as ohlcvEvents from './domains/ohlcv'
 import * as tokensEvents from './domains/tokens'
 import * as accountEvents from './domains/account'
@@ -35,6 +34,7 @@ import * as tokenPairsEvents from './domains/tokenPairs'
 import * as signerEvents from './domains/signer'
 import * as walletsEvents from './domains/wallets'
 import * as notificationEvents from './domains/notifications'
+import * as convertTokensFormEvents from './domains/convertTokensForm'
 
 export const loginPage = createReducer(action => {
   const { type, payload } = action
@@ -270,6 +270,28 @@ export const depositForm = createReducer(action => {
   }
 })
 
+export const convertTokensForm = createReducer(action => {
+  const { type, payload } = action
+  switch (type) {
+    case convertTokensFormActionTypes.confirm:
+      return convertTokensFormEvents.confirmed()
+    case convertTokensFormActionTypes.sendConvertTx:
+      return convertTokensFormEvents.convertTxSent(payload.tokenSymbol, payload.hash)
+    case convertTokensFormActionTypes.revertConvertTx:
+      return convertTokensFormEvents.convertTxReverted(payload.tokenSymbol, payload.receipt)
+    case convertTokensFormActionTypes.confirmConvertTx:
+      return convertTokensFormEvents.convertTxConfirmed(payload.tokenSymbol, payload.receipt)
+    case convertTokensFormActionTypes.sendAllowTx:
+      return convertTokensFormEvents.allowTxSent(payload.tokenSymbol, payload.hash)
+    case convertTokensFormActionTypes.revertAllowTx:
+      return convertTokensFormEvents.allowTxReverted(payload.tokenSymbol, payload.receipt)
+    case convertTokensFormActionTypes.confirmAllowTx:
+      return convertTokensFormEvents.allowTxConfirmed(payload.tokenSymbol, payload.receipt)
+    default:
+      return convertTokensFormEvents.initialized()
+    }
+})
+
 export const settings = createReducer(action => {
   const { type } = action
   switch (type) {
@@ -297,20 +319,6 @@ export const wallets = createReducer(action => {
       return walletsEvents.walletAdded(payload.address, payload.encryptedWallet)
     default:
       return walletsEvents.initialized()
-  }
-})
-
-export const etherBalance = createReducer(action => {
-  const { type, payload } = action
-  switch (type) {
-    case etherBalanceActionTypes.subscribeBalance:
-      return etherBalanceEvents.subscribed(payload.address)
-    case etherBalanceActionTypes.unsubscribeBalance:
-      return etherBalanceEvents.unsubscribed(payload.address)
-    case etherBalanceActionTypes.updateBalance:
-      return etherBalanceEvents.updated(payload.address, payload.balance)
-    default:
-      return etherBalanceEvents.initialized()
   }
 })
 

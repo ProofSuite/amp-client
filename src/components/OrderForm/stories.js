@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions'
 import { text, withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import OrderFormContainer from './index';
@@ -9,33 +10,35 @@ import * as README from './README.md';
 storiesOf('Order Form', module)
   .addDecorator(withKnobs)
   .add(
-    'Logged In state Sell Eth Form',
+    'Buy Orderform',
     withInfo({ text: README, source: false })(() => (
       <div className="bp3-dark">
         <OrderForm
+          side='BUY'
           askPrice={0.25}
           bidPrice={0.29}
-          totalQuoteBalance={1000}
-          totalBaseBalance={10}
-          formType="Sell"
+          baseTokenBalance={1000}
+          quoteTokenBalance={10}
           quoteToken="ETH"
-          baseToken="BTC"
+          baseToken="PRFT"
+          sendNewOrder={action('sendNewOrder')}
         />
       </div>
     ))
   )
   .add(
-    'Logged In state Buy Eth Form',
+    'Sell Orderform',
     withInfo({ text: README, source: false })(() => (
       <div className="bp3-dark">
         <OrderForm
+          side='SELL'
           askPrice={0.25}
           bidPrice={0.29}
-          totalQuoteBalance={1000}
-          totalBaseBalance={10}
-          formType="Buy"
+          baseTokenBalance={1000}
+          quoteTokenBalance={10}
           quoteToken="ETH"
-          baseToken="BTC"
+          baseToken="PRFT"
+          sendNewOrder={action('sendNewOrder')}
         />
       </div>
     ))

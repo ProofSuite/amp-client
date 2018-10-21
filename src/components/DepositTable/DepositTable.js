@@ -8,7 +8,7 @@ import SendEtherModal from '../../components/SendEtherModal';
 import type { Token } from '../../types/tokens';
 
 type Props = {
-  provider: string,
+  connected: boolean,
   toggleAllowance: string => void,
   depositTableData: Array<Object>,
   redirectToTradingPage: string => void,
@@ -75,7 +75,7 @@ class DepositTable extends React.PureComponent<Props, State> {
   };
 
   render() {
-    let { provider, depositTableData, toggleAllowance, redirectToTradingPage } = this.props;
+    let { connected, depositTableData, toggleAllowance, redirectToTradingPage } = this.props;
     let { isDepositModalOpen, isSendModalOpen, selectedToken, searchInput, hideZeroBalanceToken } = this.state;
 
     depositTableData = this.filterTokens(depositTableData);
@@ -83,7 +83,7 @@ class DepositTable extends React.PureComponent<Props, State> {
     return (
       <Wrapper>
         <DepositTableRenderer
-          provider={provider}
+          connected={connected}
           depositTableData={depositTableData}
           searchInput={searchInput}
           hideZeroBalanceToken={hideZeroBalanceToken}

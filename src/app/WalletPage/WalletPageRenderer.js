@@ -17,7 +17,7 @@ type Props = {
   gasPrice: number,
   gas: number,
   //Deposit table props
-  provider: string,
+  connected: string,
   depositTableData: Array<TokenData>,
   toggleAllowance: string => void,
   redirectToTradingPage: string => void
@@ -26,7 +26,7 @@ type Props = {
 const WalletPageRenderer = ({
   loading,
   pvtKeyLocked,
-  provider,
+  connected,
   depositTableData,
   accountAddress,
   accountPrivateKey,
@@ -54,7 +54,7 @@ const WalletPageRenderer = ({
             <RightSection>
               <DepositTableWrapper>
                 <DepositTable
-                  provider={provider}
+                  connected={connected}
                   toggleAllowance={toggleAllowance}
                   depositTableData={depositTableData}
                   redirectToTradingPage={redirectToTradingPage}

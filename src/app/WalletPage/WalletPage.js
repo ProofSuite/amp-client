@@ -7,7 +7,7 @@ import type { TokenData } from '../../types/tokens'
 
 export type Props = {
   loading: boolean,
-  provider: string,
+  connected: boolean,
   pvtKeyLocked: boolean,
   accountAddress: string,
   accountPrivateKey: string,
@@ -31,7 +31,7 @@ class WalletPage extends React.PureComponent<Props> {
   render() {
     const {
       loading,
-      provider,
+      connected,
       pvtKeyLocked,
       depositTableData,
       authenticated,
@@ -53,7 +53,7 @@ class WalletPage extends React.PureComponent<Props> {
         gasPrice={gasPrice}
         gas={gas}
         accountPrivateKey={accountPrivateKey}
-        provider={provider}
+        connected={connected}
         pvtKeyLocked={pvtKeyLocked}
         accountAddress={accountAddress}
         depositTableData={depositTableData}

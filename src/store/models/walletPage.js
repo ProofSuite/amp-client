@@ -28,7 +28,7 @@ export default function walletPageSelector(state: State) {
     authenticated: accountDomain.authenticated(),
     tokens: tokenDomain.tokens(),
     currentBlock: accountDomain.currentBlock(),
-    provider: 'Provider Type',
+    connected: true,
     gas: sendEtherFormDomain.getGas(),
     gasPrice: sendEtherFormDomain.getGasPrice()
   }

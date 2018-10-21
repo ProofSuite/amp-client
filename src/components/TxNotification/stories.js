@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, withKnobs } from '@storybook/addon-knobs/react';
+import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { Card } from '@blueprintjs/core';
-import { receipt } from '../../data';
+import { receipt } from '../../utils/mockData';
 import TxNotification from './TxNotification';
 import README from './README.md';
 

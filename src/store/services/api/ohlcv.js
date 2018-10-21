@@ -39,7 +39,7 @@ export const getOHLCV = async (
     throw new Error('Error')
   }
 
-  const data = await response.json()
+  const { data } = await response.json()
   if (data === null) return []
 
   let parsedData = data.map(datum => {

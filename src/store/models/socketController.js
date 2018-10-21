@@ -1,11 +1,12 @@
 //@flow
+import { utils } from 'ethers'
 
 import * as appActionCreators from '../actions/app'
 import * as actionCreators from '../actions/socketController'
 import { getAccountDomain } from '../domains'
 import { getSigner } from '../services/signer'
 import { getRandomNonce } from '../../utils/crypto'
-import { parseOrder, parseTrades, parseOrderBookData, parseOHLCV } from '../../utils/parsers'
+import { parseOrder, parseTrade, parseTrades, parseOrderBookData, parseOHLCV } from '../../utils/parsers'
 
 import type { State, ThunkAction } from '../../types/'
 import type { WebsocketEvent, WebsocketMessage } from '../../types/websocket'
@@ -135,14 +136,22 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
       let orders = []
+      let trades = []
 
-      matches.map(match => {
+      matches.forEach(match => {
         let { order, trade } = match
-        if (order.userAddress === signerAddress) orders.push(parseOrder(order))
+        if (utils.getAddress(order.userAddress) === signerAddress) {
+          orders.push(parseOrder(order))
+        }
+        if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.taker) === signerAddress) {
+          trades.push(parseTrade(trade))
+        }
       })
 
+      if (orders.length > 0) dispatch(actionCreators.updateOrdersTable(orders))
+      if (trades.length > 0) dispatch(actionCreators.updateTradesTable(trades))
       dispatch(appActionCreators.addSuccessNotification({ message: 'Order success' }))
-      dispatch(actionCreators.updateOrdersTable(orders))
+
     } catch(e) {
       console.log(e)
       dispatch(appActionCreators.addDangerNotification({ message: e.message }))
@@ -157,13 +166,21 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
       let orders = []
+      let trades = []
 
-      matches.map(match => {
+      matches.forEach(match => {
         let { order, trade } = match
-        if (order.userAddress === signerAddress) orders.push(parseOrder(order))
+        if (utils.getAddress(order.userAddress) === signerAddress) {
+          orders.push(parseOrder(order))
+        }
+
+        if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.taker) === signerAddress) {
+          trades.push(parseTrade(trade))
+        }
       })
 
-      dispatch(actionCreators.updateOrdersTable(orders))
+      if (orders.length > 0) dispatch(actionCreators.updateOrdersTable(orders))
+      if (trades.length > 0) dispatch(actionCreators.updateTradesTable(trades))
       dispatch(appActionCreators.addSuccessNotification({ message: 'Order pending' }))
 
     } catch (e) {
@@ -292,9 +309,4 @@ const handleOHLCVMessage = (dispatch, event: WebsocketMessage) => {
     dispatch(appActionCreators.addDangerNotification({ message: e.message }))
     console.log(e)
   }
-}
-
-
-const handleRawOrdersMessage = (dispatch, event: WebsocketMessage) => {
-  console.log('Receiving raw order message', event)
 }
