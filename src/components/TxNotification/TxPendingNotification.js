@@ -10,7 +10,7 @@ type Props = {
 const TxPendingNotification = ({ hash, title }: Props) => (
   <Callout intent={Intent.SUCCESS} icon="info-sign" title={title}>
     <NotificationBox>
-      <h6>Transaction Hash:</h6>
+      <h3>Transaction Hash:</h3>
       <Ellipsis>{hash}</Ellipsis>
       <SpinnerBox>
         <Spinner intent={Intent.SUCCESS} />

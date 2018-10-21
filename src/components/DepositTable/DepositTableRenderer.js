@@ -3,10 +3,9 @@ import React from 'react';
 import { Button, Switch, Checkbox, InputGroup } from '@blueprintjs/core';
 import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
 
 type Props = {
-  provider: string,
+  connected: boolean,
   depositTableData: Object,
   searchInput: string,
   handleSearchInputChange: (SyntheticEvent<>) => void,
@@ -62,7 +61,7 @@ const DepositTableRenderer = (props: Props) => {
 };
 
 const RowRenderer = (props: Props) => {
-  const { provider, depositTableData, toggleAllowance, openDepositModal, openSendModal, redirectToTradingPage } = props;
+  const { connected, depositTableData, toggleAllowance, openDepositModal, openSendModal, redirectToTradingPage } = props;
 
   return depositTableData.map(({ symbol, balance, allowed, allowancePending }, index) => {
     return (
@@ -80,14 +79,38 @@ const RowRenderer = (props: Props) => {
         </Cell>
         <Cell style={{ width: '40%' }}>
           <ButtonWrapper>
-            <Button disabled={!provider} intent="primary" text="Deposit" onClick={() => openDepositModal(symbol)} />
+            <Button disabled={!connected} intent="primary" text="Deposit" onClick={() => openDepositModal(symbol)} />
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button disabled={!provider} intent="primary" text="Send" onClick={() => openSendModal(symbol)} />
+            <Button disabled={!connected} intent="primary" text="Send" onClick={() => openSendModal(symbol)} />
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button disabled={!provider} intent="primary" text="Trade" onClick={() => redirectToTradingPage(symbol)} />
+            <Button disabled={!connected} intent="primary" text="Trade" onClick={() => redirectToTradingPage(symbol)} />
           </ButtonWrapper>
+          {symbol === 'ETH' &&
+            <ButtonWrapper>
+              <Button
+                disabled={!connected}
+                intent="primary"
+                minimal
+                text="Convert to WETH"
+                rightIcon="random"
+                onClick={() => console.log('convert to WETH')} />
+            </ButtonWrapper>
+          }
+          {
+            symbol === 'WETH' &&
+            <ButtonWrapper>
+              <Button
+                disabled={!connected}
+                intent="primary"
+                minimal
+                text="Convert to ETH"
+                onClick={() => console.log('convert to ETH')}
+                rightIcon="random"
+              />
+            </ButtonWrapper>
+          }
         </Cell>
       </Row>
     );
@@ -95,7 +118,7 @@ const RowRenderer = (props: Props) => {
 };
 
 const Table = styled.table.attrs({
-  className: 'bp3-html-table bp3-interactive bp3-html-table-striped',
+  className: 'bp3-html-table bp3-html-table-striped',
 })`
   width: 100%;
 `;
@@ -158,4 +181,4 @@ const ButtonWrapper = styled.span`
   margin-right: 10px !important;
 `;
 
-export default withRouter(DepositTableRenderer);
+export default DepositTableRenderer;

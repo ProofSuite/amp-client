@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
 import { Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
-import { HeaderText, MutedText, Box } from '../Common'
-import { formatNumber, unformat } from 'accounting-js'
+import { HeaderText, MutedText } from '../Common'
 import styled from 'styled-components'
 
 type Props = {
