@@ -106,7 +106,7 @@ export default function tradesDomain(state: TradesState) {
 
         (index === trades.length-1)
           ? change = 'positive'
-          : (trade.price > trades[index+1].price)
+          : (trade.price >= trades[index+1].price)
             ? change = 'positive'
             : change = 'negative'
 

@@ -2,7 +2,6 @@
 import type { State, ThunkAction } from '../../types'
 import { getTokenPairsDomain, getAccountBalancesDomain } from '../domains'
 import * as actionCreators from '../actions/tokenSearcher'
-import * as ohlcvActionCreators from '../actions/ohlcv'
 
 import { getQuoteToken, getBaseToken } from '../../utils/tokens'
 import { quoteTokenSymbols as quotes } from '../../config/quotes'
@@ -53,7 +52,6 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
 
       let pairDomain = getTokenPairsDomain(state)
       let newPair = pairDomain.getPair(pair)
-      let { baseTokenAddress, quoteTokenAddress } = newPair
 
       socket.subscribeTrades(newPair)
       socket.subscribeOrderBook(newPair)
@@ -63,11 +61,3 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
     }
   }
 }
-
-
-
-// let { bids, asks } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
-//       dispatch(actionCreators.initOrderBook(bids, asks))
-
-//       let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
-//       dispatch(actionCreators.initTradesTable(trades))

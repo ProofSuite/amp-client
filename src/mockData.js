@@ -85,10 +85,11 @@ export const mockSerializedWallet = JSON.stringify({
 export const mockSerializedWalletAddress = 'c838efcb6512a2ca12027ebcdf9e1fc5e4ff7ee3';
 
 export const mockDepositTableData = [
-  { symbol: 'EOS', balance: '10.0000', allowed: true },
+  { symbol: 'ETH', balance: '19.0000', allowed: false },
+  { symbol: 'WETH', balance: '10.0000', allowed: true },
   { symbol: 'ZRX', balance: '1.00000', allowed: false },
-  { symbol: 'EOS', balance: '5.00000', allowed: false },
-  { symbol: 'EOS', balance: '8.00000', allowed: true },
+  { symbol: 'AION', balance: '5.00000', allowed: false },
+  { symbol: 'LOOM', balance: '8.00000', allowed: true },
 ];
 
 export const mockAllowTxState = {
