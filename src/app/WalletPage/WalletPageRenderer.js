@@ -87,7 +87,7 @@ const HeadingMenu = styled.div`
 
 const DepositTableWrapper = styled.div`
   height: 100%;
-  width: 80%;
+  width: 90%;
 `
 const RightSection = styled.div`
   display: flex;

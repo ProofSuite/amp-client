@@ -78,7 +78,7 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
         {order.pair}
       </Cell>
       <Cell className="amount" muted>
-        {order.amount}
+        {order.filled}/{order.amount}
       </Cell>
       <Cell className="price" muted>
         {order.price} ({order.type})
