@@ -310,7 +310,7 @@ const BaseTokenRows = (props: Props) => {
 };
 
 const Table = styled.table.attrs({
-  className: 'bp3-html-table bp3-html-table-striped',
+  className: 'bp3-html-table bp3-html-table-bordered bp3--condensed',
 })`
   width: 100%;
 `;

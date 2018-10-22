@@ -68,7 +68,6 @@ const WalletPageRenderer = ({
                 />
               </DepositTableWrapper>
               <HeadingMenu>
-                <h4>Heading</h4>
               </HeadingMenu>
             </RightSection>
           )}
