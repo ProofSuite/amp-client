@@ -5,7 +5,7 @@ import { Icon } from '@blueprintjs/core';
 
 const ConfirmFormRenderer = (props: Props) => {
   const {
-    token,
+    fromToken,
     allowTxStatus,
     allowTxHash,
     allowTxReceipt,
@@ -87,7 +87,7 @@ const ConfirmFormRenderer = (props: Props) => {
             <ConfirmIconBox>
               <Icon icon="tick-circle" intent="success" iconSize={200} />
             </ConfirmIconBox>
-            <h3>Your {token.symbol} has been successfully deposited. You can now start trading</h3>
+            <h3>Your {fromToken.symbol} has been successfully tokenized. You can now start trading</h3>
           </ConfirmBox>
           <TxNotificationBox>
             <TxNotification

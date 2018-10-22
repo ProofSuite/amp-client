@@ -8,15 +8,14 @@ import type { Token, TokenBalances } from '../../types/common'
 import type { AccountBalance, AccountAllowance } from '../../types/accountBalances'
 
 export async function queryEtherBalance(address: string) {
-  let balance
   let provider = getProvider()
 
-  balance = await provider.getBalance(address)
-  balance = Number(utils.formatEther(balance)).toFixed(4)
+  let balance = await provider.getBalance(address)
+  let formattedBalance = Number(utils.formatEther(balance))
 
   return {
     symbol: 'ETH',
-    balance: balance
+    balance: formattedBalance
   }
 }
 
@@ -29,7 +28,7 @@ export async function updateAllowance(tokenAddress: string, spender: string, add
   return { allowance: utils.formatEther(allowance) }
 }
 
-export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: Object) {
+export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: Object | number) {
   const signer = getSigner()
   const exchange = EXCHANGE_ADDRESS[signer.provider.network.chainId]
   const contract = new Contract(tokenAddress, ERC20, signer)

@@ -18,7 +18,7 @@ const WaitingFormRenderer = (props: Props) => {
   return (
     <div>
       <Callout intent="primary" title="Notice">
-        Send Ether to the address display below. This form will update once your account balance is changed.
+        Send {token.symbol} to the address displayed below. This form will update once your account balance is changed.
       </Callout>
       <WaitingFormBox>
         <Spinner intent="primary" large />
@@ -27,7 +27,6 @@ const WaitingFormRenderer = (props: Props) => {
           (Your current balance is {balance} {token.symbol})
         </CurrentBalanceBox>
       </WaitingFormBox>
-
       {showTokenSuggest ? (
         <ControlGroup>
           <Button onClick={toggleTokenSuggest} text="Cancel" minimal />

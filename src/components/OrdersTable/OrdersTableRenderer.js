@@ -18,7 +18,8 @@ type Props = {
     OPEN: Array<Order>,
     PENDING: Array<Order>,
     EXECUTED: Array<Order>,
-    CANCELLED: Array<Order>
+    CANCELLED: Array<Order>,
+    FILLED: Array<Order>
   }
 }
 

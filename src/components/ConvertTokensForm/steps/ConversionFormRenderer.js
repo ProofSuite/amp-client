@@ -3,25 +3,16 @@ import styled from 'styled-components';
 import { Button, Callout, Checkbox, Icon, Slider } from '@blueprintjs/core';
 
 type Props = {
-  step: 'convert' | 'confirm',
   address: string,
   balance: ?number,
-  tokens: Array<Object>,
-  token: Object,
-  isEtherDeposit: boolean,
-  shouldConvert: boolean,
+  fromToken: Token,
+  toToken: Token,
   shouldAllow: boolean,
   convertAmount: number,
+  handleConvertTokens: void => void,
   handleChangeConvertAmount: number => void,
   toggleShouldAllowTrading: void => void,
-  toggleShouldConvert: void => void,
-  toggleTokenSuggest: void => void,
-  showTokenSuggest: boolean,
-  handleChangeToken: (SyntheticEvent<>) => void,
-  handleSubmitChangeToken: (SyntheticEvent<>) => Promise<void>,
-  handleConfirm: (SyntheticEvent<>) => void,
   allowTradingCheckboxDisabled: boolean,
-  submitButtonDisabled: boolean,
   allowTxStatus: string,
   allowTxHash: string,
   allowTxReceipt: TxReceipt,
@@ -35,42 +26,44 @@ const ConversionStepRenderer = (props: Props) => {
   const {
     shouldAllow,
     toggleShouldAllowTrading,
-    handleConfirm,
-    isEtherDeposit,
+    handleConvertTokens,
+    handleChangeConvertAmount,
+    convertAmount,
     balance,
-    token,
-    submitButtonDisabled,
-    allowTradingCheckboxDisabled,
+    fromToken,
   } = props;
 
   return (
     <div>
-      <Callout intent="success" title="Deposit Received">
-        To be able to trade on the AMP platform, you will need to allow the exchange smart-contract to trade with your
-        tokens. Learn more.
+      <Callout intent="success" title={messages[fromToken].title}>
+        {messages[fromToken].callout}
       </Callout>
       <EtherBalanceBox>
         <p>Your total wallet balance is currently:</p>
-        <h1>
-          {balance} {token.symbol}
-        </h1>
+        <h1>{balance} {fromToken.symbol}</h1>
       </EtherBalanceBox>
-      {isEtherDeposit && renderSliderBox(props)}
+      <p>{messages[fromToken].label1}</p>
+      <SliderBox>
+        <Slider
+          max={100}
+          min={0}
+          onChange={handleChangeConvertAmount}
+          value={convertAmount}
+          labelStepSize={25}
+        />
+      </SliderBox>
+      <p><Icon intent="warning" icon="warning-sign" /> {messages[fromToken].info1}</p>
       <br />
       <Checkbox
         checked={shouldAllow}
-        disabled={allowTradingCheckboxDisabled}
-        label="Allow Trading"
+        label={"Allow Trading"}
         onChange={toggleShouldAllowTrading}
       />
-      <p>
-        <Icon intent="warning" icon="warning-sign" /> This is required for trading (requires a blockchain transaction)
-      </p>
+      <p><Icon intent="warning" icon="warning-sign" /> {messages[fromToken].info2}</p>
       <Button
         intent="primary"
-        onClick={handleConfirm}
-        disabled={submitButtonDisabled}
-        text="Enable Trading"
+        onClick={handleConvertTokens}
+        text="Convert"
         large
         fill
       />
@@ -78,26 +71,23 @@ const ConversionStepRenderer = (props: Props) => {
   );
 };
 
-const renderSliderBox = (props: Props) => {
-  const { shouldConvert, toggleShouldConvert, handleChangeConvertAmount, convertAmount } = props;
-
-  return (
-    <div>
-      <Checkbox checked={shouldConvert} label="Convert to Wrapper Ether" onChange={toggleShouldConvert} />
-
-      <SliderBox>
-        <Slider
-          disabled={!shouldConvert}
-          max={100}
-          min={0}
-          onChange={handleChangeConvertAmount}
-          value={convertAmount}
-          labelStepSize={25}
-        />
-        <p>This is required for trading. Read more about wrapper ether here</p>
-      </SliderBox>
-    </div>
-  );
+const messages = {
+  "ETH": {
+    title: `Tokenize your Ether for trading!`,
+    callout: `To be able to trade on the AMP platform, you will need to convert you Ether (ETH) to tokenized ether (WETH).
+    ETH and WETH can be converted at anytime through a smart-contract and 1 ETH = 1 WETH consistently. To perform other normal blockchain transactions, you will need Ether to pay for gas. Therefore
+    we recommend tokenizing around 90% of your ETH`,
+    label1: `Choose the fraction of ETH you want to tokenize.`,
+    info1: `WETH is reequired for trading. You can convert back to ETH at any time. Read more about wrapper Ether here`,
+    info2: 'Required for trading',
+  },
+  "WETH": {
+    title: `Convert back to Ether`,
+    callout: `To be able to trade on the AMP platform, you will need to convert you Ether (ETH) to tokenized ether (WETH). ETH and WETH can be converted at anytime through a smart-contract and 1 ETH = 1 WETH consistently`,
+    label1: `Choose the fraction of WETH (tokenized Ether) you want to convert to ETH`,
+    info1: `WETH is reequired for trading. You can convert between WETH (tokenized ether) and ETH at any time. Read more about wrapper Ether here`,
+    info2: 'Required for trading',
+  },
 };
 
 const EtherBalanceBox = styled.div`

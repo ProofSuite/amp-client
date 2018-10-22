@@ -9,7 +9,8 @@ type Step = 'convert' | 'confirm';
 
 type Props = {
   txSubmitted: boolean,
-  token: Token,
+  fromToken: Token,
+  toToken: Token,
   address: string,
   balance: ?number,
   txSubmitted: false,
@@ -18,11 +19,12 @@ type Props = {
   convertTxHash: string,
   allowTxStatus: string,
   allowTxReceipt: TxReceipt,
-  allowTxHash: string
+  allowTxHash: string,
+  convertFromWETHtoETH: number => void,
+  convertFromETHtoWETH: (boolean, number) => void
 };
 
 type State = {
-  token: ?Token,
   convertAmount: number,
   shouldConvert: boolean,
   shouldAllow: boolean,
@@ -31,7 +33,6 @@ type State = {
 
 class ConvertTokensForm extends React.PureComponent<Props, State> {
   state = {
-    token: this.props.token || null,
     shouldConvert: true,
     shouldAllow: true,
     convertAmount: 50,
@@ -42,10 +43,6 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
     this.setState({ convertAmount: e });
   };
 
-  updateToken = (token: Token) => {
-    this.setState({ token })
-  }
-
   toggleTokenSuggest = () => {
     this.setState({ showTokenSuggest: !this.state.showTokenSuggest });
   };
@@ -54,26 +51,41 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
     this.setState({ shouldAllow: !this.state.shouldAllow });
   };
 
-  toggleShouldConvert = () => {
-    this.setState({ shouldConvert: !this.state.shouldConvert });
-  };
-
   transactionStatus = () => {
-    const { token, allowTxStatus, convertTxStatus } = this.props;
+    const { fromToken, allowTxStatus, convertTxStatus } = this.props;
 
-    if (token.symbol === 'ETH') {
+    if (fromToken === 'ETH') {
       if (allowTxStatus === 'failed' || convertTxStatus === 'failed') return 'failed';
       if (allowTxStatus === 'confirmed' && convertTxStatus === 'confirmed') return 'confirmed';
       if (allowTxStatus === 'sent' && convertTxStatus === 'sent') return 'sent';
     } else {
-      if (allowTxStatus === 'failed') return 'failed';
-      if (allowTxStatus === 'confirmed') return 'confirmed';
-      if (allowTxStatus === 'sent') return 'sent';
+      if (convertTxStatus === 'failed') return 'failed';
+      if (convertTxStatus === 'confirmed') return 'confirmed';
+      if (convertTxStatus === 'sent') return 'sent';
     }
   };
 
+  handleConvertTokens = () => {
+    const {
+      fromToken,
+      toToken,
+      convertFromWETHtoETH,
+      convertFromETHtoWETH,
+     } = this.props
+
+     const {
+       convertAmount,
+       shouldAllow
+     } = this.state
+
+    if (fromToken === 'WETH' && toToken === 'ETH') return convertFromWETHtoETH(convertAmount)
+    if (fromToken === 'ETH' && toToken === 'WETH') return convertFromETHtoWETH(shouldAllow, convertAmount)
+  }
+
   render() {
-    const { token,
+    const {
+      fromToken,
+      toToken,
       txSubmitted,
       address,
       balance,
@@ -82,36 +94,29 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
       convertTxHash,
       allowTxStatus,
       allowTxReceipt,
-      allowTxHash
+      allowTxHash,
     } = this.props;
 
+    const { shouldAllow, convertAmount, showTokenSuggest } = this.state;
+    const transactionStatus = this.transactionStatus()
 
-    const { shouldAllow, shouldConvert, convertAmount, showTokenSuggest } = this.state;
-
-    if (!token) return null
-
-    const isEtherDeposit = token.symbol === 'ETH';
-    const allowTradingCheckboxDisabled = isEtherDeposit && !shouldConvert;
-    const submitButtonDisabled = (!isEtherDeposit && allowTradingCheckboxDisabled) || (!shouldConvert || allowTradingCheckboxDisabled);
+    if (!fromToken) return null
 
     return (
       <ConvertTokensFormRenderer
         txSubmitted={txSubmitted}
-        token={token}
+        fromToken={fromToken}
+        toToken={toToken}
         balance={balance}
         address={address}
-        shouldConvert={shouldConvert}
         shouldAllow={shouldAllow}
         convertAmount={convertAmount}
-        isEtherDeposit={isEtherDeposit}
-        allowTradingCheckboxDisabled={allowTradingCheckboxDisabled}
-        submitButtonDisabled={submitButtonDisabled}
+        handleConvertTokens={this.handleConvertTokens}
         handleChangeConvertAmount={this.handleChangeConvertAmount}
         toggleShouldAllowTrading={this.toggleShouldAllowTrading}
-        toggleShouldConvert={this.toggleShouldConvert}
         toggleTokenSuggest={this.toggleTokenSuggest}
         showTokenSuggest={showTokenSuggest}
-        transactionStatus={this.transactionStatus()}
+        transactionStatus={transactionStatus}
         convertTxStatus={convertTxStatus}
         convertTxReceipt={convertTxReceipt}
         convertTxHash={convertTxHash}
