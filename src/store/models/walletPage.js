@@ -5,7 +5,7 @@ import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
 import * as accountActionTypes from '../actions/account'
 import * as accountBalancesService from '../services/accountBalances'
-import { quoteTokens } from '../../config/quotes'
+import { quoteTokens, quoteTokenSymbols } from '../../config/quotes'
 import { getCurrentBlock } from '../services/wallet'
 import { push } from 'connected-react-router'
 import type { Token } from '../../types/common'
@@ -17,16 +17,25 @@ export default function walletPageSelector(state: State) {
   let accountDomain = getAccountDomain(state)
   let tokenDomain = getTokenDomain(state)
   let sendEtherFormDomain = getSendEtherFormDomain(state)
-  let tokens = tokenDomain.tokens().filter((token: Token) => token.symbol !== 'ETH')
-  let depositTableData = accountBalancesDomain.getBalancesAndAllowances(tokens)
+
+  // ETH is not a token so we add it to the list to display in the deposit table
+  // let WETH = tokenDomain.token('WETH')
+  // let quoteTokens = tokenDomain.tokens().filter((token: Token) => quoteTokens.indexOf(token.symbol) !== -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
+  // let baseTokens = tokenDomain.tokens().filter((token: Token) => quoteTokens.indexOf(token.symbol) === -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
+  let ETH = { symbol: 'ETH' }
+  let tokens = tokenDomain.tokens()
+  let quoteTokens = quoteTokenSymbols
+  let baseTokens = tokenDomain.symbols().filter(symbol => quoteTokens.indexOf(symbol) !== -1)
+  let tokenData = accountBalancesDomain.getBalancesAndAllowances([ ETH ].concat(tokens))
 
   return {
-    etherBalance: accountBalancesDomain.etherBalance(),
-    depositTableData: depositTableData,
+    etherBalance: accountBalancesDomain.formattedEtherBalance(),
+    tokenData: tokenData,
+    quoteTokens: quoteTokens,
+    baseTokens: baseTokens,
     accountAddress: accountDomain.address(),
     accountPrivateKey: accountDomain.privateKey(),
     authenticated: accountDomain.authenticated(),
-    tokens: tokenDomain.tokens(),
     currentBlock: accountDomain.currentBlock(),
     connected: true,
     gas: sendEtherFormDomain.getGas(),

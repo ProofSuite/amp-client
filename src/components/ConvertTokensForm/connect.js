@@ -1,32 +1,32 @@
 // @flow
 import { connect } from 'react-redux';
 import getConvertTokensFormSelector, {
-  confirmEtherDeposit,
-  confirmTokenDeposit,
-} from '../../store/models/convertTokensForm';
+  convertFromETHtoWETH,
+  convertFromWETHtoETH,
+ } from '../../store/models/convertTokensForm';
 
-import type { State } from '../../types';
+import type { State, Dispatch } from '../../types';
 
 export const mapStateToProps = (state: State, ownProps: Object) => {
   const convertTokensFormSelector = getConvertTokensFormSelector(state);
-
-  const { tokenSymbol } = ownProps
+  const { fromToken, toToken } = ownProps
   const tokens = convertTokensFormSelector.tokens()
   const balances = convertTokensFormSelector.balances()
-  const convertTokensFormState = convertTokensFormSelector.convertTokensFormState(tokenSymbol)
+  const convertTokensFormState = convertTokensFormSelector.convertTokensFormState(fromToken)
+
 
   return {
-    token: tokens[tokenSymbol],
-    balance: balances[tokenSymbol],
+    token: tokens[fromToken],
+    balance: balances[fromToken],
     address: convertTokensFormSelector.accountAddress(),
     ...convertTokensFormState
   };
 };
 
-export const mapDispatchToProps = {
-  confirmEtherDeposit,
-  confirmTokenDeposit,
-};
+const mapDispatchToProps = {
+  convertFromWETHtoETH,
+  convertFromETHtoWETH
+}
 
 export default connect(
   mapStateToProps,

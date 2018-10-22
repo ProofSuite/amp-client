@@ -12,9 +12,10 @@ const actionTypes = {
   confirmAllowTx: 'convertTokensForm/CONFIRM_ALLOW_TX'
 };
 
-export function confirm() {
+export function confirm(tokenSymbol: string) {
   return {
     type: actionTypes.confirm,
+    payload: { tokenSymbol }
   };
 }
 

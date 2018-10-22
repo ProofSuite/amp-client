@@ -119,7 +119,7 @@ class DepositForm extends React.PureComponent<Props, State> {
   render() {
     const { step, balances, address, tokens, allowTx, convertTx } = this.props;
     const { shouldAllow, shouldConvert, convertAmount, inputToken, showTokenSuggest, token } = this.state;
-    const balance = balances[token.symbol] ? balances[token.symbol].balance : null;
+    const balance = balances[token.symbol] || null;
     const isEtherDeposit = token.symbol === 'ETH';
     const allowTradingCheckboxDisabled = isEtherDeposit && !shouldConvert;
     const submitButtonDisabled =

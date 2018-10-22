@@ -197,7 +197,8 @@ export const fetchTokenPairData = async () => {
 
 
   if (response.status === 400) {
-    throw new Error(data.error)
+    const { error } = await response.json()
+    throw new Error(error)
   }
 
   if (response.status !== 200) {

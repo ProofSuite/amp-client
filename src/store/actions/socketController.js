@@ -11,6 +11,8 @@ import type {
   UpdateOrdersTableAction,
   InitTradesTableAction,
   UpdateTradesTableAction,
+  SubscribeOrderBookAction,
+  UnsubscribeOrderBookAction,
   SubscribeOHLCVAction,
   UnsubscribeOHLCVAction,
   InitOHLCVAction,

@@ -72,6 +72,7 @@ export default function ordersDomain(state: OrdersState) {
       let orders = Object.values(state.byHash)
       orders = (orders: Orders).slice(Math.max(orders.length - n, 0))
       orders = (orders: Orders).map(order => {
+        order.filled = formatNumber(order.filled, { precision: 2 })
         order.amount = formatNumber(order.amount, { precision: 2 })
         order.price = formatNumber(order.price, { precision: 2 })
         return order

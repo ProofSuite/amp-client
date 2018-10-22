@@ -23,14 +23,23 @@ import ConvertTokensFormRenderer from './ConvertTokensFormRenderer';
 
 storiesOf('ConvertTokensForm Container', module)
   .addDecorator(withKnobs)
-  .add('ConvertTokensForm (default)',
+  .add('ConvertTokensForm (ETH => WETH)',
     withInfo({text: README,source: false })(() => (
     <div className="bp3-dark">
       <Card>
-        <ConvertTokensFormContainer tokenSymbol='ETH' />
+        <ConvertTokensFormContainer fromToken='ETH' toToken='WETH' />
       </Card>
     </div>
   ))
+)
+  .add('ConvertTokensForm (WETH => ETH)',
+  withInfo({text: README,source: false })(() => (
+  <div className="bp3-dark">
+    <Card>
+      <ConvertTokensFormContainer fromToken='WETH' toToken='ETH' />
+    </Card>
+  </div>
+))
 )
 
 // const { store: customStore } = configureStore({

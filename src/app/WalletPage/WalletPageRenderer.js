@@ -16,8 +16,11 @@ type Props = {
   etherBalance: string,
   gasPrice: number,
   gas: number,
+  tokenData: Array<TokenData>,
+  baseTokens: Array<string>,
+  quoteTokens: Array<string>,
   //Deposit table props
-  connected: string,
+  connected: boolean,
   depositTableData: Array<TokenData>,
   toggleAllowance: string => void,
   redirectToTradingPage: string => void
@@ -27,12 +30,14 @@ const WalletPageRenderer = ({
   loading,
   pvtKeyLocked,
   connected,
-  depositTableData,
   accountAddress,
   accountPrivateKey,
   etherBalance,
   gasPrice,
   gas,
+  tokenData,
+  baseTokens,
+  quoteTokens,
   toggleAllowance,
   redirectToTradingPage
 }: Props) => {
@@ -56,12 +61,13 @@ const WalletPageRenderer = ({
                 <DepositTable
                   connected={connected}
                   toggleAllowance={toggleAllowance}
-                  depositTableData={depositTableData}
+                  tokenData={tokenData}
+                  baseTokens={baseTokens}
+                  quoteTokens={quoteTokens}
                   redirectToTradingPage={redirectToTradingPage}
                 />
               </DepositTableWrapper>
               <HeadingMenu>
-                <h4>Heading</h4>
               </HeadingMenu>
             </RightSection>
           )}
@@ -81,7 +87,7 @@ const HeadingMenu = styled.div`
 
 const DepositTableWrapper = styled.div`
   height: 100%;
-  width: 69%;
+  width: 90%;
 `
 const RightSection = styled.div`
   display: flex;
