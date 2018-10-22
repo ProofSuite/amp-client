@@ -206,7 +206,7 @@ const Toolbar = ({
 
 const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
   return (
-    <DurationWrapper className="bp3-button">
+    <DurationWrapper>
       {duration.map((dur, index) => {
         const { label } = dur;
         return (

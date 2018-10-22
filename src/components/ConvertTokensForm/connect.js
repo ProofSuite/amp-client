@@ -17,7 +17,7 @@ export const mapStateToProps = (state: State, ownProps: Object) => {
 
   return {
     token: tokens[fromToken],
-    balance: balances[fromToken].balance,
+    balance: balances[fromToken],
     address: convertTokensFormSelector.accountAddress(),
     ...convertTokensFormState
   };

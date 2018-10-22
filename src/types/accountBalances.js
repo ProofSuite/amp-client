@@ -20,6 +20,7 @@ export type AccountAllowance = {
 
 export type AccountAllowances = Array<AccountAllowance>;
 export type AccountBalances = Array<AccountBalance>;
+export type AccountBalancesMap = { [string]: AccountBalance }
 
 export type SubscribeAccountBalanceAction = {
   type: 'accountBalances/SUBSCRIBE_BALANCE',

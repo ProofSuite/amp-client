@@ -29,7 +29,7 @@ export default function walletPageSelector(state: State) {
   let tokenData = accountBalancesDomain.getBalancesAndAllowances([ ETH ].concat(tokens))
 
   return {
-    etherBalance: accountBalancesDomain.etherBalance(),
+    etherBalance: accountBalancesDomain.formattedEtherBalance(),
     tokenData: tokenData,
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,

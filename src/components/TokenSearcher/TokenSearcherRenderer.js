@@ -279,25 +279,25 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
           </RowStart>
           <Box mt={3}>
             <p>
-              {base} Balance: {baseTokenBalance}
+              {base} Balance: {baseTokenBalance || 'N.A'}
             </p>
             <p>
-              {quote} Balance: {quoteTokenBalance}
+              {quote} Balance: {quoteTokenBalance || 'N.A' }
             </p>
           </Box>
         </ColumnStart>
         <ColumnEnd>
           <p className="lastPrice">
-            Last Price: {lastPrice}/{quote}
+            Last Price: { lastPrice ? `${lastPrice}/${quote}` : 'N.A'}
           </p>
-          <p>Volume: {volume}</p>
+          <p>Volume: {volume || 'N.A' }</p>
           <p>
             <span className="label">High: </span>
-            {high}
+            {high || 'N.A'}
           </p>
           <p>
             <span className="label">Low: </span>
-            {low}
+            {low || 'N.A'}
           </p>
         </ColumnEnd>
       </Row>
