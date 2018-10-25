@@ -118,7 +118,6 @@ const ETHRow = (props: Props) => {
           <Button
             disabled={!connected}
             intent="success"
-            minimal
             text="Convert to WETH"
             onClick={() => openConvertModal('ETH', 'WETH')}
             rightIcon="random"
@@ -182,7 +181,6 @@ const WETHRow = (props: Props) => {
           <Button
             disabled={!connected}
             intent="success"
-            minimal
             text="Convert to ETH"
             rightIcon="random"
             onClick={() => openConvertModal('WETH', "ETH")} />
@@ -299,7 +297,6 @@ const BaseTokenRows = (props: Props) => {
               intent="success"
               text="Trade"
               rightIcon="chart"
-              minimal
               onClick={() => redirectToTradingPage(symbol)}
             />
           </ButtonWrapper>
