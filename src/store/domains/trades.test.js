@@ -148,8 +148,6 @@ it('userTrades returns trades corresponding to a certain user', () => {
     eventCreators.tradesUpdated(trades)
   ])
 
-  console.log(tradesDomain.userTrades('0x1639cb6b1d885c94fd6b0766b098195dda300044').length)
-
   expect(tradesDomain.userTrades('0x1639cb6b1d885c94fd6b0766b098195dda300044')).toEqual(expected)
 })
 

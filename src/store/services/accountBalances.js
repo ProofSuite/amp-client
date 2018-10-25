@@ -179,8 +179,6 @@ export async function subscribeTokenAllowances(
   tokens: Array<Token>,
   callback: AccountAllowance => any
 ) {
-
-  console.log('in token allowances')
   const provider = getProvider()
   const exchange = EXCHANGE_ADDRESS[provider.network.chainId]
   const handlers = []
@@ -188,11 +186,8 @@ export async function subscribeTokenAllowances(
   tokens.map(async token => {
     const contract = new Contract(token.address, ERC20, provider)
     const handler = async (owner, spender, amount) => {
-      console.log(owner, address, spender, exchange)
       if (owner === address && spender === exchange) {
-        console.log('i am here')
         const allowance = await contract.allowance(owner, exchange)
-        console.log(token, allowance)
         callback({
           symbol: token.symbol,
           allowance: utils.formatEther(allowance)

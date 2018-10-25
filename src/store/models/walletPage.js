@@ -70,7 +70,6 @@ export function queryAccountData(): ThunkAction {
       )
 
       await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance => {
-        console.log(allowance)
         return dispatch(actionCreators.updateAllowance(allowance))
       })
     } catch (e) {
