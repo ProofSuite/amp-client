@@ -32,7 +32,7 @@ export default function depositFormSelector(state: State) {
     symbols: () => tokenDomain.symbols(),
     tokenIsSubscribed: (symbol: string) => accountBalancesDomain.isSubscribed(symbol),
     balances: () => accountBalancesDomain.formattedBalances(),
-    networkId: () => signerDomain.getNetworkId(),
+    networkID: () => signerDomain.getNetworkID(),
     getStep: () => depositFormDomain.getStep(),
     getAllowTxState: () => depositFormDomain.getAllowTxState(),
     getConvertTxState: () => depositFormDomain.getConvertTxState(),
@@ -108,7 +108,7 @@ export const confirmEtherDeposit = (
     try {
       dispatch(depositFormActionCreators.confirm());
       let signer = getSigner();
-      let network = depositFormSelector(getState()).networkId();
+      let network = depositFormSelector(getState()).networkID();
       let weth = new Contract(WETH_ADDRESS[network], WETH, signer);
 
       if (shouldConvert) {

@@ -72,6 +72,8 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
       if (convertTxStatus === 'sent') return 'sent';
       if (txSubmitted === true) return 'submitted'
     }
+
+    return "waiting";
   };
 
   handleConvertTokens = () => {

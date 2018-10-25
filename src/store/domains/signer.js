@@ -6,7 +6,7 @@ const initialState = {
   error: '',
   type: 'rpc',
   url: 'http://127.0.0.1:8545',
-  networkId: 8888,
+  networkID: 8888,
 };
 
 export const initialized = () => {
@@ -14,14 +14,14 @@ export const initialized = () => {
   return event;
 };
 
-export const signerUpdated = ({ type, url, networkId }: SignerSettings) => {
+export const signerUpdated = ({ type, url, networkID }: SignerSettings) => {
   const event = (state: SignerState) => ({
     ...state,
     loading: false,
     error: null,
     type: type || state.type,
     url: url || state.url,
-    networkId: networkId || state.networkId,
+    networkID: networkID || state.networkID,
   });
 
   return event;
@@ -50,50 +50,9 @@ export default function signerDomain(state: SignerState) {
   return {
     isLoading: () => state.loading,
     getError: () => state.error,
-    getCurrentSigner: () => ({ type: state.type, url: state.url, networkId: state.networkId }),
+    getCurrentSigner: () => ({ type: state.type, url: state.url, networkID: state.networkID }),
     getType: () => state.type,
     getUrl: () => state.url,
-    getNetworkId: () => state.networkId,
+    getNetworkID: () => state.networkID,
   };
 }
-
-// const localRPCProvider = {
-//   type: 'local',
-//   url: 'http://127.0.0.1:8545',
-//   networkID: 8888,
-//   networkName: ''
-// }
-
-// const localWebsocketRPCProvider = {
-//   type: 'local',
-//   url: 'ws://127.0.0.1:8546',
-//   networkID: 8888,
-//   networkName: ''
-// }
-
-// const rinkebyInfuraWebsocketProvider = {
-//   type: 'infura',
-//   url: 'wss://rinkeby.infura.io/_ws',
-//   networkID: 4,
-//   networkName: 'rinkeby'
-// }
-
-// const testingMetamaskProvider = {
-//   type: 'metamask',
-//   networkID: 8888,
-//   networkName: ''
-// }
-
-// const rinkebyMetamaskProvider = {
-//   type: 'metamask',
-//   networkID: 4,
-//   networkName: 'rinkeby'
-// }
-
-// const initialState = {
-//   loading: false,
-//   error: '',
-//   type: 'wallet',
-//   url: 'http://127.0.0.1:8545',
-//   networkId: 8888,
-// };

@@ -29,7 +29,7 @@ export default function convertTokensFormSelector(state: State) {
     accountAddress: () => accountDomain.address(),
     tokens: () => tokens,
     balances: () => accountBalancesDomain.balances(),
-    networkId: () => signerDomain.getNetworkId(),
+    networkID: () => signerDomain.getNetworkID(),
     convertTokensFormState: (tokenSymbol: string) => convertTokensFormDomain.convertTokensFormState(tokenSymbol),
   };
 }

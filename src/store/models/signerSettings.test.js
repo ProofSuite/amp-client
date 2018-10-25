@@ -15,7 +15,7 @@ it('returns default provider state', () => {
 
   selector = getSignerSettingsSelector(store.getState());
   expect(selector.getType()).toEqual('rpc');
-  expect(selector.getNetworkId()).toEqual(8888);
+  expect(selector.getNetworkID()).toEqual(8888);
   expect(selector.getUrl()).toEqual('http://127.0.0.1:8545');
 });
 

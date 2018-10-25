@@ -10,7 +10,6 @@ import type { TxReceipt } from '../../types/common'
 
 type Props = {
   address: string,
-  balance: ?number,
   fromToken: string,
   toToken: string,
   fromTokenBalance: number,

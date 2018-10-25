@@ -15,7 +15,7 @@ type State = {
   custom: boolean,
   customType: 'wallet' | 'rpc',
   url: ?string,
-  networkId: number,
+  networkID: number,
   wallet: Object,
 };
 
@@ -24,20 +24,20 @@ class SignerSettingsForm extends React.PureComponent<Props, State> {
     type: 'metamask', //metamask or rpc or wallet/infura or custom
     custom: false,
     customType: 'wallet',
-    networkId: 1,
+    networkID: 1,
     url: '',
     wallet: {},
   };
 
   handleSubmit = (e: SyntheticEvent<>) => {
     e.preventDefault();
-    let { type, custom, url, customType, networkId, wallet } = this.state;
+    let { type, custom, url, customType, networkID, wallet } = this.state;
     if (type === 'custom') type = customType;
     this.props.updateSigner({
       custom: custom,
       type: type,
       url: url,
-      networkId: networkId,
+      networkID: networkID,
       wallet: wallet,
     });
   };
@@ -49,12 +49,12 @@ class SignerSettingsForm extends React.PureComponent<Props, State> {
   };
 
   handleNetworkChange = (network: Object) => {
-    this.setState({ networkId: network.id });
+    this.setState({ networkID: network.id });
   };
 
   render() {
     const { loading, error, currentSigner } = this.props;
-    const { type, custom, customType, url, networkId, wallet } = this.state;
+    const { type, custom, customType, url, networkID, wallet } = this.state;
 
     return (
       <SignerSettingsFormRenderer
@@ -63,7 +63,7 @@ class SignerSettingsForm extends React.PureComponent<Props, State> {
         type={type}
         url={url}
         custom={custom}
-        networkId={networkId}
+        networkID={networkID}
         customType={customType}
         currentSigner={currentSigner}
         handleSubmit={this.handleSubmit}

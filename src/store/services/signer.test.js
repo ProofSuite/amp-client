@@ -40,7 +40,7 @@ describe('createProvider', () => {
     let { settings, address } = await signerService.createSigner(params)
 
     expect(settings).toEqual({ type: 'metamask' })
-    expect(address).toEqual({ address: 'test address', networkId: 8888 })
+    expect(address).toEqual({ address: 'test address', networkID: 8888 })
     expect(providers.Web3Provider).toHaveBeenCalledTimes(1)
     expect(window.signer.instance).toHaveProperty('signOrder')
     expect(window.signer.instance).toHaveProperty('signTrade')
@@ -53,7 +53,7 @@ describe('createProvider', () => {
     let params = { type: 'rpc' }
     let { settings, address } = await signerService.createSigner(params)
 
-    expect(settings).toEqual({ type: 'rpc', url: 'http://127.0.0.1:8545', networkId: 8888 })
+    expect(settings).toEqual({ type: 'rpc', url: 'http://127.0.0.1:8545', networkID: 8888 })
     expect(address).toEqual('test address')
     expect(providers.JsonRpcProvider).toHaveBeenCalledTimes(1)
     expect(providers.JsonRpcProvider).toHaveBeenCalledWith('http://127.0.0.1:8545', {
