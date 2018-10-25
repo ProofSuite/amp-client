@@ -1,4 +1,4 @@
-import type { WebsocketMessage, WebsocketEvent } from '../../../types/websocket'
+import type { WebsocketMessage } from '../../../types/websocket'
 const addMonths = require('date-fns/add_months')
 
 export const subscribeChart = (pair: TokenPair, from: number, to: number, duration: number, units: string) => {

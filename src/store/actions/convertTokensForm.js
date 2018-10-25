@@ -1,6 +1,5 @@
 //@flow
 import type { TxReceipt } from '../../types/common';
-import type { Token } from '../../types/tokens';
 
 const actionTypes = {
   confirm: 'convertTokensForm/CONFIRM',

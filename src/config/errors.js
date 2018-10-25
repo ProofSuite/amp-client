@@ -1,5 +1,43 @@
 export default {
   invalidJSON: 'invalid json response',
   insufficientBuyTokenBalance: 'insufficient buy token balance',
-  insufficientSellTokenBalace: 'insufficient sell token balance'
+  insufficientSellTokenBalace: 'insufficient sell token balance',
+  invalidAddress: 'invalid input argument (arg="_to", reason="invalid address", value=null, version=4.0.4)',
+  cannotReadLowerCaseOfUndefined: "Cannot read property 'toLowerCase' of undefined"
+}
+
+export const errorMessages = {
+  invalidJSON: 'invalid json response',
+  insufficientBuyTokenBalance: 'insufficient buy token balance',
+  insufficientSellTokenBalace: 'insufficient sell token balance',
+  invalidAddressInputArgument: 'invalid input argument (arg="_to", reason="invalid address", value=null, version=4.0.4)',
+  invalidValueInputArgument: 'invalid input argument (arg="_value", reason="invalid number value"',
+  invalidDecimalValue: 'invalid decimal value (arg="value"',
+  cannotReadLowerCaseOfUndefined: "Cannot read property 'toLowerCase' of undefined",
+  gasRequiredExceedsAllowance: 'gas required exceeds allowance or always failing transaction'
+}
+
+
+export const parseTransferEtherError = (error: Error) => {
+  let errorMessage = error.message
+
+  if (errorMessage.includes(errorMessages.invalidAddressInputArgument)) return 'Invalid Receiver Address'
+  if (errorMessage.includes(errorMessages.cannotReadLowerCaseOfUndefined)) return 'Invalid Receiver Address'
+  if (errorMessage.includes(errorMessages.invalidValueInputArgument)) return 'Invalid Transaction Value'
+  if (errorMessage.includes(errorMessages.gasRequiredExceedsAllowance)) return 'Insufficient Balance'
+  if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Invalid Transaction Value'
+
+  return errorMessage
+}
+
+export const parseTransferTokensError = (error: Error) => {
+  let errorMessage = error.message
+
+  if (errorMessage.includes(errorMessages.invalidAddressInputArgument)) return 'Invalid Receiver Address'
+  if (errorMessage.includes(errorMessages.cannotReadLowerCaseOfUndefined)) return 'Invalid Receiver Address'
+  if (errorMessage.includes(errorMessages.invalidValueInputArgument)) return 'Invalid Transaction Amount'
+  if (errorMessage.includes(errorMessages.gasRequiredExceedsAllowance)) return 'Insufficient Balance'
+  if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Invalid Transaction Value'
+
+  return errorMessage
 }

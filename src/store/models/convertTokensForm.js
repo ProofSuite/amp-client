@@ -1,5 +1,5 @@
 // @flow
-import { Contract } from 'ethers';
+import { utils, Contract } from 'ethers';
 import {
   getAccountBalancesDomain,
   getAccountDomain,
@@ -12,8 +12,7 @@ import * as actionCreators from '../actions/convertTokensForm'
 import { getSigner } from '../services/signer';
 import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
 import { WETH } from '../../config/abis';
-
-import type { Token } from '../../types/common';
+import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import type { State, ThunkAction } from '../../types';
 
 export default function convertTokensFormSelector(state: State) {
@@ -29,8 +28,8 @@ export default function convertTokensFormSelector(state: State) {
   return {
     accountAddress: () => accountDomain.address(),
     tokens: () => tokens,
-    balances: () => accountBalancesDomain.formattedBalances(),
-    networkId: () => signerDomain.getNetworkId(),
+    balances: () => accountBalancesDomain.balances(),
+    networkID: () => signerDomain.getNetworkID(),
     convertTokensFormState: (tokenSymbol: string) => convertTokensFormDomain.convertTokensFormState(tokenSymbol),
   };
 }
@@ -39,11 +38,13 @@ export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
   return async (dispatch, getState) => {
     try {
       dispatch(actionCreators.confirm('WETH'))
-      let signer = getSigner()
-      let network = convertTokensFormSelector(getState()).networkId()
-      let weth = new Contract(WETH_ADDRESS[network], WETH, signer)
 
-      let tx = await weth.withdraw(convertAmount)
+      let signer = getSigner()
+      let networkID = signer.networkID
+      let weth = new Contract(WETH_ADDRESS[networkID], WETH, signer)
+      let amount = utils.parseEther(convertAmount.toString())
+
+      let tx = await weth.withdraw(amount)
       dispatch(actionCreators.sendConvertTx('WETH', tx.hash))
 
       let txReceipt = await signer.provider.waitForTransaction(tx.hash)
@@ -62,16 +63,26 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
   return async (dispatch, getState) => {
     try {
       dispatch(actionCreators.confirm('ETH'));
+
       let signer = getSigner();
-      let network = convertTokensFormSelector(getState()).networkId();
-      let weth = new Contract(WETH_ADDRESS[network], WETH, signer);
+      let networkID = signer.networkID
+      let weth = new Contract(WETH_ADDRESS[networkID], WETH, signer);
+      let signerAddress = await signer.getAddress()
+      let txCount = await signer.provider.getTransactionCount(signerAddress)
 
       if (shouldAllow) {
-        let convertTxPromise = weth.deposit();
-        let allowTxPromise = weth.approve(EXCHANGE_ADDRESS[network], -1, {});
+        let convertTxPromise = weth.deposit({
+          value: utils.parseEther(convertAmount.toString()),
+          nonce: txCount
+         });
+
+        let allowTxPromise = weth.approve(
+          EXCHANGE_ADDRESS[networkID],
+          ALLOWANCE_THRESHOLD,
+          { nonce: txCount + 1 }
+        );
 
         let [convertTx, allowTx] = await Promise.all([convertTxPromise, allowTxPromise]);
-
         dispatch(actionCreators.sendConvertTx('ETH', convertTx.hash));
         dispatch(actionCreators.sendAllowTx('ETH', allowTx.hash));
 
@@ -88,7 +99,7 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
           ? dispatch(actionCreators.revertAllowTx('ETH', allowTxReceipt))
           : dispatch(actionCreators.confirmAllowTx('ETH', allowTxReceipt));
       } else {
-        let convertTx = await weth.convert();
+        let convertTx = await weth.deposit();
         dispatch(actionCreators.sendConvertTx('ETH', convertTx.hash));
         let convertTxReceipt = await signer.provider.waitForTransaction(convertTx.hash);
 
@@ -98,6 +109,7 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
       }
 
     } catch (error) {
+      //TODO add an error here
       console.log(error.message);
     }
   };

@@ -5,7 +5,7 @@ import getConvertTokensFormSelector, {
   convertFromWETHtoETH,
  } from '../../store/models/convertTokensForm';
 
-import type { State, Dispatch } from '../../types';
+import type { State } from '../../types';
 
 export const mapStateToProps = (state: State, ownProps: Object) => {
   const convertTokensFormSelector = getConvertTokensFormSelector(state);
@@ -14,10 +14,10 @@ export const mapStateToProps = (state: State, ownProps: Object) => {
   const balances = convertTokensFormSelector.balances()
   const convertTokensFormState = convertTokensFormSelector.convertTokensFormState(fromToken)
 
-
   return {
     token: tokens[fromToken],
-    balance: balances[fromToken],
+    fromTokenBalance: balances[fromToken].balance,
+    toTokenBalance: balances[toToken].balance,
     address: convertTokensFormSelector.accountAddress(),
     ...convertTokensFormState
   };

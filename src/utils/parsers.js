@@ -1,6 +1,5 @@
 import { isFloat, isInteger, round, convertPricepointToPrice } from './helpers'
 import { fromWeiToFloat } from './bignumber'
-import { ether } from './constants'
 import { utils } from 'ethers'
 
 export const parseJSONData = obj => {

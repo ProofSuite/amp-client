@@ -33,7 +33,13 @@ export const confirmed = (tokenSymbol: string): ConvertTokensFormEvent => {
     ...state,
     [tokenSymbol]: {
       ...state[tokenSymbol],
-      txSubmitted: true
+      txSubmitted: true,
+      convertTxStatus: null,
+      convertTxReceipt: null,
+      convertTxHash: "",
+      allowTxStatus: null,
+      allowTxReceipt: null,
+      allowTxHash: ""
     }
   });
 
@@ -85,7 +91,7 @@ export const allowTxSent = (tokenSymbol: string, hash: string): ConvertTokensFor
     ...state,
     [tokenSymbol]: {
       ...state[tokenSymbol],
-      allowTxStatus: 'confirmed',
+      allowTxStatus: 'sent',
       allowTxHash: hash,
     }
   });

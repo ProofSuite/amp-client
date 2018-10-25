@@ -1,5 +1,5 @@
 // @flow
-import { ENGINE_HTTP_URL, ENGINE_WS_URL } from '../../../config/urls'
+import { ENGINE_HTTP_URL } from '../../../config/urls'
 import { parseTokenPairData, parseOrders, parseTrades, parseOrderBookData } from '../../../utils/parsers'
 import fetch from 'isomorphic-fetch'
 

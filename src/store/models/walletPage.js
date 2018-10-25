@@ -34,7 +34,6 @@ export default function walletPageSelector(state: State) {
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,
     accountAddress: accountDomain.address(),
-    accountPrivateKey: accountDomain.privateKey(),
     authenticated: accountDomain.authenticated(),
     currentBlock: accountDomain.currentBlock(),
     connected: true,
@@ -69,9 +68,9 @@ export function queryAccountData(): ThunkAction {
         dispatch(actionCreators.updateBalance(balance))
       )
 
-      await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance =>
-        dispatch(actionCreators.updateAllowance(allowance))
-      )
+      await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance => {
+        return dispatch(actionCreators.updateAllowance(allowance))
+      })
     } catch (e) {
       dispatch(notifierActionCreators.addDangerNotification({ message: 'Could not connect to Ethereum network' }))
       console.log(e)

@@ -1,5 +1,3 @@
-import type TokenPairData from './tokens'
-
 export type NewOrderParams = {
   userAddress: string,
   exchangeAddress: string,

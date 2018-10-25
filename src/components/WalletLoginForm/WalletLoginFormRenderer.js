@@ -179,7 +179,7 @@ const WalletLoginFormRenderer = (props: Props) => {
       </FormGroup>
       <FooterWrapper>
         <ButtonBox>
-          <Button intent="normal" minimal={true} icon="undo" onClick={showLoginMethods} />
+          <Button intent="danger" text="Back" onClick={showLoginMethods} />
         </ButtonBox>
         <ButtonBox>
           <Button intent="primary" text="Authenticate" onClick={submit} />

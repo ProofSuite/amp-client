@@ -8,9 +8,9 @@ export default class StandardRangeSlider extends React.Component {
   onChange = value => {
     this.setState({ value });
   };
-  onRelease = value => {
-    console.log('relaeads: ', value);
-  };
+
+  onRelease = value => {};
+
   render() {
     const {
       state: { value },

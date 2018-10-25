@@ -9,35 +9,29 @@ import CurrentWallet from '../../components/CurrentWallet'
 import type { TokenData } from '../../types/tokens'
 
 type Props = {
-  loading: boolean,
-  pvtKeyLocked: boolean,
-  accountAddress: string,
-  accountPrivateKey: string,
-  etherBalance: string,
-  gasPrice: number,
   gas: number,
+  gasPrice: number,
+  loading: boolean,
+  etherBalance: string,
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
   quoteTokens: Array<string>,
-  //Deposit table props
   connected: boolean,
-  depositTableData: Array<TokenData>,
+  accountAddress: string,
   toggleAllowance: string => void,
   redirectToTradingPage: string => void
 }
 
 const WalletPageRenderer = ({
-  loading,
-  pvtKeyLocked,
-  connected,
-  accountAddress,
-  accountPrivateKey,
-  etherBalance,
-  gasPrice,
   gas,
+  gasPrice,
+  loading,
+  etherBalance,
   tokenData,
   baseTokens,
   quoteTokens,
+  connected,
+  accountAddress,
   toggleAllowance,
   redirectToTradingPage
 }: Props) => {
@@ -45,9 +39,7 @@ const WalletPageRenderer = ({
     <Wrapper>
       <RowWrapper>
         <CurrentWallet
-          pvtKeyLocked={pvtKeyLocked}
           accountAddress={accountAddress}
-          accountPrivateKey={accountPrivateKey}
           etherBalance={etherBalance}
           gasPrice={gasPrice}
           gas={gas}

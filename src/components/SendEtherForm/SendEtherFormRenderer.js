@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { Button, ControlGroup, InputGroup, Label } from '@blueprintjs/core';
+import { Button, ControlGroup, InputGroup, Label, Callout } from '@blueprintjs/core';
 import TokenSelect from '../TokenSelect';
 import GasSettings from '../GasSettings';
 import TxNotification from '../TxNotification';
@@ -43,6 +43,10 @@ const SendEtherFormRenderer = (props: Props) => {
 
   return (
     <div>
+      <ImportantNoticeCallout icon="warning-sign" intent="success" title="Important Notice">
+        <p>Double check the entered transaction information is correct. Proofsuite has no control
+          over your transactions. Your are fully responsible for your funds and assets.</p>
+      </ImportantNoticeCallout>
       <Label helpertext="(in ether or in token decimals)" text="Amount to Send">
         <ControlGroup fill vertical={false}>
           <InputGroup
@@ -75,6 +79,11 @@ const SendEtherFormRenderer = (props: Props) => {
     </div>
   );
 };
+
+
+const ImportantNoticeCallout = styled(Callout)`
+  margin-bottom: 20px;
+`
 
 const TxNotificationBox = styled.div`
   margin-top: 10px;

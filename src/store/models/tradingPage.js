@@ -1,7 +1,6 @@
 // @flow
 import { getTokenPairsDomain, getAccountDomain } from '../domains'
 import * as actionCreators from '../actions/tradingPage'
-import * as ohlcvActionCreators from '../actions/ohlcv'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
 

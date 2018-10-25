@@ -1,10 +1,9 @@
 // @flow
-import type { AccountAllowances, AccountBalancesMap, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
+import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
 import { round } from '../../utils/helpers'
 import { utils } from 'ethers'
 import { ALLOWANCE_MINIMUM } from '../../utils/constants'
 import { formatNumber } from 'accounting-js'
-import { elementIsOrContains } from '@blueprintjs/core/lib/esm/common/utils';
 // eslint-disable-next-line
 const initialState = {}
 
@@ -94,11 +93,9 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       let keys = Object.keys(state)
       let formattedBalances = {}
 
-      keys.map(key => {
+      keys.forEach(key => {
         formattedBalances[key] = formatNumber(state[key].balance, { precision: 2 })
       })
-
-      console.log(formattedBalances)
 
       return formattedBalances
     },
