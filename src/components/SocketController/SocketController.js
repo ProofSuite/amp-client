@@ -5,7 +5,7 @@ type Props = {
   openConnection: void => void
 }
 
-class socketController extends React.Component {
+class socketController extends React.Component<Props> {
   openConnection() {
     const { openConnection } = this.props
     //in case the connection is already set, nothing changes

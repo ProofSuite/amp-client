@@ -60,7 +60,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       }
 
       let order = await signer.createRawOrder(params)
-      let buyTokenSymbol = pair.baseTokenAddress === order.buyToken ? pair.baseTokenSymbol : pair.quoteTokenSymbol
       let sellTokenSymbol = pair.baseTokenAddress === order.sellToken ? pair.baseTokenSymbol : pair.quoteTokenSymbol
 
       let WETHBalance = accountBalancesDomain.getBigNumberBalance('WETH')

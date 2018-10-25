@@ -8,6 +8,14 @@ import ConvertTokensModal from '../../components/ConvertTokensModal';
 
 import type { Token } from '../../types/tokens';
 
+type TokenData = {
+  symbol: string,
+  address: string,
+  balance: string,
+  allowed: boolean,
+  allowancePending: boolean
+}
+
 type Props = {
   connected: boolean,
   toggleAllowance: string => void,

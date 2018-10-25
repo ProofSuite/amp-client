@@ -4,7 +4,14 @@ import { Button, Switch, Checkbox, InputGroup, Tag } from '@blueprintjs/core';
 import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import styled from 'styled-components';
 
-import type { TokenData } from '../../types/tokens'
+
+type TokenData = {
+  symbol: string,
+  address: string,
+  balance: string,
+  allowed: boolean,
+  allowancePending: boolean
+}
 
 type Props = {
   connected: boolean,

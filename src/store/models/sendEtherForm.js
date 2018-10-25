@@ -1,5 +1,5 @@
 // @flow
-import ethers, { Contract, utils } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { getSendEtherFormDomain, getTokenDomain } from '../domains';
 import * as actionCreators from '../actions/sendEtherForm';
 

@@ -13,7 +13,7 @@ type Props = {
   custom: boolean,
   customType: 'wallet' | 'rpc',
   url: ?string,
-  networkId: number,
+  networkID: number,
   wallet: Object,
   currentSigner: SignerSettings,
   handleSubmit: (SyntheticEvent<>) => void,
@@ -67,7 +67,7 @@ const renderCurrentSignerCallout = (currentSigner: SignerSettings) => {
 };
 
 const renderCustomSignerForm = (props: Props) => {
-  const { type, networkId, url, handleChange, handleNetworkChange, networks, customType } = props;
+  const { networkID, url, handleChange, handleNetworkChange, networks, customType } = props;
 
   return (
     <div>
@@ -78,7 +78,7 @@ const renderCustomSignerForm = (props: Props) => {
 
       <InputBox>
         <Label text="Network ID">
-          <NetworkSelect handleChange={handleNetworkChange} networkId={networkId} networks={networks} />
+          <NetworkSelect handleChange={handleNetworkChange} networkID={networkID} networks={networks} />
         </Label>
       </InputBox>
 

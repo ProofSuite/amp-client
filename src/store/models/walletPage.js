@@ -34,7 +34,6 @@ export default function walletPageSelector(state: State) {
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,
     accountAddress: accountDomain.address(),
-    accountPrivateKey: accountDomain.privateKey(),
     authenticated: accountDomain.authenticated(),
     currentBlock: accountDomain.currentBlock(),
     connected: true,

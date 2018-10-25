@@ -37,7 +37,7 @@ storiesOf('SignerSettingsForm', module)
         <SignerSettingsForm
           loading={false}
           error=""
-          currentSigner={{ type: 'rpc', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          currentSigner={{ type: 'rpc', url: 'http://127.0.0.1:8545', networkID: 8888 }}
           updateSigner={action('updateSigner')}
         />
       </div>
@@ -48,8 +48,8 @@ storiesOf('SignerSettingsForm', module)
     withInfo()(() => (
       <div className="bp3-dark">
         <SignerSettingsFormRenderer
-          options={{ provider: 'metamask', type: '', url: '', networkId: 8888 }}
-          currentSigner={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          options={{ provider: 'metamask', type: '', url: '', networkID: 8888 }}
+          currentSigner={{ type: 'local', url: 'http://127.0.0.1:8545', networkID: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
@@ -64,8 +64,8 @@ storiesOf('SignerSettingsForm', module)
       <div className="bp3-dark">
         <SignerSettingsFormRenderer
           loading
-          options={{ provider: 'metamask', type: '', url: '', networkId: 1 }}
-          currentSigner={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          options={{ provider: 'metamask', type: '', url: '', networkID: 1 }}
+          currentSigner={{ type: 'local', url: 'http://127.0.0.1:8545', networkID: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
@@ -84,9 +84,9 @@ storiesOf('SignerSettingsForm', module)
           type="wallet"
           url="https://my.node.com"
           custom={true}
-          networkId={2}
+          networkID={2}
           customType=""
-          currentSigner={{ type: 'wallet', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          currentSigner={{ type: 'wallet', url: 'http://127.0.0.1:8545', networkID: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}
@@ -105,9 +105,9 @@ storiesOf('SignerSettingsForm', module)
           type="wallet"
           url="https://my.node.com"
           custom={true}
-          networkId={2}
+          networkID={2}
           customType=""
-          currentSigner={{ type: 'local', url: 'http://127.0.0.1:8545', networkId: 8888 }}
+          currentSigner={{ type: 'local', url: 'http://127.0.0.1:8545', networkID: 8888 }}
           handleSubmit={action('handleSubmit')}
           handleChange={action('handleChange')}
           handleNetworkChange={action('handleNetworkChange')}

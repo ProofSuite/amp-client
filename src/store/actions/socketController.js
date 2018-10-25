@@ -1,5 +1,4 @@
 // @flow
-import type { TokenPairDataMap } from '../../types/tokens'
 import type { Orders } from '../../types/orders'
 import type { Trades } from '../../types/trades'
 import type {

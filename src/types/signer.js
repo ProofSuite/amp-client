@@ -18,7 +18,7 @@ export type UpdateSignerParams = {
 export type SignerSettings = {
   type: string,
   url?: string,
-  networkId?: number,
+  networkID?: number,
 };
 
 export type UpdateSignerAction = {

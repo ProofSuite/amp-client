@@ -9,7 +9,6 @@ export type Props = {
   loading: boolean,
   connected: boolean,
   accountAddress: string,
-  accountPrivateKey: string,
   etherBalance: string,
   gasPrice: number,
   gas: number,
@@ -35,7 +34,6 @@ class WalletPage extends React.PureComponent<Props> {
       connected,
       authenticated,
       accountAddress,
-      accountPrivateKey,
       etherBalance,
       gasPrice,
       gas,
@@ -57,7 +55,6 @@ class WalletPage extends React.PureComponent<Props> {
         tokenData={tokenData}
         baseTokens={baseTokens}
         quoteTokens={quoteTokens}
-        accountPrivateKey={accountPrivateKey}
         connected={connected}
         accountAddress={accountAddress}
         toggleAllowance={toggleAllowance}
