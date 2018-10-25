@@ -69,9 +69,10 @@ export function queryAccountData(): ThunkAction {
         dispatch(actionCreators.updateBalance(balance))
       )
 
-      await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance =>
-        dispatch(actionCreators.updateAllowance(allowance))
-      )
+      await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance => {
+        console.log(allowance)
+        return dispatch(actionCreators.updateAllowance(allowance))
+      })
     } catch (e) {
       dispatch(notifierActionCreators.addDangerNotification({ message: 'Could not connect to Ethereum network' }))
       console.log(e)

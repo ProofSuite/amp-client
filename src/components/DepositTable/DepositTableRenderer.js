@@ -136,7 +136,7 @@ const WETHRow = (props: Props) => {
     toggleAllowance,
     openDepositModal,
     openSendModal,
-    openConvertModal
+    openConvertModal,
   } = props
 
 

@@ -1,5 +1,5 @@
 // @flow
-import ethers, { Contract } from 'ethers';
+import ethers, { Contract, utils } from 'ethers';
 import { getSendEtherFormDomain, getTokenDomain } from '../domains';
 import * as actionCreators from '../actions/sendEtherForm';
 
@@ -8,6 +8,7 @@ import type { State, ThunkAction } from '../../types';
 
 import { getSigner } from '../services/signer';
 import { ERC20 } from '../../config/abis';
+import { parseTransferEtherError, parseTransferTokensError } from '../../config/errors'
 
 export default function sendEtherSelector(state: State) {
   let tokenDomain = getTokenDomain(state);
@@ -35,19 +36,16 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
         gasLimit: parseFloat(gas) || 0,
         gasPrice: parseFloat(gasPrice) || 2 * 10e9,
         to: receiver,
-        value: ethers.utils.parseEther(amount),
+        value: utils.parseEther(amount.toString()),
       };
-
-      console.log(signer)
-      console.log(signer.provider)
 
       let estimatedGas = await signer.provider.estimateGas(tx);
       estimatedGas = estimatedGas.toNumber();
+      dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
 
-      return dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
     } catch (error) {
-      console.log(error)
-      return dispatch(actionCreators.invalidateTx(error.message));
+      let errorMessage = parseTransferEtherError(error)
+      dispatch(actionCreators.invalidateTx(errorMessage))
     }
   };
 };
@@ -61,21 +59,20 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
         gasLimit: parseFloat(gas) || 0,
         gasPrice: parseFloat(gasPrice) || 2 * 10e9,
         to: receiver,
-        value: amount * 10 ** 18,
+        value: utils.parseEther(amount.toString()),
       };
 
       let tx = await signer.sendTransaction(rawTx);
       dispatch(actionCreators.sendTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
-      if (receipt.status === '0x0') {
-        return dispatch(actionCreators.revertTx('Transaction Failed', receipt));
-      } else {
-        return dispatch(actionCreators.confirmTx(receipt));
-      }
+      receipt.status === '0x0'
+        ? dispatch(actionCreators.revertTx('Transaction Failed', receipt))
+        : dispatch(actionCreators.confirmTx(receipt));
+
     } catch (error) {
-      console.log(error)
-      dispatch(actionCreators.txError('error', error.message));
+      let errorMessage = parseTransferEtherError(error)
+      dispatch(actionCreators.invalidateTx(errorMessage))
     }
   };
 };
@@ -87,14 +84,15 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
       let signer = getSigner();
 
       let token = new Contract(tokenAddress, ERC20, signer);
+      let amountTokens = utils.parseEther(amount)
 
-
-      let estimatedGas = await token.estimate.transfer(receiver, amount);
+      let estimatedGas = await token.estimate.transfer(receiver, amountTokens);
       estimatedGas = estimatedGas.toNumber();
       dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
+
     } catch (error) {
-      console.log(error)
-      dispatch(actionCreators.invalidateTx(error.message));
+      let errorMessage = parseTransferTokensError(error)
+      dispatch(actionCreators.invalidateTx(errorMessage))
     }
   };
 };
@@ -110,22 +108,19 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
         gasLimit: parseFloat(gas) || 0,
         gasPrice: parseFloat(gasPrice) || 2 * 10e9,
       };
-      let tx = await token.transfer(receiver, amount, txOpts);
 
+      let amountTokens = utils.parseEther(amount)
+      let tx = await token.transfer(receiver, amountTokens, txOpts);
       dispatch(actionCreators.sendTx(tx.hash));
 
-      console.log(tx)
-
       let receipt = await signer.provider.waitForTransaction(tx.hash);
-
-      console.log(receipt)
-
       receipt.status === '0x0'
         ? dispatch(actionCreators.revertTx('Transaction Failed', receipt))
         : dispatch(actionCreators.confirmTx(receipt));
+
     } catch (error) {
-      console.log(error)
-      dispatch(actionCreators.txError('error', error.message));
+      let errorMessage = parseTransferTokensError(error)
+      dispatch(actionCreators.txError('error', errorMessage))
     }
   };
 };

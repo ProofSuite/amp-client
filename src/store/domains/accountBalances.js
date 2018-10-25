@@ -98,8 +98,6 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         formattedBalances[key] = formatNumber(state[key].balance, { precision: 2 })
       })
 
-      console.log(formattedBalances)
-
       return formattedBalances
     },
     etherBalance() {

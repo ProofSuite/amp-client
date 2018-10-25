@@ -9,10 +9,11 @@ type Step = 'convert' | 'confirm';
 
 type Props = {
   txSubmitted: boolean,
-  fromToken: Token,
-  toToken: Token,
+  fromToken: string,
+  toToken: string,
   address: string,
-  balance: ?number,
+  fromTokenBalance: number,
+  toTokenBalance: number,
   txSubmitted: false,
   convertTxStatus: string,
   convertTxReceipt: TxReceipt,
@@ -26,6 +27,7 @@ type Props = {
 
 type State = {
   convertAmount: number,
+  convertFraction: number,
   shouldConvert: boolean,
   shouldAllow: boolean,
   showTokenSuggest: boolean,
@@ -35,12 +37,19 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
   state = {
     shouldConvert: true,
     shouldAllow: true,
-    convertAmount: 50,
+    convertFraction: 0,
+    convertAmount: 0,
     showTokenSuggest: false,
   };
 
-  handleChangeConvertAmount = (e: number) => {
-    this.setState({ convertAmount: e });
+  handleChangeConvertFraction = (convertFraction: number) => {
+    this.setState((prevState, { fromTokenBalance }) => {
+      return {
+        ...prevState,
+        convertFraction: convertFraction,
+        convertAmount: fromTokenBalance * convertFraction / 100,
+      }
+    })
   };
 
   toggleTokenSuggest = () => {
@@ -51,17 +60,20 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
     this.setState({ shouldAllow: !this.state.shouldAllow });
   };
 
+  //TODO refactor this
   transactionStatus = () => {
-    const { fromToken, allowTxStatus, convertTxStatus } = this.props;
+    const { fromToken, allowTxStatus, convertTxStatus, txSubmitted } = this.props;
 
     if (fromToken === 'ETH') {
       if (allowTxStatus === 'failed' || convertTxStatus === 'failed') return 'failed';
       if (allowTxStatus === 'confirmed' && convertTxStatus === 'confirmed') return 'confirmed';
       if (allowTxStatus === 'sent' && convertTxStatus === 'sent') return 'sent';
+      if (txSubmitted === true) return 'submitted'
     } else {
       if (convertTxStatus === 'failed') return 'failed';
       if (convertTxStatus === 'confirmed') return 'confirmed';
       if (convertTxStatus === 'sent') return 'sent';
+      if (txSubmitted === true) return 'submitted'
     }
   };
 
@@ -88,7 +100,8 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
       toToken,
       txSubmitted,
       address,
-      balance,
+      fromTokenBalance,
+      toTokenBalance,
       convertTxStatus,
       convertTxReceipt,
       convertTxHash,
@@ -97,9 +110,13 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
       allowTxHash,
     } = this.props;
 
-    const { shouldAllow, convertAmount, showTokenSuggest } = this.state;
-    const transactionStatus = this.transactionStatus()
+    const {
+      shouldAllow,
+      convertFraction,
+      convertAmount
+    } = this.state;
 
+    const transactionStatus = this.transactionStatus()
     if (!fromToken) return null
 
     return (
@@ -107,15 +124,15 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
         txSubmitted={txSubmitted}
         fromToken={fromToken}
         toToken={toToken}
-        balance={balance}
+        fromTokenBalance={fromTokenBalance}
+        toTokenBalance={toTokenBalance}
         address={address}
         shouldAllow={shouldAllow}
+        convertFraction={convertFraction}
         convertAmount={convertAmount}
         handleConvertTokens={this.handleConvertTokens}
-        handleChangeConvertAmount={this.handleChangeConvertAmount}
+        handleChangeConvertFraction={this.handleChangeConvertFraction}
         toggleShouldAllowTrading={this.toggleShouldAllowTrading}
-        toggleTokenSuggest={this.toggleTokenSuggest}
-        showTokenSuggest={showTokenSuggest}
         transactionStatus={transactionStatus}
         convertTxStatus={convertTxStatus}
         convertTxReceipt={convertTxReceipt}

@@ -7,15 +7,15 @@
 const fs = require('fs');
 const path = require('path');
 const utils = require('ethers').utils;
-const TRUFFLE_BUILD_PATH = path.join(`${process.env.AMP_DEX_PATH}`, `/build/contracts`);
+const truffleBuildPath = path.join(`${process.env.AMP_DEX_PATH}`, `/build/contracts`);
 
 let contracts = { '8888': {}, '1000': {}, '4': {} };
-let files = fs.readdirSync(TRUFFLE_BUILD_PATH);
+let files = fs.readdirSync(truffleBuildPath);
 
 files.forEach((file, index) => {
   let address;
   let symbol;
-  let json = JSON.parse(fs.readFileSync(`${TRUFFLE_BUILD_PATH}/${file}`, 'utf8'));
+  let json = JSON.parse(fs.readFileSync(`${truffleBuildPath}/${file}`, 'utf8'));
 
   if (json.networks['8888']) {
     if (file !== 'Owned.json' && file !== 'Migrations.json' && file !== 'SafeMath.json') {
