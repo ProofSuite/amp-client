@@ -8,15 +8,14 @@ import type { Token, TokenBalances } from '../../types/common'
 import type { AccountBalance, AccountAllowance } from '../../types/accountBalances'
 
 export async function queryEtherBalance(address: string) {
-  let balance
   let provider = getProvider()
 
-  balance = await provider.getBalance(address)
-  balance = Number(utils.formatEther(balance)).toFixed(4)
+  let balance = await provider.getBalance(address)
+  let formattedBalance = Number(utils.formatEther(balance))
 
   return {
     symbol: 'ETH',
-    balance: balance
+    balance: formattedBalance
   }
 }
 
@@ -29,7 +28,7 @@ export async function updateAllowance(tokenAddress: string, spender: string, add
   return { allowance: utils.formatEther(allowance) }
 }
 
-export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: Object) {
+export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: Object | number) {
   const signer = getSigner()
   const exchange = EXCHANGE_ADDRESS[signer.provider.network.chainId]
   const contract = new Contract(tokenAddress, ERC20, signer)
@@ -180,6 +179,8 @@ export async function subscribeTokenAllowances(
   tokens: Array<Token>,
   callback: AccountAllowance => any
 ) {
+
+  console.log('in token allowances')
   const provider = getProvider()
   const exchange = EXCHANGE_ADDRESS[provider.network.chainId]
   const handlers = []
@@ -187,8 +188,11 @@ export async function subscribeTokenAllowances(
   tokens.map(async token => {
     const contract = new Contract(token.address, ERC20, provider)
     const handler = async (owner, spender, amount) => {
+      console.log(owner, address, spender, exchange)
       if (owner === address && spender === exchange) {
+        console.log('i am here')
         const allowance = await contract.allowance(owner, exchange)
+        console.log(token, allowance)
         callback({
           symbol: token.symbol,
           allowance: utils.formatEther(allowance)

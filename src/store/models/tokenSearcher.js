@@ -11,7 +11,6 @@ export default function tokenSearcherSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let tokenPairs = domain.getTokenPairsDataArray()
   let favoriteTokenPairs = domain.getFavoritePairs()
-
   let tokenPairsByQuoteToken = {}
 
   for (let quote of quotes) {
@@ -29,8 +28,8 @@ export default function tokenSearcherSelector(state: State) {
   }
 
   let currentPair = domain.getCurrentPair()
-  let baseTokenBalance = accountBalancesDomain.tokenBalance(currentPair.baseTokenSymbol)
-  let quoteTokenBalance = accountBalancesDomain.tokenBalance(currentPair.quoteTokenSymbol)
+  let baseTokenBalance = accountBalancesDomain.formattedTokenBalance(currentPair.baseTokenSymbol)
+  let quoteTokenBalance = accountBalancesDomain.formattedTokenBalance(currentPair.quoteTokenSymbol)
 
   return {
     tokenPairsByQuoteToken,

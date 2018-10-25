@@ -4,14 +4,14 @@ export type SignerState = {
   +error: string,
   +type: string,
   +url: string,
-  +networkId: number,
+  +networkID: number,
 };
 
 export type UpdateSignerParams = {
   type: 'metamask' | 'wallet' | 'rpc',
   custom: boolean,
   url: ?string,
-  networkId: ?number,
+  networkID: ?number,
   wallet: ?Object,
 };
 

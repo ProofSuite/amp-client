@@ -32,8 +32,14 @@ export const confirmed = (tokenSymbol: string): ConvertTokensFormEvent => {
   const event = (state: ConvertTokensFormState) => ({
     ...state,
     [tokenSymbol]: {
-      ...state.tokenSymbol,
-      txSubmitted: true
+      ...state[tokenSymbol],
+      txSubmitted: true,
+      convertTxStatus: null,
+      convertTxReceipt: null,
+      convertTxHash: "",
+      allowTxStatus: null,
+      allowTxReceipt: null,
+      allowTxHash: ""
     }
   });
 
@@ -44,7 +50,7 @@ export const convertTxSent = (tokenSymbol: string, hash: string) => {
   const event = (state: ConvertTokensFormState) => ({
     ...state,
     [tokenSymbol]: {
-      ...state.tokenSymbol,
+      ...state[tokenSymbol],
       convertTxStatus: 'sent',
       convertTxHash: hash,
     }
@@ -57,7 +63,7 @@ export const convertTxReverted = (tokenSymbol: string, receipt: TxReceipt): Conv
   const event = (state: ConvertTokensFormState) => ({
       ...state,
       [tokenSymbol]: {
-        ...state.tokenSymbol,
+        ...state[tokenSymbol],
         convertTxStatus: 'reverted',
         convertTxReceipt: receipt,
       }
@@ -71,7 +77,7 @@ export const convertTxConfirmed = (tokenSymbol: string, receipt: TxReceipt): Con
   const event = (state: ConvertTokensFormState) => ({
     ...state,
     [tokenSymbol]: {
-      ...state.tokenSymbol,
+      ...state[tokenSymbol],
       convertTxStatus: 'confirmed',
       convertTxReceipt: receipt,
     }
@@ -84,8 +90,8 @@ export const allowTxSent = (tokenSymbol: string, hash: string): ConvertTokensFor
   const event = (state: ConvertTokensFormState) => ({
     ...state,
     [tokenSymbol]: {
-      ...state.tokenSymbol,
-      allowTxStatus: 'confirmed',
+      ...state[tokenSymbol],
+      allowTxStatus: 'sent',
       allowTxHash: hash,
     }
   });
@@ -97,7 +103,7 @@ export const allowTxReverted = (tokenSymbol: string, receipt: TxReceipt): Conver
   const event = (state: ConvertTokensFormState) => ({
     ...state,
     [tokenSymbol]: {
-      ...state.tokenSymbol,
+      ...state[tokenSymbol],
       allowTxStatus: 'reverted',
       allowTxReceipt: receipt,
     }
@@ -110,7 +116,7 @@ export const allowTxConfirmed = (tokenSymbol: string, receipt: TxReceipt): Conve
   const event = (state: ConvertTokensFormState) => ({
     ...state,
     [tokenSymbol]: {
-      ...state.tokenSymbol,
+      ...state[tokenSymbol],
       allowTxStatus: 'confirmed',
       allowTxReceipt: receipt,
     }

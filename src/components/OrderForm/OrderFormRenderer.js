@@ -120,6 +120,7 @@ const OrderFormRenderer = (props: Props) => {
                 fraction={fraction}
                 priceType={priceType}
                 price={price}
+                stopPrice={price}
                 amount={amount}
                 insufficientBalance={insufficientBalance}
                 maxAmount={maxAmount}

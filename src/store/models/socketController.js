@@ -40,7 +40,7 @@ export function openConnection(): ThunkAction {
     socket.onMessage((message: WebsocketMessage) => {
       let { channel, event } = message
 
-      console.log(channel, event)
+      console.log(message)
 
       switch (channel) {
         case 'orders':
@@ -100,8 +100,6 @@ const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
 function handleOrderAdded(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
-      console.log(event)
-
       let order = parseOrder(event.payload)
 
       dispatch(appActionCreators.addSuccessNotification({ message: 'Order added' }))

@@ -34,7 +34,7 @@ class OrdersTable extends React.PureComponent<Props, State> {
 
   filterOrders = () => {
     const { orders } = this.props
-    let result = { ALL: orders }
+    let result = { ALL: orders, OPEN: [], CANCELLED: [], PARTIALLY_FILLED: [], FILLED: [] }
     let filters = ['OPEN', 'CANCELLED', 'PARTIALLY_FILLED', 'FILLED', 'REPLACED']
 
     for (let filter of filters) {

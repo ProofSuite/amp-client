@@ -8,7 +8,6 @@ import type { TokenData } from '../../types/tokens'
 export type Props = {
   loading: boolean,
   connected: boolean,
-  pvtKeyLocked: boolean,
   accountAddress: string,
   accountPrivateKey: string,
   etherBalance: string,
@@ -16,10 +15,12 @@ export type Props = {
   gas: number,
   authenticated: boolean,
   queryAccountData: void => void,
-  depositTableData: Array<TokenData>,
   redirectToTradingPage: string => void,
   openConnection: void => void,
-  toggleAllowance: string => void
+  toggleAllowance: string => void,
+  tokenData: Array<TokenData>,
+  baseTokens: Array<string>,
+  quoteTokens: Array<string>,
 }
 
 class WalletPage extends React.PureComponent<Props> {
@@ -32,8 +33,6 @@ class WalletPage extends React.PureComponent<Props> {
     const {
       loading,
       connected,
-      pvtKeyLocked,
-      depositTableData,
       authenticated,
       accountAddress,
       accountPrivateKey,
@@ -41,22 +40,26 @@ class WalletPage extends React.PureComponent<Props> {
       gasPrice,
       gas,
       toggleAllowance,
-      redirectToTradingPage
+      redirectToTradingPage,
+      tokenData,
+      quoteTokens,
+      baseTokens,
     } = this.props
 
     if (!authenticated) return <Redirect to="/login" />
 
     return (
       <WalletPageRenderer
+        gas={gas}
+        gasPrice={gasPrice}
         loading={loading}
         etherBalance={etherBalance}
-        gasPrice={gasPrice}
-        gas={gas}
+        tokenData={tokenData}
+        baseTokens={baseTokens}
+        quoteTokens={quoteTokens}
         accountPrivateKey={accountPrivateKey}
         connected={connected}
-        pvtKeyLocked={pvtKeyLocked}
         accountAddress={accountAddress}
-        depositTableData={depositTableData}
         toggleAllowance={toggleAllowance}
         redirectToTradingPage={redirectToTradingPage}
       />

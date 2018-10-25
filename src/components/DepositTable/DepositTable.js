@@ -4,19 +4,25 @@ import styled from 'styled-components';
 import DepositTableRenderer from './DepositTableRenderer';
 import DepositModal from '../../components/DepositModal';
 import SendEtherModal from '../../components/SendEtherModal';
+import ConvertTokensModal from '../../components/ConvertTokensModal';
 
 import type { Token } from '../../types/tokens';
 
 type Props = {
   connected: boolean,
   toggleAllowance: string => void,
-  depositTableData: Array<Object>,
+  tokenData: Array<TokenData>,
+  baseTokens: Array<string>,
+  quoteTokens: Array<string>,
   redirectToTradingPage: string => void,
 };
 
 type State = {
   isDepositModalOpen: boolean,
   isSendModalOpen: boolean,
+  isConvertModalOpen: boolean,
+  convertModalFromToken: string,
+  convertModalToToken: string,
   selectedToken: ?Token,
   hideZeroBalanceToken: boolean,
   searchInput: string,
@@ -26,13 +32,16 @@ class DepositTable extends React.PureComponent<Props, State> {
   state = {
     isDepositModalOpen: false,
     isSendModalOpen: false,
+    isConvertModalOpen: false,
     selectedToken: null,
     hideZeroBalanceToken: false,
     searchInput: '',
+    convertModalFromToken: 'ETH',
+    convertModalToToken: 'WETH',
   };
 
   openDepositModal = (symbol: string) => {
-    let selectedToken = this.props.depositTableData.filter(elem => elem.symbol === symbol)[0];
+    let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
     this.setState({
       isDepositModalOpen: true,
@@ -41,7 +50,7 @@ class DepositTable extends React.PureComponent<Props, State> {
   };
 
   openSendModal = (symbol: string) => {
-    let selectedToken = this.props.depositTableData.filter(elem => elem.symbol === symbol)[0];
+    let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
     this.setState({
       isSendModalOpen: true,
@@ -49,12 +58,27 @@ class DepositTable extends React.PureComponent<Props, State> {
     });
   };
 
+  openConvertModal = (fromTokenSymbol: string, toTokenSymbol: string) => {
+    this.setState((previousState, currentProps) => {
+      return {
+        ...previousState,
+        convertModalFromToken: fromTokenSymbol,
+        convertModalToToken: toTokenSymbol,
+        isConvertModalOpen: true,
+      }
+    })
+  }
+
   closeDepositModal = () => {
     this.setState({ isDepositModalOpen: false });
   };
 
   closeSendModal = () => {
     this.setState({ isSendModalOpen: false });
+  };
+
+  closeConvertModal = () => {
+    this.setState({ isConvertModalOpen: false })
   };
 
   handleSearchInputChange = (e: SyntheticInputEvent<>) => {
@@ -65,7 +89,7 @@ class DepositTable extends React.PureComponent<Props, State> {
     this.setState({ hideZeroBalanceToken: !this.state.hideZeroBalanceToken });
   };
 
-  filterTokens = (data: Array<Object>) => {
+  filterTokens = (data: Array<TokenData>) => {
     const { searchInput, hideZeroBalanceToken } = this.state;
 
     if (searchInput) data = data.filter(token => token.symbol.indexOf(searchInput.toUpperCase()) > -1);
@@ -75,19 +99,50 @@ class DepositTable extends React.PureComponent<Props, State> {
   };
 
   render() {
-    let { connected, depositTableData, toggleAllowance, redirectToTradingPage } = this.props;
-    let { isDepositModalOpen, isSendModalOpen, selectedToken, searchInput, hideZeroBalanceToken } = this.state;
+    let {
+      connected,
+      tokenData,
+      quoteTokens,
+      baseTokens,
+      toggleAllowance,
+      redirectToTradingPage,
+     } = this.props;
 
-    depositTableData = this.filterTokens(depositTableData);
+    let {
+      isDepositModalOpen,
+      isSendModalOpen,
+      selectedToken,
+      searchInput,
+      hideZeroBalanceToken,
+      isConvertModalOpen,
+      convertModalFromToken,
+      convertModalToToken,
+     } = this.state;
+
+     let quoteTokenData = tokenData.filter((token: Token) => quoteTokens.indexOf(token.symbol) !== -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
+     let baseTokenData = tokenData.filter((token: Token) => baseTokens.indexOf(token.symbol) === -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
+     let WETHTokenData = tokenData.filter((token: Token) => token.symbol === 'WETH')
+     let ETHTokenData = tokenData.filter((token: Token) => token.symbol === 'ETH')
+
+
+    let filteredBaseTokenData = this.filterTokens(baseTokenData)
+    let filteredQuoteTokenData = this.filterTokens(quoteTokenData)
+    let filteredWETHTokenData = this.filterTokens(WETHTokenData)
+    let filteredETHTokenData = this.filterTokens(ETHTokenData)
 
     return (
       <Wrapper>
         <DepositTableRenderer
           connected={connected}
-          depositTableData={depositTableData}
+          baseTokensData={filteredBaseTokenData}
+          quoteTokensData={filteredQuoteTokenData}
+          ETHTokenData={filteredETHTokenData[0]}
+          WETHTokenData={filteredWETHTokenData[0]}
+          tokenDataLength={tokenData.length}
           searchInput={searchInput}
           hideZeroBalanceToken={hideZeroBalanceToken}
           openDepositModal={this.openDepositModal}
+          openConvertModal={this.openConvertModal}
           openSendModal={this.openSendModal}
           toggleZeroBalanceToken={this.toggleZeroBalanceToken}
           handleSearchInputChange={this.handleSearchInputChange}
@@ -98,9 +153,19 @@ class DepositTable extends React.PureComponent<Props, State> {
           isOpen={isDepositModalOpen}
           handleClose={this.closeDepositModal}
           token={selectedToken}
-          tokenData={depositTableData}
+          tokenData={tokenData}
         />
-        <SendEtherModal isOpen={isSendModalOpen} handleClose={this.closeSendModal} token={selectedToken} />
+        <SendEtherModal
+          isOpen={isSendModalOpen}
+          handleClose={this.closeSendModal}
+          token={selectedToken}
+        />
+        <ConvertTokensModal
+          isOpen={isConvertModalOpen}
+          handleClose={this.closeConvertModal}
+          fromToken={convertModalFromToken}
+          toToken={convertModalToToken}
+        />
       </Wrapper>
     );
   }

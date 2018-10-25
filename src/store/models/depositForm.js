@@ -14,7 +14,6 @@ import * as accountBalancesService from '../services/accountBalances';
 import { getSigner } from '../services/signer';
 import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
 import { ERC20, WETH } from '../../config/abis';
-import contractsInterfaces from 'proof-contracts-interfaces'
 
 import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
@@ -32,7 +31,7 @@ export default function depositFormSelector(state: State) {
     rankedTokens: () => tokenDomain.rankedTokens(),
     symbols: () => tokenDomain.symbols(),
     tokenIsSubscribed: (symbol: string) => accountBalancesDomain.isSubscribed(symbol),
-    balances: () => accountBalancesDomain.balances(),
+    balances: () => accountBalancesDomain.formattedBalances(),
     networkId: () => signerDomain.getNetworkId(),
     getStep: () => depositFormDomain.getStep(),
     getAllowTxState: () => depositFormDomain.getAllowTxState(),

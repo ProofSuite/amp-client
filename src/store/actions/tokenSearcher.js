@@ -6,6 +6,8 @@ import type {
   UpdateCurrentPairAction,
   UpdateFavoritePairAction,
   UpdateTradesTableAction,
+  UpdateOrdersTableAction,
+  UpdateOrderBookAction,
   InitTradesTableAction,
   InitOrdersTableAction,
   InitOrderBookAction } from '../../types/tokenSearcher';
@@ -30,6 +32,7 @@ export function initTradesTable(trades: Trades): InitTradesTableAction {
     payload: { trades },
   };
 }
+
 
 export function initOrderBook(bids: Array<Object>, asks: Array<Object>): InitOrderBookAction {
   return {

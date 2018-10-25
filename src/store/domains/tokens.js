@@ -36,6 +36,7 @@ export default function getTokenDomain(state: TokenState) {
   return {
     bySymbol: () => state.bySymbol,
     symbols: () => state.symbols,
+    token: (symbol: string) => state.bySymbol[symbol],
     tokens: () => Object.values(state.bySymbol),
     rankedTokens: () => (Object.values(state.bySymbol): any).map((m, index) => ({ ...m, rank: index + 1 })),
   };

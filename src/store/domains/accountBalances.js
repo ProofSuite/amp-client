@@ -1,9 +1,10 @@
 // @flow
-import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
+import type { AccountAllowances, AccountBalancesMap, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
 import { round } from '../../utils/helpers'
 import { utils } from 'ethers'
 import { ALLOWANCE_MINIMUM } from '../../utils/constants'
 import { formatNumber } from 'accounting-js'
+import { elementIsOrContains } from '@blueprintjs/core/lib/esm/common/utils';
 // eslint-disable-next-line
 const initialState = {}
 
@@ -89,15 +90,30 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     balances() {
       return state
     },
+    formattedBalances() {
+      let keys = Object.keys(state)
+      let formattedBalances = {}
+
+      keys.map(key => {
+        formattedBalances[key] = formatNumber(state[key].balance, { precision: 2 })
+      })
+
+      return formattedBalances
+    },
     etherBalance() {
       return state['ETH'] ? state['ETH'].balance : null
+    },
+    formattedEtherBalance() {
+      return state['ETH'] ? formatNumber(state['ETH'].balance, { precision: 2 }) : null
     },
     tokenBalance(symbol: string) {
       return state[symbol] ? state[symbol].balance : null
     },
+    formattedTokenBalance(symbol: string) {
+      return state[symbol] ? formatNumber(state[symbol].balance, { precision: 2 }) : null
+    },
     getBigNumberBalance(symbol: string) {
       if (!state[symbol]) return null
-
       //The precision multiplier allows for rounding a decimal balance to a "point" number that
       //can be converted into a bignumber. After the bignumber balance is computed, we divide by
       //the precisionMultiplier to offset the initial multiplication by the precision multiplier
