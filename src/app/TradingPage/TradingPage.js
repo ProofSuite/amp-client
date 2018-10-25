@@ -7,7 +7,7 @@ import OrderForm from '../../components/OrderForm'
 import TradesTable from '../../components/TradesTable'
 import TokenSearcher from '../../components/TokenSearcher'
 import OrderBook from '../../components/OrderBook'
-import { Grid, Cell } from 'styled-css-grid'
+import { Grid } from 'styled-css-grid'
 import { Redirect } from 'react-router-dom'
 
 type Props = {

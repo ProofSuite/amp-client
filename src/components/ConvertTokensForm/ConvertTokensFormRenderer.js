@@ -7,7 +7,6 @@ import { formatNumber } from 'accounting-js'
 
 import CenteredSpinner from '../Common/CenteredSpinner'
 import type { TxReceipt } from '../../types/common'
-import type { Token } from '../../types/tokens'
 
 type Props = {
   address: string,

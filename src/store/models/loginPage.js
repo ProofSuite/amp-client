@@ -30,7 +30,7 @@ export function loginWithMetamask(): ThunkAction {
       if (typeof window.web3 === 'undefined') throw new Error('Metamask not installed');
       if (typeof window.web3.eth.defaultAccount === 'undefined') throw new Error('Metamask account locked');
 
-      let { address, networkId } = await createMetamaskSigner();
+      let { address } = await createMetamaskSigner();
       dispatch(actionCreators.loginWithMetamask(address));
       dispatch(notifierActionCreators.addSuccessNotification({ message: 'Signed in with Metamask' }));
     } catch (e) {

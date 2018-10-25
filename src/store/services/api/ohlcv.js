@@ -1,7 +1,7 @@
+// @flow
 import { ENGINE_HTTP_URL } from '../../../config/urls'
 import { convertPricepointToPrice } from '../../../utils/helpers';
 
-// @flow
 const addMonths = require('date-fns/add_months')
 
 const request = (endpoint: string, options: Object) => {

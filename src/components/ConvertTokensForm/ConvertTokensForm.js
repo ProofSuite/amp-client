@@ -2,10 +2,7 @@
 import React from 'react';
 import ConvertTokensFormRenderer from './ConvertTokensFormRenderer';
 
-import type { Token } from '../../types/tokens';
 import type { TxReceipt } from '../../types/common'
-
-type Step = 'convert' | 'confirm';
 
 type Props = {
   txSubmitted: boolean,

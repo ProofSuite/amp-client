@@ -5,7 +5,7 @@ import getConvertTokensFormSelector, {
   convertFromWETHtoETH,
  } from '../../store/models/convertTokensForm';
 
-import type { State, Dispatch } from '../../types';
+import type { State } from '../../types';
 
 export const mapStateToProps = (state: State, ownProps: Object) => {
   const convertTokensFormSelector = getConvertTokensFormSelector(state);

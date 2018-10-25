@@ -238,12 +238,14 @@ const handleOrderBookMessage = (dispatch, event: WebsocketMessage) => {
       case 'INIT':
         if (!event.payload) return
         if (event.payload === []) return
+        // eslint-disable-next-line
         var { bids, asks } = parseOrderBookData(event.payload)
         dispatch(actionCreators.initOrderBook(bids, asks))
         break;
       case 'UPDATE':
         if (!event.payload) return
         if (event.payload === []) return
+        // eslint-disable-next-line
         var { bids, asks } = parseOrderBookData(event.payload)
         dispatch(actionCreators.updateOrderBook(bids, asks))
         break;

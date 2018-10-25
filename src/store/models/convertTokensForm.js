@@ -13,8 +13,6 @@ import { getSigner } from '../services/signer';
 import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
 import { WETH } from '../../config/abis';
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
-
-import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
 
 export default function convertTokensFormSelector(state: State) {

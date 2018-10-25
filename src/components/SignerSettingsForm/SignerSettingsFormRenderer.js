@@ -67,7 +67,7 @@ const renderCurrentSignerCallout = (currentSigner: SignerSettings) => {
 };
 
 const renderCustomSignerForm = (props: Props) => {
-  const { type, networkId, url, handleChange, handleNetworkChange, networks, customType } = props;
+  const { networkId, url, handleChange, handleNetworkChange, networks, customType } = props;
 
   return (
     <div>
