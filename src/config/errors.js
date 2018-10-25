@@ -25,7 +25,7 @@ export const parseTransferEtherError = (error: Error) => {
   if (errorMessage.includes(errorMessages.cannotReadLowerCaseOfUndefined)) return 'Invalid Receiver Address'
   if (errorMessage.includes(errorMessages.invalidValueInputArgument)) return 'Invalid Transaction Value'
   if (errorMessage.includes(errorMessages.gasRequiredExceedsAllowance)) return 'Insufficient Balance'
-  if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Insufficient Transaction Value'
+  if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Invalid Transaction Value'
 
   return errorMessage
 }
@@ -37,7 +37,7 @@ export const parseTransferTokensError = (error: Error) => {
   if (errorMessage.includes(errorMessages.cannotReadLowerCaseOfUndefined)) return 'Invalid Receiver Address'
   if (errorMessage.includes(errorMessages.invalidValueInputArgument)) return 'Invalid Transaction Amount'
   if (errorMessage.includes(errorMessages.gasRequiredExceedsAllowance)) return 'Insufficient Balance'
-  if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Insufficient Transaction Value'
+  if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Invalid Transaction Value'
 
   return errorMessage
 }

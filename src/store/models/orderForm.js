@@ -64,20 +64,9 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let sellTokenSymbol = pair.baseTokenAddress === order.sellToken ? pair.baseTokenSymbol : pair.quoteTokenSymbol
 
       let WETHBalance = accountBalancesDomain.getBigNumberBalance('WETH')
-      let buyTokenBalance = accountBalancesDomain.getBigNumberBalance(buyTokenSymbol)
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
-
-      let buyAmount = utils.bigNumberify(order.buyAmount)
       let sellAmount = utils.bigNumberify(order.sellAmount)
       let fee = utils.bigNumberify(makeFee)
-
-      if (buyTokenBalance.lt(buyAmount)) {
-        return dispatch(
-          appActionCreators.addDangerNotification({
-            message: `Insufficient ${buyTokenSymbol} balance`
-          })
-        )
-      }
 
       if (sellTokenBalance.lt(sellAmount)) {
         return dispatch(
@@ -98,8 +87,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       socket.sendNewOrderMessage(order)
     } catch (e) {
-      console.log(e)
-
       if (e.message === errors.invalidJSON) {
         return dispatch(appActionCreators.addDangerNotification({ message: 'Connection error' }))
       }

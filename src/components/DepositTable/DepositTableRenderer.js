@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Button, Switch, Checkbox, InputGroup } from '@blueprintjs/core';
+import { Button, Switch, Checkbox, InputGroup, Tag } from '@blueprintjs/core';
 import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
 import styled from 'styled-components';
 
@@ -118,7 +118,6 @@ const ETHRow = (props: Props) => {
           <Button
             disabled={!connected}
             intent="success"
-            minimal
             text="Convert to WETH"
             onClick={() => openConvertModal('ETH', 'WETH')}
             rightIcon="random"
@@ -155,7 +154,7 @@ const WETHRow = (props: Props) => {
       <Cell>{balance}</Cell>
       <Cell>
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
-          {allowancePending && <span>Pending</span>}
+          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
       <Cell style={{ width: '40%' }}>
         <ButtonWrapper>
@@ -182,7 +181,6 @@ const WETHRow = (props: Props) => {
           <Button
             disabled={!connected}
             intent="success"
-            minimal
             text="Convert to ETH"
             rightIcon="random"
             onClick={() => openConvertModal('WETH', "ETH")} />
@@ -215,7 +213,7 @@ const QuoteTokenRows = (props: Props) => {
         <Cell>{balance}</Cell>
         <Cell>
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
-          {allowancePending && <span>Pending</span>}
+          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '40%' }}>
           <ButtonWrapper>
@@ -270,7 +268,7 @@ const BaseTokenRows = (props: Props) => {
         <Cell>{balance}</Cell>
         <Cell>
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
-          {allowancePending && <span>Pending</span>}
+          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '40%' }}>
           <ButtonWrapper>
@@ -299,7 +297,6 @@ const BaseTokenRows = (props: Props) => {
               intent="success"
               text="Trade"
               rightIcon="chart"
-              minimal
               onClick={() => redirectToTradingPage(symbol)}
             />
           </ButtonWrapper>

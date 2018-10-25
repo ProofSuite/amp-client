@@ -14,9 +14,6 @@ export const mapStateToProps = (state: State, ownProps: Object) => {
   const balances = convertTokensFormSelector.balances()
   const convertTokensFormState = convertTokensFormSelector.convertTokensFormState(fromToken)
 
-
-  console.log(balances)
-
   return {
     token: tokens[fromToken],
     fromTokenBalance: balances[fromToken].balance,

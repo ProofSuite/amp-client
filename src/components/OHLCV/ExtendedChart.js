@@ -82,7 +82,6 @@ export default class ExtendedChart extends React.Component<Props, State> {
       indicatorTemp.active = !indicatorTemp.active;
     }
     this.forceUpdate();
-    console.log(this.state.indicators);
   };
 
   changeDuration = (menu: string) => {
