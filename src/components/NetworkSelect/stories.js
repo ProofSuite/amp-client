@@ -20,7 +20,7 @@ storiesOf('NetworkSelect', module)
     'Default Export',
     withInfo({ text: README, source: false })(() => (
       <div className="bp3-dark">
-        <NetworkSelect networks={networks} handleChange={action('handleChange')} networkId={1} />
+        <NetworkSelect networks={networks} handleChange={action('handleChange')} networkID={1} />
       </div>
     ))
   );
