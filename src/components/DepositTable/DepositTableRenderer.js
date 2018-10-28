@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
 import { Button, Switch, Checkbox, InputGroup, Tag } from '@blueprintjs/core';
-import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
+import { RowSpaceBetween, ColoredCryptoIcon, Colors } from '../Common';
 import styled from 'styled-components';
-
 
 type TokenData = {
   symbol: string,
@@ -94,7 +93,7 @@ const ETHRow = (props: Props) => {
     <Row key='ETH'>
       <Cell>
         <TokenNameWrapper>
-          <ColoredCryptoIcon size={35} name={symbol} />
+          <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -104,9 +103,8 @@ const ETHRow = (props: Props) => {
         <ButtonWrapper>
           <Button
             disabled={!connected}
-            intent="success"
+            intent="primary"
             text="Deposit"
-            minimal
             rightIcon="import"
             onClick={() => openDepositModal(symbol)}
           />
@@ -114,8 +112,7 @@ const ETHRow = (props: Props) => {
         <ButtonWrapper>
           <Button
             disabled={!connected}
-            intent="success"
-            minimal
+            intent="primary"
             text="Send"
             rightIcon="export"
             onClick={() => openSendModal(symbol)}
@@ -154,7 +151,7 @@ const WETHRow = (props: Props) => {
     <Row key='WETH'>
       <Cell>
         <TokenNameWrapper>
-          <ColoredCryptoIcon size={35} name={symbol} />
+          <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -167,8 +164,7 @@ const WETHRow = (props: Props) => {
         <ButtonWrapper>
           <Button
             disabled={!connected}
-            intent="success"
-            minimal
+            intent="primary"
             rightIcon="import"
             text="Deposit"
             onClick={() => openDepositModal(symbol)}
@@ -177,8 +173,7 @@ const WETHRow = (props: Props) => {
         <ButtonWrapper>
           <Button
             disabled={!connected}
-            intent="success"
-            minimal
+            intent="primary"
             rightIcon="export"
             text="Send"
             onClick={() => openSendModal(symbol)}
@@ -213,7 +208,7 @@ const QuoteTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <ColoredCryptoIcon size={35} name={symbol} />
+            <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
@@ -226,8 +221,7 @@ const QuoteTokenRows = (props: Props) => {
           <ButtonWrapper>
             <Button
               disabled={!connected}
-              intent="success"
-              minimal
+              intent="primary"
               text="Deposit"
               rightIcon="import"
               onClick={() => openDepositModal(symbol)}
@@ -236,8 +230,7 @@ const QuoteTokenRows = (props: Props) => {
           <ButtonWrapper>
             <Button
               disabled={!connected}
-              intent="success"
-              minimal
+              intent="primary"
               text="Send"
               rightIcon="export"
               onClick={() => openSendModal(symbol)}
@@ -268,7 +261,7 @@ const BaseTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <ColoredCryptoIcon size={35} name={symbol} />
+            <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
@@ -281,9 +274,8 @@ const BaseTokenRows = (props: Props) => {
           <ButtonWrapper>
             <Button
               disabled={!connected}
-              intent="success"
+              intent="primary"
               text="Deposit"
-              minimal
               rightIcon="import"
               onClick={() => openDepositModal(symbol)}
             />
@@ -291,9 +283,8 @@ const BaseTokenRows = (props: Props) => {
           <ButtonWrapper>
             <Button
               disabled={!connected}
-              intent="success"
+              intent="primary"
               text="Send"
-              minimal
               onClick={() => openSendModal(symbol)}
               rightIcon="export"
               />

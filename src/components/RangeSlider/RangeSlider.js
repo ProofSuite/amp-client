@@ -18,6 +18,7 @@ export default class StandardRangeSlider extends React.Component {
       onChange,
       onRelease,
     } = this;
+
     return (
       <RangeSlider
         className="standard-range-slider"

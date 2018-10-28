@@ -70,6 +70,7 @@ const TokenSearchRenderer = (props: Props) => {
     baseTokenBalance,
     quoteTokenBalance
   } = props
+
   return (
     <TokenSearchCard>
       {loading ? (
@@ -168,6 +169,7 @@ const Panel = (props: PanelProps) => {
     onChangeFilterName,
     changeSelectedToken
   } = props
+
   const isFavoriteTokensList = selectedTabId === 'star'
 
   return (

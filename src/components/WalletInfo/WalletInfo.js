@@ -1,7 +1,7 @@
 import React from 'react';
-import CurrentWalletRenderer from './CurrentWalletRenderer';
+import WalletInfoRenderer from './WalletInfoRenderer';
 
-export default class CurrentWallet extends React.PureComponent {
+export default class WalletInfo extends React.PureComponent {
   state = { isModalOpen: false };
 
   handleModalClose = () => {
@@ -17,7 +17,7 @@ export default class CurrentWallet extends React.PureComponent {
     } = this;
 
     return (
-      <CurrentWalletRenderer
+      <WalletInfoRenderer
         gasPrice={gasPrice}
         gas={gas}
         balance={etherBalance}
