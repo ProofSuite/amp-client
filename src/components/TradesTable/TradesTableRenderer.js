@@ -62,7 +62,7 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
         <HeadingRow>
           <HeaderCell>PRICE</HeaderCell>
           <HeaderCell>AMOUNT</HeaderCell>
-          <HeaderCell />
+          <HeaderCell>STATUS</HeaderCell>
           <HeaderCell cellName="time">TIME</HeaderCell>
         </HeadingRow>
       </ListHeader>
@@ -73,7 +73,7 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
               <Icon icon={trade.change === 'positive' ? 'chevron-up' : 'chevron-down'} iconSize={14}/>{trade.price}
             </Cell>
             <Cell>{trade.amount}</Cell>
-            <Cell side={trade.side}>{trade.side}</Cell>
+            <Cell side={trade.side}>{trade.status}</Cell>
             <Cell cellName="time" muted>{format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}</Cell>
           </Row>
         ))}
@@ -99,15 +99,17 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
         <HeadingRow>
           <HeaderCell>PRICE</HeaderCell>
           <HeaderCell>AMOUNT</HeaderCell>
-          <HeaderCell />
+          <HeaderCell>SIDE</HeaderCell>
+          <HeaderCell>STATUS</HeaderCell>
           <HeaderCell cellName="time">TIME</HeaderCell>
         </HeadingRow>
       </ListHeader>
       <ListBody className="list">
         {trades.map((trade, index) => (
-          <Row color={trade.side === 'BUY' ? Colors.BUY_MUTED : Colors.SELL_MUTED} key={index}>
+          <Row color={trade.status === 'EXECUTED' ? Colors.BUY_MUTED : Colors.SELL_MUTED} key={index}>
             <Cell>{trade.price}</Cell>
             <Cell>{trade.amount}</Cell>
+            <Cell>{trade.status}</Cell>
             <Cell color={trade.side === 'BUY' ? Colors.BUY : Colors.SELL}>{trade.side}</Cell>
             <Cell cellName="time" muted>{format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}</Cell>
         </Row>
