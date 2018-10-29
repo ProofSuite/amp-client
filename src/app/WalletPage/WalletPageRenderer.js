@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Card } from '@blueprintjs/core'
 import CenteredSpinner from '../../components/Common/CenteredSpinner'
 import DepositTable from '../../components/DepositTable'
-import CurrentWallet from '../../components/CurrentWallet'
+import WalletInfo from '../../components/WalletInfo'
 
 import type { TokenData } from '../../types/tokens'
 
@@ -36,70 +36,71 @@ const WalletPageRenderer = ({
   redirectToTradingPage
 }: Props) => {
   return (
-    <Wrapper>
+    <WalletPageBox>
       <RowWrapper>
-        <CurrentWallet
-          accountAddress={accountAddress}
-          etherBalance={etherBalance}
-          gasPrice={gasPrice}
-          gas={gas}
-        />
-        <WalletPageContent>
+        <WalletInfoBox>
+          <WalletInfo
+            accountAddress={accountAddress}
+            etherBalance={etherBalance}
+            gasPrice={gasPrice}
+            gas={gas}
+          />
+        </WalletInfoBox>
+        <WalletPageContentBox>
           {loading ? (
             <CenteredSpinner />
           ) : (
-            <RightSection>
-              <DepositTableWrapper>
-                <DepositTable
-                  connected={connected}
-                  toggleAllowance={toggleAllowance}
-                  tokenData={tokenData}
-                  baseTokens={baseTokens}
-                  quoteTokens={quoteTokens}
-                  redirectToTradingPage={redirectToTradingPage}
-                />
-              </DepositTableWrapper>
-              <HeadingMenu>
-              </HeadingMenu>
-            </RightSection>
+            <DepositTableBox>
+              <DepositTable
+                connected={connected}
+                toggleAllowance={toggleAllowance}
+                tokenData={tokenData}
+                baseTokens={baseTokens}
+                quoteTokens={quoteTokens}
+                redirectToTradingPage={redirectToTradingPage}
+              />
+            </DepositTableBox>
           )}
-        </WalletPageContent>
+        </WalletPageContentBox>
       </RowWrapper>
-    </Wrapper>
+    </WalletPageBox>
   )
 }
+
+
+const WalletPageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-bottom: 10em;
+`
+
+const WalletInfoBox = styled.div`
+  width: 35%;
+  height: 92vh;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
+const WalletPageContentBox = styled(Card)`
+  height: 92vh;
+  width: 75%;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+`
 
 const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;
 `
-const HeadingMenu = styled.div`
-  width: 30%;
-`
-
-const DepositTableWrapper = styled.div`
+const DepositTableBox = styled.div`
   height: 100%;
   width: 90%;
 `
-const RightSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-`
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  padding-top: 0.5em;
-`
 
-const WalletPageContent = styled(Card)`
-  height: 92vh;
-  width: 75%;
-  margin: 0.5em;
-`
 
 export default WalletPageRenderer

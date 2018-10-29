@@ -160,7 +160,7 @@ export default function domain(state: OrderBookState) {
 
       bids = bids.map(item => ({
         ...item,
-        relativeTotal: item.total / max,
+        relativeTotal: max ? item.total / max : 1,
         amount: formatNumber(item.amount, { precision: 1 }),
         total: formatNumber(item.total, { precision: 1 }),
         price: formatNumber(item.price, { precision: 3 })
@@ -168,7 +168,7 @@ export default function domain(state: OrderBookState) {
 
       asks = asks.map(item => ({
         ...item,
-        relativeTotal: item.total / max,
+        relativeTotal: max ? item.total / max : 1,
         amount: formatNumber(item.amount, { precision: 1 }),
         total: formatNumber(item.total, { precision: 1 }),
         price: formatNumber(item.price, { precision: 3 })

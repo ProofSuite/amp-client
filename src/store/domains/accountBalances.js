@@ -99,6 +99,16 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
 
       return formattedBalances
     },
+    tokenChartBalances() {
+      let keys = Object.keys(state)
+      let numericBalances = []
+
+      keys.forEach(key => {
+        numericBalances.push({symbol: key, value: round(state[key].balance)})
+      })
+
+      return numericBalances
+    },
     etherBalance() {
       return state['ETH'] ? state['ETH'].balance : null
     },
@@ -139,6 +149,9 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     isAllowancePending(symbol: string) {
       return state[symbol] ? state[symbol].allowance === 'pending' : false
     },
+    //To simply UX, we suppose that a trader is "allowing" the exchange smart contract to trade tokens if the
+    //allowance value is set to a very large number. If the allowance is above ALLOWANCE_MINIMUM, the tokens is
+    //is considered tradeable on the frontend app.
     getBalancesAndAllowances(tokens: Array<Object>) {
       return (tokens: any).map(token => {
         return {

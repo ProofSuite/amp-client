@@ -368,6 +368,14 @@
   content: '\E056';
 }
 
+.cc.WETH-alt::before {
+  content: '\E057';
+}
+
+.cc.WETH::before {
+  content: '\E058';
+}
+
 .cc.ETH-alt::before {
   content: '\E057';
 }

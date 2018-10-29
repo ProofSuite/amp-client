@@ -4,14 +4,11 @@ import { Colors } from '../Common';
 import styled from 'styled-components';
 
 const WalletSettingsForm = props => {
-  const { pvtKeyLocked, togglePvtKeyLock, wallets, removeWallet } = props;
-  const lockBtnLabel = pvtKeyLocked ? 'Unlock ' : 'Lock ';
+  const { wallets, removeWallet } = props;
   const walletsAreStored = wallets.slice(1).length > 0;
 
   return (
     <Card>
-      <Heading>Private Key display on Wallet Page</Heading>
-      <Button minimal="true" text={lockBtnLabel} onClick={togglePvtKeyLock} />
       <Heading>Remove Wallets from Browser Storage</Heading>
       <Header>
         <ListItem>
