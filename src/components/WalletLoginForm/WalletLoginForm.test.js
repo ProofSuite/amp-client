@@ -4,6 +4,9 @@ import { shallow } from 'enzyme';
 import WalletLoginForm from './WalletLoginForm';
 import * as walletService from '../../store/services/wallet';
 
+
+
+
 jest.mock('../../store/services/wallet');
 
 let loginWithWallet = jest.fn();

@@ -5,6 +5,8 @@ import * as actionCreators from './logoutPage';
 let unsubscribe = jest.fn();
 let selector;
 
+
+
 describe('Logout Page Model', () => {
   it('handles logout', () => {
     const { store } = createStore({

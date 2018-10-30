@@ -1,13 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
 import DepositForm from './DepositForm';
-
 import { mockAddress, mockAllowTxState, mockConvertTxState, mockTokens } from '../../mockData';
 
 jest.mock('../../store/services/wallet');
-
-let connectWithWallet = jest.fn();
 
 describe('Rendering', () => {
   it('renders without crashing', () => {

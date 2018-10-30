@@ -9,13 +9,10 @@ import type { AccountBalance, AccountAllowance } from '../../types/accountBalanc
 
 export async function queryEtherBalance(address: string) {
   let provider = getProvider()
-
   let balance = await provider.getBalance(address)
-  let formattedBalance = Number(utils.formatEther(balance))
-
   return {
     symbol: 'ETH',
-    balance: formattedBalance
+    balance: utils.formatEther(balance)
   }
 }
 
