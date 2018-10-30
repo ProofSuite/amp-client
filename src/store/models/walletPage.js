@@ -19,9 +19,6 @@ export default function walletPageSelector(state: State) {
   let sendEtherFormDomain = getSendEtherFormDomain(state)
 
   // ETH is not a token so we add it to the list to display in the deposit table
-  // let WETH = tokenDomain.token('WETH')
-  // let quoteTokens = tokenDomain.tokens().filter((token: Token) => quoteTokens.indexOf(token.symbol) !== -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
-  // let baseTokens = tokenDomain.tokens().filter((token: Token) => quoteTokens.indexOf(token.symbol) === -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
   let ETH = { symbol: 'ETH' }
   let tokens = tokenDomain.tokens()
   let quoteTokens = quoteTokenSymbols

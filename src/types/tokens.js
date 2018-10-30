@@ -6,6 +6,12 @@ export type Token = {
   symbol: string,
 };
 
+export type RankedToken = {
+  address: string,
+  symbol: string,
+  rank: number
+}
+
 export type TokenPair = {
   +pair: string,
   +baseTokenSymbol: string,

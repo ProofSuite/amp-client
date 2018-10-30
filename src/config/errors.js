@@ -14,7 +14,8 @@ export const errorMessages = {
   invalidValueInputArgument: 'invalid input argument (arg="_value", reason="invalid number value"',
   invalidDecimalValue: 'invalid decimal value (arg="value"',
   cannotReadLowerCaseOfUndefined: "Cannot read property 'toLowerCase' of undefined",
-  gasRequiredExceedsAllowance: 'gas required exceeds allowance or always failing transaction'
+  gasRequiredExceedsAllowance: 'gas required exceeds allowance or always failing transaction',
+  metamaskUserDeniedSignature: 'MetaMask Message Signature: User denied message signature.'
 }
 
 
@@ -26,6 +27,7 @@ export const parseTransferEtherError = (error: Error) => {
   if (errorMessage.includes(errorMessages.invalidValueInputArgument)) return 'Invalid Transaction Value'
   if (errorMessage.includes(errorMessages.gasRequiredExceedsAllowance)) return 'Insufficient Balance'
   if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Invalid Transaction Value'
+  if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
 
   return errorMessage
 }
@@ -38,6 +40,16 @@ export const parseTransferTokensError = (error: Error) => {
   if (errorMessage.includes(errorMessages.invalidValueInputArgument)) return 'Invalid Transaction Amount'
   if (errorMessage.includes(errorMessages.gasRequiredExceedsAllowance)) return 'Insufficient Balance'
   if (errorMessage.includes(errorMessages.invalidDecimalValue)) return 'Invalid Transaction Value'
+  if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
+
+  return errorMessage
+}
+
+export const parseCancelOrderError = (error: Error) => {
+  let errorMessage = error.message
+
+  if (errorMessage.includes(errorMessages.invalidJSON)) return 'Connection error'
+  if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
 
   return errorMessage
 }

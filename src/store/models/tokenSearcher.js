@@ -40,7 +40,7 @@ export default function tokenSearcherSelector(state: State) {
 }
 
 export const updateCurrentPair = (pair: string): ThunkAction => {
-  return async (dispatch, getState, { api, socket }) => {
+  return async (dispatch, getState, { socket }) => {
     try {
       socket.unsubscribeChart()
       socket.unsubscribeOrderBook()
