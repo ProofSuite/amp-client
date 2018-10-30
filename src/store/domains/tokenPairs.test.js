@@ -2,9 +2,6 @@ import * as eventCreators from './tokenPairs';
 import { generateTokenPairs } from '../../utils/tokens';
 import getTokenPairsDomain from './tokenPairs';
 
-
-// file.only
-
 //createInitialState is not an eventCreator. We simply import it in order to create a new
 //create an initial state. The default initial state used in the application has to many
 //tokens to be used for tests. Therefore we recreate an initial state with less tokens

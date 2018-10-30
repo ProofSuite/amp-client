@@ -6,6 +6,7 @@ import * as walletService from '../services/wallet';
 
 
 
+
 jest.mock('../services/wallet');
 
 let selector;

@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
 import connect from './connect';
 
+
+
 describe('connect(Component)', () => {
   it('injects a certain prop and renders without crashing', () => {
     const { store } = createStore();

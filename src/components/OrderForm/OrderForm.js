@@ -96,6 +96,8 @@ class OrderForm extends React.PureComponent<Props, State> {
     const { side, quoteTokenBalance, baseTokenBalance } = this.props
     let amount, total
 
+    console.log(quoteTokenBalance )
+
     if (side === 'SELL') {
       amount = (baseTokenBalance / 100) * fraction
       total = unformat(price) * amount

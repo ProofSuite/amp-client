@@ -6,6 +6,8 @@ import connect, { mapDispatchToProps, mapStateToProps } from './connect';
 import signerSettingsSelector from '../../store/models/signerSettings';
 import * as actionCreators from '../../store/models/signerSettings';
 
+
+
 jest.mock('../../store/models/signerSettings');
 
 describe('mapStateToProps(state, props)', () => {

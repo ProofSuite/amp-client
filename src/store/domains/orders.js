@@ -49,11 +49,11 @@ export function ordersUpdated(orders: Orders) {
   return event
 }
 
-export const ordersDeleted = (timestamps: Array<number>) => {
+export const ordersDeleted = (hashes: Array<number>) => {
   const event = (state: OrdersState) => ({
     ...state,
     byHash: Object.keys(state.byHash)
-      .filter(key => timestamps.indexOf(key) === -1)
+      .filter(key => hashes.indexOf(key) === -1)
       .reduce((result, current) => {
         result[current] = state.byHash[current]
         return result
@@ -65,7 +65,7 @@ export const ordersDeleted = (timestamps: Array<number>) => {
 
 export default function ordersDomain(state: OrdersState) {
   return {
-    byTimestamp: () => state.byHash,
+    byHash: () => state.byHash,
     all: () => Object.values(state.byHash),
 
     lastOrders: (n: number) => {

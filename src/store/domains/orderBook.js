@@ -4,6 +4,8 @@ import SortedArray from 'sorted-array'
 import { round } from '../../utils/helpers'
 import { formatNumber } from 'accounting-js'
 
+
+
 const initialState: OrderBookState = {
   bids: {},
   asks: {},
