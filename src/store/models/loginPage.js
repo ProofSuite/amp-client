@@ -6,7 +6,8 @@ import { getAccountDomain, getLoginPageDomain } from '../domains';
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
 import { createDefaultWalletSigner, createMetamaskSigner } from '../services/signer';
 
-import type { State, ThunkAction } from '../../types';
+import typeimport { createAccount } from '../services/api/engine';
+ { State, ThunkAction } from '../../types';
 
 type CreateWalletParams = {
   wallet: Object,
@@ -24,7 +25,7 @@ export default function loginPageSelector(state: State) {
 }
 
 export function loginWithMetamask(): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { socket }) => {
     try {
       dispatch(actionCreators.requestLogin());
       if (typeof window.web3 === 'undefined') throw new Error('Metamask not installed');

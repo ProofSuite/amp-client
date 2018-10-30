@@ -5,6 +5,7 @@ import * as actionCreators from '../actions/sendEtherForm';
 
 import type { EtherTxParams, TransferTokensTxParams } from '../../types/sendEtherForm';
 import type { State, ThunkAction } from '../../types';
+import type { RankedToken } from '../../types/tokens'
 
 import { getSigner } from '../services/signer';
 import { ERC20 } from '../../config/abis';
@@ -13,6 +14,10 @@ import { parseTransferEtherError, parseTransferTokensError } from '../../config/
 export default function sendEtherSelector(state: State) {
   let tokenDomain = getTokenDomain(state);
   let sendEtherFormDomain = getSendEtherFormDomain(state);
+
+  let eth = { symbol: 'ETH', address: '0x0', rank: 0}
+  let otherTokens = tokenDomain.rankedTokens()
+  let tokens: Array<RankedToken> = [ eth ].concat(otherTokens)
 
   return {
     getState: () => sendEtherFormDomain.getState(),
@@ -23,7 +28,7 @@ export default function sendEtherSelector(state: State) {
     getGasPrice: () => sendEtherFormDomain.getGasPrice(),
     getHash: () => sendEtherFormDomain.getHash(),
     getReceipt: () => sendEtherFormDomain.getReceipt(),
-    tokens: () => tokenDomain.rankedTokens(),
+    tokens: () => tokens,
   };
 }
 
@@ -44,6 +49,7 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
       dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
 
     } catch (error) {
+      console.log(error)
       let errorMessage = parseTransferEtherError(error)
       dispatch(actionCreators.invalidateTx(errorMessage))
     }
@@ -91,6 +97,7 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
       dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
 
     } catch (error) {
+      console.log(error)
       let errorMessage = parseTransferTokensError(error)
       dispatch(actionCreators.invalidateTx(errorMessage))
     }
