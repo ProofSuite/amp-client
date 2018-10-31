@@ -1,7 +1,7 @@
 import accountDomain from './account';
 import accountBalancesDomain from './accountBalances';
 import depositFormDomain from './depositForm';
-import sendEtherFormDomain from './sendEtherForm';
+import transferTokensFormDomain from './transferTokensForm';
 import loginPageDomain from './loginPage';
 import ohlcvDomain from './ohlcv';
 import orderBookDomain from './orderBook';
@@ -19,7 +19,7 @@ import convertTokensFormDomain from './convertTokensForm'
 export const getAccountDomain = state => accountDomain(state.account);
 export const getAccountBalancesDomain = state => accountBalancesDomain(state.accountBalances);
 export const getDepositFormDomain = state => depositFormDomain(state.depositForm);
-export const getSendEtherFormDomain = state => sendEtherFormDomain(state.sendEtherForm);
+export const getTransferTokensFormDomain = state => transferTokensFormDomain(state.transferTokensForm);
 export const getLoginPageDomain = state => loginPageDomain(state.loginPage);
 export const getOhlcvDomain = state => ohlcvDomain(state.ohlcv);
 export const getOrderBookDomain = state => orderBookDomain(state.orderBook);

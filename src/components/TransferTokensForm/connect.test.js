@@ -3,11 +3,11 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import createStore from '../../store/configureStore';
 import connect, { mapStateToProps } from './connect';
-import getSendEtherFormSelector from '../../store/models/sendEtherForm';
+import getTransferTokensFormSelector from '../../store/models/transferTokensForm';
 
 
 
-jest.mock('../../store/models/sendEtherForm');
+jest.mock('../../store/models/transferTokensForm');
 
 describe('mapStateToProps(state, props)', () => {
   let getState;
@@ -26,7 +26,7 @@ describe('mapStateToProps(state, props)', () => {
       tokens: 'test tokens',
     }));
 
-    getSendEtherFormSelector.mockReturnValue({
+    getTransferTokensFormSelector.mockReturnValue({
       isLoading: jest.fn(() => 'test loading'),
       getStatus: jest.fn(() => 'test status'),
       getStatusMessage: jest.fn(() => 'test statusMessage'),
@@ -38,7 +38,7 @@ describe('mapStateToProps(state, props)', () => {
     });
   });
 
-  it('returns component SendEtherForm props as expected', () => {
+  it('returns component TransferTokensForm props as expected', () => {
     const state = {};
     const props = { token: { symbol: 'PRFT', address: '0x1' } };
     const result = mapStateToProps(state, props);
@@ -58,13 +58,13 @@ describe('mapStateToProps(state, props)', () => {
     expect(result).toEqual(expected);
   });
 
-  it('calls sendEtherFormSelector(state) and then ', () => {
+  it('calls transferTokensFormSelector(state) and then ', () => {
     const state = {};
     const props = { token: { symbol: 'PRFT', address: '0x1' } };
     mapStateToProps(state, props);
 
-    expect(getSendEtherFormSelector).toHaveBeenCalledTimes(1);
-    expect(getSendEtherFormSelector).toBeCalledWith(state);
+    expect(getTransferTokensFormSelector).toHaveBeenCalledTimes(1);
+    expect(getTransferTokensFormSelector).toBeCalledWith(state);
   });
 });
 
