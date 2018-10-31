@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button, Tag } from '@blueprintjs/core';
 import styled from 'styled-components';
-import SendEtherModal from '../../components/SendEtherModal';
+import TransferTokensModal from '../../components/TransferTokensModal';
 import TokenBalanceChart from '../../components/TokenBalanceChart'
 
 const WalletInfoRenderer = props => {
@@ -40,7 +40,7 @@ const WalletInfoRenderer = props => {
             large
           />
         </Box>
-        <SendEtherModal gas={gas} gasPrice={gasPrice} isOpen={isModalOpen} handleClose={handleModalClose} />
+        <TransferTokensModal gas={gas} gasPrice={gasPrice} isOpen={isModalOpen} handleClose={handleModalClose} />
       </WalletInfoCard>
   );
 };

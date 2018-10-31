@@ -8,15 +8,15 @@ import type {
   SendTxAction,
   TxReceipt,
   ValidateTxAction,
-} from '../../types/sendEtherForm';
+} from '../../types/transferTokensForm';
 
 const actionTypes = {
-  txError: 'sendEtherForm/ERROR',
-  validateTx: 'sendEtherForm/VALIDATE',
-  invalidateTx: 'sendEtherForm/INVALIDATE',
-  sendTx: 'sendEtherForm/SEND',
-  confirmTx: 'sendEtherForm/CONFIRM',
-  revertTx: 'sendEtherForm/REVERT',
+  txError: 'transferTokensForm/ERROR',
+  validateTx: 'transferTokensForm/VALIDATE',
+  invalidateTx: 'transferTokensForm/INVALIDATE',
+  sendTx: 'transferTokensForm/SEND',
+  confirmTx: 'transferTokensForm/CONFIRM',
+  revertTx: 'transferTokensForm/REVERT',
 };
 
 export function txError(status: TxStatus, statusMessage: string): TxErrorAction {

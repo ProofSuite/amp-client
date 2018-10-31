@@ -1,7 +1,7 @@
 // @flow
-import type { SendEtherFormState, TxReceipt } from '../../types/sendEtherForm';
+import type { TransferTokensFormState, TxReceipt } from '../../types/transferTokensForm';
 
-const initialState: SendEtherFormState = {
+const initialState: TransferTokensFormState = {
   loading: false,
   status: 'incomplete',
   statusMessage: null,
@@ -12,12 +12,12 @@ const initialState: SendEtherFormState = {
 };
 
 export const initialized = () => {
-  const event = (state: SendEtherFormState = initialState) => state;
+  const event = (state: TransferTokensFormState = initialState) => state;
   return event;
 };
 
 export const txValidated = (statusMessage: string, gas: number) => {
-  const event = (state: SendEtherFormState) => ({
+  const event = (state: TransferTokensFormState) => ({
     ...state,
     status: 'valid',
     statusMessage: statusMessage,
@@ -27,7 +27,7 @@ export const txValidated = (statusMessage: string, gas: number) => {
 };
 
 export const txInvalidated = (statusMessage: string) => {
-  const event = (state: SendEtherFormState) => ({
+  const event = (state: TransferTokensFormState) => ({
     ...state,
     status: 'invalid',
     statusMessage: statusMessage,
@@ -36,7 +36,7 @@ export const txInvalidated = (statusMessage: string) => {
 };
 
 export const txSent = (hash: string) => {
-  const event = (state: SendEtherFormState) => ({
+  const event = (state: TransferTokensFormState) => ({
     ...state,
     loading: false,
     status: 'sent',
@@ -48,7 +48,7 @@ export const txSent = (hash: string) => {
 };
 
 export const txReverted = (statusMessage: string, receipt: TxReceipt) => {
-  const event = (state: SendEtherFormState) => ({
+  const event = (state: TransferTokensFormState) => ({
     ...state,
     loading: false,
     status: 'reverted',
@@ -59,7 +59,7 @@ export const txReverted = (statusMessage: string, receipt: TxReceipt) => {
 };
 
 export const txError = (status: string, statusMessage: string) => {
-  const event = (state: SendEtherFormState) => ({
+  const event = (state: TransferTokensFormState) => ({
     ...state,
     loading: false,
     status: status,
@@ -69,7 +69,7 @@ export const txError = (status: string, statusMessage: string) => {
 };
 
 export const txConfirmed = (receipt: TxReceipt) => {
-  const event = (state: SendEtherFormState) => ({
+  const event = (state: TransferTokensFormState) => ({
     ...state,
     loading: false,
     status: 'confirmed',
@@ -78,7 +78,7 @@ export const txConfirmed = (receipt: TxReceipt) => {
   return event;
 };
 
-export default function sendEtherFormDomain(state: SendEtherFormState) {
+export default function transferTokensFormDomain(state: TransferTokensFormState) {
   return {
     getState: () => state,
     isLoading: () => state.loading,

@@ -1,9 +1,9 @@
 // @flow
 import { Contract, utils } from 'ethers';
-import { getSendEtherFormDomain, getTokenDomain } from '../domains';
-import * as actionCreators from '../actions/sendEtherForm';
+import { getTransferTokensFormDomain, getTokenDomain } from '../domains';
+import * as actionCreators from '../actions/transferTokensForm';
 
-import type { EtherTxParams, TransferTokensTxParams } from '../../types/sendEtherForm';
+import type { EtherTxParams, TransferTokensTxParams } from '../../types/transferTokensForm';
 import type { State, ThunkAction } from '../../types';
 import type { RankedToken } from '../../types/tokens'
 
@@ -13,21 +13,21 @@ import { parseTransferEtherError, parseTransferTokensError } from '../../config/
 
 export default function sendEtherSelector(state: State) {
   let tokenDomain = getTokenDomain(state);
-  let sendEtherFormDomain = getSendEtherFormDomain(state);
+  let transferTokensFormDomain = getTransferTokensFormDomain(state);
 
   let eth = { symbol: 'ETH', address: '0x0', rank: 0}
   let otherTokens = tokenDomain.rankedTokens()
   let tokens: Array<RankedToken> = [ eth ].concat(otherTokens)
 
   return {
-    getState: () => sendEtherFormDomain.getState(),
-    isLoading: () => sendEtherFormDomain.isLoading(),
-    getStatus: () => sendEtherFormDomain.getStatus(),
-    getStatusMessage: () => sendEtherFormDomain.getStatusMessage(),
-    getGas: () => sendEtherFormDomain.getGas(),
-    getGasPrice: () => sendEtherFormDomain.getGasPrice(),
-    getHash: () => sendEtherFormDomain.getHash(),
-    getReceipt: () => sendEtherFormDomain.getReceipt(),
+    getState: () => transferTokensFormDomain.getState(),
+    isLoading: () => transferTokensFormDomain.isLoading(),
+    getStatus: () => transferTokensFormDomain.getStatus(),
+    getStatusMessage: () => transferTokensFormDomain.getStatusMessage(),
+    getGas: () => transferTokensFormDomain.getGas(),
+    getGasPrice: () => transferTokensFormDomain.getGasPrice(),
+    getHash: () => transferTokensFormDomain.getHash(),
+    getReceipt: () => transferTokensFormDomain.getReceipt(),
     tokens: () => tokens,
   };
 }
