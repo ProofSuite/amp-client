@@ -209,6 +209,24 @@ export const fetchTokenPairData = async () => {
   return data
 }
 
+export const createAccount = async (address: string) => {
+  const response = await request(`/account/create?address=${address}`, { method: 'post'})
+
+  if (response.status === 400) {
+    const { error } = await response.json()
+    throw new Error(error)
+  }
+
+  if (response.status !== 200) {
+    throw new Error('Server error')
+  }
+
+  const { data } = await response.json()
+  console.log(data)
+  return data
+}
+
+
 export const getOrders = async (userAddress: string): Orders => {
   let orders = await fetchOrders(userAddress)
   let parsedOrders

@@ -5,7 +5,6 @@ import Layout from './Layout'
 import LandingPage from './LandingPage'
 import LoginPage from './LoginPage'
 import WalletPage from './WalletPage'
-import ExchangePage from './ExchangePage'
 import SettingsPage from './SettingsPage'
 import LogoutPage from './LogoutPage'
 import TradingPage from './TradingPage'
@@ -29,7 +28,6 @@ const App = () => {
               <Route exact path="/" component={LandingPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/wallet" component={WalletPage} />
-              <Route path="/exchange" component={ExchangePage} />
               <Route path="/settings" component={SettingsPage} />
               <Route path="/logout" component={LogoutPage} />
               <Route path="/trade" component={TradingPage} />

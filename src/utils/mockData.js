@@ -54,6 +54,13 @@ export const networks = [
   { name: 'Private', id: 8888 },
 ].map((m, index) => ({ ...m, rank: index + 1 }));
 
+export const mockEtherTxParams = {
+  amount: 1e18,
+  receiver: '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47',
+  gasPrice: 2e9,
+  gas: 100000,
+};
+
 export const receiver = '0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5';
 
 export const txHash = '0x98887e6a4d3981430f5cd7ce5394e6a5bca15d0ff33cccd2b63cdcc1df297d70';

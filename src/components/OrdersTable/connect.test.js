@@ -5,6 +5,8 @@ import connect, { mapStateToProps } from './connect';
 import { shallow } from 'enzyme';
 import ordersTableSelector from '../../store/models/ordersTable';
 
+
+
 jest.mock('../../store/models/ordersTable');
 
 describe('mapStateToProps(state, props)', () => {

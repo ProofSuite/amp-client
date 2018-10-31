@@ -2,6 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import OrderBook from './OrderBook';
 
+
+
 describe('Component methods', () => {
   let wrapper, instance;
   let currentPair = {

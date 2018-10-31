@@ -1,5 +1,5 @@
 type TradesState = {
-  byTimestamp: { number: Order }
+  byHash: { number: Order }
 }
 
 type Trade = {

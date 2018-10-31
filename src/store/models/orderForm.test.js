@@ -3,6 +3,8 @@ import createStore from '../../store/configureStore';
 import getOrderFormModel from './orderForm';
 import { getTokenPairsDomain, getOrderBookDomain, getAccountBalancesDomain } from '../domains';
 
+
+
 it('checks Initial Model return', async () => {
   const { store } = createStore();
   const state = store.getState();

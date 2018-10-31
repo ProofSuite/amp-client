@@ -2,6 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import OrderForm from './OrderForm'
 
+
+
 it('renders without crashing', () => {
   shallow(
     <OrderForm
@@ -9,7 +11,7 @@ it('renders without crashing', () => {
       bidPrice={0.29}
       quoteTokenBalance={1000}
       baseTokenBalance={10}
-      formType="Sell"
+      side="SELL"
       quoteToken="WETH"
       baseToken="DAI"
       loggedIn={false}
@@ -27,7 +29,7 @@ describe('tests Functions and state', () => {
         bidPrice={0.29}
         quoteTokenBalance={1000}
         baseTokenBalance={10}
-        formType="Sell"
+        side="SELL"
         quoteToken="WETH"
         baseToken="DAI"
         loggedIn={true}

@@ -5,6 +5,8 @@ import createStore from '../../store/configureStore';
 import connect, { mapStateToProps } from './connect';
 import getSendEtherFormSelector from '../../store/models/sendEtherForm';
 
+
+
 jest.mock('../../store/models/sendEtherForm');
 
 describe('mapStateToProps(state, props)', () => {

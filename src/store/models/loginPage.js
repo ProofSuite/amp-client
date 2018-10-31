@@ -24,7 +24,7 @@ export default function loginPageSelector(state: State) {
 }
 
 export function loginWithMetamask(): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { socket }) => {
     try {
       dispatch(actionCreators.requestLogin());
       if (typeof window.web3 === 'undefined') throw new Error('Metamask not installed');

@@ -2,12 +2,15 @@ import createStore from '../../store/configureStore';
 import { getSigner } from '../services/signer';
 import getSendEtherFormSelector from './sendEtherForm';
 import * as actionCreators from './sendEtherForm';
-import { mockEtherTxParams } from '../../mockData';
+import { mockEtherTxParams } from '../../utils/mockData';
 
-import { Contract } from 'ethers';
+import { Contract, utils } from 'ethers';
 
 jest.mock('ethers');
 jest.mock('../services/signer');
+
+let utilsMock = jest.fn(() => ({ bigNumberify: jest.fn(() => 1000) }))
+utils.mockImplementation(utilsMock)
 
 let selector;
 
@@ -34,7 +37,7 @@ it('handles validateEtherTx (invalid) correctly', async () => {
   const { store } = createStore();
   selector = getSendEtherFormSelector(store.getState());
 
-  await store.dispatch(actionCreators.validateEtherTx({ mockEtherTxParams }));
+  await store.dispatch(actionCreators.validateEtherTx({ ...mockEtherTxParams }));
 
   selector = getSendEtherFormSelector(store.getState());
   expect(selector.getStatusMessage()).toEqual('some error');

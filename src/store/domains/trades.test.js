@@ -53,7 +53,7 @@ describe('Trades Domain', () => {
     const tradesDomain = getDomain([eventCreators.initialized()]);
     const expected = {};
 
-    expect(tradesDomain.byTimeStamp()).toEqual(expected);
+    expect(tradesDomain.byHash()).toEqual(expected);
   });
 
   it('handles the trades updated event', () => {

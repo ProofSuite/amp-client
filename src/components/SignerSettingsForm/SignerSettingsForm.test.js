@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SignerSettingsForm from './SignerSettingsForm';
 
+
+
 describe('Rendering', () => {
   it('renders without crashing', () => {
     shallow(

@@ -44,5 +44,5 @@ type Orders = Array<Order>
 
 // eslint-disable-next-line
 type OrdersState = {
-  byTimestamp: { number: Order }
+  byHash: { number: Order }
 }
