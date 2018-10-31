@@ -1,6 +1,5 @@
 import React from 'react'
 import TokenBalanceChartRenderer from './TokenBalanceChartRenderer'
-import { CryptoIcon } from '../Common'
 import { Sector } from 'recharts'
 import { Colors } from '../Common'
 
@@ -22,7 +21,7 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
 
   renderLabels = (props: *) => {
     const RADIAN = Math.PI / 180;
-    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+    const { cx, cy, midAngle, innerRadius, outerRadius } = props;
 
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x  = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -40,7 +39,7 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
 
   renderActiveShape = (props: *) => {
     const RADIAN = Math.PI / 180;
-    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, payload, percent, value } = props;
     const sin = Math.sin(-RADIAN * midAngle);
     const cos = Math.cos(-RADIAN * midAngle);
     const sx = cx + (outerRadius + 10) * cos;
@@ -50,10 +49,6 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
     const ex = mx + (cos >= 0 ? 1 : -1) * 22;
     const ey = my;
     const textAnchor = cos >= 0 ? 'start' : 'end';
-
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x  = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy  + radius * Math.sin(-midAngle * RADIAN);
 
     return (
       <g>

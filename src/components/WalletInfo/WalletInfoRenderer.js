@@ -61,12 +61,6 @@ const AccountAddressBox = styled.p`
   margin-left: 20px;
 `
 
-const CardTitle = styled.h3`
-  width: 100%;
-  float: left;
-  margin-bottom: 15px;
-`;
-
 const Box = styled.div`
   display: flex;
   margin-bottom: 40px;
@@ -76,13 +70,3 @@ const Box = styled.div`
 `;
 
 export default WalletInfoRenderer;
-
-{/* <Box>
-<a
-  style={{ marginTop: '15px', cursor: 'pointer' }}
-  href={'https://etherscan.io/address/' + accountAddress}
-  target="_blank"
->
-  View Wallet on Etherscan
-</a>
-</Box> */}
