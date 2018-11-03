@@ -75,11 +75,14 @@ export default function ordersDomain(state: OrdersState) {
         order.filled = formatNumber(order.filled, { precision: 2 })
         order.amount = formatNumber(order.amount, { precision: 2 })
         order.price = formatNumber(order.price, { precision: 2 })
+        order.cancelleable = (order.status === 'OPEN' || order.status === 'PARTIAL_FILLED')
         return order
       })
 
       return orders
     },
+
+
     history: () => {
       let orders = Object.values(state.byHash)
       let history = (orders: Orders).filter(

@@ -5,7 +5,6 @@ import * as appActionCreators from '../actions/app'
 import * as actionCreators from '../actions/socketController'
 import { getAccountDomain } from '../domains'
 import { getSigner } from '../services/signer'
-import { getRandomNonce } from '../../utils/crypto'
 import { parseOrder, parseTrade, parseTrades, parseOrderBookData, parseOHLCV } from '../../utils/parsers'
 
 import type { State, ThunkAction } from '../../types/'
@@ -21,7 +20,6 @@ export default function socketControllerSelector(state: State) {
 export function openConnection(): ThunkAction {
   return (dispatch, getState, { socket }) => {
     socket.createConnection()
-
     dispatch(actionCreators.createConnection())
 
     const closeConnection = socket.openConnection(event => {
@@ -39,7 +37,6 @@ export function openConnection(): ThunkAction {
 
     socket.onMessage((message: WebsocketMessage) => {
       let { channel, event } = message
-
       console.log(channel, event)
 
       switch (channel) {
@@ -87,8 +84,6 @@ const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
       return dispatch(handleOrderSuccess(event))
     case 'ORDER_PENDING':
       return dispatch(handleOrderPending(event))
-    case 'REQUEST_SIGNATURE':
-      return dispatch(handleRequestSignature(event))
     case 'ERROR':
       return dispatch(handleOrderError(event))
     default:
@@ -191,42 +186,6 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
 function handleOrderError(event: WebsocketEvent): ThunkAction {
   return async dispatch => {
     dispatch(appActionCreators.addDangerNotification({ message: `Error: ${event.payload}` }))
-  }
-}
-
-function handleRequestSignature(event: WebsocketEvent): ThunkAction {
-  return async (dispatch, getState, { socket }) => {
-    try {
-      let { payload, hash } = event
-      let { order, remainingOrder, matches } = payload
-      let signer = getSigner()
-
-      // the order that was originally sent is added to the orders table
-      if (order) {
-        let parsedOrder = parseOrder(order)
-        dispatch(actionCreators.updateOrdersTable([parsedOrder]))
-      }
-
-      // sign the remaining order in case the taker order was partially filled
-      if (remainingOrder) {
-        remainingOrder.nonce = getRandomNonce()
-        await signer.signOrder(remainingOrder)
-      }
-
-      // signed every individual trade
-      if (matches) {
-        matches.map(match => (match.trade.tradeNonce = getRandomNonce()))
-        let promises = matches.map(match => signer.signTrade(match.trade))
-
-        await Promise.all(promises)
-      }
-
-      dispatch(appActionCreators.addSuccessNotification({ message: 'Signing trade' }))
-      socket.sendNewSubmitSignatureMessage(hash, order, remainingOrder, matches)
-    } catch (e) {
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
-      console.log(e)
-    }
   }
 }
 

@@ -45,10 +45,31 @@ export const parseTransferTokensError = (error: Error) => {
   return errorMessage
 }
 
+
+export const parseNewOrderError = (error: Error) => {
+  let errorMessage = error.message
+
+  window.errorMessage = errorMessage
+
+  if (errorMessage.includes(errorMessages.invalidJSON)) return 'Connection error'
+  if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
+
+  return errorMessage
+}
+
 export const parseCancelOrderError = (error: Error) => {
   let errorMessage = error.message
 
   if (errorMessage.includes(errorMessages.invalidJSON)) return 'Connection error'
+  if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
+
+  return errorMessage
+}
+
+
+export const parseRequestSignatureError = (error: Error) => {
+  let errorMessage = error.message
+
   if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
 
   return errorMessage

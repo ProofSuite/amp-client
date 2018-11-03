@@ -5,7 +5,7 @@ import { getTokenPairsDomain, getOrderBookDomain, getAccountBalancesDomain } fro
 import { utils } from 'ethers'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
-import errors from '../../config/errors'
+import { parseNewOrderError } from '../../config/errors'
 
 export default function getOrderFormSelector(state: State) {
   let tokenPairDomain = getTokenPairsDomain(state)
@@ -69,28 +69,22 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       if (sellTokenBalance.lt(sellAmount)) {
         return dispatch(
-          appActionCreators.addDangerNotification({
-            message: `Insufficient ${sellTokenSymbol} balance`
-          })
+          appActionCreators.addDangerNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
         )
       }
 
       //TODO include the case where WETH is the token balance
       if (WETHBalance.lt(fee)) {
         return dispatch(
-          appActionCreators.addDangerNotification({
-            message: 'Insufficient WETH Balance'
-          })
+          appActionCreators.addDangerNotification({ message: 'Insufficient WETH Balance' })
         )
       }
 
       socket.sendNewOrderMessage(order)
     } catch (e) {
-      if (e.message === errors.invalidJSON) {
-        return dispatch(appActionCreators.addDangerNotification({ message: 'Connection error' }))
-      }
-
-      return dispatch(appActionCreators.addDangerNotification({ message: 'Unknown error' }))
+      console
+      let message = parseNewOrderError(e)
+      return dispatch(appActionCreators.addDangerNotification({ message }))
     }
   }
 }
