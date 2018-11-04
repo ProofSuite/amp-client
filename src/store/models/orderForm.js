@@ -5,7 +5,7 @@ import { getTokenPairsDomain, getOrderBookDomain, getAccountBalancesDomain } fro
 import { utils } from 'ethers'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
-import errors from '../../config/errors'
+import { parseNewOrderError } from '../../config/errors'
 
 export default function getOrderFormSelector(state: State) {
   let tokenPairDomain = getTokenPairsDomain(state)
@@ -42,6 +42,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let tokenPairDomain = getTokenPairsDomain(state)
       let accountBalancesDomain = getAccountBalancesDomain(state)
       let pair = tokenPairDomain.getCurrentPair()
+      let { baseTokenSymbol, quoteTokenSymbol, pricepointMultiplier } = pair
 
       let signer = getSigner()
       let userAddress = await signer.getAddress()
@@ -60,37 +61,38 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       }
 
       let order = await signer.createRawOrder(params)
-      let sellTokenSymbol = pair.baseTokenAddress === order.sellToken ? pair.baseTokenSymbol : pair.quoteTokenSymbol
+      let sellTokenSymbol, sellAmount
+
+      order.side === 'BUY'
+        ? sellTokenSymbol = quoteTokenSymbol
+        : sellTokenSymbol = baseTokenSymbol
+
+      order.side === 'BUY'
+        ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pricepointMultiplier)
+        : sellAmount = utils.bigNumberify(amount)
 
       let WETHBalance = accountBalancesDomain.getBigNumberBalance('WETH')
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
-      let sellAmount = utils.bigNumberify(order.sellAmount)
       let fee = utils.bigNumberify(makeFee)
 
       if (sellTokenBalance.lt(sellAmount)) {
         return dispatch(
-          appActionCreators.addDangerNotification({
-            message: `Insufficient ${sellTokenSymbol} balance`
-          })
+          appActionCreators.addDangerNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
         )
       }
 
       //TODO include the case where WETH is the token balance
       if (WETHBalance.lt(fee)) {
         return dispatch(
-          appActionCreators.addDangerNotification({
-            message: 'Insufficient WETH Balance'
-          })
+          appActionCreators.addDangerNotification({ message: 'Insufficient WETH Balance' })
         )
       }
 
       socket.sendNewOrderMessage(order)
     } catch (e) {
-      if (e.message === errors.invalidJSON) {
-        return dispatch(appActionCreators.addDangerNotification({ message: 'Connection error' }))
-      }
-
-      return dispatch(appActionCreators.addDangerNotification({ message: 'Unknown error' }))
+      console.log(e)
+      let message = parseNewOrderError(e)
+      return dispatch(appActionCreators.addDangerNotification({ message }))
     }
   }
 }

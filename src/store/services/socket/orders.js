@@ -40,5 +40,7 @@ export const sendNewSubmitSignatureMessage = (hash, order, remainingOrder, match
     }
   })
 
+  console.log(message)
+
   window.socket.send(message)
 }

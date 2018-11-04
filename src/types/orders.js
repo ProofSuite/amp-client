@@ -8,22 +8,23 @@ export type NewOrderParams = {
 }
 
 export type RawOrder = {
-  userAddress: string,
   exchangeAddress: string,
-  buyTokenAddress: string,
-  sellTokenAddress: string,
-  buyAmount: string,
-  sellAmount: string,
+  userAddress: string,
+  baseToken: string,
+  quoteToken: string,
+  amount: string,
+  pricepoint: string,
+  side: 'BUY' | 'SELL',
+  nonce: string,
+  makeFee: string,
+  takeFee: string,
+  status: string,
   hash: string,
   signature: {
     r: string,
     s: string,
     v: string
   },
-  nonce: string,
-  expires: string,
-  makeFee: string,
-  takeFee: string
 }
 
 export type Order = {
