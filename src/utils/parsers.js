@@ -45,8 +45,6 @@ export const parseJSONToFixed = (obj, decimals = 2) => {
 export const parseOrder = (order, decimals = 2) => ({
   time: order.createdAt,
   amount: fromWeiToFloat(order.amount, decimals),
-  buyAmount: fromWeiToFloat(order.buyAmount, decimals),
-  sellAmount: fromWeiToFloat(order.sellAmount, decimals),
   filled: fromWeiToFloat(order.filledAmount, decimals),
   price: convertPricepointToPrice(order.pricepoint),
   hash: order.hash,
@@ -60,8 +58,6 @@ export const parseOrders = (orders, decimals = 2) => {
   let parsed = orders.map(order => ({
     time: order.createdAt,
     amount: fromWeiToFloat(order.amount, decimals),
-    buyAmount: fromWeiToFloat(order.buyAmount, decimals),
-    sellAmount: fromWeiToFloat(order.sellAmount, decimals),
     filled: fromWeiToFloat(order.filledAmount, decimals),
     price: convertPricepointToPrice(order.pricepoint),
     hash: order.hash,

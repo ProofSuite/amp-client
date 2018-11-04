@@ -42,6 +42,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let tokenPairDomain = getTokenPairsDomain(state)
       let accountBalancesDomain = getAccountBalancesDomain(state)
       let pair = tokenPairDomain.getCurrentPair()
+      let { baseTokenSymbol, quoteTokenSymbol, pricepointMultiplier } = pair
 
       let signer = getSigner()
       let userAddress = await signer.getAddress()
@@ -60,11 +61,18 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       }
 
       let order = await signer.createRawOrder(params)
-      let sellTokenSymbol = pair.baseTokenAddress === order.sellToken ? pair.baseTokenSymbol : pair.quoteTokenSymbol
+      let sellTokenSymbol, sellAmount
+
+      order.side === 'BUY'
+        ? sellTokenSymbol = quoteTokenSymbol
+        : sellTokenSymbol = baseTokenSymbol
+
+      order.side === 'BUY'
+        ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pricepointMultiplier)
+        : sellAmount = utils.bigNumberify(amount)
 
       let WETHBalance = accountBalancesDomain.getBigNumberBalance('WETH')
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
-      let sellAmount = utils.bigNumberify(order.sellAmount)
       let fee = utils.bigNumberify(makeFee)
 
       if (sellTokenBalance.lt(sellAmount)) {
@@ -82,7 +90,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       socket.sendNewOrderMessage(order)
     } catch (e) {
-      console
+      console.log(e)
       let message = parseNewOrderError(e)
       return dispatch(appActionCreators.addDangerNotification({ message }))
     }

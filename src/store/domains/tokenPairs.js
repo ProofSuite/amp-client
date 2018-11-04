@@ -48,7 +48,8 @@ export const tokenPairUpdated = (baseToken: Token) => {
           baseTokenSymbol: baseToken.symbol,
           quoteTokenSymbol: quoteToken.symbol,
           baseTokenAddress: baseToken.address,
-          quoteTokenAddress: quoteToken.address
+          quoteTokenAddress: quoteToken.address,
+          pricepointMultiplier: 1e6
         }
         return result
       },

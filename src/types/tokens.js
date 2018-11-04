@@ -18,6 +18,7 @@ export type TokenPair = {
   +quoteTokenSymbol: string,
   +baseTokenAddress: string,
   +quoteTokenAddress: string,
+  +pricepointMultiplier: number,
 };
 
 export type TokenPairState = {

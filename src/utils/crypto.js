@@ -7,14 +7,14 @@ export const getOrderHash = order => {
     [
       order.exchangeAddress,
       order.userAddress,
-      order.sellToken,
-      order.buyToken,
-      order.sellAmount,
-      order.buyAmount,
+      order.baseToken,
+      order.quoteToken,
+      order.amount,
+      order.pricepoint,
+      order.side === 'BUY' ? '0' : '1',
+      order.nonce,
       order.makeFee,
-      order.takeFee,
-      order.expires,
-      order.nonce
+      order.takeFee
     ]
   )
 }
@@ -25,8 +25,8 @@ export const getOrderCancelHash = orderCancel => {
 
 export const getTradeHash = trade => {
   return utils.solidityKeccak256(
-    ['bytes', 'bytes', 'uint256', 'uint256'],
-    [trade.orderHash, trade.taker, trade.amount, trade.tradeNonce]
+    ['bytes', 'bytes'],
+    [trade.makerOrderHash, trade.takerOrderHash]
   )
 }
 
