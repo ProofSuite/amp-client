@@ -10,6 +10,8 @@ export const sendNewOrderMessage = async orderPayload => {
     }
   })
 
+  console.log(message)
+
   window.socket.send(message)
 }
 
@@ -22,21 +24,6 @@ export const sendNewOrderCancelMessage = orderCancelPayload => {
       type: 'CANCEL_ORDER',
       hash: orderCancelPayload.hash,
       payload: orderCancelPayload
-    }
-  })
-
-  window.socket.send(message)
-}
-
-export const sendNewSubmitSignatureMessage = (hash, order, remainingOrder, matches) => {
-  if (!window.socket) throw new Error('Socket connection not established')
-
-  let message = JSON.stringify({
-    channel: 'orders',
-    event: {
-      type: 'SUBMIT_SIGNATURE',
-      hash: hash,
-      payload: { order, remainingOrder, matches }
     }
   })
 
