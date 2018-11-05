@@ -15,7 +15,6 @@ export const signOrder = async function(order) {
 
 export const signTrade = async function(trade) {
   trade.hash = getTradeHash(trade)
-
   let signature = await this.signMessage(utils.arrayify(trade.hash))
   let { r, s, v } = utils.splitSignature(signature)
 
@@ -48,27 +47,21 @@ export const createRawOrder = async function(params) {
     .bigNumberify(amount)
     .mul(amountMultiplier)
     .div(utils.bigNumberify(amountPrecisionMultiplier))
-  let pricePoints = utils
+  let pricepoint = utils
     .bigNumberify(price)
     .mul(priceMultiplier)
     .div(utils.bigNumberify(pricePrecisionMultiplier))
 
-  order.userAddress = userAddress
   order.exchangeAddress = exchangeAddress
-  order.buyToken = side === 'BUY' ? baseTokenAddress : quoteTokenAddress
-  order.buyAmount = side === 'BUY'
-    ? amountPoints.toString()
-    : amountPoints.mul(pricePoints).div(priceMultiplier).toString()
-
-  order.sellToken = side === 'BUY' ? quoteTokenAddress : baseTokenAddress
-  order.sellAmount = side === 'BUY'
-    ? amountPoints.mul(pricePoints).div(priceMultiplier).toString()
-    : amountPoints.toString()
-
+  order.userAddress = userAddress
+  order.baseToken = baseTokenAddress
+  order.quoteToken = quoteTokenAddress
+  order.amount = amountPoints.toString()
+  order.pricepoint = pricepoint.toString()
+  order.side = side
   order.makeFee = makeFee
   order.takeFee = takeFee
   order.nonce = getRandomNonce()
-  order.expires = '10000000000000'
   order.hash = getOrderHash(order)
 
   let signature = await this.signMessage(utils.arrayify(order.hash))

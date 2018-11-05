@@ -1,10 +1,10 @@
-import getSendEtherFormDomain from './sendEtherForm';
-import * as eventCreators from './sendEtherForm';
+import getTransferTokensFormDomain from './transferTokensForm';
+import * as eventCreators from './transferTokensForm';
 import { mockHash, mockReceipt } from '../../mockData';
 
 function getDomain(events) {
   const state = events.reduce((state, event) => event(state), undefined);
-  return getSendEtherFormDomain(state);
+  return getTransferTokensFormDomain(state);
 }
 
 it('handles initialized event properly', () => {

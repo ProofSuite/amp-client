@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
-import SendEtherFormRenderer from './SendEtherFormRenderer';
+import TransferTokensFormRenderer from './TransferTokensFormRenderer';
 
-import type { EtherTxParams, TransferTokensTxParams } from '../../types/sendEtherForm';
+import type { EtherTxParams, TransferTokensTxParams } from '../../types/transferTokensForm';
 import type { Token } from '../../types/tokens';
 
 type State = {
@@ -30,7 +30,7 @@ type Props = {
   sendTransferTokensTx: TransferTokensTxParams => void,
 };
 
-class SendEtherForm extends React.PureComponent<Props, State> {
+class TransferTokensForm extends React.PureComponent<Props, State> {
   state = {
     token: this.props.token || this.props.tokens[0],
     amount: 0,
@@ -92,7 +92,7 @@ class SendEtherForm extends React.PureComponent<Props, State> {
     gasPrice = customGasPrice || gasPrice;
 
     return (
-      <SendEtherFormRenderer
+      <TransferTokensFormRenderer
         handleChange={this.handleChange}
         handleTokenChange={this.handleTokenChange}
         handleSubmit={this.handleSubmit}
@@ -113,4 +113,4 @@ class SendEtherForm extends React.PureComponent<Props, State> {
   }
 }
 
-export default SendEtherForm;
+export default TransferTokensForm;

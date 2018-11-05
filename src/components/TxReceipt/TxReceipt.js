@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import TxReceiptRenderer from './TxReceiptRenderer';
-import type { TxReceipt as TxReceiptType } from '../../types/sendEtherForm';
+import type { TxReceipt as TxReceiptType } from '../../types/transferTokensForm';
 
 type Props = {
   receipt: TxReceiptType,

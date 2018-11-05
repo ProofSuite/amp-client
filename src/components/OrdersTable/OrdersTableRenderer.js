@@ -93,7 +93,7 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
         {format(order.time, 'DD/MM/YYYY HH:MM:SS')}
       </Cell>
       <Cell className="cancel" muted>
-        {order.status === 'OPEN' && (
+        {order.cancelleable && (
           <Button intent="danger" minimal onClick={() => cancelOrder(order.hash)} >
             <Icon icon="cross" intent="danger" />&nbsp;&nbsp;Cancel
           </Button>

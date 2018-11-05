@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import Modal from '../Modal';
-import SendEtherFormContainer from '../SendEtherForm';
+import TransferTokensFormContainer from '../TransferTokensForm';
 
 import type { Token } from '../../types/tokens';
 
@@ -12,10 +12,10 @@ type Props = {
   tokens: Array<Token>,
 };
 
-const SendEtherModal = (props: Props) => (
+const TransferTokensModal = (props: Props) => (
   <Modal title="Send Ether or Tokens" icon="info-sign" isOpen={props.isOpen} onClose={props.handleClose}>
-    <SendEtherFormContainer token={props.token} tokens={props.tokens} />
+    <TransferTokensFormContainer token={props.token} tokens={props.tokens} />
   </Modal>
 );
 
-export default SendEtherModal;
+export default TransferTokensModal;

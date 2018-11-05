@@ -98,7 +98,7 @@ const RowWrapper = styled.div`
 `
 const DepositTableBox = styled.div`
   height: 100%;
-  width: 90%;
+  width: 100%;
 `
 
 

@@ -3,7 +3,7 @@ import type { Dispatch as ReduxDispatch, Store as ReduxStore } from 'redux';
 import type { SignerEvent, SignerSettingsAction, SignerState } from './signer';
 import type { EtherBalanceAction, EtherBalanceEvent, EtherBalanceState } from './etherBalance';
 import type { AccountBalancesAction, AccountBalancesEvent, AccountBalancesState } from './accountBalances';
-import type { SendEtherFormAction, SendEtherFormEvent, SendEtherFormState } from './sendEtherForm';
+import type { TransferTokensFormAction, TransferTokensFormEvent, TransferTokensFormState } from './transferTokensForm';
 import type { OHLCVState } from './ohlcv';
 import type { OrderBookState } from './orderBook';
 import type { TradeHistoryState } from './tradeHistory';
@@ -23,7 +23,7 @@ export type ReduxInitAction = { type: '@@INIT' };
 export type Action =
   | ReduxInitAction
   | EtherBalanceAction
-  | SendEtherFormAction
+  | TransferTokensFormAction
   | AccountBalancesAction
   | AccountAction
   | DepositFormAction
@@ -36,7 +36,7 @@ export type Action =
 export type Event =
   | LoginPageEvent
   | EtherBalanceEvent
-  | SendEtherFormEvent
+  | TransferTokensFormEvent
   | TokenEvent
   | TokenPairEvent
   | AccountBalancesEvent
@@ -53,7 +53,7 @@ export type State = {
   signer: SignerState,
   etherBalance: EtherBalanceState,
   accountBalances: AccountBalancesState,
-  sendEtherForm: SendEtherFormState,
+  transferTokensForm: TransferTokensFormState,
   ohlcv: OHLCVState,
   orderBook: OrderBookState,
   tradeHistory: TradeHistoryState,

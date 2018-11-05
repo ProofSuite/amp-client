@@ -9,7 +9,7 @@ export type TxReceipt = {
   hash: string,
 };
 
-export type SendEtherFormState = {
+export type TransferTokensFormState = {
   +loading: boolean,
   +status: TxStatus,
   +statusMessage: ?string,
@@ -42,7 +42,7 @@ export type TxNotification = {
 };
 
 export type TxErrorAction = {
-  type: 'sendEtherForm/ERROR',
+  type: 'transferTokensForm/ERROR',
   payload: {
     status: TxStatus,
     statusMessage: string,
@@ -50,7 +50,7 @@ export type TxErrorAction = {
 };
 
 export type ValidateTxAction = {
-  type: 'sendEtherForm/VALIDATE',
+  type: 'transferTokensForm/VALIDATE',
   payload: {
     statusMessage: string,
     gas: number,
@@ -58,21 +58,21 @@ export type ValidateTxAction = {
 };
 
 export type InvalidateTxAction = {
-  type: 'sendEtherForm/INVALIDATE',
+  type: 'transferTokensForm/INVALIDATE',
   payload: {
     statusMessage: string,
   },
 };
 
 export type SendTxAction = {
-  type: 'sendEtherForm/SEND',
+  type: 'transferTokensForm/SEND',
   payload: {
     hash: string,
   },
 };
 
 export type RevertTxAction = {
-  type: 'sendEtherForm/REVERT',
+  type: 'transferTokensForm/REVERT',
   payload: {
     statusMessage: string,
     receipt: TxReceipt,
@@ -80,15 +80,15 @@ export type RevertTxAction = {
 };
 
 export type ConfirmTxAction = {
-  type: 'sendEtherForm/CONFIRM',
+  type: 'transferTokensForm/CONFIRM',
   payload: {
     receipt: TxReceipt,
   },
 };
 
-export type SendEtherFormEvent = any => SendEtherFormState => SendEtherFormState;
+export type TransferTokensFormEvent = any => TransferTokensFormState => TransferTokensFormState;
 
-export type SendEtherFormAction =
+export type TransferTokensFormAction =
   | TxErrorAction
   | ValidateTxAction
   | InvalidateTxAction

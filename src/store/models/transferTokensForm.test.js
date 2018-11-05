@@ -1,7 +1,7 @@
 import createStore from '../../store/configureStore';
 import { getSigner } from '../services/signer';
-import getSendEtherFormSelector from './sendEtherForm';
-import * as actionCreators from './sendEtherForm';
+import getTransferTokensFormSelector from './transferTokensForm';
+import * as actionCreators from './transferTokensForm';
 import { mockEtherTxParams } from '../../utils/mockData';
 
 import { Contract, utils } from 'ethers';
@@ -21,10 +21,10 @@ it('handles validateEtherTx (valid) correctly', async () => {
   getSigner.mockImplementation(getSignerMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.validateEtherTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getGas()).toEqual('estimated Gas');
   expect(selector.getStatusMessage()).toEqual('Transaction Valid');
 });
@@ -35,11 +35,11 @@ it('handles validateEtherTx (invalid) correctly', async () => {
   getSigner.mockImplementation(getSignerMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
 
   await store.dispatch(actionCreators.validateEtherTx({ ...mockEtherTxParams }));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getStatusMessage()).toEqual('some error');
 });
 
@@ -50,11 +50,11 @@ it('handles sendEtherTx (transaction confirmed) correctly', async () => {
   getSigner.mockImplementation(getSignerMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
 
   await store.dispatch(actionCreators.sendEtherTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getReceipt()).toEqual({
     hash: 'some hash',
     status: '0x1',
@@ -68,10 +68,10 @@ it('handles sendEtherTx (failed) correctly', async () => {
   getSigner.mockImplementation(getSignerMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.sendEtherTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getStatus()).toEqual('reverted');
   expect(selector.getStatusMessage()).toEqual('Transaction Failed');
   expect(selector.getReceipt()).toEqual({ hash: 'some hash', status: '0x0' });
@@ -84,10 +84,10 @@ it('handles sendEtherTx (throwing an error) correctly', async () => {
   getSigner.mockImplementation(getSignerMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.sendEtherTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getStatus()).toEqual('error');
   expect(selector.getStatusMessage()).toEqual('some error');
 });
@@ -100,10 +100,10 @@ it('handles validateTransferTokens (valid) correctly', async () => {
   getSigner.mockImplementation(jest.fn(() => 'signer'));
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.validateTransferTokensTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getGas()).toEqual('estimated gas');
   expect(selector.getStatusMessage()).toEqual('Transaction Valid');
 });
@@ -115,10 +115,10 @@ it('handles validateTransferTokens (invalid) correctly', async () => {
   getSigner.mockImplementation(jest.fn(() => 'signer'));
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.validateTransferTokensTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getStatusMessage()).toEqual('some error');
 });
 
@@ -132,10 +132,10 @@ it('handles sendTransferTokens (transaction confirmed) correctly', async () => {
   Contract.mockImplementation(contractMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.sendTransferTokensTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getReceipt()).toEqual({
     hash: 'some hash',
     status: '0x1',
@@ -152,10 +152,10 @@ it('handles sendTransferTokensTx (transaction failed) correctly', async () => {
   Contract.mockImplementation(contractMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.sendTransferTokensTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getStatus()).toEqual('reverted');
   expect(selector.getStatusMessage()).toEqual('Transaction Failed');
   expect(selector.getReceipt()).toEqual({ hash: 'some hash', status: '0x0' });
@@ -171,10 +171,10 @@ it('handles sendTransferTokens (throwing an error) correctly', async () => {
   Contract.mockImplementation(contractMock);
 
   const { store } = createStore();
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   await store.dispatch(actionCreators.sendTransferTokensTx(mockEtherTxParams));
 
-  selector = getSendEtherFormSelector(store.getState());
+  selector = getTransferTokensFormSelector(store.getState());
   expect(selector.getStatus()).toEqual('error');
   expect(selector.getStatusMessage()).toEqual('some error');
 });

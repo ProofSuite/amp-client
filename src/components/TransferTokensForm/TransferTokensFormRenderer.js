@@ -23,7 +23,7 @@ type Props = {
   handleSubmit: (SyntheticEvent<>) => void,
 };
 
-const SendEtherFormRenderer = (props: Props) => {
+const TransferTokensFormRenderer = (props: Props) => {
   const {
     loading,
     status,
@@ -90,4 +90,4 @@ const TxNotificationBox = styled.div`
   margin-bottom: 20px;
 `;
 
-export default SendEtherFormRenderer;
+export default TransferTokensFormRenderer;

@@ -74,8 +74,6 @@ describe('Parsers', () => {
     let data = [
       {
         userAddress: '0x13ae20cc1ef6758f32ba15c190a1703a80a80c4b',
-        buyTokenAddress: '0x4facc27542a29a851efe5b6c88c244c2a3f93db9',
-        sellTokenAddress: '0x792469d06c3fac673cffeb960ac7b7fa02ed4678',
         hash: '0xec8670a09f530571146fe610a36b426a54aa1cb26ade3a3baea820621ea30cc1',
         type: 'LIMIT',
         makeFee: '0',
@@ -92,8 +90,6 @@ describe('Parsers', () => {
       },
       {
         userAddress: '0xf73b2e3a92c2920db9905d0e1e319a184f7b1c96',
-        buyTokenAddress: '0x779efd6e63ab339c32d54e578462292000be9811',
-        sellTokenAddress: '0xe8c77a1724cca81dc61bf485e4b2f71f2e7a521f',
         hash: '0x171749bfab482358b8b6444c82cda28bb358511ec65e58d18f8d56ac4e0fa25d',
         type: 'LIMIT',
         makeFee: '0',
@@ -110,8 +106,6 @@ describe('Parsers', () => {
       },
       {
         userAddress: '0x8bd3e4556d9da4f033c10cc46b98efe31690c567',
-        buyTokenAddress: '0x2941e56827277dd18b3c6dd55e78d5775b36217d',
-        sellTokenAddress: '0xfe401b9a40faba5e189ef2d7358a5ba90e10aaee',
         hash: '0x701116f32bd581c2ab08d411f0b4fb5e927cb8b949befe0deaada3dfd4f4579b',
         type: 'LIMIT',
         makeFee: '0',

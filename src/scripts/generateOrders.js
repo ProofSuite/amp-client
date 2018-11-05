@@ -27,8 +27,8 @@ const randomAddress = () => randomHash().slice(0, 42);
 for (let i = 0; i < 200; i++) {
   let order = {
     userAddress: randomAddress(),
-    buyTokenAddress: randomAddress(),
-    sellTokenAddress: randomAddress(),
+    quoteToken: randomAddress(),
+    baseToken: randomAddress(),
     hash: randomHash(),
     type: randomOrderType(),
     fee: randomFee(),
@@ -36,7 +36,7 @@ for (let i = 0; i < 200; i++) {
     side: randomOrderSide(),
     pairName: randomPair(),
     amount: randomAmount(),
-    price: randomPrice(),
+    pricepoint: randomPrice(),
     createdAt: randomTimestamp(),
   };
 
@@ -48,8 +48,6 @@ for (let i = 0; i < 200; i++) {
     order.filledAmount = order.amount;
   }
 
-  order.amountBuy = order.amount;
-  order.amountSell = order.amount * order.price;
   orderHistory.push(order);
 }
 
