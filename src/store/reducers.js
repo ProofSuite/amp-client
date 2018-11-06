@@ -275,6 +275,8 @@ export const convertTokensForm = createReducer(action => {
   switch (type) {
     case convertTokensFormActionTypes.confirm:
       return convertTokensFormEvents.confirmed(payload.tokenSymbol)
+    case convertTokensFormActionTypes.reset:
+      return convertTokensFormEvents.reset(payload.tokenSymbol)
     case convertTokensFormActionTypes.sendConvertTx:
       return convertTokensFormEvents.convertTxSent(payload.tokenSymbol, payload.hash)
     case convertTokensFormActionTypes.revertConvertTx:

@@ -85,31 +85,37 @@ export function redirectToTradingPage(symbol: string): ThunkAction {
   }
 }
 
-export function toggleAllowance(tokenSymbol: string): ThunkAction {
+export function toggleAllowance(symbol: string): ThunkAction {
   return async (dispatch, getState) => {
     try {
       const state = getState()
       const tokens = getTokenDomain(state).bySymbol()
       const accountAddress = getAccountDomain(state).address()
-      const isAllowed = getAccountBalancesDomain(state).isAllowed(tokenSymbol)
-      const isPending = getAccountBalancesDomain(state).isAllowancePending(tokenSymbol)
-
-      const tokenContractAddress = tokens[tokenSymbol].address
+      const isAllowed = getAccountBalancesDomain(state).isAllowed(symbol)
+      const isPending = getAccountBalancesDomain(state).isAllowancePending(symbol)
+      const tokenContractAddress = tokens[symbol].address
 
       if (isPending) throw new Error('Trading approval pending')
 
-      if (isAllowed) {
-        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0)
-      } else {
-        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD)
+      const approvalConfirmedHandler = (txConfirmed) => {
+        txConfirmed
+          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Approval Successful. You can now start trading!` }))
+          : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Approval Failed. Please try again.` }))
       }
 
-      dispatch(actionCreators.updateAllowance({ symbol: tokenSymbol, allowance: 'pending' }))
-      dispatch(
-        notifierActionCreators.addSuccessNotification({
-          message: 'Allowance pending. You will be able to trade after transaction is validated'
-        })
-      )
+      const approvalRemovedHandler = (txConfirmed) => {
+        txConfirmed
+        ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Allowance Removal Successful.` }))
+        : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
+      }
+
+      isAllowed
+        ? accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0, approvalRemovedHandler)
+        : accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
+
+      dispatch(actionCreators.updateAllowance({ symbol: symbol, allowance: 'pending' }))
+      dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} approval pending. You will be able to trade after transaction is confirmed.` }))
+
     } catch (e) {
       console.log(e)
       if (e.message === 'Trading approval pending') {

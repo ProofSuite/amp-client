@@ -4,6 +4,7 @@ import getConvertTokensFormSelector, {
   convertFromETHtoWETH,
   convertFromWETHtoETH,
  } from '../../store/models/convertTokensForm';
+import { reset } from '../../store/actions/convertTokensForm';
 
 import type { State } from '../../types';
 
@@ -25,7 +26,8 @@ export const mapStateToProps = (state: State, ownProps: Object) => {
 
 const mapDispatchToProps = {
   convertFromWETHtoETH,
-  convertFromETHtoWETH
+  convertFromETHtoWETH,
+  reset,
 }
 
 export default connect(

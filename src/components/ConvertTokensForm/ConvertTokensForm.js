@@ -19,7 +19,8 @@ type Props = {
   allowTxReceipt: TxReceipt,
   allowTxHash: string,
   convertFromWETHtoETH: number => void,
-  convertFromETHtoWETH: (boolean, number) => void
+  convertFromETHtoWETH: (boolean, number) => void,
+  reset: string => void,
 };
 
 type State = {
@@ -93,6 +94,12 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
     if (fromToken === 'ETH' && toToken === 'WETH') return convertFromETHtoWETH(shouldAllow, convertAmount)
   }
 
+  handleReset = () => {
+    const { reset, fromToken } = this.props;
+
+    reset(fromToken);
+  }
+
   render() {
     const {
       fromToken,
@@ -139,6 +146,7 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
         allowTxStatus={allowTxStatus}
         allowTxReceipt={allowTxReceipt}
         allowTxHash={allowTxHash}
+        reset={this.handleReset}
       />
     );
   }
