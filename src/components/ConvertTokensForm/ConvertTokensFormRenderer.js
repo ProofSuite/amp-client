@@ -111,6 +111,7 @@ const ConfirmFormRenderer = (props: Props) => {
     convertTxHash,
     convertTxReceipt,
     transactionStatus,
+    reset,
   } = props;
 
   const notificationBoxTitles = {
@@ -152,6 +153,9 @@ const ConfirmFormRenderer = (props: Props) => {
               title={notificationBoxTitles.convert[convertTxStatus]}
             />
           </TxNotificationBox>
+          <Button minimal onClick={reset}>
+            Try again
+          </Button>
         </div>
       );
     case 'submitted':
@@ -197,6 +201,9 @@ const ConfirmFormRenderer = (props: Props) => {
               <Icon icon="tick-circle" intent="success" iconSize={200} />
             </ConfirmIconBox>
             <h3>Your {fromToken} has been successfully tokenized. You can now start trading</h3>
+            <Button minimal onClick={reset}>
+              Convert again
+            </Button>
           </ConfirmBox>
           <TxNotificationBox>
             <TxNotification

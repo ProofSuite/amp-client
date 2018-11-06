@@ -28,6 +28,15 @@ export const initialized = (): ConvertTokensFormEvent => {
   return event;
 };
 
+export const reset = (tokenSymbol: string): ConvertTokensFormEvent => {
+  const event = (state: ConvertTokensFormState) => ({
+    ...state,
+    [tokenSymbol]: initialState[tokenSymbol],
+  });
+
+  return event;
+};
+
 export const confirmed = (tokenSymbol: string): ConvertTokensFormEvent => {
   const event = (state: ConvertTokensFormState) => ({
     ...state,
