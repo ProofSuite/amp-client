@@ -1,6 +1,8 @@
 // @flow
 import { Contract, utils } from 'ethers';
 import { getTransferTokensFormDomain, getTokenDomain } from '../domains';
+
+import * as notificationActionCreators from '../actions/app'
 import * as actionCreators from '../actions/transferTokensForm';
 
 import type { EtherTxParams, TransferTokensTxParams } from '../../types/transferTokensForm';
@@ -72,9 +74,13 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
       dispatch(actionCreators.sendTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
-      receipt.status === '0x0'
-        ? dispatch(actionCreators.revertTx('Transaction Failed', receipt))
-        : dispatch(actionCreators.confirmTx(receipt));
+      if (receipt.status === 0) {
+        dispatch(actionCreators.revertTx('Transaction Failed', receipt))
+        dispatch(notificationActionCreators.addDangerNotification({ message: 'Token transfer failed.' }))
+      } else {
+        dispatch(actionCreators.confirmTx(receipt))
+        dispatch(notificationActionCreators.addSuccessNotification({ message: 'Token transfer successful!' }))
+      }
 
     } catch (error) {
       let errorMessage = parseTransferEtherError(error)
@@ -121,9 +127,14 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       dispatch(actionCreators.sendTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
-      receipt.status === '0x0'
-        ? dispatch(actionCreators.revertTx('Transaction Failed', receipt))
-        : dispatch(actionCreators.confirmTx(receipt));
+
+      if (receipt.status === 0) {
+        dispatch(actionCreators.revertTx('Transaction Failed', receipt))
+        dispatch(notificationActionCreators.addDangerNotification({ message: 'Token transfer failed.' }))
+      } else {
+        dispatch(actionCreators.confirmTx(receipt));
+        dispatch(notificationActionCreators.addSuccessNotification({ message: 'Token transfer successful!' }))
+      }
 
     } catch (error) {
       let errorMessage = parseTransferTokensError(error)

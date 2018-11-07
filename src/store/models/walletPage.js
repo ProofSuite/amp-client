@@ -105,8 +105,8 @@ export function toggleAllowance(symbol: string): ThunkAction {
 
       const approvalRemovedHandler = (txConfirmed) => {
         txConfirmed
-        ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Allowance Removal Successful.` }))
-        : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
+          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Allowance Removal Successful.` }))
+          : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
       }
 
       isAllowed

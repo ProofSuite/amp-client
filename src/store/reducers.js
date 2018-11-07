@@ -328,11 +328,11 @@ export const notifications = createReducer(action => {
   const { type, payload } = action
   switch (type) {
     case appActionTypes.addNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.addSuccessNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.addDangerNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.removeNotification:
       return notificationEvents.notificationRemoved(payload.id)
     default:

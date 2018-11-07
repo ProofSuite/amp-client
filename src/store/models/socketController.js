@@ -97,7 +97,7 @@ function handleOrderAdded(event: WebsocketEvent): ThunkAction {
     try {
       let order = parseOrder(event.payload)
 
-      dispatch(appActionCreators.addSuccessNotification({ message: 'Order added' }))
+      dispatch(appActionCreators.addOrderAddedNotification())
       dispatch(actionCreators.updateOrdersTable([order]))
     } catch (e) {
       console.log(e)
@@ -112,7 +112,7 @@ function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
     try {
       let order = parseOrder(event.payload)
 
-      dispatch(appActionCreators.addSuccessNotification({ message: 'Order cancelled' }))
+      dispatch(appActionCreators.addOrderCancelledNotification())
       dispatch(actionCreators.updateOrdersTable([order]))
     } catch (e) {
       console.log(e)
@@ -124,32 +124,43 @@ function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
 function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
-      //TODO handle logic differently depending depending on whether the user is the maker or the taker
       let signer = getSigner()
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
-      let orders = [ ...matches.makerOrders, matches.takerOrder ]
       let trades = matches.trades
-
+      let txHash = trades[0].txHash
       let userOrders = []
       let userTrades = []
+      let userIsTaker = utils.getAddress(matches.takerOrder.userAddress) === signerAddress
 
-      orders.forEach(order => {
-        if (utils.getAddress(order.userAddress) === signerAddress) {
-          userOrders.push(parseOrder(order))
-        }
-      })
+      if (userIsTaker) {
+        let parsedOrder = parseOrder(matches.takerOrder)
+        userOrders = [ parsedOrder ]
+        userTrades = matches.trades.map(trade => parseTrade(trade))
+        let { price, amount, side, filled, pair } = parsedOrder
+        dispatch(appActionCreators.addOrderSuccessNotification({ txHash, pair, price, amount, filled, side }))
 
-      trades.forEach(trade => {
-        if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.taker) === signerAddress) {
-          userTrades.push(parseTrade(trade))
-        }
-      })
+
+      } else {
+        matches.makerOrders.forEach(order => {
+          if (utils.getAddress(order.userAddress) === signerAddress) {
+            let parsedOrder = parseOrder(order)
+            userOrders.push(parsedOrder)
+            let { price, amount, filled, side, pair } = parsedOrder
+            dispatch(appActionCreators.addOrderSuccessNotification({ txHash, pair, price, amount, filled, side }))
+          }
+        })
+
+        matches.trades.forEach(trade => {
+          if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.maker) === signerAddress) {
+            userTrades.push(parseTrade(trade))
+          }
+        })
+      }
+
 
       if (userOrders.length > 0) dispatch(actionCreators.updateOrdersTable(userOrders))
       if (userTrades.length > 0) dispatch(actionCreators.updateTradesTable(userTrades))
-      dispatch(appActionCreators.addSuccessNotification({ message: 'Order success' }))
-
     } catch(e) {
       console.log(e)
       dispatch(appActionCreators.addDangerNotification({ message: e.message }))
@@ -163,28 +174,39 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
       let signer = getSigner()
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
-      let orders = [ ...matches.makerOrders, matches.takerOrder ]
       let trades = matches.trades
-
+      let txHash = trades[0].txHash
       let userOrders = []
       let userTrades = []
+      let userIsTaker = utils.getAddress(matches.takerOrder.userAddress) === signerAddress
 
-      orders.forEach(order => {
-        if (utils.getAddress(order.userAddress) === signerAddress) {
-          userOrders.push(parseOrder(order))
-        }
-      })
+      if (userIsTaker) {
+        let parsedOrder = parseOrder(matches.takerOrder)
+        userOrders = [ parsedOrder ]
+        userTrades = matches.trades.map(trade => parseTrade(trade))
+        let { price, amount, side, filled, pair } = parsedOrder
+        dispatch(appActionCreators.addOrderPendingNotification({ txHash, pair, price, amount, filled, side }))
 
-      trades.forEach(trade => {
-        if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.maker) === signerAddress) {
-          userTrades.push(parseTrade(trade))
-        }
-      })
+
+      } else {
+        matches.makerOrders.forEach(order => {
+          if (utils.getAddress(order.userAddress) === signerAddress) {
+            let parsedOrder = parseOrder(order)
+            userOrders.push(parsedOrder)
+            let { price, amount, filled, side, pair } = parsedOrder
+            dispatch(appActionCreators.addOrderPendingNotification({ txHash, pair, price, amount, filled, side }))
+          }
+        })
+
+        matches.trades.forEach(trade => {
+          if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.maker) === signerAddress) {
+            userTrades.push(parseTrade(trade))
+          }
+        })
+      }
 
       if (userOrders.length > 0) dispatch(actionCreators.updateOrdersTable(userOrders))
       if (userTrades.length > 0) dispatch(actionCreators.updateTradesTable(userTrades))
-      dispatch(appActionCreators.addSuccessNotification({ message: 'Order pending' }))
-
     } catch (e) {
       console.log(e)
       dispatch(appActionCreators.addDangerNotification({ message: e.message }))
