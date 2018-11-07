@@ -9,14 +9,14 @@ export const initialized = () => {
   return event;
 };
 
-export const notificationAdded = options => {
+export const notificationAdded = (notificationType, options) => {
   const event = (state: NotificationState) => {
     return [
       ...state,
       {
         id: ++id,
-        message: options.message,
-        intent: options.intent,
+        notificationType,
+        options
       },
     ];
   };
