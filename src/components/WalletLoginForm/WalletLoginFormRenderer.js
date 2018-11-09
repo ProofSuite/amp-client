@@ -11,11 +11,13 @@ import {
   InputGroup,
   Intent,
   Label,
+  Position,
   Radio,
   RadioGroup,
   TextArea,
 } from '@blueprintjs/core';
 import { Divider, OverlaySpinner, Text } from '../../components/Common';
+import Help from '../../components/Help';
 import WalletSelect from './WalletSelect';
 // TODO -> Intent issue is still to get fix this func () => `JSONFileInputForm`
 
@@ -172,9 +174,19 @@ const WalletLoginFormRenderer = (props: Props) => {
           onChange={handleChange}
         >
           <strong>Save encrypted wallet in local storage</strong>
+          <span> </span>
+          <Help position={Position.RIGHT}>
+            By saving in local storage, you will be able to restore your wallet everytime you enter the platform.
+            You will be required to delete it manually on the Setting page.
+          </Help>
         </Checkbox>
         <Checkbox name="storePrivateKey" checked={storePrivateKey} onChange={handleChange}>
           <strong>Save private key in session storage </strong>
+          <span> </span>
+          <Help position={Position.RIGHT}>
+            By saving in session storage, your wallet can be restored only on the current tab.
+            The data will be lost once you close the tab.
+          </Help>
         </Checkbox>
       </FormGroup>
       <FooterWrapper>
