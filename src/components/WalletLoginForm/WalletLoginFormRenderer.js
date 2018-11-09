@@ -42,7 +42,6 @@ type Props = {
   passwordStatus: Status,
   passwordHelpingText: ?string,
   localStorageWallets: ?Array<Object>,
-  sessionStorageWallets: ?Array<Object>,
   storeWallet: boolean,
   storePrivateKey: boolean,
   submit: (SyntheticEvent<>) => Promise<void>,
@@ -102,7 +101,6 @@ const WalletLoginFormRenderer = (props: Props) => {
     password,
     passwordStatus,
     passwordHelpingText,
-    sessionStorageWallets,
     localStorageWallets,
     onDrop,
     storeWallet,
@@ -115,7 +113,6 @@ const WalletLoginFormRenderer = (props: Props) => {
   const inputForms = {
     privateKey: (
       <PrivateKeyInputForm
-        sessionStorageWallets={sessionStorageWallets}
         onEnterKeyPress={onEnterKeyPress}
         privateKeyStatus={privateKeyStatus}
         privateKey={privateKey}
@@ -203,7 +200,6 @@ const WalletLoginFormRenderer = (props: Props) => {
 };
 
 const PrivateKeyInputForm = ({
-  sessionStorageWallets,
   handleChange,
   privateKey,
   privateKeyStatus,

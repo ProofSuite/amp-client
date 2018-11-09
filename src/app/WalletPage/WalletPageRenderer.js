@@ -12,7 +12,6 @@ import type { TokenData } from '../../types/tokens'
 type Props = {
   gas: number,
   gasPrice: number,
-  loading: boolean,
   etherBalance: string,
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
@@ -23,13 +22,13 @@ type Props = {
   redirectToTradingPage: string => void,
   isHelpModalOpen: boolean,
   closeHelpModal: void => void,
+  balancesLoading: boolean,
 }
 
 const WalletPageRenderer = (props: Props) => {
   const {
     gas,
     gasPrice,
-    loading,
     etherBalance,
     tokenData,
     baseTokens,
@@ -40,6 +39,7 @@ const WalletPageRenderer = (props: Props) => {
     redirectToTradingPage,
     isHelpModalOpen,
     closeHelpModal,
+    balancesLoading
   } = props
 
   return (
@@ -54,7 +54,7 @@ const WalletPageRenderer = (props: Props) => {
           />
         </WalletInfoBox>
         <WalletPageContentBox>
-          {loading ? (
+          {balancesLoading ? (
             <CenteredSpinner />
           ) : (
             <DepositTableBox>

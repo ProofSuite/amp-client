@@ -15,12 +15,8 @@ import type { State } from '../../types'
 export function mapStateToProps(state: State ) {
   let walletPageSelector = getWalletPageSelector(state)
 
-  let { tokenData } = walletPageSelector
-  let loading = !(tokenData.length > 0)
-
   return {
-    ...walletPageSelector,
-    loading
+    ...walletPageSelector
   }
 }
 

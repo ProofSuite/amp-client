@@ -47,7 +47,6 @@ const FooterActionsBox = styled.div`
 
 const SecondStep = (props: Props) => {
   const {
-    goToFirstStep,
     goToThirdStep,
     userHasETH,
     userHasWETH,
@@ -379,11 +378,6 @@ const BalanceBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-const ConvertButtonBox = styled.div`
-  width: 40%;
-  margin: auto;
 `
 
 export default SecondStep

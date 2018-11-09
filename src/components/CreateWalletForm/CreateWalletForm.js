@@ -1,11 +1,10 @@
 //@flow
 import React from 'react';
 import { createAndEncryptWallet } from '../../store/services/wallet';
-import CreateWalletModalRenderer from './CreateWalletModalRenderer';
+import CreateWalletFormRenderer from './CreateWalletFormRenderer';
 
 type Props = {
-  visible: boolean,
-  hideModal: void => void,
+  showLoginMethods: void => void,
   walletCreated: Object => void,
 };
 
@@ -21,9 +20,10 @@ type State = {
   storeWallet: boolean,
   showPassword: boolean,
   storePrivateKey: boolean,
+  loading: boolean,
 };
 
-class CreateWalletModal extends React.PureComponent<Props, State> {
+class CreateWalletForm extends React.PureComponent<Props, State> {
   state = {
     title: 'Create Wallet Modal',
     currentStep: 0,
@@ -36,10 +36,11 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
     storePrivateKey: false,
     encryptionPercentage: 0,
     showEncryptionProgress: false,
+    loading: false,
   };
 
   cancel = () => {
-    this.props.hideModal();
+    this.props.showLoginMethods();
     setTimeout(() => {
       this.setState({
         currentStep: 0,
@@ -92,7 +93,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   complete = () => {
     const { walletCreated } = this.props;
     const { address, password, encryptedWallet, storeWallet, storePrivateKey } = this.state;
-    this.setState({ currentStep: 3, title: 'Logging you In' });
+    this.setState({ loading: true, title: 'Logging you In' });
     walletCreated({ address, password, encryptedWallet, storeWallet, storePrivateKey });
   };
 
@@ -108,7 +109,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { visible, hideModal } = this.props;
+    const { showLoginMethods } = this.props;
     const {
       title,
       currentStep,
@@ -121,11 +122,12 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
       passwordStatus,
       storeWallet,
       storePrivateKey,
+      loading
     } = this.state;
+
     return (
-      <CreateWalletModalRenderer
-        visible={visible}
-        hideModal={hideModal}
+      <CreateWalletFormRenderer
+        showLoginMethods={showLoginMethods}
         title={title}
         currentStep={currentStep}
         showEncryptionProgress={showEncryptionProgress}
@@ -137,6 +139,7 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
         storeWallet={storeWallet}
         passwordStatus={passwordStatus}
         storePrivateKey={storePrivateKey}
+        loading={loading}
         goToDownloadWallet={this.goToDownloadWallet}
         goBackToCreateWallet={this.goBackToCreateWallet}
         togglePasswordView={this.togglePasswordView}
@@ -150,4 +153,4 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
   }
 }
 
-export default CreateWalletModal;
+export default CreateWalletForm;

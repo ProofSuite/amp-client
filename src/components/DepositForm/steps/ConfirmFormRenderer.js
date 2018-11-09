@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TxNotification from '../../TxNotification';
 import { Icon } from '@blueprintjs/core';
-import { ModalBody, ModalFooter } from '../../Common'
+import { ModalBody } from '../../Common'
 
 const ConfirmFormRenderer = (props: Props) => {
   const {

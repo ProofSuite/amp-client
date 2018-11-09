@@ -11,8 +11,9 @@ type Props = {
   hash: string,
 }
 
+//TODO Add link to Etherscan
 const SmallTxNotification = (props: Props) => {
-  const { loading, status, hash, txName } = props
+  const {  status, hash, txName } = props
 
   switch (status) {
     case 'incomplete':

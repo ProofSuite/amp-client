@@ -15,7 +15,7 @@ class ModalBox extends React.PureComponent<> {
     return (
       <React.Fragment>
         <Button intent="primary" onClick={this.handleOpen} text="Click to open modal" />
-        {this.props.children({ handleClose: this.handleClose, isOpen: isOpen })}
+        {this.props.children({ handleClose: this.handleClose, isOpen })}
       </React.Fragment>
     );
   }

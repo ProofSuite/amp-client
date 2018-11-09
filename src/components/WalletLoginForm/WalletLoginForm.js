@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
-import { isJson, getSessionStorageWallets, getLocalStorageWallets } from '../../utils/helpers';
+import { isJson } from '../../utils/helpers';
+import { getLocalStorageWallets } from '../../store/services/storage'
 
 import {
   createWalletFromJSON,
@@ -35,7 +36,6 @@ type State = {
   passwordStatus: Status,
   passwordHelpingText: string,
   localStorageWallets: Array<Object>,
-  sessionStorageWallets: Array<Object>,
   storeWallet: boolean,
   storePrivateKey: boolean,
 };
@@ -57,7 +57,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     password: '',
     passwordStatus: 'incomplete',
     passwordHelpingText: '',
-    sessionStorageWallets: getSessionStorageWallets(),
     localStorageWallets: getLocalStorageWallets(),
     storeWallet: true,
     storePrivateKey: true,
@@ -271,7 +270,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         password,
         passwordStatus,
         passwordHelpingText,
-        sessionStorageWallets,
         localStorageWallets,
         storePrivateKey,
         storeWallet,
@@ -300,7 +298,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         password={password}
         passwordStatus={passwordStatus}
         passwordHelpingText={passwordHelpingText}
-        sessionStorageWallets={sessionStorageWallets}
         localStorageWallets={localStorageWallets}
         storeWallet={storeWallet}
         storePrivateKey={storePrivateKey}

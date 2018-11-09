@@ -8,7 +8,6 @@ import type { TokenData } from '../../types/tokens'
 import { loadShowHelpModalSetting } from '../../store/services/storage'
 
 export type Props = {
-  loading: boolean,
   connected: boolean,
   accountAddress: string,
   etherBalance: string,
@@ -40,12 +39,10 @@ class WalletPage extends React.PureComponent<Props, State> {
     const showHelpModalSetting = loadShowHelpModalSetting()
     const { authenticated, showHelpModal, balancesLoading, WETHBalance, WETHAllowance } = this.props
 
-    console.log(authenticated, showHelpModal, balancesLoading, WETHBalance, WETHAllowance)
-
     if (!showHelpModalSetting) return false
     if (!authenticated) return false
     if (!showHelpModal) return false
-    if (!balancesLoading) return false
+    if (balancesLoading) return false
     if (WETHBalance !== '0.0' && WETHAllowance !== '0.0') return false
 
     return true
@@ -53,7 +50,6 @@ class WalletPage extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      loading,
       connected,
       authenticated,
       accountAddress,
@@ -66,6 +62,7 @@ class WalletPage extends React.PureComponent<Props, State> {
       quoteTokens,
       baseTokens,
       closeHelpModal,
+      balancesLoading
     } = this.props
 
 
@@ -77,7 +74,6 @@ class WalletPage extends React.PureComponent<Props, State> {
       <WalletPageRenderer
         gas={gas}
         gasPrice={gasPrice}
-        loading={loading}
         etherBalance={etherBalance}
         tokenData={tokenData}
         baseTokens={baseTokens}
@@ -85,6 +81,7 @@ class WalletPage extends React.PureComponent<Props, State> {
         connected={connected}
         accountAddress={accountAddress}
         toggleAllowance={toggleAllowance}
+        balancesLoading={balancesLoading}
         redirectToTradingPage={redirectToTradingPage}
         isHelpModalOpen={isHelpModalOpen}
         closeHelpModal={closeHelpModal}

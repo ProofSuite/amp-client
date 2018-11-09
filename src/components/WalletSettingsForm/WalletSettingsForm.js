@@ -1,9 +1,15 @@
+// @flow
 import React from 'react';
 import { Card, Button } from '@blueprintjs/core';
 import { Colors } from '../Common';
 import styled from 'styled-components';
 
-const WalletSettingsForm = props => {
+type Props = {
+  wallets: Array<Object>,
+  removeWallet: void => void
+}
+
+const WalletSettingsForm = (props: Props) => {
   const { wallets, removeWallet } = props;
   const walletsAreStored = wallets.slice(1).length > 0;
 
@@ -12,12 +18,8 @@ const WalletSettingsForm = props => {
       <Heading>Remove Wallets from Browser Storage</Heading>
       <Header>
         <ListItem>
-          <p>
-            <b>Address</b>
-          </p>
-          <p>
-            <b>Remove</b>
-          </p>
+          <p><b>Address</b></p>
+          <p><b>Remove</b></p>
         </ListItem>
       </Header>
       <List>

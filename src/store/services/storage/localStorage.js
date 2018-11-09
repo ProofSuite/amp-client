@@ -1,3 +1,6 @@
+import { isEthereumAddress } from '../../../utils/crypto'
+import { isJson } from '../../../utils/helpers'
+
 export const loadValue = (key) => {
   try {
     const value = localStorage.getItem(key)
@@ -30,3 +33,21 @@ export const loadShowHelpModalSetting = () => {
     return false
   }
 }
+
+export const getLocalStorageWallets = () => {
+  let wallets = []
+  let index = 1
+
+  Object.keys(localStorage).map(key => {
+    if (isEthereumAddress(key) && isJson(localStorage[key])) {
+      wallets.push({ address: key, key: sessionStorage[key], rank: index })
+      index++
+    }
+
+    return key
+  })
+
+  return wallets
+}
+
+

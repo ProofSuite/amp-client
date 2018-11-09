@@ -84,6 +84,8 @@ class GetStartedModal extends React.PureComponent<Props, State> {
   checkTransactionsPending = () => {
     const { approveTxState, convertTxState } = this.props
 
+
+    //the form shows pending transactions if any of the transactions is pending
     if (approveTxState.approveTxStatus === 'sent') return true
     if (convertTxState.convertTxStatus === 'sent') return true
 
