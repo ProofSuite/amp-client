@@ -58,11 +58,8 @@ class LoginPage extends React.PureComponent<Props, State> {
   };
 
   walletCreated = async (props: Object) => {
-    console.log('beginning wallet created')
     const { password, encryptedWallet, storeWallet, storePrivateKey } = props;
     var { wallet } = await createWalletFromJSON(encryptedWallet, password);
-
-    console.log('in wallet created')
 
     if (wallet) this.props.loginWithWallet({ wallet, encryptedWallet, storeWallet, storePrivateKey });
   };
