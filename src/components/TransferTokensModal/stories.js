@@ -5,7 +5,7 @@ import { withInfo } from '@storybook/addon-info';
 import ModalBox from '../ModalBox';
 import TransferTokensModal from './TransferTokensModal';
 
-storiesOf('Send Ether Modal', module)
+storiesOf('Transfer Tokens Modal', module)
   .addDecorator(withKnobs)
   .add(
     'Default Export',

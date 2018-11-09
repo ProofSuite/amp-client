@@ -5,6 +5,7 @@ import { Card } from '@blueprintjs/core'
 import CenteredSpinner from '../../components/Common/CenteredSpinner'
 import DepositTable from '../../components/DepositTable'
 import WalletInfo from '../../components/WalletInfo'
+import GetStartedModal from '../../components/GetStartedModal'
 
 import type { TokenData } from '../../types/tokens'
 
@@ -19,22 +20,28 @@ type Props = {
   connected: boolean,
   accountAddress: string,
   toggleAllowance: string => void,
-  redirectToTradingPage: string => void
+  redirectToTradingPage: string => void,
+  isHelpModalOpen: boolean,
+  closeHelpModal: void => void,
 }
 
-const WalletPageRenderer = ({
-  gas,
-  gasPrice,
-  loading,
-  etherBalance,
-  tokenData,
-  baseTokens,
-  quoteTokens,
-  connected,
-  accountAddress,
-  toggleAllowance,
-  redirectToTradingPage
-}: Props) => {
+const WalletPageRenderer = (props: Props) => {
+  const {
+    gas,
+    gasPrice,
+    loading,
+    etherBalance,
+    tokenData,
+    baseTokens,
+    quoteTokens,
+    connected,
+    accountAddress,
+    toggleAllowance,
+    redirectToTradingPage,
+    isHelpModalOpen,
+    closeHelpModal,
+  } = props
+
   return (
     <WalletPageBox>
       <RowWrapper>
@@ -53,16 +60,17 @@ const WalletPageRenderer = ({
             <DepositTableBox>
               <DepositTable
                 connected={connected}
-                toggleAllowance={toggleAllowance}
                 tokenData={tokenData}
                 baseTokens={baseTokens}
                 quoteTokens={quoteTokens}
+                toggleAllowance={toggleAllowance}
                 redirectToTradingPage={redirectToTradingPage}
               />
             </DepositTableBox>
           )}
         </WalletPageContentBox>
       </RowWrapper>
+      <GetStartedModal isOpen={isHelpModalOpen} closeHelpModal={closeHelpModal} />
     </WalletPageBox>
   )
 }
@@ -100,7 +108,5 @@ const DepositTableBox = styled.div`
   height: 100%;
   width: 100%;
 `
-
-
 
 export default WalletPageRenderer

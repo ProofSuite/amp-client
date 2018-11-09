@@ -5,6 +5,8 @@ import { Redirect } from 'react-router-dom'
 
 import type { TokenData } from '../../types/tokens'
 
+import { loadShowHelpModalSetting } from '../../store/services/storage'
+
 export type Props = {
   loading: boolean,
   connected: boolean,
@@ -20,9 +22,12 @@ export type Props = {
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
   quoteTokens: Array<string>,
+  showHelpModal: boolean,
+  closeHelpModal: void => void,
 }
 
-class WalletPage extends React.PureComponent<Props> {
+class WalletPage extends React.PureComponent<Props, State> {
+
   componentDidMount() {
     const { authenticated, queryAccountData } = this.props
     if (authenticated) queryAccountData()
@@ -42,7 +47,12 @@ class WalletPage extends React.PureComponent<Props> {
       tokenData,
       quoteTokens,
       baseTokens,
+      showHelpModal,
+      closeHelpModal,
     } = this.props
+
+    const showHelpModalSetting = loadShowHelpModalSetting()
+    const isHelpModalOpen = showHelpModalSetting && authenticated && showHelpModal
 
     if (!authenticated) return <Redirect to="/login" />
 
@@ -59,6 +69,8 @@ class WalletPage extends React.PureComponent<Props> {
         accountAddress={accountAddress}
         toggleAllowance={toggleAllowance}
         redirectToTradingPage={redirectToTradingPage}
+        isHelpModalOpen={isHelpModalOpen}
+        closeHelpModal={closeHelpModal}
       />
     )
   }

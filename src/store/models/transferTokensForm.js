@@ -46,6 +46,8 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
         value: utils.parseEther(amount.toString()),
       };
 
+      console.log(tx)
+
       let estimatedGas = await signer.provider.estimateGas(tx);
       estimatedGas = estimatedGas.toNumber();
       dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));

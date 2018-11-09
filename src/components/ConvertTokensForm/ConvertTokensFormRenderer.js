@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import TxNotification from '../TxNotification';
 import { Button, Callout, Checkbox, Icon, Slider } from '@blueprintjs/core';
 import { formatNumber } from 'accounting-js'
+import { ModalBody } from '../Common'
 
 import CenteredSpinner from '../Common/CenteredSpinner'
 import type { TxReceipt } from '../../types/common'
@@ -28,6 +29,7 @@ type Props = {
   convertTxHash: string,
   convertTxReceipt: TxReceipt,
   transactionStatus: string,
+  reset: boolean,
 };
 
 const ConvertTokensFormRenderer = (props: Props) => {
@@ -53,7 +55,7 @@ const ConversionFormRenderer = (props: Props) => {
   } = props;
 
   return (
-    <div>
+    <ModalBody>
       <Callout intent="success" title={messages[fromToken].title}>
         {messages[fromToken].callout}
       </Callout>
@@ -97,7 +99,7 @@ const ConversionFormRenderer = (props: Props) => {
         large
         fill
       />
-    </div>
+    </ModalBody>
   );
 };
 
@@ -130,7 +132,7 @@ const ConfirmFormRenderer = (props: Props) => {
   switch (transactionStatus) {
     case 'failed':
       return (
-        <div>
+        <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
               <Icon icon="error" intent="danger" iconSize={200} />
@@ -156,22 +158,22 @@ const ConfirmFormRenderer = (props: Props) => {
           <Button minimal onClick={reset}>
             Try again
           </Button>
-        </div>
+        </ModalBody>
       );
     case 'submitted':
       return (
-        <div>
+        <ModalBody>
           <TxNotificationBox>
             <ConfirmBox>
               <h3>Transactions are being sent</h3>
               <CenteredSpinner />
             </ConfirmBox>
           </TxNotificationBox>
-        </div>
+        </ModalBody>
       )
     case 'sent':
       return (
-        <div>
+        <ModalBody>
           <ConfirmBox>
             <h3>Transactions have been sent!</h3>
           </ConfirmBox>
@@ -191,11 +193,11 @@ const ConfirmFormRenderer = (props: Props) => {
               title={notificationBoxTitles.convert[convertTxStatus]}
             />
           </TxNotificationBox>
-        </div>
+        </ModalBody>
       );
     case 'confirmed':
       return (
-        <div>
+        <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
               <Icon icon="tick-circle" intent="success" iconSize={200} />
@@ -221,7 +223,7 @@ const ConfirmFormRenderer = (props: Props) => {
               title={notificationBoxTitles.convert[convertTxStatus]}
             />
           </TxNotificationBox>
-        </div>
+        </ModalBody>
       );
     default:
       return null;

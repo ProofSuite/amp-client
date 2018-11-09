@@ -118,6 +118,9 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     tokenBalance(symbol: string) {
       return state[symbol] ? state[symbol].balance : null
     },
+    tokenAllowance(symbol: string) {
+      return state[symbol] ? state[symbol].allowance : null
+    },
     formattedTokenBalance(symbol: string) {
       return state[symbol] ? formatNumber(state[symbol].balance, { precision: 2 }) : null
     },
