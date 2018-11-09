@@ -27,6 +27,9 @@ export default function walletPageSelector(state: State) {
 
   return {
     etherBalance: accountBalancesDomain.formattedEtherBalance(),
+    balancesLoading: accountBalancesDomain.loading(),
+    WETHBalance: accountBalancesDomain.tokenBalance('WETH'),
+    WETHAllowance: accountBalancesDomain.tokenAllowance('WETH'),
     tokenData: tokenData,
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,

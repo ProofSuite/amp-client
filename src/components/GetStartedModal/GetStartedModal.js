@@ -34,6 +34,10 @@ class GetStartedModal extends React.PureComponent<Props, State> {
     showHelpModalChecked: false,
   }
 
+  componentDidUnmount = () => {
+    this.handleClose()
+  }
+
   goToFirstStep = () => {
     this.setState({ step: '1' })
   }
@@ -77,6 +81,33 @@ class GetStartedModal extends React.PureComponent<Props, State> {
     this.props.approveWETH()
   }
 
+  checkTransactionsPending = () => {
+    const { approveTxState, convertTxState } = this.props
+
+    if (approveTxState.approveTxStatus === 'sent') return true
+    if (convertTxState.convertTxStatus === 'sent') return true
+
+    return false
+  }
+
+  checkTransactionsComplete = () => {
+    const { approveTxState, convertTxState } = this.props
+    const { approveTxStatus } = approveTxState
+    const { convertTxStatus } = convertTxState
+
+    //case where we only have an approval tx
+    if (approveTxStatus === 'confirmed' && convertTxStatus === 'incomplete') return true
+
+    //case where we only have an conversion tx
+    if (approveTxStatus === 'incomplete' && convertTxStatus === 'confirmed') return true
+
+    //case where we have both an approval and a conversion tx
+    if (approveTxStatus === 'confirmed' && convertTxStatus === 'confirmed') return true
+
+    //otherwise transactions are either pending or not sent yet
+    return false
+  }
+
   render() {
     const {
       step,
@@ -93,7 +124,7 @@ class GetStartedModal extends React.PureComponent<Props, State> {
       approveTxState,
       convertTxState,
       redirectToTradingPage,
-      isOpen
+      isOpen,
     } = this.props
 
     const userHasETH = ETHBalance > 0
@@ -101,6 +132,9 @@ class GetStartedModal extends React.PureComponent<Props, State> {
     const userHasApprovedWETH = WETHAllowance > 0
     const { approveTxStatus, approveTxHash } = approveTxState
     const { convertTxStatus, convertTxHash } = convertTxState
+
+    const transactionsPending = this.checkTransactionsPending()
+    const transactionsComplete = this.checkTransactionsComplete()
 
     return (
       <GetStartedModalRenderer
@@ -128,6 +162,8 @@ class GetStartedModal extends React.PureComponent<Props, State> {
         toggleShowHelpModalCheckBox={this.toggleShowHelpModalCheckBox}
         showHelpModalChecked={showHelpModalChecked}
         isOpen={isOpen}
+        transactionsPending={transactionsPending}
+        transactionsComplete={transactionsComplete}
       />
     )
   }

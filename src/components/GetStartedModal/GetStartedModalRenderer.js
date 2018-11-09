@@ -30,6 +30,8 @@ type Props = {
   showHelpModalChecked: boolean,
   handleClose: void => void,
   isOpen: boolean,
+  transactionsPending: boolean,
+  transactionsComplete: boolean,
 }
 
 

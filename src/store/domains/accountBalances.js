@@ -89,6 +89,10 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     balances() {
       return state
     },
+    // we assume that account balances are loading as long as we have no ETH and no WETH state.
+    loading() {
+      return (state['ETH'] && state['WETH']) ? true : false
+    },
     formattedBalances() {
       let keys = Object.keys(state)
       let formattedBalances = {}

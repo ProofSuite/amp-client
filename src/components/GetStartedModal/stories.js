@@ -77,73 +77,44 @@ const revertedConvertTxState = {
 storiesOf('GetStartedModal', module)
   .addDecorator(withKnobs)
   .add(
-    'Connected GetStartedModal',
-    withInfo({
-      source: false,
-    })(() => (
-      <div className="bp3-dark">
-        <Card>
-          <GetStartedModalContainer />
-        </Card>
-      </div>
-    ))
-  )
-  .add(
-    'GetStartedModal (Step 1)',
-    withInfo()(() => (
-      <div className="bp3-dark">
-        <Card>
-          <GetStartedModal
-            step="1"
-            goToFirstStep={action('goToFirstStep')}
-            goToSecondStep={action('goToSecondStep')}
-            goToThirdStep={action('goToThirdStep')}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            ETHBalance={0}
-            WETHBalance={0}
-            WETHAllowance={0}
-            approveTxState={defaultApproveTxState}
-            convertTxState={defaultConvertTxState}
-          />
-        </Card>
-      </div>
-    ))
-  )
-  .add(
     'GetStartedModalRenderer (Step 1)',
     withInfo()(() => (
       <div className="bp3-dark">
-        <Card>
-          <GetStartedModalRenderer
-            step="1"
-            goToFirstStep={action('goToFirstStep')}
-            goToSecondStep={action('goToSecondStep')}
-            goToThirdStep={action('goToThirdStep')}
-            userHasETH={false}
-            userHasWETH={false}
-            userHasApprovedWETH={false}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHBalance={0}
-            WETHBalance={0}
-            convertAmount={0}
-            convertFraction={0}
-            changeConvertETHFraction={action('changeConvertETHFraction')}
-            ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxState={null}
-            convertTxState={null}
-          />
-        </Card>
+        <GetStartedModalRenderer
+          step="1"
+          goToFirstStep={action('goToFirstStep')}
+          goToSecondStep={action('goToSecondStep')}
+          goToThirdStep={action('goToThirdStep')}
+          userHasETH={false}
+          userHasWETH={false}
+          userHasApprovedWETH={false}
+          handleConvertETH={action('handleConvertETH')}
+          handleApproveWETH={action('handleApproveWETH')}
+          ETHBalance={0}
+          WETHBalance={0}
+          convertAmount={0}
+          convertFraction={0}
+          changeConvertETHFraction={action('changeConvertETHFraction')}
+          ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+          approveTxStatus={'incomplete'}
+          approveTxHash={null}
+          convertTxStatus={'incomplete'}
+          convertTxHash={null}
+          redirectToTradingPage={action('redirectToTradingPage')}
+          toggleShowHelpModalCheckBox={action('toggleShowHelpModalCheckbox')}
+          showHelpModalChecked={false}
+          handleClose={action('handleClose')}
+          isOpen={true}
+          transactionsPending={false}
+          transactionsComplete={false}
+        />
       </div>
     ))
   )
   .add(
-    'GetStartedModalRenderer (Step 2 - No ETH/No WETH/No Allowance)',
+    'GetStartedModalRenderer (Step 2)',
     withInfo()(() => (
       <div className="bp3-dark">
-        <Card>
           <GetStartedModalRenderer
             step="2"
             goToFirstStep={action('goToFirstStep')}
@@ -152,26 +123,33 @@ storiesOf('GetStartedModal', module)
             userHasETH={false}
             userHasWETH={false}
             userHasApprovedWETH={false}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
+            handleConvertETH={action('handleConvertETH')}
+            handleApproveWETH={action('handleApproveWETH')}
             ETHBalance={0}
             WETHBalance={0}
             convertAmount={0}
             convertFraction={0}
             changeConvertETHFraction={action('changeConvertETHFraction')}
             ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxState={null}
-            convertTxState={null}
+            approveTxStatus={'incomplete'}
+            approveTxHash={null}
+            convertTxStatus={'incomplete'}
+            convertTxHash={null}
+            redirectToTradingPage={action('redirectToTradingPage')}
+            toggleShowHelpModalCheckBox={action('toggleShowHelpModalCheckbox')}
+            showHelpModalChecked={false}
+            handleClose={action('handleClose')}
+            isOpen={true}
+            transactionsPending={false}
+            transactionsComplete={false}
           />
-        </Card>
       </div>
     ))
   )
   .add(
-    'GetStartedModalRenderer (Step 2 - ETH/No WETH/No Allowance)',
+    'GetStartedModalRenderer (Step 2 - User has ETH)',
     withInfo()(() => (
       <div className="bp3-dark">
-        <Card>
           <GetStartedModalRenderer
             step="2"
             goToFirstStep={action('goToFirstStep')}
@@ -180,26 +158,103 @@ storiesOf('GetStartedModal', module)
             userHasETH={true}
             userHasWETH={false}
             userHasApprovedWETH={false}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHBalance={0}
+            handleConvertETH={action('handleConvertETH')}
+            handleApproveWETH={action('handleApproveWETH')}
+            ETHBalance={'0.50'}
             WETHBalance={0}
             convertAmount={0}
             convertFraction={0}
             changeConvertETHFraction={action('changeConvertETHFraction')}
             ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxState={null}
-            convertTxState={null}
+            approveTxStatus={'incomplete'}
+            approveTxHash={null}
+            convertTxStatus={'incomplete'}
+            convertTxHash={null}
+            redirectToTradingPage={action('redirectToTradingPage')}
+            toggleShowHelpModalCheckBox={action('toggleShowHelpModalCheckbox')}
+            showHelpModalChecked={false}
+            handleClose={action('handleClose')}
+            isOpen={true}
+            transactionsPending={false}
+            transactionsComplete={false}
           />
-        </Card>
       </div>
     ))
   )
   .add(
-    'GetStartedModalRenderer (Step 2 - ETH/WETH/No Allowance)',
+    'GetStartedModalRenderer (Step 2 - User has ETH - Transactions Pending)',
     withInfo()(() => (
       <div className="bp3-dark">
-        <Card>
+          <GetStartedModalRenderer
+            step="2"
+            goToFirstStep={action('goToFirstStep')}
+            goToSecondStep={action('goToSecondStep')}
+            goToThirdStep={action('goToThirdStep')}
+            userHasETH={true}
+            userHasWETH={false}
+            userHasApprovedWETH={false}
+            handleConvertETH={action('handleConvertETH')}
+            handleApproveWETH={action('handleApproveWETH')}
+            ETHBalance={'0.50'}
+            WETHBalance={0}
+            convertAmount={0}
+            convertFraction={0}
+            changeConvertETHFraction={action('changeConvertETHFraction')}
+            ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+            approveTxStatus={'sent'}
+            approveTxHash={'0x1'}
+            convertTxStatus={'sent'}
+            convertTxHash={'0x1'}
+            redirectToTradingPage={action('redirectToTradingPage')}
+            toggleShowHelpModalCheckBox={action('toggleShowHelpModalCheckbox')}
+            showHelpModalChecked={false}
+            handleClose={action('handleClose')}
+            isOpen={true}
+            transactionsPending={true}
+            transactionsComplete={false}
+          />
+      </div>
+    ))
+  )
+  .add(
+    'GetStartedModalRenderer (Step 2 - User has ETH - Transactions Complete)',
+    withInfo()(() => (
+      <div className="bp3-dark">
+          <GetStartedModalRenderer
+            step="2"
+            goToFirstStep={action('goToFirstStep')}
+            goToSecondStep={action('goToSecondStep')}
+            goToThirdStep={action('goToThirdStep')}
+            userHasETH={true}
+            userHasWETH={false}
+            userHasApprovedWETH={false}
+            handleConvertETH={action('handleConvertETH')}
+            handleApproveWETH={action('handleApproveWETH')}
+            ETHBalance={'0.25'}
+            WETHBalance={0}
+            convertAmount={0}
+            convertFraction={0}
+            changeConvertETHFraction={action('changeConvertETHFraction')}
+            ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+            approveTxStatus={'confirmed'}
+            approveTxHash={'0x1'}
+            convertTxStatus={'confirmed'}
+            convertTxHash={'0x1'}
+            redirectToTradingPage={action('redirectToTradingPage')}
+            toggleShowHelpModalCheckBox={action('toggleShowHelpModalCheckbox')}
+            showHelpModalChecked={false}
+            handleClose={action('handleClose')}
+            isOpen={true}
+            transactionsPending={false}
+            transactionsComplete={true}
+          />
+      </div>
+    ))
+  )
+  .add(
+    'GetStartedModalRenderer (Step 2 - User has WETH/Not approved WETH)',
+    withInfo()(() => (
+      <div className="bp3-dark">
           <GetStartedModalRenderer
             step="2"
             goToFirstStep={action('goToFirstStep')}
@@ -208,134 +263,261 @@ storiesOf('GetStartedModal', module)
             userHasETH={true}
             userHasWETH={true}
             userHasApprovedWETH={false}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHBalance={0}
+            handleConvertETH={action('handleConvertETH')}
+            handleApproveWETH={action('handleApproveWETH')}
+            ETHBalance={'0.25'}
             WETHBalance={0}
             convertAmount={0}
             convertFraction={0}
             changeConvertETHFraction={action('changeConvertETHFraction')}
             ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxState={null}
-            convertTxState={null}
+            approveTxStatus={'confirmed'}
+            approveTxHash={'0x1'}
+            convertTxStatus={'confirmed'}
+            convertTxHash={'0x1'}
+            redirectToTradingPage={action('redirectToTradingPage')}
+            toggleShowHelpModalCheckBox={action('toggleShowHelpModalCheckbox')}
+            showHelpModalChecked={false}
+            handleClose={action('handleClose')}
+            isOpen={true}
+            transactionsPending={false}
+            transactionsComplete={false}
           />
-        </Card>
       </div>
     ))
   )
   .add(
-    'GetStartedModalRenderer (Step 2 - ETH/WETH/Allowance)',
+    'GetStartedModalRenderer (Step 3 - User has ETH - Transactions Complete)',
     withInfo()(() => (
       <div className="bp3-dark">
-        <Card>
-          <GetStartedModalRenderer
-            step="2"
-            goToFirstStep={action('goToFirstStep')}
-            goToSecondStep={action('goToSecondStep')}
-            goToThirdStep={action('goToThirdStep')}
-            userHasETH={true}
-            userHasWETH={true}
-            userHasApprovedWETH={true}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHBalance={0}
-            WETHBalance={0}
-            convertAmount={0}
-            convertFraction={0}
-            changeConvertETHFraction={action('changeConvertETHFraction')}
-            ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxState={null}
-            convertTxState={null}
-          />
-        </Card>
-      </div>
-    ))
-  )
-  .add(
-    'GetStartedModalRenderer (Step 3)',
-    withInfo()(() => (
-      <div className="bp3-dark">
-        <Card>
           <GetStartedModalRenderer
             step="3"
             goToFirstStep={action('goToFirstStep')}
             goToSecondStep={action('goToSecondStep')}
             goToThirdStep={action('goToThirdStep')}
             userHasETH={true}
-            userHasWETH={true}
-            userHasApprovedWETH={true}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHBalance={0}
-            WETHBalance={0}
-            convertAmount={0}
-            convertFraction={0}
-            changeConvertETHFraction={action('changeConvertETHFraction')}
-            ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxState={null}
-            convertTxState={null}
-          />
-        </Card>
-      </div>
-    ))
-  )
-  .add(
-    'GetStartedModalRenderer (Step 2 - Transactions confirmed)',
-    withInfo()(() => (
-      <div className="bp3-dark">
-        <Card>
-          <GetStartedModalRenderer
-            step="2"
-            goToFirstStep={action('goToFirstStep')}
-            goToSecondStep={action('goToSecondStep')}
-            goToThirdStep={action('goToThirdStep')}
-            userHasETH={true}
-            userHasWETH={true}
-            userHasApprovedWETH={true}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHBalance={0}
-            WETHBalance={0}
-            convertAmount={0}
-            convertFraction={0}
-            changeConvertETHFraction={action('changeConvertETHFraction')}
-            ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxStatus={confirmedApproveTxState.approveTxStatus}
-            approveTxHash={confirmedApproveTxState.approveTxHash}
-            convertTxStatus={confirmedConvertTxState.convertTxStatus}
-            convertTxHash={confirmedConvertTxState.convertTxHash}
-          />
-        </Card>
-      </div>
-    ))
-  )
-  .add(
-    'GetStartedModalRenderer (Step 2 - Transactions pending)',
-    withInfo()(() => (
-      <div className="bp3-dark">
-        <Card>
-          <GetStartedModalRenderer
-            step="2"
-            goToFirstStep={action('goToFirstStep')}
-            goToSecondStep={action('goToSecondStep')}
-            goToThirdStep={action('goToThirdStep')}
-            userHasETH={true}
             userHasWETH={false}
             userHasApprovedWETH={false}
-            convertETH={action('convertETH')}
-            approveWETH={action('approveWETH')}
-            ETHBalance={0}
+            handleConvertETH={action('handleConvertETH')}
+            handleApproveWETH={action('handleApproveWETH')}
+            ETHBalance={'0.25'}
             WETHBalance={0}
             convertAmount={0}
             convertFraction={0}
             changeConvertETHFraction={action('changeConvertETHFraction')}
             ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
-            approveTxStatus={pendingApproveTxState.approveTxStatus}
-            approveTxHash={pendingApproveTxState.approveTxHash}
-            convertTxStatus={pendingConvertTxState.convertTxStatus}
-            convertTxHash={pendingConvertTxState.convertTxHash}
+            approveTxStatus={'confirmed'}
+            approveTxHash={'0x1'}
+            convertTxStatus={'confirmed'}
+            convertTxHash={'0x1'}
+            redirectToTradingPage={action('redirectToTradingPage')}
+            toggleShowHelpModalCheckBox={action('toggleShowHelpModalCheckbox')}
+            showHelpModalChecked={false}
+            handleClose={action('handleClose')}
+            isOpen={true}
+            transactionsPending={false}
+            transactionsComplete={true}
           />
-        </Card>
       </div>
     ))
   )
+  // .add(
+  //   'GetStartedModalRenderer (Step 2 - No ETH/No WETH/No Allowance)',
+  //   withInfo()(() => (
+  //     <div className="bp3-dark">
+  //       <Card>
+  //         <GetStartedModalRenderer
+  //           step="2"
+  //           goToFirstStep={action('goToFirstStep')}
+  //           goToSecondStep={action('goToSecondStep')}
+  //           goToThirdStep={action('goToThirdStep')}
+  //           userHasETH={false}
+  //           userHasWETH={false}
+  //           userHasApprovedWETH={false}
+  //           handleConvertETH={action('handleConvertETH')}
+  //           handleApproveWETH={action('handleApproveWETH')}
+  //           ETHBalance={0}
+  //           WETHBalance={0}
+  //           convertAmount={0}
+  //           convertFraction={0}
+  //           changeConvertETHFraction={action('changeConvertETHFraction')}
+  //           ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+  //           approveTxState={null}
+  //           convertTxState={null}
+  //         />
+  //       </Card>
+  //     </div>
+  //   ))
+  // )
+  // .add(
+  //   'GetStartedModalRenderer (Step 2 - ETH/No WETH/No Allowance)',
+  //   withInfo()(() => (
+  //     <div className="bp3-dark">
+  //       <Card>
+  //         <GetStartedModalRenderer
+  //           step="2"
+  //           goToFirstStep={action('goToFirstStep')}
+  //           goToSecondStep={action('goToSecondStep')}
+  //           goToThirdStep={action('goToThirdStep')}
+  //           userHasETH={true}
+  //           userHasWETH={false}
+  //           userHasApprovedWETH={false}
+  //           handleConvertETH={action('handleConvertETH')}
+  //           handleApproveWETH={action('handleApproveWETH')}
+  //           ETHBalance={0}
+  //           WETHBalance={0}
+  //           convertAmount={0}
+  //           convertFraction={0}
+  //           changeConvertETHFraction={action('changeConvertETHFraction')}
+  //           ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+  //           approveTxState={null}
+  //           convertTxState={null}
+  //         />
+  //       </Card>
+  //     </div>
+  //   ))
+  // )
+  // .add(
+  //   'GetStartedModalRenderer (Step 2 - ETH/WETH/No Allowance)',
+  //   withInfo()(() => (
+  //     <div className="bp3-dark">
+  //       <Card>
+  //         <GetStartedModalRenderer
+  //           step="2"
+  //           goToFirstStep={action('goToFirstStep')}
+  //           goToSecondStep={action('goToSecondStep')}
+  //           goToThirdStep={action('goToThirdStep')}
+  //           userHasETH={true}
+  //           userHasWETH={true}
+  //           userHasApprovedWETH={false}
+  //           handleConvertETH={action('handleConvertETH')}
+  //           handleApproveWETH={action('handleApproveWETH')}
+  //           ETHBalance={0}
+  //           WETHBalance={0}
+  //           convertAmount={0}
+  //           convertFraction={0}
+  //           changeConvertETHFraction={action('changeConvertETHFraction')}
+  //           ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+  //           approveTxState={null}
+  //           convertTxState={null}
+  //         />
+  //       </Card>
+  //     </div>
+  //   ))
+  // )
+  // .add(
+  //   'GetStartedModalRenderer (Step 2 - ETH/WETH/Allowance)',
+  //   withInfo()(() => (
+  //     <div className="bp3-dark">
+  //       <Card>
+  //         <GetStartedModalRenderer
+  //           step="2"
+  //           goToFirstStep={action('goToFirstStep')}
+  //           goToSecondStep={action('goToSecondStep')}
+  //           goToThirdStep={action('goToThirdStep')}
+  //           userHasETH={true}
+  //           userHasWETH={true}
+  //           userHasApprovedWETH={true}
+  //           handleConvertETH={action('handleConvertETH')}
+  //           handleApproveWETH={action('handleApproveWETH')}
+  //           ETHBalance={0}
+  //           WETHBalance={0}
+  //           convertAmount={0}
+  //           convertFraction={0}
+  //           changeConvertETHFraction={action('changeConvertETHFraction')}
+  //           ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+  //           approveTxState={null}
+  //           convertTxState={null}
+  //         />
+  //       </Card>
+  //     </div>
+  //   ))
+  // )
+  // .add(
+  //   'GetStartedModalRenderer (Step 3)',
+  //   withInfo()(() => (
+  //     <div className="bp3-dark">
+  //       <Card>
+  //         <GetStartedModalRenderer
+  //           step="3"
+  //           goToFirstStep={action('goToFirstStep')}
+  //           goToSecondStep={action('goToSecondStep')}
+  //           goToThirdStep={action('goToThirdStep')}
+  //           userHasETH={true}
+  //           userHasWETH={true}
+  //           userHasApprovedWETH={true}
+  //           handleConvertETH={action('handleConvertETH')}
+  //           handleApproveWETH={action('handleApproveWETH')}
+  //           ETHBalance={0}
+  //           WETHBalance={0}
+  //           convertAmount={0}
+  //           convertFraction={0}
+  //           changeConvertETHFraction={action('changeConvertETHFraction')}
+  //           ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+  //           approveTxState={null}
+  //           convertTxState={null}
+  //         />
+  //       </Card>
+  //     </div>
+  //   ))
+  // )
+  // .add(
+  //   'GetStartedModalRenderer (Step 2 - Transactions confirmed)',
+  //   withInfo()(() => (
+  //     <div className="bp3-dark">
+  //       <Card>
+  //         <GetStartedModalRenderer
+  //           step="2"
+  //           goToFirstStep={action('goToFirstStep')}
+  //           goToSecondStep={action('goToSecondStep')}
+  //           goToThirdStep={action('goToThirdStep')}
+  //           userHasETH={true}
+  //           userHasWETH={true}
+  //           userHasApprovedWETH={true}
+  //           handleConvertETH={action('handleConvertETH')}
+  //           handleApproveWETH={action('handleApproveWETH')}
+  //           ETHBalance={0}
+  //           WETHBalance={0}
+  //           convertAmount={0}
+  //           convertFraction={0}
+  //           changeConvertETHFraction={action('changeConvertETHFraction')}
+  //           ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+  //           approveTxStatus={confirmedApproveTxState.approveTxStatus}
+  //           approveTxHash={confirmedApproveTxState.approveTxHash}
+  //           convertTxStatus={confirmedConvertTxState.convertTxStatus}
+  //           convertTxHash={confirmedConvertTxState.convertTxHash}
+  //         />
+  //       </Card>
+  //     </div>
+  //   ))
+  // )
+  // .add(
+  //   'GetStartedModalRenderer (Step 2 - Transactions pending)',
+  //   withInfo()(() => (
+  //     <div className="bp3-dark">
+  //       <Card>
+  //         <GetStartedModalRenderer
+  //           step="2"
+  //           goToFirstStep={action('goToFirstStep')}
+  //           goToSecondStep={action('goToSecondStep')}
+  //           goToThirdStep={action('goToThirdStep')}
+  //           userHasETH={true}
+  //           userHasWETH={false}
+  //           userHasApprovedWETH={false}
+  //           handleConvertETH={action('handleConvertETH')}
+  //           handleApproveWETH={action('handleApproveWETH')}
+  //           ETHBalance={0}
+  //           WETHBalance={0}
+  //           convertAmount={0}
+  //           convertFraction={0}
+  //           changeConvertETHFraction={action('changeConvertETHFraction')}
+  //           ETHAddress={'0x7df6035a91f2c58d229907AF4D9d5Fc12737F21e'}
+  //           approveTxStatus={pendingApproveTxState.approveTxStatus}
+  //           approveTxHash={pendingApproveTxState.approveTxHash}
+  //           convertTxStatus={pendingConvertTxState.convertTxStatus}
+  //           convertTxHash={pendingConvertTxState.convertTxHash}
+  //         />
+  //       </Card>
+  //     </div>
+  //   ))
+  // )

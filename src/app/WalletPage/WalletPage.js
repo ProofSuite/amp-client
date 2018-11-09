@@ -24,6 +24,9 @@ export type Props = {
   quoteTokens: Array<string>,
   showHelpModal: boolean,
   closeHelpModal: void => void,
+  balancesLoading: boolean,
+  WETHBalance: string,
+  WETHAllowance: string,
 }
 
 class WalletPage extends React.PureComponent<Props, State> {
@@ -31,6 +34,21 @@ class WalletPage extends React.PureComponent<Props, State> {
   componentDidMount() {
     const { authenticated, queryAccountData } = this.props
     if (authenticated) queryAccountData()
+  }
+
+  checkOpenHelpModal = () => {
+    const showHelpModalSetting = loadShowHelpModalSetting()
+    const { authenticated, showHelpModal, balancesLoading, WETHBalance, WETHAllowance } = this.props
+
+    console.log(authenticated, showHelpModal, balancesLoading, WETHBalance, WETHAllowance)
+
+    if (!showHelpModalSetting) return false
+    if (!authenticated) return false
+    if (!showHelpModal) return false
+    if (!balancesLoading) return false
+    if (WETHBalance !== '0.0' && WETHAllowance !== '0.0') return false
+
+    return true
   }
 
   render() {
@@ -47,14 +65,13 @@ class WalletPage extends React.PureComponent<Props, State> {
       tokenData,
       quoteTokens,
       baseTokens,
-      showHelpModal,
       closeHelpModal,
     } = this.props
 
-    const showHelpModalSetting = loadShowHelpModalSetting()
-    const isHelpModalOpen = showHelpModalSetting && authenticated && showHelpModal
 
     if (!authenticated) return <Redirect to="/login" />
+
+    const isHelpModalOpen = this.checkOpenHelpModal()
 
     return (
       <WalletPageRenderer

@@ -28,6 +28,8 @@ type Props = {
   approveTxHash: string,
   showHelpModalChecked: boolean,
   toggleShowHelpModalCheckBox: void => void,
+  transactionsPending: boolean,
+  transactionsComplete: boolean,
 }
 
 const NotificationBox = styled.div`
@@ -36,6 +38,12 @@ const NotificationBox = styled.div`
   align-items: flex-end;
   margin-bottom: 10px;
 `
+
+const FooterActionsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  `
 
 const SecondStep = (props: Props) => {
   const {
@@ -57,16 +65,52 @@ const SecondStep = (props: Props) => {
     approveTxStatus,
     approveTxHash,
     showHelpModalChecked,
-    toggleShowHelpModalCheckBox
+    toggleShowHelpModalCheckBox,
+    transactionsPending,
+    transactionsComplete
   } = props
 
-  if (userHasWETH && userHasApprovedWETH) {
+
+  if (transactionsPending) {
     return (
       <React.Fragment>
         <ModalBody>
           <IconBox>
-            <Icon intent='success' iconSize={180} icon='tick-circle' />
-            <h2>You're all set! Click to continue.</h2>
+            <h2>Your setup is in process and will finish shortly</h2>
+          </IconBox>
+          <NotificationBox>
+            {convertTxHash &&
+              <SmallTxNotification
+                txName='Conversion Transaction'
+                status={convertTxStatus}
+                hash={convertTxHash}
+              />}
+          </NotificationBox>
+          <NotificationBox>
+            {approveTxHash &&
+              <SmallTxNotification
+                txName='Approval Transaction'
+                status={approveTxStatus}
+                hash={approveTxHash}
+              />}
+          </NotificationBox>
+        </ModalBody>
+        <ModalFooter>
+          <ButtonBox>
+            <Button intent='primary' large disabled onClick={goToThirdStep} text='Continue' />
+          </ButtonBox>
+        </ModalFooter>
+      </React.Fragment>
+    )
+  }
+
+  if (transactionsComplete) {
+    return (
+      <React.Fragment>
+        <ModalBody>
+          <IconBox>
+            <Icon intent='success' iconSize={150} icon='tick-circle' />
+            <h2>Setup complete!</h2>
           </IconBox>
           <NotificationBox>
             {convertTxHash &&
@@ -93,6 +137,40 @@ const SecondStep = (props: Props) => {
       </React.Fragment>
     )
   }
+
+  // if (userHasWETH && userHasApprovedWETH || transactionsComplete) {
+  //   return (
+  //     <React.Fragment>
+  //       <ModalBody>
+  //         <IconBox>
+  //           <Icon intent='success' iconSize={180} icon='tick-circle' />
+  //           <h2>You're all set! Click to continue.</h2>
+  //         </IconBox>
+  //         <NotificationBox>
+  //           {convertTxHash &&
+  //             <SmallTxNotification
+  //               txName='Conversion Transaction'
+  //               status={convertTxStatus}
+  //               hash={convertTxHash}
+  //             />}
+  //         </NotificationBox>
+  //         <NotificationBox>
+  //           {approveTxHash &&
+  //             <SmallTxNotification
+  //               txName='Approval Transaction'
+  //               status={approveTxStatus}
+  //               hash={approveTxHash}
+  //             />}
+  //         </NotificationBox>
+  //       </ModalBody>
+  //       <ModalFooter>
+  //         <ButtonBox>
+  //           <Button intent='primary' large onClick={goToThirdStep} text='Continue' />
+  //         </ButtonBox>
+  //       </ModalFooter>
+  //     </React.Fragment>
+  //   )
+  // }
 
   if (userHasETH && !userHasWETH) {
     return (
@@ -132,32 +210,35 @@ const SecondStep = (props: Props) => {
             </BalancesBox>
           </BalancesGroup>
           <br />
-          <NotificationBox>
-            {convertTxHash &&
-              <SmallTxNotification
-                txName='Conversion Transaction'
-                status={convertTxStatus}
-                hash={convertTxHash}
-              />}
-          </NotificationBox>
-          <NotificationBox>
-            {approveTxHash &&
-              <SmallTxNotification
-                txName='Approval Transaction'
-                status={approveTxStatus}
-                hash={approveTxHash}
-              />}
-          </NotificationBox>
+
         </ModalBody>
         <ModalFooter>
           <FooterBox>
             <Checkbox checked={showHelpModalChecked} onClick={toggleShowHelpModalCheckBox}>
               Do not show again
             </Checkbox>
+            <FooterActionsBox>
+              <NotificationBox>
+              {convertTxHash &&
+                <SmallTxNotification
+                  txName='Conversion Transaction'
+                  status={convertTxStatus}
+                  hash={convertTxHash}
+                />}
+            </NotificationBox>
+            <NotificationBox>
+              {approveTxHash &&
+                <SmallTxNotification
+                  txName='Approval Transaction'
+                  status={approveTxStatus}
+                  hash={approveTxHash}
+                />}
+            </NotificationBox>
             <div>
               <Button large onClick={goToThirdStep}>Skip</Button>
               <Button large intent='primary' onClick={handleConvertETH} text='Convert ETH' />
             </div>
+            </FooterActionsBox>
           </FooterBox>
         </ModalFooter>
       </React.Fragment>
@@ -197,7 +278,7 @@ const SecondStep = (props: Props) => {
           </Callout>
           <WaitingFormBox>
             <SpinnerBox>
-              <Spinner intent='primary' size={130} />
+              <Spinner intent='primary' size={100} />
             </SpinnerBox>
             <Address>{ETHAddress}</Address>
             <CurrentBalanceBox>
@@ -227,6 +308,7 @@ const FooterBox = styled.div`
   padding-top: 80px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 `
 
 const IconBox = styled.div`

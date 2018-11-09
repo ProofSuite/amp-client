@@ -9,8 +9,8 @@ export const mapStateToProps = (state: State, ownProps: Object) => {
   const selector = getGetStartedModalSelector(state)
 
   return {
-    accountAddress: selector.accountAddress(),
     ETHBalance: selector.ETHBalance(),
+    ETHAddress: selector.ETHAddress(),
     WETHBalance: selector.WETHBalance(),
     WETHAllowance: selector.WETHAllowance(),
     approveTxState: selector.approveTxState(),

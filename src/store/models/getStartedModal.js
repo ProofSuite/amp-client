@@ -8,7 +8,7 @@ import {
 } from '../domains';
 
 import * as notificationActionCreators from '../actions/app'
-import * as actionCreators from '../actions/convertTokensForm'
+import * as actionCreators from '../actions/getStartedModal'
 import { push } from 'connected-react-router'
 
 import { getSigner } from '../services/signer';
@@ -24,7 +24,7 @@ export default function convertTokensFormSelector(state: State) {
   let getStartedModalDomain = getGetStartedModalDomain(state)
 
   return {
-    accountAddress: () => accountDomain.address(),
+    ETHAddress: () => accountDomain.address(),
     ETHBalance: () => accountBalancesDomain.etherBalance(),
     WETHBalance: () => accountBalancesDomain.tokenBalance('WETH'),
     WETHAllowance: () => accountBalancesDomain.tokenAllowance('WETH'),
@@ -55,8 +55,8 @@ export const convertETH = (convertAmount: number): ThunkAction => {
       );
 
       let [convertTx, allowTx] = await Promise.all([convertTxPromise, allowTxPromise]);
-      dispatch(actionCreators.sendConvertTx('ETH', convertTx.hash));
-      dispatch(actionCreators.sendAllowTx('ETH', allowTx.hash));
+      dispatch(actionCreators.sendConvertTx(convertTx.hash));
+      dispatch(actionCreators.sendApproveTx(allowTx.hash));
 
       let [convertTxReceipt, allowTxReceipt] = await Promise.all([
         signer.provider.waitForTransaction(convertTx.hash),
@@ -64,12 +64,12 @@ export const convertETH = (convertAmount: number): ThunkAction => {
       ]);
 
       convertTxReceipt.status === 0
-        ? dispatch(actionCreators.revertConvertTx('ETH', convertTxReceipt))
-        : dispatch(actionCreators.confirmConvertTx('ETH', convertTxReceipt));
+        ? dispatch(actionCreators.revertConvertTx(convertTxReceipt))
+        : dispatch(actionCreators.confirmConvertTx(convertTxReceipt));
 
       allowTxReceipt.status === 0
-        ? dispatch(actionCreators.revertAllowTx('ETH', allowTxReceipt))
-        : dispatch(actionCreators.confirmAllowTx('ETH', allowTxReceipt));
+        ? dispatch(actionCreators.revertApproveTx(allowTxReceipt))
+        : dispatch(actionCreators.confirmApproveTx(allowTxReceipt));
 
       (convertTxReceipt.status === 0 || allowTxReceipt.status === 0)
         ? dispatch(notificationActionCreators.addDangerNotification({ message: 'ETH conversion transaction failed' }))
@@ -100,8 +100,8 @@ export const approveWETH = (): ThunkAction => {
       let txReceipt = await signer.provider.waitForTransaction(tx.hash)
 
       txReceipt.status === 0
-        ? dispatch(actionCreators.revertAllowTx('ETH', txReceipt))
-        : dispatch(actionCreators.confirmConvertTx('ETH', txReceipt))
+        ? dispatch(actionCreators.revertApproveTx(txReceipt))
+        : dispatch(actionCreators.confirmConvertTx(txReceipt))
 
     } catch (error) {
       console.log(error.message)
