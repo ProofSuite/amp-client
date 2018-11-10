@@ -1,21 +1,22 @@
 // @flow
 export type AccountBalanceState = {
   symbol: string,
-  balance: number,
+  balance: string,
   subscribed: boolean,
-  allowance: boolean,
+  allowance: string,
 };
 
 export type AccountBalancesState = { +[string]: AccountBalanceState };
 
 export type AccountBalance = {
   symbol: string,
-  balance: number,
+  balance: string,
+  allowance: string,
 };
 
 export type AccountAllowance = {
   symbol: string,
-  allowance: number | 'pending',
+  allowance: string | 'pending',
 };
 
 export type AccountAllowances = Array<AccountAllowance>;

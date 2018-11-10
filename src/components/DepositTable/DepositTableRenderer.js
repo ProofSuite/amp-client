@@ -57,8 +57,8 @@ const DepositTableRenderer = (props: Props) => {
         <TableHeader>
           <TableHeaderCell>Token Name</TableHeaderCell>
           <TableHeaderCell>Balances</TableHeaderCell>
-          <TableHeaderCell>Allowances</TableHeaderCell>
-          <TableHeaderCell style={{ width: '40%' }}>Allow trading</TableHeaderCell>
+          <TableHeaderCell>Unlocked</TableHeaderCell>
+          <TableHeaderCell style={{ width: '40%' }}></TableHeaderCell>
         </TableHeader>
       </Table>
       <TableBodyContainer>

@@ -1,19 +1,17 @@
 // @flow
 import { connect } from 'react-redux';
-import getTradingPageSelector, { queryDefaultData } from '../../store/models/tradingPage';
+import tradingPageSelector, { getDefaultData } from '../../store/models/tradingPage';
 
 import type { State } from '../../types'
 
 export function mapStateToProps(state: State) {
-  let selector = getTradingPageSelector(state)
+  let tradingPageProps = tradingPageSelector(state)
 
-  return {
-    authenticated: selector.authenticated
-  }
+  return { ...tradingPageProps }
 }
 
 export const mapDispatchToProps = {
-  queryDefaultData,
+  getDefaultData,
 };
 
 export default connect(

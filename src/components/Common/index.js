@@ -19,3 +19,4 @@ export { default as ColoredCryptoIcon } from './ColoredCryptoIcon';
 export { default as Indent } from './Indent'
 export { default as ModalBody } from './ModalBody'
 export { default as ModalFooter } from './ModalFooter'
+export { default as CloseableCallout } from './CloseableCallout'
