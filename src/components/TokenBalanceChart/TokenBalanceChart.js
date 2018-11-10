@@ -7,8 +7,9 @@ type State = {
   activeIndex: number
 }
 
-type Props = {
-  tokenBalances: Array<Object>
+export type Props = {
+  tokenBalances: Array<Object>,
+  balancesLoading: boolean
 }
 
 export default class TokenBalanceChart extends React.PureComponent<Props,State> {
@@ -86,15 +87,18 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
 
 render() {
   const { activeIndex } = this.state
-  const { tokenBalances } = this.props
+  const { tokenBalances, balancesLoading } = this.props
+  const isEmpty = (tokenBalances.length === 0)
 
   return (
     <TokenBalanceChartRenderer
+      balancesLoading={balancesLoading}
       activeIndex={activeIndex}
       data={tokenBalances}
       renderActiveShape={this.renderActiveShape}
       renderLabels={this.renderLabels}
       onPieEnter={this.onPieEnter}
+      isEmpty={isEmpty}
     />
   )
 }

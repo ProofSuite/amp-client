@@ -108,7 +108,8 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       let numericBalances = []
 
       keys.forEach(key => {
-        numericBalances.push({symbol: key, value: round(state[key].balance)})
+        let value = round(state[key].balance)
+        if (value !== 0) numericBalances.push({symbol: key, value })
       })
 
       return numericBalances
