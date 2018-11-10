@@ -4,6 +4,8 @@ export type Address = string;
 
 export type TxHash = string;
 
+export type TokenSymbol = string;
+
 export type TxReceipt = {
   blockHash: string,
   blockNumber: string,

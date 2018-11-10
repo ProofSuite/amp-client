@@ -51,12 +51,8 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
       let { wallet, encryptedWallet, storeWallet, storePrivateKey } = params;
       let { address, privateKey } = wallet;
 
-      console.log('hey')
-
-      if (storeWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
+      if (storeWallet && encryptedWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
       if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, privateKey });
-
-      console.log('heyo')
 
       await createDefaultWalletSigner(wallet);
       dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));

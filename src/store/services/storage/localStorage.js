@@ -40,7 +40,7 @@ export const getLocalStorageWallets = () => {
 
   Object.keys(localStorage).map(key => {
     if (isEthereumAddress(key) && isJson(localStorage[key])) {
-      wallets.push({ address: key, key: sessionStorage[key], rank: index })
+      wallets.push({ address: key, encryptedWallet: localStorage[key], rank: index })
       index++
     }
 

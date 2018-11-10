@@ -105,9 +105,11 @@ const List = styled.ul``;
 const NormalListItem = styled.li`
   margin: 10px auto;
 `;
+
 const HeadListItem = styled.li`
   color: ${Colors.GRAY2};
 `;
+
 const LinkText = styled.a`
   color: ${Colors.LIGHT_GRAY5} !important;
   &:hover {

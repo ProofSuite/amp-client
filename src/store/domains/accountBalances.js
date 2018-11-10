@@ -86,14 +86,14 @@ export function cleared() {
 
 export default function accountBalancesDomain(state: AccountBalancesState) {
   return {
-    balances() {
+    balances(): AccountBalancesState {
       return state
     },
     // we assume that account balances are loading as long as we have no ETH and no WETH state.
-    loading() {
+    loading(): boolean {
       return (state['ETH'] && state['WETH']) ? false : true
     },
-    formattedBalances() {
+    formattedBalances(): * {
       let keys = Object.keys(state)
       let formattedBalances = {}
 
@@ -103,27 +103,34 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
 
       return formattedBalances
     },
-    tokenChartBalances() {
+    tokenChartBalances(): * {
       let keys = Object.keys(state)
       let numericBalances = []
 
       keys.forEach(key => {
-        numericBalances.push({symbol: key, value: round(state[key].balance)})
+        let value = round(state[key].balance)
+        if (value !== 0) numericBalances.push({symbol: key, value })
       })
 
       return numericBalances
     },
-    etherBalance() {
+    etherBalance(): ?string {
       return state['ETH'] ? state['ETH'].balance : null
     },
-    formattedEtherBalance() {
+    formattedEtherBalance(): ?string {
       return state['ETH'] ? formatNumber(state['ETH'].balance, { precision: 2 }) : null
     },
-    tokenBalance(symbol: string) {
+    tokenBalance(symbol: string): ?string {
       return state[symbol] ? state[symbol].balance : null
     },
-    tokenAllowance(symbol: string) {
+    tokenAllowance(symbol: string): ?string {
       return state[symbol] ? state[symbol].allowance : null
+    },
+    numericTokenBalance(symbol: string): ?number {
+      return state[symbol] ? Number(state[symbol].balance) : null
+    },
+    numericTokenAllowance(symbol: string): ?number {
+      return state[symbol] ? Number(state[symbol].allowance) : null
     },
     formattedTokenBalance(symbol: string) {
       return state[symbol] ? formatNumber(state[symbol].balance, { precision: 2 }) : null
@@ -134,7 +141,8 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       //can be converted into a bignumber. After the bignumber balance is computed, we divide by
       //the precisionMultiplier to offset the initial multiplication by the precision multiplier
       let precisionMultiplier = 1e4
-      let balancePoints = round(state[symbol].balance * precisionMultiplier, 0)
+      let numericBalance = Number(state[symbol].balance)
+      let balancePoints = round(numericBalance * precisionMultiplier, 0)
 
       let etherMultiplier = utils.bigNumberify('1000000000000000000')
       let balance = utils
@@ -144,16 +152,16 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
 
       return balance
     },
-    get(symbol: string) {
+    get(symbol: string): ?string {
       return state[symbol] ? state[symbol].balance : null
     },
-    isSubscribed(symbol: string) {
+    isSubscribed(symbol: string): boolean {
       return state[symbol] ? state[symbol].subscribed : false
     },
-    isAllowed(symbol: string) {
+    isAllowed(symbol: string): boolean {
       return state[symbol] ? state[symbol].allowance > ALLOWANCE_MINIMUM : false
     },
-    isAllowancePending(symbol: string) {
+    isAllowancePending(symbol: string): boolean {
       return state[symbol] ? state[symbol].allowance === 'pending' : false
     },
     //To simply UX, we suppose that a trader is "allowing" the exchange smart contract to trade tokens if the
