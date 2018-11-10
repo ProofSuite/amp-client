@@ -48,6 +48,8 @@ class DepositForm extends React.PureComponent<Props, State> {
     this.subscribe(token);
   }
 
+  //TODO handle the case where the modal is closed but not unmounted which
+  //TODO causes the unsubscribtion to not happen
   componentWillUnmount() {
     this.unsubscribe();
   }
@@ -70,7 +72,7 @@ class DepositForm extends React.PureComponent<Props, State> {
   handleSubmitChangeToken = async (e: SyntheticEvent<>) => {
     const newToken = this.state.inputToken || this.state.token;
     this.setState({ showTokenSuggest: false, token: newToken });
-    this.subscribe(newToken);
+    // this.subscribe(newToken);
   };
 
   handleChangeConvertAmount = (e: number) => {
@@ -78,7 +80,7 @@ class DepositForm extends React.PureComponent<Props, State> {
   };
 
   handleConfirm = () => {
-    this.unsubscribe();
+    // this.unsubscribe();
     const { token, shouldAllow, shouldConvert, convertAmount } = this.state;
     const { confirmTokenDeposit, confirmEtherDeposit } = this.props;
 

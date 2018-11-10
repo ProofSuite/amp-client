@@ -105,18 +105,23 @@ export async function queryTokenAllowances(owner: string, spender: string, token
   return allowances
 }
 
+//TODO replace by a real subscription. Currently provider.on(address, handler) does not seem to work
 export async function subscribeEtherBalance(address: string, callback: number => void) {
   const provider = getProvider()
-  const initialBalance = await provider.getBalance(address)
+  let previousBalance = await provider.getBalance(address)
 
-  const handler = async balance => {
-    if (balance !== initialBalance) callback(utils.formatEther(balance))
-  }
+  let listener = setInterval(async() => {
+    const balance = await provider.getBalance(address)
+    if (balance !== previousBalance) callback(utils.formatEther(balance))
+    previousBalance = balance
+  }, 10000)
 
-  provider.on(address, handler)
-
+  // provider.on({ address }, params => console.log(params))
+  // return () => {
+  //   provider.removeListener(address, handler)
+  // }
   return () => {
-    provider.removeListener(address, handler)
+    clearInterval(listener);
   }
 }
 

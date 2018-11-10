@@ -1,13 +1,13 @@
-import React from 'react';
-import { defineMessages, FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
-import { Callout, Card, Intent, Spinner, Tag } from '@blueprintjs/core';
-import WalletLoginForm from '../../components/WalletLoginForm';
-import CreateWalletModal from '../../components/CreateWalletModal';
-import MetamaskIcon from '../../components/Icons/Metamask';
-import { KeyIcon, WalletIcon } from '../../components/Icons';
-import { Centered, Divider, LargeText, Colors } from '../../components/Common';
-import type { CreateWalletParams } from '../../types/createWallet';
+import React from 'react'
+import { defineMessages, FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import { Callout, Card, Intent, Spinner, Tag } from '@blueprintjs/core'
+import WalletLoginForm from '../../components/WalletLoginForm'
+import CreateWalletForm from '../../components/CreateWalletForm'
+import MetamaskIcon from '../../components/Icons/Metamask'
+import { KeyIcon, WalletIcon } from '../../components/Icons'
+import { Centered, Divider, LargeText, Colors } from '../../components/Common'
+import type { CreateWalletParams } from '../../types/createWallet'
 
 type Props = {
   view: string,
@@ -15,7 +15,7 @@ type Props = {
   showLoginMethods: () => void,
   loginWithMetamask: void => void,
   loginWithWallet: void => void,
-};
+}
 
 const LoginPageRenderer = (props: Props) => {
   const {
@@ -23,12 +23,11 @@ const LoginPageRenderer = (props: Props) => {
     loginWithMetamask,
     loginWithWallet,
     showCreateWallet,
-    hideModal,
     showWalletLoginForm,
     metamaskStatus,
     showLoginMethods,
     walletCreated,
-  } = props;
+  } = props
 
   const views = {
     loginMethods: (
@@ -39,18 +38,30 @@ const LoginPageRenderer = (props: Props) => {
         metamaskStatus={metamaskStatus}
       />
     ),
-    wallet: <WalletLoginFormView loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />,
-    createWallet: (
-      <CreateWalletModal walletCreated={walletCreated} hideModal={hideModal} visible={view === 'createWallet'} />
+    wallet: (
+      <WalletLoginViewWrapper>
+        <WalletLoginForm loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />
+      </WalletLoginViewWrapper>
     ),
-    loading: <LoginLoadingView />,
-  };
+    createWallet: (
+      <CreateWalletViewWrapper>
+        <CreateWalletForm walletCreated={walletCreated} showLoginMethods={showLoginMethods}/>
+      </CreateWalletViewWrapper>
+    ),
+    loading: (
+      <Centered>
+        <Spinner large intent="primary" />
+        <Divider />
+        <LargeText intent="primary">Logging In ...</LargeText>
+      </Centered>
+    ),
+  }
 
-  return views[view];
-};
+  return views[view]
+}
 
 const LoginMethodsView = (props: Props) => {
-  const { showWalletLoginForm, loginWithMetamask, metamaskStatus, showCreateWallet } = props;
+  const { showWalletLoginForm, loginWithMetamask, metamaskStatus, showCreateWallet } = props
   return (
     <Wrapper>
       <Announcement>
@@ -102,29 +113,10 @@ const LoginMethodsView = (props: Props) => {
         </LoginCards>
       </LoginMethods>
     </Wrapper>
-  );
-};
+  )
+}
 
-const WalletLoginFormView = (props: Props) => {
-  const { loginWithWallet, showLoginMethods } = props;
-  return (
-    <WalletLoginViewWrapper>
-      <WalletLoginForm loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />
-    </WalletLoginViewWrapper>
-  );
-};
-
-const LoginLoadingView = (props: Props) => {
-  return (
-    <Centered>
-      <Spinner large intent="primary" />
-      <Divider />
-      <LargeText intent="primary">Logging In ...</LargeText>
-    </Centered>
-  );
-};
-
-export default LoginPageRenderer;
+export default LoginPageRenderer
 
 const Wrapper = styled.div`
   display: grid;
@@ -140,6 +132,14 @@ const WalletLoginViewWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const CreateWalletViewWrapper = styled.div`
+  margin-top: 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`
 
 const Announcement = styled.section``;
 

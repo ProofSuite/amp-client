@@ -27,10 +27,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 98%;
-  width: 98%;
-  top: 2%;
-  left: 2%;
+  height: 100%;
+  width: 100%;
+  top: 0%;
+  left: 0%;
   z-index: 100;
 `;
 

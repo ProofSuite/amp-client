@@ -7,19 +7,16 @@ import getWalletPageSelector, {
 } from '../../store/models/walletPage';
 
 import { removeNotification } from '../../store/actions/app';
+import { closeHelpModal } from '../../store/actions/walletPage'
 
 import type { State } from '../../types'
 
 
 export function mapStateToProps(state: State ) {
   let walletPageSelector = getWalletPageSelector(state)
-  let { tokenData } = walletPageSelector
-  let loading = !(tokenData.length > 0);
 
   return {
-    ...walletPageSelector,
-    isDefaultAccountSet: false,
-    loading
+    ...walletPageSelector
   }
 }
 
@@ -28,6 +25,7 @@ export const mapDispatchToProps = {
   removeNotification,
   toggleAllowance,
   redirectToTradingPage,
+  closeHelpModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)

@@ -23,7 +23,6 @@ describe('connect(Component)', () => {
       expect(props).toHaveProperty('queryAccountData');
       expect(props).toHaveProperty('loading');
       expect(props).toHaveProperty('depositTableSelector');
-      expect(props).toHaveProperty('isDefaultAccountSet');
       expect(props).toHaveProperty('authenticated');
       expect(props).toHaveProperty('pvtKeyLocked');
       return null;
@@ -47,7 +46,6 @@ describe('mapStateToProps(state, props)', () => {
     expect(result).toBeDefined();
     expect(result).toEqual({
       tokenData,
-      isDefaultAccountSet: false,
       loading: false
     });
   });

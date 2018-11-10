@@ -108,7 +108,9 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
           : dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
 
       } else {
-        let convertTx = await weth.deposit();
+        let convertTx = await weth.deposit({
+          value: utils.parseEther(convertAmount.toString())
+        });
         dispatch(actionCreators.sendConvertTx('ETH', convertTx.hash));
         let convertTxReceipt = await signer.provider.waitForTransaction(convertTx.hash);
 

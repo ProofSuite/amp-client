@@ -44,15 +44,19 @@ export const createWalletFromPrivateKey = privateKey => {
   let wallet;
   try {
     wallet = new Wallet(privateKey);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
   return { wallet };
 };
 
 export const createWalletFromJSON = async (encryptedWallet, password) => {
   let wallet;
   try {
-    wallet = await Wallet.fromEncryptedWallet(encryptedWallet, password);
-  } catch (e) {}
+    wallet = await Wallet.fromEncryptedJson(encryptedWallet, password);
+  } catch (e) {
+    console.log(e)
+  }
   return { wallet, encryptedWallet };
 };
 
@@ -60,7 +64,9 @@ export const createWalletFromMnemonic = async mnemonic => {
   let wallet;
   try {
     wallet = await Wallet.fromMnemonic(mnemonic);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
   return { wallet };
 };
 

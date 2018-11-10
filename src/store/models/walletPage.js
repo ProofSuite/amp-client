@@ -19,7 +19,7 @@ export default function walletPageSelector(state: State) {
   let transferTokensFormDomain = getTransferTokensFormDomain(state)
 
   // ETH is not a token so we add it to the list to display in the deposit table
-  let ETH = { symbol: 'ETH' }
+  let ETH = { symbol: 'ETH', address: '0x0' }
   let tokens = tokenDomain.tokens()
   let quoteTokens = quoteTokenSymbols
   let baseTokens = tokenDomain.symbols().filter(symbol => quoteTokens.indexOf(symbol) !== -1)
@@ -27,12 +27,16 @@ export default function walletPageSelector(state: State) {
 
   return {
     etherBalance: accountBalancesDomain.formattedEtherBalance(),
+    balancesLoading: accountBalancesDomain.loading(),
+    WETHBalance: accountBalancesDomain.tokenBalance('WETH'),
+    WETHAllowance: accountBalancesDomain.tokenAllowance('WETH'),
     tokenData: tokenData,
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,
     accountAddress: accountDomain.address(),
     authenticated: accountDomain.authenticated(),
     currentBlock: accountDomain.currentBlock(),
+    showHelpModal: accountDomain.showHelpModal(),
     connected: true,
     gas: transferTokensFormDomain.getGas(),
     gasPrice: transferTokensFormDomain.getGasPrice()
@@ -64,6 +68,9 @@ export function queryAccountData(): ThunkAction {
       await accountBalancesService.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance))
       )
+
+      await accountBalancesService.subscribeEtherBalance(accountAddress, balance =>
+        dispatch(actionCreators.updateBalance({ symbol: 'ETH', balance: balance })))
 
       await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance => {
         return dispatch(actionCreators.updateAllowance(allowance))
