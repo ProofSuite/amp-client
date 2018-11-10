@@ -4,6 +4,11 @@ export type WalletsState = {
   +byAddress: Object,
 };
 
+export type Wallet = {
+  address: string,
+  encryptedWallet: string
+}
+
 export type CreateWalletAction = {
   type: 'createWallet/CREATE',
   payload: { address: string, encryptedWallet: string },

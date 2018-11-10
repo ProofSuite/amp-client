@@ -4,14 +4,17 @@ import { Card, Button } from '@blueprintjs/core';
 import { Colors } from '../Common';
 import styled from 'styled-components';
 
+import type { Wallet } from '../../types/wallets'
+import type { Address } from '../../types/Common'
+
 type Props = {
-  wallets: Array<Object>,
-  removeWallet: void => void
+  wallets: Array<Wallet>,
+  removeWallet: Address => void
 }
 
 const WalletSettingsForm = (props: Props) => {
-  const { wallets, removeWallet } = props;
-  const walletsAreStored = wallets.slice(1).length > 0;
+  const { wallets, removeWallet } = props
+  const walletsAreStored = wallets.length > 0
 
   return (
     <Card>
@@ -23,7 +26,7 @@ const WalletSettingsForm = (props: Props) => {
         </ListItem>
       </Header>
       <List>
-        {wallets.slice(1).map(function(wallet, index) {
+        {wallets.map(function(wallet, index) {
           return (
             <ListItem key={index}>
               {wallet.address}
