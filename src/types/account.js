@@ -3,6 +3,7 @@ export type AccountState = {
   +address: ?string,
   +privateKey: ?string,
   +currentBlock: ?string,
+  +showHelpModal: boolean,
 };
 
 export type UpdateAccountAction = {

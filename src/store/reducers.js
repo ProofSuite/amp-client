@@ -7,6 +7,7 @@ import tokenSearcherActionTypes from './actions/tokenSearcher'
 import tokensActionTypes from './actions/tokens'
 import accountActionTypes from './actions/account'
 import depositFormActionTypes from './actions/depositForm'
+import getStartedModalActionTypes from './actions/getStartedModal'
 import settingsActionTypes from './actions/settings'
 import createWalletActionTypes from './actions/createWallet'
 import walletPageActionTypes from './actions/walletPage'
@@ -29,6 +30,7 @@ import * as ohlcvEvents from './domains/ohlcv'
 import * as tokensEvents from './domains/tokens'
 import * as accountEvents from './domains/account'
 import * as depositFormEvents from './domains/depositForm'
+import * as getStartedModalEvents from './domains/getStartedModal'
 import * as settingsEvents from './domains/settings'
 import * as tokenPairsEvents from './domains/tokenPairs'
 import * as signerEvents from './domains/signer'
@@ -237,6 +239,8 @@ export const account = createReducer(action => {
       return accountEvents.accountUpdated(payload.address, '')
     case loginPageActionTypes.loginWithWallet:
       return accountEvents.accountUpdated(payload.address, payload.privateKey)
+    case walletPageActionTypes.updateShowHelpModal:
+      return accountEvents.showHelpModalUpdated(payload.showHelpModal)
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved()
     case accountActionTypes.updateCurrentBlock:
@@ -270,11 +274,33 @@ export const depositForm = createReducer(action => {
   }
 })
 
+export const getStartedModal = createReducer(action => {
+  const { type, payload } = action
+  switch (type) {
+    case getStartedModalActionTypes.sendConvertTx:
+      return getStartedModalEvents.convertTxSent(payload.hash)
+    case getStartedModalActionTypes.revertConvertTx:
+      return getStartedModalEvents.convertTxReverted(payload.receipt)
+    case getStartedModalActionTypes.confirmConvertTx:
+      return getStartedModalEvents.convertTxConfirmed(payload.receipt)
+    case getStartedModalActionTypes.sendApproveTx:
+      return getStartedModalEvents.approveTxSent(payload.hash)
+    case getStartedModalActionTypes.revertApproveTx:
+      return getStartedModalEvents.approveTxReverted(payload.receipt)
+    case getStartedModalActionTypes.confirmApproveTx:
+      return getStartedModalEvents.approveTxConfirmed(payload.receipt)
+    default:
+      return getStartedModalEvents.initialized()
+  }
+})
+
 export const convertTokensForm = createReducer(action => {
   const { type, payload } = action
   switch (type) {
     case convertTokensFormActionTypes.confirm:
       return convertTokensFormEvents.confirmed(payload.tokenSymbol)
+    case convertTokensFormActionTypes.reset:
+      return convertTokensFormEvents.reset(payload.tokenSymbol)
     case convertTokensFormActionTypes.sendConvertTx:
       return convertTokensFormEvents.convertTxSent(payload.tokenSymbol, payload.hash)
     case convertTokensFormActionTypes.revertConvertTx:
@@ -326,11 +352,11 @@ export const notifications = createReducer(action => {
   const { type, payload } = action
   switch (type) {
     case appActionTypes.addNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.addSuccessNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.addDangerNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.removeNotification:
       return notificationEvents.notificationRemoved(payload.id)
     default:

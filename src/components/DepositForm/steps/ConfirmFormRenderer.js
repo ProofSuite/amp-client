@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TxNotification from '../../TxNotification';
 import { Icon } from '@blueprintjs/core';
+import { ModalBody } from '../../Common'
 
 const ConfirmFormRenderer = (props: Props) => {
   const {
@@ -31,7 +32,7 @@ const ConfirmFormRenderer = (props: Props) => {
   switch (transactionStatus) {
     case 'failed':
       return (
-        <div>
+        <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
               <Icon icon="error" intent="danger" iconSize={200} />
@@ -54,11 +55,11 @@ const ConfirmFormRenderer = (props: Props) => {
               title={notificationBoxTitles.convert[convertTxStatus]}
             />
           </TxNotificationBox>
-        </div>
+        </ModalBody>
       );
     case 'sent':
       return (
-        <div>
+        <ModalBody>
           <ConfirmBox>
             <h3>Transactions have been sent!</h3>
           </ConfirmBox>
@@ -78,11 +79,11 @@ const ConfirmFormRenderer = (props: Props) => {
               title={notificationBoxTitles.convert[convertTxStatus]}
             />
           </TxNotificationBox>
-        </div>
+        </ModalBody>
       );
     case 'confirmed':
       return (
-        <div>
+        <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
               <Icon icon="tick-circle" intent="success" iconSize={200} />
@@ -105,7 +106,7 @@ const ConfirmFormRenderer = (props: Props) => {
               title={notificationBoxTitles.convert[convertTxStatus]}
             />
           </TxNotificationBox>
-        </div>
+        </ModalBody>
       );
     default:
       return null;

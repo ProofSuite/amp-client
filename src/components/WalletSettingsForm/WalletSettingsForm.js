@@ -1,27 +1,32 @@
+// @flow
 import React from 'react';
 import { Card, Button } from '@blueprintjs/core';
 import { Colors } from '../Common';
 import styled from 'styled-components';
 
-const WalletSettingsForm = props => {
-  const { wallets, removeWallet } = props;
-  const walletsAreStored = wallets.slice(1).length > 0;
+import type { Wallet } from '../../types/wallets'
+import type { Address } from '../../types/Common'
+
+type Props = {
+  wallets: Array<Wallet>,
+  removeWallet: Address => void
+}
+
+const WalletSettingsForm = (props: Props) => {
+  const { wallets, removeWallet } = props
+  const walletsAreStored = wallets.length > 0
 
   return (
     <Card>
       <Heading>Remove Wallets from Browser Storage</Heading>
       <Header>
         <ListItem>
-          <p>
-            <b>Address</b>
-          </p>
-          <p>
-            <b>Remove</b>
-          </p>
+          <p><b>Address</b></p>
+          <p><b>Remove</b></p>
         </ListItem>
       </Header>
       <List>
-        {wallets.slice(1).map(function(wallet, index) {
+        {wallets.map(function(wallet, index) {
           return (
             <ListItem key={index}>
               {wallet.address}

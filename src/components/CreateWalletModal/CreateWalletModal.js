@@ -52,14 +52,10 @@ class CreateWalletModal extends React.PureComponent<Props, State> {
     }, 500);
   };
 
-  componentDidMount() {}
-
   updateProgressBar = (percent: number) => {
     if (percent === 1) {
       this.setState({ encryptionPercentage: 1 });
-      setTimeout(() => {
-        this.setState({ currentStep: 1 });
-      }, 1500);
+      setTimeout(() => { this.setState({ currentStep: 1 }); }, 1500);
     } else if (percent > 0.75) {
       this.setState({ encryptionPercentage: 0.75 });
     } else if (percent > 0.5) {

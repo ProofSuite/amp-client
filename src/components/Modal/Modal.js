@@ -17,13 +17,12 @@ const Modal = (props: Props): Node => {
       title={props.title}
       icon={props.icon}
       isOpen={props.isOpen}
-      usePortal={false}
       onClose={props.onClose}
       style={{ width: '800px' }}
       className="bp3-dark"
       canOutsideClickClose={false}
     >
-      <div className="bp3-dialog-body">{props.children}</div>
+      <div>{props.children}</div>
     </Dialog>
   );
 };

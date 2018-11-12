@@ -89,8 +89,20 @@ export function subscribeBalance(token: Token): ThunkAction {
             updateBalanceHandler
           ));
 
-      return () => {
+      return async () => {
+        //First we unsubscribe the deposit + update balance listener
         unsubscribe();
+
+        //Then we resubscribe the update balance listener.
+        const updateBalanceHandler = balance => dispatch(actionCreators.updateBalance(symbol, balance))
+        token.address === '0x0'
+        ? (unsubscribe = await accountBalancesService.subscribeEtherBalance(accountAddress, updateBalanceHandler))
+        : (unsubscribe = await accountBalancesService.subscribeTokenBalance(
+            accountAddress,
+            token,
+            updateBalanceHandler
+          ))
+
         dispatch(actionCreators.unsubscribeBalance(symbol));
       };
     } catch (error) {

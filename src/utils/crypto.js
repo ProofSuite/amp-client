@@ -33,3 +33,12 @@ export const getTradeHash = trade => {
 export const getRandomNonce = () => {
   return randInt(0, 1e16).toString()
 }
+
+export const isEthereumAddress = (address) => {
+  if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+      // Check if it has the basic requirements of an address
+      return false;
+  }
+
+  return true
+}

@@ -19,7 +19,7 @@ export default function walletPageSelector(state: State) {
   let transferTokensFormDomain = getTransferTokensFormDomain(state)
 
   // ETH is not a token so we add it to the list to display in the deposit table
-  let ETH = { symbol: 'ETH' }
+  let ETH = { symbol: 'ETH', address: '0x0' }
   let tokens = tokenDomain.tokens()
   let quoteTokens = quoteTokenSymbols
   let baseTokens = tokenDomain.symbols().filter(symbol => quoteTokens.indexOf(symbol) !== -1)
@@ -27,12 +27,16 @@ export default function walletPageSelector(state: State) {
 
   return {
     etherBalance: accountBalancesDomain.formattedEtherBalance(),
+    balancesLoading: accountBalancesDomain.loading(),
+    WETHBalance: accountBalancesDomain.tokenBalance('WETH'),
+    WETHAllowance: accountBalancesDomain.tokenAllowance('WETH'),
     tokenData: tokenData,
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,
     accountAddress: accountDomain.address(),
     authenticated: accountDomain.authenticated(),
     currentBlock: accountDomain.currentBlock(),
+    showHelpModal: accountDomain.showHelpModal(),
     connected: true,
     gas: transferTokensFormDomain.getGas(),
     gasPrice: transferTokensFormDomain.getGasPrice()
@@ -65,6 +69,9 @@ export function queryAccountData(): ThunkAction {
         dispatch(actionCreators.updateBalance(balance))
       )
 
+      await accountBalancesService.subscribeEtherBalance(accountAddress, balance =>
+        dispatch(actionCreators.updateBalance({ symbol: 'ETH', balance: balance })))
+
       await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance => {
         return dispatch(actionCreators.updateAllowance(allowance))
       })
@@ -85,31 +92,37 @@ export function redirectToTradingPage(symbol: string): ThunkAction {
   }
 }
 
-export function toggleAllowance(tokenSymbol: string): ThunkAction {
+export function toggleAllowance(symbol: string): ThunkAction {
   return async (dispatch, getState) => {
     try {
       const state = getState()
       const tokens = getTokenDomain(state).bySymbol()
       const accountAddress = getAccountDomain(state).address()
-      const isAllowed = getAccountBalancesDomain(state).isAllowed(tokenSymbol)
-      const isPending = getAccountBalancesDomain(state).isAllowancePending(tokenSymbol)
-
-      const tokenContractAddress = tokens[tokenSymbol].address
+      const isAllowed = getAccountBalancesDomain(state).isAllowed(symbol)
+      const isPending = getAccountBalancesDomain(state).isAllowancePending(symbol)
+      const tokenContractAddress = tokens[symbol].address
 
       if (isPending) throw new Error('Trading approval pending')
 
-      if (isAllowed) {
-        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0)
-      } else {
-        await accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD)
+      const approvalConfirmedHandler = (txConfirmed) => {
+        txConfirmed
+          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Approval Successful. You can now start trading!` }))
+          : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Approval Failed. Please try again.` }))
       }
 
-      dispatch(actionCreators.updateAllowance({ symbol: tokenSymbol, allowance: 'pending' }))
-      dispatch(
-        notifierActionCreators.addSuccessNotification({
-          message: 'Allowance pending. You will be able to trade after transaction is validated'
-        })
-      )
+      const approvalRemovedHandler = (txConfirmed) => {
+        txConfirmed
+          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Allowance Removal Successful.` }))
+          : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
+      }
+
+      isAllowed
+        ? accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0, approvalRemovedHandler)
+        : accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
+
+      dispatch(actionCreators.updateAllowance({ symbol: symbol, allowance: 'pending' }))
+      dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} approval pending. You will be able to trade after transaction is confirmed.` }))
+
     } catch (e) {
       console.log(e)
       if (e.message === 'Trading approval pending') {

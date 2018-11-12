@@ -50,7 +50,7 @@ class TransferTokensForm extends React.PureComponent<Props, State> {
       gas = customGas || gas;
       gasPrice = customGasPrice || gasPrice;
 
-      if (token.address === '0x0' && amount && receiver) {
+      if (token.symbol === 'ETH' && amount && receiver) {
         validateEtherTx({ amount, receiver, gas, gasPrice });
       } else if (amount && receiver && token) {
         validateTransferTokensTx({ amount, receiver, gas, gasPrice, tokenAddress: token.address });
@@ -63,7 +63,7 @@ class TransferTokensForm extends React.PureComponent<Props, State> {
       let { amount, receiver, token } = this.state;
       let { gas, gasPrice, validateEtherTx, validateTransferTokensTx } = this.props;
 
-      if (token.address === '0x0' && amount && receiver) {
+      if (token.symbol === 'ETH' && amount && receiver) {
         validateEtherTx({ amount, receiver, gas, gasPrice });
       } else if (token && amount && receiver) {
         validateTransferTokensTx({ amount, receiver, gas, gasPrice, tokenAddress: token.address });
@@ -78,7 +78,7 @@ class TransferTokensForm extends React.PureComponent<Props, State> {
     gasPrice = customGasPrice || gasPrice;
 
 
-    if (this.state.token.address === '0x0') {
+    if (this.state.token.symbol === 'ETH') {
       sendEtherTx({ amount, receiver, gas, gasPrice });
     } else {
       sendTransferTokensTx({ amount, receiver, gas, gasPrice, tokenAddress: token.address });

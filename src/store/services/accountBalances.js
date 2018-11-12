@@ -16,24 +16,40 @@ export async function queryEtherBalance(address: string) {
   }
 }
 
-export async function updateAllowance(tokenAddress: string, spender: string, address: string, balance: string) {
+export async function updateAllowance(
+  tokenAddress: string,
+  spender: string,
+  address: string,
+  balance: string,
+  txConfirmHandler: boolean => void
+) {
   const signer = getSigner()
-
   const contract = new Contract(tokenAddress, ERC20, signer)
-  await contract.approve(spender, parseFloat(balance))
-  const allowance = await contract.allowance(address, spender)
-  return { allowance: utils.formatEther(allowance) }
+  const tx = await contract.approve(spender, parseFloat(balance))
+  const receipt = await signer.provider.waitForTransaction(tx.hash)
+
+  receipt.status === 1
+    ? txConfirmHandler(true)
+    : txConfirmHandler(false)
+
 }
 
-export async function updateExchangeAllowance(tokenAddress: string, address: string, balance: Object | number) {
+export async function updateExchangeAllowance(
+  tokenAddress: string,
+  address: string,
+  balance: Object | number,
+  txConfirmHandler: boolean => void
+) {
   const signer = getSigner()
   const exchange = EXCHANGE_ADDRESS[signer.provider.network.chainId]
   const contract = new Contract(tokenAddress, ERC20, signer)
 
-  await contract.approve(exchange, balance)
-  const allowance = await contract.allowance(address, exchange)
+  const tx = await contract.approve(exchange, balance)
+  const receipt = await signer.provider.waitForTransaction(tx.hash)
 
-  return { allowance: utils.formatEther(allowance) }
+  receipt.status === 1
+    ? txConfirmHandler(true)
+    : txConfirmHandler(false)
 }
 
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
@@ -89,18 +105,23 @@ export async function queryTokenAllowances(owner: string, spender: string, token
   return allowances
 }
 
+//TODO replace by a real subscription. Currently provider.on(address, handler) does not seem to work
 export async function subscribeEtherBalance(address: string, callback: number => void) {
   const provider = getProvider()
-  const initialBalance = await provider.getBalance(address)
+  let previousBalance = await provider.getBalance(address)
 
-  const handler = async balance => {
-    if (balance !== initialBalance) callback(utils.formatEther(balance))
-  }
+  let listener = setInterval(async() => {
+    const balance = await provider.getBalance(address)
+    if (balance !== previousBalance) callback(utils.formatEther(balance))
+    previousBalance = balance
+  }, 10000)
 
-  provider.on(address, handler)
-
+  // provider.on({ address }, params => console.log(params))
+  // return () => {
+  //   provider.removeListener(address, handler)
+  // }
   return () => {
-    provider.removeListener(address, handler)
+    clearInterval(listener);
   }
 }
 

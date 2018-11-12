@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
-import { Icon, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
-import {} from '../Common'
+import { Icon, Tooltip, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
 import {
   Box,
   Colors,
@@ -221,7 +220,9 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
         {change ? `${change}%` : 'N.A'}
       </Change24H>
       <span className="star">
-        <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
+        <Tooltip hoverOpenDelay={500} content={favorited ? ' Unfavorite' : 'Favorite'}>
+          <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
+        </Tooltip>
       </span>
     </li>
   )

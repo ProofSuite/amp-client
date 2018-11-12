@@ -5,6 +5,7 @@ import { Button, ControlGroup, InputGroup, Label, Callout } from '@blueprintjs/c
 import TokenSelect from '../TokenSelect';
 import GasSettings from '../GasSettings';
 import TxNotification from '../TxNotification';
+import { ModalBody } from '../Common'
 
 type Props = {
   loading: boolean,
@@ -42,7 +43,7 @@ const TransferTokensFormRenderer = (props: Props) => {
   } = props;
 
   return (
-    <div>
+    <ModalBody>
       <ImportantNoticeCallout icon="warning-sign" intent="success" title="Important Notice">
         <p>Double check the entered transaction information is correct. Proofsuite has no control
           over your transactions. Your are fully responsible for your funds and assets.</p>
@@ -76,7 +77,7 @@ const TransferTokensFormRenderer = (props: Props) => {
         />
       </TxNotificationBox>
       <Button text="Send Transaction" intent="primary" large type="submit" fill onClick={handleSubmit} />
-    </div>
+    </ModalBody>
   );
 };
 

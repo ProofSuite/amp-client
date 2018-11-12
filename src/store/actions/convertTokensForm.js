@@ -3,6 +3,7 @@ import type { TxReceipt } from '../../types/common';
 
 const actionTypes = {
   confirm: 'convertTokensForm/CONFIRM',
+  reset: 'convertTokensForm/RESET',
   sendConvertTx: 'convertTokensForm/SEND_CONVERT_TX',
   revertConvertTx: 'convertTokensForm/REVERT_CONVERT_TX',
   confirmConvertTx: 'convertTokensForm/CONFIRM_CONVERT_TX',
@@ -14,6 +15,13 @@ const actionTypes = {
 export function confirm(tokenSymbol: string) {
   return {
     type: actionTypes.confirm,
+    payload: { tokenSymbol }
+  };
+}
+
+export function reset(tokenSymbol: string) {
+  return {
+    type: actionTypes.reset,
     payload: { tokenSymbol }
   };
 }

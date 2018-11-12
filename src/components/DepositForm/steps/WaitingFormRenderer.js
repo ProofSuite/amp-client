@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Callout, ControlGroup, Spinner } from '@blueprintjs/core';
+import { ModalBody, ModalFooter } from '../../Common'
 import TokenSuggest from '../../TokenSuggest';
 
 const WaitingFormRenderer = (props: Props) => {
@@ -16,7 +17,7 @@ const WaitingFormRenderer = (props: Props) => {
   } = props;
 
   return (
-    <div>
+    <ModalBody>
       <Callout intent="primary" title="Notice">
         Send {token.symbol} to the address displayed below. This form will update once your account balance is changed.
       </Callout>
@@ -27,18 +28,20 @@ const WaitingFormRenderer = (props: Props) => {
           (Your current balance is {balance} {token.symbol})
         </CurrentBalanceBox>
       </WaitingFormBox>
-      {showTokenSuggest ? (
-        <ControlGroup>
-          <Button onClick={toggleTokenSuggest} text="Cancel" minimal />
-          <TokenSuggest tokens={tokens} token={token} onChange={handleChangeToken} />
-          <Button intent="primary" text="Confirm" onClick={handleSubmitChangeToken} />
-        </ControlGroup>
-      ) : (
-        <ControlGroup>
-          <Button onClick={toggleTokenSuggest} text="Deposit another token" />
-        </ControlGroup>
-      )}
-    </div>
+      <ModalFooter>
+        {showTokenSuggest ? (
+          <ControlGroup>
+            <Button onClick={toggleTokenSuggest} text="Cancel" minimal />
+            <TokenSuggest tokens={tokens} token={token} onChange={handleChangeToken} />
+            <Button intent="primary" text="Confirm" onClick={handleSubmitChangeToken} />
+          </ControlGroup>
+        ) : (
+          <ControlGroup>
+            <Button onClick={toggleTokenSuggest} text="Deposit another token" />
+          </ControlGroup>
+        )}
+      </ModalFooter>
+    </ModalBody>
   );
 };
 

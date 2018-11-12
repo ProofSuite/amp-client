@@ -5,8 +5,9 @@ import { Redirect } from 'react-router-dom'
 
 import type { TokenData } from '../../types/tokens'
 
+import { loadShowHelpModalSetting } from '../../store/services/storage'
+
 export type Props = {
-  loading: boolean,
   connected: boolean,
   accountAddress: string,
   etherBalance: string,
@@ -20,17 +21,35 @@ export type Props = {
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
   quoteTokens: Array<string>,
+  showHelpModal: boolean,
+  closeHelpModal: void => void,
+  balancesLoading: boolean,
+  WETHBalance: string,
+  WETHAllowance: string,
 }
 
-class WalletPage extends React.PureComponent<Props> {
+class WalletPage extends React.PureComponent<Props, State> {
+
   componentDidMount() {
     const { authenticated, queryAccountData } = this.props
     if (authenticated) queryAccountData()
   }
 
+  checkOpenHelpModal = () => {
+    const showHelpModalSetting = loadShowHelpModalSetting()
+    const { authenticated, showHelpModal, balancesLoading, WETHBalance, WETHAllowance } = this.props
+
+    if (!showHelpModalSetting) return false
+    if (!authenticated) return false
+    if (!showHelpModal) return false
+    if (balancesLoading) return false
+    if (WETHBalance !== '0.0' && WETHAllowance !== '0.0') return false
+
+    return true
+  }
+
   render() {
     const {
-      loading,
       connected,
       authenticated,
       accountAddress,
@@ -42,15 +61,19 @@ class WalletPage extends React.PureComponent<Props> {
       tokenData,
       quoteTokens,
       baseTokens,
+      closeHelpModal,
+      balancesLoading
     } = this.props
 
+
     if (!authenticated) return <Redirect to="/login" />
+
+    const isHelpModalOpen = this.checkOpenHelpModal()
 
     return (
       <WalletPageRenderer
         gas={gas}
         gasPrice={gasPrice}
-        loading={loading}
         etherBalance={etherBalance}
         tokenData={tokenData}
         baseTokens={baseTokens}
@@ -58,7 +81,10 @@ class WalletPage extends React.PureComponent<Props> {
         connected={connected}
         accountAddress={accountAddress}
         toggleAllowance={toggleAllowance}
+        balancesLoading={balancesLoading}
         redirectToTradingPage={redirectToTradingPage}
+        isHelpModalOpen={isHelpModalOpen}
+        closeHelpModal={closeHelpModal}
       />
     )
   }

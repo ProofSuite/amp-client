@@ -4,6 +4,8 @@ import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { Intent } from '@blueprintjs/core';
 import Text, { EmphasizedText, LargeText } from './Text';
+import CloseableCallout from './CloseableCallout'
+
 import Heading from './Heading';
 import Loading from './Loading';
 import Footer from './Footer';
@@ -18,3 +20,10 @@ storiesOf('Text', module)
   .add('Large Text', withInfo({ source: false })(() => <LargeText intent="primary">Hello</LargeText>))
   .add('Heading', withInfo({ source: false })(() => <Heading h="1">Hello</Heading>))
   .add('Loading', withInfo({ source: false })(() => <Loading />));
+
+storiesOf('Callout', module)
+  .addDecorator(withKnobs)
+  .add('CloseableCallout', withInfo({ source: false })(() => <CloseableCallout title='Callout title' message='Hey I am Tai' intent='success' />))
+  .add('CloseableCallout-Danger', withInfo({ source: false })(() => <CloseableCallout title='Callout title' message='Hey I am Tai' intent='danger' />))
+  .add('CloseableCallout-NoTitle', withInfo({ source: false })(() => <CloseableCallout message='adflka;sjdf asdlfkjasdfl;k asdfkla;sdjf sadl;fkajsdfl;asdkj asdfkla;sdjfasdf asdfka;sjdf asdkfaj;sdl asdfasld;kfja asdfasdf;lkj asdfasdfsdf asdkfj;asdf' intent='danger' icon={null} />))
+

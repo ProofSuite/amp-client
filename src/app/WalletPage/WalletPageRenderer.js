@@ -5,13 +5,13 @@ import { Card } from '@blueprintjs/core'
 import CenteredSpinner from '../../components/Common/CenteredSpinner'
 import DepositTable from '../../components/DepositTable'
 import WalletInfo from '../../components/WalletInfo'
+import GetStartedModal from '../../components/GetStartedModal'
 
 import type { TokenData } from '../../types/tokens'
 
 type Props = {
   gas: number,
   gasPrice: number,
-  loading: boolean,
   etherBalance: string,
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
@@ -19,22 +19,29 @@ type Props = {
   connected: boolean,
   accountAddress: string,
   toggleAllowance: string => void,
-  redirectToTradingPage: string => void
+  redirectToTradingPage: string => void,
+  isHelpModalOpen: boolean,
+  closeHelpModal: void => void,
+  balancesLoading: boolean,
 }
 
-const WalletPageRenderer = ({
-  gas,
-  gasPrice,
-  loading,
-  etherBalance,
-  tokenData,
-  baseTokens,
-  quoteTokens,
-  connected,
-  accountAddress,
-  toggleAllowance,
-  redirectToTradingPage
-}: Props) => {
+const WalletPageRenderer = (props: Props) => {
+  const {
+    gas,
+    gasPrice,
+    etherBalance,
+    tokenData,
+    baseTokens,
+    quoteTokens,
+    connected,
+    accountAddress,
+    toggleAllowance,
+    redirectToTradingPage,
+    isHelpModalOpen,
+    closeHelpModal,
+    balancesLoading
+  } = props
+
   return (
     <WalletPageBox>
       <RowWrapper>
@@ -47,22 +54,23 @@ const WalletPageRenderer = ({
           />
         </WalletInfoBox>
         <WalletPageContentBox>
-          {loading ? (
+          {balancesLoading ? (
             <CenteredSpinner />
           ) : (
             <DepositTableBox>
               <DepositTable
                 connected={connected}
-                toggleAllowance={toggleAllowance}
                 tokenData={tokenData}
                 baseTokens={baseTokens}
                 quoteTokens={quoteTokens}
+                toggleAllowance={toggleAllowance}
                 redirectToTradingPage={redirectToTradingPage}
               />
             </DepositTableBox>
           )}
         </WalletPageContentBox>
       </RowWrapper>
+      <GetStartedModal isOpen={isHelpModalOpen} closeHelpModal={closeHelpModal} />
     </WalletPageBox>
   )
 }
@@ -100,7 +108,5 @@ const DepositTableBox = styled.div`
   height: 100%;
   width: 100%;
 `
-
-
 
 export default WalletPageRenderer

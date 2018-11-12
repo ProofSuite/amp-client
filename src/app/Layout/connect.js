@@ -1,18 +1,31 @@
+//@flow
 import { connect } from 'react-redux';
-import layoutSelector from '../../store/models/layout';
-import * as actionCreators from '../../store/models/layout';
+import layoutSelector, { queryAccountData } from '../../store/models/layout';
 
-export function mapStateToProps(state, props) {
+import type { State } from '../../types'
+import type { Props as LayoutProps } from './Layout'
+
+export function mapStateToProps(state: State, props: Object): LayoutProps {
   const selector = layoutSelector(state);
 
   return {
+    ETHBalance: selector.ETHBalance,
+    WETHBalance: selector.WETHBalance,
+    WETHAllowance: selector.WETHAllowance,
     authenticated: selector.authenticated,
-    address: selector.account,
+    address: selector.address,
+    accountLoading: selector.accountLoading,
     currentBlock: selector.currentBlock,
+    locale: 'TODO',
+    messages: 'TODO'
   };
+}
+
+const mapDispatchToProps = {
+  queryAccountData
 }
 
 export default connect(
   mapStateToProps,
-  actionCreators
+  mapDispatchToProps,
 );

@@ -46,11 +46,12 @@ export function loginWithMetamask(): ThunkAction {
 export function loginWithWallet(params: CreateWalletParams): ThunkAction {
   return async dispatch => {
     try {
+      console.log(params)
       dispatch(actionCreators.requestLogin());
       let { wallet, encryptedWallet, storeWallet, storePrivateKey } = params;
       let { address, privateKey } = wallet;
 
-      if (storeWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
+      if (storeWallet && encryptedWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
       if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, privateKey });
 
       await createDefaultWalletSigner(wallet);

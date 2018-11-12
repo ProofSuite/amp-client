@@ -13,6 +13,64 @@ export function addNotification(options) {
   };
 }
 
+export function addOrderAddedNotification() {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderAdded',
+    }
+  }
+}
+
+export function addOrderCancelledNotification() {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderCancelled'
+    }
+  }
+}
+
+export function addOrderPendingNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderPending',
+      options,
+    }
+  }
+}
+
+export function addOrderSuccessNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderSuccess',
+      options,
+    }
+  }
+}
+
+export function addTxSuccessNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'txSuccess',
+      options
+    }
+  }
+}
+
+export function addTxRevertedNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'txReverted',
+      options,
+    }
+  }
+}
+
 export function addSuccessNotification({ message }) {
   return {
     type: actionTypes.addNotification,
