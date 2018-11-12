@@ -67,7 +67,8 @@ contracts['1'] = {
   "SNT": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
   "WETH": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   "WTC": "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74",
-  "ZRX": "0xe41d2489571d322189246dafa5ebde1f4699f498"
+  "ZRX": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+  "TUSD": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e"
 }
 
 

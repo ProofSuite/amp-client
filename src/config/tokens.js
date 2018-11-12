@@ -1,7 +1,7 @@
 import { DEFAULT_NETWORK_ID } from './environment.js'
 import addresses from './addresses.json';
 
-const networkIDs = ['1000', '8888', '4' ]
+const networkIDs = ['1000', '8888', '4', '1']
 
 let tokensBySymbolTable = {}
 
