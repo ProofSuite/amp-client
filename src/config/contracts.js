@@ -10,7 +10,7 @@ export const EXCHANGE_ADDRESS = {
 };
 
 export const WETH_ADDRESS = {
-  '1': '0x7cc4b1851c35959d34e635a470f6b5c43ba3c9c9',
+  '1': addresses[1]['WETH'],
   '2': '0x7cc4b1851c35959d34e635a470f6b5c43ba3c9c9',
   '3': '0x7cc4b1851c35959d34e635a470f6b5c43ba3c9c9',
   '4': addresses[4]['WETH'],
