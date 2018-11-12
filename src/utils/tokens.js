@@ -24,7 +24,7 @@ export const generateTokenPairs = (quoteTokens, tokens) => {
           quoteTokenSymbol: quoteToken.symbol,
           baseTokenAddress: token.address,
           quoteTokenAddress: quoteToken.address,
-          pricepointMultiplier: 1e6
+          pricepointMultiplier: 1e9
         };
       }
     });
