@@ -116,13 +116,15 @@ export function toggleAllowance(symbol: string): ThunkAction {
           : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
       }
 
-      isAllowed
-        ? accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0, approvalRemovedHandler)
-        : accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
+      if (isAllowed) {
+        accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0, approvalRemovedHandler)
+        dispatch(notifierActionCreators.addSuccessNotification({ message: `Locking ${symbol}. You will not be able to trade ${symbol} after the transaction is confirmed` }))
+      } else {
+        accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
+        dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${symbol}. You will be able to trade  ${symbol} after the transaction is confirmed.` }))
+      }
 
-      dispatch(actionCreators.updateAllowance({ symbol: symbol, allowance: 'pending' }))
-      dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} approval pending. You will be able to trade after transaction is confirmed.` }))
-
+      dispatch(actionCreators.updateAllowance({ symbol, allowance: 'pending' }))
     } catch (e) {
       console.log(e)
       if (e.message === 'Trading approval pending') {
