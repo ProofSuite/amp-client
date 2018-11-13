@@ -1,5 +1,6 @@
 import React from 'react';
 import { Position, Toaster } from '@blueprintjs/core';
+import { formatNumber } from 'accounting-js'
 
 // eslint-disable-next-line
 type Props = {
@@ -49,13 +50,13 @@ const NotificationFactory = (type, options) => {
               Your order is now pending. You will receive a notification when the transaction is confirmed<br/>
                Pair: {options.pair} <br/>
                Side: {options.side} <br/>
-               Amount: {options.filled}/{options.amount} <br/>
-               Price: {options.price}
+               Amount: { formatNumber(options.filled, { precision: 3 }) }/{ formatNumber(options.amount, { precision: 3 }) }<br/>
+               Price: { formatNumber(options.price, { precision: 3 })}
             </React.Fragment>
         ),
         icon: 'tick',
         intent: 'success',
-        timeout: 0,
+        timeout: 30,
       }
     case "orderSuccess":
       return {
@@ -69,13 +70,13 @@ const NotificationFactory = (type, options) => {
              Your order has been successfully executed!<br/>
              Pair: {options.pair} <br/>
              Side: {options.side} <br/>
-             Amount: {options.filled}/{options.amount} <br/>
-             Price: {options.price}
+             Amount: { formatNumber(options.filled, { precision: 3 }) }/{ formatNumber(options.amount, { precision: 3 }) }<br/>
+             Price: { formatNumber(options.price, { precision: 3 })}
           </React.Fragment>
         ),
         icon: 'tick',
         intent: 'success',
-        timeout: 0
+        timeout: 10
       }
     case "orderAdded":
       return {

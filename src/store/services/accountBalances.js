@@ -105,25 +105,40 @@ export async function queryTokenAllowances(owner: string, spender: string, token
   return allowances
 }
 
-//TODO replace by a real subscription. Currently provider.on(address, handler) does not seem to work
+
 export async function subscribeEtherBalance(address: string, callback: number => void) {
   const provider = getProvider()
-  let previousBalance = await provider.getBalance(address)
 
-  let listener = setInterval(async() => {
-    const balance = await provider.getBalance(address)
-    if (balance !== previousBalance) callback(utils.formatEther(balance))
-    previousBalance = balance
-  }, 10000)
+  const handler = balance => {
+    callback(utils.formatEther(balance))
+  }
 
-  // provider.on({ address }, params => console.log(params))
-  // return () => {
-  //   provider.removeListener(address, handler)
-  // }
+  provider.on(address, handler)
+
   return () => {
-    clearInterval(listener);
+    provider.removeListener(address, handler)
   }
 }
+
+// //TODO replace by a real subscription. Currently provider.on(address, handler) does not seem to work
+// export async function subscribeEtherBalance(address: string, callback: number => void) {
+//   const provider = getProvider()
+//   let previousBalance = await provider.getBalance(address)
+
+//   let listener = setInterval(async() => {
+//     const balance = await provider.getBalance(address)
+//     if (balance !== previousBalance) callback(utils.formatEther(balance))
+//     previousBalance = balance
+//   }, 10000)
+
+//   // provider.on({ address }, params => console.log(params))
+//   // return () => {
+//   //   provider.removeListener(address, handler)
+//   // }
+//   return () => {
+//     clearInterval(listener);
+//   }
+// }
 
 export async function subscribeTokenBalance(address: string, token: Object, callback: number => void) {
   const provider = getProvider()

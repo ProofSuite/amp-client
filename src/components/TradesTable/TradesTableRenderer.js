@@ -48,13 +48,8 @@ const TradesTableRenderer = (props: Props) => {
 const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
   const { trades } = props;
 
-  if (!trades) {
-    return <Loading />;
-  }
-
-  if (trades.length === 0) {
-    return <CenteredMessage message="No trades for this token pair" />
-  }
+  if (!trades) return <Loading />
+  if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
     <div>
@@ -85,13 +80,8 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
 const UserTradesPanel = (props: { trades: Array<Trade> }) => {
   const { trades } = props;
 
-  if (!trades) {
-    return <Loading />;
-  }
-
-  if (trades.length === 0) {
-    return <CenteredMessage message="No trades for this token pair" />
-  }
+  if (!trades) return <Loading />
+  if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
     <div>
@@ -99,7 +89,6 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
         <HeadingRow>
           <HeaderCell>PRICE</HeaderCell>
           <HeaderCell>AMOUNT</HeaderCell>
-          <HeaderCell>SIDE</HeaderCell>
           <HeaderCell>STATUS</HeaderCell>
           <HeaderCell cellName="time">TIME</HeaderCell>
         </HeadingRow>
@@ -110,7 +99,6 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
             <Cell>{trade.price}</Cell>
             <Cell>{trade.amount}</Cell>
             <Cell>{trade.status}</Cell>
-            <Cell color={trade.side === 'BUY' ? Colors.BUY : Colors.SELL}>{trade.side}</Cell>
             <Cell cellName="time" muted>{format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}</Cell>
         </Row>
         ))}
@@ -199,6 +187,7 @@ const Cell = styled.span`
 // `;
 
 const HeaderCell = styled.span`
+  min-width: 35px;
   width: ${props => (props.cellName === 'time' ? '43%' : '12%')};
 `;
 
