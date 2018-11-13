@@ -319,6 +319,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     } = this;
 
     const saveEncryptedWalletDisabled = method === 'privateKey' || method === 'mnemonic';
+    const savedWalletsDisabled = (!localStorageWallets || localStorageWallets.length === 0);
 
     return (
       <WalletLoginFormRenderer
@@ -349,6 +350,7 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
         savedWalletAddress={savedWalletAddress}
         savedWalletPassword={savedWalletPassword}
         savedWalletPasswordStatus={savedWalletPasswordStatus}
+        savedWalletsDisabled={savedWalletsDisabled}
       />
     );
   }
