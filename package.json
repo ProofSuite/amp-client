@@ -33,7 +33,7 @@
     "d3-shape": "^1.2.0",
     "d3-time-format": "^2.1.1",
     "date-fns": "^1.29.0",
-    "ethers": "^4.0.4",
+    "ethers": "^4.0.11",
     "express": "^4.16.3",
     "jest-localstorage-mock": "^2.2.0",
     "nodemon": "^1.18.2",

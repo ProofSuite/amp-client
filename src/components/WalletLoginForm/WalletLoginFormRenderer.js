@@ -62,6 +62,7 @@ type Props = {
   submit: (SyntheticEvent<>) => Promise<void>,
   showLoginMethods: () => void,
   saveEncryptedWalletDisabled: boolean,
+  savedWalletsDisabled: boolean,
 };
 
 const inputStatuses = {
@@ -132,6 +133,7 @@ const WalletLoginFormRenderer = (props: Props) => {
     submit,
     saveEncryptedWalletDisabled,
     showLoginMethods,
+    savedWalletsDisabled
   } = props;
 
   const inputForms = {
@@ -144,6 +146,7 @@ const WalletLoginFormRenderer = (props: Props) => {
         savedWalletAddress={savedWalletAddress}
         savedWalletPassword={savedWalletPassword}
         savedWalletPasswordStatus={savedWalletPasswordStatus}
+        savedWalletDisabled={savedWalletsDisabled}
       />
     ),
     privateKey: (
@@ -204,7 +207,7 @@ const WalletLoginFormRenderer = (props: Props) => {
   return (
     <Card elevation="1" style={{ width: '600px', position: 'relative' }}>
       <RadioGroup name="method" onChange={handleChange} selectedValue={method} label="Choose how to access your wallet">
-        <Radio label="Saved Wallet" value="savedWallet" />
+        <Radio label="Saved Wallet" value="savedWallet" disabled={savedWalletsDisabled} />
         <Radio label="Private Key" value="privateKey" />
         <Radio label="JSON" value="json" />
         <Radio label="Wallet File" value="walletFile" />

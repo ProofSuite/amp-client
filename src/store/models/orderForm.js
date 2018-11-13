@@ -69,11 +69,12 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       order.side === 'BUY'
         ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pricepointMultiplier)
-        : sellAmount = utils.bigNumberify(amount)
+        : sellAmount = utils.bigNumberify(order.amount)
 
       let WETHBalance = accountBalancesDomain.getBigNumberBalance('WETH')
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
       let fee = utils.bigNumberify(makeFee)
+
 
       if (sellTokenBalance.lt(sellAmount)) {
         return dispatch(

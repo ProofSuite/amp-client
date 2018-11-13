@@ -8,6 +8,7 @@ export default {
 
 export const errorMessages = {
   invalidJSON: 'invalid json response',
+  ioTimeout: 'i/o timeout',
   insufficientBuyTokenBalance: 'insufficient buy token balance',
   insufficientSellTokenBalace: 'insufficient sell token balance',
   invalidAddressInputArgument: 'invalid input argument (arg="_to", reason="invalid address", value=null, version=4.0.4)',
@@ -52,7 +53,9 @@ export const parseNewOrderError = (error: Error) => {
   window.errorMessage = errorMessage
 
   if (errorMessage.includes(errorMessages.invalidJSON)) return 'Connection error'
+  if (errorMessage.includes(errorMessages.ioTimeout)) return 'Connection was broken and re-opened. Please try again'
   if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
+
 
   return errorMessage
 }
@@ -61,6 +64,7 @@ export const parseCancelOrderError = (error: Error) => {
   let errorMessage = error.message
 
   if (errorMessage.includes(errorMessages.invalidJSON)) return 'Connection error'
+  if (errorMessage.includes(errorMessages.ioTimeout)) return 'Connection was broken and re-opened. Please try again'
   if (errorMessage.includes(errorMessages.metamaskUserDeniedSignature)) return 'Message signature denied'
 
   return errorMessage
