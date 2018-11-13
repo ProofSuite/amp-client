@@ -46,8 +46,6 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
         value: utils.parseEther(amount.toString()),
       };
 
-      console.log(tx)
-
       let estimatedGas = await signer.provider.estimateGas(tx);
       estimatedGas = estimatedGas.toNumber();
       dispatch(actionCreators.validateTx('Transaction Valid', estimatedGas));
@@ -76,6 +74,7 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
       dispatch(actionCreators.sendTx(tx.hash));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
+
       if (receipt.status === 0) {
         dispatch(actionCreators.revertTx('Transaction Failed', receipt))
         dispatch(notificationActionCreators.addDangerNotification({ message: 'Token transfer failed.' }))
@@ -85,6 +84,7 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
       }
 
     } catch (error) {
+      console.log(error)
       let errorMessage = parseTransferEtherError(error)
       dispatch(actionCreators.invalidateTx(errorMessage))
     }
@@ -139,6 +139,7 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       }
 
     } catch (error) {
+      console.log(error)
       let errorMessage = parseTransferTokensError(error)
       dispatch(actionCreators.txError('error', errorMessage))
     }
