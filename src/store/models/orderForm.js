@@ -69,21 +69,18 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       order.side === 'BUY'
         ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pricepointMultiplier)
-        : sellAmount = utils.bigNumberify(amount)
+        : sellAmount = utils.bigNumberify(order.amount)
 
       let WETHBalance = accountBalancesDomain.getBigNumberBalance('WETH')
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
       let fee = utils.bigNumberify(makeFee)
 
-      console.log(sellTokenBalance, sellAmount)
 
       if (sellTokenBalance.lt(sellAmount)) {
         return dispatch(
           appActionCreators.addDangerNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
         )
       }
-
-      console.log(WETHBalance, fee)
 
       //TODO include the case where WETH is the token balance
       if (WETHBalance.lt(fee)) {

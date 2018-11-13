@@ -48,13 +48,8 @@ const TradesTableRenderer = (props: Props) => {
 const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
   const { trades } = props;
 
-  if (!trades) {
-    return <Loading />;
-  }
-
-  if (trades.length === 0) {
-    return <CenteredMessage message="No trades for this token pair" />
-  }
+  if (!trades) return <Loading />
+  if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
     <div>
@@ -85,13 +80,8 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
 const UserTradesPanel = (props: { trades: Array<Trade> }) => {
   const { trades } = props;
 
-  if (!trades) {
-    return <Loading />;
-  }
-
-  if (trades.length === 0) {
-    return <CenteredMessage message="No trades for this token pair" />
-  }
+  if (!trades) return <Loading />
+  if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
     <div>
