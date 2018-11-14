@@ -128,8 +128,6 @@ class WalletLoginForm extends React.PureComponent<Props, State> {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [target.name]: value }, this.validate(target.name, value));
 
-    console.log(target.name, value)
-
     if (target.name === 'savedWallet') {
       this.setState({
         savedWalletAddress: getEncryptedWalletAddress(value)

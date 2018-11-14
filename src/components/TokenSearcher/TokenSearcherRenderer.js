@@ -7,9 +7,9 @@ import {
   Centered,
   Chevron,
   OverlaySpinner,
+  ColoredCryptoIcon,
   CryptoIcon,
   ColumnEnd,
-  ColoredCryptoIcon,
   RowStart,
   ColumnStart
 } from '../Common'
@@ -277,7 +277,7 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
       <Row>
         <ColumnStart>
           <RowStart>
-            <ColoredCryptoIcon size={60} name={base} />
+            <ColoredCryptoIcon size={90} color="white" name={base} />
             <TokenPair>{pair}</TokenPair>
           </RowStart>
           <Box mt={3}>
@@ -333,7 +333,7 @@ const SelectedPairCard = styled(Card)`
 `
 
 const TokenPair = styled.h3`
-  color: ${Colors.LINK} !important;
+  /* color: ${Colors.LINK} !important; */
   font-size: 25px;
   margin-top: 15px !important;
   margin-left: 15px !important;

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Button, Switch, Checkbox, InputGroup, Tag } from '@blueprintjs/core';
-import { RowSpaceBetween, ColoredCryptoIcon, Colors } from '../Common';
+import { RowSpaceBetween, CryptoIcon, Colors } from '../Common';
 import styled from 'styled-components';
 
 type TokenData = {
@@ -93,7 +93,7 @@ const ETHRow = (props: Props) => {
     <Row key='ETH'>
       <Cell>
         <TokenNameWrapper>
-          <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
+          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -151,7 +151,7 @@ const WETHRow = (props: Props) => {
     <Row key='WETH'>
       <Cell>
         <TokenNameWrapper>
-          <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
+          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -208,7 +208,7 @@ const QuoteTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
+            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
@@ -261,7 +261,7 @@ const BaseTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <ColoredCryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
+            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>

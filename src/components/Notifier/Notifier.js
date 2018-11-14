@@ -56,7 +56,7 @@ const NotificationFactory = (type, options) => {
         ),
         icon: 'tick',
         intent: 'success',
-        timeout: 30,
+        timeout: 30000,
       }
     case "orderSuccess":
       return {
@@ -76,7 +76,7 @@ const NotificationFactory = (type, options) => {
         ),
         icon: 'tick',
         intent: 'success',
-        timeout: 10
+        timeout: 10000
       }
     case "orderAdded":
       return {
