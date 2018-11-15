@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { PieChart, Pie } from 'recharts'
+import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
 import { Colors, CenteredSpinner } from '../Common'
 import { H4 } from '@blueprintjs/core'
 import styled from 'styled-components'
@@ -10,6 +10,7 @@ type Props = {
   renderActiveShape: () => void;
   renderLabels: () => void;
   data: Array<Object>,
+  colors: Array<string>,
   onPieEnter: (Object, number) => void,
   balancesLoading: boolean,
   isEmpty: boolean,
@@ -22,7 +23,8 @@ const TokenBalanceChartRenderer = (props: Props) => {
     data,
     onPieEnter,
     isEmpty,
-    balancesLoading
+    balancesLoading,
+    colors
   } = props
 
   if (balancesLoading) return (
@@ -38,20 +40,26 @@ const TokenBalanceChartRenderer = (props: Props) => {
   )
 
   return (
-    <PieChart width={600} height={400}>
-    <Pie
-      activeIndex={activeIndex}
-      activeShape={renderActiveShape}
-      data={data}
-      cx={"44%"}
-      cy={"40%"}
-      innerRadius={100}
-      outerRadius={130}
-      fill={Colors.PRIMARY}
-      stroke={Colors.APP_BACKGROUND}
-      onMouseEnter={onPieEnter}
-    />
-   </PieChart>
+    <ResponsiveContainer height={500} width="100%">
+      <PieChart>
+        <Pie
+          data={data}
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          cx={"50%"}
+          cy={"50%"}
+          innerRadius={100}
+          outerRadius={130}
+          fill={Colors.PRIMARY}
+          stroke={Colors.APP_BACKGROUND}
+          onMouseEnter={onPieEnter}
+        >
+          {
+          	data.map((entry, index) => <Cell fill={colors[index % colors.length]}/>)
+          }
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
   )
 }
 

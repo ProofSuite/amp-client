@@ -3,9 +3,9 @@ import { AutoSizer } from 'react-virtualized';
 
 function AutoScaler({ minHeight, minWidth, ratio, children }) {
   return (
-    <AutoSizer disableHeight>
-      {({ width }) => {
-        return children({ width, ratio });
+    <AutoSizer>
+      {({ width, height }) => {
+        return children({ width, height, ratio });
       }}
     </AutoSizer>
   );

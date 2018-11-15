@@ -58,7 +58,7 @@ const DepositTableRenderer = (props: Props) => {
           <TableHeaderCell>Token Name</TableHeaderCell>
           <TableHeaderCell>Balances</TableHeaderCell>
           <TableHeaderCell>Unlocked</TableHeaderCell>
-          <TableHeaderCell style={{ width: '40%' }}></TableHeaderCell>
+          <TableHeaderCell style={{ width: '70%' }}></TableHeaderCell>
         </TableHeader>
       </Table>
       <TableBodyContainer>
@@ -99,7 +99,7 @@ const ETHRow = (props: Props) => {
       </Cell>
       <Cell>{balance}</Cell>
       <Cell></Cell>
-      <Cell style={{ width: '40%' }}>
+      <Cell style={{ width: '70%' }}>
         <ButtonWrapper>
           <Button
             disabled={!connected}
@@ -160,7 +160,7 @@ const WETHRow = (props: Props) => {
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
-      <Cell style={{ width: '40%' }}>
+      <Cell style={{ width: '70%' }}>
         <ButtonWrapper>
           <Button
             disabled={!connected}
@@ -217,7 +217,7 @@ const QuoteTokenRows = (props: Props) => {
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
-        <Cell style={{ width: '40%' }}>
+        <Cell style={{ width: '70%' }}>
           <ButtonWrapper>
             <Button
               disabled={!connected}
@@ -270,7 +270,7 @@ const BaseTokenRows = (props: Props) => {
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
-        <Cell style={{ width: '40%' }}>
+        <Cell style={{ width: '70%' }}>
           <ButtonWrapper>
             <Button
               disabled={!connected}
@@ -305,7 +305,7 @@ const BaseTokenRows = (props: Props) => {
 };
 
 const Table = styled.table.attrs({
-  className: 'bp3-html-table bp3-html-table-bordered bp3--condensed',
+  className: 'bp3-html-table bp3-condensed bp3-interactive',
 })`
   width: 100%;
 `;
@@ -321,18 +321,23 @@ const TableSection = styled.div`
   justify-content: start;
   flex-direction: column;
   height: 100%;
-  width: 99%;
+  width: 100%;
 `;
 
-const TableBody = styled.tbody``;
+const TableBody = styled.tbody`
+`;
 
-const TableHeader = styled.tr``;
+const TableHeader = styled.tr`
+  width: 100%;
+`;
 
 const TableHeaderCell = styled.th`
-  width: 19%;
+width: 15%;
+text-align: middle;
 `;
+
 const Cell = styled.td`
-  width: 19%;
+  width: 15%;
   vertical-align: middle !important;
   & label {
     margin: 0;
@@ -343,7 +348,7 @@ const Row = styled.tr`
   width: 100%;
 `;
 
-const TokenNameWrapper = styled.thead`
+const TokenNameWrapper = styled.span`
   display: flex;
   align-items: center;
   & svg {

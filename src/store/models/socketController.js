@@ -221,7 +221,8 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
 
 function handleOrderError(event: WebsocketEvent): ThunkAction {
   return async dispatch => {
-    dispatch(appActionCreators.addDangerNotification({ message: `Error: ${event.payload}` }))
+    let { message } = event.payload
+    dispatch(appActionCreators.addDangerNotification({ message: `Error: ${message}` }))
   }
 }
 
