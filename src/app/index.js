@@ -27,7 +27,7 @@ const App = () => {
           <Layout>
             <Switch>
               <Route exact path="/" component={LandingPage} />
-              <Route exact path="/faq" component={FaqPage} />
+              <Route path="/faq" component={FaqPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/wallet" component={WalletPage} />
               <Route path="/settings" component={SettingsPage} />

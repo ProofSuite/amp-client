@@ -5,9 +5,14 @@ import FaqItem from './FaqItem';
 
 class FaqPage extends React.PureComponent {
   render() {
+    const { match } = this.props;
+
     return (
       <Container>
-        <FaqItem question="What is WETH ? Why should I convert my Ether to WETH for using the platform ?">
+        <FaqItem
+          question="What is WETH ? Why should I convert my Ether to WETH for using the platform ?"
+          match={match}
+        >
           Ether or ETH is the native currency of the Ethereum blockchain.
           The native ETH currency does not however implement the very convenient ERC20 token standard.
           WETH brings the ERC20 token standard to ether.
@@ -16,7 +21,10 @@ class FaqPage extends React.PureComponent {
           You can convert your WETH back to ether at any time.
         </FaqItem>
         <Divider />
-        <FaqItem question="What are the main difference between AMP and the 0x protocol ?">
+        <FaqItem
+          question="What are the main difference between AMP and the 0x protocol ?"
+          match={match}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Pellentesque elementum dignissim ultricies.
           Fusce rhoncus ipsum tempor eros aliquam consequat.
@@ -27,7 +35,10 @@ class FaqPage extends React.PureComponent {
           Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
         </FaqItem>
         <Divider />
-        <FaqItem question="What are the main difference between AMP and IDEX ?">
+        <FaqItem
+          question="What are the main difference between AMP and IDEX ?"
+          match={match}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Pellentesque elementum dignissim ultricies.
           Fusce rhoncus ipsum tempor eros aliquam consequat.
@@ -38,7 +49,10 @@ class FaqPage extends React.PureComponent {
           Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
         </FaqItem>
         <Divider />
-        <FaqItem question="The AMP Platform and the AMP Protocol is free to use. Then what is the purpose of the Proof Token ?">
+        <FaqItem
+          question="The AMP Platform and the AMP Protocol is free to use. Then what is the purpose of the Proof Token ?"
+          match={match}
+        >
           Nulla facilisi.
           Maecenas sodales nec purus eget posuere.
           Sed sapien quam, pretium a risus in, porttitor dapibus erat.
@@ -55,7 +69,10 @@ class FaqPage extends React.PureComponent {
           Proin lacinia leo a nibh fringilla pharetra.
         </FaqItem>
         <Divider />
-        <FaqItem question="How is AMP different from a centralized exchange like Coinbase or Bitfinex ?">
+        <FaqItem
+          question="How is AMP different from a centralized exchange like Coinbase or Bitfinex ?"
+          match={match}
+        >
           Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
           Proin venenatis lectus dui, vel ultrices ante bibendum hendrerit.
           Aenean egestas feugiat dui id hendrerit.
@@ -70,7 +87,10 @@ class FaqPage extends React.PureComponent {
           Curabitur eu sapien eget nisl sodales fermentum.
         </FaqItem>
         <Divider />
-        <FaqItem question="What type of digital assets and cryptocurrencies are supported by AMP ?">
+        <FaqItem
+          question="What type of digital assets and cryptocurrencies are supported by AMP ?"
+          match={match}
+        >
           Phasellus pulvinar ex id commodo imperdiet.
           Praesent odio nibh, sollicitudin sit amet faucibus id, placerat at metus.
           Donec vitae eros vitae tortor hendrerit finibus.
@@ -86,7 +106,10 @@ class FaqPage extends React.PureComponent {
           Donec dignissim ornare nisl, eget tempor risus malesuada quis.
         </FaqItem>
         <Divider />
-        <FaqItem question="What are PRFT tokens (Proof Tokens) ?">
+        <FaqItem
+          question="What are PRFT tokens (Proof Tokens) ?"
+          match={match}
+        >
           Proof Tokens have originally been sold during the Proofsuite ICO in November 2017.
           1,217,000 tokens have been sold for a total value at the time of around ~3 million USD.
           PRFT Tokens are used to offer rewards with a staking mechanism.
@@ -95,36 +118,57 @@ class FaqPage extends React.PureComponent {
           All of the previously mentioned options are not final yet as we constantly looking to evolve and improve our battle plan.
         </FaqItem>
         <Divider />
-        <FaqItem question="Do I need PRFT tokens to pay network fees ?">
+        <FaqItem
+          question="Do I need PRFT tokens to pay network fees ?"
+          match={match}
+        >
           No, contrary to a some other decentralized exchange protocols, you do not need PRFT tokens or any special token to trade on the AMP-DEX.
           The AMP-DEX transaction fees are paid in WETH (Wrapped-Ether, mentioned above) for convenience and better integration with the rest of our protocol.
         </FaqItem>
         <Divider />
-        <FaqItem question="How does the AMP-DEX work ?">
+        <FaqItem
+          question="How does the AMP-DEX work ?"
+          match={match}
+        >
           While the AMP-DEX is semi-decentralized, we have to try to implement a user experience that is very close to the user experience of centralized exchanges.
           The main differences is that we do not hold your funds.
           Instead you need to give our decentralized exchange contract allowance.
           Each trade needs to be approved via a cryptographic signature without which trades can not be settled.
         </FaqItem>
         <Divider />
-        <FaqItem question="Is the AMP-DEX fully decentralized ?">
+        <FaqItem
+          question="Is the AMP-DEX fully decentralized ?"
+          match={match}
+        >
           While the ultimate vision is to make the AMP-DEX completely decentralized, the current state of Ethereum scalabitiy does not allow for building such an exchange while keeping a good user experience. Therefore, we use an off-chain orderbook system and matching-engine system that allows for immediate
         </FaqItem>
         <Divider />
-        <FaqItem question="How do i get Proof Tokens ?">
+        <FaqItem
+          question="How do i get Proof Tokens ?"
+          match={match}
+        >
           Proof tokens are currently not listed on any decentralized exchange.
           You can however get Proof Tokens on Etherdelta or IDEX until Proof tokens get listen on other exchanges.
         </FaqItem>
         <Divider />
-        <FaqItem question="How do I participate in the token sale ?">
+        <FaqItem
+          question="How do I participate in the token sale ?"
+          match={match}
+        >
           The token sale is currently closed.
         </FaqItem>
         <Divider />
-        <FaqItem question="Is PRFT an ERC20 Token ?">
+        <FaqItem
+          question="Is PRFT an ERC20 Token ?"
+          match={match}
+        >
           Yes, PRFT is an ERC20 Token.
         </FaqItem>
         <Divider />
-        <FaqItem question="Explain how the PRFT token works">
+        <FaqItem
+          question="Explain how the PRFT token works"
+          match={match}
+        >
           Phasellus pulvinar ex id commodo imperdiet.
           Praesent odio nibh, sollicitudin sit amet faucibus id, placerat at metus.
           Donec vitae eros vitae tortor hendrerit finibus.
@@ -140,16 +184,25 @@ class FaqPage extends React.PureComponent {
           Donec dignissim ornare nisl, eget tempor risus malesuada quis.
         </FaqItem>
         <Divider />
-        <FaqItem question="Can I mine PRFT tokens ?">
+        <FaqItem
+          question="Can I mine PRFT tokens ?"
+          match={match}
+        >
           No, PRFT tokens have a fixed supply and cannot be mined.
         </FaqItem>
         <Divider />
-        <FaqItem question="When was the PRFT token launch ? Was there a pre-sale ?">
+        <FaqItem
+          question="When was the PRFT token launch ? Was there a pre-sale ?"
+          match={match}
+        >
           The Proof token sale lasted from November 3 to December 3.
           The pre-sale occured earlier in september.
         </FaqItem>
         <Divider />
-        <FaqItem question="Where can i find a development roadmap ?">
+        <FaqItem
+          question="Where can i find a development roadmap ?"
+          match={match}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           ellentesque elementum dignissim ultricies.
           Fusce rhoncus ipsum tempor eros aliquam consequat.
@@ -160,11 +213,17 @@ class FaqPage extends React.PureComponent {
           Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
         </FaqItem>
         <Divider />
-        <FaqItem question="Where is Proofsuite based ?">
+        <FaqItem
+          question="Where is Proofsuite based ?"
+          match={match}
+        >
           Proofsuite is based in South Korea with remote workers all over the world and members of our business team constantly traveling to establish new relationships.
         </FaqItem>
         <Divider />
-        <FaqItem question="How can I get involved ?">
+        <FaqItem
+          question="How can I get involved ?"
+          match={match}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Pellentesque elementum dignissim ultricies.
           Fusce rhoncus ipsum tempor eros aliquam consequat.
@@ -175,7 +234,10 @@ class FaqPage extends React.PureComponent {
           Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
         </FaqItem>
         <Divider />
-        <FaqItem question="Why the name AMP ? What is the meaning of AMP ?">
+        <FaqItem
+          question="Why the name AMP ? What is the meaning of AMP ?"
+          match={match}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Pellentesque elementum dignissim ultricies.
           Fusce rhoncus ipsum tempor eros aliquam consequat.
