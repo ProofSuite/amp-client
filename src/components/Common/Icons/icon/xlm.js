@@ -1,0 +1,44 @@
+import React from 'react';
+
+const SvgXlm = props => (
+  <svg width={64} height={64} {...props}>
+    <defs>
+      <linearGradient id="xlm_svg__c" x1="50%" x2="50%" y1="0%" y2="100%">
+        <stop offset="0%" stopColor="#FFF" stopOpacity={0.5} />
+        <stop offset="100%" stopOpacity={0.5} />
+      </linearGradient>
+      <circle id="xlm_svg__b" cx={16} cy={15} r={15} />
+      <filter id="xlm_svg__a" width="111.7%" height="111.7%" x="-5.8%" y="-4.2%" filterUnits="objectBoundingBox">
+        <feOffset dy={0.5} in="SourceAlpha" result="shadowOffsetOuter1" />
+        <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation={0.5} />
+        <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1" />
+        <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.199473505 0" />
+      </filter>
+      <path
+        id="xlm_svg__e"
+        d="M12.779 12.527a172.718 172.718 0 0 1 2.11-3.656c2.103-3.533 7.724-3.9 8.03-3.68l-.003.006.004-.004c.306.22 1.86 5.75-.688 8.962a170.192 170.192 0 0 1-2.641 3.241c.93 1.462 1.564 3.931-.625 7.411-.104.164-.3.298-.315-.042-.034-.829-.323-2.477-1.903-4.017l-.1.118c-.485.584-.889.505-1.556.025l-.053-.039a2.64 2.64 0 0 1-.377.819c-.02.028-.042.054-.063.082-1.48 2.083-3.567 3.108-4.705 2.286-1.138-.82-.9-3.178.518-5.306.019-.03.035-.06.055-.09.175-.253.385-.465.62-.634h-.001c-.667-.481-.875-.843-.501-1.507l.053-.096c-1.952-.953-3.57-.67-4.352-.423-.325.103-.266-.133-.146-.29 2.472-3.223 4.95-3.522 6.639-3.166zm-1.046 5.947a1.823 1.823 0 0 0-.254.29c-.014.02-.025.04-.038.06-1 1.465-1.175 3.081-.382 3.64.792.557 2.254-.152 3.296-1.586.015-.02.031-.037.045-.057.069-.097.126-.199.173-.303L13.09 19.45l-1.356-.976zm4.932-8.77a2.337 2.337 0 0 0 .549 3.219 2.245 2.245 0 0 0 3.164-.558 2.336 2.336 0 0 0-.55-3.22 2.245 2.245 0 0 0-3.163.559z"
+      />
+      <filter id="xlm_svg__d" width="119.9%" height="117.6%" x="-9.9%" y="-6.3%" filterUnits="objectBoundingBox">
+        <feOffset dy={0.5} in="SourceAlpha" result="shadowOffsetOuter1" />
+        <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation={0.5} />
+        <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.204257246 0" />
+      </filter>
+    </defs>
+    <g fill="none" fillRule="evenodd">
+      <use fill="#000" filter="url(#xlm_svg__a)" xlinkHref="#xlm_svg__b" />
+      <use fill="#14B6E7" xlinkHref="#xlm_svg__b" />
+      <use
+        fill="url(#xlm_svg__c)"
+        style={{
+          mixBlendMode: 'soft-light',
+        }}
+        xlinkHref="#xlm_svg__b"
+      />
+      <circle cx={16} cy={15} r={14.5} stroke="#000" strokeOpacity={0.097} />
+      <use fill="#000" filter="url(#xlm_svg__d)" xlinkHref="#xlm_svg__e" />
+      <use fill="#FFF" xlinkHref="#xlm_svg__e" />
+    </g>
+  </svg>
+);
+
+export default SvgXlm;

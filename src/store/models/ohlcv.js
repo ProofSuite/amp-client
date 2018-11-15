@@ -1,7 +1,7 @@
 // @flow
 import OHLCVModel from '../domains/ohlcv'
 import * as actionCreators from '../actions/ohlcv'
-import { timeSpans } from '../../components/OHLCV/SmallChart'
+import { timeSpans } from '../../components/OHLCV/OHLCV'
 import type { SendTimelineParams } from '../../types/ohlcv'
 import type { State, ThunkAction } from '../../types'
 

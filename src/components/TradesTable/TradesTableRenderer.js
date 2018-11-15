@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 
 import type { Trade } from '../../types/trades';
 import type { TokenPair } from '../../types/tokens';
+import { ResizableBox } from 'react-resizable'
 
 type Props = {
   selectedTabId: string,
@@ -47,12 +48,11 @@ const TradesTableRenderer = (props: Props) => {
 
 const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
   const { trades } = props;
-
   if (!trades) return <Loading />
   if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
-    <div>
+    <ResizableBox height={500}>
       <ListHeader className="heading">
         <HeadingRow>
           <HeaderCell>PRICE</HeaderCell>
@@ -73,7 +73,7 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
           </Row>
         ))}
       </ListBody>
-    </div>
+    </ResizableBox>
   );
 };
 
@@ -84,7 +84,7 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
   if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
-    <div>
+    <ResizableBox height={500}>
       <ListHeader className="heading">
         <HeadingRow>
           <HeaderCell>PRICE</HeaderCell>
@@ -103,7 +103,7 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
         </Row>
         ))}
       </ListBody>
-    </div>
+    </ResizableBox>
   );
 };
 
@@ -134,7 +134,7 @@ const ListHeader = styled.ul`
 
 const ListBody = styled.ul`
   height: 90%;
-  max-height: 491px;
+  max-height: 500px;
   overflow-y: scroll;
   margin: 0;
 `;

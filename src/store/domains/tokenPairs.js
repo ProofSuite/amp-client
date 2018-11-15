@@ -38,9 +38,7 @@ export const tokenPairUpdated = (baseToken: Token) => {
     let newState = quoteTokens.reduce(
       (result, quoteToken) => {
         if (quoteToken.symbol === baseToken.symbol) return result
-        if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) {
-          return result
-        }
+        if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) return result
 
         let pairSymbol = getPairSymbol(baseToken.symbol, quoteToken.symbol)
         result.byPair[pairSymbol] = {
@@ -51,6 +49,7 @@ export const tokenPairUpdated = (baseToken: Token) => {
           quoteTokenAddress: quoteToken.address,
           pricepointMultiplier: 1e6
         }
+
         return result
       },
       { byPair: {} }

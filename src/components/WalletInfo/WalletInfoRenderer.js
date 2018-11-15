@@ -27,9 +27,9 @@ const WalletInfoRenderer = props => {
           </AccountAddressBox>
         </Box>
         <Tag minimal large interactive intent='primary'>PORTFOLIO OVERVIEW</Tag>
-        <Box>
+        <TokenBalanceChartBox>
           <TokenBalanceChart />
-        </Box>
+        </TokenBalanceChartBox>
         <Box>
           <Button
             fill={true}
@@ -68,5 +68,14 @@ const Box = styled.div`
   align-content: middle;
   text-align: center;
 `;
+
+const TokenBalanceChartBox = styled.div`
+  display: flex;
+  margin-bottom: 40px;
+  justify-content: left;
+  align-content: middle;
+  text-align: center;
+  width: 100%;
+`
 
 export default WalletInfoRenderer;

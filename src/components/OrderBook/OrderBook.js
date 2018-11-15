@@ -88,6 +88,7 @@ class OrderBook extends React.Component<Props, State> {
               <Tab
                 id="depth-chart"
                 title="Depth Chart"
+                disabled
                 panel={<DepthChartRenderer bids={bids} asks={asks} toolTip={this.toolTip} />}
               />
             </Tabs>
