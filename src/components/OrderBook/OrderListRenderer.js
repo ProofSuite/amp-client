@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Loading, Colors } from '../Common';
+import { ResizableBox } from 'react-resizable'
 
 type BidOrAsk = {
   price: number,
@@ -17,7 +18,8 @@ type Props = {
 export const OrderBookRenderer = (props: Props) => {
   const { bids, asks } = props;
   return (
-    <div>
+    <React.Fragment>
+      <ResizableBox height={500} >
       <OrderBookBox>
         {!bids && <Loading />}
         {bids && (
@@ -49,7 +51,8 @@ export const OrderBookRenderer = (props: Props) => {
           </ListContainer>
         )}
       </OrderBookBox>
-    </div>
+        </ResizableBox>
+    </React.Fragment>
   );
 };
 
@@ -84,6 +87,7 @@ const SellOrder = (props: SingleOrderProps) => {
 
 const OrderBookBox = styled.div.attrs({})`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
@@ -93,7 +97,7 @@ const ListContainer = styled.div`
   width: 100%;
 `;
 const List = styled.ul`
-  height: 90%;
+  height: 100%;
   max-height: 500px;
   overflow-y: scroll;
 `;

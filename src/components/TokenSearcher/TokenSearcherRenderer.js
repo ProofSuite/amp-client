@@ -7,13 +7,14 @@ import {
   Centered,
   Chevron,
   OverlaySpinner,
+  ColoredCryptoIcon,
   CryptoIcon,
   ColumnEnd,
-  ColoredCryptoIcon,
   RowStart,
   ColumnStart
 } from '../Common'
 import styled from 'styled-components'
+import { ResizableBox } from 'react-resizable'
 
 type Token = {
   pair: string,
@@ -179,6 +180,7 @@ const Panel = (props: PanelProps) => {
         filterName={filterName}
         sortOrder={sortOrder}
       />
+      <ResizableBox height={150}>
       <ul className="list">
         {tokenPairs.map((token, index) => (
           <TokenRow
@@ -193,6 +195,7 @@ const Panel = (props: PanelProps) => {
         ))}
         {tokenPairs.length === 0 && <Centered>No Tokens to show</Centered>}
       </ul>
+      </ResizableBox>
     </TokenSearchPanelBox>
   )
 }
@@ -209,7 +212,7 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
   const { favorited, lastPrice, change, base, pair } = token
   return (
     <li key={pair} className="row">
-      <CryptoIcon name={base} />
+      <CryptoIcon size={25} name={base} />
       <span className="base" onClick={() => changeSelectedToken(token)}>
         {isFavoriteTokensList ? pair : base}
       </span>
@@ -277,31 +280,19 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
       <Row>
         <ColumnStart>
           <RowStart>
-            <ColoredCryptoIcon size={60} name={base} />
+            <ColoredCryptoIcon size={90} name={base} />
             <TokenPair>{pair}</TokenPair>
           </RowStart>
           <Box mt={3}>
-            <p>
-              {base} Balance: {baseTokenBalance || 'N.A'}
-            </p>
-            <p>
-              {quote} Balance: {quoteTokenBalance || 'N.A' }
-            </p>
+            <p>{base} Balance: {baseTokenBalance || 'N.A'}</p>
+            <p>{quote} Balance: {quoteTokenBalance || 'N.A' }</p>
           </Box>
         </ColumnStart>
         <ColumnEnd>
-          <p className="lastPrice">
-            Last Price: { lastPrice ? `${lastPrice}/${quote}` : 'N.A'}
-          </p>
+          <p>Last Price: { lastPrice ? `${lastPrice}/${quote}` : 'N.A'}</p>
           <p>Volume: {volume || 'N.A' }</p>
-          <p>
-            <span className="label">High: </span>
-            {high || 'N.A'}
-          </p>
-          <p>
-            <span className="label">Low: </span>
-            {low || 'N.A'}
-          </p>
+          <p><span className="label">High: </span>{high || 'N.A'}</p>
+          <p><span className="label">Low: </span>{low || 'N.A'}</p>
         </ColumnEnd>
       </Row>
     </SelectedPairCard>
@@ -333,8 +324,8 @@ const SelectedPairCard = styled(Card)`
 `
 
 const TokenPair = styled.h3`
-  color: ${Colors.LINK} !important;
-  font-size: 25px;
+  /* color: ${Colors.LINK} !important; */
+  font-size: 20px;
   margin-top: 15px !important;
   margin-left: 15px !important;
   margin: 0;

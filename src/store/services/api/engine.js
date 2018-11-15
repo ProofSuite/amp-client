@@ -18,6 +18,28 @@ const request = (endpoint, options) => {
   })
 }
 
+export const fetchInfo = async () => {
+  const response = await request(`/info`)
+
+  if (response.status !== 200) {
+    throw new Error('Error')
+  }
+
+  const { data } = await response.json()
+  return data
+}
+
+export const fetchFees = async () => {
+  const response = await request('/fees')
+
+  if (response.status !== 200) {
+    throw new Error('Error')
+  }
+
+  const { data } = await response.json()
+  return data
+}
+
 export const fetchTokens = async () => {
   const response = await request(`/tokens`)
 

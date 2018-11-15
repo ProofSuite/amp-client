@@ -10,6 +10,7 @@ import OrderBook from '../../components/OrderBook'
 import { CloseableCallout } from '../../components/Common'
 import { Grid } from 'styled-css-grid'
 import { Redirect } from 'react-router-dom'
+import { Resizable, ResizableBox } from 'react-resizable'
 
 type Props = {
   authenticated: boolean,
@@ -102,20 +103,19 @@ class TradingPage extends React.PureComponent<Props, State> {
               handleClose={this.closeCallout}
               {...calloutOptions}
             />
-            <TokenSearcher />
-            <OrderForm side="BUY" />
-            <OrderForm side="SELL" />
+              <TokenSearcher />
+              <OrderForm side="BUY" />
+              <OrderForm side="SELL" />
           </Grid>
         </SidePanel>
 
         <MainPanel>
           <Grid columns={1} alignContent="start">
-
-            <OHLCV />
+              <OHLCV />
             <OrdersTableBox />
             <OrdersAndTradesTableBox>
-              <OrderBookBox />
-              <TradesTableBox />
+                <OrderBookBox />
+                <TradesTableBox />
             </OrdersAndTradesTableBox>
           </Grid>
         </MainPanel>
