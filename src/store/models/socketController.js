@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 
 import * as appActionCreators from '../actions/app'
 import * as actionCreators from '../actions/socketController'
-import { getAccountDomain } from '../domains'
+import { getAccountDomain, getTokenPairsDomain } from '../domains'
 import { getSigner } from '../services/signer'
 import { parseOrder, parseTrade, parseTrades, parseOrderBookData, parseOHLCV } from '../../utils/parsers'
 
@@ -12,7 +12,8 @@ import type { WebsocketEvent, WebsocketMessage } from '../../types/websocket'
 
 export default function socketControllerSelector(state: State) {
   return {
-    authenticated: getAccountDomain(state).authenticated()
+    authenticated: getAccountDomain(state).authenticated(),
+    pairs: getTokenPairsDomain(state).getPairsByCode()
   }
 }
 
@@ -115,7 +116,13 @@ function handleOrderAdded(event: WebsocketEvent): ThunkAction {
 function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
-      let order = parseOrder(event.payload)
+      let state = getState()
+      let pairs = socketControllerSelector(state)
+      let order = event.payload
+      let baseTokenDecimals = pairs[order.pairName].baseTokenDecimals
+      let quoteTokenDecimals = pairs[order.pairName].quoteTokenDecimals
+
+      order = parseOrder(order, baseTokenDecimals)
 
       dispatch(appActionCreators.addOrderCancelledNotification())
       dispatch(actionCreators.updateOrdersTable([order]))
@@ -129,19 +136,24 @@ function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
 function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
+      let state = getState()
+      let pairs = socketControllerSelector(state)
       let signer = getSigner()
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
       let trades = matches.trades
       let txHash = trades[0].txHash
+      let pairName = trades[0].pairName
       let userOrders = []
       let userTrades = []
       let userIsTaker = utils.getAddress(matches.takerOrder.userAddress) === signerAddress
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
 
       if (userIsTaker) {
-        let parsedOrder = parseOrder(matches.takerOrder)
+        let parsedOrder = parseOrder(matches.takerOrder, baseTokenDecimals)
         userOrders = [ parsedOrder ]
-        userTrades = matches.trades.map(trade => parseTrade(trade))
+
+        userTrades = matches.trades.map(trade => parseTrade(trade, baseTokenDecimals))
         let { price, amount, side, filled, pair } = parsedOrder
         dispatch(appActionCreators.addOrderSuccessNotification({ txHash, pair, price, amount, filled, side }))
 
@@ -149,7 +161,7 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
       } else {
         matches.makerOrders.forEach(order => {
           if (utils.getAddress(order.userAddress) === signerAddress) {
-            let parsedOrder = parseOrder(order)
+            let parsedOrder = parseOrder(order, baseTokenDecimals)
             userOrders.push(parsedOrder)
             let { price, amount, filled, side, pair } = parsedOrder
             dispatch(appActionCreators.addOrderSuccessNotification({ txHash, pair, price, amount, filled, side }))
@@ -158,7 +170,7 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
 
         matches.trades.forEach(trade => {
           if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.maker) === signerAddress) {
-            userTrades.push(parseTrade(trade))
+            userTrades.push(parseTrade(trade, baseTokenDecimals))
           }
         })
       }
@@ -177,18 +189,22 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
       let signer = getSigner()
+      let state = getState()
+      let pairs = socketControllerSelector(state)
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
       let trades = matches.trades
       let txHash = trades[0].txHash
+      let pairName = trades[0].pairName
       let userOrders = []
       let userTrades = []
       let userIsTaker = utils.getAddress(matches.takerOrder.userAddress) === signerAddress
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
 
       if (userIsTaker) {
-        let parsedOrder = parseOrder(matches.takerOrder)
+        let parsedOrder = parseOrder(matches.takerOrder, baseTokenDecimals)
         userOrders = [ parsedOrder ]
-        userTrades = matches.trades.map(trade => parseTrade(trade))
+        userTrades = matches.trades.map(trade => parseTrade(trade, baseTokenDecimals))
         let { price, amount, side, filled, pair } = parsedOrder
         dispatch(appActionCreators.addOrderPendingNotification({ txHash, pair, price, amount, filled, side }))
 
@@ -196,7 +212,7 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
       } else {
         matches.makerOrders.forEach(order => {
           if (utils.getAddress(order.userAddress) === signerAddress) {
-            let parsedOrder = parseOrder(order)
+            let parsedOrder = parseOrder(order, baseTokenDecimals)
             userOrders.push(parsedOrder)
             let { price, amount, filled, side, pair } = parsedOrder
             dispatch(appActionCreators.addOrderPendingNotification({ txHash, pair, price, amount, filled, side }))
@@ -205,7 +221,7 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
 
         matches.trades.forEach(trade => {
           if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.maker) === signerAddress) {
-            userTrades.push(parseTrade(trade))
+            userTrades.push(parseTrade(trade, baseTokenDecimals))
           }
         })
       }

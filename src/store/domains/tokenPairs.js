@@ -2,7 +2,6 @@
 import { quoteTokens } from '../../config/quotes'
 import { tokens } from '../../config/tokens'
 import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tokens'
-
 import type { Token, TokenPair, TokenPairState, TokenPairDataMap } from '../../types/tokens'
 
 const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens)
@@ -47,7 +46,9 @@ export const tokenPairUpdated = (baseToken: Token) => {
           quoteTokenSymbol: quoteToken.symbol,
           baseTokenAddress: baseToken.address,
           quoteTokenAddress: quoteToken.address,
-          pricepointMultiplier: 1e6
+          baseTokenDecimals: baseToken.decimals,
+          quoteTokenDecimals: quoteToken.decimals,
+          pricepointMultiplier: 10 ** 9
         }
 
         return result

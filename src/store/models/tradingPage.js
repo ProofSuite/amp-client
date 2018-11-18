@@ -3,6 +3,7 @@ import { getTokenPairsDomain, getAccountDomain, getAccountBalancesDomain } from 
 import * as actionCreators from '../actions/tradingPage'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
+import { parseTrades, parseOrders, parseTokenPairData } from '../../utils/parsers'
 
 // eslint-disable-next-line
 export default function tradingPageSelector(state: State) {
@@ -42,12 +43,16 @@ export const getDefaultData = (): ThunkAction => {
 
       let userAddress = await signer.getAddress()
       let currentPair = pairDomain.getCurrentPair()
+      let pairs = pairDomain.getPairsByCode()
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[currentPair]
 
-      let tokenPairData = await api.getTokenPairData()
+      let tokenPairData = await api.fetchTokenPairData()
+      tokenPairData = parseTokenPairData(tokenPairData, baseTokenDecimals)
+
+      let orders = await api.fetchOrders()
+      orders = parseOrders(tokenPairData, baseTokenDecimals)
 
       dispatch(actionCreators.updateTokenPairData(tokenPairData))
-
-      let orders = await api.getOrders(userAddress)
       dispatch(actionCreators.initOrdersTable(orders))
 
       socket.subscribeTrades(currentPair)
