@@ -77,7 +77,7 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
 
       if (receipt.status === 0) {
         dispatch(actionCreators.revertTx('Transaction Failed', receipt))
-        dispatch(notificationActionCreators.addDangerNotification({ message: 'Token transfer failed.' }))
+        dispatch(notificationActionCreators.addErrorNotification({ message: 'Token transfer failed.' }))
       } else {
         dispatch(actionCreators.confirmTx(receipt))
         dispatch(notificationActionCreators.addSuccessNotification({ message: 'Token transfer successful!' }))
@@ -132,7 +132,7 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
 
       if (receipt.status === 0) {
         dispatch(actionCreators.revertTx('Transaction Failed', receipt))
-        dispatch(notificationActionCreators.addDangerNotification({ message: 'Token transfer failed.' }))
+        dispatch(notificationActionCreators.addErrorNotification({ message: 'Token transfer failed.' }))
       } else {
         dispatch(actionCreators.confirmTx(receipt));
         dispatch(notificationActionCreators.addSuccessNotification({ message: 'Token transfer successful!' }))

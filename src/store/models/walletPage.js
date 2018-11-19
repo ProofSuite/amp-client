@@ -76,7 +76,7 @@ export function queryAccountData(): ThunkAction {
         return dispatch(actionCreators.updateAllowance(allowance))
       })
     } catch (e) {
-      dispatch(notifierActionCreators.addDangerNotification({ message: 'Could not connect to Ethereum network' }))
+      dispatch(notifierActionCreators.addErrorNotification({ message: 'Could not connect to Ethereum network' }))
       console.log(e)
     }
   }
@@ -107,13 +107,13 @@ export function toggleAllowance(symbol: string): ThunkAction {
       const approvalConfirmedHandler = (txConfirmed) => {
         txConfirmed
           ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Approval Successful. You can now start trading!` }))
-          : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Approval Failed. Please try again.` }))
+          : dispatch(notifierActionCreators.addErrorNotification({ message: `${symbol} Approval Failed. Please try again.` }))
       }
 
       const approvalRemovedHandler = (txConfirmed) => {
         txConfirmed
           ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Allowance Removal Successful.` }))
-          : dispatch(notifierActionCreators.addDangerNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
+          : dispatch(notifierActionCreators.addErrorNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
       }
 
       if (isAllowed) {
@@ -128,7 +128,7 @@ export function toggleAllowance(symbol: string): ThunkAction {
     } catch (e) {
       console.log(e)
       if (e.message === 'Trading approval pending') {
-        dispatch(notifierActionCreators.addDangerNotification({ message: 'Trading approval pending' }))
+        dispatch(notifierActionCreators.addErrorNotification({ message: 'Trading approval pending' }))
       }
     }
   }

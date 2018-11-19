@@ -23,7 +23,7 @@ export const cancelOrder = (hash: string): ThunkAction => {
     } catch (error) {
 
       let message = parseCancelOrderError(error)
-      return dispatch(appActionCreators.addDangerNotification({ message }))
+      return dispatch(appActionCreators.addErrorNotification({ message }))
     }
   }
 }

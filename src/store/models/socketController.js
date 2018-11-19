@@ -70,7 +70,7 @@ const handleWebsocketOpenMessage = (dispatch, event) => {
 }
 
 const handleWebsocketCloseMessage = (dispatch, event, closeConnection) => {
-  dispatch(appActionCreators.addDangerNotification({ message: 'Connection lost' }))
+  dispatch(appActionCreators.addErrorNotification({ message: 'Connection lost' }))
   setTimeout(() => dispatch(openConnection()), 5000)
 }
 
@@ -86,6 +86,8 @@ const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
       return dispatch(handleOrderAdded(event))
     case 'ORDER_CANCELLED':
       return dispatch(handleOrderCancelled(event))
+    case 'ORDER_MATCHED':
+      return dispatch(handleOrderMatched(event))
     case 'ORDER_SUCCESS':
       return dispatch(handleOrderSuccess(event))
     case 'ORDER_PENDING':
@@ -104,8 +106,7 @@ function handleOrderAdded(event: WebsocketEvent): ThunkAction {
       let state = getState()
       let { pairs } = socketControllerSelector(state)
       let order = event.payload
-      let baseTokenDecimals = pairs[order.pairName].baseTokenDecimals
-      let quoteTokenDecimals = pairs[order.pairName].quoteTokenDecimals
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[order.pairName]
 
       order = parseOrder(order, baseTokenDecimals)
 
@@ -115,7 +116,7 @@ function handleOrderAdded(event: WebsocketEvent): ThunkAction {
       dispatch(actionCreators.updateOrdersTable([order]))
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
 
   }
@@ -127,8 +128,7 @@ function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
       let state = getState()
       let  { pairs } = socketControllerSelector(state)
       let order = event.payload
-      let baseTokenDecimals = pairs[order.pairName].baseTokenDecimals
-      let quoteTokenDecimals = pairs[order.pairName].quoteTokenDecimals
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[order.pairName]
 
       order = parseOrder(order, baseTokenDecimals)
 
@@ -136,7 +136,26 @@ function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
       dispatch(actionCreators.updateOrdersTable([order]))
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
+    }
+  }
+}
+
+function handleOrderMatched(event: WebsocketEvent): ThunkAction {
+  return async (dispatch, getState, { socket }) => {
+    try {
+      let state = getState()
+      let { pairs } = socketControllerSelector(state)
+      let order = event.payload
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[order.pairName]
+
+      order = parseOrder(order, baseTokenDecimals)
+
+      dispatch(appActionCreators.addOrderMatchedNotification())
+      dispatch(actionCreators.updateOrdersTable([order]))
+    } catch (e) {
+      console.log(e)
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }
@@ -188,7 +207,7 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
       if (userTrades.length > 0) dispatch(actionCreators.updateTradesTable(userTrades))
     } catch(e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }
@@ -238,7 +257,7 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
       if (userTrades.length > 0) dispatch(actionCreators.updateTradesTable(userTrades))
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }
@@ -246,7 +265,7 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
 function handleOrderError(event: WebsocketEvent): ThunkAction {
   return async dispatch => {
     let { message } = event.payload
-    dispatch(appActionCreators.addDangerNotification({ message: `Error: ${message}` }))
+    dispatch(appActionCreators.addErrorNotification({ message: `Error: ${message}` }))
   }
 }
 
@@ -260,7 +279,7 @@ const handleOrderBookMessage = (event: WebsocketMessage): ThunkAction => {
 
     let { pairName } = event.payload
     let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
-    
+
     try {
       switch(event.type) {
         case 'INIT':
@@ -277,12 +296,12 @@ const handleOrderBookMessage = (event: WebsocketMessage): ThunkAction => {
           return
         }
       } catch (e) {
-        dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+        dispatch(appActionCreators.addErrorNotification({ message: e.message }))
         console.log(e)
       }
     }
   }
-  
+
 
 const handleTradesMessage = (event: WebsocketMessage): ThunkAction => {
   return async (dispatch, getState, { socket }) => {
@@ -295,8 +314,6 @@ const handleTradesMessage = (event: WebsocketMessage): ThunkAction => {
     let trades = event.payload
     let { pairName } = trades[0]
     let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
-
-    console.log(trades)
 
     try {
       switch(event.type) {
@@ -312,7 +329,7 @@ const handleTradesMessage = (event: WebsocketMessage): ThunkAction => {
           return
       }
     } catch (e) {
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
       console.log(e)
     }
   }
@@ -345,7 +362,7 @@ const handleOHLCVMessage = (event: WebsocketMessage): ThunkAction => {
       }
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }
