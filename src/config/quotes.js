@@ -63,7 +63,7 @@ const quoteTokensBySymbolsTable = {
       decimals: 18,
     },
     USDC: {
-      symbols: 'USDC',
+      symbol: 'USDC',
       address: addresses['4']['USDC'],
       decimals: 6,
     }

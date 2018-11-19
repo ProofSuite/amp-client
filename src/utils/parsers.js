@@ -42,8 +42,8 @@ export const parseJSONToFixed = (obj, decimals = 2) => {
 }
 
 export const parseTokenAmount = (amount, tokenDecimals = 18, precision = 2) => {
-  let precisionMultiplier = utils.bigNumberify(10 ** precision)
-  let decimalsMultiplier = utils.bigNumberify(10 ** tokenDecimals)
+  let precisionMultiplier = utils.bigNumberify((10 ** precision).toString())
+  let decimalsMultiplier = utils.bigNumberify((10 ** tokenDecimals).toString())
   let bigAmount = utils.bigNumberify(amount)
                     .mul(precisionMultiplier)
                     .div(decimalsMultiplier)
@@ -144,7 +144,7 @@ export const parseTokenPairData = (data, tokenDecimals = 18) => {
   return parsed
 }
 
-export const parseOHLCV = data => {
+export const parseOHLCV = (data, baseTokenDecimals = 18) => {
   let parsed = data.map(datum => {
     return {
       date: new Date(datum.timestamp),
@@ -152,7 +152,7 @@ export const parseOHLCV = data => {
       high: parsePricepoint(datum.high),
       low: parsePricepoint(datum.low),
       close: parsePricepoint(datum.close),
-      volume: datum.volume / 1000000000000000000
+      volume: parseTokenAmount(datum.volume, baseTokenDecimals, 2)
     }
   })
 

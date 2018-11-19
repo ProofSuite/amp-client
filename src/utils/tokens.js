@@ -24,7 +24,8 @@ export const generateTokenPairs = (quoteTokens, tokens) => {
           quoteTokenSymbol: quoteToken.symbol,
           baseTokenAddress: token.address,
           quoteTokenAddress: quoteToken.address,
-          decimalsMultiplier: 10 ** (token.decimals - quoteToken.decimals),
+          baseTokenDecimals: token.decimals,
+          quoteTokenDecimals: quoteToken.decimals,
           pricepointMultiplier: 10 ** 9
         };
       }

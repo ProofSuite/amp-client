@@ -42,11 +42,18 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let tokenPairDomain = getTokenPairsDomain(state)
       let accountBalancesDomain = getAccountBalancesDomain(state)
       let pair = tokenPairDomain.getCurrentPair()
-      let { baseTokenSymbol, quoteTokenSymbol, pricepointMultiplier } = pair
+
+      let { 
+        baseTokenSymbol, 
+        quoteTokenSymbol, 
+        baseTokenDecimals, 
+        quoteTokenDecimals, 
+      } = pair
 
       let signer = getSigner()
       let userAddress = await signer.getAddress()
 
+      //TODO replace by the makeFee and takerFee from redux state
       let makeFee = '0'
       let takeFee = '0'
 
@@ -60,6 +67,10 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         takeFee
       }
 
+      let defaultPriceMultiplier = utils.bigNumberify('1000000000')
+      let decimalsPriceMultiplier = utils.bigNumberify((10 ** (baseTokenDecimals - quoteTokenDecimals)).toString())
+      let pricepointMultiplier = defaultPriceMultiplier.mul(decimalsPriceMultiplier)
+
       let order = await signer.createRawOrder(params)
       let sellTokenSymbol, sellAmount
 
@@ -71,21 +82,11 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pricepointMultiplier)
         : sellAmount = utils.bigNumberify(order.amount)
 
-      let WETHBalance = accountBalancesDomain.getBigNumberBalance('WETH')
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
-      let fee = utils.bigNumberify(makeFee)
-
 
       if (sellTokenBalance.lt(sellAmount)) {
         return dispatch(
           appActionCreators.addDangerNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
-        )
-      }
-
-      //TODO include the case where WETH is the token balance
-      if (WETHBalance.lt(fee)) {
-        return dispatch(
-          appActionCreators.addDangerNotification({ message: 'Insufficient WETH Balance' })
         )
       }
 

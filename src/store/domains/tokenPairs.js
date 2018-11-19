@@ -18,6 +18,9 @@ const defaultInitialState = {
 //token pair state (that can be created with the createInitialState function).
 export const initialized = (customInitialState?: Object) => {
   let initialState = customInitialState || defaultInitialState
+
+  console.log(defaultInitialState)
+
   const event = (state: TokenPairState = initialState) => state
   return event
 }
@@ -40,6 +43,7 @@ export const tokenPairUpdated = (baseToken: Token) => {
         if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) return result
 
         let pairSymbol = getPairSymbol(baseToken.symbol, quoteToken.symbol)
+
         result.byPair[pairSymbol] = {
           pair: pairSymbol,
           baseTokenSymbol: baseToken.symbol,
