@@ -43,11 +43,11 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let accountBalancesDomain = getAccountBalancesDomain(state)
       let pair = tokenPairDomain.getCurrentPair()
 
-      let { 
-        baseTokenSymbol, 
-        quoteTokenSymbol, 
-        baseTokenDecimals, 
-        quoteTokenDecimals, 
+      let {
+        baseTokenSymbol,
+        quoteTokenSymbol,
+        baseTokenDecimals,
+        quoteTokenDecimals,
       } = pair
 
       let signer = getSigner()
@@ -86,7 +86,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       if (sellTokenBalance.lt(sellAmount)) {
         return dispatch(
-          appActionCreators.addDangerNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
+          appActionCreators.addErrorNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
         )
       }
 
@@ -94,7 +94,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
     } catch (e) {
       console.log(e)
       let message = parseNewOrderError(e)
-      return dispatch(appActionCreators.addDangerNotification({ message }))
+      return dispatch(appActionCreators.addErrorNotification({ message }))
     }
   }
 }

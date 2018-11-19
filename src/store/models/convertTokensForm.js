@@ -52,7 +52,7 @@ export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
 
       if (txReceipt.status === 0) {
         dispatch(actionCreators.revertConvertTx('WETH', txReceipt))
-        dispatch(notificationActionCreators.addDangerNotification({ message: 'ETH conversion transaction failed' }))
+        dispatch(notificationActionCreators.addErrorNotification({ message: 'ETH conversion transaction failed' }))
       } else {
         dispatch(actionCreators.confirmConvertTx('WETH', txReceipt))
         dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
@@ -104,7 +104,7 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
           : dispatch(actionCreators.confirmAllowTx('ETH', allowTxReceipt));
 
         (convertTxReceipt.status === 0 || allowTxReceipt.status === 0)
-          ? dispatch(notificationActionCreators.addDangerNotification({ message: 'ETH conversion transaction failed' }))
+          ? dispatch(notificationActionCreators.addErrorNotification({ message: 'ETH conversion transaction failed' }))
           : dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
 
       } else {
