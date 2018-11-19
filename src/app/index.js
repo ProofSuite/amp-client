@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import Layout from './Layout'
 import LandingPage from './LandingPage'
 import LoginPage from './LoginPage'
+import FaqPage from './FaqPage';
 import WalletPage from './WalletPage'
 import SettingsPage from './SettingsPage'
 import LogoutPage from './LogoutPage'
@@ -26,6 +27,7 @@ const App = () => {
           <Layout>
             <Switch>
               <Route exact path="/" component={LandingPage} />
+              <Route path="/faq" component={FaqPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/wallet" component={WalletPage} />
               <Route path="/settings" component={SettingsPage} />

@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 
 import * as appActionCreators from '../actions/app'
 import * as actionCreators from '../actions/socketController'
-import { getAccountDomain } from '../domains'
+import { getAccountDomain, getTokenPairsDomain } from '../domains'
 import { getSigner } from '../services/signer'
 import { parseOrder, parseTrade, parseTrades, parseOrderBookData, parseOHLCV } from '../../utils/parsers'
 
@@ -12,7 +12,8 @@ import type { WebsocketEvent, WebsocketMessage } from '../../types/websocket'
 
 export default function socketControllerSelector(state: State) {
   return {
-    authenticated: getAccountDomain(state).authenticated()
+    authenticated: getAccountDomain(state).authenticated(),
+    pairs: getTokenPairsDomain(state).getPairsByCode()
   }
 }
 
@@ -43,11 +44,11 @@ export function openConnection(): ThunkAction {
         case 'orders':
           return handleOrderMessage(dispatch, event)
         case 'orderbook':
-          return handleOrderBookMessage(dispatch, event)
+          return dispatch(handleOrderBookMessage(event))
         case 'trades':
-          return handleTradesMessage(dispatch, event)
+          return dispatch(handleTradesMessage(event))
         case 'ohlcv':
-          return handleOHLCVMessage(dispatch, event)
+          return dispatch(handleOHLCVMessage(event))
         default:
           console.log(channel, event)
           break
@@ -69,7 +70,7 @@ const handleWebsocketOpenMessage = (dispatch, event) => {
 }
 
 const handleWebsocketCloseMessage = (dispatch, event, closeConnection) => {
-  dispatch(appActionCreators.addDangerNotification({ message: 'Connection lost' }))
+  dispatch(appActionCreators.addErrorNotification({ message: 'Connection lost' }))
   setTimeout(() => dispatch(openConnection()), 5000)
 }
 
@@ -85,6 +86,8 @@ const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
       return dispatch(handleOrderAdded(event))
     case 'ORDER_CANCELLED':
       return dispatch(handleOrderCancelled(event))
+    case 'ORDER_MATCHED':
+      return dispatch(handleOrderMatched(event))
     case 'ORDER_SUCCESS':
       return dispatch(handleOrderSuccess(event))
     case 'ORDER_PENDING':
@@ -100,13 +103,20 @@ const handleOrderMessage = (dispatch, event: WebsocketEvent) => {
 function handleOrderAdded(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
-      let order = parseOrder(event.payload)
+      let state = getState()
+      let { pairs } = socketControllerSelector(state)
+      let order = event.payload
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[order.pairName]
+
+      order = parseOrder(order, baseTokenDecimals)
+
+      console.log(order)
 
       dispatch(appActionCreators.addOrderAddedNotification())
       dispatch(actionCreators.updateOrdersTable([order]))
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
 
   }
@@ -115,13 +125,37 @@ function handleOrderAdded(event: WebsocketEvent): ThunkAction {
 function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
-      let order = parseOrder(event.payload)
+      let state = getState()
+      let  { pairs } = socketControllerSelector(state)
+      let order = event.payload
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[order.pairName]
+
+      order = parseOrder(order, baseTokenDecimals)
 
       dispatch(appActionCreators.addOrderCancelledNotification())
       dispatch(actionCreators.updateOrdersTable([order]))
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
+    }
+  }
+}
+
+function handleOrderMatched(event: WebsocketEvent): ThunkAction {
+  return async (dispatch, getState, { socket }) => {
+    try {
+      let state = getState()
+      let { pairs } = socketControllerSelector(state)
+      let order = event.payload
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[order.pairName]
+
+      order = parseOrder(order, baseTokenDecimals)
+
+      dispatch(appActionCreators.addOrderMatchedNotification())
+      dispatch(actionCreators.updateOrdersTable([order]))
+    } catch (e) {
+      console.log(e)
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }
@@ -129,19 +163,24 @@ function handleOrderCancelled(event: WebsocketEvent): ThunkAction {
 function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
+      let state = getState()
+      let { pairs } = socketControllerSelector(state)
       let signer = getSigner()
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
       let trades = matches.trades
       let txHash = trades[0].txHash
+      let pairName = trades[0].pairName
       let userOrders = []
       let userTrades = []
       let userIsTaker = utils.getAddress(matches.takerOrder.userAddress) === signerAddress
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
 
       if (userIsTaker) {
-        let parsedOrder = parseOrder(matches.takerOrder)
+        let parsedOrder = parseOrder(matches.takerOrder, baseTokenDecimals)
         userOrders = [ parsedOrder ]
-        userTrades = matches.trades.map(trade => parseTrade(trade))
+
+        userTrades = matches.trades.map(trade => parseTrade(trade, baseTokenDecimals))
         let { price, amount, side, filled, pair } = parsedOrder
         dispatch(appActionCreators.addOrderSuccessNotification({ txHash, pair, price, amount, filled, side }))
 
@@ -149,7 +188,7 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
       } else {
         matches.makerOrders.forEach(order => {
           if (utils.getAddress(order.userAddress) === signerAddress) {
-            let parsedOrder = parseOrder(order)
+            let parsedOrder = parseOrder(order, baseTokenDecimals)
             userOrders.push(parsedOrder)
             let { price, amount, filled, side, pair } = parsedOrder
             dispatch(appActionCreators.addOrderSuccessNotification({ txHash, pair, price, amount, filled, side }))
@@ -158,7 +197,7 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
 
         matches.trades.forEach(trade => {
           if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.maker) === signerAddress) {
-            userTrades.push(parseTrade(trade))
+            userTrades.push(parseTrade(trade, baseTokenDecimals))
           }
         })
       }
@@ -168,7 +207,7 @@ function handleOrderSuccess(event: WebsocketEvent): ThunkAction {
       if (userTrades.length > 0) dispatch(actionCreators.updateTradesTable(userTrades))
     } catch(e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }
@@ -177,18 +216,22 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
       let signer = getSigner()
+      let state = getState()
+      let { pairs } = socketControllerSelector(state)
       let signerAddress = await signer.getAddress()
       let matches = event.payload.matches
       let trades = matches.trades
       let txHash = trades[0].txHash
+      let pairName = trades[0].pairName
       let userOrders = []
       let userTrades = []
       let userIsTaker = utils.getAddress(matches.takerOrder.userAddress) === signerAddress
+      let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
 
       if (userIsTaker) {
-        let parsedOrder = parseOrder(matches.takerOrder)
+        let parsedOrder = parseOrder(matches.takerOrder, baseTokenDecimals)
         userOrders = [ parsedOrder ]
-        userTrades = matches.trades.map(trade => parseTrade(trade))
+        userTrades = matches.trades.map(trade => parseTrade(trade, baseTokenDecimals))
         let { price, amount, side, filled, pair } = parsedOrder
         dispatch(appActionCreators.addOrderPendingNotification({ txHash, pair, price, amount, filled, side }))
 
@@ -196,7 +239,7 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
       } else {
         matches.makerOrders.forEach(order => {
           if (utils.getAddress(order.userAddress) === signerAddress) {
-            let parsedOrder = parseOrder(order)
+            let parsedOrder = parseOrder(order, baseTokenDecimals)
             userOrders.push(parsedOrder)
             let { price, amount, filled, side, pair } = parsedOrder
             dispatch(appActionCreators.addOrderPendingNotification({ txHash, pair, price, amount, filled, side }))
@@ -205,7 +248,7 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
 
         matches.trades.forEach(trade => {
           if (utils.getAddress(trade.maker) === signerAddress || utils.getAddress(trade.maker) === signerAddress) {
-            userTrades.push(parseTrade(trade))
+            userTrades.push(parseTrade(trade, baseTokenDecimals))
           }
         })
       }
@@ -214,7 +257,7 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
       if (userTrades.length > 0) dispatch(actionCreators.updateTradesTable(userTrades))
     } catch (e) {
       console.log(e)
-      dispatch(appActionCreators.addDangerNotification({ message: e.message }))
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }
@@ -222,87 +265,104 @@ function handleOrderPending(event: WebsocketEvent): ThunkAction {
 function handleOrderError(event: WebsocketEvent): ThunkAction {
   return async dispatch => {
     let { message } = event.payload
-    dispatch(appActionCreators.addDangerNotification({ message: `Error: ${message}` }))
+    dispatch(appActionCreators.addErrorNotification({ message: `Error: ${message}` }))
   }
 }
 
-const handleOrderBookMessage = (dispatch, event: WebsocketMessage) => {
-  var bids, asks
+const handleOrderBookMessage = (event: WebsocketMessage): ThunkAction => {
+  return async (dispatch, getState, { socket }) => {
+    let state = getState()
+    let { pairs } = socketControllerSelector(state)
 
-  try {
-    switch (event.type) {
-      case 'INIT':
-        if (!event.payload) return
-        if (event.payload === []) return
-        // eslint-disable-next-line
-        var { bids, asks } = parseOrderBookData(event.payload)
-        dispatch(actionCreators.initOrderBook(bids, asks))
-        break;
-      case 'UPDATE':
-        if (!event.payload) return
-        if (event.payload === []) return
-        // eslint-disable-next-line
-        var { bids, asks } = parseOrderBookData(event.payload)
-        dispatch(actionCreators.updateOrderBook(bids, asks))
-        break;
-      default:
-        return
+    if (!event.payload) return
+    if (event.payload.length === 0) return
+
+    let { pairName } = event.payload
+    let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
+
+    try {
+      switch(event.type) {
+        case 'INIT':
+          var { bids, asks } = parseOrderBookData(event.payload, baseTokenDecimals)
+          dispatch(actionCreators.initOrderBook(bids, asks))
+          break;
+
+        case 'UPDATE':
+          var { bids, asks } = parseOrderBookData(event.payload, baseTokenDecimals)
+          dispatch(actionCreators.updateOrderBook(bids, asks))
+          break;
+
+        default:
+          return
+        }
+      } catch (e) {
+        dispatch(appActionCreators.addErrorNotification({ message: e.message }))
+        console.log(e)
+      }
     }
-  } catch (e) {
-    dispatch(appActionCreators.addDangerNotification({ message: e.message }))
-    console.log(e)
+  }
+
+
+const handleTradesMessage = (event: WebsocketMessage): ThunkAction => {
+  return async (dispatch, getState, { socket }) => {
+    let state = getState()
+    let { pairs } = socketControllerSelector(state)
+
+    if (!event.payload) return
+    if (event.payload.length === 0) return
+
+    let trades = event.payload
+    let { pairName } = trades[0]
+    let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
+
+    try {
+      switch(event.type) {
+        case 'INIT':
+          trades = parseTrades(trades, baseTokenDecimals)
+          dispatch(actionCreators.initTradesTable(trades))
+          break
+        case 'UPDATE':
+          trades = parseTrades(trades, baseTokenDecimals)
+          dispatch(actionCreators.updateTradesTable(trades))
+          break
+        default:
+          return
+      }
+    } catch (e) {
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
+      console.log(e)
+    }
   }
 }
 
-const handleTradesMessage = (dispatch, event: WebsocketMessage) => {
-  let trades
+const handleOHLCVMessage = (event: WebsocketMessage): ThunkAction => {
+  return async (dispatch, getState, { socket }) => {
+    let state = getState()
+    let { pairs } = socketControllerSelector(state)
 
-  try {
-    switch(event.type) {
-      case 'INIT':
-        if (!event.payload) return
-        if (event.payload === []) return
-        trades = parseTrades(event.payload)
-        dispatch(actionCreators.initTradesTable(trades))
-        break;
-      case 'UPDATE':
-        if (!event.payload) return
-        if (event.payload === []) return
-        trades = parseTrades(event.payload)
-        dispatch(actionCreators.updateTradesTable(trades))
-        break;
-      default:
-        return
+    if (!event.payload) return
+    if (event.payload.length === 0) return
+
+    let ohlcv = event.payload
+    let { pairName } = ohlcv[0].pair
+    let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
+
+    try {
+      switch(event.type) {
+        case 'INIT':
+          ohlcv = parseOHLCV(ohlcv, baseTokenDecimals)
+          dispatch(actionCreators.initOHLCV(ohlcv))
+          break
+        case 'UPDATE':
+          ohlcv = parseOHLCV(ohlcv, baseTokenDecimals)
+          dispatch(actionCreators.updateOHLCV(ohlcv))
+          break
+        default:
+          return
+      }
+    } catch (e) {
+      console.log(e)
+      dispatch(appActionCreators.addErrorNotification({ message: e.message }))
     }
-  } catch (e) {
-    dispatch(appActionCreators.addDangerNotification({ message: e.message }))
-    console.log(e)
-  }
-}
-
-const handleOHLCVMessage = (dispatch, event: WebsocketMessage) => {
-  let ohlcv
-
-  try {
-    switch(event.type) {
-      case 'INIT':
-        if (!event.payload) return
-        if (event.payload === []) return
-        ohlcv = parseOHLCV(event.payload)
-        dispatch(actionCreators.initOHLCV(ohlcv))
-        break
-      case 'UPDATE':
-        if (!event.payload) return
-        if (event.payload === []) return
-        ohlcv = parseOHLCV(event.payload)
-        dispatch(actionCreators.updateOHLCV(ohlcv))
-        break
-        // return dispatch()
-      default:
-        return
-    }
-  } catch (e) {
-    dispatch(appActionCreators.addDangerNotification({ message: e.message }))
-    console.log(e)
   }
 }

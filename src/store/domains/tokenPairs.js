@@ -2,7 +2,6 @@
 import { quoteTokens } from '../../config/quotes'
 import { tokens } from '../../config/tokens'
 import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tokens'
-
 import type { Token, TokenPair, TokenPairState, TokenPairDataMap } from '../../types/tokens'
 
 const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens)
@@ -19,6 +18,9 @@ const defaultInitialState = {
 //token pair state (that can be created with the createInitialState function).
 export const initialized = (customInitialState?: Object) => {
   let initialState = customInitialState || defaultInitialState
+
+  console.log(defaultInitialState)
+
   const event = (state: TokenPairState = initialState) => state
   return event
 }
@@ -41,13 +43,16 @@ export const tokenPairUpdated = (baseToken: Token) => {
         if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) return result
 
         let pairSymbol = getPairSymbol(baseToken.symbol, quoteToken.symbol)
+
         result.byPair[pairSymbol] = {
           pair: pairSymbol,
           baseTokenSymbol: baseToken.symbol,
           quoteTokenSymbol: quoteToken.symbol,
           baseTokenAddress: baseToken.address,
           quoteTokenAddress: quoteToken.address,
-          pricepointMultiplier: 1e6
+          baseTokenDecimals: baseToken.decimals,
+          quoteTokenDecimals: quoteToken.decimals,
+          pricepointMultiplier: 10 ** 9
         }
 
         return result
