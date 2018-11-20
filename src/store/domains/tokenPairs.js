@@ -18,9 +18,6 @@ const defaultInitialState = {
 //token pair state (that can be created with the createInitialState function).
 export const initialized = (customInitialState?: Object) => {
   let initialState = customInitialState || defaultInitialState
-
-  console.log(defaultInitialState)
-
   const event = (state: TokenPairState = initialState) => state
   return event
 }
