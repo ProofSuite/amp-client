@@ -275,7 +275,7 @@ const handleOrderBookMessage = (event: WebsocketMessage): ThunkAction => {
     let { pairs } = socketControllerSelector(state)
 
     if (!event.payload) return
-    if (event.payload.length === 0) return
+    // if (event.payload.length === 0) return
 
     let { pairName } = event.payload
     let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
@@ -341,8 +341,11 @@ const handleOHLCVMessage = (event: WebsocketMessage): ThunkAction => {
     let { pairs } = socketControllerSelector(state)
 
     if (!event.payload) return
-    if (event.payload.length === 0) return
-
+    if (event.payload.length === 0) {
+      dispatch(actionCreators.initOHLCV([]))
+      return
+    }
+  
     let ohlcv = event.payload
     let { pairName } = ohlcv[0].pair
     let { baseTokenDecimals, quoteTokenDecimals } = pairs[pairName]
