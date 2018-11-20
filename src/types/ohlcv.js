@@ -6,13 +6,3 @@ export type OHLCVState = {
   +currentDuration: Object,
   +noOfCandles: number,
 };
-
-export type SendTimelineParams = {
-  updateWRT: string,
-};
-
-export type SingleOrderTypes = {
-  order: Object,
-  index: number,
-  decimals: number,
-};

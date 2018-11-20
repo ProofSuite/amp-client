@@ -48,11 +48,12 @@ export const getDefaultData = (): ThunkAction => {
       let { baseTokenDecimals, quoteTokenDecimals } = currentPair
 
       let tokenPairData = await api.fetchTokenPairData()
+      tokenPairData = parseTokenPairData(tokenPairData, baseTokenDecimals)
 
       console.log("TOKEN PAIR DATA", tokenPairData)
       console.log("DECIMALS", baseTokenDecimals, quoteTokenDecimals)
 
-      tokenPairData = parseTokenPairData(tokenPairData, baseTokenDecimals)
+      
 
       let orders = await api.fetchOrders(userAddress)
       orders = parseOrders(orders, baseTokenDecimals)
