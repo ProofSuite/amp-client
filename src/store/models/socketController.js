@@ -59,22 +59,23 @@ export function openConnection(): ThunkAction {
       //TODO currently, i believe the unsubscription is only used by SocketController/componentDidMount function
       //TODO This causes a notification to appear while we do not want to display a 'Connection lost' notification when logging out.
       //TODO Therefore i currently do not close the connection gracefully to avoid this problem. Looking for a workaround
-      // closeConnection()
-      dispatch(actionCreators.closeConnection())
+      closeConnection()
     }
   }
 }
 
 const handleWebsocketOpenMessage = (dispatch, event) => {
-  dispatch(appActionCreators.addSuccessNotification({ message: 'Connection successful' }))
+  dispatch(actionCreators.openConnection())
 }
 
 const handleWebsocketCloseMessage = (dispatch, event, closeConnection) => {
+  dispatch(actionCreators.closeConnection())
   dispatch(appActionCreators.addErrorNotification({ message: 'Connection lost' }))
   setTimeout(() => dispatch(openConnection()), 5000)
 }
 
 const handleWebsocketErrorMessage = (dispatch, event, closeConnection) => {
+  dispatch(actionCreators.connectionError())
   console.log(event)
 }
 

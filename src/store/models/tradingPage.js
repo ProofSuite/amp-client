@@ -1,5 +1,5 @@
 // @flow
-import { getTokenPairsDomain, getAccountDomain, getAccountBalancesDomain } from '../domains'
+import { getTokenPairsDomain, getAccountDomain, getAccountBalancesDomain, getConnectionDomain } from '../domains'
 import * as actionCreators from '../actions/tradingPage'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
@@ -10,7 +10,7 @@ export default function tradingPageSelector(state: State) {
   let accountDomain = getAccountDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let pairDomain = getTokenPairsDomain(state)
-
+  let { isInitiated, isConnected } = getConnectionDomain(state);
   let { baseTokenSymbol, quoteTokenSymbol } = pairDomain.getCurrentPair()
 
   let authenticated = accountDomain.authenticated()
@@ -24,6 +24,8 @@ export default function tradingPageSelector(state: State) {
     baseTokenAllowance,
     baseTokenBalance,
     baseTokenSymbol,
+    isConnected,
+    isInitiated,
     quoteTokenAllowance,
     quoteTokenBalance,
     quoteTokenSymbol

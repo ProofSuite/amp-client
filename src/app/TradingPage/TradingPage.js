@@ -50,10 +50,19 @@ class TradingPage extends React.PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    const { authenticated, getDefaultData } = this.props
-    if (authenticated) getDefaultData()
+    if (this.props.isConnected) {
+      this.props.getDefaultData();
+    }
 
     this.checkIfCalloutRequired()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isConnected || !this.props.isConnected) {
+      return;
+    }
+
+    this.props.getDefaultData();
   }
 
   checkIfCalloutRequired = () => {
@@ -89,10 +98,11 @@ class TradingPage extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { authenticated,  } = this.props
+    const { authenticated, isInitiated } = this.props
     const { calloutOptions, calloutVisible } = this.state
 
     if (!authenticated) return <Redirect to="/login" />
+    if (!isInitiated) return null;
 
     return (
       <TradingPageLayout>
