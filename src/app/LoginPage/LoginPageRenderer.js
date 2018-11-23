@@ -39,14 +39,14 @@ const LoginPageRenderer = (props: Props) => {
       />
     ),
     wallet: (
-      <WalletLoginViewWrapper>
+      <WidgetWrapper>
         <WalletLoginForm loginWithWallet={loginWithWallet} showLoginMethods={showLoginMethods} />
-      </WalletLoginViewWrapper>
+      </WidgetWrapper>
     ),
     createWallet: (
-      <CreateWalletViewWrapper>
+      <WidgetWrapper>
         <CreateWalletForm walletCreated={walletCreated} showLoginMethods={showLoginMethods}/>
-      </CreateWalletViewWrapper>
+      </WidgetWrapper>
     ),
     loading: (
       <Centered>
@@ -125,21 +125,10 @@ const Wrapper = styled.div`
   padding-top: 2em;
 `;
 
-const WalletLoginViewWrapper = styled.div`
-  margin-top: 5em;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+const WidgetWrapper = styled.div`
+  width: 600px;
+  margin: 60px auto;
 `;
-
-const CreateWalletViewWrapper = styled.div`
-  margin-top: 5em;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`
 
 const Announcement = styled.section``;
 
@@ -163,7 +152,7 @@ const LoginMethodsHeading = styled.h3`
 `;
 
 const LoginCards = styled.div`
-  padding-top: 20px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;

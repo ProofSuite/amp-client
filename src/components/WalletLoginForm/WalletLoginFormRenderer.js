@@ -205,7 +205,7 @@ const WalletLoginFormRenderer = (props: Props) => {
   };
 
   return (
-    <Card elevation="1" style={{ width: '600px', position: 'relative' }}>
+    <Card elevation="1">
       <RadioGroup name="method" onChange={handleChange} selectedValue={method} label="Choose how to access your wallet">
         <Radio label="Saved Wallet" value="savedWallet" disabled={savedWalletsDisabled} />
         <Radio label="Private Key" value="privateKey" />
