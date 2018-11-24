@@ -62,7 +62,7 @@ export const createSigner = async (params: UpdateSignerParams): any => {
 
 export const createMetamaskSigner = async () => {
   let networkID = Number(window.web3.version.network)
-  let provider = new providers.Web3Provider(window.web3.currentProvider)
+  let provider = new providers.Web3Provider(window.ethereum || window.web3.currentProvider)
 
   let signer = provider.getSigner()
   let address = await signer.getAddress()
