@@ -67,10 +67,14 @@ class Layout extends React.PureComponent<Props, State> {
                 <NavbarHeading>
                   <NavbarHeaderLink to="/">PROOF</NavbarHeaderLink>
                 </NavbarHeading>
-                <NavbarDivider />
-                <NavbarLink to="/wallet">Wallet</NavbarLink>
-                <NavbarLink to="/trade">Exchange</NavbarLink>
-                <NavbarLink to="/settings">Settings</NavbarLink>
+                {authenticated && (
+                  <React.Fragment>
+                    <NavbarDivider />
+                    <NavbarLink to="/wallet">Wallet</NavbarLink>
+                    <NavbarLink to="/trade">Exchange</NavbarLink>
+                    <NavbarLink to="/settings">Settings</NavbarLink>
+                  </React.Fragment>
+                )}
               </NavbarGroup>
               <NavbarGroup align={Alignment.RIGHT}>
                 {!authenticated ? (
