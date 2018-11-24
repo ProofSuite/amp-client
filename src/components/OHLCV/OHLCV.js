@@ -2,7 +2,7 @@
 import React from 'react';
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
-import { Card, Button } from '@blueprintjs/core';
+import { Card, Button, Collapse } from '@blueprintjs/core';
 import type { SendTimelineParams } from '../../types/ohlcv';
 import styled from 'styled-components';
 import { ResizableBox } from 'react-resizable'
@@ -87,6 +87,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
     timeSpans: timeSpans,
     duration: duration,
     expandedChard: true,
+    isOpen: true,
   };
 
   changeDuration = (index: number) => {
@@ -95,6 +96,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
 
     this.props.saveDuration(duration[index]);
     this.props.updateTimeLine({ updateWRT: 'duration', time: currentTimeSpan.label, duration: duration[index].label });
+    this.setState({ isOpen: true });
   };
 
   changeTimeSpan = (e: Object) => {
@@ -102,10 +104,15 @@ export default class OHLCV extends React.PureComponent<Props, State> {
 
     this.props.saveTimeSpan(e);
     this.props.updateTimeLine({ updateWRT: 'timespan', time: e.label, duration: currentDuration.label });
+    this.setState({ isOpen: true });
   };
 
   changeChartType = (e: Object) => {
-    this.setState({ currentChart: e });
+    this.setState({ currentChart: e, isOpen: true });
+  };
+
+  toggleCollapse = () => {
+    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
   onUpdateIndicators = (indicator: Indicator, active: boolean) => {
@@ -123,20 +130,20 @@ export default class OHLCV extends React.PureComponent<Props, State> {
         ...indicators.slice(indicator.rank + 1),
       ],
       indicatorHeight: newIndicatorHeight,
+      isOpen: true,
     });
   };
 
   render() {
     const {
       props: { ohlcvData, currentDuration, currentTimeSpan, noOfCandles },
-      state: { indicators, chartHeight, indicatorHeight, expandedChard, currentChart },
+      state: { indicators, chartHeight, indicatorHeight, expandedChard, currentChart, isOpen },
       changeTimeSpan,
       onUpdateIndicators,
       changeDuration,
       changeChartType,
     } = this;
     return (
-      <ResizableBox height={715}>
       <Wrapper className="main-chart">
         <Toolbar
           changeDuration={changeDuration}
@@ -146,24 +153,29 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           currentDuration={currentDuration}
           currentTimeSpan={currentTimeSpan}
           state={this.state}
+          isOpen={isOpen}
+          toggleCollapse={this.toggleCollapse}
         />
-        <ChartLoadingScreen
-          volume={indicators[0]}
-          line={indicators[1]}
-          macd={indicators[2]}
-          rsi={indicators[3]}
-          atr={indicators[4]}
-          forceIndex={indicators[5]}
-          indicatorHeight={indicatorHeight}
-          chartHeight={chartHeight}
-          noOfCandles={noOfCandles}
-          currentChart={currentChart}
-          expandedChard={expandedChard}
-          data={ohlcvData}
-          width="100%"
-        />
+        <Collapse isOpen={isOpen} transitionDuration={100}>
+          <ResizableBox height={600}>
+            <ChartLoadingScreen
+              volume={indicators[0]}
+              line={indicators[1]}
+              macd={indicators[2]}
+              rsi={indicators[3]}
+              atr={indicators[4]}
+              forceIndex={indicators[5]}
+              indicatorHeight={indicatorHeight}
+              chartHeight={chartHeight}
+              noOfCandles={noOfCandles}
+              currentChart={currentChart}
+              expandedChard={expandedChard}
+              data={ohlcvData}
+              width="100%"
+            />
+          </ResizableBox>
+        </Collapse>
       </Wrapper>
-      </ResizableBox>
     );
   }
 }
@@ -178,6 +190,8 @@ const Toolbar = ({
   changeDuration,
   changeChartType,
   indicators,
+  isOpen,
+  toggleCollapse,
 }) => (
   <ToolbarWrapper>
     <ChartTypeMenu>
@@ -204,6 +218,7 @@ const Toolbar = ({
     <TimeSpanMenu>
       <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
     </TimeSpanMenu>
+    <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
   </ToolbarWrapper>
 );
 
@@ -265,7 +280,6 @@ const ChartTypeMenu = styled.div`
 
 const Wrapper = styled(Card)`
   height: 100%;
-  padding: 20px 20px 0 20px;
 `;
 
 const TimeSpanMenu = styled.div`

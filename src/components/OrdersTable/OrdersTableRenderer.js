@@ -29,7 +29,7 @@ const OrdersTableRenderer = (props: Props) => {
     <Wrapper className="order-history">
       <OrdersTableHeader>
         <Heading>Orders</Heading>
-        <Button icon={isOpen ? 'chevron-left' : 'chevron-down'} minimal onClick={toggleCollapse} />
+        <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
       </OrdersTableHeader>
       <Collapse isOpen={isOpen}>
         <Tabs selectedTabId={selectedTabId} onChange={onChange}>
