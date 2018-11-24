@@ -1,14 +1,6 @@
 import { Wallet } from 'ethers';
 import { getProvider } from './signer';
 
-export const getDefaultWalletAddress = () => {
-  return '0xe8e84ee367bc63ddb38d3d01bccef106c194dc47';
-};
-
-export const getDefaultPrivateKey = () => {
-  return '';
-};
-
 export const getCurrentBlock = async () => {
   const provider = getProvider();
   const block = await provider.getBlock();
@@ -44,15 +36,26 @@ export const createWalletFromPrivateKey = privateKey => {
   let wallet;
   try {
     wallet = new Wallet(privateKey);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
   return { wallet };
 };
+
+export const getEncryptedWalletAddress = (encryptedWallet) => {
+  let json = JSON.parse(encryptedWallet)
+  let address = '0x' + json.address
+
+  return address
+}
 
 export const createWalletFromJSON = async (encryptedWallet, password) => {
   let wallet;
   try {
-    wallet = await Wallet.fromEncryptedWallet(encryptedWallet, password);
-  } catch (e) {}
+    wallet = await Wallet.fromEncryptedJson(encryptedWallet, password);
+  } catch (e) {
+    console.log(e)
+  }
   return { wallet, encryptedWallet };
 };
 
@@ -60,7 +63,9 @@ export const createWalletFromMnemonic = async mnemonic => {
   let wallet;
   try {
     wallet = await Wallet.fromMnemonic(mnemonic);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
   return { wallet };
 };
 

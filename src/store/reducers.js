@@ -1,40 +1,42 @@
 // @flow
 import createReducer from './createReducer'
-import etherBalanceActionTypes from './actions/etherBalance'
 import accountBalancesActionTypes from './actions/accountBalances'
-import sendEtherFormActionTypes from './actions/sendEtherForm'
+import transferTokensFormActionTypes from './actions/transferTokensForm'
 import ohlcvActionTypes from './actions/ohlcv'
 import tokenSearcherActionTypes from './actions/tokenSearcher'
 import tokensActionTypes from './actions/tokens'
 import accountActionTypes from './actions/account'
 import depositFormActionTypes from './actions/depositForm'
+import getStartedModalActionTypes from './actions/getStartedModal'
 import settingsActionTypes from './actions/settings'
 import createWalletActionTypes from './actions/createWallet'
 import walletPageActionTypes from './actions/walletPage'
 import tradingPageActionTypes from './actions/tradingPage'
-import socketManagerActionTypes from './actions/socketManager'
+import socketControllerActionTypes from './actions/socketController'
 import loginPageActionTypes from './actions/loginPage'
 import logoutPageActionTypes from './actions/logoutPage'
 import signerSettingsActionTypes from './actions/signerSettings'
+import convertTokensFormActionTypes from './actions/convertTokensForm'
 import appActionTypes from './actions/app'
 
-import * as etherBalanceEvents from './domains/etherBalance'
+
 import * as accountBalancesEvents from './domains/accountBalances'
-import * as sendEtherFormEvents from './domains/sendEtherForm'
+import * as transferTokensFormEvents from './domains/transferTokensForm'
 import * as loginPageEvents from './domains/loginPage'
 import * as orderBookEvents from './domains/orderBook'
 import * as tradeEvents from './domains/trades'
 import * as orderEvents from './domains/orders'
-import * as orderFormEvents from './domains/orderForm'
 import * as ohlcvEvents from './domains/ohlcv'
 import * as tokensEvents from './domains/tokens'
 import * as accountEvents from './domains/account'
 import * as depositFormEvents from './domains/depositForm'
+import * as getStartedModalEvents from './domains/getStartedModal'
 import * as settingsEvents from './domains/settings'
 import * as tokenPairsEvents from './domains/tokenPairs'
 import * as signerEvents from './domains/signer'
 import * as walletsEvents from './domains/wallets'
 import * as notificationEvents from './domains/notifications'
+import * as convertTokensFormEvents from './domains/convertTokensForm'
 
 export const loginPage = createReducer(action => {
   const { type, payload } = action
@@ -100,30 +102,30 @@ export const signer = createReducer(action => {
   }
 })
 
-export const sendEtherForm = createReducer(action => {
+export const transferTokensForm = createReducer(action => {
   const { type, payload } = action
   switch (type) {
-    case sendEtherFormActionTypes.txError:
-      return sendEtherFormEvents.txError(payload.status, payload.statusMessage)
-    case sendEtherFormActionTypes.validateTx:
-      return sendEtherFormEvents.txValidated(payload.statusMessage, payload.gas)
-    case sendEtherFormActionTypes.invalidateTx:
-      return sendEtherFormEvents.txInvalidated(payload.statusMessage)
-    case sendEtherFormActionTypes.revertTx:
-      return sendEtherFormEvents.txReverted(payload.statusMessage, payload.receipt)
-    case sendEtherFormActionTypes.sendTx:
-      return sendEtherFormEvents.txSent(payload.hash)
-    case sendEtherFormActionTypes.confirmTx:
-      return sendEtherFormEvents.txConfirmed(payload.receipt)
+    case transferTokensFormActionTypes.txError:
+      return transferTokensFormEvents.txError(payload.status, payload.statusMessage)
+    case transferTokensFormActionTypes.validateTx:
+      return transferTokensFormEvents.txValidated(payload.statusMessage, payload.gas)
+    case transferTokensFormActionTypes.invalidateTx:
+      return transferTokensFormEvents.txInvalidated(payload.statusMessage)
+    case transferTokensFormActionTypes.revertTx:
+      return transferTokensFormEvents.txReverted(payload.statusMessage, payload.receipt)
+    case transferTokensFormActionTypes.sendTx:
+      return transferTokensFormEvents.txSent(payload.hash)
+    case transferTokensFormActionTypes.confirmTx:
+      return transferTokensFormEvents.txConfirmed(payload.receipt)
     default:
-      return sendEtherFormEvents.initialized()
+      return transferTokensFormEvents.initialized()
   }
 })
 
 export const ohlcv = createReducer(action => {
   const { type, payload } = action
   switch (type) {
-    case socketManagerActionTypes.initOHLCV:
+    case socketControllerActionTypes.initOHLCV:
     case ohlcvActionTypes.saveData:
       return ohlcvEvents.savedOHLCVData(payload.data)
     case ohlcvActionTypes.saveDuration:
@@ -143,11 +145,11 @@ export const ohlcv = createReducer(action => {
 export const trades = createReducer(action => {
   const { type, payload } = action
   switch (type) {
-    case socketManagerActionTypes.updateTradesTable:
+    case socketControllerActionTypes.updateTradesTable:
     case tradingPageActionTypes.updateTradesTable:
     case tokenSearcherActionTypes.updateTradesTable:
       return tradeEvents.tradesUpdated(payload.trades)
-    case socketManagerActionTypes.initTradesTable:
+    case socketControllerActionTypes.initTradesTable:
     case tradingPageActionTypes.initTradesTable:
     case tokenSearcherActionTypes.initTradesTable:
       return tradeEvents.tradesInitialized(payload.trades)
@@ -164,11 +166,11 @@ export const orderBook = createReducer(action => {
   switch (type) {
     case tradingPageActionTypes.updateOrderBook:
     case tokenSearcherActionTypes.updateOrderBook:
-    case socketManagerActionTypes.updateOrderBook:
+    case socketControllerActionTypes.updateOrderBook:
       return orderBookEvents.orderBookUpdated(payload.bids, payload.asks)
     case tradingPageActionTypes.initOrderBook:
     case tokenSearcherActionTypes.initOrderBook:
-    case socketManagerActionTypes.initOrderBook:
+    case socketControllerActionTypes.initOrderBook:
       return orderBookEvents.orderBookInitialized(payload.bids, payload.asks)
     case tradingPageActionTypes.updateCurrentPair:
     case tokenSearcherActionTypes.updateCurrentPair:
@@ -182,7 +184,7 @@ export const orders = createReducer(action => {
   const { type, payload } = action
   switch (type) {
     case tradingPageActionTypes.updateOrdersTable:
-    case socketManagerActionTypes.updateOrdersTable:
+    case socketControllerActionTypes.updateOrdersTable:
       return orderEvents.ordersUpdated(payload.orders)
     case tradingPageActionTypes.initOrdersTable:
     case tokenSearcherActionTypes.initOrdersTable:
@@ -237,6 +239,8 @@ export const account = createReducer(action => {
       return accountEvents.accountUpdated(payload.address, '')
     case loginPageActionTypes.loginWithWallet:
       return accountEvents.accountUpdated(payload.address, payload.privateKey)
+    case walletPageActionTypes.updateShowHelpModal:
+      return accountEvents.showHelpModalUpdated(payload.showHelpModal)
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved()
     case accountActionTypes.updateCurrentBlock:
@@ -270,6 +274,50 @@ export const depositForm = createReducer(action => {
   }
 })
 
+export const getStartedModal = createReducer(action => {
+  const { type, payload } = action
+  switch (type) {
+    case getStartedModalActionTypes.sendConvertTx:
+      return getStartedModalEvents.convertTxSent(payload.hash)
+    case getStartedModalActionTypes.revertConvertTx:
+      return getStartedModalEvents.convertTxReverted(payload.receipt)
+    case getStartedModalActionTypes.confirmConvertTx:
+      return getStartedModalEvents.convertTxConfirmed(payload.receipt)
+    case getStartedModalActionTypes.sendApproveTx:
+      return getStartedModalEvents.approveTxSent(payload.hash)
+    case getStartedModalActionTypes.revertApproveTx:
+      return getStartedModalEvents.approveTxReverted(payload.receipt)
+    case getStartedModalActionTypes.confirmApproveTx:
+      return getStartedModalEvents.approveTxConfirmed(payload.receipt)
+    default:
+      return getStartedModalEvents.initialized()
+  }
+})
+
+export const convertTokensForm = createReducer(action => {
+  const { type, payload } = action
+  switch (type) {
+    case convertTokensFormActionTypes.confirm:
+      return convertTokensFormEvents.confirmed(payload.tokenSymbol)
+    case convertTokensFormActionTypes.reset:
+      return convertTokensFormEvents.reset(payload.tokenSymbol)
+    case convertTokensFormActionTypes.sendConvertTx:
+      return convertTokensFormEvents.convertTxSent(payload.tokenSymbol, payload.hash)
+    case convertTokensFormActionTypes.revertConvertTx:
+      return convertTokensFormEvents.convertTxReverted(payload.tokenSymbol, payload.receipt)
+    case convertTokensFormActionTypes.confirmConvertTx:
+      return convertTokensFormEvents.convertTxConfirmed(payload.tokenSymbol, payload.receipt)
+    case convertTokensFormActionTypes.sendAllowTx:
+      return convertTokensFormEvents.allowTxSent(payload.tokenSymbol, payload.hash)
+    case convertTokensFormActionTypes.revertAllowTx:
+      return convertTokensFormEvents.allowTxReverted(payload.tokenSymbol, payload.receipt)
+    case convertTokensFormActionTypes.confirmAllowTx:
+      return convertTokensFormEvents.allowTxConfirmed(payload.tokenSymbol, payload.receipt)
+    default:
+      return convertTokensFormEvents.initialized()
+    }
+})
+
 export const settings = createReducer(action => {
   const { type } = action
   switch (type) {
@@ -300,29 +348,15 @@ export const wallets = createReducer(action => {
   }
 })
 
-export const etherBalance = createReducer(action => {
-  const { type, payload } = action
-  switch (type) {
-    case etherBalanceActionTypes.subscribeBalance:
-      return etherBalanceEvents.subscribed(payload.address)
-    case etherBalanceActionTypes.unsubscribeBalance:
-      return etherBalanceEvents.unsubscribed(payload.address)
-    case etherBalanceActionTypes.updateBalance:
-      return etherBalanceEvents.updated(payload.address, payload.balance)
-    default:
-      return etherBalanceEvents.initialized()
-  }
-})
-
 export const notifications = createReducer(action => {
   const { type, payload } = action
   switch (type) {
     case appActionTypes.addNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.addSuccessNotification:
-      return notificationEvents.notificationAdded(payload.options)
-    case appActionTypes.addDangerNotification:
-      return notificationEvents.notificationAdded(payload.options)
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
+    case appActionTypes.addErrorNotification:
+      return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.removeNotification:
       return notificationEvents.notificationRemoved(payload.id)
     default:

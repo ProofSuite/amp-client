@@ -7,7 +7,7 @@ import getDepositFormSelector, {
   subscribeBalance,
 } from '../../store/models/depositForm';
 
-import type { State } from '../../types';
+import type { State } from '../../types'
 
 export const mapStateToProps = (state: State, ownProps: Object) => {
   const depositFormSelector = getDepositFormSelector(state);

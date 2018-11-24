@@ -3,6 +3,7 @@ import type { AccountAllowances, AccountBalances, AccountBalancesState } from '.
 import { round } from '../../utils/helpers'
 import { utils } from 'ethers'
 import { ALLOWANCE_MINIMUM } from '../../utils/constants'
+import { formatNumber } from 'accounting-js'
 // eslint-disable-next-line
 const initialState = {}
 
@@ -85,23 +86,63 @@ export function cleared() {
 
 export default function accountBalancesDomain(state: AccountBalancesState) {
   return {
-    balances() {
+    balances(): AccountBalancesState {
       return state
     },
-    etherBalance() {
+    // we assume that account balances are loading as long as we have no ETH and no WETH state.
+    loading(): boolean {
+      return (state['ETH'] && state['WETH']) ? false : true
+    },
+    formattedBalances(): * {
+      let keys = Object.keys(state)
+      let formattedBalances = {}
+
+      keys.forEach(key => {
+        formattedBalances[key] = formatNumber(state[key].balance, { precision: 2 })
+      })
+
+      return formattedBalances
+    },
+    tokenChartBalances(): * {
+      let keys = Object.keys(state)
+      let numericBalances = []
+
+      keys.forEach(key => {
+        let value = round(state[key].balance)
+        if (value !== 0) numericBalances.push({symbol: key, value })
+      })
+
+      return numericBalances
+    },
+    etherBalance(): ?string {
       return state['ETH'] ? state['ETH'].balance : null
     },
-    tokenBalance(symbol: string) {
+    formattedEtherBalance(): ?string {
+      return state['ETH'] ? formatNumber(state['ETH'].balance, { precision: 2 }) : null
+    },
+    tokenBalance(symbol: string): ?string {
       return state[symbol] ? state[symbol].balance : null
+    },
+    tokenAllowance(symbol: string): ?string {
+      return state[symbol] ? state[symbol].allowance : null
+    },
+    numericTokenBalance(symbol: string): ?number {
+      return state[symbol] ? Number(state[symbol].balance) : null
+    },
+    numericTokenAllowance(symbol: string): ?number {
+      return state[symbol] ? Number(state[symbol].allowance) : null
+    },
+    formattedTokenBalance(symbol: string) {
+      return state[symbol] ? formatNumber(state[symbol].balance, { precision: 2 }) : null
     },
     getBigNumberBalance(symbol: string) {
       if (!state[symbol]) return null
-
       //The precision multiplier allows for rounding a decimal balance to a "point" number that
       //can be converted into a bignumber. After the bignumber balance is computed, we divide by
       //the precisionMultiplier to offset the initial multiplication by the precision multiplier
       let precisionMultiplier = 1e4
-      let balancePoints = round(state[symbol].balance * precisionMultiplier, 0)
+      let numericBalance = Number(state[symbol].balance)
+      let balancePoints = round(numericBalance * precisionMultiplier, 0)
 
       let etherMultiplier = utils.bigNumberify('1000000000000000000')
       let balance = utils
@@ -111,23 +152,26 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
 
       return balance
     },
-    get(symbol: string) {
+    get(symbol: string): ?string {
       return state[symbol] ? state[symbol].balance : null
     },
-    isSubscribed(symbol: string) {
+    isSubscribed(symbol: string): boolean {
       return state[symbol] ? state[symbol].subscribed : false
     },
-    isAllowed(symbol: string) {
+    isAllowed(symbol: string): boolean {
       return state[symbol] ? state[symbol].allowance > ALLOWANCE_MINIMUM : false
     },
-    isAllowancePending(symbol: string) {
+    isAllowancePending(symbol: string): boolean {
       return state[symbol] ? state[symbol].allowance === 'pending' : false
     },
+    //To simply UX, we suppose that a trader is "allowing" the exchange smart contract to trade tokens if the
+    //allowance value is set to a very large number. If the allowance is above ALLOWANCE_MINIMUM, the tokens is
+    //is considered tradeable on the frontend app.
     getBalancesAndAllowances(tokens: Array<Object>) {
       return (tokens: any).map(token => {
         return {
           ...token,
-          balance: state[token.symbol] ? state[token.symbol].balance : null,
+          balance: state[token.symbol] ? formatNumber(state[token.symbol].balance, { precision: 2 }) : null,
           allowed: state[token.symbol] && state[token.symbol].allowance > ALLOWANCE_MINIMUM,
           allowancePending: state[token.symbol] && state[token.symbol].allowance === 'pending'
         }
@@ -137,7 +181,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
-          balance: item.balance,
+          balance: formatNumber(item.balance, { precision: 2 }),
           allowed: item.allowance > ALLOWANCE_MINIMUM,
           allowancePending: item.allowance === 'pending'
         }
@@ -147,7 +191,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
-          balance: item.balance,
+          balance: formatNumber(item.balance, { precision: 2}),
           allowed: item.allowance > ALLOWANCE_MINIMUM
         }
       })

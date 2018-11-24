@@ -4,13 +4,11 @@ import { shallow } from 'enzyme';
 import createStore from '../../store/configureStore';
 import connect, { mapStateToProps } from './connect';
 import * as walletPage from '../../store/models/walletPage';
-import * as layoutPage from '../../store/models/layout';
-import * as settingsPage from '../../store/models/settings';
 
 jest.mock('../../store/models/walletPage');
 jest.mock('../../store/models/layout');
 
-const depositTableData = [
+const tokenData = [
   { symbol: 'EOS', balance: '10.0000', allowed: true },
   { symbol: 'ZRX', balance: '1.00000', allowed: false },
   { symbol: 'EOS', balance: '5.00000', allowed: false },
@@ -25,7 +23,6 @@ describe('connect(Component)', () => {
       expect(props).toHaveProperty('queryAccountData');
       expect(props).toHaveProperty('loading');
       expect(props).toHaveProperty('depositTableSelector');
-      expect(props).toHaveProperty('isDefaultAccountSet');
       expect(props).toHaveProperty('authenticated');
       expect(props).toHaveProperty('pvtKeyLocked');
       return null;
@@ -41,20 +38,15 @@ describe('connect(Component)', () => {
 
 describe('mapStateToProps(state, props)', () => {
   it('returns expected props', () => {
-    walletPage.default = jest.fn(() => ({ depositTableData }));
-    layoutPage.default = jest.fn(() => ({ authenticated: true }));
-    settingsPage.default = jest.fn(() => ({ pvtKeyLocked: true }));
+    walletPage.default = jest.fn(() => ({ tokenData }));
     const state = {};
     const props = {};
     const result = mapStateToProps(state, props);
 
     expect(result).toBeDefined();
     expect(result).toEqual({
-      depositTableData,
-      pvtKeyLocked: true,
-      isDefaultAccountSet: false,
-      loading: false,
-      authenticated: true,
+      tokenData,
+      loading: false
     });
   });
 });

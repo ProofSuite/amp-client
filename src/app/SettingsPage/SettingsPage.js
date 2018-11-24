@@ -1,32 +1,37 @@
+// @flow
+
 import React from 'react';
-import { getLocalStorageWallets } from '../../utils/helpers';
+import { getLocalStorageWallets } from '../../store/services/storage';
 import WalletSettingsForm from '../../components/WalletSettingsForm/index.js';
 import SignerSettingsForm from '../../components/SignerSettingsForm/index.js';
 import { Box } from '../../components/Common';
 
-class SettingsPage extends React.PureComponent {
+import type { Wallet } from '../../types/wallets'
+import type { Address } from '../../types/common'
+
+type Props = {}
+
+type State = {
+  wallets: Array<Wallet>
+}
+
+class SettingsPage extends React.PureComponent<Props, State> {
   state = {
-    wallets: getLocalStorageWallets(),
+    wallets: getLocalStorageWallets()
   };
 
-  removeWallet = address => {
+  removeWallet = (address: Address) => {
     localStorage.removeItem(address);
     this.setState({ wallets: getLocalStorageWallets() });
   };
 
   render() {
-    const { pvtKeyLocked, togglePvtKeyLock } = this.props;
     const { wallets } = this.state;
 
     return (
       <React.Fragment>
         <Box width={500} m={3}>
-          <WalletSettingsForm
-            pvtKeyLocked={pvtKeyLocked}
-            wallets={wallets}
-            togglePvtKeyLock={togglePvtKeyLock}
-            removeWallet={this.removeWallet}
-          />
+          <WalletSettingsForm wallets={wallets} removeWallet={this.removeWallet} />
         </Box>
         <Box width={500} m={3}>
           <SignerSettingsForm />

@@ -4,3 +4,22 @@ body {
   background-color: $pt-dark-app-background-color;
 }
 
+//The following media queries adjust the browser zoom depending on the screen width
+// @media only screen and (max-width: 3000px) {
+//   body {
+//     zoom: 0.9;
+//   }
+// }
+
+// @media only screen and (max-width: 2000px) {
+//   body {
+//     zoom: 0.75;
+//   }
+
+// }
+
+// @media only screen and (max-width: 1600px) {
+//   body {
+//     zoom: 0.75;
+//   }
+// }

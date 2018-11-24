@@ -49,7 +49,7 @@ describe('Order Domain', () => {
     const ordersDomain = getDomain([eventCreators.initialized()]);
     const expected = {};
 
-    expect(ordersDomain.byTimestamp()).toEqual(expected);
+    expect(ordersDomain.byHash()).toEqual(expected);
   });
 
   //TODO replace with real order values or with test keys ?
@@ -95,13 +95,13 @@ describe('Order Domain', () => {
 
     const ordersDomain = getDomain([eventCreators.initialized(), eventCreators.ordersUpdated(orders)]);
 
-    expect(ordersDomain.byTimestamp()).toEqual(expected);
+    expect(ordersDomain.byHash()).toEqual(expected);
   });
 });
 
 it('handles orders removed event', () => {
   let expected = {
-    '1506911142876': {
+    '0x8c3122d67b7836f641a39e694b3b61f817ced9a9131d4287db30e1f05494f46a': {
       amount: 5765.64,
       price: 98517.23,
       type: 'MARKET',
@@ -118,8 +118,8 @@ it('handles orders removed event', () => {
   const ordersDomain = getDomain([
     eventCreators.initialized(),
     eventCreators.ordersUpdated(orders),
-    eventCreators.ordersDeleted(['1511091286778', '1504567900560']),
+    eventCreators.ordersDeleted(['0x5960fda2d7d3451272bca059a09e6d92b796bb9f8b5cc9d2a7d39f93e0c17346', '0x239c611ce10346eba1fe08dbc5542499a1e6bf5675070fa7ef809dc85d75f7c9']),
   ]);
 
-  expect(ordersDomain.byTimestamp()).toEqual(expected);
+  expect(ordersDomain.byHash()).toEqual(expected);
 });

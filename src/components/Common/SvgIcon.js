@@ -1,6 +1,7 @@
 import React from 'react';
 import Colors from './Colors';
 
+
 function getIntentColor(intent) {
   switch (intent) {
     case 'success':

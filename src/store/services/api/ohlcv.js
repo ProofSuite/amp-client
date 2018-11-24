@@ -1,7 +1,7 @@
+// @flow
 import { ENGINE_HTTP_URL } from '../../../config/urls'
 import { convertPricepointToPrice } from '../../../utils/helpers';
 
-// @flow
 const addMonths = require('date-fns/add_months')
 
 const request = (endpoint: string, options: Object) => {
@@ -39,7 +39,7 @@ export const getOHLCV = async (
     throw new Error('Error')
   }
 
-  const data = await response.json()
+  const { data } = await response.json()
   if (data === null) return []
 
   let parsedData = data.map(datum => {

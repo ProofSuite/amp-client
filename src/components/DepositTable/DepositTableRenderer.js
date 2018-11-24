@@ -1,19 +1,31 @@
 // @flow
 import React from 'react';
-import { Button, Switch, Checkbox, InputGroup } from '@blueprintjs/core';
-import { RowSpaceBetween, ColoredCryptoIcon } from '../Common';
+import { Button, Switch, Checkbox, InputGroup, Tag } from '@blueprintjs/core';
+import { RowSpaceBetween, CryptoIcon, Colors } from '../Common';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
+
+type TokenData = {
+  symbol: string,
+  address: string,
+  balance: string,
+  allowed: boolean,
+  allowancePending: boolean
+}
 
 type Props = {
-  provider: string,
-  depositTableData: Object,
+  connected: boolean,
+  baseTokensData: Array<TokenData>,
+  quoteTokensData: Array<TokenData>,
+  ETHTokenData: TokenData,
+  WETHTokenData: TokenData,
+  tokenDataLength: number,
   searchInput: string,
-  handleSearchInputChange: (SyntheticEvent<>) => void,
-  hideZeroBalanceToken: void => void,
+  handleSearchInputChange: (SyntheticInputEvent<>) => void,
+  hideZeroBalanceToken: boolean,
   openDepositModal: string => void,
+  openConvertModal: (string, string) => void,
   openSendModal: string => void,
-  toggleAllowance: void => void,
+  toggleAllowance: string => void,
   toggleZeroBalanceToken: void => void,
   redirectToTradingPage: string => void,
 };
@@ -22,9 +34,9 @@ const DepositTableRenderer = (props: Props) => {
   const {
     hideZeroBalanceToken,
     toggleZeroBalanceToken,
-    depositTableData,
     searchInput,
     handleSearchInputChange,
+    tokenDataLength,
   } = props;
 
   return (
@@ -45,48 +57,246 @@ const DepositTableRenderer = (props: Props) => {
         <TableHeader>
           <TableHeaderCell>Token Name</TableHeaderCell>
           <TableHeaderCell>Balances</TableHeaderCell>
-          <TableHeaderCell>Allowances</TableHeaderCell>
-          <TableHeaderCell style={{ width: '40%' }}>Allow trading</TableHeaderCell>
+          <TableHeaderCell>Unlocked</TableHeaderCell>
+          <TableHeaderCell style={{ width: '70%' }}></TableHeaderCell>
         </TableHeader>
       </Table>
       <TableBodyContainer>
         <Table>
           <TableBody>
-            <RowRenderer {...props} />
+            <ETHRow {...props} />
+            <WETHRow {...props} />
+            <QuoteTokenRows {...props} />
+            <BaseTokenRows {...props} />
           </TableBody>
         </Table>
-        {depositTableData.length === 0 && <NoToken>No tokens</NoToken>}
+        {tokenDataLength === 0 && <NoToken>No tokens</NoToken>}
       </TableBodyContainer>
     </TableSection>
   );
 };
 
-const RowRenderer = (props: Props) => {
-  const { provider, depositTableData, toggleAllowance, openDepositModal, openSendModal, redirectToTradingPage } = props;
+const ETHRow = (props: Props) => {
+  const {
+    connected,
+    ETHTokenData,
+    openDepositModal,
+    openSendModal,
+    openConvertModal,
+  } = props;
 
-  return depositTableData.map(({ symbol, balance, allowed, allowancePending }, index) => {
+  if (!ETHTokenData) return null
+
+  const { symbol, balance } = ETHTokenData
+
+  return (
+    <Row key='ETH'>
+      <Cell>
+        <TokenNameWrapper>
+          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+          <span>{symbol}</span>
+        </TokenNameWrapper>
+      </Cell>
+      <Cell>{balance}</Cell>
+      <Cell></Cell>
+      <Cell style={{ width: '70%' }}>
+        <ButtonWrapper>
+          <Button
+            disabled={!connected}
+            intent="primary"
+            text="Deposit"
+            rightIcon="import"
+            onClick={() => openDepositModal(symbol)}
+          />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <Button
+            disabled={!connected}
+            intent="primary"
+            text="Send"
+            rightIcon="export"
+            onClick={() => openSendModal(symbol)}
+          />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <Button
+            disabled={!connected}
+            intent="success"
+            text="Convert to WETH"
+            onClick={() => openConvertModal('ETH', 'WETH')}
+            rightIcon="random"
+          />
+        </ButtonWrapper>
+      </Cell>
+    </Row>
+  );
+}
+
+const WETHRow = (props: Props) => {
+  const {
+    connected,
+    WETHTokenData,
+    toggleAllowance,
+    openDepositModal,
+    openSendModal,
+    openConvertModal,
+  } = props
+
+
+  if (!WETHTokenData) return null
+
+  const { symbol, balance, allowed, allowancePending } = WETHTokenData
+
+  return (
+    <Row key='WETH'>
+      <Cell>
+        <TokenNameWrapper>
+          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+          <span>{symbol}</span>
+        </TokenNameWrapper>
+      </Cell>
+      <Cell>{balance}</Cell>
+      <Cell>
+          <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
+          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
+        </Cell>
+      <Cell style={{ width: '70%' }}>
+        <ButtonWrapper>
+          <Button
+            disabled={!connected}
+            intent="primary"
+            rightIcon="import"
+            text="Deposit"
+            onClick={() => openDepositModal(symbol)}
+          />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <Button
+            disabled={!connected}
+            intent="primary"
+            rightIcon="export"
+            text="Send"
+            onClick={() => openSendModal(symbol)}
+          />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <Button
+            disabled={!connected}
+            intent="success"
+            text="Convert to ETH"
+            rightIcon="random"
+            onClick={() => openConvertModal('WETH', "ETH")} />
+        </ButtonWrapper>
+      </Cell>
+    </Row>
+  )
+}
+
+const QuoteTokenRows = (props: Props) => {
+  const {
+    connected,
+    quoteTokensData,
+    toggleAllowance,
+    openDepositModal,
+    openSendModal,
+  } = props
+
+  if (!quoteTokensData) return null
+
+  return quoteTokensData.map(({ symbol, balance, allowed, allowancePending }, index) => {
     return (
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <ColoredCryptoIcon size={35} name={symbol} />
+            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
         <Cell>{balance}</Cell>
         <Cell>
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
-          {allowancePending && <span>Pending</span>}
+          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
-        <Cell style={{ width: '40%' }}>
+        <Cell style={{ width: '70%' }}>
           <ButtonWrapper>
-            <Button disabled={!provider} intent="primary" text="Deposit" onClick={() => openDepositModal(symbol)} />
+            <Button
+              disabled={!connected}
+              intent="primary"
+              text="Deposit"
+              rightIcon="import"
+              onClick={() => openDepositModal(symbol)}
+            />
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button disabled={!provider} intent="primary" text="Send" onClick={() => openSendModal(symbol)} />
+            <Button
+              disabled={!connected}
+              intent="primary"
+              text="Send"
+              rightIcon="export"
+              onClick={() => openSendModal(symbol)}
+            />
+          </ButtonWrapper>
+        </Cell>
+      </Row>
+    )
+  })
+}
+
+
+
+const BaseTokenRows = (props: Props) => {
+  const {
+    baseTokensData,
+    connected,
+    toggleAllowance,
+    openDepositModal,
+    openSendModal,
+    redirectToTradingPage,
+  } = props;
+
+  if (!baseTokensData) return null
+
+  return baseTokensData.map(({ symbol, balance, allowed, allowancePending }, index) => {
+    return (
+      <Row key={index}>
+        <Cell>
+          <TokenNameWrapper>
+            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+            <span>{symbol}</span>
+          </TokenNameWrapper>
+        </Cell>
+        <Cell>{balance}</Cell>
+        <Cell>
+          <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
+          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
+        </Cell>
+        <Cell style={{ width: '70%' }}>
+          <ButtonWrapper>
+            <Button
+              disabled={!connected}
+              intent="primary"
+              text="Deposit"
+              rightIcon="import"
+              onClick={() => openDepositModal(symbol)}
+            />
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button disabled={!provider} intent="primary" text="Trade" onClick={() => redirectToTradingPage(symbol)} />
+            <Button
+              disabled={!connected}
+              intent="primary"
+              text="Send"
+              onClick={() => openSendModal(symbol)}
+              rightIcon="export"
+              />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              disabled={!connected}
+              intent="success"
+              text="Trade"
+              rightIcon="chart"
+              onClick={() => redirectToTradingPage(symbol)}
+            />
           </ButtonWrapper>
         </Cell>
       </Row>
@@ -95,7 +305,7 @@ const RowRenderer = (props: Props) => {
 };
 
 const Table = styled.table.attrs({
-  className: 'bp3-html-table bp3-interactive bp3-html-table-striped',
+  className: 'bp3-html-table bp3-condensed bp3-interactive',
 })`
   width: 100%;
 `;
@@ -111,18 +321,23 @@ const TableSection = styled.div`
   justify-content: start;
   flex-direction: column;
   height: 100%;
-  width: 99%;
+  width: 100%;
 `;
 
-const TableBody = styled.tbody``;
+const TableBody = styled.tbody`
+`;
 
-const TableHeader = styled.tr``;
+const TableHeader = styled.tr`
+  width: 100%;
+`;
 
 const TableHeaderCell = styled.th`
-  width: 19%;
+width: 15%;
+text-align: middle;
 `;
+
 const Cell = styled.td`
-  width: 19%;
+  width: 15%;
   vertical-align: middle !important;
   & label {
     margin: 0;
@@ -133,7 +348,7 @@ const Row = styled.tr`
   width: 100%;
 `;
 
-const TokenNameWrapper = styled.thead`
+const TokenNameWrapper = styled.span`
   display: flex;
   align-items: center;
   & svg {
@@ -158,4 +373,4 @@ const ButtonWrapper = styled.span`
   margin-right: 10px !important;
 `;
 
-export default withRouter(DepositTableRenderer);
+export default DepositTableRenderer;

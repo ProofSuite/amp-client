@@ -1,7 +1,7 @@
 //@flow
 import React from 'react'
 import styled from 'styled-components'
-import { Card, Tab, Tabs, Collapse, Button, Icon } from '@blueprintjs/core'
+import { Card, Tag, Tab, Tabs, Collapse, Button, Icon } from '@blueprintjs/core'
 import { Colors, Loading, CenteredMessage } from '../Common'
 import { format } from 'date-fns'
 import { Order } from '../../types/orders'
@@ -18,7 +18,8 @@ type Props = {
     OPEN: Array<Order>,
     PENDING: Array<Order>,
     EXECUTED: Array<Order>,
-    CANCELLED: Array<Order>
+    CANCELLED: Array<Order>,
+    FILLED: Array<Order>
   }
 }
 
@@ -77,13 +78,13 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
         {order.pair}
       </Cell>
       <Cell className="amount" muted>
-        {order.amount}
+        {order.filled}/{order.amount}
       </Cell>
       <Cell className="price" muted>
         {order.price} ({order.type})
       </Cell>
       <Cell className="status" muted>
-        {order.status}
+        <StatusTag status={order.status} />
       </Cell>
       <Cell className="side" side={order.side} muted>
         {order.side}
@@ -92,7 +93,7 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
         {format(order.time, 'DD/MM/YYYY HH:MM:SS')}
       </Cell>
       <Cell className="cancel" muted>
-        {order.status === 'OPEN' && (
+        {order.cancelleable && (
           <Button intent="danger" minimal onClick={() => cancelOrder(order.hash)} >
             <Icon icon="cross" intent="danger" />&nbsp;&nbsp;Cancel
           </Button>
@@ -100,6 +101,19 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
       </Cell>
     </Row>
   )
+}
+
+const StatusTag = ({ status }) => {
+  const statuses = {
+    "INVALIDATED": "danger",
+    "CANCELLED": "danger",
+    "OPEN": "primary",
+    "FILLED": "success",
+    "PARTIALLY_FILLED": "success"
+  }
+
+  const intent = statuses[status]
+  return <Tag minimal large interactive intent={intent}>{status}</Tag>
 }
 
 const OrdersTableHeader = styled.div`
@@ -158,6 +172,8 @@ const Row = styled.li.attrs({ className: 'row' })`
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
 `
+
+
 
 const Cell = styled.span.attrs({ className: props => props.className })`
   color: ${props =>

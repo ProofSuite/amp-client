@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import Chart from './Chart';
-import { Loading } from '../Common';
+import { Loading, CenteredMessage } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 import AutoScaler from '../AutoScaler';
 import styled from 'styled-components';
@@ -38,21 +38,26 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
       data,
     } = this.props;
 
-    if (!data || data.length < 1) {
+    if (!data) {
       return <Loading />;
     }
+
+    if (data.length < 1) {
+      return <CenteredMessage message="There are currently no trades for this token pair" />;
+    }
+
     return (
-      <Wrapper className="chart-container">
-        <TypeChooser>
-          {type => (
+        <Wrapper className="chart-container">
             <AutoScaler>
-              {({ width }) => (
-                <Chart
+              {({ width, height }) => (
+                <TypeChooser>
+                {type => (
+                  <Chart
                   width={width}
                   type={type}
                   macd={macd}
                   volume={volume}
-                  chartHeight={chartHeight}
+                  chartHeight={height - indicatorHeight}
                   indicatorHeight={indicatorHeight}
                   rsi={rsi}
                   line={line}
@@ -62,11 +67,11 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
                   data={data}
                   noOfCandles={noOfCandles}
                 />
+                )}
+                </TypeChooser>
               )}
             </AutoScaler>
-          )}
-        </TypeChooser>
-      </Wrapper>
+        </Wrapper>
     );
   }
 }
@@ -74,4 +79,5 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
 const Wrapper = styled.div`
   text-align: left;
   margin: 10px -10px 0px -20px;
+  height: 80%;
 `;

@@ -2,18 +2,24 @@ import createStore from '../../store/configureStore';
 import * as accountBalancesService from '../services/accountBalances';
 import * as signerService from '../services/signer';
 import * as walletService from '../services/wallet';
-import { Contract } from 'ethers';
+import { utils, Contract } from 'ethers';
 import { quoteTokens } from '../../config/quotes';
 
 import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getNotificationsDomain } from '../domains';
 import * as actionCreators from './walletPage';
 
+// file.only
 jest.mock('../services/accountBalances');
 jest.mock('../services/signer');
 jest.mock('../services/wallet');
+jest.mock('../services/index.js')
+jest.mock('../services/api/index.js');
+jest.mock('../services/socket');
 jest.mock('./signerSettings');
 jest.mock('../domains');
 jest.mock('ethers');
+
+utils.bigNumberify.mockImplementationOnce(require.requireActual('ethers').utils.bigNumberify);
 
 let model, tokenModel, accountBalancesDomain;
 const { store } = createStore();
@@ -40,6 +46,7 @@ const zrx = {
 
 beforeEach(() => {
   jest.resetAllMocks();
+
   accountBalancesService.queryEtherBalance.mockReturnValue({ symbol: 'ETH', balance: 1000 });
 
   accountBalancesService.queryTokenBalances.mockReturnValue([

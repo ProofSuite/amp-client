@@ -14,7 +14,6 @@ import * as accountBalancesService from '../services/accountBalances';
 import { getSigner } from '../services/signer';
 import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
 import { ERC20, WETH } from '../../config/abis';
-import contractsInterfaces from 'proof-contracts-interfaces'
 
 import type { Token } from '../../types/common';
 import type { State, ThunkAction } from '../../types';
@@ -32,8 +31,8 @@ export default function depositFormSelector(state: State) {
     rankedTokens: () => tokenDomain.rankedTokens(),
     symbols: () => tokenDomain.symbols(),
     tokenIsSubscribed: (symbol: string) => accountBalancesDomain.isSubscribed(symbol),
-    balances: () => accountBalancesDomain.balances(),
-    networkId: () => signerDomain.getNetworkId(),
+    balances: () => accountBalancesDomain.formattedBalances(),
+    networkID: () => signerDomain.getNetworkID(),
     getStep: () => depositFormDomain.getStep(),
     getAllowTxState: () => depositFormDomain.getAllowTxState(),
     getConvertTxState: () => depositFormDomain.getConvertTxState(),
@@ -90,8 +89,20 @@ export function subscribeBalance(token: Token): ThunkAction {
             updateBalanceHandler
           ));
 
-      return () => {
+      return async () => {
+        //First we unsubscribe the deposit + update balance listener
         unsubscribe();
+
+        //Then we resubscribe the update balance listener.
+        const updateBalanceHandler = balance => dispatch(actionCreators.updateBalance(symbol, balance))
+        token.address === '0x0'
+        ? (unsubscribe = await accountBalancesService.subscribeEtherBalance(accountAddress, updateBalanceHandler))
+        : (unsubscribe = await accountBalancesService.subscribeTokenBalance(
+            accountAddress,
+            token,
+            updateBalanceHandler
+          ))
+
         dispatch(actionCreators.unsubscribeBalance(symbol));
       };
     } catch (error) {
@@ -109,7 +120,7 @@ export const confirmEtherDeposit = (
     try {
       dispatch(depositFormActionCreators.confirm());
       let signer = getSigner();
-      let network = depositFormSelector(getState()).networkId();
+      let network = depositFormSelector(getState()).networkID();
       let weth = new Contract(WETH_ADDRESS[network], WETH, signer);
 
       if (shouldConvert) {

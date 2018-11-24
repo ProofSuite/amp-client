@@ -107,7 +107,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       })
     } else {
       total = (quoteTokenBalance / 100) * fraction
-      amount = total * unformat(price)
+      amount = total / unformat(price)
 
       this.setState({
         fraction: fraction,
@@ -224,7 +224,7 @@ class OrderForm extends React.PureComponent<Props, State> {
     (price !== '0.000')
     ? maxAmount = side === 'BUY'
       ? formatNumber(quoteTokenBalance / unformat(price), { decimals: 3 })
-      : formatNumber(baseTokenBalance / unformat(price), { decimals: 3 })
+      : formatNumber(baseTokenBalance, { decimals: 3 })
     : maxAmount = '0.0'
 
 

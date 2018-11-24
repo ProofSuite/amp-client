@@ -3,8 +3,7 @@ import * as appActionCreators from '../actions/app'
 import { getOrdersDomain } from '../domains';
 import type { State, ThunkAction } from '../../types'
 
-import errors from '../../config/errors'
-
+import { parseCancelOrderError } from '../../config/errors'
 import { getSigner } from '../services/signer'
 
 export default function ordersTableSelector(state: State) {
@@ -21,13 +20,10 @@ export const cancelOrder = (hash: string): ThunkAction => {
 
       dispatch(appActionCreators.addSuccessNotification({ message: `Cancelling order ...` }))
       socket.sendNewOrderCancelMessage(orderCancelPayload)
-    } catch (e) {
-      console.log(e)
-      if (e.message === errors.invalidJSON) {
-        return dispatch(appActionCreators.addDangerNotification({ message: 'Connection error' }))
-      }
+    } catch (error) {
 
-      return dispatch(appActionCreators.addDangerNotification({ message: 'Unknown error' }))
+      let message = parseCancelOrderError(error)
+      return dispatch(appActionCreators.addErrorNotification({ message }))
     }
   }
 }

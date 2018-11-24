@@ -3,14 +3,11 @@
 @import '../../../node_modules/rc-steps/assets/index.css';
 @import '../../../node_modules/rc-steps/assets/iconfont.css';
 @import "../../../node_modules/@blueprintjs/table/lib/css/table.css";
-@import "../cryptocoins-icons/cryptocoins.css";
-@import "../cryptocoins-icons/cryptocoins-colors.css";
-@import "reset";
 @import "vars";
+@import "reset";
 @import "global";
 @import "common";
 @import "override";
-@import "orderBook";
 @import "orderHistory";
 @import "tokenSearcher";
 @import "ohlcvChart";

@@ -2,10 +2,10 @@
 import { quoteTokens } from '../../config/quotes'
 import { tokens } from '../../config/tokens'
 import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tokens'
-
 import type { Token, TokenPair, TokenPairState, TokenPairDataMap } from '../../types/tokens'
 
 const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens)
+
 const defaultInitialState = {
   byPair: defaultTokenPairs,
   data: {},
@@ -37,18 +37,21 @@ export const tokenPairUpdated = (baseToken: Token) => {
     let newState = quoteTokens.reduce(
       (result, quoteToken) => {
         if (quoteToken.symbol === baseToken.symbol) return result
-        if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) {
-          return result
-        }
+        if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) return result
 
         let pairSymbol = getPairSymbol(baseToken.symbol, quoteToken.symbol)
+
         result.byPair[pairSymbol] = {
           pair: pairSymbol,
           baseTokenSymbol: baseToken.symbol,
           quoteTokenSymbol: quoteToken.symbol,
           baseTokenAddress: baseToken.address,
-          quoteTokenAddress: quoteToken.address
+          quoteTokenAddress: quoteToken.address,
+          baseTokenDecimals: baseToken.decimals,
+          quoteTokenDecimals: quoteToken.decimals,
+          pricepointMultiplier: 10 ** 9
         }
+
         return result
       },
       { byPair: {} }

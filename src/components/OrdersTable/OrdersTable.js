@@ -34,8 +34,8 @@ class OrdersTable extends React.PureComponent<Props, State> {
 
   filterOrders = () => {
     const { orders } = this.props
-    let result = { ALL: orders }
-    let filters = ['OPEN', 'CANCELLED', 'PARTIALLY_FILLED', 'FILLED', 'REPLACED']
+    let result = { ALL: orders, OPEN: [], CANCELLED: [], PARTIALLY_FILLED: [], FILLED: [] }
+    let filters = ['OPEN', 'CANCELLED', 'PARTIALLY_FILLED', 'FILLED']
 
     for (let filter of filters) {
       // silence-error: currently too many flow errors, waiting for rest to be resolved

@@ -1,5 +1,3 @@
-import type TokenPairData from './tokens'
-
 export type NewOrderParams = {
   userAddress: string,
   exchangeAddress: string,
@@ -10,22 +8,23 @@ export type NewOrderParams = {
 }
 
 export type RawOrder = {
-  userAddress: string,
   exchangeAddress: string,
-  buyTokenAddress: string,
-  sellTokenAddress: string,
-  buyAmount: string,
-  sellAmount: string,
+  userAddress: string,
+  baseToken: string,
+  quoteToken: string,
+  amount: string,
+  pricepoint: string,
+  side: 'BUY' | 'SELL',
+  nonce: string,
+  makeFee: string,
+  takeFee: string,
+  status: string,
   hash: string,
   signature: {
     r: string,
     s: string,
     v: string
   },
-  nonce: string,
-  expires: string,
-  makeFee: string,
-  takeFee: string
 }
 
 export type Order = {
@@ -46,5 +45,5 @@ type Orders = Array<Order>
 
 // eslint-disable-next-line
 type OrdersState = {
-  byTimestamp: { number: Order }
+  byHash: { number: Order }
 }

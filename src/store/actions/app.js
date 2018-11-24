@@ -1,6 +1,6 @@
 const actionTypes = {
   addNotification: 'app/ADD_NOTIFICATION',
-  addDangerNotification: 'app/ADD_DANGER_NOTIFICATION',
+  addErrorNotification: 'app/ADD_DANGER_NOTIFICATION',
   addSuccessNotification: 'app/ADD_SUCCESS_NOTIFICATION',
   removeNotification: 'app/REMOVE_NOTIFICATION',
   updateCurrentBlock: 'app/UPDATE_CURRENT_BLOCK',
@@ -11,6 +11,73 @@ export function addNotification(options) {
     type: actionTypes.addNotification,
     payload: { options },
   };
+}
+
+export function addOrderAddedNotification() {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderAdded',
+    }
+  }
+}
+
+export function addOrderCancelledNotification() {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderCancelled'
+    }
+  }
+}
+
+export function addOrderMatchedNotification() {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderMatched'
+    }
+  }
+}
+
+export function addOrderPendingNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderPending',
+      options,
+    }
+  }
+}
+
+export function addOrderSuccessNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'orderSuccess',
+      options,
+    }
+  }
+}
+
+export function addTxSuccessNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'txSuccess',
+      options
+    }
+  }
+}
+
+export function addTxRevertedNotification(options) {
+  return {
+    type: actionTypes.addNotification,
+    payload: {
+      notificationType: 'txReverted',
+      options,
+    }
+  }
 }
 
 export function addSuccessNotification({ message }) {
@@ -25,7 +92,7 @@ export function addSuccessNotification({ message }) {
   };
 }
 
-export function addDangerNotification({ message }) {
+export function addErrorNotification({ message }) {
   return {
     type: actionTypes.addNotification,
     payload: {

@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Button, Callout, Checkbox, Icon, Slider } from '@blueprintjs/core';
+import React from 'react'
+import styled from 'styled-components'
+import { ModalBody } from '../../Common'
+import { Button, Callout, Checkbox, Icon, Slider } from '@blueprintjs/core'
 
 type Props = {
   step: 'waiting' | 'convert' | 'confirm',
@@ -17,9 +18,9 @@ type Props = {
   toggleShouldConvert: void => void,
   toggleTokenSuggest: void => void,
   showTokenSuggest: boolean,
-  handleChangeToken: (SyntheticEvent<>) => void,
-  handleSubmitChangeToken: (SyntheticEvent<>) => Promise<void>,
-  handleConfirm: (SyntheticEvent<>) => void,
+  handleChangeToken: SyntheticEvent<> => void,
+  handleSubmitChangeToken: SyntheticEvent<> => Promise<void>,
+  handleConfirm: SyntheticEvent<> => void,
   allowTradingCheckboxDisabled: boolean,
   submitButtonDisabled: boolean,
   allowTxStatus: string,
@@ -29,7 +30,7 @@ type Props = {
   convertTxHash: string,
   convertTxReceipt: TxReceipt,
   transactionStatus: string,
-};
+}
 
 const ConversionStepRenderer = (props: Props) => {
   const {
@@ -40,12 +41,12 @@ const ConversionStepRenderer = (props: Props) => {
     balance,
     token,
     submitButtonDisabled,
-    allowTradingCheckboxDisabled,
-  } = props;
+    allowTradingCheckboxDisabled
+  } = props
 
   return (
-    <div>
-      <Callout intent="success" title="Deposit Received">
+    <ModalBody>
+      <Callout intent='success' title='Deposit Received'>
         To be able to trade on the AMP platform, you will need to allow the exchange smart-contract to trade with your
         tokens. Learn more.
       </Callout>
@@ -60,31 +61,35 @@ const ConversionStepRenderer = (props: Props) => {
       <Checkbox
         checked={shouldAllow}
         disabled={allowTradingCheckboxDisabled}
-        label="Allow Trading"
+        label='Allow Trading'
         onChange={toggleShouldAllowTrading}
       />
       <p>
-        <Icon intent="warning" icon="warning-sign" /> This is required for trading (requires a blockchain transaction)
+        <Icon intent='warning' icon='warning-sign' />
+        {' '}
+        This is required for trading (requires a blockchain transaction)
       </p>
       <Button
-        intent="primary"
+        intent='primary'
         onClick={handleConfirm}
         disabled={submitButtonDisabled}
-        text="Enable Trading"
+        text='Enable Trading'
         large
         fill
       />
-    </div>
-  );
-};
+    </ModalBody>
+  )
+}
 
 const renderSliderBox = (props: Props) => {
-  const { shouldConvert, toggleShouldConvert, handleChangeConvertAmount, convertAmount } = props;
-
+  const { shouldConvert, toggleShouldConvert, handleChangeConvertAmount, convertAmount } = props
   return (
     <div>
-      <Checkbox checked={shouldConvert} label="Convert to Wrapper Ether" onChange={toggleShouldConvert} />
-
+      <Checkbox
+        checked={shouldConvert}
+        label='Convert to Wrapper Ether'
+        onChange={toggleShouldConvert}
+      />
       <SliderBox>
         <Slider
           disabled={!shouldConvert}
@@ -97,8 +102,8 @@ const renderSliderBox = (props: Props) => {
         <p>This is required for trading. Read more about wrapper ether here</p>
       </SliderBox>
     </div>
-  );
-};
+  )
+}
 
 const EtherBalanceBox = styled.div`
   padding-top: 40px;
@@ -106,10 +111,10 @@ const EtherBalanceBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`
 
 const SliderBox = styled.div`
   width: 430px;
-`;
+`
 
-export default ConversionStepRenderer;
+export default ConversionStepRenderer

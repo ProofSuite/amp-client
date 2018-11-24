@@ -3,6 +3,8 @@ import * as domains from '../domains';
 
 jest.mock('../domains');
 
+
+
 it('tokenSearcherSelector parses data correctly', () => {
   let getFavoritePairsMock = jest.fn(() => ['BNB/DAI', 'ZRX/WETH']);
 
@@ -12,7 +14,7 @@ it('tokenSearcherSelector parses data correctly', () => {
     quoteTokenSymbol: 'WETH',
   }));
 
-  let tokenBalanceMock = jest.fn(symbol => {
+  let formattedTokenBalanceMock = jest.fn(symbol => {
     if (symbol === 'BNB') return '100.00';
     if (symbol === 'WETH') return '10.00';
     return;
@@ -130,7 +132,8 @@ it('tokenSearcherSelector parses data correctly', () => {
   }));
 
   domains.getAccountBalancesDomain = jest.fn(() => ({
-    tokenBalance: tokenBalanceMock,
+    formattedTokenBalance: formattedTokenBalanceMock,
+
   }));
 
   let { tokenPairsByQuoteToken, currentPair, baseTokenBalance, quoteTokenBalance } = tokenSearcherSelector();

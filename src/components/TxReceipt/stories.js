@@ -4,7 +4,8 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import TxReceipt from './TxReceipt';
-import { receipt } from '../../data';
+
+import { receipt } from '../../utils/mockData'
 
 storiesOf('TxReceipt', module)
   .addDecorator(withKnobs)

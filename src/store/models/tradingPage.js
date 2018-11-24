@@ -1,20 +1,36 @@
 // @flow
-import { getTokenPairsDomain, getAccountDomain } from '../domains'
+import { getTokenPairsDomain, getAccountDomain, getAccountBalancesDomain } from '../domains'
 import * as actionCreators from '../actions/tradingPage'
-import * as ohlcvActionCreators from '../actions/ohlcv'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
+import { parseOrders, parseTokenPairData } from '../../utils/parsers'
 
 // eslint-disable-next-line
 export default function tradingPageSelector(state: State) {
   let accountDomain = getAccountDomain(state)
+  let accountBalancesDomain = getAccountBalancesDomain(state)
+  let pairDomain = getTokenPairsDomain(state)
+
+  let { baseTokenSymbol, quoteTokenSymbol } = pairDomain.getCurrentPair()
+
+  let authenticated = accountDomain.authenticated()
+  let baseTokenBalance = accountBalancesDomain.tokenBalance(baseTokenSymbol)
+  let quoteTokenBalance = accountBalancesDomain.tokenBalance(quoteTokenSymbol)
+  let baseTokenAllowance = accountBalancesDomain.tokenAllowance(baseTokenSymbol)
+  let quoteTokenAllowance = accountBalancesDomain.tokenAllowance(quoteTokenSymbol)
 
   return {
-    authenticated: accountDomain.authenticated()
+    authenticated,
+    baseTokenAllowance,
+    baseTokenBalance,
+    baseTokenSymbol,
+    quoteTokenAllowance,
+    quoteTokenBalance,
+    quoteTokenSymbol
   }
 }
 
-export const queryDefaultData = (): ThunkAction => {
+export const getDefaultData = (): ThunkAction => {
   return async (dispatch, getState, { api, socket }) => {
     try {
       socket.unsubscribeChart()
@@ -27,14 +43,17 @@ export const queryDefaultData = (): ThunkAction => {
 
       let userAddress = await signer.getAddress()
       let currentPair = pairDomain.getCurrentPair()
+      let pairs = pairDomain.getPairsByCode()
 
-      let tokenPairData = await api.getTokenPairData()
+      let { baseTokenDecimals, quoteTokenDecimals } = currentPair
 
-      console.log(tokenPairData)
+      let tokenPairData = await api.fetchTokenPairData()
+      tokenPairData = parseTokenPairData(tokenPairData, baseTokenDecimals)
+
+      let orders = await api.fetchOrders(userAddress)
+      orders = parseOrders(orders, baseTokenDecimals)
 
       dispatch(actionCreators.updateTokenPairData(tokenPairData))
-
-      let orders = await api.getOrders(userAddress)
       dispatch(actionCreators.initOrdersTable(orders))
 
       socket.subscribeTrades(currentPair)

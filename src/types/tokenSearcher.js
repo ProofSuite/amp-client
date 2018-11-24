@@ -28,6 +28,7 @@ export type InitTradesTableAction = {
   payload: { trades: Trades }
 }
 
+
 export type InitOrderBookAction = {
   type: 'tokenSearcher/INIT_ORDERBOOK',
   payload: { bids: any, asks: any }

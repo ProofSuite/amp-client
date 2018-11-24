@@ -1,10 +1,10 @@
 export type TxStatus = 'incomplete' | 'valid' | 'invalid' | 'sent' | 'reverted' | 'confirmed' | 'error';
 
-export type Symbol = string;
-
 export type Address = string;
 
 export type TxHash = string;
+
+export type TokenSymbol = string;
 
 export type TxReceipt = {
   blockHash: string,

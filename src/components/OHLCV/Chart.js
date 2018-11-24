@@ -103,14 +103,12 @@ class OHLCVChart extends React.Component {
     if (calculatedData.length <= 1) {
       return null
     }
+
     const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date)
-
     const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData)
-
     const start = xAccessor(last(data))
     const end = xAccessor(data[Math.max(0, data.length - noOfCandles)])
     const xExtents = [start, end]
-
     const height = chartHeight + indicatorHeight + 42
 
     var margin = { left: 70, right: 70, top: 20, bottom: 30 }
@@ -123,7 +121,7 @@ class OHLCVChart extends React.Component {
       ? {
           innerTickSize: -1 * gridWidth,
           tickStrokeDasharray: 'Solid',
-          tickStrokeOpacity: 0.2,
+          tickStrokeOpacity: 0.1,
           tickStrokeWidth: 1
         }
       : {}
@@ -131,7 +129,7 @@ class OHLCVChart extends React.Component {
       ? {
           innerTickSize: -1 * gridHeight,
           tickStrokeDasharray: 'Solid',
-          tickStrokeOpacity: 0.2,
+          tickStrokeOpacity: 0.1,
           tickStrokeWidth: 1
         }
       : {}
@@ -428,7 +426,7 @@ class OHLCVChart extends React.Component {
               origin={(w, h) => [0, h - indicatorHeight - 150]}
             >
               <MouseCoordinateY at="left" orient="left" displayFormat={format('.4s')} {...mouseEdgeAppearance} />
-              <BarSeries yAccessor={d => d.volume} fill={d => (d.close > d.open ? '#6BA583' : '#FF0000')} />
+              <BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open ? theme.GREEN3 : theme.RED2} />
               <AreaSeries yAccessor={smaVolume50.accessor()} {...volumeAppearance} />
             </Chart>
           )}

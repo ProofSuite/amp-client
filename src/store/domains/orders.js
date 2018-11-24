@@ -49,11 +49,11 @@ export function ordersUpdated(orders: Orders) {
   return event
 }
 
-export const ordersDeleted = (timestamps: Array<number>) => {
+export const ordersDeleted = (hashes: Array<number>) => {
   const event = (state: OrdersState) => ({
     ...state,
     byHash: Object.keys(state.byHash)
-      .filter(key => timestamps.indexOf(key) === -1)
+      .filter(key => hashes.indexOf(key) === -1)
       .reduce((result, current) => {
         result[current] = state.byHash[current]
         return result
@@ -65,20 +65,24 @@ export const ordersDeleted = (timestamps: Array<number>) => {
 
 export default function ordersDomain(state: OrdersState) {
   return {
-    byTimestamp: () => state.byHash,
+    byHash: () => state.byHash,
     all: () => Object.values(state.byHash),
 
     lastOrders: (n: number) => {
       let orders = Object.values(state.byHash)
-      orders = (orders: Orders).slice(Math.max(orders.length - n, 1))
+      orders = (orders: Orders).slice(Math.max(orders.length - n, 0))
       orders = (orders: Orders).map(order => {
-        order.amount = formatNumber(order.amount, { precision: 2 })
-        order.price = formatNumber(order.price, { precision: 2 })
+        order.filled = formatNumber(order.filled, { precision: 3 })
+        order.amount = formatNumber(order.amount, { precision: 3 })
+        order.price = formatNumber(order.price, { precision: 5 })
+        order.cancelleable = (order.status === 'OPEN' || order.status === 'PARTIAL_FILLED')
         return order
       })
 
       return orders
     },
+
+
     history: () => {
       let orders = Object.values(state.byHash)
       let history = (orders: Orders).filter(

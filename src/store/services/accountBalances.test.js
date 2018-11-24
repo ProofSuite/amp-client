@@ -48,7 +48,7 @@ describe('updateAllowance', () => {
   // });
 });
 
-describe('queryEtherBalance', () => {
+describe.only('queryEtherBalance', () => {
   let getBalance;
   let providerMock;
   let address;
@@ -57,7 +57,7 @@ describe('queryEtherBalance', () => {
     getBalance = jest.fn().mockReturnValue('test getBalance');
     providerMock = { getBalance };
     signerService.getProvider = jest.fn(() => providerMock);
-    utils.formatEther.mockReturnValue(1000);
+    utils.formatEther.mockReturnValue('1.0');
     address = '0x4dc5790733b997f3db7fc49118ab013182d6ba9b';
   });
 
@@ -78,7 +78,7 @@ describe('queryEtherBalance', () => {
 
     expect(utils.formatEther).toHaveBeenCalledTimes(1);
     expect(utils.formatEther).toHaveBeenCalledWith('test getBalance');
-    expect(result).toEqual({ symbol: 'ETH', balance: '1000.0000' });
+    expect(result).toEqual({ symbol: 'ETH', balance: '1.0' });
   });
 });
 

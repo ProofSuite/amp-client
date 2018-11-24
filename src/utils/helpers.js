@@ -12,7 +12,7 @@ export const isInteger = n => /^\+?\d+$/.test(n)
 
 export const round = (n, decimals = '2') => Math.round(n * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
-export const convertPricepointToPrice = (n, pricePointMultiplier = 1e6, decimals = '3') =>
+export const convertPricepointToPrice = (n, pricePointMultiplier = 1e9, decimals = '6') =>
   Math.round((n / pricePointMultiplier) * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
 export const sortTable = (table, column, order = 'asc') => {
@@ -52,28 +52,7 @@ export function toPassowrdType(text) {
   return text
 }
 
-export function getSessionStorageWallets() {
-  let wallets = [{ address: 'Enter new...', key: '', rank: 0 }],
-    index = 1
-  Object.keys(sessionStorage).map(key => {
-    // if (ethereum_address.isAddress(key)) {
-      wallets.push({ address: key, key: sessionStorage[key], rank: index })
-      index++
-    // }
-    return key
-  })
-  return wallets
-}
 
-export function getLocalStorageWallets() {
-  let wallets = [{ address: 'Enter new...', key: '', rank: 0 }],
-    index = 1
-  Object.keys(localStorage).map(key => {
-    // if (ethereum_address.isAddress(key) && isJson(localStorage[key])) {
-      wallets.push({ address: key, key: localStorage[key], rank: index })
-      index++
-    // }
-    return key
-  })
-  return wallets
-}
+
+
+

@@ -3,6 +3,8 @@ import { getSigner } from '../services/signer';
 import { Contract } from 'ethers';
 import { mockFailedTxReceipt, mockFailedTxReceipt2, mockTokens, mockTxReceipt, mockTxReceipt2 } from '../../mockData';
 
+
+
 import * as accountBalancesService from '../services/accountBalances';
 
 import {
@@ -180,7 +182,7 @@ it('confirmEtherDeposit (both transactions succeed) updates the depositForm mode
     }[hash];
   });
 
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
   let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction } }));
   let deposit = jest.fn(() => Promise.resolve({ hash: 'deposit weth tx hash' }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve weth tx hash' }));
@@ -236,7 +238,7 @@ it('confirmEtherDeposit (both transactions fail) updates the depositForm model c
     }[hash];
   });
 
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
   let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction } }));
   let deposit = jest.fn(() => Promise.resolve({ hash: 'deposit weth tx hash' }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve weth tx hash' }));
@@ -292,7 +294,7 @@ it('confirmEtherDeposit (one transactions fails) updates the depositForm model c
     }[hash];
   });
 
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
   let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction } }));
   let deposit = jest.fn(() => Promise.resolve({ hash: 'deposit weth tx hash' }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve weth tx hash' }));
@@ -340,7 +342,7 @@ it('confirmTokenDeposit (transaction succeeds updates the depositForm model corr
   const shouldAllow = true;
 
   let waitForTransaction = jest.fn(() => Promise.resolve(mockTxReceipt));
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
   let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction } }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve tx hash' }));
   let tokenContract = jest.fn(() => ({ approve }));
@@ -386,7 +388,7 @@ it('confirmTokenDeposit (transaction fails) updates the depositForm model correc
   const shouldAllow = true;
 
   let waitForTransaction = jest.fn(() => Promise.resolve(mockFailedTxReceipt));
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkId: () => 8888 }));
+  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
   let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction, chainId: '8888' } }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve tx hash' }));
   let tokenContract = jest.fn(() => ({ approve }));

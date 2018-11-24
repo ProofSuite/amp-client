@@ -1,6 +1,6 @@
 // @flow
 import { sortTable } from '../../utils/helpers'
-
+import { formatNumber } from 'accounting-js'
 import type { Trade, Trades, TradesState } from '../../types/trades'
 
 const initialState = {
@@ -78,15 +78,48 @@ export const tradesReset = () => {
 
 export default function tradesDomain(state: TradesState) {
   return {
-    byTimeStamp: () => state.byHash,
+    byHash: () => state.byHash,
     all: () => Object.values(state.byHash),
 
-    userTrades: (address) => {
+    userTrades: (address: string) => {
       let trades = Object.values(state.byHash)
       let isUserTrade = (trade: Trade) => (trade.taker === address || trade.maker === address)
-      let userTrades = trades.filter(trade => isUserTrade(trade))
-      userTrades = sortTable(trades, 'time', 'desc')
-      return userTrades
+
+      trades = trades.filter(trade => isUserTrade(trade))
+      trades = sortTable(trades, 'time', 'desc')
+      trades = trades.map(trade => {
+        return {
+          ...trade,
+          amount: formatNumber(trade.amount, { precision: 3 }),
+          price: formatNumber(trade.price, { precision: 5 })
+        }
+      })
+
+      return trades
+    },
+
+    marketTrades: (n: number) => {
+      let trades = Object.values(state.byHash)
+      trades = sortTable(trades, 'time', 'desc')
+      trades = trades.map((trade, index) => {
+        let change
+
+        (index === trades.length-1)
+          ? change = 'positive'
+          : (trade.price >= trades[index+1].price)
+            ? change = 'positive'
+            : change = 'negative'
+
+        return {
+          ...trade,
+          amount: formatNumber(trade.amount, { precision: 3 }),
+          price: formatNumber(trade.price, { precision: 5 }),
+          change
+        }
+      })
+
+      trades = (trades: Trades).slice(0, n)
+      return trades
     },
 
     lastTrades: (n: number) => {

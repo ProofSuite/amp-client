@@ -38,8 +38,8 @@ it('handles updated event properly', () => {
   expect(domain.isAllowed('REQ')).toEqual(false);
   expect(domain.isAllowed('TRX')).toEqual(false);
   expect(domain.balancesArray()).toEqual([
-    { symbol: 'REQ', balance: 1000, allowed: false },
-    { symbol: 'TRX', balance: 2000, allowed: false },
+    { symbol: 'REQ', balance: "1,000.00", allowed: false },
+    { symbol: 'TRX', balance: "2,000.00", allowed: false },
   ]);
 });
 
@@ -60,8 +60,8 @@ it('handles allowances event properly', () => {
   expect(domain.isAllowed('REQ')).toEqual(true);
   expect(domain.isAllowed('TRX')).toEqual(true);
   expect(domain.balancesArray()).toEqual([
-    { symbol: 'REQ', balance: 1000, allowed: true },
-    { symbol: 'TRX', balance: 2000, allowed: true },
+    { symbol: 'REQ', balance: "1,000.00", allowed: true },
+    { symbol: 'TRX', balance: "2,000.00", allowed: true },
   ]);
 });
 

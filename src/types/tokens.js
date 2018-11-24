@@ -4,7 +4,15 @@ export type Symbol = string;
 export type Token = {
   address: string,
   symbol: string,
+  decimals: number,
 };
+
+export type RankedToken = {
+  address: string,
+  symbol: string,
+  decimals: number,
+  rank: number,
+}
 
 export type TokenPair = {
   +pair: string,
@@ -12,6 +20,8 @@ export type TokenPair = {
   +quoteTokenSymbol: string,
   +baseTokenAddress: string,
   +quoteTokenAddress: string,
+  +decimalsMultiplier: number,
+  +pricepointMultiplier: number,
 };
 
 export type TokenPairState = {
@@ -22,6 +32,8 @@ export type TokenPairState = {
       +quoteTokenSymbol: string,
       +baseTokenAddress: string,
       +quoteTokenAddress: string,
+      +decimalsMultiplier: number,
+      +pricepointMultiplier: number,
     },
   },
   +data: {

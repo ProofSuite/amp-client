@@ -51,15 +51,16 @@ class TokenSearcher extends React.PureComponent<Props, State> {
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
     let { tokenPairsByQuoteToken, currentPair } = nextProps;
     const quoteTokens: Array<string> = Object.keys(tokenPairsByQuoteToken);
-    const defaultQuoteToken = quoteTokens[0];
-    const defaultPairs = tokenPairsByQuoteToken[defaultQuoteToken];
-
+    const currentQuoteToken = currentPair.quoteTokenSymbol
+    
+    // const currentQuoteToken = quoteTokens[0];
+    const defaultPairs = tokenPairsByQuoteToken[currentQuoteToken];
     const selectedPair = defaultPairs.filter(pair => pair.pair === currentPair.pair)[0];
 
     if (!prevState.selectedPair) {
       return {
         quoteTokens: quoteTokens,
-        selectedTabId: defaultQuoteToken,
+        selectedTabId: currentQuoteToken,
         selectedPair: selectedPair, // selectedPair: defaultPairs[0],
       };
     } else return null;

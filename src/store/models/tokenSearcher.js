@@ -2,7 +2,6 @@
 import type { State, ThunkAction } from '../../types'
 import { getTokenPairsDomain, getAccountBalancesDomain } from '../domains'
 import * as actionCreators from '../actions/tokenSearcher'
-import * as ohlcvActionCreators from '../actions/ohlcv'
 
 import { getQuoteToken, getBaseToken } from '../../utils/tokens'
 import { quoteTokenSymbols as quotes } from '../../config/quotes'
@@ -12,7 +11,6 @@ export default function tokenSearcherSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let tokenPairs = domain.getTokenPairsDataArray()
   let favoriteTokenPairs = domain.getFavoritePairs()
-
   let tokenPairsByQuoteToken = {}
 
   for (let quote of quotes) {
@@ -30,8 +28,8 @@ export default function tokenSearcherSelector(state: State) {
   }
 
   let currentPair = domain.getCurrentPair()
-  let baseTokenBalance = accountBalancesDomain.tokenBalance(currentPair.baseTokenSymbol)
-  let quoteTokenBalance = accountBalancesDomain.tokenBalance(currentPair.quoteTokenSymbol)
+  let baseTokenBalance = accountBalancesDomain.formattedTokenBalance(currentPair.baseTokenSymbol)
+  let quoteTokenBalance = accountBalancesDomain.formattedTokenBalance(currentPair.quoteTokenSymbol)
 
   return {
     tokenPairsByQuoteToken,
@@ -42,7 +40,7 @@ export default function tokenSearcherSelector(state: State) {
 }
 
 export const updateCurrentPair = (pair: string): ThunkAction => {
-  return async (dispatch, getState, { api, socket }) => {
+  return async (dispatch, getState, { socket }) => {
     try {
       socket.unsubscribeChart()
       socket.unsubscribeOrderBook()
@@ -53,7 +51,6 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
 
       let pairDomain = getTokenPairsDomain(state)
       let newPair = pairDomain.getPair(pair)
-      let { baseTokenAddress, quoteTokenAddress } = newPair
 
       socket.subscribeTrades(newPair)
       socket.subscribeOrderBook(newPair)
@@ -63,11 +60,3 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
     }
   }
 }
-
-
-
-// let { bids, asks } = await api.getOrderBookData(baseTokenAddress, quoteTokenAddress)
-//       dispatch(actionCreators.initOrderBook(bids, asks))
-
-//       let trades = await api.getTrades(baseTokenAddress, quoteTokenAddress)
-//       dispatch(actionCreators.initTradesTable(trades))

@@ -5,17 +5,20 @@ import connect, { mapStateToProps } from './connect';
 import { shallow } from 'enzyme';
 import tradesTableSelector from '../../store/models/tradesTable';
 
+
+
 jest.mock('../../store/models/tradesTable');
 
 describe('mapStateToProps(state, props)', () => {
   it('returns expected props', () => {
     const trades = jest.fn(() => 'test getTrades');
     const currentPair = jest.fn(() => 'test getCurrentPair');
-    tradesTableSelector.mockReturnValue({ trades, currentPair });
+    const userTrades = jest.fn(() => 'test userTrades')
+    tradesTableSelector.mockReturnValue({ trades, currentPair, userTrades });
 
     const state = {};
     const result = mapStateToProps({}, {});
-    const expected = { trades: 'test getTrades', currentPair: 'test getCurrentPair' };
+    const expected = { trades: 'test getTrades', currentPair: 'test getCurrentPair', userTrades: 'test userTrades' };
 
     expect(result).toBeDefined();
     expect(result).toEqual(expected);

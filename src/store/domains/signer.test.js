@@ -14,7 +14,7 @@ it('handles initialized event properly', () => {
   expect(signerDomain.isLoading()).toEqual(false);
   expect(signerDomain.getType()).toEqual('rpc');
   expect(signerDomain.getUrl()).toEqual('http://127.0.0.1:8545');
-  expect(signerDomain.getNetworkId()).toEqual(8888);
+  expect(signerDomain.getNetworkID()).toEqual(8888);
 });
 
 it('handles signerRequested event properly', () => {
@@ -23,14 +23,14 @@ it('handles signerRequested event properly', () => {
   expect(signerDomain.isLoading()).toEqual(true);
   expect(signerDomain.getType()).toEqual('rpc');
   expect(signerDomain.getUrl()).toEqual('http://127.0.0.1:8545');
-  expect(signerDomain.getNetworkId()).toEqual(8888);
+  expect(signerDomain.getNetworkID()).toEqual(8888);
 });
 
 it('handles signerSet event properly', () => {
   const settings = {
     type: 'metamask',
     url: 'http://127.0.0.1:8545',
-    networkId: 3,
+    networkID: 3,
   };
   const signerDomain = getDomain([
     eventCreators.initialized(),
@@ -41,7 +41,7 @@ it('handles signerSet event properly', () => {
   expect(signerDomain.isLoading()).toEqual(false);
   expect(signerDomain.getType()).toEqual('metamask');
   expect(signerDomain.getUrl()).toEqual('http://127.0.0.1:8545');
-  expect(signerDomain.getNetworkId()).toEqual(3);
+  expect(signerDomain.getNetworkID()).toEqual(3);
 });
 
 it('handles signerError event properly', () => {
