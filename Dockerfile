@@ -24,6 +24,7 @@ COPY nginx.conf etc/nginx/nginx.conf
 COPY config-template.js /config-template.js
 COPY replace.sh /replace.sh
 
+EXPOSE 443
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 

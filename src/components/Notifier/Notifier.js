@@ -1,6 +1,7 @@
 import React from 'react';
 import { Position, Toaster } from '@blueprintjs/core';
 import { formatNumber } from 'accounting-js'
+import { ETHERSCAN_TX_URL } from '../../config/urls'
 
 // eslint-disable-next-line
 type Props = {
@@ -10,9 +11,6 @@ type Props = {
 
 class Notifier extends React.Component {
   show = ({ notificationType, options }) => {
-
-    console.log('showing', notificationType, options)
-
     let notification = NotificationFactory(notificationType, options)
     Notification.show(notification);
 
@@ -25,8 +23,6 @@ class Notifier extends React.Component {
 
     return null;
   }
-
-
 
   componentDidUpdate(prevProps) {
     let { lastNotification, removeNotification } = prevProps;
@@ -41,7 +37,7 @@ const NotificationFactory = (type, options) => {
     case "orderPending":
       return {
         action: {
-          href: `https://rinkeby.etherscan.io/tx/${options.txHash}`,
+          href: `${ETHERSCAN_TX_URL}/${options.txHash}`,
           target: "_blank",
           text: <strong>View on Etherscan</strong>
         },
@@ -61,7 +57,7 @@ const NotificationFactory = (type, options) => {
     case "orderSuccess":
       return {
         action: {
-          href: `https://rinkeby.etherscan.io/tx/${options.txHash}`,
+          href: `${ETHERSCAN_TX_URL}/${options.txHash}`,
           target: "_blank",
           text: <strong>View on Etherscan</strong>,
         },
@@ -89,7 +85,8 @@ const NotificationFactory = (type, options) => {
       return {
         message: 'Order Cancelled',
         icon: 'tick',
-        intent: 'success'
+        intent: 'success',
+        timeout: 5000,
       }
     case "orderMatched":
       return {

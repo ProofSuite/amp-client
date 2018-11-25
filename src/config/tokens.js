@@ -27,13 +27,37 @@ export const defaultTokenDecimals = {
   USDC: 6,
 }
 
+export const defaultTokens = [
+  "WETH",
+  "BNB",
+  "OMG",
+  "ZRX",
+  "AE",
+  "TRX",
+  "MKR",
+  "BAT",
+  "REP",
+  "BTM",
+  "NPXS",
+  "WTC",
+  "KCS",
+  "GNT",
+  "PPT",
+  "SNT",
+  "DGX",
+  "MITH",
+  "AION",
+  "LOOM",
+  "DAI",
+  "USDC",
+]
+
 let tokensBySymbolTable = {}
 
 for (let networkID of networkIDs) {
   tokensBySymbolTable[networkID] = {}
-
-  for (let token in addresses[networkID]) {
-    if (token !== 'Exchange') {
+  for (let token of defaultTokens) {
+    if (addresses[networkID][token]) {
       tokensBySymbolTable[networkID][token] = {
         symbol: token,
         address: addresses[networkID][token],

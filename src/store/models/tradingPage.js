@@ -3,7 +3,7 @@ import { getTokenPairsDomain, getAccountDomain, getAccountBalancesDomain } from 
 import * as actionCreators from '../actions/tradingPage'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
-import { parseTrades, parseOrders, parseTokenPairData } from '../../utils/parsers'
+import { parseOrders, parseTokenPairData } from '../../utils/parsers'
 
 // eslint-disable-next-line
 export default function tradingPageSelector(state: State) {
@@ -49,11 +49,6 @@ export const getDefaultData = (): ThunkAction => {
 
       let tokenPairData = await api.fetchTokenPairData()
       tokenPairData = parseTokenPairData(tokenPairData, baseTokenDecimals)
-
-      console.log("TOKEN PAIR DATA", tokenPairData)
-      console.log("DECIMALS", baseTokenDecimals, quoteTokenDecimals)
-
-      
 
       let orders = await api.fetchOrders(userAddress)
       orders = parseOrders(orders, baseTokenDecimals)
