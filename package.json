@@ -36,7 +36,6 @@
     "d3-shape": "^1.2.0",
     "d3-time-format": "^2.1.1",
     "date-fns": "^1.29.0",
-    "dotenv": "^6.1.0",
     "ethers": "^4.0.12",
     "express": "^4.16.3",
     "jest-localstorage-mock": "^2.2.0",
