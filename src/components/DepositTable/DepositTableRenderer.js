@@ -311,8 +311,6 @@ const Table = styled.table.attrs({
 `;
 
 const TableBodyContainer = styled.div`
-  width: 100%;
-  height: 80%;
   overflow-y: scroll;
 `;
 

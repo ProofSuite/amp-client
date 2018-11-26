@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { getLocalStorageWallets } from '../../store/services/storage';
 import WalletSettingsForm from '../../components/WalletSettingsForm/index.js';
 import SignerSettingsForm from '../../components/SignerSettingsForm/index.js';
@@ -27,6 +28,12 @@ class SettingsPage extends React.PureComponent<Props, State> {
 
   render() {
     const { wallets } = this.state;
+
+    if (!this.props.authenticated) {
+      return (
+        <Redirect to="/login" />
+      );
+    }
 
     return (
       <React.Fragment>

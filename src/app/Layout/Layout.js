@@ -2,7 +2,6 @@
 import type { Node } from 'react'
 import React from 'react'
 import Notifier from '../../components/Notifier'
-import BlockNumber from '../../components/BlockNumber'
 import ConnectionStatus from '../../components/ConnectionStatus'
 import { IntlProvider } from 'react-intl'
 import { Link, NavLink } from 'react-router-dom'
@@ -13,7 +12,6 @@ import {
   Alignment,
   Button,
   Menu,
-  MenuDivider,
   Navbar,
   NavbarDivider,
   NavbarGroup,
@@ -47,15 +45,10 @@ class Layout extends React.PureComponent<Props, State> {
       address,
       locale,
       messages,
-      currentBlock,
     } = this.props
 
     const menu = (
       <Menu>
-        <MenuItem>
-          <MenuItemLink to="/">Current Account: {address}</MenuItemLink>
-        </MenuItem>
-        <MenuDivider />
         <MenuItem>
           <MenuItemLink to="/logout" icon="log-out">
             Logout
@@ -74,20 +67,25 @@ class Layout extends React.PureComponent<Props, State> {
                 <NavbarHeading>
                   <NavbarHeaderLink to="/">PROOF</NavbarHeaderLink>
                 </NavbarHeading>
-                <NavbarDivider />
-                <NavbarLink to="/wallet">Wallet</NavbarLink>
-                <NavbarLink to="/trade">Exchange</NavbarLink>
-                <NavbarLink to="/settings">Settings</NavbarLink>
+                {authenticated && (
+                  <React.Fragment>
+                    <NavbarDivider />
+                    <NavbarLink to="/wallet">Wallet</NavbarLink>
+                    <NavbarLink to="/trade">Exchange</NavbarLink>
+                    <NavbarLink to="/settings">Settings</NavbarLink>
+                  </React.Fragment>
+                )}
               </NavbarGroup>
               <NavbarGroup align={Alignment.RIGHT}>
-                {currentBlock && <BlockNumber currentBlock={currentBlock} />}
-                <ConnectionStatus authenticated={authenticated} />
                 {!authenticated ? (
                   <NavbarLink to="/login">Login</NavbarLink>
                 ) : (
-                  <Popover content={menu} position={Position.BOTTOM_RIGHT} minimal>
-                    <Button icon="key" text="Authenticated" />
-                  </Popover>
+                  <React.Fragment>
+                    <ConnectionStatus />
+                    <Popover content={menu} position={Position.BOTTOM_RIGHT} minimal>
+                      <Button icon="key" text={address} />
+                    </Popover>
+                  </React.Fragment>
                 )}
               </NavbarGroup>
             </Navbar>

@@ -54,7 +54,7 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
 
       socket.subscribeTrades(newPair)
       socket.subscribeOrderBook(newPair)
-      socket.subscribeChart(newPair)
+      socket.subscribeChart(newPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
     } catch (e) {
       console.log(e)
     }

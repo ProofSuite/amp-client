@@ -19,7 +19,6 @@ export const OrderBookRenderer = (props: Props) => {
   const { bids, asks } = props;
   return (
     <React.Fragment>
-      <ResizableBox height={500} >
       <OrderBookBox>
         {!bids && <Loading />}
         {bids && (
@@ -31,9 +30,6 @@ export const OrderBookRenderer = (props: Props) => {
                 <HeaderCell>PRICE</HeaderCell>
               </HeaderRow>
             </ListHeading>
-            <List className="bp3-list-unstyled list">
-              {bids.map((order, index) => <BuyOrder key={index} index={index} order={order} />)}
-            </List>
           </ListContainer>
         )}
         {asks && (
@@ -45,13 +41,27 @@ export const OrderBookRenderer = (props: Props) => {
                 <HeaderCell>TOTAL</HeaderCell>
               </HeaderRow>
             </ListHeading>
-            <List className="bp3-list-unstyled list">
-              {asks.map((order, index) => <SellOrder key={index} index={index} order={order} />)}
-            </List>
           </ListContainer>
         )}
       </OrderBookBox>
-        </ResizableBox>
+      <ResizableBox axis="y" height={250}>
+        <OrderBookBox>
+          {bids && (
+            <ListContainer className="list-container">
+              <List className="bp3-list-unstyled list">
+                {bids.map((order, index) => <BuyOrder key={index} index={index} order={order} />)}
+              </List>
+            </ListContainer>
+          )}
+          {asks && (
+            <ListContainer className="list-container left-list">
+              <List className="bp3-list-unstyled list">
+                {asks.map((order, index) => <SellOrder key={index} index={index} order={order} />)}
+              </List>
+            </ListContainer>
+          )}
+        </OrderBookBox>
+      </ResizableBox>
     </React.Fragment>
   );
 };
@@ -91,16 +101,12 @@ const OrderBookBox = styled.div.attrs({})`
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-`;
-const ListContainer = styled.div`
-  height: 91%;
-  width: 100%;
-`;
-const List = styled.ul`
-  height: 100%;
-  max-height: 500px;
   overflow-y: scroll;
 `;
+const ListContainer = styled.div`
+  width: 100%;
+`;
+const List = styled.ul``;
 
 const Row = styled.li.attrs({
   className: 'row',

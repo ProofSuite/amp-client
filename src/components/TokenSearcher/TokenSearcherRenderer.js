@@ -92,7 +92,7 @@ const TokenSearchRenderer = (props: Props) => {
               baseTokenBalance={baseTokenBalance}
               quoteTokenBalance={quoteTokenBalance}
             />
-            <TokenSearchTabs selectedTabId={selectedTabId} onChange={changeTab}>
+            <Tabs selectedTabId={selectedTabId} onChange={changeTab}>
               <Tab
                 id="star"
                 title={<Icon icon="star" />}
@@ -135,7 +135,7 @@ const TokenSearchRenderer = (props: Props) => {
                   }
                 />
               ))}
-            </TokenSearchTabs>
+            </Tabs>
           </Collapse>
         </div>
       )}
@@ -278,23 +278,31 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
   return (
     <SelectedPairCard>
       <Row>
-        <ColumnStart>
-          <RowStart>
-            <ColoredCryptoIcon size={90} name={base} />
-            <TokenPair>{pair}</TokenPair>
-          </RowStart>
-          <Box mt={3}>
-            <p>{base} Balance: {baseTokenBalance || 'N.A'}</p>
-            <p>{quote} Balance: {quoteTokenBalance || 'N.A' }</p>
-          </Box>
-        </ColumnStart>
-        <ColumnEnd>
-          <p>Last Price: { lastPrice ? `${lastPrice}/${quote}` : 'N.A'}</p>
-          <p>Volume: {volume || 'N.A' }</p>
-          <p><span className="label">High: </span>{high || 'N.A'}</p>
-          <p><span className="label">Low: </span>{low || 'N.A'}</p>
-        </ColumnEnd>
+        <ColoredCryptoIcon size={90} name={base} />
+        <TokenPair>
+          <h2>{pair}</h2>
+          <div><b>{base}</b> Balance: {baseTokenBalance || 'N.A'}</div>
+          <div><b>{quote}</b> Balance: {quoteTokenBalance || 'N.A' }</div>
+        </TokenPair>
       </Row>
+      <List>
+        <Item>
+          <div>Last Price:</div>
+          <div>{ lastPrice ? `${lastPrice}/${quote}` : 'N.A'}</div>
+        </Item>
+        <Item>
+          <div>Volume:</div>
+          <div>{volume || 'N.A' }</div>
+        </Item>
+        <Item>
+          <div>High:</div>
+          <div>{high || 'N.A'}</div>
+        </Item>
+        <Item>
+          <div>Low:</div>
+          <div>{low || 'N.A'}</div>
+        </Item>
+      </List>
     </SelectedPairCard>
   )
 }
@@ -305,12 +313,9 @@ const TokenSearchCard = styled(Card).attrs({
   position: relative;
 `
 
-const TokenSearchTabs = styled(Tabs)`
-  margin-bottom: 20px;
-`
 const Row = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 `
 
 const TokenSearchPanelBox = styled.div`
@@ -320,15 +325,26 @@ const TokenSearchPanelBox = styled.div`
 
 const SelectedPairCard = styled(Card)`
   margin: 15px 0px;
-  padding: 18px 18px 9px 18px !important;
+  padding: 5px 15px;
 `
 
-const TokenPair = styled.h3`
-  /* color: ${Colors.LINK} !important; */
-  font-size: 20px;
-  margin-top: 15px !important;
-  margin-left: 15px !important;
-  margin: 0;
+const List = styled.ul`
+  border-top: 1px dashed #202f39;
+  padding-top: 15px;
+  margin-top: 5px;
+`;
+
+const Item = styled.li`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const TokenPair = styled.div`
+  padding-left: 25px;
+
+  h2 {
+    margin: 0;
+  }
 `
 
 const SearchInput = styled(InputGroup)`
