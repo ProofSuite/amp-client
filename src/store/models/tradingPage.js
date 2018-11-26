@@ -60,7 +60,7 @@ export const getDefaultData = (): ThunkAction => {
 
       socket.subscribeTrades(currentPair)
       socket.subscribeOrderBook(currentPair)
-      socket.subscribeChart(currentPair)
+      socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
     } catch (e) {
       console.log(e)
     }
@@ -83,7 +83,7 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
 
       socket.subscribeTrades(tokenPair)
       socket.subscribeOrderBook(tokenPair)
-      socket.subscribeChart(tokenPair)
+      socket.subscribeChart(tokenPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
     } catch (e) {
       console.log(e)
     }

@@ -94,16 +94,14 @@ export default class OHLCV extends React.PureComponent<Props, State> {
     const { duration } = this.state;
     const { currentTimeSpan } = this.props;
 
-    this.props.saveDuration(duration[index]);
-    this.props.updateTimeLine({ updateWRT: 'duration', time: currentTimeSpan.label, duration: duration[index].label });
+    this.props.updateDuration(duration[index], { updateWRT: 'duration', time: currentTimeSpan.label, duration: duration[index].label });
     this.setState({ isOpen: true });
   };
 
   changeTimeSpan = (e: Object) => {
     const { currentDuration } = this.props;
 
-    this.props.saveTimeSpan(e);
-    this.props.updateTimeLine({ updateWRT: 'timespan', time: e.label, duration: currentDuration.label });
+    this.props.updateTimeSpan(e, { updateWRT: 'timespan', time: e.label, duration: currentDuration.label });
     this.setState({ isOpen: true });
   };
 
