@@ -80,11 +80,11 @@ const WalletPageBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1em;
-  margin-bottom: 10em;
+  margin-bottom: 1em;
 `
 
 const WalletInfoBox = styled.div`
-  width: 35%;
+  width: 30%;
   height: 92vh;
   margin-right: 0.5em;
   margin-left: 0.5em;
@@ -95,7 +95,7 @@ const WalletInfoBox = styled.div`
 
 const WalletPageContentBox = styled(Card)`
   height: 92vh;
-  width: 75%;
+  width: 70%;
   margin-right: 0.5em;
   margin-left: 0.5em;
 `

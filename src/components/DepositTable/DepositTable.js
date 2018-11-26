@@ -101,7 +101,7 @@ class DepositTable extends React.PureComponent<Props, State> {
     const { searchInput, hideZeroBalanceToken } = this.state;
 
     if (searchInput) data = data.filter(token => token.symbol.indexOf(searchInput.toUpperCase()) > -1);
-    if (hideZeroBalanceToken) data = data.filter(token => token.balance !== '0');
+    if (hideZeroBalanceToken) data = data.filter(token => token.symbol === 'ETH' || Number(token.balance) !== 0);
 
     return data;
   };
