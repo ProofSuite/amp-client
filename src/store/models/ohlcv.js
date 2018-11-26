@@ -1,4 +1,5 @@
 // @flow
+import { getTokenPairsDomain } from '../domains';
 import OHLCVModel from '../domains/ohlcv'
 import * as actionCreators from '../actions/ohlcv'
 import { timeSpans } from '../../components/OHLCV/OHLCV'
@@ -22,6 +23,32 @@ export const updateTimeLine = ({ updateWRT }: SendTimelineParams): ThunkAction =
       if (time) dispatch(actionCreators.saveTimeSpan(timeSpans[time]))
       return dispatch(actionCreators.saveNoOfCandles(parseInt(candles, 10)))
     }
+  }
+}
+
+export const updateTimeSpan = (currentTimeSpan: Object, config: Object): ThunkAction => {
+  return (dispatch, getState, { socket }) => {
+    dispatch(actionCreators.saveTimeSpan(currentTimeSpan))
+    dispatch(updateTimeLine(config))
+
+    const state = getState()
+    const pairDomain = getTokenPairsDomain(state)
+    const currentPair = pairDomain.getCurrentPair()
+
+    socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
+  }
+}
+
+export const updateDuration = (currentDuration: Object, config: Object): ThunkAction => {
+  return (dispatch, getState, { socket }) => {
+    dispatch(actionCreators.saveDuration(currentDuration))
+    dispatch(updateTimeLine(config))
+
+    const state = getState()
+    const pairDomain = getTokenPairsDomain(state)
+    const currentPair = pairDomain.getCurrentPair()
+
+    socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
   }
 }
 

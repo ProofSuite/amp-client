@@ -37,6 +37,7 @@ import * as signerEvents from './domains/signer'
 import * as walletsEvents from './domains/wallets'
 import * as notificationEvents from './domains/notifications'
 import * as convertTokensFormEvents from './domains/convertTokensForm'
+import * as connectionEvents from './domains/connection'
 
 export const loginPage = createReducer(action => {
   const { type, payload } = action
@@ -363,3 +364,17 @@ export const notifications = createReducer(action => {
       return notificationEvents.initialized()
   }
 })
+
+export const connection = createReducer(({ type }) => {
+  switch (type) {
+    case socketControllerActionTypes.createConnection:
+      return connectionEvents.initiated()
+    case socketControllerActionTypes.closeConnection:
+    case socketControllerActionTypes.connectionError:
+      return connectionEvents.closed()
+    case socketControllerActionTypes.openConnection:
+      return connectionEvents.opened()
+    default:
+      return connectionEvents.initialized()
+  }
+});

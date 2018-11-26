@@ -56,7 +56,7 @@ const quoteTokensBySymbolsTable = {
   '1': {
     USDC: {
       symbol: 'USDC',
-      addresses: addresses['1']['USDC'],
+      address: addresses['1']['USDC'],
       decimals: 6,
     },
     WETH: {

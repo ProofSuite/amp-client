@@ -2,10 +2,8 @@ import { connect } from 'react-redux'
 import settingsPageSelector from '../../store/models/settings'
 import { togglePvtKeyLock } from '../../store/actions/settings'
 
-export function mapStateToProps(state, props) {
-  const { pvtKeyLocked } = settingsPageSelector(state)
-
-  return { pvtKeyLocked }
+export function mapStateToProps(state) {
+  return settingsPageSelector(state)
 }
 
 const mapDispatchToProps = { togglePvtKeyLock }

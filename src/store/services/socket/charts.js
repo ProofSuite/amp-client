@@ -1,17 +1,23 @@
 import type { WebsocketMessage } from '../../../types/websocket'
-const addMonths = require('date-fns/add_months')
 
-export const subscribeChart = (pair: TokenPair, from: number, to: number, duration: number, units: string) => {
+export const subscribeChart = (pair: TokenPair, timespan: string, duration: string) => {
   if (!window.socket) throw new Error('Socket connection not established')
 
-  let message: WebsocketMessage
-  let now = Date.now()
-  duration = duration || 1
-  units = units || 'hour'
-  from = from || Math.floor(addMonths(new Date(now), -2).getTime() / 1000)
-  to = to || Math.floor(new Date(now).getTime() / 1000)
+  const now = Date.now()
+  const lengthByDurationUnit = {
+    h: 60 * 60 * 1000,
+    d: 24 * 60 * 60 * 1000,
+    M: 30 * 24 * 60 * 60 * 1000,
+    Y: 12 * 30 * 24 * 60 * 60 * 1000,
+  };
+  const nameByTimespanUnit = {
+    m: 'minute',
+    h: 'hour',
+    d: 'day',
+    M: 'month',
+  };
 
-  message = JSON.stringify({
+  let message: WebsocketMessage = JSON.stringify({
     channel: 'ohlcv',
     event: {
       type: 'SUBSCRIBE',
@@ -19,10 +25,10 @@ export const subscribeChart = (pair: TokenPair, from: number, to: number, durati
         name: pair.pair,
         baseToken: pair.baseTokenAddress,
         quoteToken: pair.quoteTokenAddress,
-        from: from,
-        to: to,
-        units: units,
-        duration: duration,
+        from: duration === 'Full' ? 0 : Math.floor((now - Number(duration.slice(0, -1)) * lengthByDurationUnit[duration.slice(-1)]) / 1000),
+        to: Math.floor(now / 1000),
+        units: nameByTimespanUnit[timespan.slice(-1)],
+        duration: Number(timespan.slice(0, -1)),
       }
     }
   })

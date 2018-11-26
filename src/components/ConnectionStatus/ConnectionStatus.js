@@ -3,16 +3,20 @@ import { SvgIcon } from '../../components/Common'
 
 import styled from 'styled-components'
 
-const ConnectionStatus = ({ authenticated }: Props) => {
+const ConnectionStatus = (props: Props) => {
+  const {
+    isConnected,
+    isInitiated,
+  } = props;
+
   return (
     <ConnectionStatusBox>
       <SvgIcon
-        style={{ marginRight: '10px' }}
         width="20px"
         icon="connect-signal"
-        intent={authenticated ? 'success' : 'error'}
+        intent={isConnected ? 'success' : isInitiated ? 'error' : 'warning'}
       />
-      <p>{authenticated ? 'Connected' : 'Not Connected'}</p>
+      <span>{isConnected ? 'Connected' : isInitiated ? 'Disconnected' : 'Initializing'}</span>
     </ConnectionStatusBox>
   )
 }
@@ -22,9 +26,10 @@ const ConnectionStatusBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 50px;
-  & p {
-    margin: 0;
+
+  & span {
+    margin-left: 10px;
+    margin-right: 30px;
   }
 `
 

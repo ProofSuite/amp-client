@@ -132,7 +132,7 @@ const CreateWalletFormRenderer = (props: Props) => {
     )
   };
   return (
-    <Card witdh={2000} style={{position: 'relative'}} >
+    <Card>
         <Steps current={currentStep}>
           <Steps.Step title="Choose password" />
           <Steps.Step title="Download Wallet" />
@@ -238,7 +238,7 @@ const WalletInformationStep = props => {
 const CardFooterBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
 `
 
 const PasswordInputBox = styled.div`
@@ -247,7 +247,7 @@ const PasswordInputBox = styled.div`
   flex-direction: column;
   justify-content: stretch;
   align-items: stretch;
-  width: 600px;
+  width: 100%;
   margin: auto;
 `;
 const LoadingStateWrapper = styled.div`
@@ -263,7 +263,7 @@ const WalletInformationBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 600px;
+  width: 100%;
   margin: auto;
 `;
 
@@ -277,8 +277,6 @@ const WalletStorageSettingsBox = styled.div`
 
 const WalletDownloadBox = styled.div`
   display: flex;
-  height: 300px;
-  width: 600px;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;

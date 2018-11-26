@@ -16,7 +16,9 @@ import notificationsDomain from './notifications'
 import tradesDomain from './trades'
 import ordersDomain from './orders'
 import convertTokensFormDomain from './convertTokensForm'
+import connectionDomain from './connection';
 
+export const getConnectionDomain = state => connectionDomain(state.connection)
 export const getAccountDomain = state => accountDomain(state.account)
 export const getAccountBalancesDomain = state => accountBalancesDomain(state.accountBalances)
 export const getDepositFormDomain = state => depositFormDomain(state.depositForm)

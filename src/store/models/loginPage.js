@@ -27,6 +27,14 @@ export function loginWithMetamask(): ThunkAction {
   return async (dispatch, getState, { socket }) => {
     try {
       dispatch(actionCreators.requestLogin());
+
+      const { Web3, ethereum } = window;
+
+      if (ethereum) {
+        window.web3 = new Web3(ethereum);
+        await ethereum.enable();
+      }
+
       if (typeof window.web3 === 'undefined') throw new Error('Metamask not installed');
       if (typeof window.web3.eth.defaultAccount === 'undefined') throw new Error('Metamask account locked');
 

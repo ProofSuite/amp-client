@@ -15,7 +15,6 @@ export function mapStateToProps(state: State, props: Object): LayoutProps {
     authenticated: selector.authenticated,
     address: selector.address,
     accountLoading: selector.accountLoading,
-    currentBlock: selector.currentBlock,
     locale: 'TODO',
     messages: 'TODO'
   };

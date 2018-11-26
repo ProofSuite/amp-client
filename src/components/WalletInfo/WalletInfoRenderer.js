@@ -17,23 +17,22 @@ const WalletInfoRenderer = props => {
   return (
       <WalletInfoCard>
         <Box>
-          <Tag minimal large interactive intent='primary'>ETHEREUM BALANCE</Tag>
+          <Tag minimal large>ETHEREUM BALANCE</Tag>
           <BalanceBox>{balance} ETH</BalanceBox>
         </Box>
         <Box>
-          <Tag minimal large interactive intent='primary'>ETHEREUM ADDRESS</Tag>
+          <Tag minimal large>ETHEREUM ADDRESS</Tag>
           <AccountAddressBox>
           {accountAddress}
           </AccountAddressBox>
         </Box>
-        <Tag minimal large interactive intent='primary'>PORTFOLIO OVERVIEW</Tag>
+        <Tag minimal large>PORTFOLIO OVERVIEW</Tag>
         <TokenBalanceChartBox>
           <TokenBalanceChart />
         </TokenBalanceChartBox>
         <Box>
           <Button
-            fill={true}
-            style={{ marginBottom: '8px' }}
+            fill
             onClick={handleModalClose}
             text="START NEW TRANSACTION"
             intent="primary"
@@ -63,7 +62,7 @@ const AccountAddressBox = styled.p`
 
 const Box = styled.div`
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   justify-content: left;
   align-content: middle;
   text-align: center;
@@ -71,7 +70,7 @@ const Box = styled.div`
 
 const TokenBalanceChartBox = styled.div`
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   justify-content: left;
   align-content: middle;
   text-align: center;
