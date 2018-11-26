@@ -8,8 +8,7 @@ import { Provider } from 'react-redux';
 
 
 const { store } = configureStore();
-
-registerServiceWorker();
+// registerServiceWorker();
 
 const render = () => {
   return ReactDOM.render(
