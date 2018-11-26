@@ -275,7 +275,7 @@ const handleOrderBookMessage = (event: WebsocketMessage): ThunkAction => {
     let state = getState()
     let { pairs } = socketControllerSelector(state)
 
-    if (!event.payload) return
+    if (event.type === 'ERROR' || !event.payload) return
     // if (event.payload.length === 0) return
 
     let { pairName } = event.payload

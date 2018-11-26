@@ -90,7 +90,10 @@ export const tokenPairDataUpdated = (tokenPairData: TokenPairDataMap) => {
       data: {
         ...state.data,
         ...tokenPairData
-      }
+      },
+      currentPair: tokenPairData.filter(data => data.pair === state.currentPair).length === 0
+        ? tokenPairData[0].pair
+        : state.currentPair,
     }
 
     return newState
