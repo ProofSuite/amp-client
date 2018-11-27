@@ -56,11 +56,7 @@ export function queryAccountData(): ThunkAction {
       if (!accountAddress) throw new Error('Account address is not set')
 
       const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress)
-
-      console.log(tokens)
       const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens)
-
-      console.log(tokenBalances)
       const allowances = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
       const balances = [etherBalance].concat(tokenBalances)
       const currentBlock = await getCurrentBlock()

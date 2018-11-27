@@ -5,6 +5,7 @@ import fetch from 'isomorphic-fetch'
 
 import type { Orders } from '../../../types/orders'
 import type { Trades } from '../../../types/trades'
+import type { TokenPair } from '../../../types/tokens'
 
 const request = (endpoint, options) => {
   return fetch(`${ENGINE_HTTP_URL}${endpoint}`, {
@@ -244,37 +245,38 @@ export const createAccount = async (address: string) => {
   }
 
   const { data } = await response.json()
-  console.log(data)
   return data
 }
 
 
-export const getOrders = async (userAddress: string): Orders => {
+export const getOrders = async (userAddress: string, pair: TokenPair): Orders => {
   let orders = await fetchOrders(userAddress)
   let parsedOrders
 
-  if (orders) parsedOrders = parseOrders(orders)
+  if (orders) parsedOrders = parseOrders(orders, pair)
 
   return parsedOrders
 }
 
-export const getTrades = async (baseToken: string, quoteToken: string): Trades => {
-  let trades = await fetchTokenPairTrades(baseToken, quoteToken)
-  let parsedTrades = parseTrades(trades)
+export const getTrades = async (pair: TokenPair): Trades => {
+  let { baseTokenAddress, quoteTokenAddress } = pair
+  let trades = await fetchTokenPairTrades(baseTokenAddress, quoteTokenAddress)
+  let parsedTrades = parseTrades(trades, pair)
 
   return parsedTrades
 }
 
-export const getOrderBookData = async (baseToken: string, quoteToken: string) => {
-  let orderbook = await fetchOrderBook(baseToken, quoteToken)
-  let { asks, bids } = parseOrderBookData(orderbook)
+export const getOrderBookData = async (pair: TokenPair) => {
+  let { baseTokenAddress, quoteTokenAddress } = pair
+  let orderbook = await fetchOrderBook(baseTokenAddress, quoteTokenAddress)
+  let { asks, bids } = parseOrderBookData(orderbook, pair)
 
   return { asks, bids }
 }
 
-export const getTokenPairData = async () => {
+export const getTokenPairData = async (pair: TokenPair) => {
   let data = await fetchTokenPairData()
-  let parsedData = parseTokenPairData(data)
+  let parsedData = parseTokenPairData(data, pair)
 
   return parsedData
 }
