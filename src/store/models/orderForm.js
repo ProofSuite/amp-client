@@ -19,8 +19,10 @@ export default function getOrderFormSelector(state: State) {
   let quoteTokenBalance = accountBalancesDomain.get(quoteToken)
   let askPrice = orderBookDomain.getAskPrice()
   let bidPrice = orderBookDomain.getBidPrice()
+  let selectedOrder = orderBookDomain.getSelectedOrder()
 
   return {
+    selectedOrder,
     currentPair,
     baseToken,
     quoteToken,

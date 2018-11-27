@@ -66,7 +66,7 @@ class OrderBook extends React.Component<Props, State> {
   };
 
   render() {
-    const { bids, asks, currentPair } = this.props;
+    const { bids, asks, currentPair, select } = this.props;
     const { selectedTabId, isOpen } = this.state;
 
     return (
@@ -84,7 +84,7 @@ class OrderBook extends React.Component<Props, State> {
           </OrderBookHeader>
           <Collapse isOpen={isOpen} transitionDuration={100}>
             <Tabs selectedTabId={selectedTabId} onChange={this.changeTab}>
-              <Tab id="list" title="Order List" panel={<OrderListRenderer bids={bids} asks={asks} />} />
+              <Tab id="list" title="Order List" panel={<OrderListRenderer bids={bids} asks={asks} onSelect={select} />} />
               <Tab
                 id="depth-chart"
                 title="Depth Chart"

@@ -1,12 +1,12 @@
 // @flow
 import type { OrderBookState } from '../../types/orderBook'
 import SortedArray from 'sorted-array'
-import { round } from '../../utils/helpers'
 import { formatNumber } from 'accounting-js'
 
 
 
 const initialState: OrderBookState = {
+  selected: null,
   bids: {},
   asks: {},
   sortedBids: [],
@@ -18,6 +18,15 @@ const initialState: OrderBookState = {
 export const initialized = () => {
   const event = (state: OrderBookState = initialState) => state
   return event
+}
+
+export const selected = (order: Object) => {
+  const event = (state: OrderBookState) => ({
+    ...state,
+    selected: order,
+  })
+
+  return event;
 }
 
 export const orderBookInitialized = (bids: Array<Object>, asks: Array<Object>) => {
@@ -125,6 +134,7 @@ export default function domain(state: OrderBookState) {
     getState: () => state,
     getAsks: () => state.asks,
     getBids: () => state.bids,
+    getSelectedOrder: () => state.selected,
     getOrderedBids: () => state.sortedBids.map(price => state.bids[price]),
     getOrderedAsks: () => state.sortedAsks.map(price => state.asks[price]),
     getOrderBookData: (ln: number) => {
@@ -137,7 +147,7 @@ export default function domain(state: OrderBookState) {
           result.push({
             price: item.price,
             amount: item.amount,
-            total: result.length > 0 ? round(result[result.length - 1].total + item.amount) : round(item.amount)
+            total: result.length > 0 ? result[result.length - 1].total + item.amount : item.amount
           })
           return result
         }, [])
@@ -149,7 +159,7 @@ export default function domain(state: OrderBookState) {
           result.push({
             price: item.price,
             amount: item.amount,
-            total: result.length > 0 ? round(result[result.length - 1].total + item.amount) : round(item.amount)
+            total: result.length > 0 ? result[result.length - 1].total + item.amount : item.amount
           })
 
           return result
@@ -163,17 +173,11 @@ export default function domain(state: OrderBookState) {
       bids = bids.map(item => ({
         ...item,
         relativeTotal: max ? item.total / max : 1,
-        amount: formatNumber(item.amount, { precision: 3 }),
-        total: formatNumber(item.total, { precision: 3 }),
-        price: formatNumber(item.price, { precision: 5 })
       }))
 
       asks = asks.map(item => ({
         ...item,
         relativeTotal: max ? item.total / max : 1,
-        amount: formatNumber(item.amount, { precision: 3 }),
-        total: formatNumber(item.total, { precision: 3 }),
-        price: formatNumber(item.price, { precision: 5 })
       }))
 
       return { asks, bids }

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import { formatNumber } from 'accounting-js'
 import { Loading, Colors } from '../Common';
 import { ResizableBox } from 'react-resizable'
 
@@ -16,7 +17,7 @@ type Props = {
 };
 
 export const OrderBookRenderer = (props: Props) => {
-  const { bids, asks } = props;
+  const { bids, asks, onSelect } = props;
   return (
     <React.Fragment>
       <OrderBookBox>
@@ -49,14 +50,14 @@ export const OrderBookRenderer = (props: Props) => {
           {bids && (
             <ListContainer className="list-container">
               <List className="bp3-list-unstyled list">
-                {bids.map((order, index) => <BuyOrder key={index} index={index} order={order} />)}
+                {bids.map((order, index) => <BuyOrder key={index} order={order} onClick={() => onSelect(order)} />)}
               </List>
             </ListContainer>
           )}
           {asks && (
             <ListContainer className="list-container left-list">
               <List className="bp3-list-unstyled list">
-                {asks.map((order, index) => <SellOrder key={index} index={index} order={order} />)}
+                {asks.map((order, index) => <SellOrder key={index} order={order} onClick={() => onSelect(order)} />)}
               </List>
             </ListContainer>
           )}
@@ -72,25 +73,25 @@ export type SingleOrderProps = {
 };
 
 const BuyOrder = (props: SingleOrderProps) => {
-  const { order } = props;
+  const { order, onClick } = props;
   return (
-    <Row>
+    <Row onClick={onClick}>
       <BuyRowBackground amount={order.relativeTotal} />
-      <Cell>{order.total}</Cell>
-      <Cell>{order.amount}</Cell>
-      <Cell>{order.price}</Cell>
+      <Cell>{formatNumber(order.total, { precision: 3 })}</Cell>
+      <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
+      <Cell>{formatNumber(order.price, { precision: 5 })}</Cell>
     </Row>
   );
 };
 
 const SellOrder = (props: SingleOrderProps) => {
-  const { order, index } = props;
+  const { order, onClick } = props;
   return (
-    <Row key={index}>
+    <Row onClick={onClick}>
       <SellRowBackGround amount={order.relativeTotal} />
-      <Cell>{order.price}</Cell>
-      <Cell>{order.amount}</Cell>
-      <Cell>{order.total}</Cell>
+      <Cell>{formatNumber(order.price, { precision: 5 })}</Cell>
+      <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
+      <Cell>{formatNumber(order.total, { precision: 3 })}</Cell>
     </Row>
   );
 };
