@@ -57,6 +57,23 @@ class OrderForm extends React.PureComponent<Props, State> {
     }
   }
 
+  componentWillReceiveProps({ side, bidPrice, askPrice, selectedOrder }) {
+    if (selectedOrder === null || selectedOrder === this.props.selectedOrder) {
+      return;
+    }
+
+    const { price, total } = selectedOrder;
+
+    if ((side === 'BUY' && price > bidPrice) || (side === 'SELL' && price < askPrice)) {
+      this.setState({
+        price: price,
+        amount: total,
+        total: price * total,
+      });
+    }
+
+  }
+
   onInputChange = ({ target }: Object) => {
     const { loggedIn } = this.props
     switch (target.name) {
