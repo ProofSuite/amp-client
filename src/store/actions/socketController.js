@@ -113,14 +113,14 @@ export function unsubscribeOHLCV(pair: string): UnsubscribeOHLCVAction {
   }
 }
 
-export function initOHLCV(data: Object): InitOHLCVAction {
+export function initOHLCV(data: Array<Object>): InitOHLCVAction {
   return {
     type: actionTypes.initOHLCV,
     payload: { data }
   }
 }
 
-export function updateOHLCV(data: Object): UpdateOHLCVAction {
+export function updateOHLCV(data: Array<Object>): UpdateOHLCVAction {
   return {
     type: actionTypes.updateOHLCV,
     payload: { data }

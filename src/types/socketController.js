@@ -59,12 +59,12 @@ export type UnsubscribeOHLCVAction = {
 
 export type InitOHLCVAction = {
   type: 'socketController/INIT_OHLCV',
-  payload: { data: Object }
+  payload: { data: Array<Object> }
 }
 
 export type UpdateOHLCVAction = {
   type: 'socketController/UPDATE_OHLCV',
-  payload: { data: Object }
+  payload: { data: Array<Object> }
 }
 
 // ORDERBOOK ACTIONS

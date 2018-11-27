@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 import { getOrderHash, getOrderCancelHash, getTradeHash, getRandomNonce } from '../../../utils/crypto'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
-import { round } from '../../../utils/helpers'
+import { round, computePricepoint, computeAmountPoints } from '../../../utils/helpers'
 
 export const signOrder = async function(order) {
   order.hash = getOrderHash(order)
@@ -22,45 +22,26 @@ export const signTrade = async function(trade) {
   return trade
 }
 
-
+// The amountPrecisionMultiplier and pricePrecisionMultiplier are temporary multipliers
+// that are used to turn decimal values into rounded integers that can be converted into
+// big numbers that can be used to compute large amounts (ex: in wei) with the amountMultiplier
+// and priceMultiplier. After multiplying with amountMultiplier and priceMultiplier, the result
+// numbers are divided by the precision multipliers.
+// So in the end we have:
+// amountPoints ~ amount * amountMultiplier ~ amount * 1e18
+// pricePoints ~ price * priceMultiplier ~ price * 1e6
 export const createRawOrder = async function(params) {
   let order = {}
   let { userAddress, side, pair, amount, price, makeFee, takeFee } = params
   let { baseTokenAddress, quoteTokenAddress, baseTokenDecimals, quoteTokenDecimals } = pair
   let exchangeAddress = EXCHANGE_ADDRESS[this.provider.network.chainId]
 
-
-  if (baseTokenDecimals < quoteTokenDecimals) throw Error('Pair currently not supported (decimals error)')
-
-  // The amountPrecisionMultiplier and pricePrecisionMultiplier are temporary multipliers
-  // that are used to turn decimal values into rounded integers that can be converted into
-  // big numbers that can be used to compute large amounts (ex: in wei) with the amountMultiplier
-  // and priceMultiplier. After multiplying with amountMultiplier and priceMultiplier, the result
-  // numbers are divided by the precision multipliers.
-  // So in the end we have:
-  // amountPoints ~ amount * amountMultiplier ~ amount * 1e18
-  // pricePoints ~ price * priceMultiplier ~ price * 1e6
-  
-  let amountPrecisionMultiplier = 1e6
-  let pricePrecisionMultiplier = 1e9
-
-  let defaultPriceMultiplier = utils.bigNumberify('1000000000')
-  let decimalsPriceMultiplier = utils.bigNumberify((10 ** (baseTokenDecimals - quoteTokenDecimals)).toString())
-
-  let amountMultiplier = utils.bigNumberify((10 ** baseTokenDecimals).toString())
-  let priceMultiplier = defaultPriceMultiplier
-  // let priceMultiplier = defaultPriceMultiplier.mul(decimalsPriceMultiplier)
-
-  amount = round(amount * amountPrecisionMultiplier, 0)
-  price = round(price * pricePrecisionMultiplier, 0)
-
-  let amountPoints = utils.bigNumberify(amount)
-    .mul(amountMultiplier)
-    .div(utils.bigNumberify(amountPrecisionMultiplier))
-
-  let pricepoint = utils.bigNumberify(price)
-    .mul(priceMultiplier)
-    .div(utils.bigNumberify(pricePrecisionMultiplier))
+  let precisionMultiplier = utils.bigNumberify(10).pow(9)
+  let baseMultiplier = utils.bigNumberify(10).pow(baseTokenDecimals)
+  let quoteMultiplier = utils.bigNumberify(10).pow(quoteTokenDecimals)
+  let priceMultiplier = utils.bigNumberify(10).pow(18)
+  let pricepoint = computePricepoint({ price, priceMultiplier, quoteMultiplier, precisionMultiplier })
+  let amountPoints = computeAmountPoints({ amount, baseMultiplier, precisionMultiplier })
 
   order.exchangeAddress = exchangeAddress
   order.userAddress = userAddress
