@@ -309,7 +309,7 @@ const handleTradesMessage = (event: WebsocketMessage): ThunkAction => {
     let state = getState()
     let { pairs } = socketControllerSelector(state)
 
-    if (!event.payload) return
+    if (event.type === 'ERROR' || !event.payload) return
     if (event.payload.length === 0) return
 
     let trades = event.payload
@@ -341,7 +341,7 @@ const handleOHLCVMessage = (event: WebsocketMessage): ThunkAction => {
     let state = getState()
     let { pairs } = socketControllerSelector(state)
 
-    if (!event.payload) return
+    if (event.type === 'ERROR' || !event.payload) return
     if (event.payload.length === 0) {
       dispatch(actionCreators.initOHLCV([]))
       return
