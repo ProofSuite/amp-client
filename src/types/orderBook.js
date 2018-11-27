@@ -9,6 +9,15 @@ export type OrderBookState = {
   +sortedAsks: Array<number>,
 };
 
+export type OrderBookData = {
+  +quoteToken: string,
+  +baseToken: string,
+  +bids: Array<Bid>,
+  +asks: Array<Ask>,
+  +sortedBids: Array<number>,
+  +sortedAsks: Array<number>,
+};
+
 export type OrderListPropsTypes = {
   orderList: Array<Object>,
   bookName: string,
@@ -22,3 +31,13 @@ export type SingleOrderPropsTypes = {
   index: number,
   decimals: number,
 };
+
+export type Bid = {
+  pricepoint: string,
+  amount: string
+}
+
+export type Ask = {
+  pricepoint: string,
+  amount: string
+}

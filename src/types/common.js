@@ -1,3 +1,5 @@
+// @flow
+
 export type TxStatus = 'incomplete' | 'valid' | 'invalid' | 'sent' | 'reverted' | 'confirmed' | 'error';
 
 export type Address = string;
@@ -25,3 +27,10 @@ export type TokenBalance = {
 
 export type Tokens = Array<Token>;
 export type TokenBalances = Array<TokenBalances>;
+
+export type BN = {
+  div: any,
+  mul: any,
+}
+
+export type Numberish = string | number;
