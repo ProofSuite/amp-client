@@ -11,7 +11,7 @@ export const subscribeChart = (pair: TokenPair, timespan: string, duration: stri
     Y: 12 * 30 * 24 * 60 * 60 * 1000,
   };
   const nameByTimespanUnit = {
-    m: 'minute',
+    m: 'min',
     h: 'hour',
     d: 'day',
     M: 'month',
