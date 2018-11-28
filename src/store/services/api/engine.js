@@ -249,11 +249,11 @@ export const createAccount = async (address: string) => {
 }
 
 
-export const getOrders = async (userAddress: string, pair: TokenPair): Orders => {
+export const getOrders = async (userAddress: string, pairs: Object): Orders => {
   let orders = await fetchOrders(userAddress)
   let parsedOrders
 
-  if (orders) parsedOrders = parseOrders(orders, pair)
+  if (orders) parsedOrders = parseOrders(orders, pairs)
 
   return parsedOrders
 }
