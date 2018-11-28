@@ -43,6 +43,7 @@ export const getDefaultData = (): ThunkAction => {
       let signer = getSigner()
       let pairDomain = getTokenPairsDomain(state)
       let currentPair = pairDomain.getCurrentPair()
+      let pairs = pairDomain.getPairsByCode()
 
       let userAddress = await signer.getAddress()
 
@@ -50,7 +51,7 @@ export const getDefaultData = (): ThunkAction => {
       tokenPairData = parseTokenPairData(tokenPairData, currentPair)
 
       let orders = await api.fetchOrders(userAddress)
-      orders = parseOrders(orders, currentPair)
+      orders = parseOrders(orders, pairs)
 
       dispatch(actionCreators.updateTokenPairData(tokenPairData))
       dispatch(actionCreators.initOrdersTable(orders))
@@ -58,7 +59,6 @@ export const getDefaultData = (): ThunkAction => {
       state = getState()
       pairDomain = getTokenPairsDomain(state)
       
-
       socket.subscribeTrades(currentPair)
       socket.subscribeOrderBook(currentPair)
       socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
