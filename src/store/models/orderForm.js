@@ -49,7 +49,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         baseTokenSymbol,
         quoteTokenSymbol,
         baseTokenDecimals,
-        quoteTokenDecimals,
       } = pair
 
       let signer = getSigner()
@@ -69,10 +68,8 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         takeFee
       }
 
-      let defaultPriceMultiplier = utils.bigNumberify('1000000000')
-      let decimalsPriceMultiplier = utils.bigNumberify((10 ** (baseTokenDecimals - quoteTokenDecimals)).toString())
-      let pricepointMultiplier = defaultPriceMultiplier.mul(decimalsPriceMultiplier)
-
+    
+      let pairMultiplier = utils.bigNumberify(10).pow(10 + baseTokenDecimals)
       let order = await signer.createRawOrder(params)
       let sellTokenSymbol, sellAmount
 
@@ -81,7 +78,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         : sellTokenSymbol = baseTokenSymbol
 
       order.side === 'BUY'
-        ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pricepointMultiplier)
+        ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pairMultiplier)
         : sellAmount = utils.bigNumberify(order.amount)
 
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
