@@ -14,7 +14,7 @@ let composeEnhancers = compose
 // const persistConfig = { key: 'root', storage }
 
 if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
-  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  // composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 }
 
 const middlewares = [thunk.withExtraArgument(services), routerMiddleware(history)]

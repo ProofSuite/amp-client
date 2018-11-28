@@ -37,9 +37,9 @@ export const createRawOrder = async function(params) {
   let exchangeAddress = EXCHANGE_ADDRESS[this.provider.network.chainId]
 
   let precisionMultiplier = utils.bigNumberify(10).pow(9)
+  let priceMultiplier = utils.bigNumberify(10).pow(18)
   let baseMultiplier = utils.bigNumberify(10).pow(baseTokenDecimals)
   let quoteMultiplier = utils.bigNumberify(10).pow(quoteTokenDecimals)
-  let priceMultiplier = utils.bigNumberify(10).pow(18)
   let pricepoint = computePricepoint({ price, priceMultiplier, quoteMultiplier, precisionMultiplier })
   let amountPoints = computeAmountPoints({ amount, baseMultiplier, precisionMultiplier })
 
