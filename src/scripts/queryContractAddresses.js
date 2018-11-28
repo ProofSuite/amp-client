@@ -53,7 +53,7 @@ files.forEach((file, index) => {
     "BAT": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
     "BNB": " 0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
     "DAI": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-    "Exchange": "0x44cccaaa4f586300f552dd4adbb20ceddf57a2c5",
+    "Exchange": "0x3e74af98042dc0dc75c41731e178cf739c8cc5bb",
     "RewardPools": "0x654d7a6de5580e0c8bc34658cc5e471d55a864bd",
     "RewardCollector": "0x1ff2124b2a842257704e94c40214252ba646e3c7",
     "GNT": "0xa74476443119A942dE498590Fe1f2454d7D4aC0d",
