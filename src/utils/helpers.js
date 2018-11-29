@@ -67,4 +67,32 @@ export const computePairMultiplier = ({ priceMultiplier, baseMultiplier, quoteMu
 }
 
 
+export const max = (a: Object, b: Object) => {
+  let bigA = utils.bigNumberify(a)
+  let bigB = utils.bigNumberify(b)
 
+  if (bigA.gte(bigB)) {
+    return bigA
+  } else {
+    return bigB
+  }
+}
+
+export const min = (a: Object, b: Object) => {
+  let bigA = utils.bigNumberify(a)
+  let bigB = utils.bigNumberify(b)
+
+  if (bigA.lte(bigB)) {
+    return bigA
+  } else {
+    return bigB
+  }
+}
+
+export const minOrderAmount = (makeFee: string, takeFee: string) => {
+  let bigMakeFee = utils.bigNumberify(makeFee)
+  let bigTakeFee = utils.bigNumberify(takeFee)
+  let minAmount = (bigMakeFee.mul(2)).add(bigTakeFee.mul(2))
+  
+  return minAmount
+}
