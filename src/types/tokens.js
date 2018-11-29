@@ -22,9 +22,11 @@ export type TokenPair = {
   +baseTokenDecimals: number,
   +quoteTokenDecimals: number,
   +quoteTokenAddress: string,
-  +decimalsMultiplier: number,
-  +pricepointMultiplier: number,
+  +makeFee: string,
+  +takeFee: string,
 };
+
+export type TokenPairs = Array<TokenPair>
 
 export type TokenPairState = {
   +byPair: {
@@ -36,8 +38,8 @@ export type TokenPairState = {
       +quoteTokenAddress: string,
       +baseTokenDecimals: number,
       +quoteTokenDecimals: number,
-      +decimalsMultiplier: number,
-      +pricepointMultiplier: number,
+      +makeFee: string,
+      +takeFee: string,
     },
   },
   +data: {
