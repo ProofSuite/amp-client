@@ -69,7 +69,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       }
 
     
-      let pairMultiplier = utils.bigNumberify(10).pow(10 + baseTokenDecimals)
+      let pairMultiplier = utils.bigNumberify(10).pow(18 + baseTokenDecimals)
       let order = await signer.createRawOrder(params)
       let sellTokenSymbol, sellAmount
 
