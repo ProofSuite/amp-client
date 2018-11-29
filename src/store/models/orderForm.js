@@ -6,7 +6,7 @@ import { utils } from 'ethers'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
 import { parseNewOrderError } from '../../config/errors'
-import { max } from '../../utils/helpers'
+import { max, minOrderAmount } from '../../utils/helpers'
 
 export default function getOrderFormSelector(state: State) {
   let tokenPairDomain = getTokenPairsDomain(state)
@@ -70,7 +70,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
     
       let pairMultiplier = utils.bigNumberify(10).pow(18 + baseTokenDecimals)
       let order = await signer.createRawOrder(params)
-      let sellTokenSymbol, sellAmount, totalSellAmount
+      let sellTokenSymbol, totalSellAmount
       let fee = max(makeFee, takeFee)
 
       order.side === 'BUY'
@@ -78,13 +78,19 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         : sellTokenSymbol = baseTokenSymbol
 
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
+      let baseAmount = utils.bigNumberify(order.amount)
+      let quoteAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pairMultiplier)
+      let minQuoteAmount = minOrderAmount(makeFee, takeFee)
 
       //In case the order is a sell, the fee is subtracted from the received amount of quote token so there is no requirement
-      if (order.side === 'BUY') {
-        sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pairMultiplier)
-        totalSellAmount = sellAmount.add(fee)
-      } else {
-        totalSellAmount = utils.bigNumberify(order.amount)
+      order.side === 'BUY'
+        ? totalSellAmount = quoteAmount.add(fee)
+        : totalSellAmount = baseAmount
+
+      if (quoteAmount.lt(minQuoteAmount)) {
+        return dispatch(
+          appActionCreators.addErrorNotification({ message: `Order quote amount too low. Required minimum is ${minQuoteAmount.toString()} ${quoteTokenSymbol}`})
+        )
       }
   
       if (sellTokenBalance.lt(totalSellAmount)) {
@@ -92,7 +98,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
           appActionCreators.addErrorNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
         )
       }
-
+      
       socket.sendNewOrderMessage(order)
     } catch (e) {
       console.log(e)

@@ -88,3 +88,11 @@ export const min = (a: Object, b: Object) => {
     return bigB
   }
 }
+
+export const minOrderAmount = (makeFee: string, takeFee: string) => {
+  let bigMakeFee = utils.bigNumberify(makeFee)
+  let bigTakeFee = utils.bigNumberify(takeFee)
+  let minAmount = (bigMakeFee.mul(2)).add(bigTakeFee.mul(2))
+  
+  return minAmount
+}
