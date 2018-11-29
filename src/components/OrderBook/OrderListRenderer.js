@@ -45,7 +45,7 @@ export const OrderBookRenderer = (props: Props) => {
           </ListContainer>
         )}
       </OrderBookBox>
-      <ResizableBox axis="y" height={250}>
+      <ResizableBox height={400}>
         <OrderBookBox>
           {bids && (
             <ListContainer className="list-container">
