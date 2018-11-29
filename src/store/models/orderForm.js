@@ -49,15 +49,14 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         baseTokenSymbol,
         quoteTokenSymbol,
         baseTokenDecimals,
+        makeFee,
+        takeFee,
       } = pair
 
       let signer = getSigner()
       let userAddress = await signer.getAddress()
 
       //TODO replace by the makeFee and takerFee from redux state
-      let makeFee = '0'
-      let takeFee = '0'
-
       let params = {
         side,
         userAddress,
@@ -67,7 +66,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         makeFee,
         takeFee
       }
-
     
       let pairMultiplier = utils.bigNumberify(10).pow(18 + baseTokenDecimals)
       let order = await signer.createRawOrder(params)
