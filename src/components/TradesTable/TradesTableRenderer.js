@@ -52,7 +52,7 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
   if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
-    <ResizableBox height={500}>
+    <ResizableBox height={400}>
       <ListHeader className="heading">
         <HeadingRow>
           <HeaderCell>PRICE</HeaderCell>

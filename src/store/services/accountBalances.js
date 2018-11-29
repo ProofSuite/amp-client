@@ -72,6 +72,7 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
 
 export async function queryExchangeTokenAllowances(owner: string, tokens: Array<Token>) {
   const provider = getProvider()
+  
   const exchange = EXCHANGE_ADDRESS[provider.network.chainId]
 
   const allowancePromises = tokens.map(token => {
