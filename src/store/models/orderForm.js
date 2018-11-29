@@ -6,6 +6,7 @@ import { utils } from 'ethers'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
 import { parseNewOrderError } from '../../config/errors'
+import { max } from '../../utils/helpers'
 
 export default function getOrderFormSelector(state: State) {
   let tokenPairDomain = getTokenPairsDomain(state)
@@ -69,19 +70,24 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
     
       let pairMultiplier = utils.bigNumberify(10).pow(18 + baseTokenDecimals)
       let order = await signer.createRawOrder(params)
-      let sellTokenSymbol, sellAmount
+      let sellTokenSymbol, sellAmount, totalSellAmount
+      let fee = max(makeFee, takeFee)
 
       order.side === 'BUY'
         ? sellTokenSymbol = quoteTokenSymbol
         : sellTokenSymbol = baseTokenSymbol
 
-      order.side === 'BUY'
-        ? sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pairMultiplier)
-        : sellAmount = utils.bigNumberify(order.amount)
-
       let sellTokenBalance = accountBalancesDomain.getBigNumberBalance(sellTokenSymbol)
 
-      if (sellTokenBalance.lt(sellAmount)) {
+      //In case the order is a sell, the fee is subtracted from the received amount of quote token so there is no requirement
+      if (order.side === 'BUY') {
+        sellAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pairMultiplier)
+        totalSellAmount = sellAmount.add(fee)
+      } else {
+        totalSellAmount = utils.bigNumberify(order.amount)
+      }
+  
+      if (sellTokenBalance.lt(totalSellAmount)) {
         return dispatch(
           appActionCreators.addErrorNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
         )
