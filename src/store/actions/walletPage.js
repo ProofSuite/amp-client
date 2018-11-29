@@ -4,10 +4,12 @@ import type {
   UpdateAccountAllowanceAction,
   UpdateAccountBalancesAction,
   UpdateAccountBalanceAction,
+  UpdateTokenPairsAction,
   UpdateCurrentPairAction,
 } from '../../types/walletPage';
 
 import type { AccountAllowances, AccountBalances, AccountBalance, AccountAllowance } from '../../types/accountBalances';
+import type { TokenPairs } from '../../types/tokens'
 
 const actionTypes = {
   updateBalance: 'walletPage/UPDATE_BALANCE',
@@ -15,8 +17,16 @@ const actionTypes = {
   updateAllowance: 'walletPage/UPDATE_ALLOWANCE',
   updateAllowances: 'walletPage/UPDATE_ALLOWANCES',
   updateCurrentPair: 'walletPage/UPDATE_CURRENT_PAIR',
+  updateTokenPairs: 'walletPage/UPDATE_TOKEN_PAIRS',
   updateShowHelpModal: 'walletPage/UPDATE_SHOW_HELP_MODAL'
 };
+
+export function updateTokenPairs(pairs: TokenPairs): UpdateTokenPairsAction {
+  return {
+    type: actionTypes.updateTokenPairs,
+    payload: { pairs }
+  }
+} 
 
 export function updateBalances(balances: AccountBalances): UpdateAccountBalancesAction {
   return {
