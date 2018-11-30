@@ -16,7 +16,19 @@ export const errorMessages = {
   cannotReadLowerCaseOfUndefined: "Cannot read property 'toLowerCase' of undefined",
   gasRequiredExceedsAllowance: 'gas required exceeds allowance or always failing transaction',
   metamaskUserDeniedSignature: 'MetaMask Message Signature: User denied message signature.',
-  ioTimeout: 'timeout'
+  ioTimeout: 'timeout',
+  callException: 'call exception'
+}
+
+
+export const parseQueryAccountDataError = (error: Error) => {
+  let errorMessage = error.message
+
+  if (errorMessage.includes(errorMessages.invalidJSON)) return 'Could not connect to Ethereum network'
+  if (errorMessage.includes(errorMessages.callException)) return 'Ethereum connection slow. All balances could not be retrieved.'
+
+
+  return 'Could not connect to Ethereum network'
 }
 
 

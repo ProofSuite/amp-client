@@ -36,7 +36,6 @@ export const tokenPairsUpdated = (pairs: TokenPairs) => {
     let byPair = pairs.reduce(
       (result, pair) => {
         let pairSymbol = getPairSymbol(pair.baseTokenSymbol, pair.quoteTokenSymbol)
-
         result[pairSymbol] = {
           pair: pairSymbol,
           baseTokenSymbol: pair.baseTokenSymbol,
