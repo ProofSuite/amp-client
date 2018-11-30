@@ -42,6 +42,11 @@ export type ClearAccountBalancesAction = {
   type: 'walletPage/CLEAR_BALANCES',
 };
 
+export type UpdateExchangeAddressAction = {
+  type: 'walletPage/UPDATE_EXCHANGE_ADDRESS',
+  payload: { exchangeAddress: string }
+}
+
 export type WalletPageActions =
   | UpdateCurrentPairAction
   | UpdateAccountBalanceAction
@@ -50,3 +55,4 @@ export type WalletPageActions =
   | UpdateAccountAllowancesAction
   | UnsubscribeAccountBalanceAction
   | UpdateTokenPairsAction
+  | UpdateExchangeAddressAction
