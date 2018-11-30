@@ -75,6 +75,7 @@ export function queryAccountData(): ThunkAction {
       // ] = await Promise.all(promises)
 
       let pairs = await api.fetchPairs()
+      let exchangeAddress = await api.getExchangeAddress()
       let etherBalance = await accountBalancesService.queryEtherBalance(accountAddress)
       let tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens)
       let allowances = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
@@ -84,6 +85,7 @@ export function queryAccountData(): ThunkAction {
       dispatch(actionCreators.updateTokenPairs(pairs))
       dispatch(actionCreators.updateBalances(balances))
       dispatch(actionCreators.updateAllowances(allowances))
+      dispatch(actionCreators.updateExchangeAddress(exchangeAddress))
 
       await accountBalancesService.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance))

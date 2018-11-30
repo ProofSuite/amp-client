@@ -280,3 +280,12 @@ export const getTokenPairData = async (pair: TokenPair) => {
 
   return parsedData
 }
+
+export const getExchangeAddress = async () => {
+  let data = await fetchInfo()
+  let exchangeAddress = data.exchangeAddress
+
+  return exchangeAddress
+}
+
+

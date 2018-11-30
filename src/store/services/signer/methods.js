@@ -36,6 +36,8 @@ export const createRawOrder = async function(params) {
   let { baseTokenAddress, quoteTokenAddress, baseTokenDecimals, quoteTokenDecimals } = pair
   let exchangeAddress = EXCHANGE_ADDRESS[this.provider.network.chainId]
 
+  console.log(exchangeAddress)
+
   let precisionMultiplier = utils.bigNumberify(10).pow(9)
   let priceMultiplier = utils.bigNumberify(10).pow(18)
   let baseMultiplier = utils.bigNumberify(10).pow(baseTokenDecimals)
