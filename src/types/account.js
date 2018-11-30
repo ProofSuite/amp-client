@@ -4,6 +4,7 @@ export type AccountState = {
   +privateKey: ?string,
   +currentBlock: ?string,
   +showHelpModal: boolean,
+  +exchangeAddress: string,
 };
 
 export type UpdateAccountAction = {

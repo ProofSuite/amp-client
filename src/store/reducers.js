@@ -245,6 +245,8 @@ export const account = createReducer(action => {
       return accountEvents.accountUpdated(payload.address, payload.privateKey)
     case walletPageActionTypes.updateShowHelpModal:
       return accountEvents.showHelpModalUpdated(payload.showHelpModal)
+    case walletPageActionTypes.updateExchangeAddress:
+      return accountEvents.exchangeAddressUpdated(payload.exchangeAddress)
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved()
     case accountActionTypes.updateCurrentBlock:
