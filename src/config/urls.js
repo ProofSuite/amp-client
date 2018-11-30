@@ -7,7 +7,7 @@ export const ETHEREUM_NODE_WS_URL = env.ETHEREUM_NODE_WS_URL
 
 
 const ETHERSCAN_RINKEBY_TX = 'https://rinkeby.etherscan.io/tx'
-const ETHERSCAN_MAINNET_TX = 'https://mainnet.etherscan.io/tx'
+const ETHERSCAN_MAINNET_TX = 'https://etherscan.io/tx'
 export const ETHERSCAN_TX_URL = { '4': ETHERSCAN_RINKEBY_TX, '1': ETHERSCAN_MAINNET_TX }[env.DEFAULT_NETWORK_ID]
 
 

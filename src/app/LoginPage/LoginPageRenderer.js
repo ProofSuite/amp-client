@@ -65,11 +65,11 @@ const LoginMethodsView = (props: Props) => {
   return (
     <Wrapper>
       <Announcement>
-        <Callout intent="success" title="Important notice">
+        <Callout intent="success" title="Disclaimer">
           <AnnouncementMessages>
             <FormattedMessage
               {...messages.announcement}
-              values={{ link: <a href="https://proof-amp.com">https://proof-amp.com</a> }}
+              values={{ link: <a href="https://amp.exchange.com">https://amp.exchange.com</a> }}
             />
             <Reminder>
               <FormattedMessage {...messages.noPlugins} />
@@ -189,7 +189,11 @@ const messages = defineMessages({
   },
   noPlugins: {
     id: 'loginPage.noPlugins',
-    defaultMessage: 'Never install any browser plug-ins that claim to be associated with Proofsuite',
+    defaultMessage: "Never trade more value than you are willing to lose",
+  },
+  thisAppIsInBeta: {
+    id: 'loginPage.thisAppIsInBeta',
+    defaultMessage: "This app is in beta. Please expect a certain amount of bugs for upcoming weeks",
   },
   noPhoneCalls: {
     id: 'loginPage.noPhoneCalls',
