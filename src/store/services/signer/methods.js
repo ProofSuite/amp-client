@@ -1,6 +1,5 @@
 import { utils } from 'ethers'
 import { getOrderHash, getOrderCancelHash, getTradeHash, getRandomNonce } from '../../../utils/crypto'
-import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { round, computePricepoint, computeAmountPoints } from '../../../utils/helpers'
 
 export const signOrder = async function(order) {
@@ -32,12 +31,10 @@ export const signTrade = async function(trade) {
 // pricePoints ~ price * priceMultiplier ~ price * 1e6
 export const createRawOrder = async function(params) {
   let order = {}
-  let { userAddress, side, pair, amount, price, makeFee, takeFee } = params
+  let { userAddress, exchangeAddress, side, pair, amount, price, makeFee, takeFee } = params
   let { baseTokenAddress, quoteTokenAddress, baseTokenDecimals, quoteTokenDecimals } = pair
-  let exchangeAddress = EXCHANGE_ADDRESS[this.provider.network.chainId]
 
-  console.log(exchangeAddress)
-
+  
   let precisionMultiplier = utils.bigNumberify(10).pow(9)
   let priceMultiplier = utils.bigNumberify(10).pow(18)
   let baseMultiplier = utils.bigNumberify(10).pow(baseTokenDecimals)

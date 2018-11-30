@@ -50,6 +50,9 @@ export function queryAccountData(): ThunkAction {
     const state = getState()
     const accountAddress = getAccountDomain(state).address()
 
+    let balances = []
+    let allowances = []
+
     try {
       let tokens = getTokenDomain(state).tokens()
       let quotes = quoteTokens
@@ -59,34 +62,27 @@ export function queryAccountData(): ThunkAction {
 
       const currentBlock = await getCurrentBlock()
       if (!currentBlock) throw new Error('')
-
-      // const promises = [
-      //   api.fetchPairs(),
-      //   accountBalancesService.queryEtherBalance(accountAddress),
-      //   accountBalancesService.queryTokenBalances(accountAddress, tokens),
-      //   accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
-      // ]
-
-      // const [
-      //   pairs,
-      //   etherBalance,
-      //   tokenBalances,
-      //   allowances
-      // ] = await Promise.all(promises)
+      dispatch(accountActionTypes.updateCurrentBlock(currentBlock))
 
       let pairs = await api.fetchPairs()
-      let exchangeAddress = await api.getExchangeAddress()
-      let etherBalance = await accountBalancesService.queryEtherBalance(accountAddress)
-      let tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens)
-      let allowances = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
-      
-      const balances = [etherBalance].concat(tokenBalances)
-      dispatch(accountActionTypes.updateCurrentBlock(currentBlock))
       dispatch(actionCreators.updateTokenPairs(pairs))
-      dispatch(actionCreators.updateBalances(balances))
-      dispatch(actionCreators.updateAllowances(allowances))
+
+      let exchangeAddress = await api.getExchangeAddress()
       dispatch(actionCreators.updateExchangeAddress(exchangeAddress))
 
+      let etherBalance = await accountBalancesService.queryEtherBalance(accountAddress)
+      balances.push(etherBalance)
+
+      let { errors: tokenBalanceErrors, tokenBalances } = await accountBalancesService.queryTokenBalances(accountAddress, tokens)
+      balances.concat(tokenBalances)
+
+      let { errors: tokenAllowanceErrors, tokenAllowances } = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
+      allowances = tokenAllowances
+
+      balances = [etherBalance].concat(tokenBalances)
+      console.log(tokenBalanceErrors)
+      console.log(tokenAllowanceErrors)
+      
       await accountBalancesService.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance))
       )
@@ -102,7 +98,9 @@ export function queryAccountData(): ThunkAction {
       console.log(e)
       let message = parseQueryAccountDataError(e)
       dispatch(notifierActionCreators.addErrorNotification({ message }))
-      console.log(e)
+    } finally {
+      dispatch(actionCreators.updateBalances(balances))
+      dispatch(actionCreators.updateAllowances(allowances))
     }
   }
 }

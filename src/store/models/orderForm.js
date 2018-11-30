@@ -1,6 +1,12 @@
 // @flow
 import * as appActionCreators from '../actions/app'
-import { getTokenPairsDomain, getOrderBookDomain, getAccountBalancesDomain } from '../domains/'
+
+import { 
+  getTokenPairsDomain, 
+  getOrderBookDomain, 
+  getAccountBalancesDomain, 
+  getAccountDomain
+} from '../domains/'
 
 import { utils } from 'ethers'
 import type { State, ThunkAction } from '../../types'
@@ -44,7 +50,10 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let state = getState()
       let tokenPairDomain = getTokenPairsDomain(state)
       let accountBalancesDomain = getAccountBalancesDomain(state)
+      let accountDomain = getAccountDomain(state)
+
       let pair = tokenPairDomain.getCurrentPair()
+      let exchangeAddress = accountDomain.exchangeAddress()
 
       let {
         baseTokenSymbol,
@@ -60,6 +69,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       //TODO replace by the makeFee and takerFee from redux state
       let params = {
         side,
+        exchangeAddress,
         userAddress,
         pair,
         amount,
