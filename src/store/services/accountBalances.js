@@ -77,7 +77,9 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
     return new Promise((resolve) => {
       let payload = new Array(2)
       promise.then((result) => {
-        payload[0] = { symbol: tokens[i].symbol, balance: utils.formatEther(result)}
+        payload[0] = { 
+          symbol: tokens[i].symbol, 
+          balance: utils.formatUnits(result, tokens[i].decimals)}
       })
       .catch((error) => {
         payload[1] = error;
@@ -121,7 +123,10 @@ export async function queryExchangeTokenAllowances(owner: string, tokens: Array<
     return new Promise((resolve) => {
       let payload = new Array(2)
       promise.then((result) => {
-        payload[0] = { symbol: tokens[i].symbol, allowance: utils.formatEther(result) }
+        payload[0] = {
+          symbol: tokens[i].symbol,
+          allowance: utils.formatUnits(result, tokens[i].decimals)
+        }
       })
       .catch((error) => {
         payload[1] = error;
@@ -163,7 +168,7 @@ export async function queryTokenAllowances(owner: string, spender: string, token
   allowances = await Promise.all(allowancePromises)
   allowances = (allowances: TokenBalances).map((allowance, i) => ({
     symbol: tokens[i].symbol,
-    allowance: utils.formatEther(allowance)
+    allowance: utils.formatUnits(allowance, tokens[i].decimals)
   }))
 
   return allowances
@@ -237,7 +242,7 @@ export async function subscribeTokenBalances(address: string, tokens: Array<Toke
         const balance = await contract.balanceOf(address)
         callback({
           symbol: token.symbol,
-          balance: utils.formatEther(balance)
+          balance: utils.formatUnits(balance, token.decimals)
         })
       }
     }
@@ -260,7 +265,7 @@ export async function subscribeTokenAllowance(address: string, token: Object, ca
   const handler = async (sender, receiver, tokens) => {
     if (receiver === address) {
       const allowance = await contract.allowance(exchange, receiver)
-      if (allowance !== initialAllowance) callback(utils.formatEther(allowance))
+      if (allowance !== initialAllowance) callback(utils.formatUnits(allowance, token.decimals))
     }
   }
 
@@ -287,7 +292,7 @@ export async function subscribeTokenAllowances(
         const allowance = await contract.allowance(owner, exchange)
         callback({
           symbol: token.symbol,
-          allowance: utils.formatEther(allowance)
+          allowance: utils.formatUnits(allowance, token.decimals)
         })
       }
     }

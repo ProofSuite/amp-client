@@ -65,7 +65,10 @@ class Layout extends React.PureComponent<Props, State> {
             <Navbar>
               <NavbarGroup align={Alignment.LEFT}>
                 <NavbarHeading>
-                  <NavbarHeaderLink to="/">PROOF</NavbarHeaderLink>
+                  <NavbarHeaderBox>
+                    <img src="amp_black.svg" class="Profile-image" height={25} width={25} />
+                    {/* <NavbarHeaderLink to="/">PROOF</NavbarHeaderLink> */}
+                  </NavbarHeaderBox>
                 </NavbarHeading>
                 {authenticated && (
                   <React.Fragment>
@@ -109,6 +112,12 @@ const Header = styled.header``
 
 const MainContent = styled.main`
   flex: 1;
+`
+
+const NavbarHeaderBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `
 
 const NavbarHeaderLink = styled(Link).attrs({
