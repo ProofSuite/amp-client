@@ -31,7 +31,7 @@ const App = () => {
               <Route path="/settings" component={SettingsPage} />
               <Route path="/logout" component={LogoutPage} />
               <Route path="/trade" component={TradingPage} />
-              <Redirect to="login" />
+              <Redirect to="/login" />
             </Switch>
           </Layout>
         </SocketController>
