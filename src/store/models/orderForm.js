@@ -22,6 +22,10 @@ export default function getOrderFormSelector(state: State) {
   let currentPair = tokenPairDomain.getCurrentPair()
   let baseToken = currentPair.baseTokenSymbol
   let quoteToken = currentPair.quoteTokenSymbol
+  let makeFee = currentPair.makeFee
+  let takeFee = currentPair.takeFee
+  let baseTokenDecimals = currentPair.baseTokenDecimals
+  let quoteTokenDecimals = currentPair.quoteTokenDecimals
   let baseTokenBalance = accountBalancesDomain.get(baseToken)
   let quoteTokenBalance = accountBalancesDomain.get(quoteToken)
   let askPrice = orderBookDomain.getAskPrice()
@@ -35,8 +39,12 @@ export default function getOrderFormSelector(state: State) {
     quoteToken,
     baseTokenBalance,
     quoteTokenBalance,
+    baseTokenDecimals,
+    quoteTokenDecimals,
     askPrice,
-    bidPrice
+    bidPrice,
+    makeFee,
+    takeFee,
   }
 }
 

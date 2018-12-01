@@ -3,6 +3,7 @@ import React from 'react'
 import { Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
 import { HeaderText, MutedText } from '../Common'
 import styled from 'styled-components'
+import { utils } from 'ethers'
 
 type Props = {
   selectedTabId: string,
@@ -22,6 +23,10 @@ type Props = {
   handleChangeOrderType: string => void,
   handleSendOrder: void => void,
   toggleCollapse: (SyntheticEvent<>) => void,
+  makeFee: string,
+  takeFee: string,
+  baseTokenDecimals: number,
+  quoteTokenDecimals: number
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -43,6 +48,10 @@ const OrderFormRenderer = (props: Props) => {
     handleChangeOrderType,
     handleSendOrder,
     toggleCollapse,
+    makeFee,
+    takeFee,
+    baseTokenDecimals,
+    quoteTokenDecimals
   } = props
 
   return (
@@ -86,6 +95,10 @@ const OrderFormRenderer = (props: Props) => {
                 insufficientBalance={insufficientBalance}
                 onInputChange={onInputChange}
                 handleSendOrder={handleSendOrder}
+                makeFee={makeFee}
+                takeFee={takeFee}
+                quoteTokenDecimals={quoteTokenDecimals}
+                baseTokenDecimals={baseTokenDecimals}
               />
             }
           />
@@ -106,6 +119,10 @@ const OrderFormRenderer = (props: Props) => {
                 total={total}
                 onInputChange={onInputChange}
                 handleSendOrder={handleSendOrder}
+                makeFee={makeFee}
+                takeFee={takeFee}
+                quoteTokenDecimals={quoteTokenDecimals}
+                baseTokenDecimals={baseTokenDecimals}
               />
             }
           />
@@ -127,6 +144,10 @@ const OrderFormRenderer = (props: Props) => {
                 total={total}
                 onInputChange={onInputChange}
                 handleSendOrder={handleSendOrder}
+                makeFee={makeFee}
+                takeFee={takeFee}
+                quoteTokenDecimals={quoteTokenDecimals}
+                baseTokenDecimals={baseTokenDecimals}
               />
             }
           />
@@ -137,7 +158,21 @@ const OrderFormRenderer = (props: Props) => {
 }
 
 const MarketOrderPanel = (props: *) => {
-  const { side, price, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance, handleSendOrder } = props
+  const { 
+    side, 
+    price, 
+    amount, 
+    maxAmount, 
+    fraction, 
+    total, 
+    quoteToken, 
+    baseToken, 
+    onInputChange, 
+    insufficientBalance, 
+    handleSendOrder, 
+    makeFee,
+    quoteTokenDecimals
+  } = props
 
 
   return (
@@ -167,13 +202,28 @@ const MarketOrderPanel = (props: *) => {
       </RadioButtonsWrapper>
       { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
       { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
+      { makeFee && <MaxAmount>Fee: {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteToken}</MaxAmount> }
       <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
     </React.Fragment>
   )
 }
 
 const LimitOrderPanel = props => {
-  const { price, side, amount, maxAmount, fraction, total, quoteToken, baseToken, onInputChange, insufficientBalance, handleSendOrder } = props
+  const { 
+    price, 
+    side, 
+    amount, 
+    maxAmount, 
+    fraction, 
+    total, 
+    quoteToken, 
+    baseToken, 
+    onInputChange, 
+    insufficientBalance, 
+    handleSendOrder, 
+    makeFee,
+    quoteTokenDecimals,
+  } = props
 
   return (
     <React.Fragment>
@@ -204,13 +254,27 @@ const LimitOrderPanel = props => {
       </RadioButtonsWrapper>
       { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
       { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
+      { makeFee && <MaxAmount> Fee: {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteToken}</MaxAmount>}
       <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
     </React.Fragment>
   )
 }
 
 const StopLimitOrderPanel = (props: *) => {
-  const { stopPrice, side, amount, maxAmount, total, quoteToken, baseToken, onInputChange, insufficientBalance, handleSendOrder } = props
+  const { 
+    stopPrice, 
+    side, 
+    amount, 
+    maxAmount, 
+    total, 
+    quoteToken, 
+    baseToken, 
+    onInputChange, 
+    insufficientBalance, 
+    handleSendOrder, 
+    makeFee,
+    quoteTokenDecimals
+    } = props
 
   return (
     <React.Fragment>
@@ -247,6 +311,7 @@ const StopLimitOrderPanel = (props: *) => {
       </InputBox>
       <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount>
       <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount>
+      <MaxAmount>Fee: {makeFee} {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteToken} </MaxAmount>
       <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
     </React.Fragment>
   )
@@ -338,6 +403,7 @@ const Total = styled.div`
 const MaxAmount = styled.div`
   display: flex;
   color: ${Colors.GRAY3}
+  font-size: 11px;
   justify-content: flex-end;
   padding-bottom: 5px;
   `

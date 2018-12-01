@@ -5,7 +5,7 @@ import Notifier from '../../components/Notifier'
 import ConnectionStatus from '../../components/ConnectionStatus'
 import { IntlProvider } from 'react-intl'
 import { Link, NavLink } from 'react-router-dom'
-import { Footer } from '../../components/Common'
+import { Footer, Indent } from '../../components/Common'
 
 import styled from 'styled-components'
 import {
@@ -17,7 +17,8 @@ import {
   NavbarGroup,
   NavbarHeading,
   Popover,
-  Position
+  Position,
+  Tag
 } from '@blueprintjs/core'
 
 export type Props = {
@@ -67,6 +68,8 @@ class Layout extends React.PureComponent<Props, State> {
                 <NavbarHeading>
                   <NavbarHeaderBox>
                     <img src="amp_black.svg" class="Profile-image" height={25} width={25} />
+                    <Indent />
+                    <Tag minimal intent="success">BETA</Tag>
                     {/* <NavbarHeaderLink to="/">PROOF</NavbarHeaderLink> */}
                   </NavbarHeaderBox>
                 </NavbarHeading>
@@ -76,6 +79,7 @@ class Layout extends React.PureComponent<Props, State> {
                     <NavbarLink to="/wallet">Wallet</NavbarLink>
                     <NavbarLink to="/trade">Exchange</NavbarLink>
                     <NavbarLink to="/settings">Settings</NavbarLink>
+                    <NavbarDivider />
                   </React.Fragment>
                 )}
               </NavbarGroup>
