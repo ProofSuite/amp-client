@@ -98,7 +98,8 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
       let signer = getSigner();
 
       let token = new Contract(tokenAddress, ERC20, signer);
-      let amountTokens = utils.parseEther(amount)
+      let decimals = await token.decimals.call()
+      let amountTokens = utils.parseUnits(amount, decimals)
 
       let estimatedGas = await token.estimate.transfer(receiver, amountTokens);
       estimatedGas = estimatedGas.toNumber();
@@ -118,13 +119,14 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       let { receiver, amount, gas, gasPrice, tokenAddress } = params;
       let signer = getSigner();
       let token = new Contract(tokenAddress, ERC20, signer);
+      let decimals = await token.decimals.call()
+      let amountTokens = utils.parseUnits(amount, decimals)
 
       let txOpts = {
         gasLimit: parseFloat(gas) || 0,
         gasPrice: parseFloat(gasPrice) || 2 * 10e9,
       };
 
-      let amountTokens = utils.parseEther(amount)
       let tx = await token.transfer(receiver, amountTokens, txOpts);
       dispatch(actionCreators.sendTx(tx.hash));
 

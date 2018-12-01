@@ -45,7 +45,7 @@ const TransferTokensFormRenderer = (props: Props) => {
   return (
     <ModalBody>
       <ImportantNoticeCallout icon="warning-sign" intent="success" title="Important Notice">
-        <p>Double check the entered transaction information is correct. Proofsuite has no control
+        <p>Double check the entered transaction information is correct. Proof Suite has no control
           over your transactions. Your are fully responsible for your funds and assets.</p>
       </ImportantNoticeCallout>
       <Label helpertext="(in ether or in token decimals)" text="Amount to Send">

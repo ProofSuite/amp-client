@@ -168,9 +168,9 @@ class OHLCVChart extends React.Component {
 
               <CandlestickSeries
                 opacity={1}
-                fill={d => { return d.close > d.open ? theme.GREEN3 : theme.RED2 }}
-                stroke={d => { return d.close > d.open ? theme.GREEN3 : theme.RED2 }}
-                wickStroke={d => { return d.close > d.open ? theme.GREEN3 : theme.RED2 }}
+                fill={d => { return d.close >= d.open ? theme.GREEN3 : theme.RED2 }}
+                stroke={d => { return d.close >= d.open ? theme.GREEN3 : theme.RED2 }}
+                wickStroke={d => { return d.close >= d.open ? theme.GREEN3 : theme.RED2 }}
               />
 
               <MouseCoordinateX
@@ -197,8 +197,8 @@ class OHLCVChart extends React.Component {
                 orient="right"
                 edgeAt="right"
                 yAccessor={d => d.close}
-                fill={d => (d.close > d.open ? theme.GREEN3 : theme.RED2)}
-                stroke={d => (d.close > d.open ? theme.GREEN3 : theme.RED2)}
+                fill={d => (d.close >= d.open ? theme.GREEN3 : theme.RED2)}
+                stroke={d => (d.close >= d.open ? theme.GREEN3 : theme.RED2)}
                 textFill={theme.white}
                 {...edgeIndicatorAppearance}
               />
@@ -332,11 +332,11 @@ class OHLCVChart extends React.Component {
               <MouseCoordinateY at="right" orient="right" displayFormat={format('.1f')} />
 
               <CandlestickSeries
-                fill={d => d.close > d.open ? theme.GREEN3 : theme.RED2 }
+                fill={d => d.close >= d.open ? theme.GREEN3 : theme.RED2 }
                 opacity={1}
-                stroke={d => d.close > d.open ? theme.GREEN3 : theme.RED2 }
+                stroke={d => d.close >= d.open ? theme.GREEN3 : theme.RED2 }
                 widthRatio={0.8}
-                wickStroke={d => d.close > d.open ? theme.GREEN3 : theme.RED2 }
+                wickStroke={d => d.close >= d.open ? theme.GREEN3 : theme.RED2 }
               />
 
               {line.active && (

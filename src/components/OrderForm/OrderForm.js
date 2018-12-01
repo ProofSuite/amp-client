@@ -2,6 +2,7 @@
 import React from 'react'
 import OrderFormRenderer from './OrderFormRenderer'
 import { formatNumber, unformat } from 'accounting-js'
+import { utils } from 'ethers'
 
 type Props = {
   side: 'BUY' | 'SELL',
@@ -11,8 +12,12 @@ type Props = {
   quoteTokenBalance: number,
   baseToken: string,
   quoteToken: string,
+  baseTokenDecimals: number,
+  quoteTokenDecimals: number,
   loggedIn: boolean,
-  sendNewOrder: (string, number, number) => void
+  sendNewOrder: (string, number, number) => void,
+  makeFee: string,
+  takeFee: string,
 }
 
 type State = {
@@ -230,20 +235,34 @@ class OrderForm extends React.PureComponent<Props, State> {
   render() {
     const {
       state: { selectedTabId, fraction, priceType, price, isOpen, amount, total },
-      props: { side, baseToken, loggedIn, quoteToken, baseTokenBalance, quoteTokenBalance },
+      props: { side, baseToken, loggedIn, quoteToken, baseTokenBalance, quoteTokenBalance, makeFee, takeFee, baseTokenDecimals, quoteTokenDecimals },
       onInputChange,
       handleChangeOrderType,
       handleSendOrder,
       toggleCollapse,
     } = this
 
-    let maxAmount
-    (price !== '0.000')
-    ? maxAmount = side === 'BUY'
-      ? formatNumber(quoteTokenBalance / unformat(price), { decimals: 3 })
-      : formatNumber(baseTokenBalance, { decimals: 3 })
-    : maxAmount = '0.0'
 
+    //TODO refactor!
+    let maxAmount
+    let formattedMakeFee = utils.formatUnits(makeFee, quoteTokenDecimals)
+    let maxQuoteTokenAmount = quoteTokenBalance - Number(formattedMakeFee)
+
+    if (price !== '0.000') {
+      if (side === 'BUY') {
+        maxAmount = formatNumber(maxQuoteTokenAmount / unformat(price), { decimals: 3 })
+      } else {
+        maxAmount = formatNumber(baseTokenBalance, { decimals: 3 })
+      }
+    } else {
+      maxAmount = '0.0'
+    }
+
+    // (price !== '0.000')
+    // ? maxAmount = side === 'BUY'
+    //   ? formatNumber((quoteTokenBalance - makeFee) / unformat(price), { decimals: 3 })
+    //   : formatNumber(baseTokenBalance, { decimals: 3 })
+    // : maxAmount = '0.0'
 
     let insufficientBalance = (unformat(amount) > unformat(maxAmount))
 
@@ -266,6 +285,10 @@ class OrderForm extends React.PureComponent<Props, State> {
         toggleCollapse={toggleCollapse}
         handleChangeOrderType={handleChangeOrderType}
         handleSendOrder={handleSendOrder}
+        makeFee={makeFee}
+        takeFee={takeFee}
+        baseTokenDecimals={baseTokenDecimals}
+        quoteTokenDecimals={quoteTokenDecimals}
       />
     )
   }

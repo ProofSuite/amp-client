@@ -46,7 +46,7 @@ export const isJson = (text: *) => {
 
 
 export const computeTokenAmount = (amount: Object, tokenDecimals: number) => {
-  return utils.bigNumberify(amount).div(utils.bigNumberify(10).pow(tokenDecimals))
+  return utils.bigNumberify(amount).div(utils.bigNumberify(10).pow(tokenDecimals)).toString()
 }
 
 export const computePricepoint = ({ price, priceMultiplier, quoteMultiplier, precisionMultiplier }: *) => {

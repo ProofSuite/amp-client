@@ -66,6 +66,7 @@ type Props = {
   saveDuration: Object => void,
   saveTimeSpan: Object => void,
 };
+
 type State = {
   chartHeight: number,
   indicatorHeight: number,
