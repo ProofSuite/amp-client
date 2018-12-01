@@ -69,7 +69,7 @@ const LoginMethodsView = (props: Props) => {
           <AnnouncementMessages>
             <FormattedMessage
               {...messages.announcement}
-              values={{ link: <a href="https://amp.exchange.com">https://amp.exchange.com</a> }}
+              values={{ link: <a href="https://amp.exchange">https://amp.exchange</a> }}
             />
             <Reminder>
               <FormattedMessage {...messages.noDisclosure} />

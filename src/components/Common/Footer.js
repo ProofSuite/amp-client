@@ -13,8 +13,7 @@ const Footer = () => (
       <TopSection>
         <LogosWrapper>
         <img src="amp_black.png" class="Profile-image" width="120" height="120" />
-        <FooterText>The AMP trading platform settles trades directly on the blockchain.
-        Trading fees are distributed to the Proof Suite community.</FooterText>
+        <FooterText>The community-owned trading platform</FooterText>
         </LogosWrapper>
         <LinksWrapper className="content">
           <List>

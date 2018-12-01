@@ -40,7 +40,7 @@ const FirstStep = (props: Props) => {
       <ModalBody>
         <Callout intent='success' title='Welcome to the AMP Exchange!' icon='hand' />
         <ul>
-          <li>1) Before starting, make sure you are on https://amp.exchange.com. </li>
+          <li>1) Before starting, make sure you are on https://amp.exchange. </li>
           <li>2) AMP allows you to trade from your own Ethereum wallet. We can not control your funds.</li>
           <li>3) All trades are settled on the Ethereum blockchain. </li>
           <li>4) Only invest and trade what you can afford to risk. </li>
