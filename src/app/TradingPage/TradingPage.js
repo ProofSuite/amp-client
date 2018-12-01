@@ -21,7 +21,9 @@ type Props = {
   quoteTokenAllowance: string,
   baseTokenSymbol: string,
   quoteTokenSymbol: string,
-  getDefaultData: () => void
+  getDefaultData: () => void,
+  makeFee: string, 
+  takeFee: string,
 }
 
 type State = {
@@ -42,10 +44,20 @@ class TradingPage extends React.PureComponent<Props, State> {
       intent: 'danger',
       message: 'Please authenticate to start trading'
     }),
-    fundsLocked: (symbol: string) => ({
-      title: `${symbol} Tokens locked`,
+    quoteTokensLocked: (quoteTokenSymbol: string) => ({ 
+      title: `Unlock tokens to start trading`,
       intent: 'danger',
-      message: 'To start trading, you need to unlock funds and allow AMP to settle transactions when a match is found'
+      message: `To start trading, you need to unlock ${quoteTokenSymbol} tokens` 
+    }),
+    baseTokensLocked: (baseTokenSymbol: string) => ({
+      title: `Unlock tokens to start trading`,
+      intent: 'danger',
+      message: `To start trading, you need to unlock trading for ${baseTokenSymbol} tokens`
+    }),
+    tokensLocked: (baseTokenSymbol: string, quoteTokenSymbol: string) => ({
+      title: `Unlock tokens to start trading`,
+      intent: `danger`,
+      message: `To start trading, you need to unlock ${baseTokenSymbol} and ${quoteTokenSymbol}`
     })
   }
 
@@ -73,7 +85,9 @@ class TradingPage extends React.PureComponent<Props, State> {
       baseTokenAllowance,
       quoteTokenAllowance,
       baseTokenSymbol,
-      quoteTokenSymbol
+      quoteTokenSymbol,
+      makeFee,
+      takeFee
      } = this.props
 
     if (!authenticated) {
@@ -81,14 +95,23 @@ class TradingPage extends React.PureComponent<Props, State> {
       this.setState({ calloutVisible: true, calloutOptions })
     }
 
-    // TODO update when moving balances in redux from string to numbers
-    if (baseTokenBalance !== '0.0' && baseTokenAllowance === '0.0') {
-      let calloutOptions = this.callouts.fundsLocked(baseTokenSymbol)
+    if (baseTokenBalance === '0.0' && quoteTokenBalance === '0.0') {
+      return
+    }
+
+    if (baseTokenAllowance === '0.0' && quoteTokenAllowance === '0.0') {
+      let calloutOptions = this.callouts.tokensLocked(baseTokenSymbol, quoteTokenSymbol)
       this.setState({ calloutVisible: true, calloutOptions })
     }
 
-    if (quoteTokenBalance !== '0.0' && quoteTokenAllowance === '0.0') {
-      let calloutOptions = this.callouts.fundsLocked(quoteTokenSymbol)
+    // TODO update when moving balances in redux from string to numbers
+    if (baseTokenAllowance === '0.0') {
+      let calloutOptions = this.callouts.baseTokensLocked(baseTokenSymbol)
+      this.setState({ calloutVisible: true, calloutOptions })
+    }
+
+    if (quoteTokenAllowance === '0.0') {
+      let calloutOptions = this.callouts.quoteTokensLocked(quoteTokenSymbol)
       this.setState({ calloutVisible: true, calloutOptions })
     }
   }
