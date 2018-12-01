@@ -35,7 +35,9 @@ export default function convertTokensFormSelector(state: State) {
 }
 
 export const convertETH = (convertAmount: number): ThunkAction => {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('convert-eth');
+
     try {
       let signer = getSigner()
       let networkID = signer.networkID
@@ -90,7 +92,9 @@ export const redirectToTradingPage = (): ThunkAction => {
 
 
 export const approveWETH = (): ThunkAction => {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('approve-weth');
+
     try {
       let signer = getSigner()
       let networkID = signer.networkID

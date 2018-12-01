@@ -18,7 +18,9 @@ export default function createWalletModalSelector(state: State) {
 }
 
 export function createWallet(params: CreateWalletParams): ThunkAction {
-  return async dispatch => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('create-wallet');
+
     try {
       let { address, encryptedWallet, password, storeWallet, storePrivateKey } = params;
       dispatch(actionCreators.createWallet(address, encryptedWallet));

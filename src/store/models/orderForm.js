@@ -53,7 +53,9 @@ export const defaultFunction = (): ThunkAction => {
 }
 
 export const sendNewOrder = (side: string, amount: number, price: number): ThunkAction => {
-  return async (dispatch, getState, { socket }) => {
+  return async (dispatch, getState, { socket, mixpanel }) => {
+    mixpanel.track('send-new-order');
+
     try {
       let state = getState()
       let tokenPairDomain = getTokenPairsDomain(state)
