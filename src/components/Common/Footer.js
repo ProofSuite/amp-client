@@ -82,14 +82,14 @@ const Footer = () => (
               </a>
               </NormalListItem>
             <NormalListItem>
-              <a href="https://medium.com/proof-of-fintech" target="_blank">
+              <a href="https://facebook.com/proofsuite" target="_blank">
                 <FontAwesomeIcon icon={faFacebook} />
                 <Indent />
                 <LinkText>Facebook</LinkText>
               </a>
             </NormalListItem>
             <NormalListItem>
-              <a href="https://www.proofsuite.com/#togen" target="_blank">
+              <a href="https://medium.com/proof-of-fintech" target="_blank">
                 <FontAwesomeIcon icon={faMedium} />
                 <Indent />
                 <LinkText>Medium</LinkText>
