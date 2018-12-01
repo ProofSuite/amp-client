@@ -14,7 +14,7 @@ const Footer = () => (
         <LogosWrapper>
         <img src="amp_black.png" class="Profile-image" width="120" height="120" />
         <FooterText>The AMP trading platform settles trades directly on the blockchain.
-        Trading fees are distributed to the Proofsuite community.</FooterText>
+        Trading fees are distributed to the Proof Suite community.</FooterText>
         </LogosWrapper>
         <LinksWrapper className="content">
           <List>
@@ -22,7 +22,7 @@ const Footer = () => (
             <NormalListItem>
                 <LinkText>
                   <a href="https://www.proofsuite.com/#about" target="_blank">
-                    Proofsuite
+                    Proof Suite
                   </a>
                 </LinkText>
             </NormalListItem>

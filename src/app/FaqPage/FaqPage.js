@@ -110,7 +110,7 @@ class FaqPage extends React.PureComponent {
           question="What are PRFT tokens (Proof Tokens) ?"
           match={match}
         >
-          Proof Tokens have originally been sold during the Proofsuite ICO in November 2017.
+          Proof Tokens have originally been sold during the Proof Suite ICO in November 2017.
           1,217,000 tokens have been sold for a total value at the time of around ~3 million USD.
           PRFT Tokens are used to offer rewards with a staking mechanism.
           Although we describe some of the potential sources of revenues that will be sent to the reward pool, we plan to adapt our original vision.
@@ -214,10 +214,10 @@ class FaqPage extends React.PureComponent {
         </FaqItem>
         <Divider />
         <FaqItem
-          question="Where is Proofsuite based ?"
+          question="Where is Proof Suite based ?"
           match={match}
         >
-          Proofsuite is based in South Korea with remote workers all over the world and members of our business team constantly traveling to establish new relationships.
+          Proof Suite is based in South Korea with remote workers all over the world and members of our business team constantly traveling to establish new relationships.
         </FaqItem>
         <Divider />
         <FaqItem
