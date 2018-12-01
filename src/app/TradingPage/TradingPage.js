@@ -47,17 +47,17 @@ class TradingPage extends React.PureComponent<Props, State> {
     quoteTokensLocked: (quoteTokenSymbol: string) => ({ 
       title: `Unlock tokens to start trading`,
       intent: 'danger',
-      message: `To start trading, you need to unlock ${quoteTokenSymbol} tokens` 
+      message: `To start trading, unlock trading for ${quoteTokenSymbol} tokens on your wallet page.` 
     }),
     baseTokensLocked: (baseTokenSymbol: string) => ({
       title: `Unlock tokens to start trading`,
       intent: 'danger',
-      message: `To start trading, you need to unlock trading for ${baseTokenSymbol} tokens`
+      message: `To start trading, unlock trading for ${baseTokenSymbol} tokens on your wallet page.`
     }),
     tokensLocked: (baseTokenSymbol: string, quoteTokenSymbol: string) => ({
       title: `Unlock tokens to start trading`,
       intent: `danger`,
-      message: `To start trading, you need to unlock ${baseTokenSymbol} and ${quoteTokenSymbol}`
+      message: `To start trading a currency pair, unlock trading for both tokens (${baseTokenSymbol} and ${quoteTokenSymbol}) on your wallet page.`
     })
   }
 
@@ -86,8 +86,6 @@ class TradingPage extends React.PureComponent<Props, State> {
       quoteTokenAllowance,
       baseTokenSymbol,
       quoteTokenSymbol,
-      makeFee,
-      takeFee
      } = this.props
 
     if (!authenticated) {
@@ -101,18 +99,18 @@ class TradingPage extends React.PureComponent<Props, State> {
 
     if (baseTokenAllowance === '0.0' && quoteTokenAllowance === '0.0') {
       let calloutOptions = this.callouts.tokensLocked(baseTokenSymbol, quoteTokenSymbol)
-      this.setState({ calloutVisible: true, calloutOptions })
+      return this.setState({ calloutVisible: true, calloutOptions })
     }
 
     // TODO update when moving balances in redux from string to numbers
     if (baseTokenAllowance === '0.0') {
       let calloutOptions = this.callouts.baseTokensLocked(baseTokenSymbol)
-      this.setState({ calloutVisible: true, calloutOptions })
+      return this.setState({ calloutVisible: true, calloutOptions })
     }
 
     if (quoteTokenAllowance === '0.0') {
       let calloutOptions = this.callouts.quoteTokensLocked(quoteTokenSymbol)
-      this.setState({ calloutVisible: true, calloutOptions })
+      return this.setState({ calloutVisible: true, calloutOptions })
     }
   }
 

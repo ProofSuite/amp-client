@@ -242,6 +242,8 @@ class OrderForm extends React.PureComponent<Props, State> {
       toggleCollapse,
     } = this
 
+
+    //TODO refactor!
     let maxAmount
     let formattedMakeFee = utils.formatUnits(makeFee, quoteTokenDecimals)
     let maxQuoteTokenAmount = quoteTokenBalance - Number(formattedMakeFee)
