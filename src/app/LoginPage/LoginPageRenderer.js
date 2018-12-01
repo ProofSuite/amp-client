@@ -75,13 +75,13 @@ const LoginMethodsView = (props: Props) => {
               <FormattedMessage {...messages.noPlugins} />
             </Reminder>
             <Reminder>
-              <FormattedMessage {...messages.noPhoneCalls} />
+              <FormattedMessage {...messages.noDisclosure} />
             </Reminder>
             <Reminder>
               <FormattedMessage {...messages.noOfficialStaffs} />
             </Reminder>
             <Reminder>
-              <FormattedMessage {...messages.noDisclosure} />
+              <FormattedMessage {...messages.exchangeLaws} />
             </Reminder>
           </AnnouncementMessages>
         </Callout>
@@ -92,20 +92,20 @@ const LoginMethodsView = (props: Props) => {
         </LoginMethodsHeading>
         <LoginCards>
           <LoginCard onClick={loginWithMetamask}>
-            <MetamaskIcon size={100} />
+            <MetamaskIcon size={75} />
             <Heading>
               <FormattedMessage {...messages.metamask} />
             </Heading>
             <MetamaskStatusTag>{metamaskStatuses[metamaskStatus]}</MetamaskStatusTag>
           </LoginCard>
           <LoginCard onClick={showWalletLoginForm}>
-            <KeyIcon size={100} />
+            <KeyIcon size={75} />
             <Heading>
               <FormattedMessage {...messages.wallet} />
             </Heading>
           </LoginCard>
           <LoginCard onClick={showCreateWallet}>
-            <WalletIcon size={100} color={Colors.WHITE} />
+            <WalletIcon size={75} color={Colors.WHITE} />
             <Heading>
               <FormattedMessage {...messages.createWallet} />
             </Heading>
@@ -167,8 +167,8 @@ const LoginCard = styled(Card).attrs({
   interactive: true,
 })`
   margin: 10px;
-  height: 13em;
-  width: 13em;
+  height: 11.5em;
+  width: 11.5em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -195,18 +195,18 @@ const messages = defineMessages({
     id: 'loginPage.thisAppIsInBeta',
     defaultMessage: "This app is in beta. Please expect a certain amount of bugs for upcoming weeks",
   },
-  noPhoneCalls: {
-    id: 'loginPage.noPhoneCalls',
-    defaultMessage: 'Never make any phone calls to anyone that claims to be a Proofsuite representative',
+  exchangeLaws: {
+    id: 'loginPage.exchangeLaws',
+    defaultMessage: ' To adhere to international securities and exchange laws, AMP Marketplace prohibits use of this platform by US and South Korean residents. By using this platform, you are confirming that you are not excluded from use by this criteria.',
   },
   noOfficialStaffs: {
     id: 'loginPage.noOfficialStaffs',
-    defaultMessage: 'Never make transactions or send funds to anyone who claims to be a member of Proofsuite support',
+    defaultMessage: 'Never make transactions or send funds to anyone who claims to be a member of Proof Suite support',
   },
   noDisclosure: {
     id: 'loginPage.noDisclosure',
     defaultMessage:
-      'Never disclose your password, private keys or other authentication elements to anyone, including Proofsuite support',
+      'Never disclose your password, private keys or other authentication elements to anyone, including Proof Suite support',
   },
   loginMethods: {
     id: 'loginPage.loginMethodsHeading',

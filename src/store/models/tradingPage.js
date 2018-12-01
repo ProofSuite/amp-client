@@ -11,7 +11,7 @@ export default function tradingPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let pairDomain = getTokenPairsDomain(state)
   let { isInitiated, isConnected } = getConnectionDomain(state);
-  let { baseTokenSymbol, quoteTokenSymbol } = pairDomain.getCurrentPair()
+  let { makeFee, takeFee, baseTokenSymbol, quoteTokenSymbol } = pairDomain.getCurrentPair()
 
   let authenticated = accountDomain.authenticated()
   let baseTokenBalance = accountBalancesDomain.tokenBalance(baseTokenSymbol)
@@ -20,6 +20,8 @@ export default function tradingPageSelector(state: State) {
   let quoteTokenAllowance = accountBalancesDomain.tokenAllowance(quoteTokenSymbol)
 
   return {
+    makeFee,
+    takeFee,
     authenticated,
     baseTokenAllowance,
     baseTokenBalance,
