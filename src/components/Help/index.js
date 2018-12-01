@@ -18,7 +18,7 @@ function Help(props) {
     >
       <Tooltip
         className={Classes.TOOLTIP_INDICATOR}
-        content={label}
+        // content={label}
         position={position}
         disabled={disabled}
       >
