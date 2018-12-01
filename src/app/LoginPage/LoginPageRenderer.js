@@ -72,9 +72,6 @@ const LoginMethodsView = (props: Props) => {
               values={{ link: <a href="https://amp.exchange.com">https://amp.exchange.com</a> }}
             />
             <Reminder>
-              <FormattedMessage {...messages.noPlugins} />
-            </Reminder>
-            <Reminder>
               <FormattedMessage {...messages.noDisclosure} />
             </Reminder>
             <Reminder>
@@ -123,6 +120,7 @@ const Wrapper = styled.div`
   padding-left: 2em;
   padding-right: 2em;
   padding-top: 2em;
+  padding-bottom: 6em;
 `;
 
 const WidgetWrapper = styled.div`
@@ -148,7 +146,7 @@ const LoginMethods = styled.div`
 const LoginMethodsHeading = styled.h3`
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 1em;
 `;
 
 const LoginCards = styled.div`
@@ -185,15 +183,15 @@ const MetamaskStatusTag = styled(Tag).attrs({
 const messages = defineMessages({
   announcement: {
     id: 'loginPage.announcement',
-    defaultMessage: 'Make sure you are visiting {link} to prevent any phishing attacks',
+    defaultMessage: 'Make sure you are visiting {link} to prevent any phishing attacks.',
   },
   noPlugins: {
     id: 'loginPage.noPlugins',
-    defaultMessage: "Never trade more value than you are willing to lose",
+    defaultMessage: "Never trade more value than you are willing to lose.",
   },
   thisAppIsInBeta: {
     id: 'loginPage.thisAppIsInBeta',
-    defaultMessage: "This app is in beta. Please expect a certain amount of bugs for upcoming weeks",
+    defaultMessage: "This app is in beta. Please expect a certain amount of bugs for upcoming weeks.",
   },
   exchangeLaws: {
     id: 'loginPage.exchangeLaws',
@@ -201,16 +199,16 @@ const messages = defineMessages({
   },
   noOfficialStaffs: {
     id: 'loginPage.noOfficialStaffs',
-    defaultMessage: 'Never make transactions or send funds to anyone who claims to be a member of Proof Suite support',
+    defaultMessage: 'Never make transactions or send funds to anyone who claims to be a member of Proof Suite support.',
   },
   noDisclosure: {
     id: 'loginPage.noDisclosure',
     defaultMessage:
-      'Never disclose your password, private keys or other authentication elements to anyone, including Proof Suite support',
+      'Never disclose your password, private keys or other authentication elements to anyone, including Proof Suite support.',
   },
   loginMethods: {
     id: 'loginPage.loginMethodsHeading',
-    defaultMessage: 'Select a login method',
+    defaultMessage: 'Choose a login method',
   },
   connect: {
     id: 'loginPage.connect',
