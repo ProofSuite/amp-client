@@ -1,12 +1,10 @@
 import React from 'react'
 import { defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Callout, Card, Intent, Spinner, Tag } from '@blueprintjs/core'
+import { Callout, Card, Intent, Spinner, Tag, Button } from '@blueprintjs/core'
 import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
-import MetamaskIcon from '../../components/Icons/Metamask'
-import { KeyIcon, WalletIcon } from '../../components/Icons'
-import { Centered, Divider, LargeText, Colors } from '../../components/Common'
+import { Centered, Divider, LargeText, LinkText, Colors, Box, Flex, Indent } from '../../components/Common'
 import type { CreateWalletParams } from '../../types/createWallet'
 
 type Props = {
@@ -87,33 +85,41 @@ const LoginMethodsView = (props: Props) => {
         <LoginMethodsHeading>
           <FormattedMessage {...messages.loginMethods} />
         </LoginMethodsHeading>
-        <LoginCards>
-          <LoginCard onClick={loginWithMetamask}>
-            <MetamaskIcon size={75} />
-            <Heading>
-              <FormattedMessage {...messages.metamask} />
-            </Heading>
-            <MetamaskStatusTag>{metamaskStatuses[metamaskStatus]}</MetamaskStatusTag>
-          </LoginCard>
-          <LoginCard onClick={showWalletLoginForm}>
-            <KeyIcon size={75} />
-            <Heading>
-              <FormattedMessage {...messages.wallet} />
-            </Heading>
-          </LoginCard>
-          <LoginCard onClick={showCreateWallet}>
-            <WalletIcon size={75} color={Colors.WHITE} />
-            <Heading>
-              <FormattedMessage {...messages.createWallet} />
-            </Heading>
-          </LoginCard>
-        </LoginCards>
+            <LoginCards>
+                <Flex flexDirection="column" width="30%">
+                  <Flex p={2} flexDirection="column">
+                    <Button onClick={loginWithMetamask} disabled={metamaskStatus === "undefined"}large intent="primary" fill>
+                      {
+                        metamaskStatus === "undefined" 
+                        ? <FormattedMessage {...messages.metamaskNotFound} />
+                        : <FormattedMessage {...messages.metamask} />
+                      }
+                    </Button>
+                    <Flex p={1} justifyContent="right">
+                      <Indent />
+                      {metamaskStatus === "undefined" && <a href="https://metamask.io/">→ Get Metamask</a>}
+                    </Flex>
+                  </Flex>
+                  <Box p={2}>
+                    <Button onClick={showWalletLoginForm} large intent="primary" fill>
+                      <FormattedMessage {...messages.wallet} />
+                    </Button>
+                    <Flex p={1} justifyContent="right">
+                      <LinkText onClick={showCreateWallet}>→ Create a new wallet</LinkText>
+                    </Flex>
+                  </Box>
+                </Flex>
+            </LoginCards>
       </LoginMethods>
     </Wrapper>
   )
 }
 
 export default LoginPageRenderer
+
+
+// box-shadow: ${"inset 0 0 2px" + Colors.BLACK + ", 0 0 2px " + Colors.BLUE5 + "!important;"};
+
 
 const Wrapper = styled.div`
   display: grid;
@@ -222,13 +228,17 @@ const messages = defineMessages({
     id: 'loginPage.metamask',
     defaultMessage: 'Metamask',
   },
+  metamaskNotFound: {
+    id: 'loginPage.metamask',
+    defaultMessage: 'Metamask not detected'
+  },
   wallet: {
     id: 'loginPage.wallet',
     defaultMessage: 'Wallet',
   },
   createWallet: {
     id: 'loginPage.createWallet',
-    defaultMessage: 'Create Wallet',
+    defaultMessage: 'Create a new wallet',
   },
 });
 
