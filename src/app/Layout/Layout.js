@@ -4,8 +4,8 @@ import React from 'react'
 import Notifier from '../../components/Notifier'
 import ConnectionStatus from '../../components/ConnectionStatus'
 import { IntlProvider } from 'react-intl'
-import { Link, NavLink } from 'react-router-dom'
-import { Footer, Indent, Colors } from '../../components/Common'
+import { NavLink } from 'react-router-dom'
+import { Footer, Indent } from '../../components/Common'
 
 import styled from 'styled-components'
 import {
@@ -32,12 +32,16 @@ export type Props = {
   locale: string,
   messages: string,
   currentBlock?: string,
+  createProvider: () => {}
 }
 
-export type State = {
-}
+export type State = {}
 
 class Layout extends React.PureComponent<Props, State> {
+
+  componentDidMount() {
+    this.props.createProvider()
+  }
 
   render() {
     const {
@@ -70,7 +74,6 @@ class Layout extends React.PureComponent<Props, State> {
                     <img src="amp_black.svg" class="Profile-image" height={25} width={25} />
                     <Indent />
                     <Tag minimal intent="success">BETA</Tag>
-                    {/* <NavbarHeaderLink to="/">PROOF</NavbarHeaderLink> */}
                   </NavbarHeaderBox>
                 </NavbarHeading>
                 {authenticated && (
@@ -125,11 +128,6 @@ const NavbarHeaderBox = styled.div`
   flex-direction: row;
   justify-content: center;
 `
-
-const NavbarHeaderLink = styled(Link).attrs({
-  className: 'bp3-button bp3-minimal bp3-intent-primary',
-  role: 'button'
-})``
 
 const NavbarLink = styled(NavLink).attrs({
   activeClassName: 'bp3-active bp3-intent-primary',

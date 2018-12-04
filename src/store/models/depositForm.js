@@ -40,7 +40,7 @@ export default function depositFormSelector(state: State) {
 }
 
 export function queryBalances(): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { provider }) => {
     try {
       const state = getState();
       const accountAddress = depositFormSelector(state).accountAddress();
@@ -48,9 +48,8 @@ export function queryBalances(): ThunkAction {
       tokens = tokens.filter((token: Token) => token.symbol !== 'ETH');
 
       if (!accountAddress) throw new Error('Account address is not set');
-
-      const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens);
-      const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress);
+      const tokenBalances = await provider.queryTokenBalances(accountAddress, tokens);
+      const etherBalance = await provider.queryEtherBalance(accountAddress);
 
       const balances = [etherBalance].concat(tokenBalances);
       dispatch(actionCreators.updateBalances(balances));
@@ -61,7 +60,7 @@ export function queryBalances(): ThunkAction {
 }
 
 export function subscribeBalance(token: Token): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { provider }) => {
     try {
       let unsubscribe;
       const { symbol } = token;
@@ -82,8 +81,8 @@ export function subscribeBalance(token: Token): ThunkAction {
       dispatch(actionCreators.subscribeBalance(symbol));
 
       token.address === '0x0'
-        ? (unsubscribe = await accountBalancesService.subscribeEtherBalance(accountAddress, updateBalanceHandler))
-        : (unsubscribe = await accountBalancesService.subscribeTokenBalance(
+        ? (unsubscribe = await provider.subscribeEtherBalance(accountAddress, updateBalanceHandler))
+        : (unsubscribe = await provider.subscribeTokenBalance(
             accountAddress,
             token,
             updateBalanceHandler
@@ -96,8 +95,8 @@ export function subscribeBalance(token: Token): ThunkAction {
         //Then we resubscribe the update balance listener.
         const updateBalanceHandler = balance => dispatch(actionCreators.updateBalance(symbol, balance))
         token.address === '0x0'
-        ? (unsubscribe = await accountBalancesService.subscribeEtherBalance(accountAddress, updateBalanceHandler))
-        : (unsubscribe = await accountBalancesService.subscribeTokenBalance(
+        ? (unsubscribe = await provider.subscribeEtherBalance(accountAddress, updateBalanceHandler))
+        : (unsubscribe = await provider.subscribeTokenBalance(
             accountAddress,
             token,
             updateBalanceHandler
@@ -130,7 +129,6 @@ export const confirmEtherDeposit = (
 
           // let allowTxParams = {};
           let allowTxPromise = weth.approve(EXCHANGE_ADDRESS[network], -1, {});
-
           let [convertTx, allowTx] = await Promise.all([convertTxPromise, allowTxPromise]);
 
           dispatch(depositFormActionCreators.sendConvertTx(convertTx.hash));
