@@ -80,8 +80,6 @@ export const createMetamaskSigner = async () => {
 
 export const createDefaultWalletSigner = async (wallet: Object, networkID: ?number) => {
   let provider
-  console.log(DEFAULT_NETWORK_ID)
-
   networkID = networkID || DEFAULT_NETWORK_ID
 
   if (networkID === '8888') {

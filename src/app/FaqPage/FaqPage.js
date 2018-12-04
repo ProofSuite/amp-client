@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Divider } from "@blueprintjs/core";
+import { Box, DividerBox } from "../../components/Common"
 import FaqItem from './FaqItem';
 
 class FaqPage extends React.PureComponent {
@@ -9,251 +10,238 @@ class FaqPage extends React.PureComponent {
 
     return (
       <Container>
-        <FaqItem
-          question="What is WETH ? Why should I convert my Ether to WETH for using the platform ?"
-          match={match}
-        >
-          Ether or ETH is the native currency of the Ethereum blockchain.
-          The native ETH currency does not however implement the very convenient ERC20 token standard.
-          WETH brings the ERC20 token standard to ether.
-          When you are converting ETH to WETH, you receive 1 WETH token for each Ether you've converted.
-          Using WETH allows decentralized applications such as the AMP decentralized exchanges to offer better functionality and a better user experience.
-          You can convert your WETH back to ether at any time.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="What are the main difference between AMP and the 0x protocol ?"
-          match={match}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Pellentesque elementum dignissim ultricies.
-          Fusce rhoncus ipsum tempor eros aliquam consequat.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Vivamus elementum massa eget nulla aliquet sagittis.
-          Proin odio tortor, vulputate ut odio in, ultrices ultricies augue.
-          Cras ornare ultrices lorem malesuada iaculis.
-          Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="What are the main difference between AMP and IDEX ?"
-          match={match}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Pellentesque elementum dignissim ultricies.
-          Fusce rhoncus ipsum tempor eros aliquam consequat.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Vivamus elementum massa eget nulla aliquet sagittis.
-          Proin odio tortor, vulputate ut odio in, ultrices ultricies augue.
-          Cras ornare ultrices lorem malesuada iaculis.
-          Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="The AMP Platform and the AMP Protocol is free to use. Then what is the purpose of the Proof Token ?"
-          match={match}
-        >
-          Nulla facilisi.
-          Maecenas sodales nec purus eget posuere.
-          Sed sapien quam, pretium a risus in, porttitor dapibus erat.
-          Sed sit amet fringilla ipsum, eget iaculis augue.
-          Integer sollicitudin tortor quis ultricies aliquam.
-          Suspendisse fringilla nunc in tellus cursus, at placerat tellus scelerisque.
-          Sed tempus elit a sollicitudin rhoncus.
-          Nulla facilisi. Morbi nec dolor dolor.
-          Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          Cras et aliquet lectus. Pellentesque sit amet eros nisi.
-          Quisque ac sapien in sapien congue accumsan.
-          Nullam in posuere ante.
-          Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-          Proin lacinia leo a nibh fringilla pharetra.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="How is AMP different from a centralized exchange like Coinbase or Bitfinex ?"
-          match={match}
-        >
-          Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          Proin venenatis lectus dui, vel ultrices ante bibendum hendrerit.
-          Aenean egestas feugiat dui id hendrerit.
-          Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          Curabitur in tellus laoreet, eleifend nunc id, viverra leo.
-          Proin vulputate non dolor vel vulputate.
-          Curabitur pretium lobortis felis, sit amet finibus lorem suscipit ut.
-          Sed non mollis risus.
-          Duis sagittis, mi in euismod tincidunt, nunc mauris vestibulum urna, at euismod est elit quis erat.
-          Phasellus accumsan vitae neque eu placerat.
-          In elementum arcu nec tellus imperdiet, eget maximus nulla sodales.
-          Curabitur eu sapien eget nisl sodales fermentum.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="What type of digital assets and cryptocurrencies are supported by AMP ?"
-          match={match}
-        >
-          Phasellus pulvinar ex id commodo imperdiet.
-          Praesent odio nibh, sollicitudin sit amet faucibus id, placerat at metus.
-          Donec vitae eros vitae tortor hendrerit finibus.
-          Interdum et malesuada fames ac ante ipsum primis in faucibus.
-          Quisque vitae purus dolor.
-          uis suscipit ac nulla et finibus.
-          Phasellus ac sem sed dui dictum gravida.
-          Phasellus eleifend vestibulum facilisis.
-          Integer pharetra nec enim vitae mattis.
-          Duis auctor, lectus quis condimentum bibendum, nunc dolor aliquam massa, id bibendum orci velit quis magna.
-          Ut volutpat nulla nunc, sed interdum magna condimentum non.
-          Sed urna metus, scelerisque vitae consectetur a, feugiat quis magna.
-          Donec dignissim ornare nisl, eget tempor risus malesuada quis.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="What are PRFT tokens (Proof Tokens) ?"
-          match={match}
-        >
-          Proof Tokens have originally been sold during the Proof Suite ICO in November 2017.
-          1,217,000 tokens have been sold for a total value at the time of around ~3 million USD.
-          PRFT Tokens are used to offer rewards with a staking mechanism.
-          Although we describe some of the potential sources of revenues that will be sent to the reward pool, we plan to adapt our original vision.
-          The currently explored options include rewards from transactions fees on the AMP Decentralized Exchange, % of transaction fees on the AMP Token Platform smart-contracts as well and % of transaction fees on the Cryptodollar stablecoin.
-          All of the previously mentioned options are not final yet as we constantly looking to evolve and improve our battle plan.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Do I need PRFT tokens to pay network fees ?"
-          match={match}
-        >
-          No, contrary to a some other decentralized exchange protocols, you do not need PRFT tokens or any special token to trade on the AMP-DEX.
-          The AMP-DEX transaction fees are paid in WETH (Wrapped-Ether, mentioned above) for convenience and better integration with the rest of our protocol.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="How does the AMP-DEX work ?"
-          match={match}
-        >
-          While the AMP-DEX is semi-decentralized, we have to try to implement a user experience that is very close to the user experience of centralized exchanges.
-          The main differences is that we do not hold your funds.
-          Instead you need to give our decentralized exchange contract allowance.
-          Each trade needs to be approved via a cryptographic signature without which trades can not be settled.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Is the AMP-DEX fully decentralized ?"
-          match={match}
-        >
-          While the ultimate vision is to make the AMP-DEX completely decentralized, the current state of Ethereum scalabitiy does not allow for building such an exchange while keeping a good user experience. Therefore, we use an off-chain orderbook system and matching-engine system that allows for immediate
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="How do i get Proof Tokens ?"
-          match={match}
-        >
-          Proof tokens are currently not listed on any decentralized exchange.
-          You can however get Proof Tokens on Etherdelta or IDEX until Proof tokens get listen on other exchanges.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="How do I participate in the token sale ?"
-          match={match}
-        >
-          The token sale is currently closed.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Is PRFT an ERC20 Token ?"
-          match={match}
-        >
-          Yes, PRFT is an ERC20 Token.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Explain how the PRFT token works"
-          match={match}
-        >
-          Phasellus pulvinar ex id commodo imperdiet.
-          Praesent odio nibh, sollicitudin sit amet faucibus id, placerat at metus.
-          Donec vitae eros vitae tortor hendrerit finibus.
-          Interdum et malesuada fames ac ante ipsum primis in faucibus.
-          Quisque vitae purus dolor.
-          Duis suscipit ac nulla et finibus.
-          Phasellus ac sem sed dui dictum gravida.
-          Phasellus eleifend vestibulum facilisis.
-          Integer pharetra nec enim vitae mattis.
-          Duis auctor, lectus quis condimentum bibendum, nunc dolor aliquam massa, id bibendum orci velit quis magna.
-          Ut volutpat nulla nunc, sed interdum magna condimentum non.
-          Sed urna metus, scelerisque vitae consectetur a, feugiat quis magna.
-          Donec dignissim ornare nisl, eget tempor risus malesuada quis.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Can I mine PRFT tokens ?"
-          match={match}
-        >
-          No, PRFT tokens have a fixed supply and cannot be mined.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="When was the PRFT token launch ? Was there a pre-sale ?"
-          match={match}
-        >
-          The Proof token sale lasted from November 3 to December 3.
-          The pre-sale occured earlier in september.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Where can i find a development roadmap ?"
-          match={match}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          ellentesque elementum dignissim ultricies.
-          Fusce rhoncus ipsum tempor eros aliquam consequat.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Vivamus elementum massa eget nulla aliquet sagittis.
-          Proin odio tortor, vulputate ut odio in, ultrices ultricies augue.
-          Cras ornare ultrices lorem malesuada iaculis.
-          Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Where is Proof Suite based ?"
-          match={match}
-        >
-          Proof Suite is based in South Korea with remote workers all over the world and members of our business team constantly traveling to establish new relationships.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="How can I get involved ?"
-          match={match}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Pellentesque elementum dignissim ultricies.
-          Fusce rhoncus ipsum tempor eros aliquam consequat.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Vivamus elementum massa eget nulla aliquet sagittis.
-          Proin odio tortor, vulputate ut odio in, ultrices ultricies augue.
-          Cras ornare ultrices lorem malesuada iaculis.
-          Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
-        </FaqItem>
-        <Divider />
-        <FaqItem
-          question="Why the name AMP ? What is the meaning of AMP ?"
-          match={match}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Pellentesque elementum dignissim ultricies.
-          Fusce rhoncus ipsum tempor eros aliquam consequat.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Vivamus elementum massa eget nulla aliquet sagittis.
-          Proin odio tortor, vulputate ut odio in, ultrices ultricies augue.
-          Cras ornare ultrices lorem malesuada iaculis.
-          Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
-        </FaqItem>
+        <h1>AMP Knowledge Base</h1>
+        <FaqGrid>
+          <FirstColumn>
+          <FaqItem
+            question="What is AMP ?"
+            match={match}
+          >
+            AMP is a community-owned marketplace and decentralized exchange built on the Ethereum blockchain.
+            AMP trades are settled directly between the two exchanging parties without any intermediates. We do not 
+            hold any funds and have no ability to do so. With AMP, you can trade any ERC20 Ethereum token whether they
+            represent native Ethereum tokens or are tethered tokens representing other cryptocurrencies or fiat currencies.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="Are there fees ?"
+            match={match}
+          >
+            Contrary to most exchanges that take a percentage of each transaction value, AMP trades only cost a fixed amount
+            that include the gas fees. The trading is denominated in the quote currency of the traded pair. For example, when trading
+            the ETH/USDC pair, each trade will cost 0.5 USDC when completely matched. The current fees for each quote token at the time
+            of this writing are 0.5 USDC (for USDC pairs), 0.5 DAI (for DAI pairs) and 0.004 WETH (for WETH pairs).
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="How is AMP different from an exchange like Binance or Coinbase ?"
+            match={match}
+          >
+            Unlike custodial and centralized exchanges, AMP does not hold any funds nor secret keys. You can deposit and withdraw
+            your funds immediately and your account can not be compromised by a disgruntled employee or a database hack.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="Will you be adding more features to AMP?"
+            match={match}
+          >
+            Yes! Here are some of the things we are currently working on:
+            <ul>
+              <li>- Improved usability and bug fixes</li>
+              <li>- A mobile version of the site</li>
+              <li>- More tokens pairs including stablecoins, tethered assets and financial instruments (shorts, options)</li>
+              <li>- The ability for anyone to list a token and start trading immediately</li>
+              <li>- Enhanced charting</li>
+            </ul>
+            Any features you think we should add ? Let us know! support@proofsuite.com
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="How do I setup an AMP account?"
+            match={match}
+          >
+            Getting started with trading on AMP is easy! If you do not currently have an Ethereum wallet, you 
+            can go to amp.exchange and click "Create new wallet" among the suggested options on the login page and 
+            we'll walk you through the steps required to create your Ethereum address. 
+            <br /><br />
+            The current preferred and most secure way to use AMP is to connect with your Metamask account. Click
+            the link that will be displayed on amp.exchange/login to install the Metamask browser extension and start trading.
+            <br />
+            Now that you are connected, you will be redirected to your wallet page. Here is a quick rundown of the basic actions needed
+            to start trading:
+            <br />
+            <ul>
+              <li>- If you do not own any tokens or Ether, you have to make a deposit before any further step.</li>
+              <li>- If you have Ether in your account and want to start trading, you will need to tokenize your ETH into WETH (see next question)</li>
+              <li>- To start trading a token pair, you need to unlock both tokens on the wallet page. Click the switch on the corresponding token row on the wallet page</li>
+            </ul>
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="Do i need a pre-existing ethereum wallet to use AMP ?"
+            match={match}
+          >
+            No. You can click the "Create new wallet" option on the login page. However we recommend downloading Metamask for the
+            most secure trading experience.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="What is WETH and why do i need to use it ?"
+            match={match}
+          >
+            Ether or ETH is the native currency of the Ethereum blockchain.
+            The native ETH currency does not however implement the very convenient ERC20 token standard.
+            WETH brings the ERC20 token standard to ether. When you are converting ETH to WETH, you receive 1 WETH token for each Ether you've converted.
+            Using WETH allows decentralized applications such as the AMP decentralized exchanges to offer better functionality and a better user experience.
+            You can convert your WETH back to ether at any time. You can read more about WETH here.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="How can i cancel an order ?"
+            match={match}
+          >
+            If your order has not been matched yet, you can cancel your order by clicking the cancel button on the Orders table on the trading page.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="Do I need PRFT tokens to pay network fees ?"
+            match={match}
+          >
+            No, contrary to a some other decentralized exchange protocols, you do not need PRFT tokens or any special token to trade on AMP.
+          </FaqItem>
+          <DividerBox p={2} />
+          </FirstColumn>
+          <SecondColumn>
+          <DividerBox p={2} />
+          <FaqItem
+            question="How do i contact Proofsuite ?"
+            match={match}
+          >
+            Write us anytime: support@proofsuite.com
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="Is AMP fully decentralized ?"
+            match={match}
+          >
+            AMP is a hybrid decentralized exchange. We maintain the orderbook and match orders with each other. Trades are then settled on the Ethereum chain.
+            This model allows up to provide a good user experience along with the benefits of centralized exchanges.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="Can you explain how the PRFT token works ?"
+            match={match}
+          >
+            Owner of Proof tokens are rewarded with a portion of the trading fees (and in the future, other Proofsuite decentralized products) proportional to 
+            the amount of Proof tokens they own. To reclaim your trading fees, you need to make a transaction to the rewards contract which will be published 
+            soon. Proofsuite currently owns 90% of the Proof tokens and thus receives a large part of the trading fees that is 
+            mostly used for paying the Exchange gas fees. 
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="What is the 'Unlocked' column section on the wallet page? Why do i need to unlock tokens ?"
+            match={match}
+          >
+            Unlocking tokens allows the Proof smart contracts to make full use of the Ethereum blockchain capacities and provide a better user experience by for example letting your 
+            trade from your wallet. In order to trade a token pair, you must unlock both tokens for that token pair. For example, if you are trading the MKR/USDC pair you will need to unlock
+            trading for both the MKR token and the USDC token.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="Do i have to pay gas fees to cancel an order like on other decentralized exchanges ?"
+            match={match}
+          >
+            No. Contrary to most decentralized exchanges, making and canceling orders on the Proof decentralized exchange is free. You only pay the trade fee
+            if the order is successfully settled on the Ethereum chain.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="I sent funds to the wrong address."
+            match={match}
+          >
+            Unfortunately, blockchain transactions are irreversible, so if you accidentally send funds to the wrong address, 
+            there's nothing we, or anyone else, can do to help you.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="How long will it take for my order to fill ?"
+            match={match}
+          >
+            The AMP matching-engine matches orders fast. When your order is matched, the corresponding trade is sent to a queue that will settle the trade
+            on the Ethereum chain as soon as possible. You will thus receive several messages: 
+            <ul>
+              <li>1) An order matched message: Your order was successfully filled or partially filled and the corresponding transaction is waiting to be sent to the Ethereum chain.</li> <br/>
+              <li>2) An order pending message: The transaction has been sent to the Ethereum chain and is currently pending. You can follow the transaction with the given Etherscan link.</li><br/>
+              <li>3) An order success message: Your order was confirmed and settled on the Ethereum chain and you have receive your tokens</li><br/>
+            </ul>
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="How does AMP secure my funds ?"
+            match={match}
+          >
+            Here are some facts about AMP security: 
+            <ul>
+              <li> - We do not hold any of your Ether or tokens. They are all stored in your wallet on the Ethereum network and you can access them at anytime through any Ethereum client (think GUI) such as MyEtherWallet or Metamask. </li>
+              <li> - The most secure way to trade on AMP is to use the Metamask wallet </li>
+              <li> - If you choose log in without metamask, your secret key will be stored in the browser session storage and is deleted immediately at the end of the session (or also upon page refresh) </li>
+              <li> - We do not have access to your private key. If you choose to do so, the only thing that will be stored after you leave the AMP website is your encrypted 
+              Ethereum wallet if you choose to log in with your own wallet file, create your own wallet. You can delete the encrypted wallet from the browser storage at 
+              anytime by deleting the corresponding address on the settings page. </li>
+              <li> - All AMP source code can be read at https://github.com/Proofsuite </li>
+            </ul>
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="I forgot which address I used to login on AMP"
+            match={match}
+          >
+            In case your wallet was stored in the browser storage, you can access it by using the "Saved wallet" login method after clicking "Wallet" on the login page.
+            Otherwise, unfortunately, there's nothing we can do to help you.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="What is a limit order ?"
+            match={match}
+          >
+            A limit order is an order placed to sell or buy a certain amount of tokens at a certain price or better. A limit order is not a market order, and thus may not 
+            be executed if the price you've set cannot be met. The order will stay in the orderbook until it is completely filled or canceled.
+          </FaqItem>
+          <DividerBox p={2} />
+          <FaqItem
+            question="How can I get involved ?"
+            match={match}
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Pellentesque elementum dignissim ultricies.
+            Fusce rhoncus ipsum tempor eros aliquam consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Vivamus elementum massa eget nulla aliquet sagittis.
+            Proin odio tortor, vulputate ut odio in, ultrices ultricies augue.
+            Cras ornare ultrices lorem malesuada iaculis.
+            Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
+          </FaqItem>
+          </SecondColumn>
+        </FaqGrid>
       </Container>
     );
   }
 }
 
 const Container = styled.div`
-  padding: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+`
+
+const FaqGrid = styled.div`
+  display: grid;
+  grid-gap: 2em;
+  grid-template-columns: 1fr 1fr;
 `;
+
+const FirstColumn = styled.div``
+
+const SecondColumn = styled.div``
 
 export default FaqPage;

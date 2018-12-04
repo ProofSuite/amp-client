@@ -118,14 +118,14 @@ const ConfirmFormRenderer = (props: Props) => {
 
   const notificationBoxTitles = {
     allow: {
-      reverted: 'Allow Trading Transaction Failed',
-      sent: 'Allowing Trading ...',
-      confirmed: 'Allow Trading Transaction Successful',
+      reverted: 'Transaction Failed. Could not unlock enable WETH trading',
+      sent: 'Unlocking WETH trading ...',
+      confirmed: 'WETH trading unlocked successfully',
     },
     convert: {
-      reverted: 'Convert Ether Transaction Failed',
-      sent: 'Converting Ether  ...',
-      confirmed: 'Convert Ether Transaction Successful',
+      reverted: 'Transaction Failed. Could not convert Ether',
+      sent: 'Converting Ether ...',
+      confirmed: 'Ether converted successfully',
     },
   };
 
@@ -244,7 +244,7 @@ const messages = {
     title: `Convert back to Ether`,
     callout: `To be able to trade on the AMP platform, you will need to convert you Ether (ETH) to tokenized ether (WETH). ETH and WETH can be converted at anytime through a smart-contract and 1 ETH = 1 WETH consistently`,
     label1: `Choose the fraction of WETH (tokenized Ether) you want to convert to ETH`,
-    info1: `WETH is reequired for trading. You can convert between WETH (tokenized ether) and ETH at any time. Read more about WETH here`,
+    info1: `WETH is required for trading. You can convert between WETH (tokenized ether) and ETH at any time. Read more about WETH here`,
     info2: 'Required for trading',
   },
 };

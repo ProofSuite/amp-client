@@ -4,6 +4,7 @@ import { Icon, Tooltip, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@b
 import {
   Box,
   Colors,
+  SmallText,
   Centered,
   Chevron,
   OverlaySpinner,
@@ -11,7 +12,8 @@ import {
   CryptoIcon,
   ColumnEnd,
   RowStart,
-  ColumnStart
+  ColumnStart,
+  SmallTextDiv
 } from '../Common'
 import styled from 'styled-components'
 import { ResizableBox } from 'react-resizable'
@@ -213,20 +215,20 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
   return (
     <li key={pair} className="row">
       <CryptoIcon size={25} name={base} />
-      <span className="base" onClick={() => changeSelectedToken(token)}>
+      <SmallText className="base" onClick={() => changeSelectedToken(token)}>
         {isFavoriteTokensList ? pair : base}
-      </span>
-      <span className="lastPrice" onClick={() => changeSelectedToken(token)}>
+      </SmallText>
+      <SmallText className="lastPrice" onClick={() => changeSelectedToken(token)}>
         {lastPrice ? lastPrice : 'N.A'}
-      </span>
+      </SmallText>
       <Change24H change={change} onClick={() => changeSelectedToken(token)}>
         {change ? `${change}%` : 'N.A'}
       </Change24H>
-      <span className="star">
+      <SmallText className="star">
         <Tooltip hoverOpenDelay={500} content={favorited ? ' Unfavorite' : 'Favorite'}>
           <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
         </Tooltip>
-      </span>
+      </SmallText>
     </li>
   )
 }
@@ -242,30 +244,30 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
   return (
     <ListHeader>
       <li className="heading">
-        <span className="base" onClick={onChangeFilterName}>
+        <SmallText className="base" onClick={onChangeFilterName}>
           {isFavoriteTokensList ? 'Token Pair' : 'Token'}
           {filterName === 'base' && (
             <span className="icon">
               <Chevron direction={sortOrder} />
             </span>
           )}
-        </span>
-        <span className="lastPrice" onClick={onChangeFilterName}>
+        </SmallText>
+        <SmallText className="lastPrice" onClick={onChangeFilterName}>
           Last Price
           {filterName === 'lastPrice' && (
             <span className="icon">
               <Chevron direction={sortOrder} />
             </span>
           )}
-        </span>
-        <span className="change" onClick={onChangeFilterName}>
+        </SmallText>
+        <SmallText className="change" onClick={onChangeFilterName}>
           Change 24H
           {filterName === 'change' && (
             <span className="icon">
               <Chevron direction={sortOrder} />
             </span>
           )}
-        </span>
+        </SmallText>
         <span className="star">&nbsp;</span>
       </li>
     </ListHeader>
@@ -287,20 +289,20 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
       </Row>
       <List>
         <Item>
-          <div>Last Price:</div>
-          <div>{ lastPrice ? `${lastPrice}/${quote}` : 'N.A'}</div>
+          <SmallTextDiv>Last Price:</SmallTextDiv>
+          <SmallTextDiv>{ lastPrice ? `${lastPrice}/${quote}` : 'N.A'}</SmallTextDiv>
         </Item>
         <Item>
-          <div>Volume:</div>
-          <div>{volume || 'N.A' }</div>
+          <SmallTextDiv>Volume:</SmallTextDiv>
+          <SmallTextDiv>{volume || 'N.A' }</SmallTextDiv>
         </Item>
         <Item>
-          <div>High:</div>
-          <div>{high || 'N.A'}</div>
+          <SmallTextDiv>High:</SmallTextDiv>
+          <SmallTextDiv>{high || 'N.A'}</SmallTextDiv>
         </Item>
         <Item>
-          <div>Low:</div>
-          <div>{low || 'N.A'}</div>
+          <SmallTextDiv>Low:</SmallTextDiv>
+          <SmallTextDiv>{low || 'N.A'}</SmallTextDiv>
         </Item>
       </List>
     </SelectedPairCard>
@@ -356,6 +358,6 @@ const ListHeader = styled.ul`
   margin: 10px 0 7px;
 `
 
-const Change24H = styled.span.attrs({ className: 'change' })`
+const Change24H = styled(SmallText).attrs({ className: 'change' })`
   color: ${props => (props.change > 0 ? Colors.GREEN5 : Colors.RED4)} !important;
 `

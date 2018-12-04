@@ -1,12 +1,19 @@
-export { default as Box } from './Box';
+import { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn } from './Box'
+import { Text, SmallText, SmallTextDiv, TextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText } from './Text';
+
+export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
+export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+
+export { default as Spacer } from './Spacer'
 export { default as Chevron } from './Chevron';
 export { default as Centered } from './Centered';
 export { default as Colors } from './Colors';
+export { default as Variables } from './Variables';
 export { default as Divider } from './Divider';
 export { default as Heading } from './Heading';
 export { default as CenteredSpinner } from './CenteredSpinner';
 export { default as OverlaySpinner } from './OverlaySpinner';
-export { default as Text, EmphasizeText, LargeText, HeaderText, LabelText, MutedText } from './Text';
+
 export { default as RowStart, RowEnd, RowCenter, RowSpaceAround, RowSpaceBetween } from './Row';
 export { default as Column, ColumnStart, ColumnEnd, ColumnSpaceAround } from './Column';
 export { default as Loading } from './Loading';
@@ -20,3 +27,4 @@ export { default as Indent } from './Indent'
 export { default as ModalBody } from './ModalBody'
 export { default as ModalFooter } from './ModalFooter'
 export { default as CloseableCallout } from './CloseableCallout'
+export { default as AMPLogo } from './AMPLogo'

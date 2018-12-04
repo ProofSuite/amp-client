@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgEtc = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <g fill="#FFF" fillRule="evenodd">
       <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm6.732-16L16 12.19 9.268 16 16 19.781l6.732-3.783zM16 21.047a3944.37 3944.37 0 0 0-7-3.952c2.079 3.248 4.66 7.26 7 10.904 2.34-3.643 4.921-7.656 7-10.904a3944.185 3944.185 0 0 0-7 3.952zm0-10.089l7 3.907L16 4 9 14.866l7-3.907z" />
       <path

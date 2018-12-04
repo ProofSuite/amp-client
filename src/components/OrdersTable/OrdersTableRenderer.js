@@ -1,9 +1,10 @@
 //@flow
 import React from 'react'
 import styled from 'styled-components'
+import { formatRelative } from 'date-fns'
 import { Card, Tag, Tab, Tabs, Collapse, Button, Icon } from '@blueprintjs/core'
 import { Colors, Loading, CenteredMessage } from '../Common'
-import { format } from 'date-fns'
+import { relativeDate } from '../../utils/helpers'
 import { Order } from '../../types/orders'
 
 type Props = {
@@ -90,7 +91,8 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
         {order.side}
       </Cell>
       <Cell className="time" muted>
-        {format(order.time, 'DD/MM/YYYY HH:MM:SS')}
+        {relativeDate(order.time)}
+        {/* {format(order.time, 'DD/MM/YYYY HH:MM:SS')} */}
       </Cell>
       <Cell className="cancel" muted>
         {order.cancelleable && (
