@@ -1,6 +1,7 @@
 //@flow
 
 import { utils } from 'ethers'
+import { formatRelative } from 'date-fns'
 
 import type { BN, Numberish } from '../types/common'
 
@@ -10,6 +11,15 @@ export const rand = (min: number, max: number, decimals: number = 4) => {
 
 export const randInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const relativeDate = (time: number) => {
+  let formattedDate = formatRelative(time, new Date())
+  return capitalizeFirstLetter(formattedDate)
 }
 
 export const isFloat = (n: *) => parseFloat(n.match(/^-?\d*(\.\d+)?$/)) > 0

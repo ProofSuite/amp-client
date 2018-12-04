@@ -40,7 +40,7 @@
     "d3-format": "^1.3.0",
     "d3-shape": "^1.2.0",
     "d3-time-format": "^2.1.1",
-    "date-fns": "^1.29.0",
+    "date-fns": "^2.0.0-alpha.25",
     "ethers": "^4.0.13",
     "express": "^4.16.3",
     "jest-localstorage-mock": "^2.2.0",

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import { relativeDate } from '../../utils/helpers'
 import { Loading, Colors, Text, CenteredMessage } from '../Common';
 import { Icon, Button, Card, Tabs, Tab, Collapse } from '@blueprintjs/core';
 import { format } from 'date-fns';
@@ -69,7 +70,8 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
             </Cell>
             <Cell>{trade.amount}</Cell>
             <Cell side={trade.side}>{trade.status}</Cell>
-            <Cell cellName="time" muted>{format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}</Cell>
+            {/* {format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')} */}
+            <Cell cellName="time" muted>{relativeDate(trade.time)}</Cell>
           </Row>
         ))}
       </ListBody>
@@ -99,7 +101,7 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
             <Cell>{trade.price}</Cell>
             <Cell>{trade.amount}</Cell>
             <Cell>{trade.status}</Cell>
-            <Cell cellName="time" muted>{format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')}</Cell>
+            <Cell cellName="time" muted>{relativeDate(trade.time)}</Cell>
         </Row>
         ))}
       </ListBody>
