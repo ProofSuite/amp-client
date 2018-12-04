@@ -1,12 +1,10 @@
 import React from 'react'
 import { defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Callout, Card, Intent, Spinner, Tag } from '@blueprintjs/core'
+import { Callout, Card, Intent, Spinner, Tag, Button } from '@blueprintjs/core'
 import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
-import MetamaskIcon from '../../components/Icons/Metamask'
-import { KeyIcon, WalletIcon } from '../../components/Icons'
-import { Centered, Divider, LargeText, Colors } from '../../components/Common'
+import { Centered, Divider, LargeText, LinkText, Colors, Box, Flex, Indent } from '../../components/Common'
 import type { CreateWalletParams } from '../../types/createWallet'
 
 type Props = {
@@ -69,11 +67,8 @@ const LoginMethodsView = (props: Props) => {
           <AnnouncementMessages>
             <FormattedMessage
               {...messages.announcement}
-              values={{ link: <a href="https://amp.exchange.com">https://amp.exchange.com</a> }}
+              values={{ link: <a href="https://amp.exchange">https://amp.exchange</a> }}
             />
-            <Reminder>
-              <FormattedMessage {...messages.noPlugins} />
-            </Reminder>
             <Reminder>
               <FormattedMessage {...messages.noDisclosure} />
             </Reminder>
@@ -90,27 +85,31 @@ const LoginMethodsView = (props: Props) => {
         <LoginMethodsHeading>
           <FormattedMessage {...messages.loginMethods} />
         </LoginMethodsHeading>
-        <LoginCards>
-          <LoginCard onClick={loginWithMetamask}>
-            <MetamaskIcon size={75} />
-            <Heading>
-              <FormattedMessage {...messages.metamask} />
-            </Heading>
-            <MetamaskStatusTag>{metamaskStatuses[metamaskStatus]}</MetamaskStatusTag>
-          </LoginCard>
-          <LoginCard onClick={showWalletLoginForm}>
-            <KeyIcon size={75} />
-            <Heading>
-              <FormattedMessage {...messages.wallet} />
-            </Heading>
-          </LoginCard>
-          <LoginCard onClick={showCreateWallet}>
-            <WalletIcon size={75} color={Colors.WHITE} />
-            <Heading>
-              <FormattedMessage {...messages.createWallet} />
-            </Heading>
-          </LoginCard>
-        </LoginCards>
+            <LoginCards>
+                <Flex flexDirection="column" width="30%">
+                  <Flex p={2} flexDirection="column">
+                    <Button onClick={loginWithMetamask} disabled={metamaskStatus === "undefined"}large intent="primary" fill>
+                      {
+                        metamaskStatus === "undefined" 
+                        ? <FormattedMessage {...messages.metamaskNotFound} />
+                        : <FormattedMessage {...messages.metamask} />
+                      }
+                    </Button>
+                    <Flex p={1} justifyContent="right">
+                      <Indent />
+                      {metamaskStatus === "undefined" && <a href="https://metamask.io/">→ Get Metamask</a>}
+                    </Flex>
+                  </Flex>
+                  <Box p={2}>
+                    <Button onClick={showWalletLoginForm} large intent="primary" fill>
+                      <FormattedMessage {...messages.wallet} />
+                    </Button>
+                    <Flex p={1} justifyContent="right">
+                      <LinkText onClick={showCreateWallet}>→ Create a new wallet</LinkText>
+                    </Flex>
+                  </Box>
+                </Flex>
+            </LoginCards>
       </LoginMethods>
     </Wrapper>
   )
@@ -118,11 +117,16 @@ const LoginMethodsView = (props: Props) => {
 
 export default LoginPageRenderer
 
+
+// box-shadow: ${"inset 0 0 2px" + Colors.BLACK + ", 0 0 2px " + Colors.BLUE5 + "!important;"};
+
+
 const Wrapper = styled.div`
   display: grid;
   padding-left: 2em;
   padding-right: 2em;
   padding-top: 2em;
+  padding-bottom: 6em;
 `;
 
 const WidgetWrapper = styled.div`
@@ -148,7 +152,7 @@ const LoginMethods = styled.div`
 const LoginMethodsHeading = styled.h3`
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 1em;
 `;
 
 const LoginCards = styled.div`
@@ -185,15 +189,15 @@ const MetamaskStatusTag = styled(Tag).attrs({
 const messages = defineMessages({
   announcement: {
     id: 'loginPage.announcement',
-    defaultMessage: 'Make sure you are visiting {link} to prevent any phishing attacks',
+    defaultMessage: 'Make sure you are visiting {link} to prevent any phishing attacks.',
   },
   noPlugins: {
     id: 'loginPage.noPlugins',
-    defaultMessage: "Never trade more value than you are willing to lose",
+    defaultMessage: "Never trade more value than you are willing to lose.",
   },
   thisAppIsInBeta: {
     id: 'loginPage.thisAppIsInBeta',
-    defaultMessage: "This app is in beta. Please expect a certain amount of bugs for upcoming weeks",
+    defaultMessage: "This app is in beta. Please expect a certain amount of bugs for upcoming weeks.",
   },
   exchangeLaws: {
     id: 'loginPage.exchangeLaws',
@@ -201,16 +205,16 @@ const messages = defineMessages({
   },
   noOfficialStaffs: {
     id: 'loginPage.noOfficialStaffs',
-    defaultMessage: 'Never make transactions or send funds to anyone who claims to be a member of Proof Suite support',
+    defaultMessage: 'Never make transactions or send funds to anyone who claims to be a member of Proof Suite support.',
   },
   noDisclosure: {
     id: 'loginPage.noDisclosure',
     defaultMessage:
-      'Never disclose your password, private keys or other authentication elements to anyone, including Proof Suite support',
+      'Never disclose your password, private keys or other authentication elements to anyone, including Proof Suite support.',
   },
   loginMethods: {
     id: 'loginPage.loginMethodsHeading',
-    defaultMessage: 'Select a login method',
+    defaultMessage: 'Choose a login method',
   },
   connect: {
     id: 'loginPage.connect',
@@ -224,13 +228,17 @@ const messages = defineMessages({
     id: 'loginPage.metamask',
     defaultMessage: 'Metamask',
   },
+  metamaskNotFound: {
+    id: 'loginPage.metamask',
+    defaultMessage: 'Metamask not detected'
+  },
   wallet: {
     id: 'loginPage.wallet',
     defaultMessage: 'Wallet',
   },
   createWallet: {
     id: 'loginPage.createWallet',
-    defaultMessage: 'Create Wallet',
+    defaultMessage: 'Create a new wallet',
   },
 });
 

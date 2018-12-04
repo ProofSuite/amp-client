@@ -52,7 +52,7 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
     const sy = cy + (outerRadius + 10) * sin;
     const mx = cx + (outerRadius + 30) * cos;
     const my = cy + (outerRadius + 30) * sin;
-    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 2;
     const ey = my;
     const textAnchor = cos >= 0 ? 'start' : 'end';
 
@@ -82,8 +82,8 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
         <text x={cx} y={cy} dy={8} style={{"fontSize": 30}} textAnchor="middle" fill={Colors.WHITE}>{payload.symbol}</text>
         <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={Colors.BLUE5} fill="none"/>
         <circle cx={ex} cy={ey} r={2} fill={Colors.PRIMARY} stroke={Colors.BLUE5}/>
-        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill={Colors.WHITE}>{`Balance ${value} ${payload.symbol}`}</text>
-        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill={Colors.WHITE}>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 4} y={ey} textAnchor={textAnchor} fill={Colors.WHITE}>{`${value} ${payload.symbol}`}</text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 4} y={ey} dy={18} textAnchor={textAnchor} fill={Colors.WHITE}>
           {`(${(percent * 100).toFixed(2)}%)`}
         </text>
       </g>

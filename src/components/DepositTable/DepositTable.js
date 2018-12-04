@@ -132,11 +132,11 @@ class DepositTable extends React.PureComponent<Props, State> {
      let WETHTokenData = tokenData.filter((token: Token) => token.symbol === 'WETH')
      let ETHTokenData = tokenData.filter((token: Token) => token.symbol === 'ETH')
 
-
     let filteredBaseTokenData = this.filterTokens(baseTokenData)
     let filteredQuoteTokenData = this.filterTokens(quoteTokenData)
     let filteredWETHTokenData = this.filterTokens(WETHTokenData)
     let filteredETHTokenData = this.filterTokens(ETHTokenData)
+    let totalFilteredTokens = filteredBaseTokenData.length + filteredQuoteTokenData.length + filteredWETHTokenData.length + filteredETHTokenData.length
 
     return (
       <Wrapper>
@@ -156,6 +156,7 @@ class DepositTable extends React.PureComponent<Props, State> {
           handleSearchInputChange={this.handleSearchInputChange}
           toggleAllowance={toggleAllowance}
           redirectToTradingPage={redirectToTradingPage}
+          totalFilteredTokens={totalFilteredTokens}
         />
         <DepositModal
           isOpen={isDepositModalOpen}

@@ -61,7 +61,7 @@ const ConversionStepRenderer = (props: Props) => {
       <Checkbox
         checked={shouldAllow}
         disabled={allowTradingCheckboxDisabled}
-        label='Allow Trading'
+        label='Authorize WETH trading'
         onChange={toggleShouldAllowTrading}
       />
       <p>

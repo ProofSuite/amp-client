@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import Chart from './Chart';
-import { Loading, CenteredMessage } from '../Common';
+import { Loading, CenteredMessage, AMPLogo, Centered, LargeText } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 import AutoScaler from '../AutoScaler';
 import styled from 'styled-components';
@@ -43,7 +43,14 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
     }
 
     if (data.length < 1) {
-      return <CenteredMessage message="There are currently no trades for this token pair" />;
+      return (
+        <React.Fragment>
+          <Centered>
+            <AMPLogo height="150em" width="150em" />
+            <LargeText muted>No trades during this period. Make the first one!</LargeText>
+          </Centered>
+        </React.Fragment>
+      )
     }
 
     return (
