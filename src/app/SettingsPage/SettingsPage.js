@@ -10,7 +10,9 @@ import { Box } from '../../components/Common';
 import type { Wallet } from '../../types/wallets'
 import type { Address } from '../../types/common'
 
-type Props = {}
+type Props = {
+  authenticated: bool
+}
 
 type State = {
   wallets: Array<Wallet>

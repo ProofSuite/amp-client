@@ -1,8 +1,7 @@
 // @flow
+import { addMonths } from 'date-fns'
 import { ENGINE_HTTP_URL } from '../../../config/urls'
 import { convertPricepointToPrice } from '../../../utils/helpers';
-
-const addMonths = require('date-fns/add_months')
 
 const request = (endpoint: string, options: Object) => {
   return fetch(`${ENGINE_HTTP_URL}${endpoint}`, {

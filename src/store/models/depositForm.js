@@ -10,7 +10,6 @@ import {
 
 import * as actionCreators from '../actions/accountBalances';
 import * as depositFormActionCreators from '../actions/depositForm';
-import * as accountBalancesService from '../services/accountBalances';
 import { getSigner } from '../services/signer';
 import { EXCHANGE_ADDRESS, WETH_ADDRESS } from '../../config/contracts';
 import { ERC20, WETH } from '../../config/abis';
@@ -45,6 +44,7 @@ export function queryBalances(): ThunkAction {
       const state = getState();
       const accountAddress = depositFormSelector(state).accountAddress();
       let tokens = depositFormSelector(state).tokens();
+      
       tokens = tokens.filter((token: Token) => token.symbol !== 'ETH');
 
       if (!accountAddress) throw new Error('Account address is not set');
@@ -82,11 +82,7 @@ export function subscribeBalance(token: Token): ThunkAction {
 
       token.address === '0x0'
         ? (unsubscribe = await provider.subscribeEtherBalance(accountAddress, updateBalanceHandler))
-        : (unsubscribe = await provider.subscribeTokenBalance(
-            accountAddress,
-            token,
-            updateBalanceHandler
-          ));
+        : (unsubscribe = await provider.subscribeTokenBalance(accountAddress, token, updateBalanceHandler));
 
       return async () => {
         //First we unsubscribe the deposit + update balance listener
@@ -96,11 +92,7 @@ export function subscribeBalance(token: Token): ThunkAction {
         const updateBalanceHandler = balance => dispatch(actionCreators.updateBalance(symbol, balance))
         token.address === '0x0'
         ? (unsubscribe = await provider.subscribeEtherBalance(accountAddress, updateBalanceHandler))
-        : (unsubscribe = await provider.subscribeTokenBalance(
-            accountAddress,
-            token,
-            updateBalanceHandler
-          ))
+        : (unsubscribe = await provider.subscribeTokenBalance(accountAddress, token, updateBalanceHandler))
 
         dispatch(actionCreators.unsubscribeBalance(symbol));
       };

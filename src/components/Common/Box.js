@@ -84,6 +84,24 @@ export const Flex = styled(Box)`
   ${flexDirection}
 `
 
+export const FlexRow = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
+export const FlexColumn = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
 export const FlexItem = styled.div`
   ${flex}
   ${justifySelf}

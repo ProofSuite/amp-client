@@ -1,7 +1,7 @@
-import { Box, TextBox, DividerBox, Flex, FlexItem } from './Box'
+import { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn } from './Box'
 import { Text, SmallText, SmallTextDiv, TextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText } from './Text';
 
-export { Box, TextBox, DividerBox, Flex, FlexItem }
+export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
 export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export { default as Spacer } from './Spacer'
