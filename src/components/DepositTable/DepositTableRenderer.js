@@ -107,7 +107,7 @@ const ETHRow = (props: Props) => {
     <Row key='ETH'>
       <Cell>
         <TokenNameWrapper>
-          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+          <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -165,7 +165,7 @@ const WETHRow = (props: Props) => {
     <Row key='WETH'>
       <Cell>
         <TokenNameWrapper>
-          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+          <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -222,7 +222,7 @@ const QuoteTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+            <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
@@ -275,7 +275,7 @@ const BaseTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+            <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>

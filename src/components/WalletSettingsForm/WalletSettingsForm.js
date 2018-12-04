@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
-import { Card, Button } from '@blueprintjs/core';
-import { Colors } from '../Common';
+import { Card, Button, Position } from '@blueprintjs/core';
+import { Colors, FlexRow, Box } from '../Common';
+import Help from '../Help'
 import styled from 'styled-components';
 
 import type { Wallet } from '../../types/wallets'
@@ -18,7 +19,16 @@ const WalletSettingsForm = (props: Props) => {
 
   return (
     <Card>
-      <Heading>Remove Wallets from Browser Storage</Heading>
+      <FlexRow>
+        <Heading>Remove Encrypted Wallets from Browser Storage</Heading>
+        <Box pl={2} pt={1}>
+          <Help position={Position.RIGHT}>
+            When you log in with your private key or with your wallet/password, your encrypted wallet
+            is saved in the browser storage. You can keep the encrypted wallet in your browser storage 
+            or remove it by clicking the corresponding address below.
+          </Help>
+        </Box>
+      </FlexRow>
       <Header>
         <ListItem>
           <p><b>Address</b></p>

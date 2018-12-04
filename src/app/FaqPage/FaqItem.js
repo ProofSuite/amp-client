@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, Route } from 'react-router-dom';
 import { Collapse, H4 } from "@blueprintjs/core";
+import { Text } from '../../components/Common'
 
 function getId(question) {
   return question
@@ -49,7 +50,7 @@ class FaqItem extends React.PureComponent {
         </H4>
         <Collapse isOpen={route.match}>
           <div ref={this.message}>
-            {children}
+            <Text muted>{children}</Text>
           </div>
         </Collapse>
       </Container>

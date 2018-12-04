@@ -47,14 +47,26 @@ import {
   verticalAlign,
   } from 'styled-system';
 
+import { Divider } from '@blueprintjs/core'
+
 
 export const Box = styled.div`
   ${space}
   ${width}
+  ${height}
   ${margin}
   ${padding}
   ${color}
 `;
+
+export const DividerBox = styled(Divider)`
+  ${space}
+  ${width}
+  ${height}
+  ${margin}
+  ${padding}
+  ${color}
+`
 
 export const TextBox = styled(Box)`
   ${fontSize}
@@ -70,6 +82,24 @@ export const Flex = styled(Box)`
   ${flexWrap}
   ${flexBasis}
   ${flexDirection}
+`
+
+export const FlexRow = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
+export const FlexColumn = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
 `
 
 export const FlexItem = styled.div`

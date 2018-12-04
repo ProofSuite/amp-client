@@ -24,6 +24,24 @@ export const Text = styled.span`
   )}
 `;
 
+export const SmallText = styled.span`
+  ${space}
+  ${width}
+  ${margin}
+  ${padding}
+  font-size: ${Fonts.FONT_SIZE_SMALL}px !important;
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)};
+`;
+
+export const SmallTextDiv = styled.div`
+  ${space}
+  ${width}
+  ${margin}
+  ${padding}
+  font-size: ${Fonts.FONT_SIZE_SMALL}px !important;
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)};
+`;
+  
 export const TextDiv = styled.div`
   ${space}
   ${width}
@@ -68,7 +86,7 @@ export const MutedText = styled.span`
   color: ${Colors.TEXT_MUTED};
 `;
 
-export const LinkText = styled.span`
+export const LinkText = styled.div`
   ${space}
   ${width}
   ${margin}

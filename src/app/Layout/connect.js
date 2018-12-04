@@ -1,6 +1,6 @@
 //@flow
 import { connect } from 'react-redux';
-import layoutSelector, { queryAccountData } from '../../store/models/layout';
+import layoutSelector, { createProvider } from '../../store/models/layout';
 
 import type { State } from '../../types'
 import type { Props as LayoutProps } from './Layout'
@@ -21,7 +21,7 @@ export function mapStateToProps(state: State, props: Object): LayoutProps {
 }
 
 const mapDispatchToProps = {
-  queryAccountData
+  createProvider
 }
 
 export default connect(
