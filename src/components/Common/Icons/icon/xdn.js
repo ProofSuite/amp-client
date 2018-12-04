@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgXdn = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <defs>
       <linearGradient id="xdn_svg__c" x1="50%" x2="50%" y1="0%" y2="100%">
         <stop offset="0%" stopColor="#FFF" stopOpacity={0.5} />

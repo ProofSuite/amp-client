@@ -1,8 +1,9 @@
 // @flow
 import React from 'react'
-import { Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
-import { HeaderText, MutedText } from '../Common'
+import { Position, Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
+import { Flex, Box, HeaderText, MutedText } from '../Common'
 import styled from 'styled-components'
+import Help from '../../components/Help'
 import { utils } from 'ethers'
 
 type Props = {
@@ -199,6 +200,11 @@ const MarketOrderPanel = (props: *) => {
         <RadioButton value={50} fraction={fraction} onInputChange={onInputChange} />
         <RadioButton value={75} fraction={fraction} onInputChange={onInputChange} />
         <RadioButton value={100} fraction={fraction} onInputChange={onInputChange} />
+        <Flex pl={2} pt={1} >
+          <Help position={Position.RIGHT}>
+            Select fraction of total possible value you can trade at the currently selected price.
+          </Help>
+        </Flex>
       </RadioButtonsWrapper>
       { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
       { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
@@ -251,6 +257,11 @@ const LimitOrderPanel = props => {
         <RadioButton value={50} fraction={fraction} onInputChange={onInputChange} />
         <RadioButton value={75} fraction={fraction} onInputChange={onInputChange} />
         <RadioButton value={100} fraction={fraction} onInputChange={onInputChange} />
+        <Flex pl={2} pt={1} >
+          <Help position={Position.RIGHT}>
+            Select fraction of total possible value you can trade at the currently selected price.
+          </Help>
+        </Flex>
       </RadioButtonsWrapper>
       { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
       { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
@@ -323,7 +334,7 @@ const RadioButton = props => {
   const { onInputChange, value } = props
   return (
     <RadioButtonBox>
-      {value}%
+      <span>{value}%</span>
       <InputGroup name="fraction" type="radio" onChange={onInputChange} value={value} />
     </RadioButtonBox>
   )
@@ -360,8 +371,7 @@ const RadioButtonBox = styled(Label)`
   margin-bottom: 16px;
   background: #27343d;
   text-align: center;
-  padding: 8px 0;
-  justify-content: center;
+  padding: 4px;
   cursor: pointer;
   border: 1px solid #2584c1;
   box-shadow: none;

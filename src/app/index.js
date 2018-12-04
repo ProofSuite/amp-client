@@ -1,8 +1,7 @@
 import './env'
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Layout from './Layout'
-import LandingPage from './LandingPage'
 import LoginPage from './LoginPage'
 import FaqPage from './FaqPage';
 import WalletPage from './WalletPage'
@@ -26,13 +25,13 @@ const App = () => {
         <SocketController>
           <Layout>
             <Switch>
-              <Route exact path="/" component={LandingPage} />
               <Route path="/faq" component={FaqPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/wallet" component={WalletPage} />
               <Route path="/settings" component={SettingsPage} />
               <Route path="/logout" component={LogoutPage} />
               <Route path="/trade" component={TradingPage} />
+              <Redirect to="/login" />
             </Switch>
           </Layout>
         </SocketController>

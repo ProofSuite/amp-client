@@ -106,9 +106,11 @@ const OrderBookHeader = styled.div`
   grid-gap: 10px;
   align-items: center;
 `;
+
 const Heading = styled.h3`
   margin: auto;
 `;
+
 const Wrapper = styled(Card)`
   min-width: 500px;
   width: 100%;

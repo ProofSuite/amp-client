@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, Button, Tag } from '@blueprintjs/core';
+import { Card, Button, Tag, Callout } from '@blueprintjs/core';
 import styled from 'styled-components';
 import TransferTokensModal from '../../components/TransferTokensModal';
 import TokenBalanceChart from '../../components/TokenBalanceChart'
+import { Box, Flex, Text, TextDiv, TextBox } from '../Common'
+import { Fonts } from '../Common/Variables'
 
 const WalletInfoRenderer = props => {
   const {
@@ -16,21 +18,36 @@ const WalletInfoRenderer = props => {
 
   return (
       <WalletInfoCard>
-        <Box>
-          <Tag minimal large>ETHEREUM BALANCE</Tag>
-          <BalanceBox>{balance} ETH</BalanceBox>
+        <Box py={3}>
+          <TextBox>
+            <Tag minimal large>Ethereum Account</Tag>
+          </TextBox>
+          <TextDiv py={2} small muted>
+            Here is your ethereum address where people can send you tokens:
+          </TextDiv>
+          <TextBox py={2} fontSize={Fonts.FONT_SIZE} textAlign="right">
+            {accountAddress}
+          </TextBox>
         </Box>
-        <Box>
-          <Tag minimal large>ETHEREUM ADDRESS</Tag>
-          <AccountAddressBox>
-          {accountAddress}
-          </AccountAddressBox>
+        <Box py={3}>
+          <TextBox>
+            <Tag minimal large>Ethereum Balance</Tag>
+          </TextBox>
+          <TextDiv py={2} small muted>
+            This is the total amount of Ether (the native Ethereum currency) in your
+            wallet:
+          </TextDiv>
+          <TextBox py={2} fontSize={Fonts.FONT_SIZE_LARGE} textAlign="right">
+            {balance} ETH
+          </TextBox>
         </Box>
-        <Tag minimal large>PORTFOLIO OVERVIEW</Tag>
+
+        
+        <Tag minimal large>Portfolio Overview</Tag>
         <TokenBalanceChartBox>
           <TokenBalanceChart />
         </TokenBalanceChartBox>
-        <Box>
+        <TextBox>
           <Button
             fill
             onClick={handleModalClose}
@@ -38,7 +55,7 @@ const WalletInfoRenderer = props => {
             intent="primary"
             large
           />
-        </Box>
+        </TextBox>
         <TransferTokensModal gas={gas} gasPrice={gasPrice} isOpen={isModalOpen} handleClose={handleModalClose} />
       </WalletInfoCard>
   );
@@ -60,13 +77,13 @@ const AccountAddressBox = styled.p`
   margin-left: 20px;
 `
 
-const Box = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-  justify-content: left;
-  align-content: middle;
-  text-align: center;
-`;
+// const TextBox = styled.div`
+//   display: flex;
+//   margin-bottom: 10px;
+//   justify-content: left;
+//   align-content: middle;
+//   text-align: center;
+// `;
 
 const TokenBalanceChartBox = styled.div`
   display: flex;

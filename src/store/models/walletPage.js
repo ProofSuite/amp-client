@@ -1,18 +1,17 @@
 // @flow
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain } from '../domains'
+import { push } from 'connected-react-router'
 
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
 import * as accountActionTypes from '../actions/account'
-import * as accountBalancesService from '../services/accountBalances'
 import { quoteTokens, quoteTokenSymbols } from '../../config/quotes'
 import { getCurrentBlock } from '../services/wallet'
-import { push } from 'connected-react-router'
+import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
+import { parseQueryAccountDataError } from '../../config/errors'
+
 import type { Token } from '../../types/common'
 import type { State, ThunkAction } from '../../types'
-import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
-
-import { parseQueryAccountDataError } from '../../config/errors'
 
 export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
@@ -46,7 +45,7 @@ export default function walletPageSelector(state: State) {
 }
 
 export function queryAccountData(): ThunkAction {
-  return async (dispatch, getState, { api }) => {
+  return async (dispatch, getState, { api, provider }) => {
     const state = getState()
     const accountAddress = getAccountDomain(state).address()
 
@@ -70,27 +69,27 @@ export function queryAccountData(): ThunkAction {
       let exchangeAddress = await api.getExchangeAddress()
       dispatch(actionCreators.updateExchangeAddress(exchangeAddress))
 
-      let etherBalance = await accountBalancesService.queryEtherBalance(accountAddress)
+      let etherBalance = await provider.queryEtherBalance(accountAddress)
       balances.push(etherBalance)
 
-      let { errors: tokenBalanceErrors, tokenBalances } = await accountBalancesService.queryTokenBalances(accountAddress, tokens)
+      let { errors: tokenBalanceErrors, tokenBalances } = await provider.queryTokenBalances(accountAddress, tokens)
       balances.concat(tokenBalances)
 
-      let { errors: tokenAllowanceErrors, tokenAllowances } = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
+      let { errors: tokenAllowanceErrors, tokenAllowances } = await provider.queryExchangeTokenAllowances(accountAddress, tokens)
       allowances = tokenAllowances
 
       balances = [etherBalance].concat(tokenBalances)
       console.log(tokenBalanceErrors)
       console.log(tokenAllowanceErrors)
       
-      await accountBalancesService.subscribeTokenBalances(accountAddress, tokens, balance =>
+      await provider.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance))
       )
 
-      await accountBalancesService.subscribeEtherBalance(accountAddress, balance =>
+      await provider.subscribeEtherBalance(accountAddress, balance =>
         dispatch(actionCreators.updateBalance({ symbol: 'ETH', balance: balance })))
 
-      await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance => {
+      await provider.subscribeTokenAllowances(accountAddress, tokens, allowance => {
         return dispatch(actionCreators.updateAllowance(allowance))
       })
 
@@ -116,7 +115,7 @@ export function redirectToTradingPage(symbol: string): ThunkAction {
 }
 
 export function toggleAllowance(symbol: string): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { provider }) => {
     try {
       const state = getState()
       const tokens = getTokenDomain(state).bySymbol()
@@ -140,10 +139,10 @@ export function toggleAllowance(symbol: string): ThunkAction {
       }
 
       if (isAllowed) {
-        accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, 0, approvalRemovedHandler)
+        provider.updateExchangeAllowance(tokenContractAddress, accountAddress, 0, approvalRemovedHandler)
         dispatch(notifierActionCreators.addSuccessNotification({ message: `Locking ${symbol}. You will not be able to trade ${symbol} after the transaction is confirmed` }))
       } else {
-        accountBalancesService.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
+        provider.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
         dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${symbol}. You will be able to trade  ${symbol} after the transaction is confirmed.` }))
       }
 

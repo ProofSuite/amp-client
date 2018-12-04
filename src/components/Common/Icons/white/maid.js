@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgMaid = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <g fill="#FFF" fillRule="evenodd">
       <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zM9.291 19.333l10.955 6.308c2.263-1.282 3.394-1.692 3.394-5.436V7.59c-2.263-1.282-3.189-2.052-6.429-.205L6.257 13.692c0 2.564-.206 3.744 3.034 5.641zm8.234-5.108v2.854l-2.488-1.427 2.488-1.427z" />
       <path

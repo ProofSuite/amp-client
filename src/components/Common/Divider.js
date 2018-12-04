@@ -1,5 +1,5 @@
 //@flow
-import Box from './Box';
+import { Box } from './Box';
 
 const heights = {
   small: 0.1,

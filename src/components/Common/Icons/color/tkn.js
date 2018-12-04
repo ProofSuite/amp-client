@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgTkn = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <g fill="none">
       <circle cx={16} cy={16} r={16} fill="#24DD7B" />
       <path

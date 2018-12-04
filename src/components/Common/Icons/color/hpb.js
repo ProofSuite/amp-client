@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgHpb = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <g fill="none" fillRule="evenodd">
       <circle cx={16} cy={16} fill="#1591ca" r={16} />
       <g fill="#fff" fillRule="nonzero">

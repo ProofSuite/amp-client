@@ -38,7 +38,7 @@ const SignerSettingsFormRenderer = (props: Props) => {
         </options>
         {custom && renderCustomSignerForm(props)}
         <ButtonBox>
-          <Button intent="primary" loading={loading} onClick={handleSubmit} text="Change Signer" />
+          <Button intent="primary" loading={loading} onClick={handleSubmit} disabled text="Coming soon" />
         </ButtonBox>
         {error ? renderErrorCallout(error) : renderCurrentSignerCallout(currentSigner)}
       </Card>
