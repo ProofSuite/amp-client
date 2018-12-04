@@ -6,6 +6,7 @@ import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
 import { Centered, Divider, LargeText, LinkText, Colors, Box, Flex, Indent } from '../../components/Common'
 import type { CreateWalletParams } from '../../types/createWallet'
+import backgroundImage  from './video-bg.png'
 
 type Props = {
   view: string,
@@ -87,27 +88,39 @@ const LoginMethodsView = (props: Props) => {
         </LoginMethodsHeading>
             <LoginCards>
                 <Flex flexDirection="column" width="30%">
-                  <Flex p={2} flexDirection="column">
-                    <Button onClick={loginWithMetamask} disabled={metamaskStatus === "undefined"}large intent="primary" fill>
+                  <Flex flexDirection="column" py={1}>
+                    <StyledButton 
+                      onClick={loginWithMetamask} 
+                      disabled={metamaskStatus === "undefined"}
+                      large 
+                      intent="primary"
+                      fill
+                    >
                       {
                         metamaskStatus === "undefined" 
                         ? <FormattedMessage {...messages.metamaskNotFound} />
                         : <FormattedMessage {...messages.metamask} />
+                      }                      
+                    </StyledButton>
+                      {
+                        metamaskStatus === "undefined"
+                          ? (
+                          <Flex p={1} justifyContent="flex-end">
+                            <Indent />
+                            <a href="https://metamask.io/">→ Get Metamask</a>
+                          </Flex>
+                          )
+                          : null
                       }
-                    </Button>
-                    <Flex p={1} justifyContent="right">
-                      <Indent />
-                      {metamaskStatus === "undefined" && <a href="https://metamask.io/">→ Get Metamask</a>}
-                    </Flex>
                   </Flex>
-                  <Box p={2}>
-                    <Button onClick={showWalletLoginForm} large intent="primary" fill>
+                  <Flex flexDirection="column" py={1}>
+                    <StyledButton onClick={showWalletLoginForm} large intent="primary" fill>
                       <FormattedMessage {...messages.wallet} />
-                    </Button>
-                    <Flex p={1} justifyContent="right">
+                    </StyledButton>
+                    <Flex p={1} justifyContent="flex-end">
                       <LinkText onClick={showCreateWallet}>→ Create a new wallet</LinkText>
                     </Flex>
-                  </Box>
+                  </Flex>
                 </Flex>
             </LoginCards>
       </LoginMethods>
@@ -118,8 +131,13 @@ const LoginMethodsView = (props: Props) => {
 export default LoginPageRenderer
 
 
-// box-shadow: ${"inset 0 0 2px" + Colors.BLACK + ", 0 0 2px " + Colors.BLUE5 + "!important;"};
-
+const StyledButton = styled(Button)`
+  box-shadow: ${"0 3px 20px " + Colors.BLUE1 + "!important;"}
+  &hover: {
+    background-color: ${Colors.BLUE5}
+    box-shadow: ${"0 3px 20px " + Colors.BLUE5 + "!important;"}
+  }
+`
 
 const Wrapper = styled.div`
   display: grid;

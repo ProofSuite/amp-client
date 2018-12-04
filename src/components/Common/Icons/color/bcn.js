@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgBcn = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <g fill="none">
       <circle cx={15.999} cy={15.999} r={15.999} fill="#F04086" />
       <path

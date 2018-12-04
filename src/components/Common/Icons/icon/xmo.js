@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgXmo = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <defs>
       <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="xmo_svg__c">
         <stop stopColor="#FFF" stopOpacity={0.5} offset="0%" />

@@ -1,8 +1,8 @@
-import { Box, TextBox, Flex, FlexItem } from './Box'
-import { Text, TextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText } from './Text';
+import { Box, TextBox, DividerBox, Flex, FlexItem } from './Box'
+import { Text, SmallText, SmallTextDiv, TextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText } from './Text';
 
-export { Box, TextBox, Flex, FlexItem }
-export { Text, TextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { Box, TextBox, DividerBox, Flex, FlexItem }
+export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export { default as Spacer } from './Spacer'
 export { default as Chevron } from './Chevron';

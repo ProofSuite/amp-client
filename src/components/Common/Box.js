@@ -47,14 +47,26 @@ import {
   verticalAlign,
   } from 'styled-system';
 
+import { Divider } from '@blueprintjs/core'
+
 
 export const Box = styled.div`
   ${space}
   ${width}
+  ${height}
   ${margin}
   ${padding}
   ${color}
 `;
+
+export const DividerBox = styled(Divider)`
+  ${space}
+  ${width}
+  ${height}
+  ${margin}
+  ${padding}
+  ${color}
+`
 
 export const TextBox = styled(Box)`
   ${fontSize}

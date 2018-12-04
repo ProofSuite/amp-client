@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgWan = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <path
       fill="#FFF"
       fillRule="evenodd"

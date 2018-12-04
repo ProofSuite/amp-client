@@ -5,7 +5,7 @@ import Notifier from '../../components/Notifier'
 import ConnectionStatus from '../../components/ConnectionStatus'
 import { IntlProvider } from 'react-intl'
 import { Link, NavLink } from 'react-router-dom'
-import { Footer, Indent } from '../../components/Common'
+import { Footer, Indent, Colors } from '../../components/Common'
 
 import styled from 'styled-components'
 import {
@@ -116,6 +116,8 @@ const Header = styled.header``
 
 const MainContent = styled.main`
   flex: 1;
+  width: 100%;
+  
 `
 
 const NavbarHeaderBox = styled.div`
