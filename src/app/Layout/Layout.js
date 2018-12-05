@@ -2,7 +2,9 @@
 import type { Node } from 'react'
 import React from 'react'
 import Notifier from '../../components/Notifier'
+import ampLogo from '../../assets/amp_black.png'
 import ConnectionStatus from '../../components/ConnectionStatus'
+
 import { IntlProvider } from 'react-intl'
 import { NavLink } from 'react-router-dom'
 import { Footer, Indent } from '../../components/Common'
@@ -71,7 +73,7 @@ class Layout extends React.PureComponent<Props, State> {
               <NavbarGroup align={Alignment.LEFT}>
                 <NavbarHeading>
                   <NavbarHeaderBox>
-                    <img src="amp_black.svg" class="Profile-image" height={25} width={25} />
+                    <img src={ampLogo} class="Profile-image" height={25} width={25} />
                     <Indent />
                     <Tag minimal intent="success">BETA</Tag>
                   </NavbarHeaderBox>

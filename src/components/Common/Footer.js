@@ -3,6 +3,7 @@ import Colors from './Colors';
 import styled from 'styled-components';
 import Indent from './Indent'
 import { MutedText } from './Text'
+import ampLogo from '../../assets/amp_black.png'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faDiscord, faMedium, faFacebook, faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -13,7 +14,7 @@ const Footer = () => (
     <Container>
       <TopSection>
         <LogosWrapper>
-        <img src="amp_black.png" class="Profile-image" width="120" height="120" />
+        <img src={ampLogo} class="Profile-image" width="120" height="120" />
         <FooterText>
             <FooterSatoshiQuote>"03/Jan/2009 Chancellor on brink of second bailout for banks"</FooterSatoshiQuote>
             <FooterFirstBlock>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa in Block 1</FooterFirstBlock>
