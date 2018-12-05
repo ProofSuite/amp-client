@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Box } from './Box'
+import ampLogo from '../../assets/amp_black.png'
 
 const AMPLogo = (props: { height: number, width: number }) => {
     const { height, width } = props
@@ -9,7 +10,7 @@ const AMPLogo = (props: { height: number, width: number }) => {
   return (
     <Wrapper>
       <Box p={3}>
-        <img src="amp_black.png" class="Profile-image" width={width} height={height} />
+        <img src={ampLogo} class="Profile-image" width={width} height={height} />
       </Box>
     </Wrapper>
   );
