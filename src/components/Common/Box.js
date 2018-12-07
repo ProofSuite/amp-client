@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { 
   space, 
-  width, 
-  margin, 
-  padding, 
+  width,  
   fontSize, 
   color, 
   textAlign, 
@@ -18,7 +16,6 @@ import {
   flex,
   flexWrap,
   justifyItems,
-  order,
   gridGap,
   gridColumnGap,
   gridRowGap,
@@ -54,8 +51,6 @@ export const Box = styled.div`
   ${space}
   ${width}
   ${height}
-  ${margin}
-  ${padding}
   ${color}
 `;
 
@@ -63,8 +58,6 @@ export const DividerBox = styled(Divider)`
   ${space}
   ${width}
   ${height}
-  ${margin}
-  ${padding}
   ${color}
 `
 
