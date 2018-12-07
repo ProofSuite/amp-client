@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
-import { Button, Switch, Checkbox, InputGroup, Tag } from '@blueprintjs/core';
-import { RowSpaceBetween, CryptoIcon, Colors } from '../Common';
+import { Button, Switch, Checkbox, InputGroup, Tag, Position } from '@blueprintjs/core';
+import { RowSpaceBetween, CryptoIcon, Colors, AMPLogo, Centered, LargeText } from '../Common';
+import Help from '../../components/Help'
 import styled from 'styled-components';
 
 type TokenData = {
@@ -28,6 +29,7 @@ type Props = {
   toggleAllowance: string => void,
   toggleZeroBalanceToken: void => void,
   redirectToTradingPage: string => void,
+  totalFilteredTokens: number
 };
 
 const DepositTableRenderer = (props: Props) => {
@@ -36,7 +38,7 @@ const DepositTableRenderer = (props: Props) => {
     toggleZeroBalanceToken,
     searchInput,
     handleSearchInputChange,
-    tokenDataLength,
+    totalFilteredTokens
   } = props;
 
   return (
@@ -57,7 +59,14 @@ const DepositTableRenderer = (props: Props) => {
         <TableHeader>
           <TableHeaderCell>Token Name</TableHeaderCell>
           <TableHeaderCell>Balances</TableHeaderCell>
-          <TableHeaderCell>Unlocked</TableHeaderCell>
+          <TableHeaderCell>
+          Unlocked 
+          <span> </span>
+          <Help position={Position.RIGHT}>
+            By unlocking tokens, you allow the AMP smart-contract to settle trades you have approved.
+            Unlocking both tokens is required before starting trading a given pair.
+          </Help>
+          </TableHeaderCell>
           <TableHeaderCell style={{ width: '70%' }}></TableHeaderCell>
         </TableHeader>
       </Table>
@@ -70,8 +79,13 @@ const DepositTableRenderer = (props: Props) => {
             <BaseTokenRows {...props} />
           </TableBody>
         </Table>
-        {tokenDataLength === 0 && <NoToken>No tokens</NoToken>}
       </TableBodyContainer>
+      {totalFilteredTokens === 0 && (
+          <Centered>
+            <AMPLogo height="150em" width="150em" />
+            <LargeText muted>No tokens to display!</LargeText>
+          </Centered>
+      )}
     </TableSection>
   );
 };
@@ -93,7 +107,7 @@ const ETHRow = (props: Props) => {
     <Row key='ETH'>
       <Cell>
         <TokenNameWrapper>
-          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+          <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -151,7 +165,7 @@ const WETHRow = (props: Props) => {
     <Row key='WETH'>
       <Cell>
         <TokenNameWrapper>
-          <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+          <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
@@ -208,7 +222,7 @@ const QuoteTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+            <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
@@ -261,7 +275,7 @@ const BaseTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <CryptoIcon size={38} color={Colors.BLUE5} name={symbol} />
+            <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>

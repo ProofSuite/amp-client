@@ -1,52 +1,102 @@
-// import styled from 'styled-components';
-// import { space, width, margin, padding } from 'styled-system';
+import styled from 'styled-components';
+import { 
+  space, 
+  width,  
+  fontSize, 
+  color, 
+  textAlign, 
+  lineHeight, 
+  fontWeight, 
+  letterSpacing,
+  alignItems,
+  alignContent,
+  justifyContent,
+  flexBasis,
+  flexDirection,
+  flex,
+  flexWrap,
+  justifyItems,
+  gridGap,
+  gridColumnGap,
+  gridRowGap,
+  gridColumn,
+  gridRow,
+  gridAutoFlow,
+  gridAutoColumns,
+  gridAutoRows,
+  gridTemplateColumns,
+  gridTemplateRows,
+  gridTemplateAreas,
+  gridArea,
+  border,
+  justifySelf,
+  alignSelf,
+  textColor,
+  bgColor,
+  fontFamily,
+  fontStyle,
+  height,
+  maxHeight,
+  minHeight,
+  sizeHeight,
+  display,
+  size,
+  verticalAlign,
+  } from 'styled-system';
 
-// const Box = styled.div`
-//   ${space}
-//   ${width}
-//   ${margin}
-//   ${padding}
-// `;
+import { Divider } from '@blueprintjs/core'
 
-// export default Box;
 
-import system from 'system-components';
+export const Box = styled.div`
+  ${space}
+  ${width}
+  ${height}
+  ${color}
+`;
 
-const Box = system(
-  // core
-  'space',
-  'width',
-  'color',
-  'fontSize',
-  // borders
-  'borders',
-  'borderColor',
-  'borderRadius',
-  // layout
-  'display',
-  'maxWidth',
-  'minWidth',
-  'height',
-  'maxHeight',
-  'minHeight',
-  // flexbox
-  'alignItems',
-  'alignContent',
-  'justifyContent',
-  'flexWrap',
-  'flexDirection',
-  'flex',
-  'flexBasis',
-  'justifySelf',
-  'alignSelf',
-  'order',
-  // position
-  'position',
-  'zIndex',
-  'top',
-  'right',
-  'bottom',
-  'left',
-);
+export const DividerBox = styled(Divider)`
+  ${space}
+  ${width}
+  ${height}
+  ${color}
+`
 
-export default Box
+export const TextBox = styled(Box)`
+  ${fontSize}
+  ${textAlign}
+  ${justifySelf}
+  ${alignSelf}
+`
+
+export const Flex = styled(Box)`
+  display: flex;
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+  ${flexDirection}
+`
+
+export const FlexRow = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
+export const FlexColumn = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
+export const FlexItem = styled.div`
+  ${flex}
+  ${justifySelf}
+  ${alignSelf}
+`

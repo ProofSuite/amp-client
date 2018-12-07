@@ -72,6 +72,6 @@ export type Store = ReduxStore<State, Action>;
 export type Dispatch = ReduxDispatch<Action>;
 export type GetState = () => State;
 export type PromiseAction = Promise<Action>;
-export type ExtraArgument = { socket: Object } & { api: Object } & { trading: Object } & { mixpanel: Object };
+export type ExtraArgument = { socket: Object } & { api: Object } & { trading: Object } & { mixpanel: Object } & { provider: Object };
 export type ThunkAction = (dispatch: Dispatch, getState: GetState, ExtraArgument) => any;
 // export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;

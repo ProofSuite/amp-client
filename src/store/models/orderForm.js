@@ -69,6 +69,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         baseTokenSymbol,
         quoteTokenSymbol,
         baseTokenDecimals,
+        quoteTokenDecimals,
         makeFee,
         takeFee,
       } = pair
@@ -101,6 +102,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let baseAmount = utils.bigNumberify(order.amount)
       let quoteAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pairMultiplier)
       let minQuoteAmount = minOrderAmount(makeFee, takeFee)
+      let formattedMinQuoteAmount = utils.formatUnits(minQuoteAmount, quoteTokenDecimals)
 
       //In case the order is a sell, the fee is subtracted from the received amount of quote token so there is no requirement
       order.side === 'BUY'
@@ -109,7 +111,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       if (quoteAmount.lt(minQuoteAmount)) {
         return dispatch(
-          appActionCreators.addErrorNotification({ message: `Order quote amount too low. Required minimum is ${minQuoteAmount.toString()} ${quoteTokenSymbol}`})
+          appActionCreators.addErrorNotification({ message: `Order value should be higher than ${formattedMinQuoteAmount} ${quoteTokenSymbol}`})
         )
       }
   

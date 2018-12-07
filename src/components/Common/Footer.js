@@ -2,6 +2,8 @@ import React from 'react';
 import Colors from './Colors';
 import styled from 'styled-components';
 import Indent from './Indent'
+import { MutedText } from './Text'
+import ampLogo from '../../assets/amp_black.png'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faDiscord, faMedium, faFacebook, faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -12,9 +14,11 @@ const Footer = () => (
     <Container>
       <TopSection>
         <LogosWrapper>
-        <img src="amp_black.png" class="Profile-image" width="120" height="120" />
-        <FooterText>The AMP trading platform settles trades directly on the blockchain.
-        Trading fees are distributed to the Proof Suite community.</FooterText>
+        <img src={ampLogo} class="Profile-image" width="120" height="120" />
+        <FooterText>
+            <FooterSatoshiQuote>"03/Jan/2009 Chancellor on brink of second bailout for banks"</FooterSatoshiQuote>
+            <FooterFirstBlock>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa in Block 1</FooterFirstBlock>
+        </FooterText>
         </LogosWrapper>
         <LinksWrapper className="content">
           <List>
@@ -82,14 +86,14 @@ const Footer = () => (
               </a>
               </NormalListItem>
             <NormalListItem>
-              <a href="https://medium.com/proof-of-fintech" target="_blank">
+              <a href="https://facebook.com/proofsuite" target="_blank">
                 <FontAwesomeIcon icon={faFacebook} />
                 <Indent />
                 <LinkText>Facebook</LinkText>
               </a>
             </NormalListItem>
             <NormalListItem>
-              <a href="https://www.proofsuite.com/#togen" target="_blank">
+              <a href="https://medium.com/proof-of-fintech" target="_blank">
                 <FontAwesomeIcon icon={faMedium} />
                 <Indent />
                 <LinkText>Medium</LinkText>
@@ -133,11 +137,11 @@ const Wrapper = styled.div.attrs({
 `;
 
 const Container = styled.div`
-  width: 70%;
+  width: 80%;
   margin: 0px auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 `;
 
@@ -178,9 +182,21 @@ const HeadListItem = styled.li`
   color: ${Colors.GRAY2};
 `;
 
-const FooterText = styled.p`
+const FooterText = styled.div`
+
+`;
+
+const FooterSatoshiQuote = styled.div`
   color: ${Colors.GRAY5};
+  font-size: 12px;
   text-align: center;
+`
+
+const FooterFirstBlock = styled.div`
+  width: 370px;
+  color: ${Colors.GRAY1};
+  font-size: 10px;
+  text-align: right;
 `;
 
 const LinkText = styled.a`

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SvgNano = props => (
-  <svg width={64} height={64} {...props}>
+  <svg width={props.width || 64} height={props.height || 64} {...props}>
     <g fill="none">
       <circle fill="#4A90E2" cx={16} cy={16} r={16} />
       <path

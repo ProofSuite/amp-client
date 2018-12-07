@@ -1,5 +1,6 @@
 import React from 'react';
-import { Classes, Popover, Tooltip } from "@blueprintjs/core";
+import { Classes, Popover, Tooltip, Icon } from "@blueprintjs/core";
+import { Colors } from '../Common'
 
 function Help(props) {
   const {
@@ -17,12 +18,10 @@ function Help(props) {
       disabled={disabled}
     >
       <Tooltip
-        className={Classes.TOOLTIP_INDICATOR}
-        // content={label}
         position={position}
         disabled={disabled}
       >
-        ?
+        <Icon icon="help" color={Colors.GRAY1}/>
       </Tooltip>
     </Popover>
   );
