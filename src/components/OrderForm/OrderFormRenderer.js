@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Position, Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
-import { Flex, Box, HeaderText, MutedText } from '../Common'
+import { Flex, Box, HeaderText, MutedText, RedGlowingButton, GreenGlowingButton } from '../Common'
 import styled from 'styled-components'
 import Help from '../../components/Help'
 import { utils } from 'ethers'
@@ -15,19 +15,21 @@ type Props = {
   amount: string,
   maxAmount: string,
   total: string,
-  baseToken: string,
-  quoteToken: string,
+  baseTokenSymbol: string,
+  quoteTokenSymbol: string,
   isOpen: boolean,
   insufficientBalance: boolean,
   loggedIn: boolean,
   onInputChange: Object => void,
   handleChangeOrderType: string => void,
   handleSendOrder: void => void,
+  handleUnlockPair: (string, string) => void,
   toggleCollapse: (SyntheticEvent<>) => void,
   makeFee: string,
   takeFee: string,
   baseTokenDecimals: number,
-  quoteTokenDecimals: number
+  quoteTokenDecimals: number,
+  pairIsAllowed: string,
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -41,8 +43,8 @@ const OrderFormRenderer = (props: Props) => {
     amount,
     maxAmount,
     total,
-    baseToken,
-    quoteToken,
+    baseTokenSymbol,
+    quoteTokenSymbol,
     loggedIn,
     onInputChange,
     insufficientBalance,
@@ -52,13 +54,15 @@ const OrderFormRenderer = (props: Props) => {
     makeFee,
     takeFee,
     baseTokenDecimals,
-    quoteTokenDecimals
+    quoteTokenDecimals,
+    pairIsAllowed,
+    handleUnlockPair
   } = props
 
   return (
     <Wrapper className="order-form">
       <OrderFormHeader>
-        <HeaderText text={`${side} ${baseToken}`} />
+        <HeaderText text={`${side} ${baseTokenSymbol}`} />
         <ButtonRow>
           <Button
             text="Limit"
@@ -85,8 +89,8 @@ const OrderFormRenderer = (props: Props) => {
               <LimitOrderPanel
                 loggedIn={loggedIn}
                 side={side}
-                baseToken={baseToken}
-                quoteToken={quoteToken}
+                baseTokenSymbol={baseTokenSymbol}
+                quoteTokenSymbol={quoteTokenSymbol}
                 fraction={fraction}
                 priceType={priceType}
                 price={price}
@@ -100,6 +104,8 @@ const OrderFormRenderer = (props: Props) => {
                 takeFee={takeFee}
                 quoteTokenDecimals={quoteTokenDecimals}
                 baseTokenDecimals={baseTokenDecimals}
+                pairIsAllowed={pairIsAllowed}
+                handleUnlockPair={handleUnlockPair}
               />
             }
           />
@@ -109,8 +115,8 @@ const OrderFormRenderer = (props: Props) => {
               <MarketOrderPanel
                 loggedIn={loggedIn}
                 side={side}
-                baseToken={baseToken}
-                quoteToken={quoteToken}
+                baseTokenSymbol={baseTokenSymbol}
+                quoteTokenSymbol={quoteTokenSymbol}
                 fraction={fraction}
                 priceType={priceType}
                 price={price}
@@ -124,6 +130,8 @@ const OrderFormRenderer = (props: Props) => {
                 takeFee={takeFee}
                 quoteTokenDecimals={quoteTokenDecimals}
                 baseTokenDecimals={baseTokenDecimals}
+                pairIsAllowed={pairIsAllowed}
+                handleUnlockPair={handleUnlockPair}
               />
             }
           />
@@ -133,8 +141,8 @@ const OrderFormRenderer = (props: Props) => {
               <StopLimitOrderPanel
                 loggedIn={loggedIn}
                 side={side}
-                baseToken={baseToken}
-                quoteToken={quoteToken}
+                baseTokenSymbol={baseTokenSymbol}
+                quoteTokenSymbol={quoteTokenSymbol}
                 fraction={fraction}
                 priceType={priceType}
                 price={price}
@@ -149,68 +157,14 @@ const OrderFormRenderer = (props: Props) => {
                 takeFee={takeFee}
                 quoteTokenDecimals={quoteTokenDecimals}
                 baseTokenDecimals={baseTokenDecimals}
+                pairIsAllowed={pairIsAllowed}
+                handleUnlockPair={handleUnlockPair}
               />
             }
           />
         </Tabs>
       </Collapse>
     </Wrapper>
-  )
-}
-
-const MarketOrderPanel = (props: *) => {
-  const { 
-    side, 
-    price, 
-    amount, 
-    maxAmount, 
-    fraction, 
-    total, 
-    quoteToken, 
-    baseToken, 
-    onInputChange, 
-    insufficientBalance, 
-    handleSendOrder, 
-    makeFee,
-    quoteTokenDecimals
-  } = props
-
-
-  return (
-    <React.Fragment>
-      <InputBox>
-        <InputLabel>
-          Price <MutedText>({quoteToken})</MutedText>
-        </InputLabel>
-        <PriceInputGroup name="price" onChange={onInputChange} placeholder={price} disabled />
-      </InputBox>
-      <InputBox>
-        <InputLabel>Amount <MutedText>({baseToken})</MutedText></InputLabel>
-        <PriceInputGroup
-          name="amount"
-          value={amount}
-          placeholder="Amount"
-          onChange={onInputChange}
-          intent={insufficientBalance ? 'danger' : null}
-          rightElement={insufficientBalance ? <Total>Insufficient Balance</Total> : null}
-        />
-      </InputBox>
-      <RadioButtonsWrapper>
-        <RadioButton value={25} fraction={fraction} onInputChange={onInputChange} />
-        <RadioButton value={50} fraction={fraction} onInputChange={onInputChange} />
-        <RadioButton value={75} fraction={fraction} onInputChange={onInputChange} />
-        <RadioButton value={100} fraction={fraction} onInputChange={onInputChange} />
-        <Flex pl={2} pt={1} >
-          <Help position={Position.RIGHT}>
-            Select fraction of total possible value you can trade at the currently selected price.
-          </Help>
-        </Flex>
-      </RadioButtonsWrapper>
-      { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
-      { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
-      { makeFee && <MaxAmount>Fee: {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteToken}</MaxAmount> }
-      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
-    </React.Fragment>
   )
 }
 
@@ -222,26 +176,28 @@ const LimitOrderPanel = props => {
     maxAmount, 
     fraction, 
     total, 
-    quoteToken, 
-    baseToken, 
+    quoteTokenSymbol, 
+    baseTokenSymbol, 
     onInputChange, 
     insufficientBalance, 
     handleSendOrder, 
     makeFee,
     quoteTokenDecimals,
+    pairIsAllowed,
+    handleUnlockPair
   } = props
 
   return (
     <React.Fragment>
       <InputBox>
         <InputLabel>
-          Price <MutedText>({quoteToken})</MutedText>
+          Price <MutedText>({quoteTokenSymbol})</MutedText>
         </InputLabel>
         <PriceInputGroup name="price" onChange={onInputChange} value={price} placeholder="Price" />
       </InputBox>
       <InputBox>
         <InputLabel>
-          Amount <MutedText>({baseToken})</MutedText>
+          Amount <MutedText>({baseTokenSymbol})</MutedText>
         </InputLabel>
         <PriceInputGroup
           name="amount"
@@ -263,10 +219,98 @@ const LimitOrderPanel = props => {
           </Help>
         </Flex>
       </RadioButtonsWrapper>
-      { total && <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount> }
-      { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount> }
-      { makeFee && <MaxAmount> Fee: {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteToken}</MaxAmount>}
-      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
+      { total && <MaxAmount>Total: ~{total} {quoteTokenSymbol}</MaxAmount> }
+      { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseTokenSymbol}</MaxAmount> }
+      { makeFee && <MaxAmount> Fee: {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteTokenSymbol}</MaxAmount>}
+
+      {
+        side === 'BUY' 
+        ? (
+          <GreenGlowingButton
+            intent="success"
+            text={pairIsAllowed ? side : `Unlock ${baseTokenSymbol}/${quoteTokenSymbol}`}
+            name="order"
+            onClick={pairIsAllowed ? handleSendOrder : handleUnlockPair}
+            disabled={insufficientBalance} 
+            fill
+          />
+        )
+        : (
+          <RedGlowingButton
+            intent="danger"
+            text={pairIsAllowed ? side : `Unlock ${baseTokenSymbol}/${quoteTokenSymbol}`}
+            name="order"
+            onClick={pairIsAllowed ? handleSendOrder : handleUnlockPair}
+            disabled={insufficientBalance} 
+            fill 
+          />
+        )
+      }
+    </React.Fragment>
+  )
+}
+
+const MarketOrderPanel = (props: *) => {
+  const { 
+    side, 
+    price, 
+    amount, 
+    maxAmount, 
+    fraction, 
+    total, 
+    quoteTokenSymbol, 
+    baseTokenSymbol, 
+    onInputChange, 
+    insufficientBalance, 
+    handleSendOrder, 
+    makeFee,
+    quoteTokenDecimals,
+    pairIsAllowed,
+    handleUnlockPair
+  } = props
+
+
+  return (
+    <React.Fragment>
+      <InputBox>
+        <InputLabel>
+          Price <MutedText>({quoteTokenSymbol})</MutedText>
+        </InputLabel>
+        <PriceInputGroup name="price" onChange={onInputChange} placeholder={price} disabled />
+      </InputBox>
+      <InputBox>
+        <InputLabel>Amount <MutedText>({baseTokenSymbol})</MutedText></InputLabel>
+        <PriceInputGroup
+          name="amount"
+          value={amount}
+          placeholder="Amount"
+          onChange={onInputChange}
+          intent={insufficientBalance ? 'danger' : null}
+          rightElement={insufficientBalance ? <Total>Insufficient Balance</Total> : null}
+        />
+      </InputBox>
+      <RadioButtonsWrapper>
+        <RadioButton value={25} fraction={fraction} onInputChange={onInputChange} />
+        <RadioButton value={50} fraction={fraction} onInputChange={onInputChange} />
+        <RadioButton value={75} fraction={fraction} onInputChange={onInputChange} />
+        <RadioButton value={100} fraction={fraction} onInputChange={onInputChange} />
+        <Flex pl={2} pt={1} >
+          <Help position={Position.RIGHT}>
+            Select fraction of total possible value you can trade at the currently selected price.
+          </Help>
+        </Flex>
+      </RadioButtonsWrapper>
+      { total && <MaxAmount>Total: ~{total} {quoteTokenSymbol}</MaxAmount> }
+      { maxAmount && <MaxAmount>Max: ~{maxAmount} {baseTokenSymbol}</MaxAmount> }
+      { makeFee && <MaxAmount>Fee: {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteTokenSymbol}</MaxAmount> }
+      <Button 
+        intent={side === 'BUY' ? 'success' : 'danger'} 
+        text={side} 
+        name="order" 
+        onClick={pairIsAllowed ? handleSendOrder : handleUnlockPair}
+        disabled={insufficientBalance}
+        fill
+      />
     </React.Fragment>
   )
 }
@@ -278,26 +322,28 @@ const StopLimitOrderPanel = (props: *) => {
     amount, 
     maxAmount, 
     total, 
-    quoteToken, 
-    baseToken, 
+    quoteTokenSymbol, 
+    baseTokenSymbol, 
     onInputChange, 
     insufficientBalance, 
     handleSendOrder, 
     makeFee,
-    quoteTokenDecimals
+    quoteTokenDecimals,
+    handleUnlockPair,
+    pairIsAllowed
     } = props
 
   return (
     <React.Fragment>
       <InputBox>
         <InputLabel>
-          Stop Price <MutedText>({quoteToken})</MutedText>
+          Stop Price <MutedText>({quoteTokenSymbol})</MutedText>
         </InputLabel>
         <PriceInputGroup name="stopPrice" onChange={onInputChange} value={stopPrice} placeholder="Stop Price" />
       </InputBox>
       <InputBox>
         <InputLabel>
-          Limit Price <MutedText>({quoteToken})</MutedText>
+          Limit Price <MutedText>({quoteTokenSymbol})</MutedText>
         </InputLabel>
         <PriceInputGroup
           name="limitPrice"
@@ -310,20 +356,27 @@ const StopLimitOrderPanel = (props: *) => {
       </InputBox>
       <InputBox>
         <InputLabel>
-          Amount <MutedText>({baseToken})</MutedText>
+          Amount <MutedText>({baseTokenSymbol})</MutedText>
         </InputLabel>
         <PriceInputGroup
           name="amount"
           onChange={onInputChange}
           value={amount}
           placeholder="Amount"
-          rightElement={<Total>Total: ~{total} {quoteToken}</Total>}
+          rightElement={<Total>Total: ~{total} {quoteTokenSymbol}</Total>}
         />
       </InputBox>
-      <MaxAmount>Total: ~{total} {quoteToken}</MaxAmount>
-      <MaxAmount>Max: ~{maxAmount} {baseToken}</MaxAmount>
-      <MaxAmount>Fee: {makeFee} {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteToken} </MaxAmount>
-      <Button intent={side === 'BUY' ? 'success' : 'danger'} text={side} name="order" onClick={handleSendOrder} disabled={insufficientBalance} fill />
+      <MaxAmount>Total: ~{total} {quoteTokenSymbol}</MaxAmount>
+      <MaxAmount>Max: ~{maxAmount} {baseTokenSymbol}</MaxAmount>
+      <MaxAmount>Fee: {makeFee} {utils.formatUnits(makeFee, quoteTokenDecimals)} {quoteTokenSymbol} </MaxAmount>
+      <Button 
+        intent={side === 'BUY' ? 'success' : 'danger'} 
+        text={side} 
+        name="order"
+        onClick={pairIsAllowed ? handleSendOrder : handleUnlockPair}
+        disabled={insufficientBalance} 
+        fill
+      />
     </React.Fragment>
   )
 }

@@ -24,7 +24,6 @@ export async function updateAllowance(
 
 export async function updateExchangeAllowance(
   tokenAddress: string,
-  address: string,
   balance: Object | number,
   txConfirmHandler: boolean => void
 ) {
@@ -39,5 +38,3 @@ export async function updateExchangeAllowance(
     ? txConfirmHandler(true)
     : txConfirmHandler(false)
 }
-
-

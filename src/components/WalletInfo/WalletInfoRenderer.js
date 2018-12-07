@@ -3,7 +3,7 @@ import { Card, Button, Tag, Callout } from '@blueprintjs/core';
 import styled from 'styled-components';
 import TransferTokensModal from '../../components/TransferTokensModal';
 import TokenBalanceChart from '../../components/TokenBalanceChart'
-import { Box, Flex, Text, TextDiv, TextBox } from '../Common'
+import { Box, Colors, Flex, Text, TextDiv, TextBox } from '../Common'
 import { Fonts } from '../Common/Variables'
 
 const WalletInfoRenderer = props => {
@@ -48,10 +48,10 @@ const WalletInfoRenderer = props => {
           <TokenBalanceChart />
         </TokenBalanceChartBox>
         <TextBox>
-          <Button
+          <GlowingButton
             fill
             onClick={handleModalClose}
-            text="START NEW TRANSACTION"
+            text="NEW TRANSACTION"
             intent="primary"
             large
           />
@@ -65,25 +65,13 @@ const WalletInfoCard = styled(Card)`
   height: 92vh;
 `
 
-const BalanceBox = styled.p`
-  font-size: 14px;
-  margin: auto;
-  margin-left: 20px;
+const GlowingButton = styled(Button)`
+  box-shadow: ${"0 3px 20px " + Colors.BLUE1 + "!important;"}
+  &hover: {
+    background-color: ${Colors.BLUE5}
+    box-shadow: ${"0 3px 20px " + Colors.BLUE5 + "!important;"}
+  }
 `
-
-const AccountAddressBox = styled.p`
-  font-size: 14px;
-  margin: auto;
-  margin-left: 20px;
-`
-
-// const TextBox = styled.div`
-//   display: flex;
-//   margin-bottom: 10px;
-//   justify-content: left;
-//   align-content: middle;
-//   text-align: center;
-// `;
 
 const TokenBalanceChartBox = styled.div`
   display: flex;
