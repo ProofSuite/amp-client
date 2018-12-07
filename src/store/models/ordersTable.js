@@ -13,7 +13,9 @@ export default function ordersTableSelector(state: State) {
 }
 
 export const cancelOrder = (hash: string): ThunkAction => {
-  return async (dispatch, getState, { socket }) => {
+  return async (dispatch, getState, { socket, mixpanel }) => {
+    mixpanel.track('cancel-order');
+
     try {
       let signer = getSigner()
       let orderCancelPayload = await signer.createOrderCancel(hash)

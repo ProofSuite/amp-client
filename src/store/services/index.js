@@ -3,4 +3,6 @@ import * as socket from './socket'
 import * as storage from './storage'
 import * as provider from './provider'
 
-export { api, socket, storage, provider }
+const { mixpanel } = window;
+
+export { api, socket, storage, mixpanel, provider };
