@@ -25,7 +25,7 @@ import TUSD from './Icons/icon/tusd.js'
 import WTC from './Icons/icon/wtc.js'
 import ZRX from './Icons/icon/zrx.js'
 import ETH from './Icons/icon/eth.js'
-
+import USD from './Icons/icon/usd.js'
 
 
 const ColoredCryptoIcon = ({ name, color, size }) => {
@@ -51,6 +51,8 @@ const ColoredCryptoIcon = ({ name, color, size }) => {
     case 'OMG': return <OMG witdh={size} height={size} viewBox="0 0 32 32"  />
     case 'PPT': return <PPT witdh={size} height={size} viewBox="0 0 32 32"  />
     // case 'PRFT': return <PRFT witdh={size} height={size} viewBox="0 0 32 32"  />
+    case 'DAI': return <USD witdh={size} height={size} viewBox="0 0 32 32"  />
+    case 'USDC': return <USD witdh={size} height={size} viewBox="0 0 32 32"  />
     case 'REP': return <REP witdh={size} height={size} viewBox="0 0 32 32"  />
     case 'SNT': return <SNT witdh={size} height={size} viewBox="0 0 32 32"  />
     case 'TRX': return <TRX witdh={size} height={size} viewBox="0 0 32 32"  />

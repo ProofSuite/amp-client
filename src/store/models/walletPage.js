@@ -12,6 +12,8 @@ import type { Token } from '../../types/common'
 import type { State, ThunkAction } from '../../types'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 
+import { parseQueryAccountDataError } from '../../config/errors'
+
 export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let accountDomain = getAccountDomain(state)
@@ -44,9 +46,12 @@ export default function walletPageSelector(state: State) {
 }
 
 export function queryAccountData(): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { api }) => {
     const state = getState()
     const accountAddress = getAccountDomain(state).address()
+
+    let balances = []
+    let allowances = []
 
     try {
       let tokens = getTokenDomain(state).tokens()
@@ -55,16 +60,29 @@ export function queryAccountData(): ThunkAction {
       tokens = quotes.concat(tokens).filter((token: Token) => token.symbol !== 'ETH')
       if (!accountAddress) throw new Error('Account address is not set')
 
-      const etherBalance = await accountBalancesService.queryEtherBalance(accountAddress)
-      const tokenBalances = await accountBalancesService.queryTokenBalances(accountAddress, tokens)
-      const allowances = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
-      const balances = [etherBalance].concat(tokenBalances)
       const currentBlock = await getCurrentBlock()
-
+      if (!currentBlock) throw new Error('')
       dispatch(accountActionTypes.updateCurrentBlock(currentBlock))
-      dispatch(actionCreators.updateBalances(balances))
-      dispatch(actionCreators.updateAllowances(allowances))
 
+      let pairs = await api.fetchPairs()
+      dispatch(actionCreators.updateTokenPairs(pairs))
+
+      let exchangeAddress = await api.getExchangeAddress()
+      dispatch(actionCreators.updateExchangeAddress(exchangeAddress))
+
+      let etherBalance = await accountBalancesService.queryEtherBalance(accountAddress)
+      balances.push(etherBalance)
+
+      let { errors: tokenBalanceErrors, tokenBalances } = await accountBalancesService.queryTokenBalances(accountAddress, tokens)
+      balances.concat(tokenBalances)
+
+      let { errors: tokenAllowanceErrors, tokenAllowances } = await accountBalancesService.queryExchangeTokenAllowances(accountAddress, tokens)
+      allowances = tokenAllowances
+
+      balances = [etherBalance].concat(tokenBalances)
+      console.log(tokenBalanceErrors)
+      console.log(tokenAllowanceErrors)
+      
       await accountBalancesService.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance))
       )
@@ -75,9 +93,14 @@ export function queryAccountData(): ThunkAction {
       await accountBalancesService.subscribeTokenAllowances(accountAddress, tokens, allowance => {
         return dispatch(actionCreators.updateAllowance(allowance))
       })
+
     } catch (e) {
-      dispatch(notifierActionCreators.addErrorNotification({ message: 'Could not connect to Ethereum network' }))
       console.log(e)
+      let message = parseQueryAccountDataError(e)
+      dispatch(notifierActionCreators.addErrorNotification({ message }))
+    } finally {
+      dispatch(actionCreators.updateBalances(balances))
+      dispatch(actionCreators.updateAllowances(allowances))
     }
   }
 }

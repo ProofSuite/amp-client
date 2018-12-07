@@ -8,7 +8,6 @@ export default {
 
 export const errorMessages = {
   invalidJSON: 'invalid json response',
-  ioTimeout: 'i/o timeout',
   insufficientBuyTokenBalance: 'insufficient buy token balance',
   insufficientSellTokenBalace: 'insufficient sell token balance',
   invalidAddressInputArgument: 'invalid input argument (arg="_to", reason="invalid address", value=null, version=4.0.4)',
@@ -16,7 +15,21 @@ export const errorMessages = {
   invalidDecimalValue: 'invalid decimal value (arg="value"',
   cannotReadLowerCaseOfUndefined: "Cannot read property 'toLowerCase' of undefined",
   gasRequiredExceedsAllowance: 'gas required exceeds allowance or always failing transaction',
-  metamaskUserDeniedSignature: 'MetaMask Message Signature: User denied message signature.'
+  metamaskUserDeniedSignature: 'MetaMask Message Signature: User denied message signature.',
+  ioTimeout: 'timeout',
+  callException: 'call exception',
+  contractNotDeployed: 'contract not deployed'
+}
+
+
+export const parseQueryAccountDataError = (error: Error) => {
+  let errorMessage = error.message
+
+  if (errorMessage.includes(errorMessages.invalidJSON)) return 'Could not connect to Ethereum network'
+  if (errorMessage.includes(errorMessages.contractNotDeployed)) return 'Metamask connection slow. All balances could not be retrieved.'
+  if (errorMessage.includes(errorMessages.callException)) return 'Metamask connection slow. All balances could not be retrieved.'
+
+  return 'Could not connect to Ethereum network'
 }
 
 

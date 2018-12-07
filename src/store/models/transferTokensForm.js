@@ -59,7 +59,9 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
 };
 
 export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams): ThunkAction => {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('send-ether-tx');
+
     try {
       let signer = getSigner();
 
@@ -92,13 +94,16 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
 };
 
 export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkAction => {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('validate-transfer-token-tx');
+
     try {
       let { receiver, amount, tokenAddress } = params;
       let signer = getSigner();
 
       let token = new Contract(tokenAddress, ERC20, signer);
-      let amountTokens = utils.parseEther(amount)
+      let decimals = await token.decimals.call()
+      let amountTokens = utils.parseUnits(amount, decimals)
 
       let estimatedGas = await token.estimate.transfer(receiver, amountTokens);
       estimatedGas = estimatedGas.toNumber();
@@ -113,18 +118,21 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
 };
 
 export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkAction => {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('send-transfer-tokens-tx');
+
     try {
       let { receiver, amount, gas, gasPrice, tokenAddress } = params;
       let signer = getSigner();
       let token = new Contract(tokenAddress, ERC20, signer);
+      let decimals = await token.decimals.call()
+      let amountTokens = utils.parseUnits(amount, decimals)
 
       let txOpts = {
         gasLimit: parseFloat(gas) || 0,
         gasPrice: parseFloat(gasPrice) || 2 * 10e9,
       };
 
-      let amountTokens = utils.parseEther(amount)
       let tx = await token.transfer(receiver, amountTokens, txOpts);
       dispatch(actionCreators.sendTx(tx.hash));
 

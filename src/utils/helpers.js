@@ -44,6 +44,11 @@ export const isJson = (text: *) => {
   )
 }
 
+
+export const computeTokenAmount = (amount: Object, tokenDecimals: number) => {
+  return utils.bigNumberify(amount).div(utils.bigNumberify(10).pow(tokenDecimals)).toString()
+}
+
 export const computePricepoint = ({ price, priceMultiplier, quoteMultiplier, precisionMultiplier }: *) => {
     let a = price * precisionMultiplier
     let b = a.toFixed(0)
@@ -67,4 +72,32 @@ export const computePairMultiplier = ({ priceMultiplier, baseMultiplier, quoteMu
 }
 
 
+export const max = (a: Object, b: Object) => {
+  let bigA = utils.bigNumberify(a)
+  let bigB = utils.bigNumberify(b)
 
+  if (bigA.gte(bigB)) {
+    return bigA
+  } else {
+    return bigB
+  }
+}
+
+export const min = (a: Object, b: Object) => {
+  let bigA = utils.bigNumberify(a)
+  let bigB = utils.bigNumberify(b)
+
+  if (bigA.lte(bigB)) {
+    return bigA
+  } else {
+    return bigB
+  }
+}
+
+export const minOrderAmount = (makeFee: string, takeFee: string) => {
+  let bigMakeFee = utils.bigNumberify(makeFee)
+  let bigTakeFee = utils.bigNumberify(takeFee)
+  let minAmount = (bigMakeFee.mul(2)).add(bigTakeFee.mul(2))
+  
+  return minAmount
+}

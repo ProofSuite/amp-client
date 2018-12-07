@@ -2,7 +2,7 @@
 import { quoteTokens } from '../../config/quotes'
 import { tokens } from '../../config/tokens'
 import { generateTokenPairs, getPairSymbol, getBaseToken } from '../../utils/tokens'
-import type { Token, TokenPair, TokenPairState, TokenPairDataMap } from '../../types/tokens'
+import type { Token, TokenPair, TokenPairs, TokenPairState, TokenPairDataMap } from '../../types/tokens'
 
 const defaultTokenPairs = generateTokenPairs(quoteTokens, tokens)
 
@@ -31,35 +31,31 @@ export const currentPairUpdated = (pair: string) => {
   return event
 }
 
-export const tokenPairUpdated = (baseToken: Token) => {
+export const tokenPairsUpdated = (pairs: TokenPairs) => {
   const event = (state: TokenPairState) => {
-    if (baseToken.symbol === 'ETH') return
-    let newState = quoteTokens.reduce(
-      (result, quoteToken) => {
-        if (quoteToken.symbol === baseToken.symbol) return result
-        if (Object.keys(state.byPair).indexOf(getPairSymbol(quoteToken.symbol, baseToken.symbol)) !== -1) return result
-
-        let pairSymbol = getPairSymbol(baseToken.symbol, quoteToken.symbol)
-
-        result.byPair[pairSymbol] = {
+    let byPair = pairs.reduce(
+      (result, pair) => {
+        let pairSymbol = getPairSymbol(pair.baseTokenSymbol, pair.quoteTokenSymbol)
+        result[pairSymbol] = {
           pair: pairSymbol,
-          baseTokenSymbol: baseToken.symbol,
-          quoteTokenSymbol: quoteToken.symbol,
-          baseTokenAddress: baseToken.address,
-          quoteTokenAddress: quoteToken.address,
-          baseTokenDecimals: baseToken.decimals,
-          quoteTokenDecimals: quoteToken.decimals,
-          pricepointMultiplier: 10 ** 9
+          baseTokenSymbol: pair.baseTokenSymbol,
+          quoteTokenSymbol: pair.quoteTokenSymbol,
+          baseTokenAddress: pair.baseTokenAddress,
+          quoteTokenAddress: pair.quoteTokenAddress,
+          baseTokenDecimals: pair.baseTokenDecimals,
+          quoteTokenDecimals: pair.quoteTokenDecimals,
+          makeFee: pair.makeFee,
+          takeFee: pair.takeFee,
         }
 
         return result
       },
-      { byPair: {} }
+      { }
     )
 
     return {
       ...state,
-      byPair: { ...state.byPair, ...newState.byPair }
+      byPair,
     }
   }
 

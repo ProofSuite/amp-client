@@ -52,22 +52,62 @@ export async function updateExchangeAllowance(
     : txConfirmHandler(false)
 }
 
+
+// Promise.all(state.routes.map(function(route) {
+//   return route.handler.promiseHandler().catch(function(err) {
+//     return err;
+//   });
+// }))
+// .then(function(arrayOfValuesOrErrors) {
+//   // handling of my array containing values and/or errors. 
+// })
+// .catch(function(err) {
+//   console.log(err.message); // some coding error in handling happened
+// });
+
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
-  let balances
   const provider = getProvider()
 
-  const balancePromises = tokens.map(async token => {
+  const balancePromises = tokens.map(token => {
     const contract = new Contract(token.address, ERC20, provider)
-    return await contract.balanceOf(address)
+    return contract.balanceOf(address)
   })
 
-  balances = await Promise.all(balancePromises)
-  balances = (balances: TokenBalances).map((balance, i) => ({
-    symbol: tokens[i].symbol,
-    balance: utils.formatEther(balance)
-  }))
+  const resolvingPromises = balancePromises.map((promise, i) => {
+    return new Promise((resolve) => {
+      let payload = new Array(2)
+      promise.then((result) => {
+        payload[0] = { 
+          symbol: tokens[i].symbol, 
+          balance: utils.formatUnits(result, tokens[i].decimals)}
+      })
+      .catch((error) => {
+        payload[1] = error;
+      })
+      .then(() => {
+        resolve(payload);
+      })
+    })
+  })
 
-  return balances
+  const errors = []
+  const tokenBalances = []
+
+  return Promise.all(resolvingPromises)
+    .then((items) => {
+      items.forEach((payload) => {
+        if (payload[1]) {
+          errors.push(payload[1])
+        } else {
+          tokenBalances.push(payload[0])
+        }
+      })
+
+      return {
+        errors: errors,
+        tokenBalances: tokenBalances
+      }
+    })
 }
 
 export async function queryExchangeTokenAllowances(owner: string, tokens: Array<Token>) {
@@ -79,13 +119,42 @@ export async function queryExchangeTokenAllowances(owner: string, tokens: Array<
     return contract.allowance(owner, exchange)
   })
 
-  let allowances = await Promise.all(allowancePromises)
-  allowances = (allowances: TokenBalances).map((allowance, i) => ({
-    symbol: tokens[i].symbol,
-    allowance: utils.formatEther(allowance)
-  }))
+  const resolvingPromises = allowancePromises.map((promise, i) => {
+    return new Promise((resolve) => {
+      let payload = new Array(2)
+      promise.then((result) => {
+        payload[0] = {
+          symbol: tokens[i].symbol,
+          allowance: utils.formatUnits(result, tokens[i].decimals)
+        }
+      })
+      .catch((error) => {
+        payload[1] = error;
+      })
+      .then(() => {
+        resolve(payload);
+      })
+    })
+  })
 
-  return allowances
+  const errors = []
+  const tokenAllowances = []
+
+  return Promise.all(resolvingPromises)
+    .then((items) => {
+      items.forEach((payload) => {
+        if (payload[1]) {
+          errors.push(payload[1])
+        } else {
+          tokenAllowances.push(payload[0])
+        }
+      })
+
+      return {
+        errors: errors,
+        tokenAllowances: tokenAllowances
+      }
+    })
 }
 
 export async function queryTokenAllowances(owner: string, spender: string, tokens: Array<Token>) {
@@ -99,7 +168,7 @@ export async function queryTokenAllowances(owner: string, spender: string, token
   allowances = await Promise.all(allowancePromises)
   allowances = (allowances: TokenBalances).map((allowance, i) => ({
     symbol: tokens[i].symbol,
-    allowance: utils.formatEther(allowance)
+    allowance: utils.formatUnits(allowance, tokens[i].decimals)
   }))
 
   return allowances
@@ -173,7 +242,7 @@ export async function subscribeTokenBalances(address: string, tokens: Array<Toke
         const balance = await contract.balanceOf(address)
         callback({
           symbol: token.symbol,
-          balance: utils.formatEther(balance)
+          balance: utils.formatUnits(balance, token.decimals)
         })
       }
     }
@@ -196,7 +265,7 @@ export async function subscribeTokenAllowance(address: string, token: Object, ca
   const handler = async (sender, receiver, tokens) => {
     if (receiver === address) {
       const allowance = await contract.allowance(exchange, receiver)
-      if (allowance !== initialAllowance) callback(utils.formatEther(allowance))
+      if (allowance !== initialAllowance) callback(utils.formatUnits(allowance, token.decimals))
     }
   }
 
@@ -223,7 +292,7 @@ export async function subscribeTokenAllowances(
         const allowance = await contract.allowance(owner, exchange)
         callback({
           symbol: token.symbol,
-          allowance: utils.formatEther(allowance)
+          allowance: utils.formatUnits(allowance, token.decimals)
         })
       }
     }

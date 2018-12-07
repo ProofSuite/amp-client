@@ -98,7 +98,6 @@ export const createDefaultWalletSigner = async (wallet: Object, networkID: ?numb
     provider = new providers.FallbackProvider(fallbackProviders)
   }
 
-
   let signer = new Wallet(wallet.privateKey, provider)
 
   signer.networkID = networkID
