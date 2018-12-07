@@ -11,7 +11,9 @@ export default function logoutPageSelector(state: State) {
 }
 
 export function logout(): ThunkAction {
-  return async dispatch => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('logout');
+
     dispatch(accountActionCreators.updateCurrentBlock(''));
     dispatch(accountActionCreators.updateCurrentProvider(''));
     dispatch(actionCreators.logout());
