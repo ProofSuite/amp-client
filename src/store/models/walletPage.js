@@ -1,7 +1,7 @@
 // @flow
 import { push } from 'connected-react-router'
 
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain } from '../domains'
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain, getPairsDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
 import * as accountActionTypes from '../actions/account'
@@ -17,11 +17,13 @@ export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let accountDomain = getAccountDomain(state)
   let tokenDomain = getTokenDomain(state)
+  let tokenPairsDomain = getTokenPairsDomain(state)
   let transferTokensFormDomain = getTransferTokensFormDomain(state)
 
   // ETH is not a token so we add it to the list to display in the deposit table
   let ETH = { symbol: 'ETH', address: '0x0' }
   let tokens = tokenDomain.tokens()
+  let tokenPairs = pairsDomain.getPairsByCode()
   let quoteTokens = quoteTokenSymbols
   let baseTokens = tokenDomain.symbols().filter(symbol => quoteTokens.indexOf(symbol) !== -1)
   let tokenData = accountBalancesDomain.getBalancesAndAllowances([ ETH ].concat(tokens))

@@ -123,6 +123,7 @@ it('tokenSearcherSelector parses data correctly', () => {
         favorited: false,
       },
     ],
+    USDC: [],
   };
 
   domains.getTokenPairsDomain = jest.fn(() => ({

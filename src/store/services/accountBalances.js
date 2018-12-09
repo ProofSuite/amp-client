@@ -1,8 +1,8 @@
 // @flow
-import { Contract, utils } from 'ethers'
+import { Contract } from 'ethers'
 import { ERC20 } from '../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../config/contracts'
-import { getProvider, getSigner } from './signer'
+import { getSigner } from './signer'
 
 export async function updateAllowance(
   tokenAddress: string,

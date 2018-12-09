@@ -8,7 +8,6 @@ import { quoteTokens } from '../../config/quotes';
 import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getNotificationsDomain } from '../domains';
 import * as actionCreators from './walletPage';
 
-// file.only
 jest.mock('../services/accountBalances');
 jest.mock('../services/signer');
 jest.mock('../services/wallet');

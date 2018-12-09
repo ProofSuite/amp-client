@@ -92,6 +92,14 @@ export const mockDepositTableData = [
   { symbol: 'LOOM', balance: '8.00000', allowed: true },
 ];
 
+export const mockMarketsTableData  = [
+  { symbol: 'ETH', balance: '19.0000', allowed: false },
+  { symbol: 'WETH', balance: '10.0000', allowed: true },
+  { symbol: 'ZRX', balance: '1.00000', allowed: false },
+  { symbol: 'AION', balance: '5.00000', allowed: false },
+  { symbol: 'LOOM', balance: '8.00000', allowed: true },
+]
+
 export const mockAllowTxState = {
   allowTxStatus: 'incomplete',
   allowTxHash: null,
