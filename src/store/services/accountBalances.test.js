@@ -2,8 +2,6 @@ import { Contract } from 'ethers'
 import * as signerService from './signer';
 import * as accountBalancesService from './accountBalances';
 
-// file.only
-
 jest.mock('ethers');
 jest.mock('./signer');
 

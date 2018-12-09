@@ -81,8 +81,6 @@ export function queryAccountData(): ThunkAction {
       allowances = tokenAllowances
 
       balances = [etherBalance].concat(tokenBalances)
-      console.log(tokenBalanceErrors)
-      console.log(tokenAllowanceErrors)
       
       await provider.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance))

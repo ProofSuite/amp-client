@@ -1,7 +1,7 @@
 import { utils } from 'ethers';
 
 export const mockTxReceipt = {
-  status: '0x1',
+  status: 1,
   blockHash: '0x98887e6a4d3981430f5cd7ce5394e6a5bca15d0ff33cccd2b63cdcc1df297d70',
   blockNumber: '4132335',
   gasLimit: utils.bigNumberify(1000000),
@@ -9,7 +9,7 @@ export const mockTxReceipt = {
 };
 
 export const mockTxReceipt2 = {
-  status: '0x1',
+  status: 1,
   blockHash: '0x5225cc22ca9c8a6d77eeab0bd6802d7b80aae9c4315a23f2f00b4fb5b019bc21',
   blockNumber: '4132336',
   gasLimit: utils.bigNumberify(1000000),
@@ -17,7 +17,7 @@ export const mockTxReceipt2 = {
 };
 
 export const mockFailedTxReceipt = {
-  status: '0x0',
+  status: 0,
   blockHash: '0x98887e6a4d3981430f5cd7ce5394e6a5bca15d0ff33cccd2b63cdcc1df297d70',
   blockNumber: '4132335',
   gasLimit: utils.bigNumberify(1000000),
@@ -25,7 +25,7 @@ export const mockFailedTxReceipt = {
 };
 
 export const mockFailedTxReceipt2 = {
-  status: '0x0',
+  status: 0,
   blockHash: '0x5225cc22ca9c8a6d77eeab0bd6802d7b80aae9c4315a23f2f00b4fb5b019bc21',
   blockNumber: '4132336',
   gasLimit: utils.bigNumberify(1000000),

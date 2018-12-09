@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DepositTable from './DepositTable';
+import MarketsTable from './MarketsTable';
 
 
 
@@ -14,5 +14,5 @@ it('shows "loadingMessage" when balance being null, elsewise the balance', () =>
 
   const quoteTokens = ['WETH']
   const baseTokens = ['ZRX', 'EOS']
-  const wrapper = shallow(<DepositTable baseTokens={baseTokens} quoteTokens={quoteTokens} tokenData={tokenData} />);
+  const wrapper = shallow(<MarketsTable baseTokens={baseTokens} quoteTokens={quoteTokens} tokenData={tokenData} />);
 });

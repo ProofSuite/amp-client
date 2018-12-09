@@ -175,7 +175,7 @@ export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): T
 
         let allowTxReceipt = await signer.provider.waitForTransaction(allowTx.hash);
 
-        allowTxReceipt.status === '0x0'
+        allowTxReceipt.status === 0
           ? dispatch(depositFormActionCreators.revertAllowTx(allowTxReceipt))
           : dispatch(depositFormActionCreators.confirmAllowTx(allowTxReceipt));
       }
