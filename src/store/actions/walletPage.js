@@ -16,6 +16,7 @@ const actionTypes = {
   updateBalance: 'walletPage/UPDATE_BALANCE',
   updateBalances: 'walletPage/UPDATE_BALANCES',
   updateAllowance: 'walletPage/UPDATE_ALLOWANCE',
+  updateAllowancePending: 'walletPage/UPDATE_ALLOWANCE_PENDING',
   updateAllowances: 'walletPage/UPDATE_ALLOWANCES',
   updateCurrentPair: 'walletPage/UPDATE_CURRENT_PAIR',
   updateTokenPairs: 'walletPage/UPDATE_TOKEN_PAIRS',
@@ -49,6 +50,13 @@ export function updateAllowances(allowances: AccountAllowances): UpdateAccountAl
     type: actionTypes.updateAllowances,
     payload: { allowances },
   };
+}
+
+export function updateAllowancePending(symbol: string): UpdateAllowancePendingAction {
+  return {
+    type: actionTypes.updateAllowancePending,
+    payload: { symbol } ,
+  }
 }
 
 export function updateAllowance(allowance: AccountAllowance): UpdateAccountAllowanceAction {

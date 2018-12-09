@@ -1,8 +1,8 @@
 // @flow
-import { Contract, utils } from 'ethers'
+import { Contract } from 'ethers'
 import { ERC20 } from '../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../config/contracts'
-import { getProvider, getSigner } from './signer'
+import { getSigner } from './signer'
 
 export async function updateAllowance(
   tokenAddress: string,
@@ -24,7 +24,6 @@ export async function updateAllowance(
 
 export async function updateExchangeAllowance(
   tokenAddress: string,
-  address: string,
   balance: Object | number,
   txConfirmHandler: boolean => void
 ) {
@@ -39,5 +38,3 @@ export async function updateExchangeAllowance(
     ? txConfirmHandler(true)
     : txConfirmHandler(false)
 }
-
-

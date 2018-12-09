@@ -16,6 +16,7 @@ it('handles initialized event properly', () => {
     sortedAsks: [],
     quoteToken: '',
     baseToken: '',
+    selected: null
   });
 
   expect(domain.getAsks()).toEqual({});
@@ -134,24 +135,80 @@ it('handles updated event properly', () => {
     sortedAsks: [400.1586, 402.2414, 403.3452, 403.755, 417.5532, 418.1707],
     quoteToken: '',
     baseToken: '',
+    selected: null,
   });
 
   expect(domain.getOrderBookData()).toEqual({
+      asks: [
+      {
+        amount: 21,
+        price: 400.1586,
+        relativeTotal: 0.06843734723806419,
+        total: 21
+      },
+      {
+        amount: 79,
+        price: 402.2414,
+        relativeTotal: 0.3258921297050676,
+        total: 100
+      },
+      {
+        amount: 45,
+        price: 403.3452,
+        relativeTotal: 0.47254358807234803,
+        total: 145
+      },
+      {
+        amount: 43,
+        price: 403.755,
+        relativeTotal: 0.612677203845527,
+        total: 188
+      },
+      {
+        amount: 16,
+        price: 417.5532,
+        relativeTotal: 0.6648199445983379,
+        total: 204
+      },
+      {
+        amount: 52,
+        price: 418.1707,
+        relativeTotal: 0.834283852044973,
+        total: 256
+      }
+    ],
     bids: [
-      { price: "414.398", amount: "76.9", total: "76.9", relativeTotal: 0.2504481016783444 },
-      { price: "414.242", amount: "80.0", total: "156.9", relativeTotal: 0.5111618054423985 },
-      { price: "411.793", amount: "64.0", total: "220.9", relativeTotal: 0.7197327684536418 },
-      { price: "409.039", amount: "17.0", total: "237.9", relativeTotal: 0.7751344305035033 },
-      { price: "407.589", amount: "69.0", total: "306.9", relativeTotal: 1 },
-    ],
-    asks: [
-      { price: "400.159", amount: "21.0", total: "21.0", relativeTotal: 0.06843734723806419 },
-      { price: "402.241", amount: "79.0", total: "100.0", relativeTotal: 0.3258921297050676 },
-      { price: "403.345", amount: "45.0", total: "145.0", relativeTotal: 0.47254358807234803 },
-      { price: "403.755", amount: "43.0", total: "188.0", relativeTotal: 0.612677203845527 },
-      { price: "417.553", amount: "16.0", total: "204.0", relativeTotal: 0.6648199445983379 },
-      { price: "418.171", amount: "52.0", total: "256.0", relativeTotal: 0.834283852044973 },
-    ],
+      {
+        amount: 76.85,
+        price: 414.3982,
+        relativeTotal: 0.2504481016783444,
+        total: 76.85
+      },
+      {
+        amount: 80,
+        price: 414.2421,
+        relativeTotal: 0.5111618054423985,
+        total: 156.85
+      },
+      {
+        amount: 64,
+        price: 411.7926,
+        relativeTotal: 0.7197327684536418,
+        total: 220.85
+      },
+      {
+        amount: 17,
+        price: 409.039,
+        relativeTotal: 0.7751344305035033,
+        total: 237.85
+      },
+      { 
+        amount: 69,
+        price: 407.5885, 
+        relativeTotal: 1, 
+        total: 306.85
+      }
+    ]
   });
 });
 
@@ -271,23 +328,74 @@ it('handles handles updated event successvely', () => {
     sortedAsks: [400.1586, 402.2414, 403.3452, 403.755, 417.5532, 418.1707],
     quoteToken: '',
     baseToken: '',
+    selected: null,
   });
 
   expect(domain.getOrderBookData()).toEqual({
+      asks: [
+      {
+        amount: 21,
+        price: 400.1586,
+        relativeTotal: 0.06843734723806419,
+        total: 21
+      },
+      {
+        amount: 79,
+        price: 402.2414,
+        relativeTotal: 0.3258921297050676,
+        total: 100
+      },
+      {
+        amount: 45,
+        price: 403.3452,
+        relativeTotal: 0.47254358807234803,
+        total: 145
+      },
+      {
+        amount: 43,
+        price: 403.755,
+        relativeTotal: 0.612677203845527,
+        total: 188
+      },
+      {
+        amount: 16,
+        price: 417.5532,
+        relativeTotal: 0.6648199445983379,
+        total: 204
+      },
+      {
+        amount: 52,
+        price: 418.1707,
+        relativeTotal: 0.834283852044973,
+        total: 256
+      }
+    ],
     bids: [
-      { price: "414.398", amount: "76.9", total: "76.9", relativeTotal: 0.2504481016783444 },
-      { price: "414.242", amount: "80.0", total: "156.9", relativeTotal: 0.5111618054423985 },
-      { price: "411.793", amount: "64.0", total: "220.9", relativeTotal: 0.7197327684536418 },
-      { price: "409.039", amount: "17.0", total: "237.9", relativeTotal: 0.7751344305035033 },
-      { price: "407.589", amount: "69.0", total: "306.9", relativeTotal: 1 },
-    ],
-    asks: [
-      { price: "400.159", amount: "21.0", total: "21.0", relativeTotal: 0.06843734723806419 },
-      { price: "402.241", amount: "79.0", total: "100.0", relativeTotal: 0.3258921297050676 },
-      { price: "403.345", amount: "45.0", total: "145.0", relativeTotal: 0.47254358807234803 },
-      { price: "403.755", amount: "43.0", total: "188.0", relativeTotal: 0.612677203845527 },
-      { price: "417.553", amount: "16.0", total: "204.0", relativeTotal: 0.6648199445983379 },
-      { price: "418.171", amount: "52.0", total: "256.0", relativeTotal: 0.834283852044973 },
-    ],
+      {
+        amount: 76.85,
+        price: 414.3982,
+        relativeTotal: 0.2504481016783444,
+        total: 76.85
+      },
+      {
+        amount: 80,
+        price: 414.2421,
+        relativeTotal: 0.5111618054423985,
+        total: 156.85
+      },
+      {
+        amount: 64,
+        price: 411.7926,
+        relativeTotal: 0.7197327684536418,
+        total: 220.85
+      },
+      {
+        amount: 17,
+        price: 409.039,
+        relativeTotal: 0.7751344305035033,
+        total: 237.85
+      },
+      { amount: 69, price: 407.5885, relativeTotal: 1, total: 306.85 }
+    ]
   });
 });

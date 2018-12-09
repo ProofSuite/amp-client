@@ -54,7 +54,8 @@ export function allowancesUpdated(allowances: AccountAllowances) {
       result[item.symbol] = {
         ...state[item.symbol],
         symbol: item.symbol,
-        allowance: item.allowance
+        allowance: item.allowance,
+        allowancePending: false,
       }
       return result
     }, {})
@@ -66,6 +67,29 @@ export function allowancesUpdated(allowances: AccountAllowances) {
 
   return event
 }
+
+
+export function allowancesPendingUpdated(symbols: string[]) {
+  const event = (state: AccountBalancesState) => {
+    let newState = symbols.reduce((result, symbol) => {
+      result[symbol] = {
+        ...state[symbol],
+        symbol: symbol,
+        allowancePending: true
+      }
+
+      return result
+    }, {})
+
+    return {
+      ...state,
+      ...newState
+    }
+  }
+
+  return event
+}
+
 
 export function unsubscribed(symbol: string) {
   const event = (state: AccountBalancesState) => ({
@@ -159,7 +183,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].subscribed : false
     },
     isAllowed(symbol: string): boolean {
-      return state[symbol] ? state[symbol].allowance > ALLOWANCE_MINIMUM : false
+      return state[symbol] ? state[symbol].allowance >= state[symbol].balance : false
     },
     isAllowancePending(symbol: string): boolean {
       return state[symbol] ? state[symbol].allowance === 'pending' : false
@@ -168,22 +192,48 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     //allowance value is set to a very large number. If the allowance is above ALLOWANCE_MINIMUM, the tokens is
     //is considered tradeable on the frontend app.
     getBalancesAndAllowances(tokens: Array<Object>) {
-      return (tokens: any).map(token => {
+      return (tokens: any).map(token => {        
+        if (!state[token.symbol]) {
+          return {
+            ...token,
+            balance: null,
+            allowed: null,
+            allowancePending: null
+          }
+        }
+
+        let balance = state[token.symbol].balance
+        let allowance = state[token.symbol].allowance
+        let allowed = Number(allowance) >= Number(balance)
+        
         return {
           ...token,
-          balance: state[token.symbol] ? formatNumber(state[token.symbol].balance, { precision: 2 }) : null,
-          allowed: state[token.symbol] && state[token.symbol].allowance > ALLOWANCE_MINIMUM,
-          allowancePending: state[token.symbol] && state[token.symbol].allowance === 'pending'
+          balance: balance,
+          allowed: allowed,
+          allowancePending: state[token.symbol].allowancePending
+          
         }
       })
     },
-    depositTableData() {
-      return (Object.values(state): any).map(item => {
+    getBalancesAndAllowancesBySymbol(symbols: Array<string>) {
+      return (symbols: any).map(symbol => {        
+        if (!state[symbol]) {
+          return {
+            balance: null,
+            allowed: null,
+            allowancePending: null
+          }
+        }
+
+        let balance = state[symbol].balance
+        let allowance = state[symbol].allowance
+        let allowed = Number(allowance) >= Number(balance)
+        
         return {
-          symbol: item.symbol,
-          balance: formatNumber(item.balance, { precision: 2 }),
-          allowed: item.allowance > ALLOWANCE_MINIMUM,
-          allowancePending: item.allowance === 'pending'
+          balance: balance,
+          allowed: allowed,
+          allowancePending: state[symbol].allowancePending
+          
         }
       })
     },
@@ -191,8 +241,8 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return (Object.values(state): any).map(item => {
         return {
           symbol: item.symbol,
-          balance: formatNumber(item.balance, { precision: 2}),
-          allowed: item.allowance > ALLOWANCE_MINIMUM
+          balance: formatNumber(item.balance, { precision: 2 }),
+          allowed: item.allowance >= item.balance
         }
       })
     }

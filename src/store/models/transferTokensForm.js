@@ -64,7 +64,6 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
 
     try {
       let signer = getSigner();
-
       let rawTx = {
         gasLimit: parseFloat(gas) || 0,
         gasPrice: parseFloat(gasPrice) || 2 * 10e9,

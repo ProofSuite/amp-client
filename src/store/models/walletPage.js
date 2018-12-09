@@ -1,7 +1,7 @@
 // @flow
 import { push } from 'connected-react-router'
 
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain } from '../domains'
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain, getPairsDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
 import * as accountActionTypes from '../actions/account'
@@ -17,11 +17,13 @@ export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let accountDomain = getAccountDomain(state)
   let tokenDomain = getTokenDomain(state)
+  // let tokenPairsDomain = getTokenPairsDomain(state)
   let transferTokensFormDomain = getTransferTokensFormDomain(state)
 
   // ETH is not a token so we add it to the list to display in the deposit table
   let ETH = { symbol: 'ETH', address: '0x0' }
   let tokens = tokenDomain.tokens()
+  // let tokenPairs = pairsDomain.getPairsByCode()
   let quoteTokens = quoteTokenSymbols
   let baseTokens = tokenDomain.symbols().filter(symbol => quoteTokens.indexOf(symbol) !== -1)
   let tokenData = accountBalancesDomain.getBalancesAndAllowances([ ETH ].concat(tokens))
@@ -65,7 +67,7 @@ export function queryAccountData(): ThunkAction {
 
       let pairs = await api.fetchPairs()
       dispatch(actionCreators.updateTokenPairs(pairs))
-
+      
       let exchangeAddress = await api.getExchangeAddress()
       dispatch(actionCreators.updateExchangeAddress(exchangeAddress))
 
@@ -79,8 +81,6 @@ export function queryAccountData(): ThunkAction {
       allowances = tokenAllowances
 
       balances = [etherBalance].concat(tokenBalances)
-      console.log(tokenBalanceErrors)
-      console.log(tokenAllowanceErrors)
       
       await provider.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance))
@@ -115,11 +115,10 @@ export function redirectToTradingPage(symbol: string): ThunkAction {
 }
 
 export function toggleAllowance(symbol: string): ThunkAction {
-  return async (dispatch, getState, { provider }) => {
+  return async (dispatch, getState, { txProvider }) => {
     try {
       const state = getState()
       const tokens = getTokenDomain(state).bySymbol()
-      const accountAddress = getAccountDomain(state).address()
       const isAllowed = getAccountBalancesDomain(state).isAllowed(symbol)
       const isPending = getAccountBalancesDomain(state).isAllowancePending(symbol)
       const tokenContractAddress = tokens[symbol].address
@@ -139,14 +138,14 @@ export function toggleAllowance(symbol: string): ThunkAction {
       }
 
       if (isAllowed) {
-        provider.updateExchangeAllowance(tokenContractAddress, accountAddress, 0, approvalRemovedHandler)
+        txProvider.updateExchangeAllowance(tokenContractAddress, 0, approvalRemovedHandler)
         dispatch(notifierActionCreators.addSuccessNotification({ message: `Locking ${symbol}. You will not be able to trade ${symbol} after the transaction is confirmed` }))
       } else {
-        provider.updateExchangeAllowance(tokenContractAddress, accountAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
+        txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
         dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${symbol}. You will be able to trade  ${symbol} after the transaction is confirmed.` }))
       }
 
-      dispatch(actionCreators.updateAllowance({ symbol, allowance: 'pending' }))
+      dispatch(actionCreators.updateAllowancePending(symbol))
     } catch (e) {
       console.log(e)
       if (e.message === 'Trading approval pending') {
