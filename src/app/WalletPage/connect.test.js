@@ -8,12 +8,22 @@ import * as walletPage from '../../store/models/walletPage';
 jest.mock('../../store/models/walletPage');
 jest.mock('../../store/models/layout');
 
-const tokenData = [
-  { symbol: 'EOS', balance: '10.0000', allowed: true },
-  { symbol: 'ZRX', balance: '1.00000', allowed: false },
-  { symbol: 'EOS', balance: '5.00000', allowed: false },
-  { symbol: 'EOS', balance: '8.00000', allowed: true },
-];
+const selectorData = {
+  etherBalance: 'etherBalance',
+  balancesLoading: 'balancesLoading',
+  WETHBalance: 'WETHBalance',
+  WETHAllowance: 'WETHAllowance',
+  tokenData: 'tokenData',
+  quoteTokens: 'quoteTokens',
+  baseTokens: 'baseTokens',
+  accountAddress: 'accountAddress',
+  authenticated: 'authenticated',
+  currentBlock: 'currentBlock',
+  showHelpModal: 'showHelpModal',
+  connected: 'connected',
+  gas: 'gas',
+  gasPrice: 'gasPrice'
+}
 
 describe('connect(Component)', () => {
   it('injects certain props and renders without crashing', () => {
@@ -38,15 +48,12 @@ describe('connect(Component)', () => {
 
 describe('mapStateToProps(state, props)', () => {
   it('returns expected props', () => {
-    walletPage.default = jest.fn(() => ({ tokenData }));
+    walletPage.default = jest.fn(() => ({ ...selectorData }));
     const state = {};
     const props = {};
     const result = mapStateToProps(state, props);
 
     expect(result).toBeDefined();
-    expect(result).toEqual({
-      tokenData,
-      loading: false
-    });
+    expect(result).toEqual({ ...selectorData });
   });
 });

@@ -85,6 +85,8 @@ export const accountBalances = createReducer(action => {
       return accountBalancesEvents.allowancesUpdated(payload.allowances)
     case walletPageActionTypes.updateAllowance:
       return accountBalancesEvents.allowancesUpdated([{ symbol: payload.symbol, allowance: payload.allowance }])
+    case walletPageActionTypes.updateAllowancePending:
+      return accountBalancesEvents.allowancesPendingUpdated([ payload.symbol ])
     default:
       return accountBalancesEvents.initialized()
   }

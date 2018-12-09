@@ -10,14 +10,18 @@ type Props = {
   bidPrice: number,
   baseTokenBalance: number,
   quoteTokenBalance: number,
-  baseToken: string,
-  quoteToken: string,
+  baseTokenSymbol: string,
+  quoteTokenSymbol: string,
   baseTokenDecimals: number,
   quoteTokenDecimals: number,
   loggedIn: boolean,
-  sendNewOrder: (string, number, number) => void,
   makeFee: string,
   takeFee: string,
+  pairIsAllowed: boolean,
+  selectedOrder: Object,
+  unlockPair: (string, string) => void,
+  sendNewOrder: (string, number, number) => void,
+  
 }
 
 type State = {
@@ -76,7 +80,6 @@ class OrderForm extends React.PureComponent<Props, State> {
         total: price * total,
       });
     }
-
   }
 
   onInputChange = ({ target }: Object) => {
@@ -204,6 +207,12 @@ class OrderForm extends React.PureComponent<Props, State> {
     })
   }
 
+  handleUnlockPair = () => {
+    const { baseTokenSymbol, quoteTokenSymbol } = this.props
+    
+    this.props.unlockPair(baseTokenSymbol, quoteTokenSymbol)
+  }
+
   handleChangeOrderType = (tabId: string) => {
     const { askPrice, bidPrice, side } = this.props
 
@@ -234,11 +243,32 @@ class OrderForm extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      state: { selectedTabId, fraction, priceType, price, isOpen, amount, total },
-      props: { side, baseToken, loggedIn, quoteToken, baseTokenBalance, quoteTokenBalance, makeFee, takeFee, baseTokenDecimals, quoteTokenDecimals },
+      state: { 
+        selectedTabId,
+        fraction, 
+        priceType, 
+        price, 
+        isOpen, 
+        amount, 
+        total
+      },
+      props: { 
+        side, 
+        baseTokenSymbol, 
+        loggedIn, 
+        quoteTokenSymbol,
+        baseTokenBalance, 
+        quoteTokenBalance, 
+        makeFee, 
+        takeFee, 
+        baseTokenDecimals, 
+        quoteTokenDecimals, 
+        pairIsAllowed,
+      },
       onInputChange,
       handleChangeOrderType,
       handleSendOrder,
+      handleUnlockPair,
       toggleCollapse,
     } = this
 
@@ -266,6 +296,7 @@ class OrderForm extends React.PureComponent<Props, State> {
 
     let insufficientBalance = (unformat(amount) > unformat(maxAmount))
 
+
     return (
       <OrderFormRenderer
         selectedTabId={selectedTabId}
@@ -277,18 +308,20 @@ class OrderForm extends React.PureComponent<Props, State> {
         amount={amount}
         total={total}
         isOpen={isOpen}
-        baseToken={baseToken}
-        quoteToken={quoteToken}
+        baseTokenSymbol={baseTokenSymbol}
+        quoteTokenSymbol={quoteTokenSymbol}
         insufficientBalance={insufficientBalance}
         loggedIn={loggedIn}
         onInputChange={onInputChange}
         toggleCollapse={toggleCollapse}
         handleChangeOrderType={handleChangeOrderType}
         handleSendOrder={handleSendOrder}
+        handleUnlockPair={handleUnlockPair}
         makeFee={makeFee}
         takeFee={takeFee}
         baseTokenDecimals={baseTokenDecimals}
         quoteTokenDecimals={quoteTokenDecimals}
+        pairIsAllowed={pairIsAllowed}
       />
     )
   }

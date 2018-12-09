@@ -18,12 +18,12 @@ it('handles initialized event properly', () => {
 
 it('handles update tokens event properly', () => {
   const newToken = {
-    symbol: 'PRFT',
+    symbol: 'TOK',
     address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
   };
 
-  const expectedSymbols = tokenSymbols.concat('PRFT');
-  const expectedTokensBySymbol = { ...tokensBySymbol, ['PRFT']: newToken };
+  const expectedSymbols = tokenSymbols.concat('TOK');
+  const expectedTokensBySymbol = { ...tokensBySymbol, ['TOK']: newToken };
   const expectedTokens = Object.values(expectedTokensBySymbol);
 
   const tokenDomain = getDomain([
@@ -38,12 +38,12 @@ it('handles update tokens event properly', () => {
 
 it('handles update and remove tokens events properly', () => {
   const newToken = {
-    symbol: 'PRFT',
+    symbol: 'TOK',
     address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
   };
 
-  const expectedSymbols = tokenSymbols.concat('PRFT').filter(elem => elem !== 'ZRX');
-  const expectedTokensBySymbol = objectWithoutKey({ ...tokensBySymbol, ['PRFT']: newToken }, 'ZRX');
+  const expectedSymbols = tokenSymbols.concat('TOK').filter(elem => elem !== 'ZRX');
+  const expectedTokensBySymbol = objectWithoutKey({ ...tokensBySymbol, ['TOK']: newToken }, 'ZRX');
   const expectedTokens = Object.values(expectedTokensBySymbol);
 
   const tokenDomain = getDomain([

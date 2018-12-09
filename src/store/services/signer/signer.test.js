@@ -3,7 +3,7 @@ import * as signerService from './index'
 
 jest.mock('ethers')
 
-describe.only('createSigner', () => {
+describe('createSigner', () => {
   let providerMock
   let listAccounts
   let getBlockNumber

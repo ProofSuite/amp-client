@@ -26,7 +26,6 @@ export const generateTokenPairs = (quoteTokens, tokens) => {
           quoteTokenAddress: quoteToken.address,
           baseTokenDecimals: token.decimals,
           quoteTokenDecimals: quoteToken.decimals,
-          pricepointMultiplier: 10 ** 9
         };
       }
     });

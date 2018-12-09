@@ -3,9 +3,7 @@ import { getSigner } from '../services/signer';
 import { Contract } from 'ethers';
 import { mockFailedTxReceipt, mockFailedTxReceipt2, mockTokens, mockTxReceipt, mockTxReceipt2 } from '../../mockData';
 
-
-
-import * as accountBalancesService from '../services/accountBalances';
+import * as services from '../services/index.js'
 
 import {
   getAccountBalancesDomain,
@@ -20,6 +18,7 @@ import * as actionCreators from './depositForm';
 
 jest.mock('../services/accountBalances');
 jest.mock('../services/signer');
+jest.mock('../services/index.js')
 jest.mock('../domains');
 jest.mock('./signerSettings');
 jest.mock('ethers');
@@ -28,16 +27,21 @@ let unsubscribeEtherBalance = jest.fn();
 let unsubscribeTokenBalance = jest.fn();
 let domain, depositFormDomain, model;
 
+
 beforeEach(() => {
   jest.resetAllMocks();
-  accountBalancesService.subscribeEtherBalance.mockReturnValue(unsubscribeEtherBalance);
-  accountBalancesService.subscribeTokenBalance.mockReturnValue(unsubscribeTokenBalance);
+  services.mixpanel = { track: jest.fn() }
+
+  services.provider = {
+    subscribeEtherBalance: jest.fn(() => unsubscribeEtherBalance),
+    subscribeTokenBalance: jest.fn(() => unsubscribeTokenBalance)
+  }
 });
 
-it('handles subscribeBalance (token) properly', async () => {
+it.only('handles subscribeBalance (token) properly', async () => {
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
 
-  const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
+  const testAddress = '0x1';
   const { store } = createStore();
   const token = {
     address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
@@ -63,11 +67,11 @@ it('handles subscribeBalance (token) properly', async () => {
   expect(domain.get(token.symbol)).toEqual(null);
   expect(domain.isSubscribed(token.symbol)).toEqual(true);
 
-  expect(accountBalancesService.subscribeTokenBalance).toHaveBeenCalledTimes(1);
-  expect(accountBalancesService.subscribeTokenBalance.mock.calls[0][0]).toEqual(testAddress);
-  expect(accountBalancesService.subscribeTokenBalance.mock.calls[0][1]).toEqual(token);
+  expect(services.provider.subscribeTokenBalance).toHaveBeenCalledTimes(1);
+  expect(services.provider.subscribeTokenBalance.mock.calls[0][0]).toEqual(testAddress);
+  expect(services.provider.subscribeTokenBalance.mock.calls[0][1]).toEqual(token);
 
-  const updateBalanceCallback = accountBalancesService.subscribeTokenBalance.mock.calls[0][2];
+  const updateBalanceCallback = services.provider.subscribeTokenBalance.mock.calls[0][2];
 
   updateBalanceCallback(1000);
   domain = getAccountBalancesDomain(store.getState());
@@ -79,7 +83,7 @@ it('handles subscribeBalance (token) properly', async () => {
   expect(domain.get('REQ')).toEqual(2000);
   expect(domain.isSubscribed('REQ')).toEqual(true);
 
-  unsubscribeCallback();
+  await unsubscribeCallback();
   expect(unsubscribeTokenBalance).toHaveBeenCalledTimes(1);
 
   domain = getAccountBalancesDomain(store.getState());
@@ -87,10 +91,10 @@ it('handles subscribeBalance (token) properly', async () => {
   expect(domain.isSubscribed('REQ')).toEqual(false);
 });
 
-it('handles subscribeBalance (ether) properly', async () => {
+it.only('handles subscribeBalance (ether) properly', async () => {
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
   const { store } = createStore();
-  const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
+  const testAddress = '0x1';
   const token = { address: '0x0', symbol: 'ETH' };
 
   const getTokenDomainMock = jest.fn(() => ({
@@ -112,8 +116,8 @@ it('handles subscribeBalance (ether) properly', async () => {
   expect(domain.get('ETH')).toEqual(null);
   expect(domain.isSubscribed('ETH')).toEqual(true);
 
-  expect(accountBalancesService.subscribeEtherBalance).toHaveBeenCalledTimes(1);
-  const updateBalanceCallback = accountBalancesService.subscribeEtherBalance.mock.calls[0][1];
+  expect(services.provider.subscribeEtherBalance).toHaveBeenCalledTimes(1);
+  const updateBalanceCallback = services.provider.subscribeEtherBalance.mock.calls[0][1];
 
   updateBalanceCallback(1000);
   domain = getAccountBalancesDomain(store.getState());
@@ -125,7 +129,7 @@ it('handles subscribeBalance (ether) properly', async () => {
   expect(domain.get('ETH')).toEqual(2000);
   expect(domain.isSubscribed('ETH')).toEqual(true);
 
-  unsubscribeCallback();
+  await unsubscribeCallback();
   expect(unsubscribeEtherBalance).toHaveBeenCalledTimes(1);
 
   domain = getAccountBalancesDomain(store.getState());
@@ -133,12 +137,12 @@ it('handles subscribeBalance (ether) properly', async () => {
   expect(domain.isSubscribed('ETH')).toEqual(false);
 });
 
-it('subscribeBalance (ether) updates the depositForm model correctly', async () => {
+it.only('subscribeBalance (ether) updates the depositForm model correctly', async () => {
   getDepositFormDomain.mockImplementation(require.requireActual('../domains').getDepositFormDomain);
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
 
   const { store } = createStore();
-  const testAddress = '0x7a9f3cd060ab180f36c17fe6bdf9974f577d77aa';
+  const testAddress = '0x1';
   const token = { address: '0x0', symbol: 'ETH' };
 
   const getTokenDomainMock = jest.fn(() => ({
@@ -158,15 +162,15 @@ it('subscribeBalance (ether) updates the depositForm model correctly', async () 
   model = DepositFormSelector(store.getState());
   expect(model.getStep()).toEqual('waiting');
 
-  expect(accountBalancesService.subscribeEtherBalance).toHaveBeenCalledTimes(1);
-  const updateBalanceCallback = accountBalancesService.subscribeEtherBalance.mock.calls[0][1];
+  expect(services.provider.subscribeEtherBalance).toHaveBeenCalledTimes(1);
+  const updateBalanceCallback = services.provider.subscribeEtherBalance.mock.calls[0][1];
 
   updateBalanceCallback(1000);
   model = DepositFormSelector(store.getState());
   expect(model.getStep()).toEqual('convert');
 });
 
-it('confirmEtherDeposit (both transactions succeed) updates the depositForm model correctly', async () => {
+it.only('confirmEtherDeposit (both transactions succeed) updates the depositForm model correctly', async () => {
   getDepositFormDomain.mockImplementation(require.requireActual('../domains').getDepositFormDomain);
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
   getSignerDomain.mockImplementation(require.requireActual('../domains').getSignerDomain);
@@ -221,7 +225,7 @@ it('confirmEtherDeposit (both transactions succeed) updates the depositForm mode
   });
 });
 
-it('confirmEtherDeposit (both transactions fail) updates the depositForm model correctly', async () => {
+it.only('confirmEtherDeposit (both transactions fail) updates the depositForm model correctly', async () => {
   getDepositFormDomain.mockImplementation(require.requireActual('../domains').getDepositFormDomain);
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
   getSignerDomain.mockImplementation(require.requireActual('../domains').getSignerDomain);
@@ -277,7 +281,7 @@ it('confirmEtherDeposit (both transactions fail) updates the depositForm model c
   });
 });
 
-it('confirmEtherDeposit (one transactions fails) updates the depositForm model correctly', async () => {
+it.only('confirmEtherDeposit (one transactions fails) updates the depositForm model correctly', async () => {
   getDepositFormDomain.mockImplementation(require.requireActual('../domains').getDepositFormDomain);
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
   getSignerDomain.mockImplementation(require.requireActual('../domains').getSignerDomain);
@@ -294,7 +298,6 @@ it('confirmEtherDeposit (one transactions fails) updates the depositForm model c
     }[hash];
   });
 
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
   let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction } }));
   let deposit = jest.fn(() => Promise.resolve({ hash: 'deposit weth tx hash' }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve weth tx hash' }));
@@ -302,7 +305,6 @@ it('confirmEtherDeposit (one transactions fails) updates the depositForm model c
 
   getSigner.mockImplementation(getSignerMock);
   Contract.mockImplementation(wethContractMock);
-  getSignerSettingsModel.mockImplementation(getSignerSettingsModelMock);
 
   depositFormDomain = getDepositFormDomain(store.getState());
   expect(depositFormDomain.getStep()).toEqual('waiting');
@@ -333,7 +335,7 @@ it('confirmEtherDeposit (one transactions fails) updates the depositForm model c
   });
 });
 
-it('confirmTokenDeposit (transaction succeeds updates the depositForm model correctly', async () => {
+it.only('confirmTokenDeposit (transaction succeeds updates the depositForm model correctly', async () => {
   getDepositFormDomain.mockImplementation(require.requireActual('../domains').getDepositFormDomain);
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
   getSignerDomain.mockImplementation(require.requireActual('../domains').getSignerDomain);
@@ -342,14 +344,12 @@ it('confirmTokenDeposit (transaction succeeds updates the depositForm model corr
   const shouldAllow = true;
 
   let waitForTransaction = jest.fn(() => Promise.resolve(mockTxReceipt));
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
-  let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction } }));
+  let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction, network: { chainId: '8888'} } }));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve tx hash' }));
   let tokenContract = jest.fn(() => ({ approve }));
 
   getSigner.mockImplementation(getSignerMock);
   Contract.mockImplementation(tokenContract);
-  getSignerSettingsModel.mockImplementation(getSignerSettingsModelMock);
 
   model = DepositFormSelector(store.getState());
   expect(model.getStep()).toEqual('waiting');
@@ -380,7 +380,7 @@ it('confirmTokenDeposit (transaction succeeds updates the depositForm model corr
   });
 });
 
-it('confirmTokenDeposit (transaction fails) updates the depositForm model correctly', async () => {
+it.only('confirmTokenDeposit (transaction fails) updates the depositForm model correctly', async () => {
   getDepositFormDomain.mockImplementation(require.requireActual('../domains').getDepositFormDomain);
   getAccountBalancesDomain.mockImplementation(require.requireActual('../domains').getAccountBalancesDomain);
   getSignerDomain.mockImplementation(require.requireActual('../domains').getSignerDomain);
@@ -388,14 +388,12 @@ it('confirmTokenDeposit (transaction fails) updates the depositForm model correc
   const shouldAllow = true;
 
   let waitForTransaction = jest.fn(() => Promise.resolve(mockFailedTxReceipt));
-  let getSignerSettingsModelMock = jest.fn(() => ({ getNetworkID: () => 8888 }));
-  let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction, chainId: '8888' } }));
+  let getSignerMock = jest.fn(() => ({ provider: { waitForTransaction, network: { chainId: '8888' }}}));
   let approve = jest.fn(() => Promise.resolve({ hash: 'approve tx hash' }));
   let tokenContract = jest.fn(() => ({ approve }));
 
   getSigner.mockImplementation(getSignerMock);
   Contract.mockImplementation(tokenContract);
-  getSignerSettingsModel.mockImplementation(getSignerSettingsModelMock);
 
   model = DepositFormSelector(store.getState());
   expect(model.getStep()).toEqual('waiting');
@@ -425,7 +423,3 @@ it('confirmTokenDeposit (transaction fails) updates the depositForm model correc
     convertTxReceipt: null,
   });
 });
-
-// getDepositFormDomain.mockImplementation(
-//   require.requireActual('../domains').getDepositFormDomain
-// );

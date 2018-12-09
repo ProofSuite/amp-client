@@ -3,16 +3,16 @@ import createStore from '../../store/configureStore';
 import createWalletModalSelector from './createWalletModal';
 import * as actionCreators from './createWalletModal';
 import * as walletService from '../services/wallet';
-
-
-
+import * as services from '../services/index.js'
 
 jest.mock('../services/wallet');
+jest.mock('../services/index.js')
 
 let selector;
 
 beforeEach(() => {
   jest.resetAllMocks();
+  services.mixpanel = { track: jest.fn() }
 });
 
 describe('create Wallet', () => {

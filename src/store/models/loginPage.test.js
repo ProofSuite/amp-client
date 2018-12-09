@@ -5,6 +5,7 @@ import getAccountDomain from '../domains/account'
 import getWalletDomain from '../domains/wallets'
 import * as walletService from '../services/wallet'
 import * as signerService from '../services/signer'
+import * as services from '../services/index.js'
 
 //TODO: -> (1) Test fix at line 84(commented)
 // TODO: -> (2) Currently there is a local and session storage mock which don't persist values line 205
@@ -13,11 +14,14 @@ import * as signerService from '../services/signer'
 
 jest.mock('../services/wallet')
 jest.mock('../services/signer')
+jest.mock('../services')
 
 let accountDomain, domain
 
 beforeEach(() => {
   jest.resetAllMocks()
+
+  services.mixpanel = { track: jest.fn() }
 })
 
 let unsubscribe = jest.fn()

@@ -1,9 +1,28 @@
 // @flow
 import React from 'react';
-import { Button, Switch, Checkbox, InputGroup, Tag, Position } from '@blueprintjs/core';
-import { RowSpaceBetween, CryptoIcon, Colors, AMPLogo, Centered, LargeText } from '../Common';
-import Help from '../../components/Help'
 import styled from 'styled-components';
+import { formatNumber } from 'accounting-js'
+import Help from '../../components/Help'
+
+import { 
+  Button, 
+  Switch, 
+  Checkbox, 
+  InputGroup, 
+  Tag, 
+  Position
+} from '@blueprintjs/core';
+
+import { 
+  RowSpaceBetween, 
+  CryptoIcon, 
+  Colors, 
+  AMPLogo, 
+  Centered, 
+  LargeText, 
+  GreenGlowingButton, 
+  BlueGlowingButton
+} from '../Common';
 
 type TokenData = {
   symbol: string,
@@ -111,34 +130,31 @@ const ETHRow = (props: Props) => {
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
-      <Cell>{balance}</Cell>
+      <Cell>{formatNumber(balance, { precision: 2})}</Cell>
       <Cell></Cell>
       <Cell style={{ width: '70%' }}>
         <ButtonWrapper>
-          <Button
+          <BlueGlowingButton
             disabled={!connected}
             intent="primary"
             text="Deposit"
-            rightIcon="import"
             onClick={() => openDepositModal(symbol)}
           />
         </ButtonWrapper>
         <ButtonWrapper>
-          <Button
+          <BlueGlowingButton
             disabled={!connected}
             intent="primary"
             text="Send"
-            rightIcon="export"
             onClick={() => openSendModal(symbol)}
           />
         </ButtonWrapper>
         <ButtonWrapper>
-          <Button
+          <GreenGlowingButton
             disabled={!connected}
             intent="success"
             text="Convert to WETH"
             onClick={() => openConvertModal('ETH', 'WETH')}
-            rightIcon="random"
           />
         </ButtonWrapper>
       </Cell>
@@ -169,36 +185,33 @@ const WETHRow = (props: Props) => {
           <span>{symbol}</span>
         </TokenNameWrapper>
       </Cell>
-      <Cell>{balance}</Cell>
+      <Cell>{formatNumber(balance, { precision: 2})}</Cell>
       <Cell>
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
       <Cell style={{ width: '70%' }}>
         <ButtonWrapper>
-          <Button
+          <BlueGlowingButton
             disabled={!connected}
             intent="primary"
-            rightIcon="import"
             text="Deposit"
             onClick={() => openDepositModal(symbol)}
           />
         </ButtonWrapper>
         <ButtonWrapper>
-          <Button
+          <BlueGlowingButton
             disabled={!connected}
             intent="primary"
-            rightIcon="export"
             text="Send"
             onClick={() => openSendModal(symbol)}
           />
         </ButtonWrapper>
         <ButtonWrapper>
-          <Button
+          <GreenGlowingButton
             disabled={!connected}
             intent="success"
             text="Convert to ETH"
-            rightIcon="random"
             onClick={() => openConvertModal('WETH', "ETH")} />
         </ButtonWrapper>
       </Cell>
@@ -226,27 +239,25 @@ const QuoteTokenRows = (props: Props) => {
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
-        <Cell>{balance}</Cell>
+        <Cell>{formatNumber(balance, { precision: 2 })}</Cell>
         <Cell>
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '70%' }}>
           <ButtonWrapper>
-            <Button
+            <BlueGlowingButton
               disabled={!connected}
               intent="primary"
               text="Deposit"
-              rightIcon="import"
               onClick={() => openDepositModal(symbol)}
             />
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button
+            <BlueGlowingButton
               disabled={!connected}
               intent="primary"
               text="Send"
-              rightIcon="export"
               onClick={() => openSendModal(symbol)}
             />
           </ButtonWrapper>
@@ -279,36 +290,33 @@ const BaseTokenRows = (props: Props) => {
             <span>{symbol}</span>
           </TokenNameWrapper>
         </Cell>
-        <Cell>{balance}</Cell>
+        <Cell>{formatNumber(balance, { precision: 2})}</Cell>
         <Cell>
           <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '70%' }}>
           <ButtonWrapper>
-            <Button
+            <BlueGlowingButton
               disabled={!connected}
               intent="primary"
               text="Deposit"
-              rightIcon="import"
               onClick={() => openDepositModal(symbol)}
             />
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button
+            <BlueGlowingButton
               disabled={!connected}
               intent="primary"
               text="Send"
               onClick={() => openSendModal(symbol)}
-              rightIcon="export"
               />
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button
+            <GreenGlowingButton
               disabled={!connected}
               intent="success"
               text="Trade"
-              rightIcon="chart"
               onClick={() => redirectToTradingPage(symbol)}
             />
           </ButtonWrapper>

@@ -1,11 +1,12 @@
 import createStore from '../../store/configureStore';
 import logoutPageSelector from './logoutPage';
 import * as actionCreators from './logoutPage';
+import * as services from '../services/index.js'
 
 let unsubscribe = jest.fn();
 let selector;
 
-
+jest.mock('../services/index.js')
 
 describe('Logout Page Model', () => {
   it('handles logout', () => {
@@ -15,6 +16,7 @@ describe('Logout Page Model', () => {
       },
     });
 
+    services.mixpanel = { track: jest.fn() }
     selector = logoutPageSelector(store.getState());
     expect(selector.authenticated).toEqual(true);
 
