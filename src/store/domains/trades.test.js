@@ -130,8 +130,8 @@ it('handles trades removed event', () => {
 it('userTrades returns trades corresponding to a certain user', () => {
   let expected = [
     {
-      amount: "2,885.50",
-      price: "23,798.09",
+      amount: "2,885.500",
+      price: "23,798.09000",
       type: 'LIMIT',
       side: 'SELL',
       hash: '0x5960fda2d7d3451272bca059a09e6d92b796bb9f8b5cc9d2a7d39f93e0c17346',
@@ -154,8 +154,8 @@ it('userTrades returns trades corresponding to a certain user', () => {
 it('marketTrades should return a sorted list of trades', () => {
   let expected = [
     {
-      amount: '2,885.50',
-      price: '23,798.09',
+      amount: '2,885.500',
+      price: '23,798.09000',
       type: 'LIMIT',
       side: 'SELL',
       hash: '0x5960fda2d7d3451272bca059a09e6d92b796bb9f8b5cc9d2a7d39f93e0c17346',
@@ -167,8 +167,8 @@ it('marketTrades should return a sorted list of trades', () => {
       change: 'negative'
     },
     {
-      amount: '5,765.64',
-      price: '98,517.23',
+      amount: '5,765.640',
+      price: '98,517.23000',
       type: 'MARKET',
       side: 'SELL',
       hash: '0x8c3122d67b7836f641a39e694b3b61f817ced9a9131d4287db30e1f05494f46a',
@@ -180,8 +180,8 @@ it('marketTrades should return a sorted list of trades', () => {
       change: 'positive'
     },
     {
-      amount: '3,606.63',
-      price: '53,983.52',
+      amount: '3,606.630',
+      price: '53,983.52000',
       type: 'MARKET',
       side: 'SELL',
       hash: '0x239c611ce10346eba1fe08dbc5542499a1e6bf5675070fa7ef809dc85d75f7c9',

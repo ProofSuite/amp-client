@@ -1,6 +1,8 @@
 // @flow
-import { getTokenPairsDomain, getAccountDomain, getAccountBalancesDomain, getConnectionDomain } from '../domains'
+import { getTokenPairsDomain, getAccountDomain, getTokenDomain, getAccountBalancesDomain, getConnectionDomain } from '../domains'
 import * as actionCreators from '../actions/tradingPage'
+import * as notifierActionCreators from '../actions/app'
+
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
 import { parseOrders, parseTokenPairData } from '../../utils/parsers'
@@ -11,14 +13,34 @@ export default function tradingPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let pairDomain = getTokenPairsDomain(state)
   let { isInitiated, isConnected } = getConnectionDomain(state);
-  let { makeFee, takeFee, baseTokenSymbol, quoteTokenSymbol } = pairDomain.getCurrentPair()
 
   let authenticated = accountDomain.authenticated()
-  let baseTokenBalance = accountBalancesDomain.tokenBalance(baseTokenSymbol)
-  let quoteTokenBalance = accountBalancesDomain.tokenBalance(quoteTokenSymbol)
-  let baseTokenAllowance = accountBalancesDomain.tokenAllowance(baseTokenSymbol)
-  let quoteTokenAllowance = accountBalancesDomain.tokenAllowance(quoteTokenSymbol)
 
+  let { 
+    pair, 
+    makeFee, 
+    takeFee, 
+    baseTokenSymbol, 
+    quoteTokenSymbol,
+  } = pairDomain.getCurrentPair()
+
+  let [ baseToken, quoteToken ] = accountBalancesDomain.getBalancesAndAllowancesBySymbol([baseTokenSymbol, quoteTokenSymbol])
+  
+  let {
+    balance: baseTokenBalance,
+    allowance: baseTokenAllowance,
+    allowed: baseTokenIsAllowed
+  } = baseToken
+
+  let {
+    balance: quoteTokenBalance,
+    allowance: quoteTokenAllowance,
+    allowed: quoteTokenIsAllowed
+  } = quoteToken
+
+  let pairIsAllowed = baseTokenIsAllowed && quoteTokenIsAllowed
+
+  
   return {
     makeFee,
     takeFee,
@@ -28,9 +50,11 @@ export default function tradingPageSelector(state: State) {
     baseTokenSymbol,
     isConnected,
     isInitiated,
+    pairIsAllowed,
     quoteTokenAllowance,
     quoteTokenBalance,
-    quoteTokenSymbol
+    quoteTokenSymbol,
+    pairName: pair
   }
 }
 
@@ -70,6 +94,30 @@ export const getDefaultData = (): ThunkAction => {
   }
 }
 
+export function toggleAllowances(baseTokenSymbol: string, quoteTokenSymbol: string): ThunkAction {
+  return async (dispatch, getState, { txProvider }) => {
+    try {
+      const state = getState()
+      const tokens = getTokenDomain(state).bySymbol()
+      const baseTokenAddress = tokens[baseTokenSymbol].address
+      const quoteTokenAddress = tokens[quoteTokenSymbol].address
+      
+      const txConfirmHandler = (txConfirmed) => {
+        txConfirmed
+          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `Approval Successful. You can now start trading!` }))
+          : dispatch(notifierActionCreators.addErrorNotification({ message: `Approval Failed. Please try again.` }))
+      }
+
+      txProvider.updatePairAllowances(baseTokenAddress, quoteTokenAddress, txConfirmHandler)
+      dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${baseTokenSymbol}/${quoteTokenSymbol} trading. Your transaction should be approved within a few minutes`}))
+  
+    } catch (e) {
+      console.log(e)
+      dispatch(notifierActionCreators.addErrorNotification({ message: e.message }))
+    }
+  }
+}
+
 // eslint-disable-next-line
 export const updateCurrentPair = (pair: string): ThunkAction => {
   return async (dispatch, getState, { api, socket }) => {
@@ -90,5 +138,6 @@ export const updateCurrentPair = (pair: string): ThunkAction => {
     } catch (e) {
       console.log(e)
     }
+
   }
 }

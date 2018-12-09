@@ -79,17 +79,30 @@ export const tokenPairRemoved = (baseToken: Token) => {
   return event
 }
 
-export const tokenPairDataUpdated = (tokenPairData: TokenPairDataMap) => {
+export const tokenPairDataUpdated = (tokenPairData: Array<Object>) => {
   const event = (state: TokenPairDataMap) => {
+
+    let data = tokenPairData.reduce((result, item) => {
+      return {
+        ...result,
+        [item.pair]: {
+          ...state.data[item.pair],
+          ...item
+        }
+      }
+    }, {})
+
+    let currentPair = tokenPairData.filter(data => data.pair === state.currentPair).length === 0
+        ? tokenPairData[0].pair
+        : state.currentPair
+    
     let newState = {
       ...state,
       data: {
         ...state.data,
-        ...tokenPairData
+        ...data
       },
-      currentPair: tokenPairData.filter(data => data.pair === state.currentPair).length === 0
-        ? tokenPairData[0].pair
-        : state.currentPair,
+      currentPair: currentPair
     }
 
     return newState
@@ -122,6 +135,22 @@ export default function getTokenPairsDomain(state: TokenPairState) {
     getTokenPairsData: () => state.data,
     getTokenPairsDataArray: () => Object.values(state.data),
     getFavoritePairs: () => state.favorites,
-    getCurrentPair: (): TokenPair => state.byPair[state.currentPair]
+    getCurrentPair: (): TokenPair => state.byPair[state.currentPair],
+
+    //Merge token pair properties and data
+    getTokenPairsWithData: () => {
+      let symbols = Object.keys(state.byPair)
+      return symbols.reduce((
+        (result, symbol) => {
+          
+          result[symbol] = {
+            ...state.data[symbol],
+            ...state.byPair[symbol]
+          }
+
+          return result
+        }
+      ), {})      
+    }
   }
 }

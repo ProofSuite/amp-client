@@ -73,7 +73,7 @@ describe('Component methods', () => {
     expect(wrapper.state('method')).toBe('privateKey');
 
     await instance.submit();
-    expect(walletService.createWalletFromPrivateKey).toHaveBeenCalledTimes(0);
+    expect(walletService.createWalletFromPrivateKey).toHaveBeenCalledTimes(1);
   });
 
   it('Validates Form correctly on Submit with JSON', async () => {

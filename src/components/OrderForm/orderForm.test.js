@@ -12,9 +12,17 @@ it('renders without crashing', () => {
       quoteTokenBalance={1000}
       baseTokenBalance={10}
       side="SELL"
-      quoteToken="WETH"
-      baseToken="DAI"
+      quoteTokenSymbol="WETH"
+      baseTokenSymbol="DAI"
       loggedIn={false}
+      makeFee="50000"
+      takeFee="50000"
+      pairIsAllowed={true}
+      selectedOrder={null}
+      quoteTokenDecimals={18}
+      baseTokenDecimals={18}
+      unlockPair={jest.fn()}
+      sendNewOrder={jest.fn()}
     />
   )
 })
@@ -33,6 +41,10 @@ describe('tests Functions and state', () => {
         quoteToken="WETH"
         baseToken="DAI"
         loggedIn={true}
+        makeFee="50000"
+        takeFee="50000"
+        quoteTokenDecimals={18}
+        baseTokenDecimals={18}
       />
     )
 

@@ -1,11 +1,13 @@
 // @flow
 import * as appActionCreators from '../actions/app'
+import * as notifierActionCreators from '../actions/app'
 
 import { 
   getTokenPairsDomain, 
   getOrderBookDomain, 
   getAccountBalancesDomain, 
-  getAccountDomain
+  getAccountDomain,
+  getTokenDomain
 } from '../domains/'
 
 import { utils } from 'ethers'
@@ -20,31 +22,49 @@ export default function getOrderFormSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
 
   let currentPair = tokenPairDomain.getCurrentPair()
-  let baseToken = currentPair.baseTokenSymbol
-  let quoteToken = currentPair.quoteTokenSymbol
-  let makeFee = currentPair.makeFee
-  let takeFee = currentPair.takeFee
-  let baseTokenDecimals = currentPair.baseTokenDecimals
-  let quoteTokenDecimals = currentPair.quoteTokenDecimals
-  let baseTokenBalance = accountBalancesDomain.get(baseToken)
-  let quoteTokenBalance = accountBalancesDomain.get(quoteToken)
+
+  let { 
+    baseTokenSymbol,
+    quoteTokenSymbol,
+    makeFee,
+    takeFee,
+    baseTokenDecimals,
+    quoteTokenDecimals
+  } = currentPair
+
   let askPrice = orderBookDomain.getAskPrice()
   let bidPrice = orderBookDomain.getBidPrice()
   let selectedOrder = orderBookDomain.getSelectedOrder()
+  let [ baseToken, quoteToken ] = accountBalancesDomain.getBalancesAndAllowancesBySymbol([baseTokenSymbol, quoteTokenSymbol])
+  
+  let {
+    balance: baseTokenBalance,
+    allowed: baseTokenIsAllowed,
+  } = baseToken
+
+  let {
+    balance: quoteTokenBalance,
+    allowed: quoteTokenIsAllowed
+  } = quoteToken
+
+  let pairIsAllowed = baseTokenIsAllowed && quoteTokenIsAllowed
 
   return {
     selectedOrder,
     currentPair,
-    baseToken,
-    quoteToken,
+    baseTokenSymbol,
+    quoteTokenSymbol,
     baseTokenBalance,
+    baseTokenIsAllowed,
     quoteTokenBalance,
+    quoteTokenIsAllowed,
     baseTokenDecimals,
     quoteTokenDecimals,
     askPrice,
     bidPrice,
     makeFee,
     takeFee,
+    pairIsAllowed
   }
 }
 
@@ -126,6 +146,31 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       console.log(e)
       let message = parseNewOrderError(e)
       return dispatch(appActionCreators.addErrorNotification({ message }))
+    }
+  }
+}
+
+
+export function unlockPair(baseTokenSymbol: string, quoteTokenSymbol: string): ThunkAction {
+  return async (dispatch, getState, { txProvider }) => {
+    try {
+      const state = getState()
+      const tokens = getTokenDomain(state).bySymbol()
+      const baseTokenAddress = tokens[baseTokenSymbol].address
+      const quoteTokenAddress = tokens[quoteTokenSymbol].address
+      
+      const txConfirmHandler = (txConfirmed) => {
+        txConfirmed
+          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `Approval Successful. You can now start trading!` }))
+          : dispatch(notifierActionCreators.addErrorNotification({ message: `Approval Failed. Please try again.` }))
+      }
+
+      txProvider.updatePairAllowances(baseTokenAddress, quoteTokenAddress, txConfirmHandler)
+      dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${baseTokenSymbol}/${quoteTokenSymbol} trading. Your transaction should be approved within a few minutes`}))
+  
+    } catch (e) {
+      console.log(e)
+      dispatch(notifierActionCreators.addErrorNotification({ message: e.message }))
     }
   }
 }

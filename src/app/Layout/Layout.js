@@ -84,6 +84,7 @@ class Layout extends React.PureComponent<Props, State> {
                     <NavbarLink to="/wallet">Wallet</NavbarLink>
                     <NavbarLink to="/trade">Exchange</NavbarLink>
                     <NavbarLink to="/settings">Settings</NavbarLink>
+                    <NavbarLink to="/faq">FAQ</NavbarLink>
                     <NavbarDivider />
                   </React.Fragment>
                 )}

@@ -136,11 +136,11 @@ export const confirmEtherDeposit = (
             signer.provider.waitForTransaction(allowTx.hash),
           ]);
 
-          convertTxReceipt.status === '0x0'
+          convertTxReceipt.status === 0
             ? dispatch(depositFormActionCreators.revertConvertTx(convertTxReceipt))
             : dispatch(depositFormActionCreators.confirmConvertTx(convertTxReceipt));
 
-          allowTxReceipt.status === '0x0'
+          allowTxReceipt.status === 0
             ? dispatch(depositFormActionCreators.revertAllowTx(allowTxReceipt))
             : dispatch(depositFormActionCreators.confirmAllowTx(allowTxReceipt));
         } else {
@@ -149,7 +149,7 @@ export const confirmEtherDeposit = (
           dispatch(depositFormActionCreators.sendConvertTx(convertTx.hash));
           let convertTxReceipt = await signer.provider.waitForTransaction(convertTx.hash);
 
-          convertTxReceipt.status === '0x0'
+          convertTxReceipt.status === 0
             ? dispatch(depositFormActionCreators.revertConvertTx(convertTxReceipt))
             : dispatch(depositFormActionCreators.confirmConvertTx(convertTxReceipt));
         }
@@ -175,7 +175,7 @@ export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): T
 
         let allowTxReceipt = await signer.provider.waitForTransaction(allowTx.hash);
 
-        allowTxReceipt.status === '0x0'
+        allowTxReceipt.status === 0
           ? dispatch(depositFormActionCreators.revertAllowTx(allowTxReceipt))
           : dispatch(depositFormActionCreators.confirmAllowTx(allowTxReceipt));
       }

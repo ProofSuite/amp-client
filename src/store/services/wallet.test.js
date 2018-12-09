@@ -23,7 +23,7 @@ describe('wallet service', () => {
   });
 });
 
-describe.only('wallet service (integration with ethers', () => {
+describe('wallet service (integration with ethers', () => {
   //TODO make this test work
   // it('createWalletFromJSON should return correct json file', async () => {
   //   Wallet.fromEncryptedWallet = jest.fn()

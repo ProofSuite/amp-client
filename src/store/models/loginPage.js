@@ -58,7 +58,6 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
     mixpanel.track('login-with-wallet');
 
     try {
-      console.log(params)
       dispatch(actionCreators.requestLogin());
       let { wallet, encryptedWallet, storeWallet, storePrivateKey } = params;
       let { address, privateKey } = wallet;

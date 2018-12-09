@@ -10,10 +10,10 @@ import OrderBook from '../../components/OrderBook'
 import { CloseableCallout } from '../../components/Common'
 import { Grid } from 'styled-css-grid'
 import { Redirect } from 'react-router-dom'
-import { Resizable, ResizableBox } from 'react-resizable'
 
 type Props = {
   authenticated: boolean,
+  isConnected: boolean,
   balancesLoading: boolean,
   baseTokenBalance: string,
   quoteTokenBalance: string,
@@ -21,9 +21,12 @@ type Props = {
   quoteTokenAllowance: string,
   baseTokenSymbol: string,
   quoteTokenSymbol: string,
+  pairIsAllowed: boolean,
+  pairName: string,
   getDefaultData: () => void,
   makeFee: string, 
   takeFee: string,
+  toggleAllowances: (string, string[]) => void,
 }
 
 type State = {
@@ -44,22 +47,54 @@ class TradingPage extends React.PureComponent<Props, State> {
       intent: 'danger',
       message: 'Please authenticate to start trading'
     }),
-    quoteTokensLocked: (quoteTokenSymbol: string) => ({ 
+    quoteTokensLocked: () => {
+      const { baseTokenSymbol, quoteTokenSymbol, pairName, toggleAllowances } = this.props
+      
+    return {
       title: `Unlock tokens to start trading`,
       intent: 'danger',
-      message: `To start trading, unlock trading for ${quoteTokenSymbol} tokens on your wallet page.` 
-    }),
-    baseTokensLocked: (baseTokenSymbol: string) => ({
-      title: `Unlock tokens to start trading`,
-      intent: 'danger',
-      message: `To start trading, unlock trading for ${baseTokenSymbol} tokens on your wallet page.`
-    }),
-    tokensLocked: (baseTokenSymbol: string, quoteTokenSymbol: string) => ({
-      title: `Unlock tokens to start trading`,
-      intent: `danger`,
-      message: `To start trading a currency pair, unlock trading for both tokens (${baseTokenSymbol} and ${quoteTokenSymbol}) on your wallet page.`
-    })
-  }
+      message: (
+          <React.Fragment>
+            To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
+            Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+          </React.Fragment>
+        )
+      }
+    },
+    baseTokensLocked: () => {
+      const { 
+        baseTokenSymbol, 
+        quoteTokenSymbol, 
+        pairName, 
+        toggleAllowances,
+      } = this.props
+
+      return {
+        title: `Unlock tokens to start trading`,
+        intent: 'danger',
+        message: (
+          <React.Fragment>
+            To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
+            Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+          </React.Fragment>
+        )
+      }
+    },
+    tokensLocked: () => {
+      const { baseTokenSymbol, quoteTokenSymbol, pairName, toggleAllowances } = this.props
+
+      return {
+        title: `Unlock tokens to start trading`,
+        intent: `danger`,
+        message: (
+            <React.Fragment>
+              To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
+              Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+            </React.Fragment>
+          )
+        }
+      }
+    }
 
   componentDidMount() {
     if (this.props.isConnected) {
@@ -86,6 +121,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       quoteTokenAllowance,
       baseTokenSymbol,
       quoteTokenSymbol,
+      pairIsAllowed,
      } = this.props
 
     if (!authenticated) {
@@ -97,19 +133,8 @@ class TradingPage extends React.PureComponent<Props, State> {
       return
     }
 
-    if (baseTokenAllowance === '0.0' && quoteTokenAllowance === '0.0') {
+    if (!pairIsAllowed) {
       let calloutOptions = this.callouts.tokensLocked(baseTokenSymbol, quoteTokenSymbol)
-      return this.setState({ calloutVisible: true, calloutOptions })
-    }
-
-    // TODO update when moving balances in redux from string to numbers
-    if (baseTokenAllowance === '0.0') {
-      let calloutOptions = this.callouts.baseTokensLocked(baseTokenSymbol)
-      return this.setState({ calloutVisible: true, calloutOptions })
-    }
-
-    if (quoteTokenAllowance === '0.0') {
-      let calloutOptions = this.callouts.quoteTokensLocked(quoteTokenSymbol)
       return this.setState({ calloutVisible: true, calloutOptions })
     }
   }
@@ -129,11 +154,11 @@ class TradingPage extends React.PureComponent<Props, State> {
       <TradingPageLayout>
         <SidePanel>
           <Grid columns={1} alignContent="start">
-            <CloseableCallout
-              visible={calloutVisible}
-              handleClose={this.closeCallout}
-              {...calloutOptions}
-            />
+              <CloseableCallout
+                visible={calloutVisible}
+                handleClose={this.closeCallout}
+                {...calloutOptions}
+              />
               <TokenSearcher />
               <OrderForm side="BUY" />
               <OrderForm side="SELL" />
