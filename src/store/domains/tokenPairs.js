@@ -97,6 +97,7 @@ export const tokenPairDataUpdated = (tokenPairData: Array<Object>) => {
         : state.currentPair
     
     let newState = {
+      ...state,
       data: {
         ...state.data,
         ...data
