@@ -72,6 +72,7 @@ storiesOf('Markets Table', module)
         <MarketsTable
           pairs={pairs}
           redirectToTradingPage={action('redirectToTradingPage')}
+          quoteTokens={['USDC', 'WETH', 'DAI']}
         />
       </Card>
     ))

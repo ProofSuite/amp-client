@@ -1,9 +1,6 @@
 // @flow
 import type { OrderBookState } from '../../types/orderBook'
 import SortedArray from 'sorted-array'
-import { formatNumber } from 'accounting-js'
-
-
 
 const initialState: OrderBookState = {
   selected: null,
@@ -12,7 +9,7 @@ const initialState: OrderBookState = {
   sortedBids: [],
   sortedAsks: [],
   quoteToken: '',
-  baseToken: ''
+  baseToken: '',
 }
 
 export const initialized = () => {
