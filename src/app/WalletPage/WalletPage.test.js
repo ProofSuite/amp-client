@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import WalletPage from './WalletPage';
 
-const depositTableData = [
+const tokenTableData = [
   { symbol: 'EOS', balance: '10.0000', allowed: true },
   { symbol: 'ZRX', balance: '1.00000', allowed: false },
   { symbol: 'EOS', balance: '5.00000', allowed: false },
@@ -19,7 +19,7 @@ it('calls queryAccountData on mount', () => {
     <WalletPage
       authenticated={true}
       queryAccountData={queryAccountData}
-      depositTableData={depositTableData}
+      tokenTableData={tokenTableData}
       loading={false}
     />
   );

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import DepositTableRenderer from './DepositTableRenderer';
+import TokenTableRenderer from './TokenTableRenderer';
 import DepositModal from '../../components/DepositModal';
 import TransferTokensModal from '../../components/TransferTokensModal';
 import ConvertTokensModal from '../../components/ConvertTokensModal';
@@ -37,7 +37,7 @@ type State = {
   searchInput: string,
 };
 
-class DepositTable extends React.PureComponent<Props, State> {
+class TokenTable extends React.PureComponent<Props, State> {
   state = {
     isDepositModalOpen: false,
     isSendModalOpen: false,
@@ -141,7 +141,7 @@ class DepositTable extends React.PureComponent<Props, State> {
 
     return (
       <Wrapper>
-        <DepositTableRenderer
+        <TokenTableRenderer
           connected={connected}
           baseTokensData={filteredBaseTokenData}
           quoteTokensData={filteredQuoteTokenData}
@@ -181,7 +181,7 @@ class DepositTable extends React.PureComponent<Props, State> {
   }
 }
 
-export default DepositTable;
+export default TokenTable;
 
 const Wrapper = styled.div`
   height: 100%;

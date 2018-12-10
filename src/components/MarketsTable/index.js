@@ -1,4 +1,4 @@
-import DepositTable from './DepositTable';
+import TokenTable from './TokenTable';
 import connect from './connect'
 
-export default connect(DepositTable);
+export default connect(TokenTable);

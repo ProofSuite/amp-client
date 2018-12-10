@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { action } from '@storybook/addon-actions';
-import DepositTableRenderer from './DepositTableRenderer';
+import TokenTableRenderer from './TokenTableRenderer';
 import { Card } from '@blueprintjs/core';
 
 import { mockDepositTableData } from '../../mockData'
@@ -15,8 +15,8 @@ storiesOf('Deposit Table', module)
     'Deposit Table (Default)',
     withInfo({ source: false })(() => (
       <Card className="bp3-dark">
-        <DepositTableRenderer
-          depositTableData={mockDepositTableData}
+        <TokenTableRenderer
+          tokenTableData={mockDepositTableData}
           searchInput={""}
           connected={true}
           handleSearchInputChange={action('handleSearchInputChange')}
@@ -34,8 +34,8 @@ storiesOf('Deposit Table', module)
     'Deposit Table (Provider not connected)',
     withInfo({ source: false })(() => (
       <Card className="bp3-dark">
-        <DepositTableRenderer
-          depositTableData={mockDepositTableData}
+        <TokenTableRenderer
+          tokenTableData={mockDepositTableData}
           searchInput={""}
           connected={false}
           handleSearchInputChange={action('handleSearchInputChange')}

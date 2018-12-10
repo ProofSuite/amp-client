@@ -52,7 +52,7 @@ type Props = {
   totalFilteredTokens: number
 };
 
-const DepositTableRenderer = (props: Props) => {
+const TokenTableRenderer = (props: Props) => {
   const {
     hideZeroBalanceToken,
     toggleZeroBalanceToken,
@@ -394,4 +394,4 @@ const ButtonWrapper = styled.span`
   margin-right: 10px !important;
 `;
 
-export default DepositTableRenderer;
+export default TokenTableRenderer;

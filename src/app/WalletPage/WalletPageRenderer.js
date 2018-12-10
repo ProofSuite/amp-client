@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Card } from '@blueprintjs/core'
 import CenteredSpinner from '../../components/Common/CenteredSpinner'
-import DepositTable from '../../components/DepositTable'
+import TokenTable from '../../components/TokenTable'
 import WalletInfo from '../../components/WalletInfo'
 import GetStartedModal from '../../components/GetStartedModal'
 
@@ -58,7 +58,7 @@ const WalletPageRenderer = (props: Props) => {
             <CenteredSpinner />
           ) : (
             <DepositTableBox>
-              <DepositTable
+              <TokenTable
                 connected={connected}
                 tokenData={tokenData}
                 baseTokens={baseTokens}
