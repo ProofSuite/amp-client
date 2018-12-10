@@ -2,25 +2,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { formatNumber } from 'accounting-js'
-import Help from '../../components/Help'
 
 import { 
   Button, 
-  Switch, 
-  Checkbox, 
   InputGroup, 
-  Tag, 
-  Position
 } from '@blueprintjs/core';
 
 import { 
-  RowSpaceBetween, 
-  CryptoIcon, 
+  RowSpaceBetween,
   Colors, 
   AMPLogo, 
   Centered, 
   LargeText, 
-  GreenGlowingButton, 
+  SmallText,
   BlueGlowingButton
 } from '../Common';
 
@@ -28,15 +22,21 @@ type Props = {
   searchInput: string,
   pairs: Array<Object>,
   handleSearchInputChange: (SyntheticInputEvent<>) => void,
-  redirectToTradingPage: string => void,
+  redirectToTradingPage: (string, string) => void,
+  selectedQuoteToken: string,
+  handleUpdateQuoteToken: string => void,
+  quoteTokens: Array<string>
 };
 
 const MarketsTableRenderer = (props: Props) => {
   const {
     pairs,
+    quoteTokens,
     searchInput,
     handleSearchInputChange,
-    redirectToTradingPage
+    redirectToTradingPage,
+    selectedQuoteToken,
+    handleUpdateQuoteToken,
   } = props;
 
   return (
@@ -49,6 +49,20 @@ const MarketsTableRenderer = (props: Props) => {
           value={searchInput}
           onChange={handleSearchInputChange}
         />
+        <ButtonRow>
+          {quoteTokens.map((quote, i) => {
+            return (
+              <Button
+                text={quote}
+                minimal
+                onClick={() => handleUpdateQuoteToken(quote)}
+                active={selectedQuoteToken === quote}
+                intent={selectedQuoteToken === quote ? 'primary' : ''}
+              />    
+            )
+          })
+        }
+        </ButtonRow>
       </RowSpaceBetween>
       <Table>
         <TableHeader>
@@ -57,6 +71,7 @@ const MarketsTableRenderer = (props: Props) => {
           <TableHeaderCell>Volume</TableHeaderCell>
           <TableHeaderCell>Orderbook size</TableHeaderCell>
           <TableHeaderCell>Change 24H</TableHeaderCell>
+          <TableHeaderCell></TableHeaderCell>
         </TableHeader>
       </Table>
       <TableBodyContainer>
@@ -65,6 +80,7 @@ const MarketsTableRenderer = (props: Props) => {
             <MarketTableRow
               pairs={pairs}
               redirectToTradingPage={redirectToTradingPage}
+              quoteTokens={quoteTokens}
             />
           </TableBody>
         </Table>
@@ -79,25 +95,53 @@ const MarketsTableRenderer = (props: Props) => {
   );
 };
 
-const MarketTableRow = (props: Props) => {
+const MarketTableRow = (props: *) => {
   const {
     redirectToTradingPage,
     pairs
   } = props;
 
-  return pairs.map(({ baseTokenSymbol, quoteTokenSymbol, pairIsAllowed, allowancePending }, index) => {
+  return pairs.map(({ pair, baseTokenSymbol, quoteTokenSymbol, baseTokenAddress, quoteTokenAddress, lastPrice, change, high, low, volume, orderbookSize }, index) => {
     return (
       <Row key={index}>
-        <Cell></Cell>
-        <Cell></Cell>
-        <Cell></Cell>
-        <Cell></Cell>
-        <Cell></Cell>
+        <Cell>
+          <SmallText>
+            {pair}
+          </SmallText>
+        </Cell>
+        <Cell>
+          <SmallText>
+            {formatNumber(lastPrice, { precision: 2 })} {baseTokenSymbol}
+          </SmallText>
+        </Cell>
+        <Cell>
+          <SmallText>
+            {formatNumber(volume, { precision: 2 })}
+          </SmallText>
+        </Cell>
+        <Cell>
+          <SmallText>
+            {formatNumber(orderbookSize, { precision: 2 })}
+          </SmallText>
+        </Cell>
+        <Cell>
+          <ChangeCell change={change}>{change} %</ChangeCell>
+        </Cell>
+        <Cell>
+          <BlueGlowingButton
+            intent="primary"
+            text="Trade"
+            onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)}
+          />
+        </Cell>
       </Row>
     )
   })
 }
 
+const ChangeCell = styled(SmallText).attrs({ className: 'change' })`
+  color: ${props => (props.change > 0 ? Colors.GREEN5 : Colors.RED4)} !important;
+`
 
 const Table = styled.table.attrs({
   className: 'bp3-html-table bp3-condensed bp3-interactive',
@@ -141,29 +185,12 @@ const Row = styled.tr`
   width: 100%;
 `;
 
-const TokenNameWrapper = styled.span`
+const ButtonRow = styled.span`
   display: flex;
-  align-items: center;
-  & svg {
-    margin-right: 12px;
+  justify-content: flex-end;
+  & .bp3-button {
+    margin-left: 5px;
   }
-`;
-
-const HideTokenCheck = styled(Checkbox)`
-  margin: 0 !important;
-`;
-
-const NoToken = styled.p`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-`;
-
-const ButtonWrapper = styled.span`
-  margin-left: 10px !important;
-  margin-right: 10px !important;
-`;
+`
 
 export default MarketsTableRenderer;

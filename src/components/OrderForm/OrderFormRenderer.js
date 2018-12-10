@@ -29,7 +29,7 @@ type Props = {
   takeFee: string,
   baseTokenDecimals: number,
   quoteTokenDecimals: number,
-  pairIsAllowed: string,
+  pairIsAllowed: boolean,
 }
 
 const OrderFormRenderer = (props: Props) => {

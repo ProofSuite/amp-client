@@ -28,7 +28,7 @@ export function subscribeBalance(symbol: string): SubscribeAccountBalanceAction 
   };
 }
 
-export function updateBalance(symbol: string, balance: number): UpdateAccountBalanceAction {
+export function updateBalance(symbol: string, balance: string): UpdateAccountBalanceAction {
   return {
     type: actionTypes.updateBalance,
     payload: { symbol, balance },
@@ -42,7 +42,7 @@ export function updateBalances(balances: AccountBalances): UpdateAccountBalances
   };
 }
 
-export function updateAllowance(symbol: string, allowance: number): UpdateAccountAllowanceAction {
+export function updateAllowance(symbol: string, allowance: string): UpdateAccountAllowanceAction {
   return {
     type: actionTypes.updateAllowance,
     payload: { symbol, allowance },

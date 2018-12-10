@@ -29,7 +29,8 @@ type TokenData = {
   address: string,
   balance: string,
   allowed: boolean,
-  allowancePending: boolean
+  allowancePending: boolean,
+  decimals: number,
 }
 
 type Props = {

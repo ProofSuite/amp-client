@@ -25,7 +25,7 @@ type State = {
   address: ?string,
   savedWallet: string,
   savedWalletAddress: string,
-  savedWalletPasswordStatus: string,
+  savedWalletPasswordStatus: Status,
   savedWalletPassword: string,
   json: ?string,
   jsonStatus: Status,

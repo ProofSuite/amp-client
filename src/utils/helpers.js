@@ -27,12 +27,14 @@ export const isFloat = (n: *) => parseFloat(n.match(/^-?\d*(\.\d+)?$/)) > 0
 
 export const isInteger = (n: *) => /^\+?\d+$/.test(n)
 
+// silence-error: silence number/string conversion error
 export const round = (n: *, decimals: number = 2) => Math.round(n * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
 export const convertPricepointToPrice = (n: any, pricePointMultiplier: number = 1e9, decimals: number = 6) =>
   Math.round((n / pricePointMultiplier) * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
 export const sortTable = (table: *, column: *, order: string = 'asc') => {
+  // silence-error: unknown Issue
   let sortedTable = table.sort((a, b) => compare(a[column], b[column]))
   return order === 'asc' ? sortedTable : sortedTable.reverse()
 }
@@ -48,7 +50,7 @@ export const compare = (a: *, b: *, order: string = 'asc') => {
 
 export const isJson = (text: *) => {
   return /^[\],:{}\s]*$/.test(
-    text // eslint-disable-next-line
+    text // silence-error: unknown Issue
       .replace(/\\["\\\/bfnrtu]/g, '@') // eslint-disable-next-line
       .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
       .replace(/(?:^|:|,)(?:\s*\[)+/g, '')

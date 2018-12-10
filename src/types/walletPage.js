@@ -23,6 +23,11 @@ export type UpdateAccountAllowanceAction = {
   payload: AccountAllowance,
 };
 
+export type UpdateAllowancePendingAction = {
+  type: 'walletPage/UPDATE_ALLOWANCE_PENDING',
+  payload: { symbol: string },
+}
+
 export type UpdateAccountAllowancesAction = {
   type: 'walletPage/UPDATE_ALLOWANCES',
   payload: { allowances: AccountAllowances },
@@ -56,3 +61,4 @@ export type WalletPageActions =
   | UnsubscribeAccountBalanceAction
   | UpdateTokenPairsAction
   | UpdateExchangeAddressAction
+  | UpdateAllowancePendingAction

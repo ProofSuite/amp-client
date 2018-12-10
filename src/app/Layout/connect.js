@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import layoutSelector, { createProvider } from '../../store/models/layout';
 
 import type { State } from '../../types'
-import type { Props as LayoutProps } from './Layout'
 
-export function mapStateToProps(state: State, props: Object): LayoutProps {
+export function mapStateToProps(state: State, props: Object) {
   const selector = layoutSelector(state);
 
   return {

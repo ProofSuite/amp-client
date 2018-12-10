@@ -331,6 +331,7 @@ describe('Token Pair Domain', () => {
         high: '8782.7964',
         low: '6499.3696',
         volume: 720404,
+        orderbookSize: '100000',
       },
       {
         pair: 'WETH/DAI',
@@ -339,6 +340,7 @@ describe('Token Pair Domain', () => {
         high: '3876.8717',
         low: '4613.5315',
         volume: 68946,
+        orderbookSize: '100000',
       }
     ]
   
@@ -359,6 +361,7 @@ describe('Token Pair Domain', () => {
         quoteTokenAddress: '0x2',
         lastPrice: '7425.2945',
         change: '4.5421',
+        orderbookSize: '100000',
         high: '8782.7964',
         low: '6499.3696',
         volume: 720404,
@@ -375,6 +378,7 @@ describe('Token Pair Domain', () => {
         quoteTokenAddress: '0x2',
         lastPrice: '6018.7886',
         change: '1.6589',
+        orderbookSize: '100000',
         high: '3876.8717',
         low: '4613.5315',
         volume: 68946,

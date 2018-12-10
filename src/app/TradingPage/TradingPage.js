@@ -14,6 +14,7 @@ import { Redirect } from 'react-router-dom'
 type Props = {
   authenticated: boolean,
   isConnected: boolean,
+  isInitiated: boolean,
   balancesLoading: boolean,
   baseTokenBalance: string,
   quoteTokenBalance: string,
@@ -26,7 +27,7 @@ type Props = {
   getDefaultData: () => void,
   makeFee: string, 
   takeFee: string,
-  toggleAllowances: (string, string[]) => void,
+  toggleAllowances: (string, string) => void,
 }
 
 type State = {
@@ -81,7 +82,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       }
     },
     tokensLocked: () => {
-      const { baseTokenSymbol, quoteTokenSymbol, pairName, toggleAllowances } = this.props
+      const { baseTokenSymbol, quoteTokenSymbol } = this.props
 
       return {
         title: `Unlock tokens to start trading`,
@@ -104,7 +105,7 @@ class TradingPage extends React.PureComponent<Props, State> {
     this.checkIfCalloutRequired()
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.isConnected || !this.props.isConnected) {
       return;
     }
@@ -134,7 +135,7 @@ class TradingPage extends React.PureComponent<Props, State> {
     }
 
     if (!pairIsAllowed) {
-      let calloutOptions = this.callouts.tokensLocked(baseTokenSymbol, quoteTokenSymbol)
+      let calloutOptions = this.callouts.tokensLocked()
       return this.setState({ calloutVisible: true, calloutOptions })
     }
   }

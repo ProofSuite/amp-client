@@ -3,7 +3,8 @@ import React from 'react';
 import WaitingFormRenderer from './steps/WaitingFormRenderer';
 import ConversionFormRenderer from './steps/ConversionFormRenderer';
 import ConfirmFormRenderer from './steps/ConfirmFormRenderer';
-import { TxReceipt } from '../../types/common';
+
+import type { TxReceipt } from '../../types/common';
 
 type Props = {
   step: 'waiting' | 'convert' | 'confirm',

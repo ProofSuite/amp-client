@@ -6,7 +6,8 @@ import type {
   UpdateAccountBalanceAction,
   UpdateTokenPairsAction,
   UpdateCurrentPairAction,
-  UpdateExchangeAddressAction
+  UpdateExchangeAddressAction,
+  UpdateAllowancePendingAction
 } from '../../types/walletPage';
 
 import type { AccountAllowances, AccountBalances, AccountBalance, AccountAllowance } from '../../types/accountBalances';

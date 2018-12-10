@@ -7,6 +7,10 @@ export type OrderBookState = {
   +asks: Object,
   +sortedBids: Array<number>,
   +sortedAsks: Array<number>,
+  +selected: ?{
+    pricepoint: string,
+    amount: string,
+  }
 };
 
 export type OrderBookData = {

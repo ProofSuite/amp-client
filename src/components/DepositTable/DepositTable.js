@@ -13,6 +13,7 @@ type TokenData = {
   address: string,
   balance: string,
   allowed: boolean,
+  decimals: number,
   allowancePending: boolean
 }
 
@@ -53,7 +54,7 @@ class DepositTable extends React.PureComponent<Props, State> {
 
     this.setState({
       isDepositModalOpen: true,
-      selectedToken: selectedToken,
+      selectedToken,
     });
   };
 
@@ -62,7 +63,7 @@ class DepositTable extends React.PureComponent<Props, State> {
 
     this.setState({
       isSendModalOpen: true,
-      selectedToken: selectedToken,
+      selectedToken,
     });
   };
 

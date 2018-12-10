@@ -14,6 +14,7 @@ type BidOrAsk = {
 type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
+  onSelect: BidOrAsk => void,
 };
 
 export const OrderBookRenderer = (props: Props) => {
@@ -69,7 +70,7 @@ export const OrderBookRenderer = (props: Props) => {
 
 export type SingleOrderProps = {
   order: Object,
-  index: number,
+  onClick: void => void
 };
 
 const BuyOrder = (props: SingleOrderProps) => {

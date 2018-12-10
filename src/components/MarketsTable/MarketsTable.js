@@ -2,46 +2,55 @@
 import React from 'react';
 import styled from 'styled-components';
 import MarketsTableRenderer from './MarketsTableRenderer';
-import type { Token } from '../../types/tokens';
+
+import type { TokenPair } from '../../types/tokens';
 
 type Props = {
-  pairs: Array<Object>,
-  redirectToTradingPage: string => void,
+  pairs: Array<TokenPair>,
+  quoteTokens: Array<string>,
+  redirectToTradingPage: (string, string) => void,
 };
 
 type State = {
   searchInput: string,
+  selectedQuoteToken: string
 };
 
 class MarketsTable extends React.PureComponent<Props, State> {
 
   state = {
     searchInput: '',
+    selectedQuoteToken: ''
   };
 
   handleSearchInputChange = (e: SyntheticInputEvent<>) => {
     this.setState({ searchInput: e.target.value });
   };
 
-  filterTokens = (data: Array<TokenData>) => {
+  handleUpdateQuoteToken = (selectedQuoteToken: string ) => {
+    this.setState({ selectedQuoteToken })
+  }
+
+  filterTokens = (pairs: Array<TokenPair>) => {
     const { searchInput } = this.state;
-    if (searchInput) data = data.filter(token => token.symbol.indexOf(searchInput.toUpperCase()) > -1);
-    return data;
+
+    return searchInput ? pairs.filter(pair => pair.baseTokenSymbol.indexOf(searchInput.toUpperCase()) > -1) : pairs
   };
 
   render() {
     let {
       pairs,
       redirectToTradingPage,
+      quoteTokens,
      } = this.props;
 
     let {
       searchInput,
+      selectedQuoteToken
      } = this.state;
 
      let filteredPairs = this.filterTokens(pairs)
 
-    
     return (
       <Wrapper>
         <MarketsTableRenderer
@@ -49,6 +58,9 @@ class MarketsTable extends React.PureComponent<Props, State> {
           searchInput={searchInput}
           handleSearchInputChange={this.handleSearchInputChange}
           redirectToTradingPage={redirectToTradingPage}
+          quoteTokens={quoteTokens}
+          selectedQuoteToken={selectedQuoteToken}
+          handleUpdateQuoteToken={this.handleUpdateQuoteToken}
         />
       </Wrapper>
     );

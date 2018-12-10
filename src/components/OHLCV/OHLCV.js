@@ -3,7 +3,6 @@ import React from 'react';
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 import { Card, Button, Collapse } from '@blueprintjs/core';
-import type { SendTimelineParams } from '../../types/ohlcv';
 import styled from 'styled-components';
 import { ResizableBox } from 'react-resizable'
 
@@ -62,9 +61,11 @@ type Props = {
   currentTimeSpan: Object,
   currentDuration: Object,
   noOfCandles: number,
-  updateTimeLine: SendTimelineParams => void,
+  updateTimeLine: Object => void,
   saveDuration: Object => void,
   saveTimeSpan: Object => void,
+  updateDuration: (*, *) => void,
+  updateTimeSpan: (*, *) => void,
 };
 
 type State = {
@@ -76,6 +77,7 @@ type State = {
   chartTypes: Array<Object>,
   duration: Array<Object>,
   expandedChard: boolean,
+  isOpen: boolean,
 };
 
 export default class OHLCV extends React.PureComponent<Props, State> {
