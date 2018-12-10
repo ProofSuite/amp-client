@@ -6,7 +6,12 @@ import { MutedText } from './Text'
 import ampLogo from '../../assets/amp_black.png'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter, faDiscord, faMedium, faFacebook, faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter } from '../Common/Icons/faTwitter'
+import { faDiscord } from '../Common/Icons/faDiscord'
+import { faGithub } from '../Common/Icons/faGithub'
+import { faYoutube } from '../Common/Icons/faYoutube'
+import { faFacebook } from '../Common/Icons/faFacebook'
+import { faMedium } from '../Common/Icons/faMedium'
 
 
 const Footer = () => (

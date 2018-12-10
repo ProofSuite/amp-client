@@ -142,12 +142,13 @@ export default function getTokenPairsDomain(state: TokenPairState) {
       let symbols = Object.keys(state.byPair)
       return symbols.reduce((
         (result, symbol) => {
-          
-          result[symbol] = {
+          if (state.data[symbol] && state.byPair[symbol]) {
+            result[symbol] = {
             ...state.data[symbol],
             ...state.byPair[symbol]
+            }
           }
-
+          
           return result
         }
       ), {})      

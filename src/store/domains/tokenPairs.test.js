@@ -85,11 +85,13 @@ describe('Token Pair Domain', () => {
         quoteTokenAddress: '0x2',
       },
     };
+
     expect(tokenPairsDomain.getPairs()).toEqual(expectedPairs);
     expect(tokenPairsDomain.getPairsByCode()).toEqual(expectedByPairsByCode);
   });
 
   it('handles tokenPairsUpdated event properly', () => {
+
     const pairs = [
       {
         pair: 'EOS/DAI',
@@ -198,7 +200,7 @@ describe('Token Pair Domain', () => {
   });
 
   
-  it('handles updated event', () => {
+  it('handles tokenPairDataUpdated event', () => {
     const tokenPairData = [
       {
         pair: 'WETH/USDC',
@@ -260,5 +262,125 @@ describe('Token Pair Domain', () => {
     ]);
 
     expect(domain.getFavoritePairs()).toEqual(['EOS/DAI', 'EOS/ZRX']);
+  });
+
+  it('returns getTokensPairsWithData correctly', () => {
+    const pairs = [
+      {
+        pair: 'EOS/DAI',
+        baseTokenSymbol: 'EOS',
+        quoteTokenSymbol: 'DAI',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x1',
+        quoteTokenAddress: '0x2',
+        makeFee: '500000',
+        takeFee: '500000'
+      },
+      {
+        pair: 'EOS/WETH',
+        baseTokenSymbol: 'EOS',
+        quoteTokenSymbol: 'WETH',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x1',
+        quoteTokenAddress: '0x3',
+        makeFee: '500000',
+        takeFee: '500000'
+      },
+      {
+        pair: 'ZRX/DAI',
+        baseTokenSymbol: 'ZRX',
+        quoteTokenSymbol: 'DAI',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x4',
+        quoteTokenAddress: '0x2',
+        makeFee: '500000',
+        takeFee: '500000'
+      },
+      {
+        pair: 'ZRX/WETH',
+        baseTokenSymbol: 'ZRX',
+        quoteTokenSymbol: 'WETH',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x4',
+        quoteTokenAddress: '0x3',
+        makeFee: '500000',
+        takeFee: '500000'
+      },
+      {
+        pair: 'WETH/DAI',
+        baseTokenSymbol: 'WETH',
+        quoteTokenSymbol: 'DAI',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x3',
+        quoteTokenAddress: '0x2',
+        makeFee: '500000',
+        takeFee: '500000'
+      }
+    ];
+
+    const tokenPairData = [
+      {
+        pair: 'EOS/DAI',
+        lastPrice: '7425.2945',
+        change: '4.5421',
+        high: '8782.7964',
+        low: '6499.3696',
+        volume: 720404,
+      },
+      {
+        pair: 'WETH/DAI',
+        lastPrice: '6018.7886',
+        change: '1.6589',
+        high: '3876.8717',
+        low: '4613.5315',
+        volume: 68946,
+      }
+    ]
+  
+    const tokenPairsDomain = getDomain([
+      eventCreators.initialized(initialTokenPairState),
+      eventCreators.tokenPairsUpdated(pairs),
+      eventCreators.tokenPairDataUpdated(tokenPairData)
+    ]);
+
+    expect(tokenPairsDomain.getTokenPairsWithData()).toEqual({
+      'EOS/DAI': {
+        pair: 'EOS/DAI',
+        baseTokenSymbol: 'EOS',
+        quoteTokenSymbol: 'DAI',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x1',
+        quoteTokenAddress: '0x2',
+        lastPrice: '7425.2945',
+        change: '4.5421',
+        high: '8782.7964',
+        low: '6499.3696',
+        volume: 720404,
+        makeFee: '500000',
+        takeFee: '500000'
+      },
+      'WETH/DAI': {
+        pair: 'WETH/DAI',
+        baseTokenSymbol: 'WETH',
+        quoteTokenSymbol: 'DAI',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x3',
+        quoteTokenAddress: '0x2',
+        lastPrice: '6018.7886',
+        change: '1.6589',
+        high: '3876.8717',
+        low: '4613.5315',
+        volume: 68946,
+        makeFee: '500000',
+        takeFee: '500000'
+      }
+    })
   });
 });
