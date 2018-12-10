@@ -1,7 +1,7 @@
 //@flow
 
 import { utils } from 'ethers'
-import { formatRelative } from 'date-fns'
+import distanceInWordsStrict from 'date-fns/distance_in_words_strict'
 
 import type { BN, Numberish } from '../types/common'
 
@@ -18,7 +18,8 @@ export const capitalizeFirstLetter = (str: string) => {
 }
 
 export const relativeDate = (time: number) => {
-  let formattedDate = formatRelative(time, new Date())
+  let formattedDate = distanceInWordsStrict(time, new Date()) + ' ago'
+  // let formattedDate = formatRelative(time, new Date())
   return capitalizeFirstLetter(formattedDate)
 }
 
