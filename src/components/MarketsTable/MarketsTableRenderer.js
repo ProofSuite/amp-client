@@ -24,33 +24,19 @@ import {
   BlueGlowingButton
 } from '../Common';
 
-type TokenData = {
-  symbol: string,
-  address: string,
-  balance: string,
-  allowed: boolean,
-  allowancePending: boolean
-}
-
 type Props = {
-  connected: boolean,
-  baseTokensData: Array<TokenData>,
-  quoteTokensData: Array<TokenData>,
-  ETHTokenData: TokenData,
-  WETHTokenData: TokenData,
-  tokenDataLength: number,
   searchInput: string,
+  pairs: Array<Object>,
   handleSearchInputChange: (SyntheticInputEvent<>) => void,
-  toggleAllowance: string => void,
   redirectToTradingPage: string => void,
-  totalFilteredTokens: number
 };
 
 const MarketsTableRenderer = (props: Props) => {
   const {
+    pairs,
     searchInput,
     handleSearchInputChange,
-    totalFilteredTokens
+    redirectToTradingPage
   } = props;
 
   return (
@@ -77,12 +63,13 @@ const MarketsTableRenderer = (props: Props) => {
         <Table>
           <TableBody>
             <MarketTableRow
-              
+              pairs={pairs}
+              redirectToTradingPage={redirectToTradingPage}
             />
           </TableBody>
         </Table>
       </TableBodyContainer>
-      {totalFilteredTokens === 0 && (
+      {pairs.length === 0 && (
           <Centered>
             <AMPLogo height="150em" width="150em" />
             <LargeText muted>No tokens to display!</LargeText>
@@ -92,12 +79,13 @@ const MarketsTableRenderer = (props: Props) => {
   );
 };
 
-const MarketRow = (props: Props) => {
+const MarketTableRow = (props: Props) => {
   const {
     redirectToTradingPage,
+    pairs
   } = props;
 
-  return pairData.map(({ baseTokenSymbol, quoteTokenSymbol, pairIsAllowed, allowancePending }, index) => {
+  return pairs.map(({ baseTokenSymbol, quoteTokenSymbol, pairIsAllowed, allowancePending }, index) => {
     return (
       <Row key={index}>
         <Cell></Cell>
