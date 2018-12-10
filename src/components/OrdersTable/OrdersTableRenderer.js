@@ -1,7 +1,6 @@
 //@flow
 import React from 'react'
 import styled from 'styled-components'
-import { formatRelative } from 'date-fns'
 import { Card, Tag, Tab, Tabs, Collapse, Button, Icon } from '@blueprintjs/core'
 import { Colors, Loading, CenteredMessage } from '../Common'
 import { relativeDate } from '../../utils/helpers'

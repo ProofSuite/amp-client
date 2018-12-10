@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { relativeDate } from '../../utils/helpers'
 import { Loading, Colors, Text, CenteredMessage } from '../Common';
 import { Icon, Button, Card, Tabs, Tab, Collapse } from '@blueprintjs/core';
-import { format } from 'date-fns';
 
 import type { Trade } from '../../types/trades';
 import type { TokenPair } from '../../types/tokens';
