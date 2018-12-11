@@ -5,6 +5,7 @@ export type AccountState = {
   +currentBlock: ?string,
   +showHelpModal: boolean,
   +exchangeAddress: string,
+  +referenceCurrency: string,
 };
 
 export type UpdateAccountAction = {

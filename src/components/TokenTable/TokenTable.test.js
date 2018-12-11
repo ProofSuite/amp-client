@@ -2,9 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import TokenTable from './TokenTable';
 
-
-
-it('shows "loadingMessage" when balance being null, elsewise the balance', () => {
+it('renders without crashing', () => {
   const tokenData = [
     { symbol: 'EOS', balance: '10.0000', allowed: true },
     { symbol: 'ZRX', balance: '1.00000', allowed: false },
@@ -14,5 +12,6 @@ it('shows "loadingMessage" when balance being null, elsewise the balance', () =>
 
   const quoteTokens = ['WETH']
   const baseTokens = ['ZRX', 'EOS']
-  const wrapper = shallow(<TokenTable baseTokens={baseTokens} quoteTokens={quoteTokens} tokenData={tokenData} />);
+  
+  shallow(<TokenTable baseTokens={baseTokens} quoteTokens={quoteTokens} tokenData={tokenData} />);
 });

@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Colors from './Colors'
 import { Button } from '@blueprintjs/core';

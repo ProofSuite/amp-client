@@ -23,20 +23,23 @@ type Props = {
   pairs: Array<Object>,
   handleSearchInputChange: (SyntheticInputEvent<>) => void,
   redirectToTradingPage: (string, string) => void,
-  selectedQuoteToken: string,
-  handleUpdateQuoteToken: string => void,
-  quoteTokens: Array<string>
+  selectedTab: string,
+  handleChangeTab: string => void,
+  tabs: Array<string>,
+  quoteTokens: Array<string>,
+  currentReferenceCurrency: string,
 };
 
 const MarketsTableRenderer = (props: Props) => {
   const {
     pairs,
-    quoteTokens,
     searchInput,
     handleSearchInputChange,
     redirectToTradingPage,
-    selectedQuoteToken,
-    handleUpdateQuoteToken,
+    selectedTab,
+    handleChangeTab,
+    currentReferenceCurrency,
+    tabs
   } = props;
 
   return (
@@ -50,14 +53,14 @@ const MarketsTableRenderer = (props: Props) => {
           onChange={handleSearchInputChange}
         />
         <ButtonRow>
-          {quoteTokens.map((quote, i) => {
+          {tabs.map((tab, i) => {
             return (
               <Button
-                text={quote}
+                text={tab}
                 minimal
-                onClick={() => handleUpdateQuoteToken(quote)}
-                active={selectedQuoteToken === quote}
-                intent={selectedQuoteToken === quote ? 'primary' : ''}
+                onClick={() => handleChangeTab(tab)}
+                active={selectedTab === tab}
+                intent={selectedTab === tab ? 'primary' : ''}
               />    
             )
           })
@@ -68,6 +71,7 @@ const MarketsTableRenderer = (props: Props) => {
         <TableHeader>
           <TableHeaderCell>Market</TableHeaderCell>
           <TableHeaderCell>Price</TableHeaderCell>
+          <TableHeaderCell>Price ({currentReferenceCurrency})</TableHeaderCell>
           <TableHeaderCell>Volume</TableHeaderCell>
           <TableHeaderCell>Orderbook size</TableHeaderCell>
           <TableHeaderCell>Change 24H</TableHeaderCell>
@@ -80,13 +84,13 @@ const MarketsTableRenderer = (props: Props) => {
             <MarketTableRow
               pairs={pairs}
               redirectToTradingPage={redirectToTradingPage}
-              quoteTokens={quoteTokens}
+              currentReferenceCurrency={currentReferenceCurrency}
             />
           </TableBody>
         </Table>
       </TableBodyContainer>
       {pairs.length === 0 && (
-          <Centered>
+          <Centered my={4}>
             <AMPLogo height="150em" width="150em" />
             <LargeText muted>No tokens to display!</LargeText>
           </Centered>
@@ -98,34 +102,40 @@ const MarketsTableRenderer = (props: Props) => {
 const MarketTableRow = (props: *) => {
   const {
     redirectToTradingPage,
-    pairs
+    pairs,
+    currentReferenceCurrency
   } = props;
 
   return pairs.map(({ pair, baseTokenSymbol, quoteTokenSymbol, baseTokenAddress, quoteTokenAddress, lastPrice, change, high, low, volume, orderbookSize }, index) => {
     return (
       <Row key={index}>
         <Cell>
-          <SmallText>
+          <SmallText muted>
             {pair}
           </SmallText>
         </Cell>
         <Cell>
-          <SmallText>
-            {formatNumber(lastPrice, { precision: 2 })} {baseTokenSymbol}
+          <SmallText muted>
+            {formatNumber(lastPrice, { precision: 2 })} {quoteTokenSymbol}
           </SmallText>
         </Cell>
         <Cell>
-          <SmallText>
+          <SmallText muted>
+            {formatNumber(lastPrice, { precision: 2 })} {currentReferenceCurrency}
+          </SmallText>
+        </Cell>
+        <Cell>
+          <SmallText muted>
             {formatNumber(volume, { precision: 2 })}
           </SmallText>
         </Cell>
         <Cell>
-          <SmallText>
-            {formatNumber(orderbookSize, { precision: 2 })}
+          <SmallText muted>
+            {orderbookSize ? formatNumber(orderbookSize, { precision: 2 }) : 'N.A'}
           </SmallText>
         </Cell>
         <Cell>
-          <ChangeCell change={change}>{change} %</ChangeCell>
+          <ChangeCell change={change}>{change ? `${change}%` : 'N.A'}</ChangeCell>
         </Cell>
         <Cell>
           <BlueGlowingButton
@@ -144,9 +154,10 @@ const ChangeCell = styled(SmallText).attrs({ className: 'change' })`
 `
 
 const Table = styled.table.attrs({
-  className: 'bp3-html-table bp3-condensed bp3-interactive',
+  className: 'bp3-html-table bp3-condensed',
 })`
   width: 100%;
+  border: none !important;
 `;
 
 const TableBodyContainer = styled.div`
@@ -162,6 +173,7 @@ const TableSection = styled.div`
 `;
 
 const TableBody = styled.tbody`
+  border: none !important
 `;
 
 const TableHeader = styled.tr`
@@ -183,6 +195,16 @@ const Cell = styled.td`
 
 const Row = styled.tr`
   width: 100%;
+  &:hover {
+    background-color: ${Colors.BLUE_MUTED} !important;
+    cursor: pointer;
+    position: relative;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 10px 4px rgba(16, 22, 26, 0.1),
+      1px 18px 24px rgba(16, 22, 26, 0.2);
+    box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
+    z-index: 1;
+  }
 `;
 
 const ButtonRow = styled.span`

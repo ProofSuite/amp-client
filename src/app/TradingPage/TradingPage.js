@@ -49,7 +49,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       message: 'Please authenticate to start trading'
     }),
     quoteTokensLocked: () => {
-      const { baseTokenSymbol, quoteTokenSymbol, pairName, toggleAllowances } = this.props
+      const { baseTokenSymbol, quoteTokenSymbol } = this.props
       
     return {
       title: `Unlock tokens to start trading`,
@@ -66,8 +66,6 @@ class TradingPage extends React.PureComponent<Props, State> {
       const { 
         baseTokenSymbol, 
         quoteTokenSymbol, 
-        pairName, 
-        toggleAllowances,
       } = this.props
 
       return {
@@ -118,10 +116,6 @@ class TradingPage extends React.PureComponent<Props, State> {
       authenticated,
       baseTokenBalance,
       quoteTokenBalance,
-      baseTokenAllowance,
-      quoteTokenAllowance,
-      baseTokenSymbol,
-      quoteTokenSymbol,
       pairIsAllowed,
      } = this.props
 

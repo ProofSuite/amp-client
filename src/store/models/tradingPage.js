@@ -82,9 +82,6 @@ export const getDefaultData = (): ThunkAction => {
       dispatch(actionCreators.updateTokenPairData(tokenPairData))
       dispatch(actionCreators.initOrdersTable(orders))
 
-      state = getState()
-      pairDomain = getTokenPairsDomain(state)
-      
       socket.subscribeTrades(currentPair)
       socket.subscribeOrderBook(currentPair)
       socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)

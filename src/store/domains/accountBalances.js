@@ -2,7 +2,6 @@
 import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
 import { round } from '../../utils/helpers'
 import { utils } from 'ethers'
-import { ALLOWANCE_MINIMUM } from '../../utils/constants'
 import { formatNumber } from 'accounting-js'
 // eslint-disable-next-line
 const initialState = {}

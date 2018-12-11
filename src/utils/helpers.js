@@ -3,8 +3,6 @@
 import { utils } from 'ethers'
 import distanceInWordsStrict from 'date-fns/distance_in_words_strict'
 
-import type { BN, Numberish } from '../types/common'
-
 export const rand = (min: number, max: number, decimals: number = 4) => {
   return (Math.random() * (max - min) + min).toFixed(decimals)
 }

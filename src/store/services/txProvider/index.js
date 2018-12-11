@@ -1,7 +1,7 @@
 // @flow
-import { Contract, utils } from 'ethers'
-import { ERC20, SetupAccount } from '../../../config/abis'
-import { EXCHANGE_ADDRESS, SETUP_ACCOUNT_ADDRESS } from '../../../config/contracts'
+import { Contract } from 'ethers'
+import { ERC20 } from '../../../config/abis'
+import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { getSigner } from '../signer'
 import { ALLOWANCE_THRESHOLD } from '../../../utils/constants'
 
@@ -48,7 +48,6 @@ export async function updatePairAllowances(
 ) {
   const signer = getSigner()
   const networkID = signer.provider.network.chainId
-  const setupAccountAddress = SETUP_ACCOUNT_ADDRESS[networkID]
   const exchangeAddress = EXCHANGE_ADDRESS[networkID]
   const txCount = await signer.provider.getTransactionCount(signer.address)
 

@@ -350,7 +350,7 @@ describe('Token Pair Domain', () => {
       eventCreators.tokenPairDataUpdated(tokenPairData)
     ]);
 
-    expect(tokenPairsDomain.getTokenPairsWithData()).toEqual({
+    expect(tokenPairsDomain.getTokenPairsWithDataObject()).toEqual({
       'EOS/DAI': {
         pair: 'EOS/DAI',
         baseTokenSymbol: 'EOS',
@@ -386,5 +386,43 @@ describe('Token Pair Domain', () => {
         takeFee: '500000'
       }
     })
+
+    expect(tokenPairsDomain.getTokenPairsWithDataArray()).toEqual([
+      {
+        pair: 'EOS/DAI',
+        baseTokenSymbol: 'EOS',
+        quoteTokenSymbol: 'DAI',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x1',
+        quoteTokenAddress: '0x2',
+        lastPrice: '7425.2945',
+        change: '4.5421',
+        orderbookSize: '100000',
+        high: '8782.7964',
+        low: '6499.3696',
+        volume: 720404,
+        makeFee: '500000',
+        takeFee: '500000'
+      },
+      {
+        pair: 'WETH/DAI',
+        baseTokenSymbol: 'WETH',
+        quoteTokenSymbol: 'DAI',
+        baseTokenDecimals: 18,
+        quoteTokenDecimals: 18,
+        baseTokenAddress: '0x3',
+        quoteTokenAddress: '0x2',
+        lastPrice: '6018.7886',
+        change: '1.6589',
+        orderbookSize: '100000',
+        high: '3876.8717',
+        low: '4613.5315',
+        volume: 68946,
+        makeFee: '500000',
+        takeFee: '500000'
+      }
+    ]
+    )
   });
 });

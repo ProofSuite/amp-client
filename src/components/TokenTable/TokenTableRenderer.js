@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import { formatNumber } from 'accounting-js'
 import Help from '../../components/Help'
 
-import { 
-  Button, 
+import {
   Switch, 
   Checkbox, 
   InputGroup, 
@@ -21,7 +20,8 @@ import {
   Centered, 
   LargeText, 
   GreenGlowingButton, 
-  BlueGlowingButton
+  BlueGlowingButton,
+  FlexRow,
 } from '../Common';
 
 type TokenData = {
@@ -134,30 +134,32 @@ const ETHRow = (props: Props) => {
       <Cell>{formatNumber(balance, { precision: 2})}</Cell>
       <Cell></Cell>
       <Cell style={{ width: '70%' }}>
-        <ButtonWrapper>
-          <BlueGlowingButton
-            disabled={!connected}
-            intent="primary"
-            text="Deposit"
-            onClick={() => openDepositModal(symbol)}
-          />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <BlueGlowingButton
-            disabled={!connected}
-            intent="primary"
-            text="Send"
-            onClick={() => openSendModal(symbol)}
-          />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <GreenGlowingButton
-            disabled={!connected}
-            intent="success"
-            text="Convert to WETH"
-            onClick={() => openConvertModal('ETH', 'WETH')}
-          />
-        </ButtonWrapper>
+        <FlexRow justifyContent="flex-end" p={1}>
+            <ButtonWrapper>
+            <GreenGlowingButton
+              disabled={!connected}
+              intent="success"
+              text="Convert to WETH"
+              onClick={() => openConvertModal('ETH', 'WETH')}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <BlueGlowingButton
+              disabled={!connected}
+              intent="primary"
+              text="Deposit"
+              onClick={() => openDepositModal(symbol)}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <BlueGlowingButton
+              disabled={!connected}
+              intent="primary"
+              text="Send"
+              onClick={() => openSendModal(symbol)}
+            />
+          </ButtonWrapper>
+        </FlexRow>
       </Cell>
     </Row>
   );
@@ -192,29 +194,31 @@ const WETHRow = (props: Props) => {
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
       <Cell style={{ width: '70%' }}>
-        <ButtonWrapper>
-          <BlueGlowingButton
-            disabled={!connected}
-            intent="primary"
-            text="Deposit"
-            onClick={() => openDepositModal(symbol)}
-          />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <BlueGlowingButton
-            disabled={!connected}
-            intent="primary"
-            text="Send"
-            onClick={() => openSendModal(symbol)}
-          />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <GreenGlowingButton
-            disabled={!connected}
-            intent="success"
-            text="Convert to ETH"
-            onClick={() => openConvertModal('WETH', "ETH")} />
-        </ButtonWrapper>
+        <FlexRow justifyContent="flex-end" p={1}>
+          <ButtonWrapper>
+            <GreenGlowingButton
+              disabled={!connected}
+              intent="success"
+              text="Convert to ETH"
+              onClick={() => openConvertModal('WETH', "ETH")} />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <BlueGlowingButton
+              disabled={!connected}
+              intent="primary"
+              text="Deposit"
+              onClick={() => openDepositModal(symbol)}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <BlueGlowingButton
+              disabled={!connected}
+              intent="primary"
+              text="Send"
+              onClick={() => openSendModal(symbol)}
+            />
+          </ButtonWrapper>
+          </FlexRow>
       </Cell>
     </Row>
   )
@@ -246,6 +250,7 @@ const QuoteTokenRows = (props: Props) => {
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '70%' }}>
+          <FlexRow justifyContent="flex-end" p={1}>
           <ButtonWrapper>
             <BlueGlowingButton
               disabled={!connected}
@@ -262,6 +267,7 @@ const QuoteTokenRows = (props: Props) => {
               onClick={() => openSendModal(symbol)}
             />
           </ButtonWrapper>
+          </FlexRow>
         </Cell>
       </Row>
     )
@@ -297,30 +303,24 @@ const BaseTokenRows = (props: Props) => {
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '70%' }}>
-          <ButtonWrapper>
-            <BlueGlowingButton
-              disabled={!connected}
-              intent="primary"
-              text="Deposit"
-              onClick={() => openDepositModal(symbol)}
-            />
-          </ButtonWrapper>
-          <ButtonWrapper>
-            <BlueGlowingButton
-              disabled={!connected}
-              intent="primary"
-              text="Send"
-              onClick={() => openSendModal(symbol)}
+          <FlexRow justifyContent="flex-end" p={1}>
+            <ButtonWrapper>
+              <BlueGlowingButton
+                disabled={!connected}
+                intent="primary"
+                text="Deposit"
+                onClick={() => openDepositModal(symbol)}
               />
-          </ButtonWrapper>
-          <ButtonWrapper>
-            <GreenGlowingButton
-              disabled={!connected}
-              intent="success"
-              text="Trade"
-              onClick={() => redirectToTradingPage(symbol)}
-            />
-          </ButtonWrapper>
+            </ButtonWrapper>
+            <ButtonWrapper>
+              <BlueGlowingButton
+                disabled={!connected}
+                intent="primary"
+                text="Send"
+                onClick={() => openSendModal(symbol)}
+                />
+            </ButtonWrapper>
+          </FlexRow>
         </Cell>
       </Row>
     );
@@ -328,7 +328,7 @@ const BaseTokenRows = (props: Props) => {
 };
 
 const Table = styled.table.attrs({
-  className: 'bp3-html-table bp3-condensed bp3-interactive',
+  className: 'bp3-html-table bp3-condensed',
 })`
   width: 100%;
 `;
@@ -353,12 +353,12 @@ const TableHeader = styled.tr`
 `;
 
 const TableHeaderCell = styled.th`
-width: 15%;
+width: 20%;
 text-align: middle;
 `;
 
 const Cell = styled.td`
-  width: 15%;
+  width: 20%;
   vertical-align: middle !important;
   & label {
     margin: 0;
@@ -367,6 +367,16 @@ const Cell = styled.td`
 
 const Row = styled.tr`
   width: 100%;
+  &:hover {
+    background-color: ${Colors.BLUE_MUTED} !important;
+    cursor: pointer;
+    position: relative;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 10px 4px rgba(16, 22, 26, 0.1),
+      1px 18px 24px rgba(16, 22, 26, 0.2);
+    box-shadow: inset 0 0 0 1px rgb(49, 64, 76), -1px 5px 4px rgba(16, 22, 26, 0.1), 1px 7px 24px rgba(16, 22, 26, 0.2);
+    z-index: 1;
+  }
 `;
 
 const TokenNameWrapper = styled.span`
@@ -390,6 +400,7 @@ const NoToken = styled.p`
 `;
 
 const ButtonWrapper = styled.span`
+  
   margin-left: 10px !important;
   margin-right: 10px !important;
 `;

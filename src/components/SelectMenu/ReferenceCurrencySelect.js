@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 
-class StandardSelect extends Component {
+class ReferenceCurrencySelect extends Component {
   renderItem(item, { handleClick, modifiers }) {
     return (
       <MenuItem
@@ -18,6 +18,9 @@ class StandardSelect extends Component {
 
   render() {
     const { items, item, icon, handleChange } = this.props;
+
+    const buttonText = `Ref. Currency: ${item.name}` 
+
     return (
       <Select
         items={items}
@@ -27,16 +30,16 @@ class StandardSelect extends Component {
         onItemSelect={handleChange}
         popoverProps={{ minimal: true }}
       >
-        <Button icon={item.icon ? item.icon : icon} text={item.name} righticonname="double-caret-vertical" />
+        <Button icon={item.icon ? item.icon : icon} text={buttonText} righticonname="double-caret-vertical" />
       </Select>
     );
   }
 }
 
-StandardSelect.propTypes = {
+ReferenceCurrencySelect.propTypes = {
   item: PropTypes.object,
   items: PropTypes.array,
   handleChange: PropTypes.func,
 };
 
-export default StandardSelect;
+export default ReferenceCurrencySelect;

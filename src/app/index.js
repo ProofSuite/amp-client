@@ -8,6 +8,7 @@ import WalletPage from './WalletPage'
 import SettingsPage from './SettingsPage'
 import LogoutPage from './LogoutPage'
 import TradingPage from './TradingPage'
+import MarketsPage from './MarketsPage'
 
 import { connect } from 'react-redux';
 
@@ -27,6 +28,7 @@ const App = () => {
             <Switch>
               <Route path="/faq" component={FaqPage} />
               <Route path="/login" component={LoginPage} />
+              <Route path="/markets" component={MarketsPage} />
               <Route path="/wallet" component={WalletPage} />
               <Route path="/settings" component={SettingsPage} />
               <Route path="/logout" component={LogoutPage} />

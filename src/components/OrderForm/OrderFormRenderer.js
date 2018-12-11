@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Position, Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
-import { Flex, Box, HeaderText, MutedText, RedGlowingButton, GreenGlowingButton } from '../Common'
+import { Flex, HeaderText, MutedText, RedGlowingButton, GreenGlowingButton } from '../Common'
 import styled from 'styled-components'
 import Help from '../../components/Help'
 import { utils } from 'ethers'

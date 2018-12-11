@@ -138,7 +138,7 @@ export default function getTokenPairsDomain(state: TokenPairState) {
     getCurrentPair: (): TokenPair => state.byPair[state.currentPair],
 
     //Merge token pair properties and data
-    getTokenPairsWithData: () => {
+    getTokenPairsWithDataObject: () => {
       let symbols = Object.keys(state.byPair)
       return symbols.reduce((
         (result, symbol) => {
@@ -152,6 +152,24 @@ export default function getTokenPairsDomain(state: TokenPairState) {
           return result
         }
       ), {})      
-    }
+    },
+
+    getTokenPairsWithDataArray: () => {
+      let symbols = Object.keys(state.byPair)
+      let tokenPairData = symbols.reduce((
+        (result, symbol) => {
+          if (state.data[symbol] && state.byPair[symbol]) {
+            result[symbol] = {
+            ...state.data[symbol],
+            ...state.byPair[symbol]
+            }
+          }
+          
+          return result
+        }
+      ), {})
+
+      return Object.values(tokenPairData)
+    },
   }
 }

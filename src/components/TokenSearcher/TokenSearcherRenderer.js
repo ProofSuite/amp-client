@@ -2,7 +2,6 @@
 import React from 'react'
 import { Icon, Tooltip, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
 import {
-  Box,
   Colors,
   SmallText,
   Centered,
@@ -10,9 +9,6 @@ import {
   OverlaySpinner,
   ColoredCryptoIcon,
   CryptoIcon,
-  ColumnEnd,
-  RowStart,
-  ColumnStart,
   SmallTextDiv
 } from '../Common'
 import styled from 'styled-components'

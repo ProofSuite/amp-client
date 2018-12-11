@@ -17,9 +17,11 @@ import loginPageActionTypes from './actions/loginPage'
 import logoutPageActionTypes from './actions/logoutPage'
 import signerSettingsActionTypes from './actions/signerSettings'
 import convertTokensFormActionTypes from './actions/convertTokensForm'
+import marketsPageActionTypes from './actions/marketsPage'
 import appActionTypes from './actions/app'
 import orderBookActionTypes from './actions/orderBook';
-
+import marketsTableActionTypes from './actions/marketsTable';
+import layoutActionTypes from './actions/layout'
 
 import * as accountBalancesEvents from './domains/accountBalances'
 import * as transferTokensFormEvents from './domains/transferTokensForm'
@@ -86,6 +88,8 @@ export const accountBalances = createReducer(action => {
     case walletPageActionTypes.updateAllowance:
       return accountBalancesEvents.allowancesUpdated([{ symbol: payload.symbol, allowance: payload.allowance }])
     case walletPageActionTypes.updateAllowancePending:
+      return accountBalancesEvents.allowancesPendingUpdated([ payload.symbol ])
+    case marketsTableActionTypes.updateAllowancePending:
       return accountBalancesEvents.allowancesPendingUpdated([ payload.symbol ])
     default:
       return accountBalancesEvents.initialized()
@@ -219,6 +223,8 @@ export const tokenPairs = createReducer(action => {
       return tokenPairsEvents.currentPairUpdated(payload.pair)
     case walletPageActionTypes.updateCurrentPair:
       return tokenPairsEvents.currentPairUpdated(payload.pair)
+    case marketsTableActionTypes.updateCurrentPair:
+      return tokenPairsEvents.currentPairUpdated(payload.pair)
     case tokensActionTypes.removeTokens:
       return tokenPairsEvents.tokenPairRemoved(payload)
     case tokenSearcherActionTypes.updateFavorite:
@@ -226,6 +232,8 @@ export const tokenPairs = createReducer(action => {
     case tokenSearcherActionTypes.updateCurrentPair:
       return tokenPairsEvents.currentPairUpdated(payload.pair)
     case tradingPageActionTypes.updateTokenPairData:
+      return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
+    case marketsPageActionTypes.updateTokenPairData:
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
     case walletPageActionTypes.updateTokenPairs:
       return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
@@ -249,6 +257,8 @@ export const account = createReducer(action => {
       return accountEvents.showHelpModalUpdated(payload.showHelpModal)
     case walletPageActionTypes.updateExchangeAddress:
       return accountEvents.exchangeAddressUpdated(payload.exchangeAddress)
+    case layoutActionTypes.UpdateReferenceCurrency:
+      return accountEvents.referenceCurrencyUpdated(payload.referenceCurrency)
     case logoutPageActionTypes.logout:
       return accountEvents.accountRemoved()
     case accountActionTypes.updateCurrentBlock:
