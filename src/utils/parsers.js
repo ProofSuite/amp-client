@@ -3,7 +3,7 @@
 import { isFloat, isInteger, round } from './helpers'
 import { utils } from 'ethers'
 
-import type { TokenPair } from '../types/tokens'
+import type { TokenPair, APITokens, Tokens } from '../types/tokens'
 import type { Order } from '../types/orders'
 import type { Trade } from '../types/trades'
 import type { OrderBookData } from '../types/orderBook'
@@ -48,6 +48,22 @@ export const parseJSONToFixed = (obj: Object, decimals: number = 2) => {
   }
 
   return obj
+}
+
+
+export const parseTokens = (tokens: APITokens) => {
+  let parsedTokens = tokens.map((token) => {
+    return {
+      address: token.contractAddress,
+      active: token.active,
+      listed: token.listed,
+      quote: token.quote,
+      symbol: token.symbol,
+      decimals: token.decimals,
+    }
+  })
+
+  return parsedTokens  
 }
 
 export const parseTokenAmount = (amount: string, pair: TokenPair, precision: number = 2) => {

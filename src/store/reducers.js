@@ -208,9 +208,9 @@ export const tokens = createReducer(action => {
   const { type, payload } = action
   switch (type) {
     case tokensActionTypes.updateTokens:
-      return tokensEvents.tokenUpdated(payload.symbol, payload.address)
-    case tokensActionTypes.removeTokens:
-      return tokensEvents.tokenRemoved(payload.symbol)
+      return tokensEvents.tokensUpdated(payload.tokens)
+    case walletPageActionTypes.updateTokens:
+      return tokensEvents.tokensUpdated(payload.tokens)
     default:
       return tokensEvents.initialized()
   }

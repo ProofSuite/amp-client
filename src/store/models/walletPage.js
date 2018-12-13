@@ -1,7 +1,7 @@
 // @flow
 import { push } from 'connected-react-router'
 
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain } from '../domains'
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
 import * as accountActionTypes from '../actions/account'
@@ -10,14 +10,12 @@ import { getCurrentBlock } from '../services/wallet'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import { parseQueryAccountDataError } from '../../config/errors'
 
-import type { Token } from '../../types/common'
 import type { State, ThunkAction } from '../../types'
 
 export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let accountDomain = getAccountDomain(state)
   let tokenDomain = getTokenDomain(state)
-  let transferTokensFormDomain = getTransferTokensFormDomain(state)
 
   // ETH is not a token so we add it to the list to display in the deposit table
   let ETH = { symbol: 'ETH', address: '0x0' }
@@ -27,20 +25,16 @@ export default function walletPageSelector(state: State) {
   let tokenData = accountBalancesDomain.getBalancesAndAllowances([ ETH ].concat(tokens))
 
   return {
-    etherBalance: accountBalancesDomain.formattedEtherBalance(),
     balancesLoading: accountBalancesDomain.loading(),
     WETHBalance: accountBalancesDomain.tokenBalance('WETH'),
     WETHAllowance: accountBalancesDomain.tokenAllowance('WETH'),
     tokenData: tokenData,
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,
-    accountAddress: accountDomain.address(),
     authenticated: accountDomain.authenticated(),
     currentBlock: accountDomain.currentBlock(),
     showHelpModal: accountDomain.showHelpModal(),
     connected: true,
-    gas: transferTokensFormDomain.getGas(),
-    gasPrice: transferTokensFormDomain.getGasPrice()
   }
 }
 
@@ -53,15 +47,18 @@ export function queryAccountData(): ThunkAction {
     let allowances = []
 
     try {
-      let tokens = getTokenDomain(state).tokens()
-      let quotes = quoteTokens
+      // let tokens = getTokenDomain(state).tokens()
+      // let quotes = quoteTokens
 
-      tokens = quotes.concat(tokens).filter((token: Token) => token.symbol !== 'ETH')
-      if (!accountAddress) throw new Error('Account address is not set')
+      // tokens = quotes.concat(tokens).filter((token: Token) => token.symbol !== 'ETH')
+      // if (!accountAddress) throw new Error('Account address is not set')
 
       const currentBlock = await getCurrentBlock()
       if (!currentBlock) throw new Error('')
       dispatch(accountActionTypes.updateCurrentBlock(currentBlock))
+
+      let tokens = await api.getTokens()
+      dispatch(actionCreators.updateTokens(tokens))
 
       let pairs = await api.fetchPairs()
       dispatch(actionCreators.updateTokenPairs(pairs))

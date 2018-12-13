@@ -10,14 +10,10 @@ import GetStartedModal from '../../components/GetStartedModal'
 import type { TokenData } from '../../types/tokens'
 
 type Props = {
-  gas: number,
-  gasPrice: number,
-  etherBalance: string,
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
   quoteTokens: Array<string>,
   connected: boolean,
-  accountAddress: string,
   toggleAllowance: string => void,
   redirectToTradingPage: string => void,
   isHelpModalOpen: boolean,
@@ -27,14 +23,10 @@ type Props = {
 
 const WalletPageRenderer = (props: Props) => {
   const {
-    gas,
-    gasPrice,
-    etherBalance,
     tokenData,
     baseTokens,
     quoteTokens,
     connected,
-    accountAddress,
     toggleAllowance,
     redirectToTradingPage,
     isHelpModalOpen,
@@ -46,12 +38,7 @@ const WalletPageRenderer = (props: Props) => {
     <WalletPageBox>
       <RowWrapper>
         <WalletInfoBox>
-          <WalletInfo
-            accountAddress={accountAddress}
-            etherBalance={etherBalance}
-            gasPrice={gasPrice}
-            gas={gas}
-          />
+          <WalletInfo/>
         </WalletInfoBox>
         <WalletPageContentBox>
           {balancesLoading ? (

@@ -1,11 +1,11 @@
 // @flow
 import { ENGINE_HTTP_URL } from '../../../config/urls'
-import { parseTokenPairData, parseOrders, parseTrades, parseOrderBookData } from '../../../utils/parsers'
+import { parseTokens, parseTokenPairData, parseOrders, parseTrades, parseOrderBookData } from '../../../utils/parsers'
 import fetch from 'isomorphic-fetch'
 
 import type { Orders } from '../../../types/orders'
 import type { Trades } from '../../../types/trades'
-import type { TokenPair } from '../../../types/tokens'
+import type { TokenPair, Tokens } from '../../../types/tokens'
 
 const request = (endpoint, options) => {
   return fetch(`${ENGINE_HTTP_URL}${endpoint}`, {
@@ -246,6 +246,15 @@ export const createAccount = async (address: string) => {
 
   const { data } = await response.json()
   return data
+}
+
+export const getTokens = async() => {
+  let tokens = await fetchTokens()
+  let parsedTokens = []
+
+  if (tokens) parsedTokens = parseTokens(tokens)
+
+  return parsedTokens
 }
 
 

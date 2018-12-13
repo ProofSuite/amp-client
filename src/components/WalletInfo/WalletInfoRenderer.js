@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Card, Button, Tag, Tabs, Tab, FormGroup, InputGroup } from '@blueprintjs/core';
+import { Card, Button, Tag, Tabs, Tab, ControlGroup, InputGroup } from '@blueprintjs/core';
 import styled from 'styled-components';
 import TransferTokensModal from '../../components/TransferTokensModal';
 import TokenBalanceChart from '../../components/TokenBalanceChart'
@@ -9,16 +9,21 @@ import { Fonts } from '../Common/Variables'
 
 type Props = {
   isModalOpen: boolean,
-  handleModalClose: void => void,
   accountAddress: string,
   balance: string,
   gas: string,
   gasPrice: string,
-  handleChangeTab: string => void,
   selectedTab: string,
-  contractAddress: string,
-  handleChangeContractAddress: SyntheticInputEvent<Object> => void,
-  handleDetectContract: SyntheticEvent<> => void,
+  tokenAddress: string,
+  tokenAddressStatus: string,
+  tokenSymbol: string,
+  tokenEtherscanUrl: string,
+  tokenIsAdded: boolean,
+  tokenIsListed: boolean,
+  handleChangeTab: string => void,
+  handleModalClose: void => void,
+  handleChangetokenAddress: SyntheticInputEvent<Object> => void,
+  handleDetectContract: SyntheticEvent<> => Promise<void>,
 }
 
 const WalletInfoRenderer = (props: Props) => {
@@ -29,10 +34,13 @@ const WalletInfoRenderer = (props: Props) => {
     balance,
     gasPrice,
     gas,
-    handleChangeTab,
-    handleChangeContractAddress,
     selectedTab,
-    contractAddress,
+    tokenAddress,
+    tokenSymbol,
+    tokenEtherscanUrl,
+    tokenAddressStatus,
+    handleChangeTab,
+    handleChangetokenAddress,
     handleDetectContract,
   } = props;
 
@@ -53,13 +61,6 @@ const WalletInfoRenderer = (props: Props) => {
           active={selectedTab === "Add Token"}
           intent={selectedTab === "Add Token" ? 'primary' : ''}
         />    
-        <Button
-          text="List Token"
-          minimal
-          onClick={() => handleChangeTab("List Token")}
-          active={selectedTab === "List Token"}
-          intent={selectedTab === "List Token" ? 'primary' : ''}
-        />    
       </ButtonRow>
       <Tabs selectedTabId={selectedTab}>
         <Tab
@@ -79,9 +80,12 @@ const WalletInfoRenderer = (props: Props) => {
           id="Add Token"
           panel={
             <AddTokenPanel
-              handleChangeContractAddress={handleChangeContractAddress}
+              handleChangetokenAddress={handleChangetokenAddress}
               handleDetectContract={handleDetectContract}
-              contractAddress={contractAddress}
+              tokenAddress={tokenAddress}
+              tokenAddressStatus={tokenAddressStatus}
+              tokenSymbol={tokenSymbol}
+              tokenEtherscanUrl={tokenEtherscanUrl}
             />
           }
         />
@@ -144,35 +148,58 @@ const PortfolioPanel = (props: *) => {
 }
 
 const AddTokenPanel = (props: *) => {
-  return (
-    <React.Fragment>
-      <Text>
-        Add a token that is not listed among the default AMP tokens. If the token has not yet been added to 
-        the AMP you can also list the token. View the FAQ for more detailed information on listing tokens.
-      </Text>
-      <FormGroup
-          helperText=""
-          label="Input Token Contract Address"
-          intent=""
-        >
-          <InputGroup
-            name="contractAddress"
-            placeholder="(Contract address must start with 0x)"
-            intent=""
-            onChange={handleChange}
-            value={contractAddress}
-            autoFocus
-          />
-      </FormGroup>
-    </React.Fragment>
-  )
-}
+  const { 
+    tokenAddress,
+    tokenAddressStatus, 
+    tokenSymbol,
+    tokenEtherscanUrl,
+    handleDetectContract,    
+    handleChangetokenAddress, 
+  } = props
 
-const ListTokenPanel = (props: *) => {
   return (
-    <div>
-      List Token Panel
-    </div>
+      <React.Fragment>
+        <Text>
+          Add a token that is not listed among the default AMP tokens. If the token has not yet been added to 
+          the AMP you can also list the token.
+          <br />
+          View the FAQ for more detailed information on listing tokens.
+        </Text>
+        <Box py={3}>
+          <ControlGroup
+            helperText=""
+            label="Input Token Contract Address"
+            intent=""
+            fill
+          >
+            <InputGroup
+              name="tokenAddress"
+              placeholder="(Contract address must start with 0x)"
+              intent={tokenAddressStatus === "invalid" ? "danger" : ""}
+              onChange={handleChangetokenAddress}
+              value={tokenAddress}
+              autoFocus
+            />
+            <Button
+              intent="primary"
+              text="Detect Contract"
+              onClick={handleDetectContract}
+            />
+        </ControlGroup>
+      </Box>
+      {tokenSymbol &&
+        <React.Fragment>
+          <Box py={3}>
+            <TextBox>Token detected: </TextBox>
+            <TextBox>Symbol: {tokenSymbol}</TextBox>
+            <TextBox><a href={tokenEtherscanUrl}>View on Etherscan</a></TextBox>
+          </Box>
+          <Box py={3}>
+            <TextBox></TextBox>
+          </Box>
+        </React.Fragment>
+      }
+    </React.Fragment>
   )
 }
 

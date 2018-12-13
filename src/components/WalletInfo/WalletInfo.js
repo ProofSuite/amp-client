@@ -2,25 +2,34 @@
 import React from 'react';
 import WalletInfoRenderer from './WalletInfoRenderer';
 
+import { isEthereumAddress } from '../../utils/crypto'
+import { ETHERSCAN_TOKEN_URL } from '../../config/urls'
+
 type Props = {
   accountAddress: string,
   etherBalance: string,
   gasPrice: string,
   gas: string,
-  handleDetectContract: SyntheticEvent<> => void,
+  userTokens: Array<string>,
+  listedTokens: Array<string>,
+  detectContract: string => { decimals: number, symbol: string },
 }
 
 type State = {
   isModalOpen: boolean,
   selectedTab: string,
-  contractAddress: string
+  tokenAddress: string,
+  tokenAddressStatus: string,
+  tokenSymbol: string,
 }
 
 export default class WalletInfo extends React.PureComponent<Props, State> {
   state = { 
     isModalOpen: false,
     selectedTab: "Portfolio",
-    contractAddress: ""
+    tokenAddress: "",
+    tokenAddressStatus: "",
+    tokenSymbol: "",
   };
 
   handleModalClose = () => {
@@ -31,28 +40,51 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
     this.setState({ selectedTab: tab })
   }
 
-  handleChangeContractAddress = ({ target }: *) => {
-    this.setState({ contractAddress: target.value })
+  handleChangetokenAddress = ({ target }: *) => {
+    this.setState({ tokenAddress: target.value })
+  }
+
+  handleDetectContract = async () => {
+    const { tokenAddress } = this.state
+    const { detectContract } = this.props 
+
+    if (!isEthereumAddress(tokenAddress)) {
+      return this.setState({ tokenAddressStatus: "invalid" })
+    }
+
+    const { decimals, symbol } = await detectContract(tokenAddress)
+    if (!decimals || !symbol) {
+      return this.setState({ tokenAddressStatus: "invalid" })
+    }
+
+    return this.setState({ tokenSymbol: symbol })
   }
 
   render() {
     const {
       props: { 
-        accountAddress, 
-        gasPrice, 
-        gas, 
+        accountAddress,
+        gasPrice,
+        gas,
         etherBalance,
-        handleDetectContract,
+        userTokens,
+        listedTokens,
       },
       state: { 
         isModalOpen,
         selectedTab,
-        contractAddress,
+        tokenAddress,
+        tokenSymbol,
       },
       handleModalClose,
       handleChangeTab,
-      handleChangeContractAddress
+      handleChangetokenAddress,
+      handleDetectContract
     } = this;
+
+    let tokenEtherscanUrl = `${ETHERSCAN_TOKEN_URL}/${tokenAddress}`
+    let tokenIsAdded = userTokens.indexOf(tokenSymbol) === -1
+    let tokenIsListed = listedTokens.indexOf(tokenSymbol) === -1
 
     return (
       <WalletInfoRenderer
@@ -62,10 +94,14 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
         isModalOpen={isModalOpen}
         selectedTab={selectedTab}
         accountAddress={accountAddress}
-        contractAddress={contractAddress}
+        tokenAddress={tokenAddress}
+        tokenSymbol={tokenSymbol}
+        tokenEtherscanUrl={tokenEtherscanUrl}
+        tokenIsAdded={tokenIsAdded}
+        tokenIsListed={tokenIsListed}
         handleModalClose={handleModalClose}
         handleChangeTab={handleChangeTab}
-        handleChangeContractAddress={handleChangeContractAddress}
+        handleChangetokenAddress={handleChangetokenAddress}
         handleDetectContract={handleDetectContract}
       />
     );

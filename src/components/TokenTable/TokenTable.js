@@ -14,7 +14,11 @@ type TokenData = {
   balance: string,
   allowed: boolean,
   decimals: number,
-  allowancePending: boolean
+  allowancePending: boolean,
+  quote?: ?bool,
+  registered?: ?bool,
+  listed?: ?bool,
+  active?: ?bool,
 }
 
 type Props = {

@@ -5,13 +5,31 @@ export type Token = {
   address: string,
   symbol: string,
   decimals: number,
+  quote?: ?bool,
+  registered?: ?bool,
+  listed?: ?bool,
 };
+
+export type APIToken = {
+  contractAddress: string, 
+  symbol: string,
+  decimals: number,
+  quote?: ?bool,
+  registered?: ?bool,
+  listed?: ?bool,
+  active?: ?bool,
+}
+
+export type Tokens = Array<Token>
+export type APITokens = Array<APIToken>
 
 export type RankedToken = {
   address: string,
   symbol: string,
   decimals: number,
   rank: number,
+  registered?: bool,
+  listed?: bool,
 }
 
 export type TokenPair = {
@@ -61,6 +79,7 @@ export type TokenData = {
   symbol: string,
   balance: string,
   allowance: string,
+  
 };
 
 export type TokenPairData = {
@@ -80,7 +99,6 @@ export type TokenPairDataArray = Array<TokenPairData>;
 export type TokenPairDataMap = { [string]: TokenPairData };
 
 export type TokenState = {
-  +symbols: Array<Symbol>,
   +bySymbol: { [Symbol]: Token },
 };
 

@@ -1,12 +1,11 @@
 // @flow
-import { addElementToArray, addKeyToObject, arrayWithoutElement, objectWithoutKey } from '../../helpers/utils';
-import { tokensBySymbol, tokenSymbols } from '../../config/tokens';
+import { tokensBySymbol } from '../../config/tokens';
 
-import type { TokenState } from '../../types/tokens';
+import type { TokenState, Token, Tokens } from '../../types/tokens';
 
 const initialState = {
-  symbols: tokenSymbols,
-  bySymbol: tokensBySymbol,
+  bySymbol: {}
+  // bySymbol: tokensBySymbol,
 };
 
 export const initialized = () => {
@@ -14,23 +13,60 @@ export const initialized = () => {
   return event;
 };
 
-export const tokenUpdated = (symbol: string, address: string) => {
-  const event = (state: TokenState) => ({
-    ...state,
-    symbols: addElementToArray(state.symbols, symbol),
-    bySymbol: addKeyToObject(state.bySymbol, symbol, { symbol, address }),
-  });
-  return event;
-};
+export const tokensUpdated = (tokens: Tokens) => {
+  const event = (state: TokenState) => {
+    let bySymbol = tokens.reduce(
+      (result, token) => {
+        result[token.symbol] = {
+          address: token.address,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          registered: token.registered,
+          listed: token.listed
+        }
 
-export const tokenRemoved = (symbol: string) => {
-  const event = (state: TokenState) => ({
-    ...state,
-    symbols: arrayWithoutElement(state.symbols, symbol),
-    bySymbol: objectWithoutKey(state.bySymbol, symbol),
-  });
-  return event;
-};
+        return result
+      },
+      { }
+    )
+
+    return {
+      ...state,
+      bySymbol: {
+        ...state.bySymbol,
+        ...bySymbol,
+      }
+    }
+  }
+
+  return event
+}
+
+export const tokensReset = (tokens: Tokens) => {
+  const event = (state: TokenState) => {
+    let bySymbol = tokens.reduce(
+      (result, token) => {
+        result[token.symbol] = {
+          address: token.address,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          registered: token.registered,
+          listed: token.listed
+        }
+
+        return result
+      },
+      { }
+    )
+
+    return {
+      ...state,
+      bySymbol
+    }
+  }
+
+  return event
+}
 
 export const tokenFeeUpdated = (symbol: string, makeFee: string, takeFee: string) => {
   const event = (state: TokenState) => {
@@ -55,7 +91,7 @@ export const tokenFeeUpdated = (symbol: string, makeFee: string, takeFee: string
 export default function getTokenDomain(state: TokenState) {
   return {
     bySymbol: () => state.bySymbol,
-    symbols: () => state.symbols,
+    symbols: (): any => Object.keys(state.bySymbol),
     token: (symbol: string) => state.bySymbol[symbol],
     tokens: () => Object.values(state.bySymbol),
     rankedTokens: () => (Object.values(state.bySymbol): any).map((m, index) => ({ ...m, rank: index + 1 })),
