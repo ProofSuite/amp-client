@@ -182,7 +182,13 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
       return state[symbol] ? state[symbol].subscribed : false
     },
     isAllowed(symbol: string): boolean {
-      return state[symbol] ? state[symbol].allowance >= state[symbol].balance : false
+      if (!state[symbol]) return false
+
+      let balance = state[symbol].balance
+      let allowance = state[symbol].allowance
+      let allowed = Number(allowance) >= Math.max(Number(balance), 100000)
+      
+      return allowed
     },
     isAllowancePending(symbol: string): boolean {
       return state[symbol] ? state[symbol].allowance === 'pending' : false
@@ -203,8 +209,8 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
 
         let balance = state[token.symbol].balance
         let allowance = state[token.symbol].allowance
-        let allowed = Number(allowance) >= Number(balance)
-        
+        let allowed = Number(allowance) >= Math.max(Number(balance), 100000)
+
         return {
           ...token,
           balance: balance,
@@ -226,8 +232,8 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
 
         let balance = state[symbol].balance
         let allowance = state[symbol].allowance
-        let allowed = Number(allowance) >= Number(balance)
-        
+        let allowed = Number(allowance) >= Math.max(Number(balance), 100000)
+
         return {
           balance: balance,
           allowed: allowed,

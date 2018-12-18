@@ -16,6 +16,15 @@
     "build-storybook": "build-storybook -s public",
     "build-svg": "npx @svgr/cli -d ./node-modules/cryptocurrency-icons/svg/color/ src/components/Common/Icons/"
   },
+  "proxy": {
+    "/rates": {
+      "target": "https://min-api.cryptocompare.com",
+      "pathRewrite": {
+        "^/rates" : ""
+      },
+      "changeOrigin": true
+    }
+  },
   "dependencies": {
     "@amcharts/amcharts3-react": "^3.1.0",
     "@axetroy/react-download": "^1.1.1",

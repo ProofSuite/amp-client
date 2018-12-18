@@ -145,7 +145,7 @@ describe('Token Pair Domain', () => {
       eventCreators.tokenPairsUpdated(pairs),
     ]);
 
-    const expectedPairs = ["EOS/DAI", "EOS/WETH", "ZRX/DAI", "ZRX/WETH", "WETH/DAI"]
+    const expectedPairs = ["EOS/WETH", "EOS/DAI", "WETH/DAI", "ZRX/WETH", "ZRX/DAI"]
 
     const expectedPairsBySymbol = {
       'EOS/DAI': {

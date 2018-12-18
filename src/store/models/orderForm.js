@@ -94,6 +94,8 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         takeFee,
       } = pair
 
+      console.log(pair)
+
       let signer = getSigner()
       let userAddress = await signer.getAddress()
 
@@ -108,6 +110,8 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         makeFee,
         takeFee
       }
+
+      console.log(params)
     
       let pairMultiplier = utils.bigNumberify(10).pow(18 + baseTokenDecimals)
       let order = await signer.createRawOrder(params)
@@ -123,6 +127,8 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let quoteAmount = (utils.bigNumberify(order.amount).mul(utils.bigNumberify(order.pricepoint))).div(pairMultiplier)
       let minQuoteAmount = minOrderAmount(makeFee, takeFee)
       let formattedMinQuoteAmount = utils.formatUnits(minQuoteAmount, quoteTokenDecimals)
+
+      console.log(order)
 
       //In case the order is a sell, the fee is subtracted from the received amount of quote token so there is no requirement
       order.side === 'BUY'

@@ -121,6 +121,58 @@ it('handle tokensReset correctly', () => {
   ])  
 })
 
+it('handles tokenRatesUpdated correctly', () => {
+  const tokens = [
+    {
+      symbol: 'ZRX',
+      address: '0x1'
+    },
+    {
+      symbol: 'WETH',
+      address: '0x2'
+    }
+  ]
+
+  const rates = [
+    {
+      symbol: 'ZRX',
+      USD: 1.50,
+      EUR: 2.15,
+      JPY: 3000,
+    },
+    {
+      symbol: 'WETH',
+      USD: 2.1,
+      EUR: 2.2,
+      JPY: 3.4,
+    }
+  ]
+
+  const tokenDomain = getDomain([
+    eventCreators.initialized(),
+    eventCreators.tokensUpdated(tokens),
+    eventCreators.tokenRatesUpdated(rates)
+  ])
+
+  
+  expect(tokenDomain.bySymbol()).toEqual({
+    'ZRX': {
+      symbol: 'ZRX',
+      address: '0x1',
+      USDRate: 1.50,
+      EURRate: 2.15,
+      JPYRate: 3000,
+    },
+    "WETH": {
+      symbol: 'WETH',
+      address: '0x2',
+      USDRate: 2.1,
+      EURRate: 2.2,
+      JPYRate: 3.4,
+    }
+  })
+})
+
 
 // it('handles update and remove tokens events properly', () => {
 //   const newToken = {

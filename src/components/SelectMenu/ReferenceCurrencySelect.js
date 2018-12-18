@@ -10,7 +10,7 @@ class ReferenceCurrencySelect extends Component {
         active={modifiers.active}
         disabled={modifiers.disabled}
         onClick={rank => handleClick(item.rank)}
-        text={`${item.name}`}
+        text={`${item.name}: ${item.symbol}`}
         key={item.rank}
       />
     );
@@ -19,7 +19,7 @@ class ReferenceCurrencySelect extends Component {
   render() {
     const { items, item, icon, handleChange } = this.props;
 
-    const buttonText = `Ref. Currency: ${item.name}` 
+    const buttonText = `${item.name}: ${item.symbol}` 
 
     return (
       <Select

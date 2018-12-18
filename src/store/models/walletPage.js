@@ -4,7 +4,6 @@ import { push } from 'connected-react-router'
 import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
-import * as accountActionTypes from '../actions/account'
 import { quoteTokens, quoteTokenSymbols } from '../../config/quotes'
 import { getCurrentBlock } from '../services/wallet'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
@@ -47,24 +46,27 @@ export function queryAccountData(): ThunkAction {
     let allowances = []
 
     try {
-      // let tokens = getTokenDomain(state).tokens()
-      // let quotes = quoteTokens
-
-      // tokens = quotes.concat(tokens).filter((token: Token) => token.symbol !== 'ETH')
-      // if (!accountAddress) throw new Error('Account address is not set')
-
       const currentBlock = await getCurrentBlock()
       if (!currentBlock) throw new Error('')
-      dispatch(accountActionTypes.updateCurrentBlock(currentBlock))
 
       let tokens = await api.getTokens()
-      dispatch(actionCreators.updateTokens(tokens))
-
       let pairs = await api.fetchPairs()
-      dispatch(actionCreators.updateTokenPairs(pairs))
-      
       let exchangeAddress = await api.getExchangeAddress()
-      dispatch(actionCreators.updateExchangeAddress(exchangeAddress))
+
+      let tokenSymbols = tokens.map(token => token.symbol)
+      let currencySymbols = ['USD', 'EUR', 'JPY']
+      let exchangeRates = await api.fetchExchangeRates(tokenSymbols, currencySymbols)
+
+      tokens = tokens.map(token => {
+        return {
+          ...token,
+          USDRate: exchangeRates[token.symbol] ? exchangeRates[token.symbol].USD : 0,
+          EURRate: exchangeRates[token.symbol] ? exchangeRates[token.symbol].EUR : 0,
+          JPYRate: exchangeRates[token.symbol] ? exchangeRates[token.symbol].JPY : 0,
+        }
+      })
+
+      dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress))
 
       let etherBalance = await provider.queryEtherBalance(accountAddress)
       balances.push(etherBalance)

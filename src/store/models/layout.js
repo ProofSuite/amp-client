@@ -21,11 +21,12 @@ export default function createSelector(state) {
   let referenceCurrencies = fiatCurrencies.map((currency, i) => {
     return {
       rank: i,
-      name: currency
+      name: currency.name,
+      symbol: currency.symbol
     }
   })
 
-  let currentReferenceCurrency = referenceCurrencies.filter(currency => currency.name === referenceCurrency)[0]
+  let currentReferenceCurrency = referenceCurrencies.filter(currency => currency.name === referenceCurrency.name)[0]
 
   return {
     ETHBalance,

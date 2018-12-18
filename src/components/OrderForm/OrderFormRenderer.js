@@ -73,6 +73,7 @@ const OrderFormRenderer = (props: Props) => {
           />
           <Button
             text="Market"
+            disabled
             minimal
             onClick={() => handleChangeOrderType('market')}
             active={selectedTabId === 'market'}

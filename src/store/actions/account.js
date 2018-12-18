@@ -14,13 +14,6 @@ export function updateAccount(address: string, privateKey: string): UpdateAccoun
   };
 }
 
-export function updateCurrentBlock(currentBlock: string) {
-  return {
-    type: actionTypes.updateCurrentBlock,
-    payload: { currentBlock },
-  };
-}
-
 export function updateCurrentProvider(provider: string) {
   return {
     type: actionTypes.updateCurrentProvider,

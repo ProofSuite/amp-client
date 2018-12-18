@@ -3,6 +3,9 @@
 import { utils } from 'ethers'
 import distanceInWordsStrict from 'date-fns/distance_in_words_strict'
 
+
+import type { Token } from '../types/Token'
+
 export const rand = (min: number, max: number, decimals: number = 4) => {
   return (Math.random() * (max - min) + min).toFixed(decimals)
 }
@@ -111,4 +114,17 @@ export const minOrderAmount = (makeFee: string, takeFee: string) => {
   let minAmount = (bigMakeFee.mul(2)).add(bigTakeFee.mul(2))
   
   return minAmount
+}
+
+export const getExchangeRate = (currency: string, token: Token) => {
+  switch (currency) {
+    case "USD":
+      return token ? token.USDRate : null
+    case "EUR":
+      return token ? token.EURRate : null
+    case "JPY":
+      return token ? token.JPYRate : null
+    default:
+      return null
+  }
 }

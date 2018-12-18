@@ -9,16 +9,18 @@ const request = (endpoint, options) => {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    mode: 'cors',
+    // mode: 'cors',
     ...options
   })
 }
 
-export const fetchExchangeRate = async (baseCurrencies, quoteCurrencies) => {
+export const fetchExchangeRates = async (baseCurrencies, quoteCurrencies) => {
     baseCurrencies = baseCurrencies.join(',')
     quoteCurrencies = quoteCurrencies.join(',')
 
     const response = await request(`/data/pricemulti?fsyms=${baseCurrencies}&tsyms=${quoteCurrencies}`)
+
+    console.log(response)
 
     if (response.status !== 200) {
         throw new Error('error')
@@ -27,4 +29,18 @@ export const fetchExchangeRate = async (baseCurrencies, quoteCurrencies) => {
     const data = await response.json()
 
     return data
+}
+
+
+export const getExchangeRates = async (baseCurrencies, quoteCurrencies) => {
+  let exchangeRates = await fetchExchangeRates(baseCurrencies, quoteCurrencies)
+
+  return Object.keys(exchangeRates).map(symbol => {
+    return {
+      symbol: symbol,
+      USD: exchangeRates[symbol].USD,
+      EUR: exchangeRates[symbol].EUR,
+      JPY: exchangeRates[symbol].JPY,
+    }
+  })
 }

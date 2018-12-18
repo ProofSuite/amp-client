@@ -21,6 +21,7 @@ import marketsPageActionTypes from './actions/marketsPage'
 import appActionTypes from './actions/app'
 import orderBookActionTypes from './actions/orderBook';
 import marketsTableActionTypes from './actions/marketsTable';
+import walletInfoActionTypes from './actions/walletInfo'
 import layoutActionTypes from './actions/layout'
 
 import * as accountBalancesEvents from './domains/accountBalances'
@@ -193,10 +194,9 @@ export const orderBook = createReducer(action => {
 export const orders = createReducer(action => {
   const { type, payload } = action
   switch (type) {
-    case tradingPageActionTypes.updateOrdersTable:
     case socketControllerActionTypes.updateOrdersTable:
       return orderEvents.ordersUpdated(payload.orders)
-    case tradingPageActionTypes.initOrdersTable:
+    case tradingPageActionTypes.updateTradingPageData:
     case tokenSearcherActionTypes.initOrdersTable:
       return orderEvents.ordersInitialized(payload.orders)
     default:
@@ -209,8 +209,10 @@ export const tokens = createReducer(action => {
   switch (type) {
     case tokensActionTypes.updateTokens:
       return tokensEvents.tokensUpdated(payload.tokens)
-    case walletPageActionTypes.updateTokens:
+    case walletPageActionTypes.updateWalletPageData:
       return tokensEvents.tokensUpdated(payload.tokens)
+    case walletInfoActionTypes.addToken:
+      return tokensEvents.tokensUpdated([payload.token])
     default:
       return tokensEvents.initialized()
   }
@@ -231,11 +233,15 @@ export const tokenPairs = createReducer(action => {
       return tokenPairsEvents.tokenPairFavorited(payload.code, payload.favorite)
     case tokenSearcherActionTypes.updateCurrentPair:
       return tokenPairsEvents.currentPairUpdated(payload.pair)
-    case tradingPageActionTypes.updateTokenPairData:
+    case tradingPageActionTypes.updateTradingPageData:
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
     case marketsPageActionTypes.updateTokenPairData:
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
-    case walletPageActionTypes.updateTokenPairs:
+    case walletPageActionTypes.updateWalletPageData:
+      return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
+    case walletInfoActionTypes.addToken:
+      return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
+    case walletInfoActionTypes.registerToken:
       return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
     default:
       return tokenPairsEvents.initialized()
@@ -255,14 +261,13 @@ export const account = createReducer(action => {
       return accountEvents.accountUpdated(payload.address, payload.privateKey)
     case walletPageActionTypes.updateShowHelpModal:
       return accountEvents.showHelpModalUpdated(payload.showHelpModal)
-    case walletPageActionTypes.updateExchangeAddress:
-      return accountEvents.exchangeAddressUpdated(payload.exchangeAddress)
-    case layoutActionTypes.UpdateReferenceCurrency:
+    case walletPageActionTypes.updateWalletPageData:
+      return accountEvents.updated({ exchangeAddress: payload.exchangeAddress, currentBlock: payload.currentBlock })
+    case layoutActionTypes.updateReferenceCurrency:
       return accountEvents.referenceCurrencyUpdated(payload.referenceCurrency)
     case logoutPageActionTypes.logout:
-      return accountEvents.accountRemoved()
-    case accountActionTypes.updateCurrentBlock:
-      return accountEvents.currentBlockUpdated(payload.currentBlock)
+      accountEvents.accountRemoved()
+      return accountEvents.currentBlockUpdated('')
     default:
       return accountEvents.initialized()
   }

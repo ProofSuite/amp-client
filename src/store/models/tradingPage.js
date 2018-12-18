@@ -75,12 +75,10 @@ export const getDefaultData = (): ThunkAction => {
 
       let tokenPairData = await api.fetchTokenPairData()
       tokenPairData = parseTokenPairData(tokenPairData, currentPair)
-
       let orders = await api.fetchOrders(userAddress)
       orders = parseOrders(orders, pairs)
 
-      dispatch(actionCreators.updateTokenPairData(tokenPairData))
-      dispatch(actionCreators.initOrdersTable(orders))
+      dispatch(actionCreators.updateTradingPageData(tokenPairData, orders))
 
       socket.subscribeTrades(currentPair)
       socket.subscribeOrderBook(currentPair)

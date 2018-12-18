@@ -95,7 +95,6 @@ render() {
   const { tokenBalances, balancesLoading } = this.props
   const isEmpty = (tokenBalances.length === 0)
 
-
   return (
     <TokenBalanceChartRenderer
       balancesLoading={balancesLoading}

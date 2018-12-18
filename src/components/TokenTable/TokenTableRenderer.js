@@ -14,11 +14,12 @@ import {
 
 import { 
   RowSpaceBetween, 
-  CryptoIcon, 
+  ColoredCryptoIcon, 
   Colors, 
   AMPLogo, 
   Centered, 
   LargeText, 
+  SmallText,
   GreenGlowingButton, 
   BlueGlowingButton,
   FlexRow,
@@ -50,7 +51,7 @@ type Props = {
   openDepositModal: string => void,
   openConvertModal: (string, string) => void,
   openSendModal: string => void,
-  toggleAllowance: string => void,
+  handleToggleAllowance: (SyntheticEvent<>, string) => void,
   toggleZeroBalanceToken: void => void,
   redirectToTradingPage: string => void,
   totalFilteredTokens: number
@@ -76,7 +77,7 @@ const TokenTableRenderer = (props: Props) => {
           onChange={handleSearchInputChange}
         />
         <HideTokenCheck checked={hideZeroBalanceToken} onChange={toggleZeroBalanceToken}>
-          Hide Tokens with 0 balance
+          Hide small balances
         </HideTokenCheck>
       </RowSpaceBetween>
       <Table>
@@ -128,15 +129,19 @@ const ETHRow = (props: Props) => {
   const { symbol, balance } = ETHTokenData
 
   return (
-    <Row key='ETH'>
+    <Row key='ETH' onClick={() => console.log('hey')}>
       <Cell>
         <TokenNameWrapper>
-          <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
-          <span>{symbol}</span>
+          <ColoredCryptoIcon size={32} name={symbol} />
+          <SmallText muted>{symbol}</SmallText>
         </TokenNameWrapper>
       </Cell>
-      <Cell>{formatNumber(balance, { precision: 2})}</Cell>
-      <Cell></Cell>
+      <Cell>
+        <SmallText muted>
+          {formatNumber(balance, { precision: 2})}
+        </SmallText>
+      </Cell>
+      <Cell style={{ width: '5%'}}></Cell>
       <Cell style={{ width: '70%' }}>
         <FlexRow justifyContent="flex-end" p={1}>
             <ButtonWrapper>
@@ -144,7 +149,7 @@ const ETHRow = (props: Props) => {
               disabled={!connected}
               intent="success"
               text="Convert to WETH"
-              onClick={() => openConvertModal('ETH', 'WETH')}
+              onClick={(event) => openConvertModal(event, 'ETH', 'WETH')}
             />
           </ButtonWrapper>
           <ButtonWrapper>
@@ -152,7 +157,7 @@ const ETHRow = (props: Props) => {
               disabled={!connected}
               intent="primary"
               text="Deposit"
-              onClick={() => openDepositModal(symbol)}
+              onClick={(event) => openDepositModal(event, symbol)}
             />
           </ButtonWrapper>
           <ButtonWrapper>
@@ -160,7 +165,7 @@ const ETHRow = (props: Props) => {
               disabled={!connected}
               intent="primary"
               text="Send"
-              onClick={() => openSendModal(symbol)}
+              onClick={(event) => openSendModal(event, symbol)}
             />
           </ButtonWrapper>
         </FlexRow>
@@ -173,7 +178,7 @@ const WETHRow = (props: Props) => {
   const {
     connected,
     WETHTokenData,
-    toggleAllowance,
+    handleToggleAllowance,
     openDepositModal,
     openSendModal,
     openConvertModal,
@@ -188,13 +193,17 @@ const WETHRow = (props: Props) => {
     <Row key='WETH'>
       <Cell>
         <TokenNameWrapper>
-          <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
-          <span>{symbol}</span>
+          <ColoredCryptoIcon size={32} name={symbol} />
+          <SmallText muted>{symbol}</SmallText>
         </TokenNameWrapper>
       </Cell>
-      <Cell>{formatNumber(balance, { precision: 2})}</Cell>
       <Cell>
-          <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
+        <SmallText muted>
+          {formatNumber(balance, { precision: 2})}
+        </SmallText>
+      </Cell>
+      <Cell style={{ width: '5%'}} >
+          <Switch inline checked={allowed} onChange={(event) => handleToggleAllowance(event, symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
       <Cell style={{ width: '70%' }}>
@@ -204,14 +213,14 @@ const WETHRow = (props: Props) => {
               disabled={!connected}
               intent="success"
               text="Convert to ETH"
-              onClick={() => openConvertModal('WETH', "ETH")} />
+              onClick={(event) => openConvertModal(event, 'WETH', "ETH")} />
           </ButtonWrapper>
           <ButtonWrapper>
             <BlueGlowingButton
               disabled={!connected}
               intent="primary"
               text="Deposit"
-              onClick={() => openDepositModal(symbol)}
+              onClick={(event) => openDepositModal(event, symbol)}
             />
           </ButtonWrapper>
           <ButtonWrapper>
@@ -219,7 +228,7 @@ const WETHRow = (props: Props) => {
               disabled={!connected}
               intent="primary"
               text="Send"
-              onClick={() => openSendModal(symbol)}
+              onClick={(event) => openSendModal(event, symbol)}
             />
           </ButtonWrapper>
           </FlexRow>
@@ -232,7 +241,7 @@ const QuoteTokenRows = (props: Props) => {
   const {
     connected,
     quoteTokensData,
-    toggleAllowance,
+    handleToggleAllowance,
     openDepositModal,
     openSendModal,
   } = props
@@ -244,13 +253,17 @@ const QuoteTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
-            <span>{symbol}</span>
+            <ColoredCryptoIcon size={32} name={symbol} />
+            <SmallText muted>{symbol}</SmallText>
           </TokenNameWrapper>
         </Cell>
-        <Cell>{formatNumber(balance, { precision: 2 })}</Cell>
         <Cell>
-          <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
+          <SmallText muted>
+            {formatNumber(balance, { precision: 2})}
+          </SmallText>
+        </Cell>
+        <Cell style={{ width: '5%'}} >
+          <Switch inline checked={allowed} onChange={(event) => handleToggleAllowance(event, symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '70%' }}>
@@ -260,7 +273,7 @@ const QuoteTokenRows = (props: Props) => {
               disabled={!connected}
               intent="primary"
               text="Deposit"
-              onClick={() => openDepositModal(symbol)}
+              onClick={(event) => openDepositModal(event, symbol)}
             />
           </ButtonWrapper>
           <ButtonWrapper>
@@ -268,7 +281,7 @@ const QuoteTokenRows = (props: Props) => {
               disabled={!connected}
               intent="primary"
               text="Send"
-              onClick={() => openSendModal(symbol)}
+              onClick={(event) => openSendModal(event, symbol)}
             />
           </ButtonWrapper>
           </FlexRow>
@@ -284,7 +297,7 @@ const BaseTokenRows = (props: Props) => {
   const {
     baseTokensData,
     connected,
-    toggleAllowance,
+    handleToggleAllowance,
     openDepositModal,
     openSendModal,
     redirectToTradingPage,
@@ -297,13 +310,17 @@ const BaseTokenRows = (props: Props) => {
       <Row key={index}>
         <Cell>
           <TokenNameWrapper>
-            <CryptoIcon size={30} color={Colors.BLUE5} name={symbol} />
-            <span>{symbol}</span>
+            <ColoredCryptoIcon size={32} name={symbol} />
+            <SmallText muted>{symbol}</SmallText>
           </TokenNameWrapper>
         </Cell>
-        <Cell>{formatNumber(balance, { precision: 2})}</Cell>
         <Cell>
-          <Switch inline checked={allowed} onChange={() => toggleAllowance(symbol)} />
+          <SmallText muted>
+            {formatNumber(balance, { precision: 2})}
+          </SmallText>
+        </Cell>
+        <Cell style={{ width: '5%'}}>
+          <Switch inline checked={allowed} onChange={(event) => handleToggleAllowance(event, symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
         <Cell style={{ width: '70%' }}>

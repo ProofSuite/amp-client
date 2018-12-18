@@ -5,7 +5,7 @@ import * as provider from '../services/provider'
 import * as api from '../services/api'
 import * as txProvider from '../services/txProvider'
 import * as walletService from '../services/wallet';
-import { utils, Contract } from 'ethers';
+import { Contract } from 'ethers';
 
 import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getNotificationsDomain } from '../domains';
 import * as actionCreators from './walletPage';
@@ -20,7 +20,7 @@ jest.mock('./signerSettings');
 jest.mock('../domains');
 jest.mock('ethers');
 
-let model, tokenModel, accountBalancesDomain;
+let accountBalancesDomain;
 const { store } = createStore();
 
 const testAddress = '0x1';
@@ -60,6 +60,7 @@ beforeEach(() => {
   }])
 
   api.getTokens = jest.fn(() => [ zrx, ether, req ])
+  api.getExchangeRates = jest.fn(() => [])
   
   api.getExchangeAddress = jest.fn(() => '0x1')
   txProvider.updateExchangeAllowance = jest.fn()
@@ -115,7 +116,7 @@ it('handles toggleAllowance Successfully', async () => {
   getAccountDomain.mockImplementation(getAccountDomainMock);
   getNotificationsDomain.mockImplementation(getNotificationsDomainMock);
   getAccountBalancesDomain.mockImplementation(getAccountBalancesDomainMock);
-  tokenModel = getTokenDomain(store.getState());
+  // tokenModel = getTokenDomain(store.getState());
 
   expect(getAccountBalancesDomain().isAllowed('ZRX')).toEqual(false);
 
@@ -145,7 +146,7 @@ it('handles queryAccountData properly', async () => {
   getNotificationsDomain.mockImplementation(getNotificationsDomainMock);
 
   accountBalancesDomain = getAccountBalancesDomain(store.getState());
-  tokenModel = getTokenDomain(store.getState());
+  // tokenModel = getTokenDomain(store.getState());
 
   expect(accountBalancesDomain.get(req.symbol)).toEqual(null);
   expect(accountBalancesDomain.isAllowed(req.symbol)).toEqual(false);

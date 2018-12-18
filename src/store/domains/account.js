@@ -1,5 +1,5 @@
 // @flow
-import type { AccountState } from '../../types/account'
+import type { AccountState, AccountParams, ReferenceCurrency } from '../../types/account'
 
 const initialState = {
   address: null,
@@ -7,11 +7,20 @@ const initialState = {
   currentBlock: '',
   showHelpModal: true,
   exchangeAddress: '',
-  referenceCurrency: 'USD'
+  referenceCurrency: { name: 'USD', symbol: '$'}
 }
 
 export const initialized = () => {
   const event = (state: AccountState = initialState) => state
+  return event
+}
+
+export const updated = (newAccountState: AccountParams) => {
+  const event = (state: AccountState = initialState) => ({
+    ...state,
+    ...newAccountState
+  })
+  
   return event
 }
 
@@ -59,10 +68,16 @@ export const exchangeAddressUpdated = (exchangeAddress: string) => {
   return event
 }
 
-export const referenceCurrencyUpdated = (referenceCurrency: string) => {
+export const referenceCurrencyUpdated = (referenceCurrency: ReferenceCurrency) => {
+
+  console.log(referenceCurrency)
+
   const event = (state: AccountState) => ({
     ...state,
-    referenceCurrency,
+    referenceCurrency: {
+      name: referenceCurrency.name,
+      symbol: referenceCurrency.symbol
+    }
   })
 
   return event
@@ -77,5 +92,6 @@ export default function accountDomain(state: AccountState) {
     showHelpModal: () => state.showHelpModal,
     exchangeAddress: () => state.exchangeAddress,
     referenceCurrency: () => state.referenceCurrency,
+    referenceCurrencyName: () => state.referenceCurrency.name
   };
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import walletInfoSelector, { detectContract } from '../../store/models/walletInfo'
+import walletInfoSelector, { detectContract, addToken, registerToken } from '../../store/models/walletInfo'
 
 
 const mapStateToProps = (state: State) => {
@@ -11,7 +11,9 @@ const mapStateToProps = (state: State) => {
 }
 
 const mapDispatchToProps = {
-    detectContract
+    detectContract,
+    addToken,
+    registerToken,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

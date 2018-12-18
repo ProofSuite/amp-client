@@ -88,8 +88,8 @@ class Layout extends React.PureComponent<Props, State> {
                 {authenticated && (
                   <React.Fragment>
                     <NavbarDivider />
-                    <NavbarLink to="/markets">Markets</NavbarLink>
                     <NavbarLink to="/wallet">Wallet</NavbarLink>
+                    <NavbarLink to="/markets">Markets</NavbarLink>
                     <NavbarLink to="/trade">Exchange</NavbarLink>
                     <NavbarLink to="/settings">Settings</NavbarLink>
                     <NavbarLink to="/faq">FAQ</NavbarLink>
@@ -97,7 +97,7 @@ class Layout extends React.PureComponent<Props, State> {
                     <ReferenceCurrencySelect
                       items={referenceCurrencies}
                       item={currentReferenceCurrency}
-                      handleChange={(item) => updateReferenceCurrency(item.name)}
+                      handleChange={(item) => updateReferenceCurrency(item)}
                       type="text"
                     />
                   </React.Fragment>

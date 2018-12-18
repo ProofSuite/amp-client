@@ -4,6 +4,7 @@ import type { Orders } from './orders'
 import type { Trades } from './trades'
 
 export const actionTypes = {
+  updateTradingPageData: 'tradingPage/UPDATE_TRADING_PAGE_DATA',
   updateCurrentPair: 'tradingPage/UPDATE_CURRENT_PAIR',
   updateTokenPairData: 'tradingPage/UPDATE_TOKEN_PAIR_DATA',
   initOrdersTable: 'tradingPage/INIT_ORDERS_TABLE',
@@ -14,9 +15,9 @@ export const actionTypes = {
   updateTradesTable: 'tradingPage/UPDATE_TRADES_TABLE'
 }
 
-export type UpdateTokenPairDataAction = {
-  type: 'tradingPage/UPDATE_TOKEN_PAIR_DATA',
-  payload: { tokenPairData: TokenPairDataMap }
+export type UpdateTradingPageDataAction = {
+  type: 'tradingPage/UPDATE_TRADING_PAGE_DATA',
+  payload: { tokenPairData: TokenPairDataMap, orders: Orders }
 }
 
 export type UpdateCurrentPairAction = {
@@ -69,3 +70,4 @@ export type TradingPageAction =
   | InitTradesTableAction
   | InitOrderBookAction
   | InitOrdersTableAction
+  | UpdateTradingPageDataAction

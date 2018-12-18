@@ -2,12 +2,12 @@
 import type { UpdateReferenceCurrencyAction } from '../../types/layout'
 
 const actionTypes = {
-    UpdateReferenceCurrency: 'layout/UPDATE_REFERENCE_CURRENCY'
+    updateReferenceCurrency: 'layout/UPDATE_REFERENCE_CURRENCY'
 }
 
 export function updateReferenceCurrency(referenceCurrency: string): UpdateReferenceCurrencyAction {
     return {
-        type: actionTypes.UpdateReferenceCurrency,
+        type: actionTypes.updateReferenceCurrency,
         payload: { referenceCurrency },
     }
 }

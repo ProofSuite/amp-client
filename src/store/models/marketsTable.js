@@ -19,13 +19,15 @@ import type { State, ThunkAction } from '../../types'
 export default function marketsTableSelector(state: State) {
     let accountDomain = getAccountDomain(state)
     let pairsDomain = getTokenPairsDomain(state)
+
+    let referenceCurrency = accountDomain.referenceCurrency()
     let pairs = pairsDomain.getTokenPairsWithDataArray()
     
     return {
         pairs,
         quoteTokens,
         authenticated: accountDomain.authenticated(),
-        currentReferenceCurrency: accountDomain.referenceCurrency()
+        currentReferenceCurrency: referenceCurrency.symbol
     }
 }
 

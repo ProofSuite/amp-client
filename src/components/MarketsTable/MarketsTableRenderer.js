@@ -10,12 +10,15 @@ import {
 
 import { 
   RowSpaceBetween,
+  ColoredCryptoIcon,
   Colors, 
   AMPLogo, 
   Centered, 
   LargeText, 
   SmallText,
-  BlueGlowingButton
+  BlueGlowingButton,
+  FlexRow,
+  Box
 } from '../Common';
 
 type Props = {
@@ -110,9 +113,12 @@ const MarketTableRow = (props: *) => {
     return (
       <Row key={index}>
         <Cell>
-          <SmallText muted>
+          <FlexRow alignItems="center">
+          <ColoredCryptoIcon size={32} name={baseTokenSymbol} />
+          <SmallText p={2} muted>
             {pair}
           </SmallText>
+          </FlexRow>
         </Cell>
         <Cell>
           <SmallText muted>
@@ -138,11 +144,13 @@ const MarketTableRow = (props: *) => {
           <ChangeCell change={change}>{change ? `${change}%` : 'N.A'}</ChangeCell>
         </Cell>
         <Cell>
-          <BlueGlowingButton
-            intent="primary"
-            text="Trade"
-            onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)}
-          />
+          <FlexRow justifyContent="flex-end" p={1}>
+            <BlueGlowingButton
+              intent="primary"
+              text="Trade"
+              onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)}
+            />
+          </FlexRow>
         </Cell>
       </Row>
     )

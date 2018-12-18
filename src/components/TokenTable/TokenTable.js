@@ -53,7 +53,9 @@ class TokenTable extends React.PureComponent<Props, State> {
     convertModalToToken: 'WETH',
   };
 
-  openDepositModal = (symbol: string) => {
+  openDepositModal = (event, symbol: string) => {
+    event.stopPropagation();
+
     let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
     this.setState({
@@ -62,7 +64,9 @@ class TokenTable extends React.PureComponent<Props, State> {
     });
   };
 
-  openSendModal = (symbol: string) => {
+  openSendModal = (event, symbol: string) => {
+    event.stopPropagation();
+
     let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
     this.setState({
@@ -71,7 +75,9 @@ class TokenTable extends React.PureComponent<Props, State> {
     });
   };
 
-  openConvertModal = (fromTokenSymbol: string, toTokenSymbol: string) => {
+  openConvertModal = (event, fromTokenSymbol: string, toTokenSymbol: string) => {
+    event.stopPropagation();
+
     this.setState((previousState, currentProps) => {
       return {
         ...previousState,
@@ -80,6 +86,12 @@ class TokenTable extends React.PureComponent<Props, State> {
         isConvertModalOpen: true,
       }
     })
+  }
+
+  handleToggleAllowance = (event, symbol: string) => {
+    event.stopPropagation();
+    
+    this.props.toggleAllowance(symbol)
   }
 
   closeDepositModal = () => {
@@ -147,6 +159,7 @@ class TokenTable extends React.PureComponent<Props, State> {
       <Wrapper>
         <TokenTableRenderer
           connected={connected}
+          handleToggleAllowance={this.handleToggleAllowance}
           baseTokensData={filteredBaseTokenData}
           quoteTokensData={filteredQuoteTokenData}
           ETHTokenData={filteredETHTokenData[0]}

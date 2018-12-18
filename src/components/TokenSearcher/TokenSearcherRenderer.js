@@ -276,7 +276,7 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
   return (
     <SelectedPairCard>
       <Row>
-        <ColoredCryptoIcon size={90} name={base} />
+        <ColoredCryptoIcon size={75} name={base} />
         <TokenPair>
           <h2>{pair}</h2>
           <div><b>{base}</b> Balance: {baseTokenBalance || 'N.A'}</div>
