@@ -5,7 +5,17 @@ export type AccountState = {
   +currentBlock: ?string,
   +showHelpModal: boolean,
   +exchangeAddress: string,
+  +referenceCurrency: ReferenceCurrency,
 };
+
+export type AccountParams = {
+  address?: ?string,
+  privateKey?: ?string,
+  currentBlock?: ?string,
+  showHelpModal?: ?boolean,
+  exchangeAddress?: ?string,
+  referenceCurrency?: ?ReferenceCurrency,
+}
 
 export type UpdateAccountAction = {
   type: 'account/UPDATE_ACCOUNT',
@@ -13,6 +23,11 @@ export type UpdateAccountAction = {
     address: string,
   },
 };
+
+export type ReferenceCurrency = {
+  name: string,
+  symbol: string,
+}
 
 export type AccountEvent = any => AccountState => AccountState;
 export type AccountAction = UpdateAccountAction;

@@ -3,14 +3,13 @@ import { getTokenPairsDomain } from '../domains';
 import OHLCVModel from '../domains/ohlcv'
 import * as actionCreators from '../actions/ohlcv'
 import { timeSpans } from '../../components/OHLCV/OHLCV'
-import type { SendTimelineParams } from '../../types/ohlcv'
 import type { State, ThunkAction } from '../../types'
 
 export default function getOHLCVModel(state: State) {
   return OHLCVModel(state.ohlcv)
 }
 
-export const updateTimeLine = ({ updateWRT }: SendTimelineParams): ThunkAction => {
+export const updateTimeLine = ({ updateWRT }: *): ThunkAction => {
   return async (dispatch, getState) => {
     let currentDuration = getState().ohlcv.currentDuration.label
     let currentTimeSpan = getState().ohlcv.currentTimeSpan.label

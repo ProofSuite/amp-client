@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import Chart from './Chart';
-import { Loading, CenteredMessage, AMPLogo, Centered, LargeText } from '../Common';
+import { Loading, AMPLogo, Centered, LargeText } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 import AutoScaler from '../AutoScaler';
 import styled from 'styled-components';
@@ -28,7 +28,6 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
       macd,
       volume,
       noOfCandles,
-      chartHeight,
       currentChart,
       indicatorHeight,
       rsi,

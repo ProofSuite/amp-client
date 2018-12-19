@@ -14,10 +14,12 @@ type BidOrAsk = {
 type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
+  onSelect: BidOrAsk => void,
 };
 
 export const OrderBookRenderer = (props: Props) => {
   const { bids, asks, onSelect } = props;
+
   return (
     <React.Fragment>
       <OrderBookBox>
@@ -45,7 +47,7 @@ export const OrderBookRenderer = (props: Props) => {
           </ListContainer>
         )}
       </OrderBookBox>
-      <ResizableBox height={400} width={0}>
+      <ResizableBox height={400}>
         <OrderBookBox>
           {bids && (
             <ListContainer className="list-container">
@@ -69,11 +71,13 @@ export const OrderBookRenderer = (props: Props) => {
 
 export type SingleOrderProps = {
   order: Object,
-  index: number,
+  onClick: void => void
 };
 
 const BuyOrder = (props: SingleOrderProps) => {
   const { order, onClick } = props;
+
+  console.log(order)
   return (
     <Row onClick={onClick}>
       <BuyRowBackground amount={order.relativeTotal} />
@@ -86,6 +90,8 @@ const BuyOrder = (props: SingleOrderProps) => {
 
 const SellOrder = (props: SingleOrderProps) => {
   const { order, onClick } = props;
+
+  console.log(order)
   return (
     <Row onClick={onClick}>
       <SellRowBackGround amount={order.relativeTotal} />

@@ -7,13 +7,14 @@ import OrderForm from '../../components/OrderForm'
 import TradesTable from '../../components/TradesTable'
 import TokenSearcher from '../../components/TokenSearcher'
 import OrderBook from '../../components/OrderBook'
-import { CloseableCallout } from '../../components/Common'
+import { CloseableCallout, EmphasizedText } from '../../components/Common'
 import { Grid } from 'styled-css-grid'
 import { Redirect } from 'react-router-dom'
 
 type Props = {
   authenticated: boolean,
   isConnected: boolean,
+  isInitiated: boolean,
   balancesLoading: boolean,
   baseTokenBalance: string,
   quoteTokenBalance: string,
@@ -26,7 +27,7 @@ type Props = {
   getDefaultData: () => void,
   makeFee: string, 
   takeFee: string,
-  toggleAllowances: (string, string[]) => void,
+  toggleAllowances: (string, string) => void,
 }
 
 type State = {
@@ -48,7 +49,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       message: 'Please authenticate to start trading'
     }),
     quoteTokensLocked: () => {
-      const { baseTokenSymbol, quoteTokenSymbol, pairName, toggleAllowances } = this.props
+      const { baseTokenSymbol, quoteTokenSymbol } = this.props
       
     return {
       title: `Unlock tokens to start trading`,
@@ -56,7 +57,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       message: (
           <React.Fragment>
             To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
-            Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+            Click <EmphasizedText onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</EmphasizedText> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
           </React.Fragment>
         )
       }
@@ -65,8 +66,6 @@ class TradingPage extends React.PureComponent<Props, State> {
       const { 
         baseTokenSymbol, 
         quoteTokenSymbol, 
-        pairName, 
-        toggleAllowances,
       } = this.props
 
       return {
@@ -75,13 +74,13 @@ class TradingPage extends React.PureComponent<Props, State> {
         message: (
           <React.Fragment>
             To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
-            Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+            Click <EmphasizedText onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</EmphasizedText> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
           </React.Fragment>
         )
       }
     },
     tokensLocked: () => {
-      const { baseTokenSymbol, quoteTokenSymbol, pairName, toggleAllowances } = this.props
+      const { baseTokenSymbol, quoteTokenSymbol } = this.props
 
       return {
         title: `Unlock tokens to start trading`,
@@ -89,7 +88,7 @@ class TradingPage extends React.PureComponent<Props, State> {
         message: (
             <React.Fragment>
               To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
-              Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+              Click <EmphasizedText onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</EmphasizedText> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
             </React.Fragment>
           )
         }
@@ -104,7 +103,7 @@ class TradingPage extends React.PureComponent<Props, State> {
     this.checkIfCalloutRequired()
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.isConnected || !this.props.isConnected) {
       return;
     }
@@ -117,10 +116,6 @@ class TradingPage extends React.PureComponent<Props, State> {
       authenticated,
       baseTokenBalance,
       quoteTokenBalance,
-      baseTokenAllowance,
-      quoteTokenAllowance,
-      baseTokenSymbol,
-      quoteTokenSymbol,
       pairIsAllowed,
      } = this.props
 
@@ -134,7 +129,7 @@ class TradingPage extends React.PureComponent<Props, State> {
     }
 
     if (!pairIsAllowed) {
-      let calloutOptions = this.callouts.tokensLocked(baseTokenSymbol, quoteTokenSymbol)
+      let calloutOptions = this.callouts.tokensLocked()
       return this.setState({ calloutVisible: true, calloutOptions })
     }
   }

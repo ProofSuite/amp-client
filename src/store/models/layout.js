@@ -3,6 +3,8 @@ import {
   getAccountBalancesDomain
  } from '../domains'
 
+import { fiatCurrencies } from '../../config'
+
 export default function createSelector(state) {
   let accountDomain = getAccountDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
@@ -13,7 +15,18 @@ export default function createSelector(state) {
   let authenticated = accountDomain.authenticated()
   let address = accountDomain.address()
   let currentBlock = accountDomain.currentBlock()
+  let referenceCurrency = accountDomain.referenceCurrency()
   let accountLoading = !(ETHBalance && WETHBalance && WETHAllowance)
+
+  let referenceCurrencies = fiatCurrencies.map((currency, i) => {
+    return {
+      rank: i,
+      name: currency.name,
+      symbol: currency.symbol
+    }
+  })
+
+  let currentReferenceCurrency = referenceCurrencies.filter(currency => currency.name === referenceCurrency.name)[0]
 
   return {
     ETHBalance,
@@ -22,7 +35,9 @@ export default function createSelector(state) {
     authenticated,
     address,
     accountLoading,
-    currentBlock
+    currentBlock,
+    currentReferenceCurrency,
+    referenceCurrencies
   };
 }
 

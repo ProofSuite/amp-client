@@ -8,6 +8,7 @@ import ConnectionStatus from '../../components/ConnectionStatus'
 import { IntlProvider } from 'react-intl'
 import { NavLink } from 'react-router-dom'
 import { Footer, Indent } from '../../components/Common'
+import { ReferenceCurrencySelect } from '../../components/SelectMenu'
 
 import styled from 'styled-components'
 import {
@@ -34,10 +35,13 @@ export type Props = {
   locale: string,
   messages: string,
   currentBlock?: string,
-  createProvider: () => {}
+  createProvider: () => {},
+  referenceCurrencies: Array<string>,
+  updateReferenceCurrency: void => string,
+  currentReferenceCurrency: string,
 }
 
-export type State = {}
+type State = {}
 
 class Layout extends React.PureComponent<Props, State> {
 
@@ -52,6 +56,9 @@ class Layout extends React.PureComponent<Props, State> {
       address,
       locale,
       messages,
+      referenceCurrencies,
+      currentReferenceCurrency,
+      updateReferenceCurrency,
     } = this.props
 
     const menu = (
@@ -73,7 +80,7 @@ class Layout extends React.PureComponent<Props, State> {
               <NavbarGroup align={Alignment.LEFT}>
                 <NavbarHeading>
                   <NavbarHeaderBox>
-                    <img src={ampLogo} class="Profile-image" height={25} width={25} />
+                    <img src={ampLogo} class="Profile-image" height={25} width={25} alt="AMP Logo" />
                     <Indent />
                     <Tag minimal intent="success">BETA</Tag>
                   </NavbarHeaderBox>
@@ -82,10 +89,17 @@ class Layout extends React.PureComponent<Props, State> {
                   <React.Fragment>
                     <NavbarDivider />
                     <NavbarLink to="/wallet">Wallet</NavbarLink>
+                    <NavbarLink to="/markets">Markets</NavbarLink>
                     <NavbarLink to="/trade">Exchange</NavbarLink>
                     <NavbarLink to="/settings">Settings</NavbarLink>
                     <NavbarLink to="/faq">FAQ</NavbarLink>
                     <NavbarDivider />
+                    <ReferenceCurrencySelect
+                      items={referenceCurrencies}
+                      item={currentReferenceCurrency}
+                      handleChange={(item) => updateReferenceCurrency(item)}
+                      type="text"
+                    />
                   </React.Fragment>
                 )}
               </NavbarGroup>

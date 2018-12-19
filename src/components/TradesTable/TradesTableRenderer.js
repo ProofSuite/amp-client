@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { relativeDate } from '../../utils/helpers'
 import { Loading, Colors, Text, CenteredMessage } from '../Common';
 import { Icon, Button, Card, Tabs, Tab, Collapse } from '@blueprintjs/core';
-import { format } from 'date-fns';
 
 import type { Trade } from '../../types/trades';
 import type { TokenPair } from '../../types/tokens';
@@ -102,7 +101,7 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
             <Cell>{trade.amount}</Cell>
             <Cell>{trade.status}</Cell>
             <Cell cellName="time" muted>{relativeDate(trade.time)}</Cell>
-        </Row>
+          </Row>
         ))}
       </ListBody>
     </ResizableBox>
@@ -173,20 +172,6 @@ const Cell = styled.span`
   min-width: 35px;
   width: ${props => (props.cellName === 'time' ? '43%' : '12%')};
 `;
-
-// const Cell = styled.span`
-//   color: ${props =>
-//     props.side === 'BUY'
-//       ? Colors.BUY
-//       : props.side === 'SELL'
-//         ? Colors.SELL
-//         : props.muted
-//           ? Colors.TEXT_MUTED
-//           : Colors.TEXT_MUTED}
-
-//   min-width: 35px;
-//   width: ${props => (props.cellName === 'time' ? '43%' : '12%')};
-// `;
 
 const HeaderCell = styled.span`
   min-width: 35px;

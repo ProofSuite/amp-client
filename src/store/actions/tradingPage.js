@@ -3,8 +3,9 @@ import { actionTypes } from '../../types/tradingPage'
 import type { TokenPairDataMap } from '../../types/tokens'
 import type { Orders } from '../../types/orders'
 import type { Trades } from '../../types/trades'
+
 import type {
-  UpdateTokenPairDataAction,
+  UpdateTradingPageDataAction,
   UpdateCurrentPairAction,
   UpdateOrderBookAction,
   UpdateOrdersTableAction,
@@ -21,10 +22,10 @@ export function updateCurrentPair(pair: string): UpdateCurrentPairAction {
   }
 }
 
-export function updateTokenPairData(tokenPairData: TokenPairDataMap): UpdateTokenPairDataAction {
+export function updateTradingPageData(tokenPairData: TokenPairDataMap, orders: Orders): UpdateTradingPageDataAction {
   return {
-    type: actionTypes.updateTokenPairData,
-    payload: { tokenPairData }
+    type: actionTypes.updateTradingPageData,
+    payload: { tokenPairData, orders }
   }
 }
 

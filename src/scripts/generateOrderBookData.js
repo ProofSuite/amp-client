@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { rand, randInt, round } from '../utils/helpers';
-import { format } from 'date-fns';
 import tokenPairs from '../jsons/tokenPairs.json';
 import { utils } from 'ethers';
 

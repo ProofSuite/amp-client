@@ -40,7 +40,6 @@ export default function tradingPageSelector(state: State) {
 
   let pairIsAllowed = baseTokenIsAllowed && quoteTokenIsAllowed
 
-  
   return {
     makeFee,
     takeFee,
@@ -75,16 +74,11 @@ export const getDefaultData = (): ThunkAction => {
 
       let tokenPairData = await api.fetchTokenPairData()
       tokenPairData = parseTokenPairData(tokenPairData, currentPair)
-
       let orders = await api.fetchOrders(userAddress)
       orders = parseOrders(orders, pairs)
 
-      dispatch(actionCreators.updateTokenPairData(tokenPairData))
-      dispatch(actionCreators.initOrdersTable(orders))
+      dispatch(actionCreators.updateTradingPageData(tokenPairData, orders))
 
-      state = getState()
-      pairDomain = getTokenPairsDomain(state)
-      
       socket.subscribeTrades(currentPair)
       socket.subscribeOrderBook(currentPair)
       socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)

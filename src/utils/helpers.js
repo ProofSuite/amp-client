@@ -1,9 +1,10 @@
 //@flow
 
 import { utils } from 'ethers'
-import { formatRelative } from 'date-fns'
+import distanceInWordsStrict from 'date-fns/distance_in_words_strict'
 
-import type { BN, Numberish } from '../types/common'
+
+import type { Token } from '../types/Token'
 
 export const rand = (min: number, max: number, decimals: number = 4) => {
   return (Math.random() * (max - min) + min).toFixed(decimals)
@@ -18,7 +19,8 @@ export const capitalizeFirstLetter = (str: string) => {
 }
 
 export const relativeDate = (time: number) => {
-  let formattedDate = formatRelative(time, new Date())
+  let formattedDate = distanceInWordsStrict(time, new Date()) + ' ago'
+  // let formattedDate = formatRelative(time, new Date())
   return capitalizeFirstLetter(formattedDate)
 }
 
@@ -26,12 +28,14 @@ export const isFloat = (n: *) => parseFloat(n.match(/^-?\d*(\.\d+)?$/)) > 0
 
 export const isInteger = (n: *) => /^\+?\d+$/.test(n)
 
+// silence-error: silence number/string conversion error
 export const round = (n: *, decimals: number = 2) => Math.round(n * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
 export const convertPricepointToPrice = (n: any, pricePointMultiplier: number = 1e9, decimals: number = 6) =>
   Math.round((n / pricePointMultiplier) * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
 export const sortTable = (table: *, column: *, order: string = 'asc') => {
+  // silence-error: unknown Issue
   let sortedTable = table.sort((a, b) => compare(a[column], b[column]))
   return order === 'asc' ? sortedTable : sortedTable.reverse()
 }
@@ -47,7 +51,7 @@ export const compare = (a: *, b: *, order: string = 'asc') => {
 
 export const isJson = (text: *) => {
   return /^[\],:{}\s]*$/.test(
-    text // eslint-disable-next-line
+    text // silence-error: unknown Issue
       .replace(/\\["\\\/bfnrtu]/g, '@') // eslint-disable-next-line
       .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
       .replace(/(?:^|:|,)(?:\s*\[)+/g, '')
@@ -110,4 +114,17 @@ export const minOrderAmount = (makeFee: string, takeFee: string) => {
   let minAmount = (bigMakeFee.mul(2)).add(bigTakeFee.mul(2))
   
   return minAmount
+}
+
+export const getExchangeRate = (currency: string, token: Token) => {
+  switch (currency) {
+    case "USD":
+      return token ? token.USDRate : null
+    case "EUR":
+      return token ? token.EURRate : null
+    case "JPY":
+      return token ? token.JPYRate : null
+    default:
+      return null
+  }
 }

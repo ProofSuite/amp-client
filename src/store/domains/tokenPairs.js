@@ -10,7 +10,8 @@ const defaultInitialState = {
   byPair: defaultTokenPairs,
   data: {},
   favorites: [],
-  currentPair: (Object.values(defaultTokenPairs)[0]: any).pair
+  currentPair: 'WETH/USDC',
+  sortedPairs: [],
 }
 
 //By default the application is started with a default create from tokens in a configuration file. To
@@ -46,6 +47,9 @@ export const tokenPairsUpdated = (pairs: TokenPairs) => {
           quoteTokenDecimals: pair.quoteTokenDecimals,
           makeFee: pair.makeFee,
           takeFee: pair.takeFee,
+          listed: pair.listed,
+          active: pair.active,
+          rank: pair.rank
         }
 
         return result
@@ -53,9 +57,59 @@ export const tokenPairsUpdated = (pairs: TokenPairs) => {
       { }
     )
 
+    let sortedPairs = pairs.map(pair => {
+      let pairSymbol = getPairSymbol(pair.baseTokenSymbol, pair.quoteTokenSymbol)
+      return pairSymbol
+    })
+
+    return {
+      ...state,
+      byPair: {
+        ...state.byPair,
+        ...byPair
+      },
+      sortedPairs: [ ...new Set([ ...state.sortedPairs, ...sortedPairs ])]
+    }
+  }
+
+  return event
+}
+
+
+export const tokenPairsReset = (pairs: TokenPairs) => {
+  const event = (state: TokenPairState) => {
+    let byPair = pairs.reduce(
+      (result, pair) => {
+        let pairSymbol = getPairSymbol(pair.baseTokenSymbol, pair.quoteTokenSymbol)
+        result[pairSymbol] = {
+          pair: pairSymbol,
+          baseTokenSymbol: pair.baseTokenSymbol,
+          quoteTokenSymbol: pair.quoteTokenSymbol,
+          baseTokenAddress: pair.baseTokenAddress,
+          quoteTokenAddress: pair.quoteTokenAddress,
+          baseTokenDecimals: pair.baseTokenDecimals,
+          quoteTokenDecimals: pair.quoteTokenDecimals,
+          makeFee: pair.makeFee,
+          takeFee: pair.takeFee,
+          listed: pair.listed,
+          active: pair.active,
+          rank: pair.rank
+        }
+
+        return result
+      },
+      { }
+    )
+
+    let sortedPairs = pairs.map(pair => {
+      let pairSymbol = getPairSymbol(pair.baseTokenSymbol, pair.quoteTokenSymbol)
+      return pairSymbol
+    })
+
     return {
       ...state,
       byPair,
+      sortedPairs: [ ...new Set([ ...sortedPairs ])]
     }
   }
 
@@ -91,10 +145,6 @@ export const tokenPairDataUpdated = (tokenPairData: Array<Object>) => {
         }
       }
     }, {})
-
-    let currentPair = tokenPairData.filter(data => data.pair === state.currentPair).length === 0
-        ? tokenPairData[0].pair
-        : state.currentPair
     
     let newState = {
       ...state,
@@ -102,7 +152,6 @@ export const tokenPairDataUpdated = (tokenPairData: Array<Object>) => {
         ...state.data,
         ...data
       },
-      currentPair: currentPair
     }
 
     return newState
@@ -137,20 +186,44 @@ export default function getTokenPairsDomain(state: TokenPairState) {
     getFavoritePairs: () => state.favorites,
     getCurrentPair: (): TokenPair => state.byPair[state.currentPair],
 
+    getListedPairs: (): TokenPair => {
+      let pairs: any = Object.values(state.byPair)
+      let listedPairs = pairs.filter(pair => pair.listed === true)
+
+      return listedPairs
+    },
+
     //Merge token pair properties and data
-    getTokenPairsWithData: () => {
+    getTokenPairsWithDataObject: () => {
       let symbols = Object.keys(state.byPair)
       return symbols.reduce((
         (result, symbol) => {
-          
-          result[symbol] = {
+          if (state.data[symbol] && state.byPair[symbol]) {
+            result[symbol] = {
             ...state.data[symbol],
             ...state.byPair[symbol]
+            }
           }
-
+          
           return result
         }
       ), {})      
-    }
+    },
+
+    getTokenPairsWithDataArray: () => {
+      let tokenPairData = []
+      let symbols = state.sortedPairs
+
+      symbols.forEach(symbol => {
+        if (state.data[symbol] && state.byPair[symbol]) {
+          tokenPairData.push({
+            ...state.data[symbol],
+            ...state.byPair[symbol]
+          })
+        }
+      })
+
+      return tokenPairData
+    },
   }
 }

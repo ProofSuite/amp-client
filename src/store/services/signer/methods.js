@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 import { getOrderHash, getOrderCancelHash, getTradeHash, getRandomNonce } from '../../../utils/crypto'
-import { round, computePricepoint, computeAmountPoints } from '../../../utils/helpers'
+import { computePricepoint, computeAmountPoints } from '../../../utils/helpers'
 
 export const signOrder = async function(order) {
   order.hash = getOrderHash(order)

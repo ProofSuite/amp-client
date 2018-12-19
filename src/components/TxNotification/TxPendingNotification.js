@@ -65,12 +65,4 @@ const NotificationBox = styled.div`
   margin: auto;
 `;
 
-const Ellipsis = styled.p`
-  text-align: center;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
 export default TxPendingNotification;
