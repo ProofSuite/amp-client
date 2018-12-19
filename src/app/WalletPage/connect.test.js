@@ -32,7 +32,7 @@ describe('connect(Component)', () => {
       expect(props).toBeDefined();
       expect(props).toHaveProperty('queryAccountData');
       expect(props).toHaveProperty('loading');
-      expect(props).toHaveProperty('depositTableSelector');
+      expect(props).toHaveProperty('tokenTableSelector');
       expect(props).toHaveProperty('authenticated');
       expect(props).toHaveProperty('pvtKeyLocked');
       return null;

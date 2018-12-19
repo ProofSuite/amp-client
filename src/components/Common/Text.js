@@ -60,7 +60,7 @@ export const EmphasizedText = styled.span`
   ${space}
   ${width}
   font-size: ${props => (props.small ? Fonts.FONT_SIZE_SMALL : props.large ? Fonts.FONT_SIZE_LARGE : Fonts.FONT_SIZE)}
-  color: ${Colors.LINK};
+  color: ${Colors.LINK} !important;
 `;
 
 export const MutedText = styled.span`

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import DepositTableRenderer from './DepositTableRenderer';
+import TokenTableRenderer from './TokenTableRenderer';
 import DepositModal from '../../components/DepositModal';
 import TransferTokensModal from '../../components/TransferTokensModal';
 import ConvertTokensModal from '../../components/ConvertTokensModal';
@@ -13,7 +13,12 @@ type TokenData = {
   address: string,
   balance: string,
   allowed: boolean,
-  allowancePending: boolean
+  decimals: number,
+  allowancePending: boolean,
+  quote?: ?bool,
+  registered?: ?bool,
+  listed?: ?bool,
+  active?: ?bool,
 }
 
 type Props = {
@@ -23,6 +28,7 @@ type Props = {
   baseTokens: Array<string>,
   quoteTokens: Array<string>,
   redirectToTradingPage: string => void,
+  referenceCurrency: string
 };
 
 type State = {
@@ -36,7 +42,7 @@ type State = {
   searchInput: string,
 };
 
-class DepositTable extends React.PureComponent<Props, State> {
+class TokenTable extends React.PureComponent<Props, State> {
   state = {
     isDepositModalOpen: false,
     isSendModalOpen: false,
@@ -48,25 +54,42 @@ class DepositTable extends React.PureComponent<Props, State> {
     convertModalToToken: 'WETH',
   };
 
-  openDepositModal = (symbol: string) => {
+  openDepositModal = (event: SyntheticEvent<>, symbol: string) => {
+    console.log(event)
+
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
     let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
     this.setState({
       isDepositModalOpen: true,
-      selectedToken: selectedToken,
+      selectedToken,
     });
   };
 
-  openSendModal = (symbol: string) => {
+  openSendModal = (event: SyntheticEvent<>, symbol: string) => {
+    console.log(event)
+
+    event.preventDefault()
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
     let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
     this.setState({
       isSendModalOpen: true,
-      selectedToken: selectedToken,
+      selectedToken,
     });
   };
 
-  openConvertModal = (fromTokenSymbol: string, toTokenSymbol: string) => {
+  openConvertModal = (event: SyntheticEvent<>, fromTokenSymbol: string, toTokenSymbol: string) => {
+    console.log(event)
+
+    event.preventDefault()
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
     this.setState((previousState, currentProps) => {
       return {
         ...previousState,
@@ -75,6 +98,20 @@ class DepositTable extends React.PureComponent<Props, State> {
         isConvertModalOpen: true,
       }
     })
+  }
+
+  handleToggleAllowance = (event: SyntheticEvent<>, symbol: string) => {
+    console.log(event)
+    
+    // event.stopProp
+    event.preventDefault()
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+    
+    
+    this.props.toggleAllowance(symbol)
+
+    return false
   }
 
   closeDepositModal = () => {
@@ -114,6 +151,7 @@ class DepositTable extends React.PureComponent<Props, State> {
       baseTokens,
       toggleAllowance,
       redirectToTradingPage,
+      referenceCurrency
      } = this.props;
 
     let {
@@ -140,8 +178,9 @@ class DepositTable extends React.PureComponent<Props, State> {
 
     return (
       <Wrapper>
-        <DepositTableRenderer
+        <TokenTableRenderer
           connected={connected}
+          handleToggleAllowance={this.handleToggleAllowance}
           baseTokensData={filteredBaseTokenData}
           quoteTokensData={filteredQuoteTokenData}
           ETHTokenData={filteredETHTokenData[0]}
@@ -154,9 +193,9 @@ class DepositTable extends React.PureComponent<Props, State> {
           openSendModal={this.openSendModal}
           toggleZeroBalanceToken={this.toggleZeroBalanceToken}
           handleSearchInputChange={this.handleSearchInputChange}
-          toggleAllowance={toggleAllowance}
           redirectToTradingPage={redirectToTradingPage}
           totalFilteredTokens={totalFilteredTokens}
+          referenceCurrency={referenceCurrency}
         />
         <DepositModal
           isOpen={isDepositModalOpen}
@@ -180,7 +219,7 @@ class DepositTable extends React.PureComponent<Props, State> {
   }
 }
 
-export default DepositTable;
+export default TokenTable;
 
 const Wrapper = styled.div`
   height: 100%;

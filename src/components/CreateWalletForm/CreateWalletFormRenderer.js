@@ -3,7 +3,6 @@ import React from 'react';
 import Download from '@axetroy/react-download';
 import {
   Button,
-  Spinner,
   Checkbox,
   Card,
   FormGroup,
@@ -249,12 +248,6 @@ const PasswordInputBox = styled.div`
   align-items: stretch;
   width: 100%;
   margin: auto;
-`;
-const LoadingStateWrapper = styled.div`
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const WalletInformationBox = styled.div`

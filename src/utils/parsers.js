@@ -3,11 +3,12 @@
 import { isFloat, isInteger, round } from './helpers'
 import { utils } from 'ethers'
 
-import type { TokenPair } from '../types/tokens'
+import type { TokenPair, APITokens, APIToken, Tokens } from '../types/tokens'
 import type { Order } from '../types/orders'
 import type { Trade } from '../types/trades'
 import type { OrderBookData } from '../types/orderBook'
 import type { Candles } from '../types/ohlcv'
+import type { APIPairData } from '../types/api'
 
 export const parseJSONData = (obj: Object) => {
   for (let key in obj) {
@@ -47,6 +48,35 @@ export const parseJSONToFixed = (obj: Object, decimals: number = 2) => {
   }
 
   return obj
+}
+
+
+export const parseToken = (token: APIToken) => {
+  return {
+    address: token.address,
+    active: token.active,
+    listed: token.listed,
+    quote: token.quote,
+    symbol: token.symbol,
+    decimals: token.decimals,
+    rank: token.rank,
+  }
+}
+
+export const parseTokens = (tokens: APITokens) => {
+  let parsedTokens = tokens.map((token) => {
+    return {
+      address: token.address,
+      active: token.active,
+      listed: token.listed,
+      quote: token.quote,
+      symbol: token.symbol,
+      decimals: token.decimals,
+      rank: token.rank,
+    }
+  })
+
+  return parsedTokens  
 }
 
 export const parseTokenAmount = (amount: string, pair: TokenPair, precision: number = 2) => {
@@ -154,15 +184,17 @@ export const parseOrderBookData = (data: OrderBookData, pair: TokenPair, precisi
   return { asks, bids }
 }
 
-export const parseTokenPairData = (data: Candles, pair: TokenPair) => {
-  let parsed = (data: Candles).map(datum => {
+export const parseTokenPairData = (data: APIPairData, pair: TokenPair) => {
+  let parsed = (data: APIPairData).map(datum => {
     return {
       pair: datum.pair.pairName,
       lastPrice: datum.close ? parsePricepoint(datum.close, pair) : null,
       change: datum.open ? round((datum.close - datum.open) / datum.open, 1) : null,
       high: datum.high ? parsePricepoint(datum.high, pair) : null,
       low: datum.low ? parsePricepoint(datum.low, pair) : null,
-      volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null
+      volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,
+      orderVolume: datum.orderVolume ? parseTokenAmount(datum.orderVolume, pair, 0) : null,
+      orderCount: datum.orderCount ? parseTokenAmount(datum.orderCount, pair, 0) : null,
     }
   })
     

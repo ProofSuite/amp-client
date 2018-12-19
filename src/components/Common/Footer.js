@@ -2,11 +2,15 @@ import React from 'react';
 import Colors from './Colors';
 import styled from 'styled-components';
 import Indent from './Indent'
-import { MutedText } from './Text'
 import ampLogo from '../../assets/amp_black.png'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter, faDiscord, faMedium, faFacebook, faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter } from '../Common/Icons/faTwitter'
+import { faDiscord } from '../Common/Icons/faDiscord'
+import { faGithub } from '../Common/Icons/faGithub'
+import { faYoutube } from '../Common/Icons/faYoutube'
+import { faFacebook } from '../Common/Icons/faFacebook'
+import { faMedium } from '../Common/Icons/faMedium'
 
 
 const Footer = () => (
@@ -14,7 +18,7 @@ const Footer = () => (
     <Container>
       <TopSection>
         <LogosWrapper>
-        <img src={ampLogo} class="Profile-image" width="120" height="120" />
+        <img src={ampLogo} class="Profile-image" width="120" height="120" alt=""/>
         <FooterText>
             <FooterSatoshiQuote>"03/Jan/2009 Chancellor on brink of second bailout for banks"</FooterSatoshiQuote>
             <FooterFirstBlock>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa in Block 1</FooterFirstBlock>
@@ -25,21 +29,33 @@ const Footer = () => (
             <HeadListItem>About</HeadListItem>
             <NormalListItem>
                 <LinkText>
-                  <a href="https://www.proofsuite.com/#about" target="_blank">
+                  <a 
+                    href="https://www.proofsuite.com/#about" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
                     Proof Suite
                   </a>
                 </LinkText>
             </NormalListItem>
             <NormalListItem>
               <LinkText>
-                <a href="https://www.proofsuite.com/#apps" target="_blank">
-                    Products
-                  </a>
+                <a 
+                  href="https://www.proofsuite.com/#apps" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Products
+                </a>
               </LinkText>
             </NormalListItem>
             <NormalListItem>
               <LinkText>
-                <a href="https://www.proofsuite.com/#terms" target="_blank">
+                <a 
+                  href="https://www.proofsuite.com/#terms" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Terms
                 </a>
               </LinkText>
@@ -49,21 +65,32 @@ const Footer = () => (
             <HeadListItem>Platforms</HeadListItem>
             <NormalListItem>
               <LinkText>
-                <a href="https://www.proofsuite.com/#amp" target="_blank">
+                <a href="https://www.proofsuite.com/#amp" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   AMP
                 </a>
               </LinkText>
             </NormalListItem>
             <NormalListItem>
               <LinkText>
-                <a href="https://www.proofsuite.com/#avocado" target="_blank">
+                <a 
+                  href="https://www.proofsuite.com/#avocado" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >
                   Avocado
                 </a>
               </LinkText>
             </NormalListItem>
             <NormalListItem>
               <LinkText>
-                <a href="https://www.proofsuite.com/#togen" target="_blank">
+                <a 
+                  href="https://www.proofsuite.com/#togen" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Togen
                 </a>
               </LinkText>
@@ -72,42 +99,66 @@ const Footer = () => (
           <List>
             <HeadListItem>Links</HeadListItem>
             <NormalListItem>
-              <a href="https://twitter.com/proofsuite" target="_blank">
+              <a 
+                href="https://twitter.com/proofsuite" 
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faTwitter} />
                 <Indent />
                 <LinkText>Twitter</LinkText>
               </a>
             </NormalListItem>
             <NormalListItem>
-              <a href="https://discordapp.com/invite/eChaHFk" target="_blank">
+              <a 
+                href="https://discordapp.com/invite/eChaHFk" 
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faDiscord} />
                 <Indent />
                 <LinkText>Discord</LinkText>
               </a>
               </NormalListItem>
             <NormalListItem>
-              <a href="https://facebook.com/proofsuite" target="_blank">
+              <a 
+                href="https://facebook.com/proofsuite" 
+                target="_blank"
+                rel="noopener noreferrer"
+                >
                 <FontAwesomeIcon icon={faFacebook} />
                 <Indent />
                 <LinkText>Facebook</LinkText>
               </a>
             </NormalListItem>
             <NormalListItem>
-              <a href="https://medium.com/proof-of-fintech" target="_blank">
+              <a 
+                href="https://medium.com/proof-of-fintech" 
+                target="_blank"
+                rel="noopener noreferrer"
+                >
                 <FontAwesomeIcon icon={faMedium} />
                 <Indent />
                 <LinkText>Medium</LinkText>
               </a>
             </NormalListItem>
             <NormalListItem>
-              <a href="https://github.com/proofsuite" target="_blank">
+              <a 
+                href="https://github.com/proofsuite" 
+                target="_blank"
+                rel="noopener noreferrer"
+                >
                 <FontAwesomeIcon icon={faGithub} />
                 <Indent />
                 <LinkText>Github</LinkText>
               </a>
             </NormalListItem>
             <NormalListItem>
-              <a href="https://www.youtube.com/channel/UCKDNphVF9TItP7PP9wJPM6g" target="_blank">
+              <a 
+                href="https://www.youtube.com/channel/UCKDNphVF9TItP7PP9wJPM6g" 
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faYoutube} />            
                 <Indent />
                 <LinkText>Youtube</LinkText>
@@ -151,11 +202,6 @@ const TopSection = styled.div`
   justify-content: space-between;
   padding: 40px 0px 30px;
   margin-bottom: 15px;
-`;
-
-const BottomSection = styled.p`
-  margin-bottom: 15px;
-  text-align: center;
 `;
 
 const LogosWrapper = styled.div`

@@ -1,4 +1,4 @@
-import DepositTable from './DepositTable';
-// import connect from './connect'
+import MarketsTable from './MarketsTable';
+import connect from './connect'
 
-export default DepositTable;
+export default connect(MarketsTable);

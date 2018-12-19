@@ -14,7 +14,7 @@ import {
     SmallText, 
     SmallTextDiv, 
     TextDiv, 
-    EmphasizeText, 
+    EmphasizedText, 
     LargeText, 
     HeaderText, 
     LabelText,
@@ -31,7 +31,7 @@ import {
 
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
 export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
-export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export { default as Spacer } from './Spacer'
 export { default as Chevron } from './Chevron';
@@ -52,6 +52,7 @@ export { default as CryptoIcon } from './CryptoIcon';
 export { default as Footer } from './Footer';
 export { default as SvgIcon } from './SvgIcon';
 export { default as ColoredCryptoIcon } from './ColoredCryptoIcon';
+export { default as CryptoIconPair } from './CryptoIconPair';
 export { default as Indent } from './Indent'
 export { default as ModalBody } from './ModalBody'
 export { default as ModalFooter } from './ModalFooter'

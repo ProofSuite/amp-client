@@ -1,88 +1,78 @@
 // @flow
+
 import React from 'react';
 import styled from 'styled-components';
 import MarketsTableRenderer from './MarketsTableRenderer';
-import type { Token } from '../../types/tokens';
 
-type TokenData = {
-  symbol: string,
-  address: string,
-  balance: string,
-  allowed: boolean,
-  allowancePending: boolean
-}
+import type { TokenPair } from '../../types/tokens';
 
 type Props = {
-  connected: boolean,
-  toggleAllowance: string => void,
-  tokenData: Array<TokenData>,
-  baseTokens: Array<string>,
+  pairs: Array<TokenPair>,
   quoteTokens: Array<string>,
-  redirectToTradingPage: string => void,
+  redirectToTradingPage: (string, string) => void,
+  currentReferenceCurrency: string,
 };
 
 type State = {
-  selectedToken: ?Token,
-  hideZeroBalanceToken: boolean,
   searchInput: string,
+  selectedTab: string
 };
 
 class MarketsTable extends React.PureComponent<Props, State> {
+  static defaultProps = {
+    pairs: []
+  }
+
   state = {
-    selectedToken: null,
     searchInput: '',
+    selectedTab: this.props.quoteTokens[0] 
   };
 
   handleSearchInputChange = (e: SyntheticInputEvent<>) => {
     this.setState({ searchInput: e.target.value });
   };
 
-  filterTokens = (data: Array<TokenData>) => {
-    const { searchInput } = this.state;
-    if (searchInput) data = data.filter(token => token.symbol.indexOf(searchInput.toUpperCase()) > -1);
-    return data;
+  handleChangeTab = (selectedTab: string ) => {
+    this.setState({ selectedTab })
+  }
+
+  filterTokens = (pairs: Array<TokenPair>) => {
+    const { searchInput, selectedTab } = this.state;
+
+    if (selectedTab !== 'ALL') pairs = pairs.filter(pair => pair.quoteTokenSymbol === selectedTab)
+    pairs = searchInput ? pairs.filter(pair => pair.baseTokenSymbol.indexOf(searchInput.toUpperCase()) > -1) : pairs
+
+    return pairs
   };
 
   render() {
     let {
-      connected,
-      tokenData,
-      quoteTokens,
-      baseTokens,
-      toggleAllowance,
+      pairs,
       redirectToTradingPage,
+      quoteTokens,
+      currentReferenceCurrency
      } = this.props;
 
     let {
-      selectedToken,
       searchInput,
+      selectedTab
      } = this.state;
 
-     let quoteTokenData = tokenData.filter((token: Token) => quoteTokens.indexOf(token.symbol) !== -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
-     let baseTokenData = tokenData.filter((token: Token) => baseTokens.indexOf(token.symbol) === -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
-     let WETHTokenData = tokenData.filter((token: Token) => token.symbol === 'WETH')
-     let ETHTokenData = tokenData.filter((token: Token) => token.symbol === 'ETH')
-
-    let filteredBaseTokenData = this.filterTokens(baseTokenData)
-    let filteredQuoteTokenData = this.filterTokens(quoteTokenData)
-    let filteredWETHTokenData = this.filterTokens(WETHTokenData)
-    let filteredETHTokenData = this.filterTokens(ETHTokenData)
-    let totalFilteredTokens = filteredBaseTokenData.length + filteredQuoteTokenData.length + filteredWETHTokenData.length + filteredETHTokenData.length
+     let filteredPairs = this.filterTokens(pairs)
+     let tabs = quoteTokens.concat(['ALL'])
 
     return (
       <Wrapper>
         <MarketsTableRenderer
-          connected={connected}
-          baseTokensData={filteredBaseTokenData}
-          quoteTokensData={filteredQuoteTokenData}
-          ETHTokenData={filteredETHTokenData[0]}
-          WETHTokenData={filteredWETHTokenData[0]}
-          tokenDataLength={tokenData.length}
+          pairs={filteredPairs}
           searchInput={searchInput}
           handleSearchInputChange={this.handleSearchInputChange}
-          toggleAllowance={toggleAllowance}
           redirectToTradingPage={redirectToTradingPage}
-          totalFilteredTokens={totalFilteredTokens}
+          quoteTokens={quoteTokens}
+          tabs={tabs}
+          selectedTab={selectedTab}
+          handleChangeTab={this.handleChangeTab}
+          currentReferenceCurrency={currentReferenceCurrency}
         />
       </Wrapper>
     );

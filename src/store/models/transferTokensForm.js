@@ -17,7 +17,7 @@ export default function sendEtherSelector(state: State) {
   let tokenDomain = getTokenDomain(state);
   let transferTokensFormDomain = getTransferTokensFormDomain(state);
 
-  let eth = { symbol: 'ETH', address: '0x0', rank: 0}
+  let eth = { symbol: 'ETH', address: '0x0', decimals: 18, rank: 0}
   let otherTokens = tokenDomain.rankedTokens()
   let tokens: Array<RankedToken> = [ eth ].concat(otherTokens)
 

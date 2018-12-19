@@ -10,7 +10,7 @@ const AMPLogo = (props: { height: number, width: number }) => {
   return (
     <Wrapper>
       <Box p={3}>
-        <img src={ampLogo} class="Profile-image" width={width} height={height} />
+        <img src={ampLogo} class="Profile-image" width={width} height={height} alt=""/>
       </Box>
     </Wrapper>
   );

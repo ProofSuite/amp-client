@@ -21,6 +21,7 @@ type Props = {
   asks: Array<BidOrAsk>,
   bids: Array<BidOrAsk>,
   currentPair: TokenPair,
+  select: BidOrAsk => void
 };
 
 type State = {

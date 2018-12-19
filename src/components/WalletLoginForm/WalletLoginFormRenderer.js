@@ -27,8 +27,6 @@ import {
 import Help from '../../components/Help';
 import WalletSelect from './WalletSelect';
 
-import type { Wallet } from '../../types/Common'
-
 
 // TODO -> Intent issue is still to get fix this func () => `JSONFileInputForm`
 
@@ -56,7 +54,7 @@ type Props = {
   password: ?string,
   passwordStatus: Status,
   passwordHelpingText: ?string,
-  localStorageWallets: ?Array<Wallet>,
+  localStorageWallets: ?Array<Object>,
   storeWallet: boolean,
   storePrivateKey: boolean,
   submit: (SyntheticEvent<>) => Promise<void>,

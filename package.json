@@ -16,6 +16,15 @@
     "build-storybook": "build-storybook -s public",
     "build-svg": "npx @svgr/cli -d ./node-modules/cryptocurrency-icons/svg/color/ src/components/Common/Icons/"
   },
+  "proxy": {
+    "/rates": {
+      "target": "https://min-api.cryptocompare.com",
+      "pathRewrite": {
+        "^/rates" : ""
+      },
+      "changeOrigin": true
+    }
+  },
   "dependencies": {
     "@amcharts/amcharts3-react": "^3.1.0",
     "@axetroy/react-download": "^1.1.1",
@@ -23,7 +32,6 @@
     "@blueprintjs/select": "^3.1.0",
     "@blueprintjs/table": "^3.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
-    "@fortawesome/free-brands-svg-icons": "^5.5.0",
     "@fortawesome/free-regular-svg-icons": "^5.5.0",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/react-fontawesome": "^0.1.3",
@@ -34,21 +42,16 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "connected-react-router": "^4.4.1",
-    "cryptocoins-icons": "^2.8.0",
     "cryptocurrency-icons": "^0.9.0",
     "d3-dsv": "^1.0.8",
     "d3-format": "^1.3.0",
     "d3-shape": "^1.2.0",
     "d3-time-format": "^2.1.1",
-    "date-fns": "^2.0.0-alpha.25",
+    "date-fns": "^1.29.0",
     "ethers": "^4.0.13",
     "express": "^4.16.3",
     "jest-localstorage-mock": "^2.2.0",
-    "jquery": "^3.3.1",
-    "nodemon": "^1.18.2",
-    "numeral": "^2.0.6",
     "polished": "^1.9.3",
-    "proof-contracts-interfaces": "https://github.com/ProofSuite/proof-contract-interfaces#master",
     "rc-steps": "^3.1.1",
     "react": "^16.4.1",
     "react-app-rewire-hot-loader": "^1.0.2",
@@ -56,7 +59,6 @@
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.13",
     "react-hot-loader": "^4.3.11",
-    "react-iframe": "^1.3.3",
     "react-intl": "^2.4.0",
     "react-popper": "^1.0.2",
     "react-redux": "^5.0.7",
@@ -71,18 +73,12 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "sha3": "^1.2.2",
-    "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1",
-    "sockjs-client": "^1.3.0",
     "sorted-array": "^2.0.2",
     "styled-components": "~3.3.3",
     "styled-css-grid": "^0.11.0",
     "styled-system": "^3.0.2",
-    "svg-inline-loader": "^0.8.0",
-    "svg-react-loader": "^0.4.6",
     "system-components": "^3.0.1",
-    "web3-utils": "^1.0.0-beta.36",
-    "ws": "^6.1.0"
+    "web3-utils": "^1.0.0-beta.36"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.8",

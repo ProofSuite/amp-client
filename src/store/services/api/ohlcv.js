@@ -1,5 +1,5 @@
 // @flow
-import { addMonths } from 'date-fns'
+import addMonths from 'date-fns/add_months'
 import { ENGINE_HTTP_URL } from '../../../config/urls'
 import { convertPricepointToPrice } from '../../../utils/helpers';
 
