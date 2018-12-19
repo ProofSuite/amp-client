@@ -13,7 +13,7 @@ import {
 
 import { 
   RowSpaceBetween,
-  ColoredCryptoIcon,
+  CryptoIconPair,
   Colors, 
   AMPLogo, 
   Centered, 
@@ -123,7 +123,7 @@ const MarketTableRow = (props: *) => {
       <Row key={index} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)}>
         <Cell>
           <FlexRow alignItems="center">
-            <ColoredCryptoIcon size={32} name={baseTokenSymbol} />
+            <CryptoIconPair size={32} baseToken={baseTokenSymbol} quoteToken={quoteTokenSymbol} />
             <SmallText p={2} muted>{pair}</SmallText>
           </FlexRow>
         </Cell>

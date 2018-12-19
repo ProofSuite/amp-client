@@ -17,7 +17,6 @@ import MKR from './Icons/icon/mkr.js'
 import NPXS from './Icons/icon/npxs.js'
 import OMG from './Icons/icon/omg.js'
 import PPT from './Icons/icon/ppt.js'
-// import PRFT from './Icons/icon/prft.js'
 import REP from './Icons/icon/rep.js'
 import SNT from './Icons/icon/snt.js'
 import TRX from './Icons/icon/trx.js'
@@ -25,6 +24,7 @@ import TUSD from './Icons/icon/tusd.js'
 import WTC from './Icons/icon/wtc.js'
 import ZRX from './Icons/icon/zrx.js'
 import ETH from './Icons/icon/eth.js'
+import DAI from './Icons/icon/dai.js'
 import USD from './Icons/icon/usd.js'
 
 
@@ -51,7 +51,7 @@ const ColoredCryptoIcon = ({ name, color, size }) => {
     case 'OMG': return <OMG width={size} height={size} viewBox="0 0 32 32"  />
     case 'PPT': return <PPT width={size} height={size} viewBox="0 0 32 32"  />
     // case 'PRFT': return <PRFT width={size} height={size} viewBox="0 0 32 32"  />
-    case 'DAI': return <USD width={size} height={size} viewBox="0 0 32 32"  />
+    case 'DAI': return <DAI width={size} height={size} viewBox="0 0 32 32"  />
     case 'USDC': return <USD width={size} height={size} viewBox="0 0 32 32"  />
     case 'REP': return <REP width={size} height={size} viewBox="0 0 32 32"  />
     case 'SNT': return <SNT width={size} height={size} viewBox="0 0 32 32"  />
@@ -61,7 +61,6 @@ const ColoredCryptoIcon = ({ name, color, size }) => {
     case 'ETH': return <ETH width={size} height={size} viewBox="0 0 32 32"  />
     case 'WETH': return <ETH width={size} height={size} viewBox="0 0 32 32"  />
     case 'ZRX': return <ZRX width={size} height={size} viewBox="0 0 32 32"  />
-    //case 'LOOM': return <LOOM width={size} height={size} viewBox="0 0 32 32" ine
     default: return <ETH width={size} height={size} viewBox="0 0 32 32"  />
   }
 }
