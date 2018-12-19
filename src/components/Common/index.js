@@ -14,7 +14,7 @@ import {
     SmallText, 
     SmallTextDiv, 
     TextDiv, 
-    EmphasizeText, 
+    EmphasizedText, 
     LargeText, 
     HeaderText, 
     LabelText,
@@ -31,7 +31,7 @@ import {
 
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
 export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
-export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizeText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export { default as Spacer } from './Spacer'
 export { default as Chevron } from './Chevron';

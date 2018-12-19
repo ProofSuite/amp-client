@@ -27,6 +27,7 @@ export type Props = {
   balancesLoading: boolean,
   WETHBalance: string,
   WETHAllowance: string,
+  referenceCurrency: string,
 }
 
 class WalletPage extends React.PureComponent<Props, State> {
@@ -63,7 +64,8 @@ class WalletPage extends React.PureComponent<Props, State> {
       quoteTokens,
       baseTokens,
       closeHelpModal,
-      balancesLoading
+      balancesLoading,
+      referenceCurrency
     } = this.props
 
 
@@ -86,6 +88,7 @@ class WalletPage extends React.PureComponent<Props, State> {
         redirectToTradingPage={redirectToTradingPage}
         isHelpModalOpen={isHelpModalOpen}
         closeHelpModal={closeHelpModal}
+        referenceCurrency={referenceCurrency}
       />
     )
   }

@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
-import { quoteTokens, quoteTokenSymbols } from '../../config/quotes'
+import { quoteTokens } from '../../config/quotes'
 import { getCurrentBlock } from '../services/wallet'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import { parseQueryAccountDataError } from '../../config/errors'
@@ -16,12 +16,11 @@ export default function walletPageSelector(state: State) {
   let accountDomain = getAccountDomain(state)
   let tokenDomain = getTokenDomain(state)
 
-  // ETH is not a token so we add it to the list to display in the deposit table
-  let ETH = { symbol: 'ETH', address: '0x0' }
   let tokens = tokenDomain.tokens()
-  let quoteTokens = quoteTokenSymbols
-  let baseTokens = tokenDomain.symbols().filter(symbol => quoteTokens.indexOf(symbol) !== -1)
-  let tokenData = accountBalancesDomain.getBalancesAndAllowances([ ETH ].concat(tokens))
+  let quoteTokens = tokenDomain.quoteTokens()
+  let baseTokens = tokenDomain.baseTokens()
+  let currency = accountDomain.referenceCurrency()
+  let tokenData = accountBalancesDomain.getBalancesAndAllowances(tokens, currency)
 
   return {
     balancesLoading: accountBalancesDomain.loading(),
@@ -34,6 +33,7 @@ export default function walletPageSelector(state: State) {
     currentBlock: accountDomain.currentBlock(),
     showHelpModal: accountDomain.showHelpModal(),
     connected: true,
+    referenceCurrency: currency.symbol
   }
 }
 
@@ -50,6 +50,8 @@ export function queryAccountData(): ThunkAction {
       if (!currentBlock) throw new Error('')
 
       let tokens = await api.getTokens()
+      tokens.push({ symbol: 'ETH', address: '0x0'})
+
       let pairs = await api.fetchPairs()
       let exchangeAddress = await api.getExchangeAddress()
 
@@ -67,6 +69,10 @@ export function queryAccountData(): ThunkAction {
       })
 
       dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress))
+
+
+      //we remove the ETH 'token' because the process to obtain balances for ETH and others tokens is different
+      tokens = tokens.filter(token => token.symbol !== 'ETH')
 
       let etherBalance = await provider.queryEtherBalance(accountAddress)
       balances.push(etherBalance)
@@ -103,8 +109,19 @@ export function queryAccountData(): ThunkAction {
 
 export function redirectToTradingPage(symbol: string): ThunkAction {
   return async (dispatch, getState) => {
-    let defaultQuoteToken = quoteTokens[0]
-    let pair = `${symbol}/${defaultQuoteToken.symbol}`
+    let quoteTokenSymbols = quoteTokens.map(token => token.symbol)
+    let quoteTokenIndex = quoteTokenSymbols.indexOf(symbol)
+    let baseTokenSymbol, quoteTokenSymbol
+
+    if (quoteTokenIndex === 0) {
+      quoteTokenSymbol = quoteTokens[0].symbol
+      baseTokenSymbol = quoteTokens[1].symbol
+    } else {
+      quoteTokenSymbol = quoteTokens[0].symbol
+      baseTokenSymbol = symbol      
+    }
+
+    let pair = `${baseTokenSymbol}/${quoteTokenSymbol}`
 
     dispatch(actionCreators.updateCurrentPair(pair))
     dispatch(push('/trade'))

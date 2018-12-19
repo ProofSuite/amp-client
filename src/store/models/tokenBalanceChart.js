@@ -7,26 +7,30 @@ import { round, getExchangeRate } from '../../utils/helpers'
 
 
 export default function tokenBalanceChartSelector(state: State) {
-  let tokenBalancesDomain = getAccountBalancesDomain(state)
-
-  let tokenBalances = tokenBalancesDomain.balances()
+  let accountBalancesDomain = getAccountBalancesDomain(state)
+  let tokenBalances = accountBalancesDomain.balances()
   let tokens = getTokenDomain(state).bySymbol()
-  let currency = getAccountDomain(state).referenceCurrencyName()
+  let currency = getAccountDomain(state).referenceCurrency()
 
   let chartData = Object.keys(tokenBalances).map((symbol) => {
     let token = tokens[symbol]
-    let rate = getExchangeRate(currency, token)
-    let balance = rate * round(tokenBalances[symbol].balance)
+    if (symbol === 'WETH') token = tokens['ETH']
+      
+    let rate = getExchangeRate(currency.name, token)  
+    let balance = round(tokenBalances[symbol].balance, 4)
+    let value = round(rate * balance)
 
     return {
-      symbol: symbol,
-      value: balance,
+      symbol,
+      balance,
+      value,
+      currency: currency.symbol
     }
   })
 
   return {
-    balancesLoading: tokenBalancesDomain.loading(),
+    balancesLoading: accountBalancesDomain.loading(),
     tokenBalances: chartData,
-    tokens: tokens,
+    tokens: tokens
   }
 }

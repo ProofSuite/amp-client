@@ -40,7 +40,6 @@ export default function tradingPageSelector(state: State) {
 
   let pairIsAllowed = baseTokenIsAllowed && quoteTokenIsAllowed
 
-  
   return {
     makeFee,
     takeFee,

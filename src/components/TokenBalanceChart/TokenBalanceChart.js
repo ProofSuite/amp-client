@@ -12,12 +12,13 @@ type State = {
 
 export type Props = {
   tokenBalances: Array<Object>,
-  balancesLoading: boolean
+  balancesLoading: boolean,
+  currency: string,
 }
 
 export default class TokenBalanceChart extends React.PureComponent<Props,State> {
 
-  state = { activeIndex: 1 }
+  state = { activeIndex: 0 }
 
   onPieEnter = (data: Object, index: number) => {
     this.setState({ activeIndex: index })
@@ -79,10 +80,10 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
           fill={Colors.BLUE5}
         />
         {/* <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	style={{"font-size": 20}} fill={Colors.WHITE} dominantBaseline="central">{payload.symbol}</text> */}
-        <text x={cx} y={cy} dy={8} style={{"fontSize": 30}} textAnchor="middle" fill={Colors.WHITE}>{payload.symbol}</text>
+        <text x={cx} y={cy} dy={8} style={{"fontSize": 15}} textAnchor="middle" fill={Colors.WHITE}>{payload.balance} {payload.symbol}</text>
         <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={Colors.BLUE5} fill="none"/>
         <circle cx={ex} cy={ey} r={2} fill={Colors.PRIMARY} stroke={Colors.BLUE5}/>
-        <text x={ex + (cos >= 0 ? 1 : -1) * 4} y={ey} textAnchor={textAnchor} fill={Colors.WHITE}>{`${value} ${payload.symbol}`}</text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 4} y={ey} textAnchor={textAnchor} fill={Colors.WHITE}>{`${value} ${payload.currency}`}</text>
         <text x={ex + (cos >= 0 ? 1 : -1) * 4} y={ey} dy={18} textAnchor={textAnchor} fill={Colors.WHITE}>
           {`(${(percent * 100).toFixed(2)}%)`}
         </text>

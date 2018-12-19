@@ -28,6 +28,7 @@ type Props = {
   baseTokens: Array<string>,
   quoteTokens: Array<string>,
   redirectToTradingPage: string => void,
+  referenceCurrency: string
 };
 
 type State = {
@@ -53,8 +54,11 @@ class TokenTable extends React.PureComponent<Props, State> {
     convertModalToToken: 'WETH',
   };
 
-  openDepositModal = (event, symbol: string) => {
+  openDepositModal = (event: SyntheticEvent<>, symbol: string) => {
+    console.log(event)
+
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
 
     let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
@@ -64,8 +68,12 @@ class TokenTable extends React.PureComponent<Props, State> {
     });
   };
 
-  openSendModal = (event, symbol: string) => {
+  openSendModal = (event: SyntheticEvent<>, symbol: string) => {
+    console.log(event)
+
+    event.preventDefault()
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
 
     let selectedToken = this.props.tokenData.filter(elem => elem.symbol === symbol)[0];
 
@@ -75,8 +83,12 @@ class TokenTable extends React.PureComponent<Props, State> {
     });
   };
 
-  openConvertModal = (event, fromTokenSymbol: string, toTokenSymbol: string) => {
+  openConvertModal = (event: SyntheticEvent<>, fromTokenSymbol: string, toTokenSymbol: string) => {
+    console.log(event)
+
+    event.preventDefault()
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
 
     this.setState((previousState, currentProps) => {
       return {
@@ -88,10 +100,18 @@ class TokenTable extends React.PureComponent<Props, State> {
     })
   }
 
-  handleToggleAllowance = (event, symbol: string) => {
+  handleToggleAllowance = (event: SyntheticEvent<>, symbol: string) => {
+    console.log(event)
+    
+    // event.stopProp
+    event.preventDefault()
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+    
     
     this.props.toggleAllowance(symbol)
+
+    return false
   }
 
   closeDepositModal = () => {
@@ -131,6 +151,7 @@ class TokenTable extends React.PureComponent<Props, State> {
       baseTokens,
       toggleAllowance,
       redirectToTradingPage,
+      referenceCurrency
      } = this.props;
 
     let {
@@ -172,9 +193,9 @@ class TokenTable extends React.PureComponent<Props, State> {
           openSendModal={this.openSendModal}
           toggleZeroBalanceToken={this.toggleZeroBalanceToken}
           handleSearchInputChange={this.handleSearchInputChange}
-          toggleAllowance={toggleAllowance}
           redirectToTradingPage={redirectToTradingPage}
           totalFilteredTokens={totalFilteredTokens}
+          referenceCurrency={referenceCurrency}
         />
         <DepositModal
           isOpen={isDepositModalOpen}

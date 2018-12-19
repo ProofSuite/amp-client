@@ -9,7 +9,10 @@ import {
   Checkbox, 
   InputGroup, 
   Tag, 
-  Position
+  Position,
+  Button,
+  Icon,
+  Tooltip
 } from '@blueprintjs/core';
 
 import { 
@@ -23,6 +26,7 @@ import {
   GreenGlowingButton, 
   BlueGlowingButton,
   FlexRow,
+  Box
 } from '../Common';
 
 type TokenData = {
@@ -54,7 +58,8 @@ type Props = {
   handleToggleAllowance: (SyntheticEvent<>, string) => void,
   toggleZeroBalanceToken: void => void,
   redirectToTradingPage: string => void,
-  totalFilteredTokens: number
+  totalFilteredTokens: number,
+  referenceCurrency: string,
 };
 
 const TokenTableRenderer = (props: Props) => {
@@ -122,14 +127,16 @@ const ETHRow = (props: Props) => {
     openDepositModal,
     openSendModal,
     openConvertModal,
+    referenceCurrency,
+    redirectToTradingPage
   } = props;
 
   if (!ETHTokenData) return null
 
-  const { symbol, balance } = ETHTokenData
+  const { symbol, balance, value } = ETHTokenData
 
   return (
-    <Row key='ETH' onClick={() => console.log('hey')}>
+    <Row key='ETH'>
       <Cell>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
@@ -138,7 +145,7 @@ const ETHRow = (props: Props) => {
       </Cell>
       <Cell>
         <SmallText muted>
-          {formatNumber(balance, { precision: 2})}
+          {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
         </SmallText>
       </Cell>
       <Cell style={{ width: '5%'}}></Cell>
@@ -182,31 +189,33 @@ const WETHRow = (props: Props) => {
     openDepositModal,
     openSendModal,
     openConvertModal,
+    referenceCurrency,
+    redirectToTradingPage
   } = props
 
 
   if (!WETHTokenData) return null
 
-  const { symbol, balance, allowed, allowancePending } = WETHTokenData
+  const { symbol, balance, allowed, allowancePending, value } = WETHTokenData
 
   return (
     <Row key='WETH'>
-      <Cell>
+      <Cell onClick={() => redirectToTradingPage(symbol)}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
         </TokenNameWrapper>
       </Cell>
-      <Cell>
+      <Cell onClick={() => redirectToTradingPage(symbol)}>
         <SmallText muted>
-          {formatNumber(balance, { precision: 2})}
+          {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
         </SmallText>
       </Cell>
       <Cell style={{ width: '5%'}} >
-          <Switch inline checked={allowed} onChange={(event) => handleToggleAllowance(event, symbol)} />
+          <Switch inline checked={allowed} onClick={(event) => handleToggleAllowance(event, symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
-      <Cell style={{ width: '70%' }}>
+      <Cell style={{ width: '70%' }} onClick={() => redirectToTradingPage(symbol)}>
         <FlexRow justifyContent="flex-end" p={1}>
           <ButtonWrapper>
             <GreenGlowingButton
@@ -244,29 +253,36 @@ const QuoteTokenRows = (props: Props) => {
     handleToggleAllowance,
     openDepositModal,
     openSendModal,
+    referenceCurrency,
+    redirectToTradingPage
   } = props
 
   if (!quoteTokensData) return null
 
-  return quoteTokensData.map(({ symbol, balance, allowed, allowancePending }, index) => {
+  return quoteTokensData.map(({ symbol, balance, allowed, allowancePending, value }, index) => {
     return (
       <Row key={index}>
-        <Cell>
+        <Cell onClick={() => redirectToTradingPage(symbol)}>
           <TokenNameWrapper>
             <ColoredCryptoIcon size={32} name={symbol} />
             <SmallText muted>{symbol}</SmallText>
           </TokenNameWrapper>
         </Cell>
-        <Cell>
+        <Cell onClick={() => redirectToTradingPage(symbol)}>
           <SmallText muted>
-            {formatNumber(balance, { precision: 2})}
+            {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
           </SmallText>
         </Cell>
-        <Cell style={{ width: '5%'}} >
-          <Switch inline checked={allowed} onChange={(event) => handleToggleAllowance(event, symbol)} />
+        <Cell style={{ width: '5%'}}>
+          <Button
+            disabled={!connected}
+            intent={allowed ? 'primary' : 'danger'}
+            text={allowed ? 'Unlocked' : 'Locked'}
+            onClick={event => handleToggleAllowance(event, symbol)}
+          />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
-        <Cell style={{ width: '70%' }}>
+        <Cell style={{ width: '70%' }} onClick={() => redirectToTradingPage(symbol)}>
           <FlexRow justifyContent="flex-end" p={1}>
           <ButtonWrapper>
             <BlueGlowingButton
@@ -301,36 +317,43 @@ const BaseTokenRows = (props: Props) => {
     openDepositModal,
     openSendModal,
     redirectToTradingPage,
+    referenceCurrency
   } = props;
 
   if (!baseTokensData) return null
 
-  return baseTokensData.map(({ symbol, balance, allowed, allowancePending }, index) => {
+  return baseTokensData.map(({ symbol, balance, allowed, allowancePending, value }, index) => {
     return (
       <Row key={index}>
-        <Cell>
+        <Cell onClick={() => redirectToTradingPage(symbol)}>
           <TokenNameWrapper>
             <ColoredCryptoIcon size={32} name={symbol} />
             <SmallText muted>{symbol}</SmallText>
+            <Box px={2}>
+              <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
+                <Icon icon="tick-circle" iconSize={14} intent="primary" />
+              </Tooltip>
+            </Box>
           </TokenNameWrapper>
         </Cell>
-        <Cell>
+        <Cell onClick={() => redirectToTradingPage(symbol)}>
           <SmallText muted>
-            {formatNumber(balance, { precision: 2})}
+            {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
           </SmallText>
         </Cell>
         <Cell style={{ width: '5%'}}>
-          <Switch inline checked={allowed} onChange={(event) => handleToggleAllowance(event, symbol)} />
-          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
+          <Switch inline checked={allowed} 
+            onChange={(event) => handleToggleAllowance(event, symbol)} />
+            {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
-        <Cell style={{ width: '70%' }}>
+        <Cell style={{ width: '70%' }} onClick={() => redirectToTradingPage(symbol)}>
           <FlexRow justifyContent="flex-end" p={1}>
             <ButtonWrapper>
               <BlueGlowingButton
                 disabled={!connected}
                 intent="primary"
                 text="Deposit"
-                onClick={() => openDepositModal(symbol)}
+                onClick={(event) => openDepositModal(event, symbol)}
               />
             </ButtonWrapper>
             <ButtonWrapper>
@@ -338,7 +361,7 @@ const BaseTokenRows = (props: Props) => {
                 disabled={!connected}
                 intent="primary"
                 text="Send"
-                onClick={() => openSendModal(symbol)}
+                onClick={(event) => openSendModal(event, symbol)}
                 />
             </ButtonWrapper>
           </FlexRow>

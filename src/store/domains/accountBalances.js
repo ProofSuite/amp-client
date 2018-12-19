@@ -1,6 +1,6 @@
 // @flow
 import type { AccountAllowances, AccountBalances, AccountBalancesState } from '../../types/accountBalances'
-import { round } from '../../utils/helpers'
+import { round, getExchangeRate } from '../../utils/helpers'
 import { utils } from 'ethers'
 import { formatNumber } from 'accounting-js'
 // eslint-disable-next-line
@@ -196,7 +196,7 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
     //To simply UX, we suppose that a trader is "allowing" the exchange smart contract to trade tokens if the
     //allowance value is set to a very large number. If the allowance is above ALLOWANCE_MINIMUM, the tokens is
     //is considered tradeable on the frontend app.
-    getBalancesAndAllowances(tokens: Array<Object>) {
+    getBalancesAndAllowances(tokens: Array<Object>, currency: Object) {
       return (tokens: any).map(token => {        
         if (!state[token.symbol]) {
           return {
@@ -210,13 +210,15 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         let balance = state[token.symbol].balance
         let allowance = state[token.symbol].allowance
         let allowed = Number(allowance) >= Math.max(Number(balance), 100000)
+        let exchangeRate = getExchangeRate(currency.name, token)
+        let value = balance * exchangeRate
 
         return {
           ...token,
           balance: balance,
           allowed: allowed,
+          value: value,
           allowancePending: state[token.symbol].allowancePending
-          
         }
       })
     },

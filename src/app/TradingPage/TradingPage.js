@@ -7,7 +7,7 @@ import OrderForm from '../../components/OrderForm'
 import TradesTable from '../../components/TradesTable'
 import TokenSearcher from '../../components/TokenSearcher'
 import OrderBook from '../../components/OrderBook'
-import { CloseableCallout } from '../../components/Common'
+import { CloseableCallout, EmphasizedText } from '../../components/Common'
 import { Grid } from 'styled-css-grid'
 import { Redirect } from 'react-router-dom'
 
@@ -57,7 +57,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       message: (
           <React.Fragment>
             To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
-            Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+            Click <EmphasizedText onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</EmphasizedText> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
           </React.Fragment>
         )
       }
@@ -74,7 +74,7 @@ class TradingPage extends React.PureComponent<Props, State> {
         message: (
           <React.Fragment>
             To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
-            Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+            Click <EmphasizedText onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</EmphasizedText> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
           </React.Fragment>
         )
       }
@@ -88,7 +88,7 @@ class TradingPage extends React.PureComponent<Props, State> {
         message: (
             <React.Fragment>
               To start trading a currency pair, unlock trading for both tokens ({baseTokenSymbol} and {quoteTokenSymbol}).
-              Click <span onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</span> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
+              Click <EmphasizedText onClick={() => this.props.toggleAllowances(baseTokenSymbol, quoteTokenSymbol)}>here</EmphasizedText> to unlock {baseTokenSymbol}/{quoteTokenSymbol}
             </React.Fragment>
           )
         }

@@ -10,7 +10,7 @@ export function mapStateToProps(state: State, props: Object) {
 
   return {
     ...selectorData,
-    locale: 'TODO',
+    locale: 'en',
     messages: 'TODO',
   };
 }

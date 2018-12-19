@@ -2,7 +2,9 @@
 import type { TokenState, Tokens, TokenRates } from '../../types/tokens';
 
 const initialState = {
-  bySymbol: {}
+  bySymbol: {
+    'ETH': { symbol: 'ETH', address: '0x0', decimals: 18, quote: false }
+  }
 };
 
 export const initialized = () => {
@@ -131,10 +133,17 @@ export default function getTokenDomain(state: TokenState) {
     tokens: () => Object.values(state.bySymbol),
 
     quoteTokens: (): any => {
-      let tokens: any = Object.values(state.bySymbol)
-      let quoteTokens = tokens.filter(token => token.quote === true)
+      let tokens: any = Object.values(state.bySymbol)      
+      let quoteTokens = tokens.filter(token => (token.quote === true && token.symbol !== 'ETH'))
 
       return quoteTokens
+    },
+
+    baseTokens: (): any => {
+      let tokens: any = Object.values(state.bySymbol)      
+      let baseTokens = tokens.filter(token => (token.quote === false && token.symbol !== 'ETH'))
+
+      return baseTokens
     },
 
     tokenAddresses: (): any => {
@@ -146,21 +155,22 @@ export default function getTokenDomain(state: TokenState) {
 
     registeredTokens: (): any => {
       let tokens: any = Object.values(state.bySymbol)
-      let registeredTokens = tokens.filter(token => token.registered === true)
+      let registeredTokens = tokens.filter(token => (token.registered === true && token.symbol !== 'ETH'))
+
 
       return registeredTokens
     },
 
     listedTokens: (): any => {
       let tokens: any = Object.values(state.bySymbol)
-      let listedTokens = tokens.filter(token => token.listed === true)
+      let listedTokens = tokens.filter(token => (token.listed === true && token.symbol !== 'ETH'))
 
       return listedTokens
     },
 
     listedTokenAddresses: (): any => {
       let tokens: any = Object.values(state.bySymbol)
-      let listed = tokens.filter(token => token.listed === true)
+      let listed = tokens.filter(token => (token.listed === true && token.symbol !== 'ETH'))
       let addresses = listed.map(token => token.address)
       
       return addresses
@@ -168,7 +178,7 @@ export default function getTokenDomain(state: TokenState) {
 
     registeredTokenAddresses: (): any => {
       let tokens: any = Object.values(state.bySymbol)
-      let registered = tokens.filter(token => token.registered === true)
+      let registered = tokens.filter((token => token.registered === true && token.symbol !== 'ETH'))
       let addresses = registered.map(token => token.address)
 
       return addresses

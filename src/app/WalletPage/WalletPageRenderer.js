@@ -19,6 +19,7 @@ type Props = {
   isHelpModalOpen: boolean,
   closeHelpModal: void => void,
   balancesLoading: boolean,
+  referenceCurrency: string,
 }
 
 const WalletPageRenderer = (props: Props) => {
@@ -31,7 +32,8 @@ const WalletPageRenderer = (props: Props) => {
     redirectToTradingPage,
     isHelpModalOpen,
     closeHelpModal,
-    balancesLoading
+    balancesLoading,
+    referenceCurrency
   } = props
 
   return (
@@ -52,6 +54,7 @@ const WalletPageRenderer = (props: Props) => {
                 quoteTokens={quoteTokens}
                 toggleAllowance={toggleAllowance}
                 redirectToTradingPage={redirectToTradingPage}
+                referenceCurrency={referenceCurrency}
               />
             </DepositTableBox>
           )}

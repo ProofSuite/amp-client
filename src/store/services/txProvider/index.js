@@ -46,27 +46,33 @@ export async function updatePairAllowances(
   quoteTokenAddress: string,
   txConfirmHandler: boolean => void,
 ) {
-  const signer = getSigner()
-  const networkID = signer.provider.network.chainId
-  const exchangeAddress = EXCHANGE_ADDRESS[networkID]
-  const txCount = await signer.provider.getTransactionCount(signer.address)
+  try {
+    const signer = getSigner()
+    const signerAddress = await signer.getAddress()
+    const networkID = signer.provider.network.chainId
+    const exchangeAddress = EXCHANGE_ADDRESS[networkID]
 
-  const baseToken = new Contract(baseTokenAddress, ERC20, signer)
-  const quoteToken = new Contract(quoteTokenAddress, ERC20, signer)
+    const txCount = await signer.provider.getTransactionCount(signerAddress)
 
-  const promise1 = baseToken.approve(exchangeAddress, ALLOWANCE_THRESHOLD, { nonce: txCount })
-  const promise2 = quoteToken.approve(exchangeAddress, ALLOWANCE_THRESHOLD, { nonce: txCount + 1 })
+    const baseToken = new Contract(baseTokenAddress, ERC20, signer)
+    const quoteToken = new Contract(quoteTokenAddress, ERC20, signer)
 
-  let [ tx1, tx2 ] = await Promise.all([promise1, promise2])
+    const promise1 = baseToken.approve(exchangeAddress, ALLOWANCE_THRESHOLD, { nonce: txCount })
+    const promise2 = quoteToken.approve(exchangeAddress, ALLOWANCE_THRESHOLD, { nonce: txCount + 1 })
 
-  let [ receipt1, receipt2 ] = await Promise.all([
-      signer.provider.waitForTransaction(tx1.hash),
-      signer.provider.waitForTransaction(tx2.hash)
-  ]);
+    let [ tx1, tx2 ] = await Promise.all([promise1, promise2])
 
-  (receipt1.status === 0 || receipt2.status === 0)
-    ? txConfirmHandler(false)
-    : txConfirmHandler(true)
+    let [ receipt1, receipt2 ] = await Promise.all([
+        signer.provider.waitForTransaction(tx1.hash),
+        signer.provider.waitForTransaction(tx2.hash)
+    ]);
 
+    (receipt1.status === 0 || receipt2.status === 0)
+      ? txConfirmHandler(false)
+      : txConfirmHandler(true)
+
+  } catch (e) {
+    console.log(e.message) 
+  }
 }
   

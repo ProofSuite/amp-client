@@ -68,7 +68,7 @@ export const tokenPairsUpdated = (pairs: TokenPairs) => {
         ...state.byPair,
         ...byPair
       },
-      sortedPairs: [ ...state.sortedPairs, ...sortedPairs ]
+      sortedPairs: [ ...new Set([ ...state.sortedPairs, ...sortedPairs ])]
     }
   }
 
@@ -109,7 +109,7 @@ export const tokenPairsReset = (pairs: TokenPairs) => {
     return {
       ...state,
       byPair,
-      sortedPairs
+      sortedPairs: [ ...new Set([ ...sortedPairs ])]
     }
   }
 

@@ -201,7 +201,7 @@ const Toolbar = ({
         item={state.currentChart || state.chartTypes[0]}
         handleChange={changeChartType}
         icon="series-configuration"
-        type="icon"
+        minimal
       />
     </ChartTypeMenu>
     <TimeSpanMenu>
@@ -210,12 +210,10 @@ const Toolbar = ({
         item={currentTimeSpan || state.timeSpans[0]}
         handleChange={changeTimeSpan}
         icon="series-add"
-        type="text"
       />
     </TimeSpanMenu>
 
     <DurationMenu duration={state.duration} currentDuration={currentDuration} changeDuration={changeDuration} />
-
     <TimeSpanMenu>
       <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
     </TimeSpanMenu>

@@ -3,9 +3,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { formatNumber } from 'accounting-js'
 
+import Help from '../../components/Help'
+
 import { 
   Button, 
   InputGroup, 
+  Position,
 } from '@blueprintjs/core';
 
 import { 
@@ -18,7 +21,7 @@ import {
   SmallText,
   BlueGlowingButton,
   FlexRow,
-  Box
+  Box,
 } from '../Common';
 
 type Props = {
@@ -76,7 +79,13 @@ const MarketsTableRenderer = (props: Props) => {
           <TableHeaderCell>Price</TableHeaderCell>
           <TableHeaderCell>Price ({currentReferenceCurrency})</TableHeaderCell>
           <TableHeaderCell>Volume</TableHeaderCell>
-          <TableHeaderCell>Orderbook size</TableHeaderCell>
+          <TableHeaderCell>
+            Orderbook size
+            <span> </span>
+            <Help position={Position.RIGHT}>
+              The total amount of bids and asks currently in the orderbook
+            </Help>
+          </TableHeaderCell>
           <TableHeaderCell>Change 24H</TableHeaderCell>
           <TableHeaderCell></TableHeaderCell>
         </TableHeader>
@@ -111,13 +120,11 @@ const MarketTableRow = (props: *) => {
 
   return pairs.map(({ pair, baseTokenSymbol, quoteTokenSymbol, baseTokenAddress, quoteTokenAddress, lastPrice, change, high, low, volume, orderbookSize }, index) => {
     return (
-      <Row key={index}>
+      <Row key={index} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)}>
         <Cell>
           <FlexRow alignItems="center">
-          <ColoredCryptoIcon size={32} name={baseTokenSymbol} />
-          <SmallText p={2} muted>
-            {pair}
-          </SmallText>
+            <ColoredCryptoIcon size={32} name={baseTokenSymbol} />
+            <SmallText p={2} muted>{pair}</SmallText>
           </FlexRow>
         </Cell>
         <Cell>
