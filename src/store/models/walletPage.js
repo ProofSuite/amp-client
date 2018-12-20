@@ -139,6 +139,17 @@ export function toggleAllowance(symbol: string): ThunkAction {
 
       if (isPending) throw new Error('Trading approval pending')
 
+
+      const lockTxSentHandler = () => {
+        dispatch(notifierActionCreators.addSuccessNotification({ message: `Locking ${symbol}. You will not be able to trade ${symbol} after the transaction is confirmed` }))
+        dispatch(actionCreators.updateAllowancePending(symbol))
+      }
+
+      const unlockTxSentHandler = () => {
+        dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${symbol}. You will be able to trade  ${symbol} after the transaction is confirmed.` }))
+        dispatch(actionCreators.updateAllowancePending(symbol))
+      }
+
       const approvalConfirmedHandler = (txConfirmed) => {
         txConfirmed
           ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Approval Successful. You can now start trading!` }))
@@ -152,14 +163,11 @@ export function toggleAllowance(symbol: string): ThunkAction {
       }
 
       if (isAllowed) {
-        txProvider.updateExchangeAllowance(tokenContractAddress, 0, approvalRemovedHandler)
-        dispatch(notifierActionCreators.addSuccessNotification({ message: `Locking ${symbol}. You will not be able to trade ${symbol} after the transaction is confirmed` }))
+        await txProvider.updateExchangeAllowance(tokenContractAddress, 0, approvalRemovedHandler, lockTxSentHandler)
       } else {
-        txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler)
-        dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${symbol}. You will be able to trade  ${symbol} after the transaction is confirmed.` }))
+        await txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler, unlockTxSentHandler)
       }
-
-      dispatch(actionCreators.updateAllowancePending(symbol))
+      
     } catch (e) {
       console.log(e)
       if (e.message === 'Trading approval pending') {
