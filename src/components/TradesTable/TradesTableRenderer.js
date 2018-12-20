@@ -2,8 +2,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { relativeDate } from '../../utils/helpers'
-import { Loading, Colors, Text, CenteredMessage } from '../Common';
-import { Icon, Button, Card, Tabs, Tab, Collapse } from '@blueprintjs/core';
+
+import { 
+  Loading, 
+  Colors, 
+  Text, 
+  CenteredMessage,
+  SmallText
+} from '../Common';
+
+import { 
+  Icon, 
+  Button, 
+  Card, 
+  Tabs, 
+  Tab, 
+  Collapse
+} from '@blueprintjs/core';
 
 import type { Trade } from '../../types/trades';
 import type { TokenPair } from '../../types/tokens';
@@ -65,12 +80,19 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
         {trades.map((trade, index) => (
           <Row color={trade.change === 'positive' ? Colors.BUY_MUTED : Colors.SELL_MUTED} key={index}>
             <Cell color={trade.change === 'positive' ? Colors.BUY : Colors.SELL}>
-              <Icon icon={trade.change === 'positive' ? 'chevron-up' : 'chevron-down'} iconSize={14}/>{trade.price}
+              <Icon icon={trade.change === 'positive' ? 'chevron-up' : 'chevron-down'} iconSize={14}/>
+              <SmallText color={trade.change === 'positive' ? Colors.BUY : Colors.SELL}>{trade.price}</SmallText>
             </Cell>
-            <Cell>{trade.amount}</Cell>
-            <Cell side={trade.side}>{trade.status}</Cell>
+            <Cell>
+              <SmallText muted>{trade.amount}</SmallText>
+            </Cell>
+            <Cell>
+              <SmallText muted>{trade.status}</SmallText>
+            </Cell>
             {/* {format(trade.time, 'DD/MM/YYYY HH:MM:SS Z ')} */}
-            <Cell cellName="time" muted>{relativeDate(trade.time)}</Cell>
+            <Cell cellName="time">
+              <SmallText muted>{relativeDate(trade.time)}</SmallText>
+            </Cell>
           </Row>
         ))}
       </ListBody>
@@ -97,10 +119,18 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
       <ListBody className="list">
         {trades.map((trade, index) => (
           <Row color={trade.status === 'EXECUTED' ? Colors.BUY_MUTED : Colors.SELL_MUTED} key={index}>
-            <Cell>{trade.price}</Cell>
-            <Cell>{trade.amount}</Cell>
-            <Cell>{trade.status}</Cell>
-            <Cell cellName="time" muted>{relativeDate(trade.time)}</Cell>
+            <Cell>
+              <SmallText muted>{trade.price}</SmallText>
+            </Cell>
+            <Cell>
+              <SmallText muted>{trade.amount}</SmallText>
+            </Cell>
+            <Cell>
+              <SmallText muted>{trade.status}</SmallText>
+            </Cell>
+            <Cell cellName="time">
+              <SmallText muted>{relativeDate(trade.time)}</SmallText>
+            </Cell>
           </Row>
         ))}
       </ListBody>
