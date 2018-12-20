@@ -24,7 +24,15 @@ export const SmallText = styled.span`
   ${space}
   ${width}
   font-size: ${Fonts.FONT_SIZE_SMALL}px !important;
-  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)};
+  color: ${props =>
+    props.color
+      ? props.color
+      : props.intent
+        ? Colors[props.intent]
+        : props.muted
+          ? Colors.TEXT_MUTED 
+          : Colors.TEXT
+  };
 `;
 
 export const SmallTextDiv = styled.div`
