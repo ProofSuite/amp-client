@@ -1,6 +1,6 @@
 // @flow
-import * as appActionCreators from '../actions/app'
 import * as notifierActionCreators from '../actions/app'
+import * as actionCreators from '../actions/orderForm'
 
 import { 
   getTokenPairsDomain, 
@@ -20,7 +20,6 @@ export default function getOrderFormSelector(state: State) {
   let tokenPairDomain = getTokenPairsDomain(state)
   let orderBookDomain = getOrderBookDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
-
   let currentPair = tokenPairDomain.getCurrentPair()
 
   let { 
@@ -48,6 +47,7 @@ export default function getOrderFormSelector(state: State) {
   } = quoteToken
 
   let pairIsAllowed = baseTokenIsAllowed && quoteTokenIsAllowed
+  let pairAllowanceIsPending = baseToken.allowancePending || quoteToken.allowancePending
 
   return {
     selectedOrder,
@@ -64,7 +64,8 @@ export default function getOrderFormSelector(state: State) {
     bidPrice,
     makeFee,
     takeFee,
-    pairIsAllowed
+    pairIsAllowed,
+    pairAllowanceIsPending
   }
 }
 
@@ -110,8 +111,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         makeFee,
         takeFee
       }
-
-      console.log(params)
     
       let pairMultiplier = utils.bigNumberify(10).pow(18 + baseTokenDecimals)
       let order = await signer.createRawOrder(params)
@@ -128,8 +127,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let minQuoteAmount = minOrderAmount(makeFee, takeFee)
       let formattedMinQuoteAmount = utils.formatUnits(minQuoteAmount, quoteTokenDecimals)
 
-      console.log(order)
-
       //In case the order is a sell, the fee is subtracted from the received amount of quote token so there is no requirement
       order.side === 'BUY'
         ? totalSellAmount = quoteAmount.add(fee)
@@ -137,13 +134,13 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
       if (quoteAmount.lt(minQuoteAmount)) {
         return dispatch(
-          appActionCreators.addErrorNotification({ message: `Order value should be higher than ${formattedMinQuoteAmount} ${quoteTokenSymbol}`})
+          notifierActionCreators.addErrorNotification({ message: `Order value should be higher than ${formattedMinQuoteAmount} ${quoteTokenSymbol}`})
         )
       }
   
       if (sellTokenBalance.lt(totalSellAmount)) {
         return dispatch(
-          appActionCreators.addErrorNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
+          notifierActionCreators.addErrorNotification({ message: `Insufficient ${sellTokenSymbol} balance` })
         )
       }
       
@@ -151,7 +148,7 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
     } catch (e) {
       console.log(e)
       let message = parseNewOrderError(e)
-      return dispatch(appActionCreators.addErrorNotification({ message }))
+      return dispatch(notifierActionCreators.addErrorNotification({ message }))
     }
   }
 }
@@ -164,6 +161,11 @@ export function unlockPair(baseTokenSymbol: string, quoteTokenSymbol: string): T
       const tokens = getTokenDomain(state).bySymbol()
       const baseTokenAddress = tokens[baseTokenSymbol].address
       const quoteTokenAddress = tokens[quoteTokenSymbol].address
+
+      const txSentHandler = () => {
+        dispatch(actionCreators.unlockPair(baseTokenSymbol, quoteTokenSymbol))
+        dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${baseTokenSymbol}/${quoteTokenSymbol} trading. Your transaction should be approved within a few minutes`}))
+      }
       
       const txConfirmHandler = (txConfirmed) => {
         txConfirmed
@@ -171,9 +173,7 @@ export function unlockPair(baseTokenSymbol: string, quoteTokenSymbol: string): T
           : dispatch(notifierActionCreators.addErrorNotification({ message: `Approval Failed. Please try again.` }))
       }
 
-      txProvider.updatePairAllowances(baseTokenAddress, quoteTokenAddress, txConfirmHandler)
-      dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${baseTokenSymbol}/${quoteTokenSymbol} trading. Your transaction should be approved within a few minutes`}))
-  
+      txProvider.updatePairAllowances(baseTokenAddress, quoteTokenAddress, txConfirmHandler, txSentHandler)
     } catch (e) {
       console.log(e)
       dispatch(notifierActionCreators.addErrorNotification({ message: e.message }))

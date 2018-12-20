@@ -65,4 +65,5 @@ const ColoredCryptoIcon = ({ name, color, size }) => {
   }
 }
 
+
 export default ColoredCryptoIcon

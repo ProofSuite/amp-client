@@ -155,8 +155,7 @@ class TradingPage extends React.PureComponent<Props, State> {
                 {...calloutOptions}
               />
               <TokenSearcher />
-              <OrderForm side="BUY" />
-              <OrderForm side="SELL" />
+              <OrderForm />
           </Grid>
         </SidePanel>
 
