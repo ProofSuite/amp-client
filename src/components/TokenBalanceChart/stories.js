@@ -20,7 +20,7 @@ const data = [
 storiesOf('TokenBalanceChart', module)
   .addDecorator(withKnobs)
   .add(
-    'Buy Orderform',
+    'TokenB Balance Chart',
     withInfo({ source: false })(() => (
       <Card className="bp3-dark">
         <TokenBalanceChart tokenBalances={data} />

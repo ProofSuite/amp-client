@@ -25,6 +25,7 @@ type Props = {
 }
 
 type State = {
+  side: 'BUY' | 'SELL',
   fraction: number,
   priceType: string,
   selectedTabId: string,
@@ -50,27 +51,25 @@ class OrderForm extends React.PureComponent<Props, State> {
     let price
     //TODO: not quite sure whether the suggested price should be equal to
     //the ask price, the bid price or somewhere in between
-    props.side === 'SELL'
-      ? price = this.props.bidPrice
-      : price = this.props.askPrice
-
     this.state = {
+      side: 'BUY',
       fraction: 0,
       isOpen: true,
       priceType: 'null',
       selectedTabId: 'limit',
-      price: formatNumber(price, { precision: 3 }),
-      stopPrice: formatNumber(price, { precision: 3 }),
+      price: formatNumber(this.props.bidPrice, { precision: 3 }),
+      stopPrice: formatNumber(this.props.bidPrice, { precision: 3 }),
       amount: '0.0',
       total: '0.0'
     }
   }
 
-  componentWillReceiveProps({ side, bidPrice, askPrice, selectedOrder }: *) {
+  componentWillReceiveProps({ bidPrice, askPrice, selectedOrder }: *) {
     if (selectedOrder === null || selectedOrder === this.props.selectedOrder) {
       return;
     }
 
+    const { side } = this.state
     const { price, total } = selectedOrder;
 
     if ((side === 'BUY' && price > bidPrice) || (side === 'SELL' && price < askPrice)) {
@@ -107,8 +106,7 @@ class OrderForm extends React.PureComponent<Props, State> {
   }
 
   handleSendOrder = () => {
-    let { amount, price } = this.state
-    let { side } = this.props
+    let { amount, price, side } = this.state
 
     amount = unformat(amount)
     price = unformat(price)
@@ -117,8 +115,8 @@ class OrderForm extends React.PureComponent<Props, State> {
   }
 
   handleUpdateAmountFraction = (fraction: number) => {
-    const { price } = this.state
-    const { side, quoteTokenBalance, baseTokenBalance } = this.props
+    const { side, price } = this.state
+    const { quoteTokenBalance, baseTokenBalance } = this.props
     let amount, total
 
     if (side === 'SELL') {
@@ -153,6 +151,10 @@ class OrderForm extends React.PureComponent<Props, State> {
       amount: formatNumber(amount, { precision: 3 }),
       price: price
     })
+  }
+
+  handleSideChange = (side: string) => {
+    this.setState({ side })
   }
 
   handleStopPriceChange = (stopPrice: string) => {
@@ -214,7 +216,8 @@ class OrderForm extends React.PureComponent<Props, State> {
   }
 
   handleChangeOrderType = (tabId: string) => {
-    const { askPrice, bidPrice, side } = this.props
+    const { side } = this.state
+    const { askPrice, bidPrice } = this.props
 
     this.setState({
       selectedTabId: tabId,
@@ -244,6 +247,7 @@ class OrderForm extends React.PureComponent<Props, State> {
   render() {
     const {
       state: { 
+        side,
         selectedTabId,
         fraction, 
         priceType, 
@@ -253,7 +257,6 @@ class OrderForm extends React.PureComponent<Props, State> {
         total
       },
       props: { 
-        side, 
         baseTokenSymbol, 
         loggedIn, 
         quoteTokenSymbol,
@@ -269,6 +272,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       handleChangeOrderType,
       handleSendOrder,
       handleUnlockPair,
+      handleSideChange,
       toggleCollapse,
     } = this
 
@@ -322,6 +326,7 @@ class OrderForm extends React.PureComponent<Props, State> {
         baseTokenDecimals={baseTokenDecimals}
         quoteTokenDecimals={quoteTokenDecimals}
         pairIsAllowed={pairIsAllowed}
+        handleSideChange={handleSideChange}
       />
     )
   }

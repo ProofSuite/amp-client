@@ -30,6 +30,7 @@ type Props = {
   baseTokenDecimals: number,
   quoteTokenDecimals: number,
   pairIsAllowed: boolean,
+  handleSideChange: string => void
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -56,13 +57,30 @@ const OrderFormRenderer = (props: Props) => {
     baseTokenDecimals,
     quoteTokenDecimals,
     pairIsAllowed,
-    handleUnlockPair
+    handleUnlockPair,
+    handleSideChange,
   } = props
 
   return (
     <Wrapper className="order-form">
       <OrderFormHeader>
-        <HeaderText text={`${side} ${baseTokenSymbol}`} />
+        {/* <HeaderText text={`${side} ${baseTokenSymbol}`} /> */}
+        <ButtonRow>
+          <Button
+            text="BUY"
+            minimal
+            onClick={() => handleSideChange('BUY')}
+            active={side === 'BUY'}
+            intent="success"
+          />
+          <Button
+            text="SELL"
+            minimal
+            onClick={() => handleSideChange('SELL')}
+            active={side === 'SELL'}
+            intent="danger"
+          />
+        </ButtonRow>
         <ButtonRow>
           <Button
             text="Limit"
