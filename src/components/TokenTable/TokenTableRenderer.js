@@ -87,9 +87,9 @@ const TokenTableRenderer = (props: Props) => {
       </RowSpaceBetween>
       <Table>
         <TableHeader>
-          <TableHeaderCell>Token Name</TableHeaderCell>
+          <TableHeaderCell style={{ width: '15%' }}>Token Name</TableHeaderCell>
           <TableHeaderCell>Balances</TableHeaderCell>
-          <TableHeaderCell>
+          <TableHeaderCell style={{ width: '15%' }}>
           Unlocked 
           <span> </span>
           <Help position={Position.RIGHT}>
@@ -137,7 +137,7 @@ const ETHRow = (props: Props) => {
 
   return (
     <Row key='ETH'>
-      <Cell>
+      <Cell style={{ width: '15%'}}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -148,7 +148,7 @@ const ETHRow = (props: Props) => {
           {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
         </SmallText>
       </Cell>
-      <Cell style={{ width: '5%'}}></Cell>
+      <Cell style={{ width: '15%'}}></Cell>
       <Cell style={{ width: '70%' }}>
         <FlexRow justifyContent="flex-end" p={1}>
             <ButtonWrapper>
@@ -200,7 +200,7 @@ const WETHRow = (props: Props) => {
 
   return (
     <Row key='WETH'>
-      <Cell onClick={() => redirectToTradingPage(symbol)}>
+      <Cell style={{ width: '15%'}} onClick={() => redirectToTradingPage(symbol)}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -211,7 +211,7 @@ const WETHRow = (props: Props) => {
           {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
         </SmallText>
       </Cell>
-      <Cell style={{ width: '5%'}} >
+      <Cell style={{ width: '15%'}} >
           <Switch inline checked={allowed} onClick={(event) => handleToggleAllowance(event, symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
         </Cell>
@@ -262,7 +262,7 @@ const QuoteTokenRows = (props: Props) => {
   return quoteTokensData.map(({ symbol, balance, allowed, allowancePending, value }, index) => {
     return (
       <Row key={index}>
-        <Cell onClick={() => redirectToTradingPage(symbol)}>
+        <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
           <TokenNameWrapper>
             <ColoredCryptoIcon size={32} name={symbol} />
             <SmallText muted>{symbol}</SmallText>
@@ -273,7 +273,7 @@ const QuoteTokenRows = (props: Props) => {
             {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
           </SmallText>
         </Cell>
-        <Cell style={{ width: '5%'}}>
+        <Cell style={{ width: '15%'}}>
           <Button
             disabled={!connected}
             intent={allowed ? 'primary' : 'danger'}
@@ -325,7 +325,7 @@ const BaseTokenRows = (props: Props) => {
   return baseTokensData.map(({ symbol, balance, allowed, allowancePending, value }, index) => {
     return (
       <Row key={index}>
-        <Cell onClick={() => redirectToTradingPage(symbol)}>
+        <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
           <TokenNameWrapper>
             <ColoredCryptoIcon size={32} name={symbol} />
             <SmallText muted>{symbol}</SmallText>
@@ -341,7 +341,7 @@ const BaseTokenRows = (props: Props) => {
             {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
           </SmallText>
         </Cell>
-        <Cell style={{ width: '5%'}}>
+        <Cell style={{ width: '15%'}}>
           <Switch inline checked={allowed} 
             onChange={(event) => handleToggleAllowance(event, symbol)} />
             {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
