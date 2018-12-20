@@ -4,16 +4,26 @@ import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import TokenBalanceChart from './TokenBalanceChart';
 
-const data = [{symbol: 'EOS', value: 400}, {symbol: 'WETH', value: 300},
-                  {symbol: 'ZRX', value: 300}, {symbol: 'ETH', value: 200}];
+import {
+  Card
+} from '@blueprintjs/core'
+
+const data = [
+  {symbol: 'EOS', balance: 100, value: 400, currency: '$' },
+  {symbol: 'WETH', balance: 100, value: 300, currency: '$' },
+  {symbol: 'ZRX', balance: 100, value: 300, currency: '$' },
+  {symbol: 'ETH', balance: 100, value: 200, currency: '$' },
+  {symbol: 'ETH', balance: 100, value: 200, currency: '$' },
+  {symbol: 'ETH', balance: 100, value: 200, currency: '$' }
+];
 
 storiesOf('TokenBalanceChart', module)
   .addDecorator(withKnobs)
   .add(
     'Buy Orderform',
     withInfo({ source: false })(() => (
-      <div className="bp3-dark">
+      <Card className="bp3-dark">
         <TokenBalanceChart tokenBalances={data} />
-      </div>
+      </Card>
     ))
   )
