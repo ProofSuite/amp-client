@@ -26,13 +26,17 @@ export async function updateAllowance(
 export async function updateExchangeAllowance(
   tokenAddress: string,
   balance: Object | number,
-  txConfirmHandler: boolean => void
+  txConfirmHandler: boolean => void,
+  txSentHandler: void => void
 ) {
   const signer = getSigner()
   const exchange = EXCHANGE_ADDRESS[signer.provider.network.chainId]
   const contract = new Contract(tokenAddress, ERC20, signer)
 
   const tx = await contract.approve(exchange, balance)
+
+  txSentHandler()
+
   const receipt = await signer.provider.waitForTransaction(tx.hash)
 
   receipt.status === 1
