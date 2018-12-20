@@ -23,6 +23,7 @@ import orderBookActionTypes from './actions/orderBook';
 import marketsTableActionTypes from './actions/marketsTable';
 import walletInfoActionTypes from './actions/walletInfo'
 import layoutActionTypes from './actions/layout'
+import orderFormActionTypes from './actions/orderForm'
 
 import * as accountBalancesEvents from './domains/accountBalances'
 import * as transferTokensFormEvents from './domains/transferTokensForm'
@@ -92,6 +93,8 @@ export const accountBalances = createReducer(action => {
       return accountBalancesEvents.allowancesPendingUpdated([ payload.symbol ])
     case marketsTableActionTypes.updateAllowancePending:
       return accountBalancesEvents.allowancesPendingUpdated([ payload.symbol ])
+    case orderFormActionTypes.unlockPair:
+      return accountBalancesEvents.allowancesPendingUpdated([ payload.baseTokenSymbol, payload.quoteTokenSymbol ])
     default:
       return accountBalancesEvents.initialized()
   }
