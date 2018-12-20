@@ -49,6 +49,7 @@ export async function updatePairAllowances(
   baseTokenAddress: string, 
   quoteTokenAddress: string,
   txConfirmHandler: boolean => void,
+  txSendHandler: void => void,
 ) {
   try {
     const signer = getSigner()
@@ -65,6 +66,8 @@ export async function updatePairAllowances(
     const promise2 = quoteToken.approve(exchangeAddress, ALLOWANCE_THRESHOLD, { nonce: txCount + 1 })
 
     let [ tx1, tx2 ] = await Promise.all([promise1, promise2])
+
+    txSendHandler()
 
     let [ receipt1, receipt2 ] = await Promise.all([
         signer.provider.waitForTransaction(tx1.hash),
