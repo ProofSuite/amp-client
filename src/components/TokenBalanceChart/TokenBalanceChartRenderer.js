@@ -38,6 +38,7 @@ const TokenBalanceChartRenderer = (props: Props) => {
       <H4>Your account is empty</H4>
     </EmptyChartNotification>
   )
+  let p = Math.floor(colors.length/data.length)
 
   return (
     <ResponsiveContainer height={300} width="100%">
@@ -55,7 +56,7 @@ const TokenBalanceChartRenderer = (props: Props) => {
           onMouseEnter={onPieEnter}
         >
           {
-          	data.map((entry, index) => <Cell fill={colors[index % colors.length]}/>)
+          	data.map((entry, index) => <Cell fill={colors[p * index]}/>)
           }
         </Pie>
       </PieChart>

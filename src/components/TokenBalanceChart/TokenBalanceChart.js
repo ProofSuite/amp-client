@@ -3,7 +3,7 @@ import TokenBalanceChartRenderer from './TokenBalanceChartRenderer'
 import { Sector } from 'recharts'
 import { Colors } from '../Common'
 
-const colors = ["#D1E1FF", "#CBD7FD", "#C5CEFA", "#BFC4F7", "#B9BBF4", "#B2B1F1", "#ABA8ED", "#A49FEA", "#9C97E6", "#958EE1", "#8D86DD", "#847ED8", "#7B76D3", "#726ECD", "#6867C7", "#5D60C0", "#515AB8", "#4454B0", "#344FA5", "#1F4B99"]
+const colors = ["#FFEEC5", "#FEE0BE", "#FBD3B7", "#F8C5B0", "#F5B8A9", "#F0ABA2", "#EB9E9C", "#E59196", "#DE8590", "#D7798A", "#CF6D84", "#C6627F", "#BC5779", "#B24C74", "#A6436F", "#9A3A6B", "#8D3367", "#7E2D63", "#6E285F", "#5C255C"]
 // const activeShapeColors = ["#2965CC", "#29A634", "#D99E0B", "#D13913", "#8F398F", "#00B3A4", "#DB2C6F", "#9BBF30", "#96622D", "#7157D9"]
 
 type State = {

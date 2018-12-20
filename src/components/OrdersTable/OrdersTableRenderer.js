@@ -1,8 +1,24 @@
 //@flow
 import React from 'react'
 import styled from 'styled-components'
-import { Card, Tag, Tab, Tabs, Collapse, Button, Icon } from '@blueprintjs/core'
-import { Colors, Loading, CenteredMessage } from '../Common'
+
+import { 
+  Card, 
+  Tag, 
+  Tab,
+  Tabs, 
+  Collapse, 
+  Button, 
+  Icon
+} from '@blueprintjs/core'
+
+import { 
+  Colors, 
+  Loading, 
+  CenteredMessage,
+  SmallText,
+} from '../Common'
+
 import { relativeDate } from '../../utils/helpers'
 import { Order } from '../../types/orders'
 
@@ -75,27 +91,27 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
   return (
     <Row>
       <Cell className="pair" muted>
-        {order.pair}
+        <SmallText muted>{order.pair}</SmallText>
       </Cell>
       <Cell className="amount" muted>
-        {order.filled}/{order.amount}
+        <SmallText muted>{order.filled}/{order.amount}</SmallText>
       </Cell>
       <Cell className="price" muted>
-        {order.price} ({order.type})
+        <SmallText muted>{order.price} ({order.type})</SmallText>
       </Cell>
       <Cell className="status" muted>
         <StatusTag status={order.status} />
       </Cell>
       <Cell className="side" side={order.side} muted>
-        {order.side}
+        <SmallText color={order.side === 'BUY' ? Colors.BUY : Colors.SELL}>{order.side}</SmallText>
       </Cell>
       <Cell className="time" muted>
-        {relativeDate(order.time)}
+        <SmallText muted>{relativeDate(order.time)}</SmallText>
         {/* {format(order.time, 'DD/MM/YYYY HH:MM:SS')} */}
       </Cell>
       <Cell className="cancel" muted>
         {order.cancelleable && (
-          <Button intent="danger" minimal onClick={() => cancelOrder(order.hash)} >
+          <Button intent="danger" minimal onClick={() => cancelOrder(order.hash)}>
             <Icon icon="cross" intent="danger" />&nbsp;&nbsp;Cancel
           </Button>
         )}
@@ -114,7 +130,11 @@ const StatusTag = ({ status }) => {
   }
 
   const intent = statuses[status]
-  return <Tag minimal large interactive intent={intent}>{status}</Tag>
+  return (
+    <Tag minimal large interactive intent={intent}>
+      <SmallText>{status}</SmallText>
+    </Tag>
+  )
 }
 
 const OrdersTableHeader = styled.div`

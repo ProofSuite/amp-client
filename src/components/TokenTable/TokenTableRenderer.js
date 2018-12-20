@@ -195,7 +195,6 @@ const WETHRow = (props: Props) => {
 
 
   if (!WETHTokenData) return null
-
   const { symbol, balance, allowed, allowancePending, value } = WETHTokenData
 
   return (
@@ -204,6 +203,11 @@ const WETHRow = (props: Props) => {
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
+          <Box px={2}>
+            <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
+              <Icon icon="tick-circle" iconSize={14} intent="primary" />
+            </Tooltip>
+          </Box>
         </TokenNameWrapper>
       </Cell>
       <Cell onClick={() => redirectToTradingPage(symbol)}>
