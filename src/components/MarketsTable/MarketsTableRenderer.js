@@ -21,7 +21,6 @@ import {
   SmallText,
   BlueGlowingButton,
   FlexRow,
-  Box,
 } from '../Common';
 
 type Props = {
