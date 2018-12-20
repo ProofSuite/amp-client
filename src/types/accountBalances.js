@@ -11,7 +11,7 @@ export type AccountBalancesState = { +[string]: AccountBalanceState };
 export type AccountBalance = {
   symbol: string,
   balance: string,
-  allowance: string,
+  allowance?: string,
 };
 
 export type AccountAllowance = {

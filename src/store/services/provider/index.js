@@ -14,6 +14,19 @@ export const createConnection = () => {
     }
 }
 
+export async function detectContract(address: string) {
+  try {
+    const contract = new Contract(address, ERC20, window.provider)
+  
+    let decimals = await contract.decimals()
+    let symbol = await contract.symbol()
+
+    return { decimals, symbol }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export async function queryTokenBalances(address: string, tokens: Array<Token>) {
   const balancePromises = tokens.map(token => {
     const contract = new Contract(token.address, ERC20, window.provider)

@@ -1,48 +1,39 @@
 // @flow
 import { push } from 'connected-react-router'
 
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain, getTransferTokensFormDomain, getPairsDomain } from '../domains'
+import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
-import * as accountActionTypes from '../actions/account'
-import { quoteTokens, quoteTokenSymbols } from '../../config/quotes'
+import { quoteTokens } from '../../config/quotes'
 import { getCurrentBlock } from '../services/wallet'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import { parseQueryAccountDataError } from '../../config/errors'
 
-import type { Token } from '../../types/common'
 import type { State, ThunkAction } from '../../types'
 
 export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let accountDomain = getAccountDomain(state)
   let tokenDomain = getTokenDomain(state)
-  // let tokenPairsDomain = getTokenPairsDomain(state)
-  let transferTokensFormDomain = getTransferTokensFormDomain(state)
 
-  // ETH is not a token so we add it to the list to display in the deposit table
-  let ETH = { symbol: 'ETH', address: '0x0' }
   let tokens = tokenDomain.tokens()
-  // let tokenPairs = pairsDomain.getPairsByCode()
-  let quoteTokens = quoteTokenSymbols
-  let baseTokens = tokenDomain.symbols().filter(symbol => quoteTokens.indexOf(symbol) !== -1)
-  let tokenData = accountBalancesDomain.getBalancesAndAllowances([ ETH ].concat(tokens))
+  let quoteTokens = tokenDomain.quoteTokens()
+  let baseTokens = tokenDomain.baseTokens()
+  let currency = accountDomain.referenceCurrency()
+  let tokenData = accountBalancesDomain.getBalancesAndAllowances(tokens, currency)
 
   return {
-    etherBalance: accountBalancesDomain.formattedEtherBalance(),
     balancesLoading: accountBalancesDomain.loading(),
     WETHBalance: accountBalancesDomain.tokenBalance('WETH'),
     WETHAllowance: accountBalancesDomain.tokenAllowance('WETH'),
     tokenData: tokenData,
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,
-    accountAddress: accountDomain.address(),
     authenticated: accountDomain.authenticated(),
     currentBlock: accountDomain.currentBlock(),
     showHelpModal: accountDomain.showHelpModal(),
     connected: true,
-    gas: transferTokensFormDomain.getGas(),
-    gasPrice: transferTokensFormDomain.getGasPrice()
+    referenceCurrency: currency.symbol
   }
 }
 
@@ -55,21 +46,33 @@ export function queryAccountData(): ThunkAction {
     let allowances = []
 
     try {
-      let tokens = getTokenDomain(state).tokens()
-      let quotes = quoteTokens
-
-      tokens = quotes.concat(tokens).filter((token: Token) => token.symbol !== 'ETH')
-      if (!accountAddress) throw new Error('Account address is not set')
-
       const currentBlock = await getCurrentBlock()
       if (!currentBlock) throw new Error('')
-      dispatch(accountActionTypes.updateCurrentBlock(currentBlock))
+
+      let tokens = await api.getTokens()
+      tokens.push({ symbol: 'ETH', address: '0x0'})
 
       let pairs = await api.fetchPairs()
-      dispatch(actionCreators.updateTokenPairs(pairs))
-      
       let exchangeAddress = await api.getExchangeAddress()
-      dispatch(actionCreators.updateExchangeAddress(exchangeAddress))
+
+      let tokenSymbols = tokens.map(token => token.symbol)
+      let currencySymbols = ['USD', 'EUR', 'JPY']
+      let exchangeRates = await api.fetchExchangeRates(tokenSymbols, currencySymbols)
+
+      tokens = tokens.map(token => {
+        return {
+          ...token,
+          USDRate: exchangeRates[token.symbol] ? exchangeRates[token.symbol].USD : 0,
+          EURRate: exchangeRates[token.symbol] ? exchangeRates[token.symbol].EUR : 0,
+          JPYRate: exchangeRates[token.symbol] ? exchangeRates[token.symbol].JPY : 0,
+        }
+      })
+
+      dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress))
+
+
+      //we remove the ETH 'token' because the process to obtain balances for ETH and others tokens is different
+      tokens = tokens.filter(token => token.symbol !== 'ETH')
 
       let etherBalance = await provider.queryEtherBalance(accountAddress)
       balances.push(etherBalance)
@@ -106,8 +109,19 @@ export function queryAccountData(): ThunkAction {
 
 export function redirectToTradingPage(symbol: string): ThunkAction {
   return async (dispatch, getState) => {
-    let defaultQuoteToken = quoteTokens[0]
-    let pair = `${symbol}/${defaultQuoteToken.symbol}`
+    let quoteTokenSymbols = quoteTokens.map(token => token.symbol)
+    let quoteTokenIndex = quoteTokenSymbols.indexOf(symbol)
+    let baseTokenSymbol, quoteTokenSymbol
+
+    if (quoteTokenIndex === 0) {
+      quoteTokenSymbol = quoteTokens[0].symbol
+      baseTokenSymbol = quoteTokens[1].symbol
+    } else {
+      quoteTokenSymbol = quoteTokens[0].symbol
+      baseTokenSymbol = symbol      
+    }
+
+    let pair = `${baseTokenSymbol}/${quoteTokenSymbol}`
 
     dispatch(actionCreators.updateCurrentPair(pair))
     dispatch(push('/trade'))

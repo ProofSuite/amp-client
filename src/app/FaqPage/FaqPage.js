@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Divider } from "@blueprintjs/core";
-import { Box, DividerBox } from "../../components/Common"
+import { Box } from "../../components/Common"
 import FaqItem from './FaqItem';
 
 class FaqPage extends React.PureComponent {
@@ -22,7 +21,7 @@ class FaqPage extends React.PureComponent {
             hold any funds and have no ability to do so. With AMP, you can trade any ERC20 Ethereum token whether they
             represent native Ethereum tokens or are tethered tokens representing other cryptocurrencies or fiat currencies.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="Are there fees ?"
             match={match}
@@ -32,7 +31,7 @@ class FaqPage extends React.PureComponent {
             the ETH/USDC pair, each trade will cost 0.5 USDC when completely matched. The current fees for each quote token at the time
             of this writing are 0.5 USDC (for USDC pairs), 0.5 DAI (for DAI pairs) and 0.004 WETH (for WETH pairs).
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="How is AMP different from an exchange like Binance or Coinbase ?"
             match={match}
@@ -40,7 +39,7 @@ class FaqPage extends React.PureComponent {
             Unlike custodial and centralized exchanges, AMP does not hold any funds nor secret keys. You can deposit and withdraw
             your funds immediately and your account can not be compromised by a disgruntled employee or a database hack.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="Will you be adding more features to AMP?"
             match={match}
@@ -55,7 +54,7 @@ class FaqPage extends React.PureComponent {
             </ul>
             Any features you think we should add ? Let us know! support@proofsuite.com
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="How do I setup an AMP account?"
             match={match}
@@ -76,7 +75,7 @@ class FaqPage extends React.PureComponent {
               <li>- To start trading a token pair, you need to unlock both tokens on the wallet page. Click the switch on the corresponding token row on the wallet page</li>
             </ul>
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="Do i need a pre-existing ethereum wallet to use AMP ?"
             match={match}
@@ -84,7 +83,7 @@ class FaqPage extends React.PureComponent {
             No. You can click the "Create new wallet" option on the login page. However we recommend downloading Metamask for the
             most secure trading experience.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="What is WETH and why do i need to use it ?"
             match={match}
@@ -95,31 +94,31 @@ class FaqPage extends React.PureComponent {
             Using WETH allows decentralized applications such as the AMP decentralized exchanges to offer better functionality and a better user experience.
             You can convert your WETH back to ether at any time. You can read more about WETH here.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="How can i cancel an order ?"
             match={match}
           >
             If your order has not been matched yet, you can cancel your order by clicking the cancel button on the Orders table on the trading page.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="Do I need PRFT tokens to pay network fees ?"
             match={match}
           >
             No, contrary to a some other decentralized exchange protocols, you do not need PRFT tokens or any special token to trade on AMP.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           </FirstColumn>
           <SecondColumn>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="How do i contact Proofsuite ?"
             match={match}
           >
             Write us anytime: support@proofsuite.com
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="Is AMP fully decentralized ?"
             match={match}
@@ -127,7 +126,7 @@ class FaqPage extends React.PureComponent {
             AMP is a hybrid decentralized exchange. We maintain the orderbook and match orders with each other. Trades are then settled on the Ethereum chain.
             This model allows up to provide a good user experience along with the benefits of centralized exchanges.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="Can you explain how the PRFT token works ?"
             match={match}
@@ -137,7 +136,7 @@ class FaqPage extends React.PureComponent {
             soon. Proofsuite currently owns 90% of the Proof tokens and thus receives a large part of the trading fees that is 
             mostly used for paying the Exchange gas fees. 
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="What is the 'Unlocked' column section on the wallet page? Why do i need to unlock tokens ?"
             match={match}
@@ -146,7 +145,7 @@ class FaqPage extends React.PureComponent {
             trade from your wallet. In order to trade a token pair, you must unlock both tokens for that token pair. For example, if you are trading the MKR/USDC pair you will need to unlock
             trading for both the MKR token and the USDC token.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="Do i have to pay gas fees to cancel an order like on other decentralized exchanges ?"
             match={match}
@@ -154,7 +153,7 @@ class FaqPage extends React.PureComponent {
             No. Contrary to most decentralized exchanges, making and canceling orders on the Proof decentralized exchange is free. You only pay the trade fee
             if the order is successfully settled on the Ethereum chain.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="I sent funds to the wrong address."
             match={match}
@@ -162,7 +161,7 @@ class FaqPage extends React.PureComponent {
             Unfortunately, blockchain transactions are irreversible, so if you accidentally send funds to the wrong address, 
             there's nothing we, or anyone else, can do to help you.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="How long will it take for my order to fill ?"
             match={match}
@@ -175,7 +174,7 @@ class FaqPage extends React.PureComponent {
               <li>3) An order success message: Your order was confirmed and settled on the Ethereum chain and you have receive your tokens</li><br/>
             </ul>
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="How does AMP secure my funds ?"
             match={match}
@@ -191,7 +190,7 @@ class FaqPage extends React.PureComponent {
               <li> - All AMP source code can be read at https://github.com/Proofsuite </li>
             </ul>
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="I forgot which address I used to login on AMP"
             match={match}
@@ -199,7 +198,7 @@ class FaqPage extends React.PureComponent {
             In case your wallet was stored in the browser storage, you can access it by using the "Saved wallet" login method after clicking "Wallet" on the login page.
             Otherwise, unfortunately, there's nothing we can do to help you.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="What is a limit order ?"
             match={match}
@@ -207,7 +206,7 @@ class FaqPage extends React.PureComponent {
             A limit order is an order placed to sell or buy a certain amount of tokens at a certain price or better. A limit order is not a market order, and thus may not 
             be executed if the price you've set cannot be met. The order will stay in the orderbook until it is completely filled or canceled.
           </FaqItem>
-          <DividerBox p={2} />
+          <Box p={2} />
           <FaqItem
             question="How can I get involved ?"
             match={match}

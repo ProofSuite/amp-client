@@ -1,27 +1,23 @@
 //@flow
 import { connect } from 'react-redux';
 import layoutSelector, { createProvider } from '../../store/models/layout';
+import { updateReferenceCurrency } from '../../store/actions/layout'
 
 import type { State } from '../../types'
-import type { Props as LayoutProps } from './Layout'
 
-export function mapStateToProps(state: State, props: Object): LayoutProps {
-  const selector = layoutSelector(state);
+export function mapStateToProps(state: State, props: Object) {
+  const selectorData = layoutSelector(state);
 
   return {
-    ETHBalance: selector.ETHBalance,
-    WETHBalance: selector.WETHBalance,
-    WETHAllowance: selector.WETHAllowance,
-    authenticated: selector.authenticated,
-    address: selector.address,
-    accountLoading: selector.accountLoading,
-    locale: 'TODO',
-    messages: 'TODO'
+    ...selectorData,
+    locale: 'en',
+    messages: 'TODO',
   };
 }
 
 const mapDispatchToProps = {
-  createProvider
+  createProvider,
+  updateReferenceCurrency
 }
 
 export default connect(

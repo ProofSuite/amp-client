@@ -3,68 +3,58 @@ import React from 'react'
 import styled from 'styled-components'
 import { Card } from '@blueprintjs/core'
 import CenteredSpinner from '../../components/Common/CenteredSpinner'
-import DepositTable from '../../components/DepositTable'
+import TokenTable from '../../components/TokenTable'
 import WalletInfo from '../../components/WalletInfo'
 import GetStartedModal from '../../components/GetStartedModal'
 
 import type { TokenData } from '../../types/tokens'
 
 type Props = {
-  gas: number,
-  gasPrice: number,
-  etherBalance: string,
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
   quoteTokens: Array<string>,
   connected: boolean,
-  accountAddress: string,
   toggleAllowance: string => void,
   redirectToTradingPage: string => void,
   isHelpModalOpen: boolean,
   closeHelpModal: void => void,
   balancesLoading: boolean,
+  referenceCurrency: string,
 }
 
 const WalletPageRenderer = (props: Props) => {
   const {
-    gas,
-    gasPrice,
-    etherBalance,
     tokenData,
     baseTokens,
     quoteTokens,
     connected,
-    accountAddress,
     toggleAllowance,
     redirectToTradingPage,
     isHelpModalOpen,
     closeHelpModal,
-    balancesLoading
+    balancesLoading,
+    referenceCurrency
   } = props
 
   return (
     <WalletPageBox>
       <RowWrapper>
         <WalletInfoBox>
-          <WalletInfo
-            accountAddress={accountAddress}
-            etherBalance={etherBalance}
-            gasPrice={gasPrice}
-            gas={gas}
-          />
+          <WalletInfo/>
         </WalletInfoBox>
         <WalletPageContentBox>
           {balancesLoading ? (
             <CenteredSpinner />
           ) : (
             <DepositTableBox>
-              <DepositTable
+              <TokenTable
                 connected={connected}
                 tokenData={tokenData}
                 baseTokens={baseTokens}
                 quoteTokens={quoteTokens}
                 toggleAllowance={toggleAllowance}
                 redirectToTradingPage={redirectToTradingPage}
+                referenceCurrency={referenceCurrency}
               />
             </DepositTableBox>
           )}

@@ -32,6 +32,12 @@ export const parseQueryAccountDataError = (error: Error) => {
   return 'Could not connect to Ethereum network'
 }
 
+export const parseQueryMarketDataError = (error: Error) => {
+  let errorMessage = error.message
+
+  return errorMessage
+}
+
 
 export const parseTransferEtherError = (error: Error) => {
   let errorMessage = error.message

@@ -5,7 +5,6 @@ import { Colors } from '../Common'
 function Help(props) {
   const {
     position,
-    label,
     disabled,
     children,
   } = props;

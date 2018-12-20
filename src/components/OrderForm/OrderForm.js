@@ -66,7 +66,7 @@ class OrderForm extends React.PureComponent<Props, State> {
     }
   }
 
-  componentWillReceiveProps({ side, bidPrice, askPrice, selectedOrder }) {
+  componentWillReceiveProps({ side, bidPrice, askPrice, selectedOrder }: *) {
     if (selectedOrder === null || selectedOrder === this.props.selectedOrder) {
       return;
     }
@@ -77,7 +77,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       this.setState({
         price: price,
         amount: total,
-        total: price * total,
+        total: (price * Number(total)).toString(),
       });
     }
   }

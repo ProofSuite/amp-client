@@ -29,7 +29,7 @@ type Props = {
   convertTxHash: string,
   convertTxReceipt: TxReceipt,
   transactionStatus: string,
-  reset: boolean,
+  reset: string => void,
 };
 
 const ConvertTokensFormRenderer = (props: Props) => {
@@ -306,8 +306,4 @@ const ConfirmIconBox = styled.div`
   margin-bottom: 20px;
 `;
 
-
-
 export default ConvertTokensFormRenderer;
-
-

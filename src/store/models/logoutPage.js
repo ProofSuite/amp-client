@@ -1,6 +1,5 @@
 // @flow
 import * as actionCreators from '../actions/logoutPage';
-import * as accountActionCreators from '../actions/account';
 import { getAccountDomain } from '../domains';
 import type { State, ThunkAction } from '../../types';
 
@@ -15,8 +14,6 @@ export function logout(): ThunkAction {
   return async (dispatch, getState, { mixpanel }) => {
     mixpanel.track('logout');
 
-    dispatch(accountActionCreators.updateCurrentBlock(''));
-    dispatch(accountActionCreators.updateCurrentProvider(''));
     dispatch(actionCreators.logout());
   };
 }

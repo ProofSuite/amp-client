@@ -17,7 +17,7 @@ class StandardSelect extends Component {
   }
 
   render() {
-    const { items, item, icon, handleChange } = this.props;
+    const { items, item, icon, handleChange, minimal } = this.props;
     return (
       <Select
         items={items}
@@ -27,7 +27,7 @@ class StandardSelect extends Component {
         onItemSelect={handleChange}
         popoverProps={{ minimal: true }}
       >
-        <Button icon={item.icon ? item.icon : icon} text={item.label} righticonname="double-caret-vertical" />
+        <Button icon={item.icon ? item.icon : icon} text={!minimal && item.name} righticonname="double-caret-vertical" />
       </Select>
     );
   }

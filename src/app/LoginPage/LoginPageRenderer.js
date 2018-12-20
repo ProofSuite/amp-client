@@ -1,12 +1,11 @@
 import React from 'react'
 import { defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Callout, Card, Intent, Spinner, Tag, Button } from '@blueprintjs/core'
+import { Callout, Spinner, Button } from '@blueprintjs/core'
 import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
-import { Centered, Divider, LargeText, LinkText, Colors, Box, Flex, Indent } from '../../components/Common'
+import { Centered, Divider, LargeText, LinkText, Colors, Flex, Indent } from '../../components/Common'
 import type { CreateWalletParams } from '../../types/createWallet'
-import backgroundImage  from './video-bg.png'
 
 type Props = {
   view: string,
@@ -154,11 +153,6 @@ const WidgetWrapper = styled.div`
 
 const Announcement = styled.section``;
 
-const Heading = styled.h4`
-  margin-top: 10px;
-  margin-bottom: 10px;
-`;
-
 const Reminder = styled.div``;
 
 const LoginMethods = styled.div`
@@ -184,25 +178,6 @@ const AnnouncementMessages = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
 `;
-
-const LoginCard = styled(Card).attrs({
-  interactive: true,
-})`
-  margin: 10px;
-  height: 11.5em;
-  width: 11.5em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MetamaskStatusTag = styled(Tag).attrs({
-  intent: Intent.SUCCESS,
-  interactive: true,
-  minimal: true,
-  textalign: 'center',
-})``;
 
 const messages = defineMessages({
   announcement: {
@@ -259,9 +234,3 @@ const messages = defineMessages({
     defaultMessage: 'Create a new wallet',
   },
 });
-
-const metamaskStatuses = {
-  undefined: 'Not found',
-  locked: 'Locked',
-  unlocked: 'Connected',
-};

@@ -1,11 +1,19 @@
 // @flow
 import { ENGINE_HTTP_URL } from '../../../config/urls'
-import { parseTokenPairData, parseOrders, parseTrades, parseOrderBookData } from '../../../utils/parsers'
+
+import { parseToken,
+  parseTokens, 
+  parseTokenPairData, 
+  parseOrders, 
+  parseTrades, 
+  parseOrderBookData 
+} from '../../../utils/parsers'
+
 import fetch from 'isomorphic-fetch'
 
 import type { Orders } from '../../../types/orders'
 import type { Trades } from '../../../types/trades'
-import type { TokenPair } from '../../../types/tokens'
+import type { TokenPair, Tokens } from '../../../types/tokens'
 
 const request = (endpoint, options) => {
   return fetch(`${ENGINE_HTTP_URL}${endpoint}`, {
@@ -17,6 +25,23 @@ const request = (endpoint, options) => {
     mode: 'cors',
     ...options
   })
+}
+
+export const createPairs = async (tokenAddress: string) => {
+  console.log(tokenAddress)
+
+  const response = await request(`/pairs/create`, {
+    body: JSON.stringify({ address: tokenAddress }),
+    method: 'POST'
+  })
+
+  if (response.status === 400) {
+    const { error } = await response.json()
+    throw new Error(error)
+  }
+
+  const { data } = await response.json()
+  return data
 }
 
 export const fetchInfo = async () => {
@@ -42,7 +67,7 @@ export const fetchFees = async () => {
 }
 
 export const fetchTokens = async () => {
-  const response = await request(`/tokens`)
+  const response = await request(`/tokens?listed=true`)
 
   if (response.status !== 200) {
     throw new Error('Error')
@@ -218,7 +243,6 @@ export const fetchRawOrderBook = async (baseToken: string, quoteToken: string) =
 export const fetchTokenPairData = async () => {
   const response = await request('/pairs/data')
 
-
   if (response.status === 400) {
     const { error } = await response.json()
     throw new Error(error)
@@ -248,6 +272,24 @@ export const createAccount = async (address: string) => {
   return data
 }
 
+
+export const getToken = async(tokenAddress: string) => {
+  let tokens = await fetchToken(tokenAddress)
+  let parsedToken
+
+  if (tokens) parsedToken = parseToken(tokens)
+  
+  return parsedToken
+}
+
+export const getTokens = async() => {
+  let tokens = await fetchTokens()
+  let parsedTokens = []
+
+  if (tokens) parsedTokens = parseTokens(tokens)
+
+  return parsedTokens
+}
 
 export const getOrders = async (userAddress: string, pairs: Object): Orders => {
   let orders = await fetchOrders(userAddress)

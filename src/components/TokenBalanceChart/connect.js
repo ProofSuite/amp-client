@@ -7,9 +7,9 @@ import type { State } from '../../types'
 
 
 export function mapStateToProps(state: State): TokenBalanceChartProps {
-  const { tokenBalances, balancesLoading } = tokenBalanceChartSelector(state)
+  const selector = tokenBalanceChartSelector(state)
 
-  return { tokenBalances, balancesLoading }
+  return { ...selector }
 }
 
 export default connect(

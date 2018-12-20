@@ -2,7 +2,6 @@
 import React from 'react'
 import { Icon, Tooltip, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
 import {
-  Box,
   Colors,
   SmallText,
   Centered,
@@ -10,9 +9,6 @@ import {
   OverlaySpinner,
   ColoredCryptoIcon,
   CryptoIcon,
-  ColumnEnd,
-  RowStart,
-  ColumnStart,
   SmallTextDiv
 } from '../Common'
 import styled from 'styled-components'
@@ -280,7 +276,7 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
   return (
     <SelectedPairCard>
       <Row>
-        <ColoredCryptoIcon size={90} name={base} />
+        <ColoredCryptoIcon size={75} name={base} />
         <TokenPair>
           <h2>{pair}</h2>
           <div><b>{base}</b> Balance: {baseTokenBalance || 'N.A'}</div>

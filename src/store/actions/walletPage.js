@@ -4,13 +4,13 @@ import type {
   UpdateAccountAllowanceAction,
   UpdateAccountBalancesAction,
   UpdateAccountBalanceAction,
-  UpdateTokenPairsAction,
   UpdateCurrentPairAction,
-  UpdateExchangeAddressAction
+  UpdateAllowancePendingAction,
+  UpdateWalletPageDataAction,
 } from '../../types/walletPage';
 
 import type { AccountAllowances, AccountBalances, AccountBalance, AccountAllowance } from '../../types/accountBalances';
-import type { TokenPairs } from '../../types/tokens'
+import type { TokenPairs, Tokens, TokenRates } from '../../types/tokens'
 
 const actionTypes = {
   updateBalance: 'walletPage/UPDATE_BALANCE',
@@ -19,17 +19,16 @@ const actionTypes = {
   updateAllowancePending: 'walletPage/UPDATE_ALLOWANCE_PENDING',
   updateAllowances: 'walletPage/UPDATE_ALLOWANCES',
   updateCurrentPair: 'walletPage/UPDATE_CURRENT_PAIR',
-  updateTokenPairs: 'walletPage/UPDATE_TOKEN_PAIRS',
   updateShowHelpModal: 'walletPage/UPDATE_SHOW_HELP_MODAL',
-  updateExchangeAddress: 'walletPage/UPDATE_EXCHANGE_ADDRESS'
+  updateWalletPageData: 'walletPage/UPDATE_WALLET_PAGE_DATA'
 };
 
-export function updateTokenPairs(pairs: TokenPairs): UpdateTokenPairsAction {
+export function updateWalletPageData(currentBlock: number, tokens: Tokens, pairs: TokenPairs, exchangeAddress: string): UpdateWalletPageDataAction {
   return {
-    type: actionTypes.updateTokenPairs,
-    payload: { pairs }
+    type: actionTypes.updateWalletPageData,
+    payload: { currentBlock, tokens, pairs, exchangeAddress }
   }
-} 
+}
 
 export function updateBalances(balances: AccountBalances): UpdateAccountBalancesAction {
   return {
@@ -71,13 +70,6 @@ export function updateCurrentPair(pair: string): UpdateCurrentPairAction {
     type: actionTypes.updateCurrentPair,
     payload: { pair },
   };
-}
-
-export function updateExchangeAddress(exchangeAddress: string): UpdateExchangeAddressAction {
-  return {
-    type: actionTypes.updateExchangeAddress,
-    payload: { exchangeAddress }
-  }
 }
 
 export function closeHelpModal() {

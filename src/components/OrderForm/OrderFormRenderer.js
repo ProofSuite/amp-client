@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Position, Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
-import { Flex, Box, HeaderText, MutedText, RedGlowingButton, GreenGlowingButton } from '../Common'
+import { Flex, HeaderText, MutedText, RedGlowingButton, GreenGlowingButton } from '../Common'
 import styled from 'styled-components'
 import Help from '../../components/Help'
 import { utils } from 'ethers'
@@ -29,7 +29,7 @@ type Props = {
   takeFee: string,
   baseTokenDecimals: number,
   quoteTokenDecimals: number,
-  pairIsAllowed: string,
+  pairIsAllowed: boolean,
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -73,6 +73,7 @@ const OrderFormRenderer = (props: Props) => {
           />
           <Button
             text="Market"
+            disabled
             minimal
             onClick={() => handleChangeOrderType('market')}
             active={selectedTabId === 'market'}
