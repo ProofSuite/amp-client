@@ -2,7 +2,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { formatNumber } from 'accounting-js'
-import { Loading, Colors } from '../Common';
+import { 
+  Loading, 
+  SmallText,
+  Colors
+} from '../Common';
+
 import { ResizableBox } from 'react-resizable'
 
 type BidOrAsk = {
@@ -163,7 +168,7 @@ const BuyRowBackground = styled.span`
   z-index: 1;
 `;
 
-const Cell = styled.span`
+const Cell = styled(SmallText)`
   min-width: 35px;
   width: 20%;
 `;
