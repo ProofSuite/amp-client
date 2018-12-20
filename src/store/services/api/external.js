@@ -20,8 +20,6 @@ export const fetchExchangeRates = async (baseCurrencies, quoteCurrencies) => {
 
     const response = await request(`/data/pricemulti?fsyms=${baseCurrencies}&tsyms=${quoteCurrencies}`)
 
-    console.log(response)
-
     if (response.status !== 200) {
         throw new Error('error')
     }
