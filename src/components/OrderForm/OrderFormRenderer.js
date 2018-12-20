@@ -1,7 +1,29 @@
 // @flow
 import React from 'react'
-import { Position, Tabs, Tab, Card, Button, InputGroup, Label, Colors, Collapse } from '@blueprintjs/core'
-import { Flex, HeaderText, MutedText, RedGlowingButton, GreenGlowingButton } from '../Common'
+
+import { 
+  Position, 
+  Tabs, 
+  Tab, 
+  Card, 
+  Button, 
+  InputGroup, 
+  Label, 
+  Colors, 
+  Collapse,
+  Spinner
+} from '@blueprintjs/core'
+
+import {
+   Flex, 
+   HeaderText, 
+   MutedText, 
+   RedGlowingButton, 
+   GreenGlowingButton,
+   FlexRow,
+   Box
+} from '../Common'
+
 import styled from 'styled-components'
 import Help from '../../components/Help'
 import { utils } from 'ethers'
@@ -30,6 +52,7 @@ type Props = {
   baseTokenDecimals: number,
   quoteTokenDecimals: number,
   pairIsAllowed: boolean,
+  pairAllowanceIsPending: boolean,
   handleSideChange: string => void
 }
 
@@ -57,6 +80,7 @@ const OrderFormRenderer = (props: Props) => {
     baseTokenDecimals,
     quoteTokenDecimals,
     pairIsAllowed,
+    pairAllowanceIsPending,
     handleUnlockPair,
     handleSideChange,
   } = props
@@ -124,6 +148,7 @@ const OrderFormRenderer = (props: Props) => {
                 quoteTokenDecimals={quoteTokenDecimals}
                 baseTokenDecimals={baseTokenDecimals}
                 pairIsAllowed={pairIsAllowed}
+                pairAllowanceIsPending={pairAllowanceIsPending}
                 handleUnlockPair={handleUnlockPair}
               />
             }
@@ -150,6 +175,7 @@ const OrderFormRenderer = (props: Props) => {
                 quoteTokenDecimals={quoteTokenDecimals}
                 baseTokenDecimals={baseTokenDecimals}
                 pairIsAllowed={pairIsAllowed}
+                pairAllowanceIsPending={pairAllowanceIsPending}
                 handleUnlockPair={handleUnlockPair}
               />
             }
@@ -177,6 +203,7 @@ const OrderFormRenderer = (props: Props) => {
                 quoteTokenDecimals={quoteTokenDecimals}
                 baseTokenDecimals={baseTokenDecimals}
                 pairIsAllowed={pairIsAllowed}
+                pairAllowanceIsPending={pairAllowanceIsPending}
                 handleUnlockPair={handleUnlockPair}
               />
             }
@@ -203,7 +230,8 @@ const LimitOrderPanel = props => {
     makeFee,
     quoteTokenDecimals,
     pairIsAllowed,
-    handleUnlockPair
+    handleUnlockPair,
+    pairAllowanceIsPending
   } = props
 
   return (
@@ -244,17 +272,47 @@ const LimitOrderPanel = props => {
 
       {
         side === 'BUY' 
-        ? (
-          <GreenGlowingButton
-            intent="success"
-            text={pairIsAllowed ? side : `Unlock ${baseTokenSymbol}/${quoteTokenSymbol}`}
-            name="order"
-            onClick={pairIsAllowed ? handleSendOrder : handleUnlockPair}
-            disabled={insufficientBalance} 
-            fill
+        ? pairAllowanceIsPending
+          ? (
+            <GreenGlowingButton
+              intent="success"
+              name="order"
+              disabled
+              fill
+            >
+            <FlexRow alignItems="center">
+              <Box px={2}>
+                <Spinner size={15} intent="success" />
+              </Box>
+              Pending
+            </FlexRow>
+            </GreenGlowingButton>
+          ) : (
+            <GreenGlowingButton
+              intent="success"
+              text={pairIsAllowed ? side : `Unlock ${baseTokenSymbol}/${quoteTokenSymbol}`}
+              name="order"
+              onClick={pairIsAllowed ? handleSendOrder : handleUnlockPair}
+              disabled={insufficientBalance} 
+              fill
           />
-        )
-        : (
+          )
+        : pairAllowanceIsPending 
+          ? (
+          <RedGlowingButton
+              intent="danger"
+              name="order"
+              disabled
+              fill
+            >
+            <FlexRow alignItems="center">
+              <Box px={2}>
+                <Spinner size={15} intent="danger" />
+              </Box>
+              Pending
+            </FlexRow>
+            </RedGlowingButton>
+        ) : (
           <RedGlowingButton
             intent="danger"
             text={pairIsAllowed ? side : `Unlock ${baseTokenSymbol}/${quoteTokenSymbol}`}

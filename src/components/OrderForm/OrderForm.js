@@ -18,6 +18,7 @@ type Props = {
   makeFee: string,
   takeFee: string,
   pairIsAllowed: boolean,
+  pairAllowanceIsPending: boolean,
   selectedOrder: Object,
   unlockPair: (string, string) => void,
   sendNewOrder: (string, number, number) => void,
@@ -118,6 +119,12 @@ class OrderForm extends React.PureComponent<Props, State> {
     const { side, price } = this.state
     const { quoteTokenBalance, baseTokenBalance } = this.props
     let amount, total
+
+    console.log(side)
+    console.log(price)
+    console.log(quoteTokenBalance)
+    console.log(baseTokenBalance)
+    console.log(fraction)
 
     if (side === 'SELL') {
       amount = (baseTokenBalance / 100) * fraction
@@ -267,6 +274,7 @@ class OrderForm extends React.PureComponent<Props, State> {
         baseTokenDecimals, 
         quoteTokenDecimals, 
         pairIsAllowed,
+        pairAllowanceIsPending
       },
       onInputChange,
       handleChangeOrderType,
@@ -326,6 +334,7 @@ class OrderForm extends React.PureComponent<Props, State> {
         baseTokenDecimals={baseTokenDecimals}
         quoteTokenDecimals={quoteTokenDecimals}
         pairIsAllowed={pairIsAllowed}
+        pairAllowanceIsPending={pairAllowanceIsPending}
         handleSideChange={handleSideChange}
       />
     )
