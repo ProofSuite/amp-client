@@ -37,6 +37,8 @@ export const accountRemoved = () => {
   const event = (state: AccountState) => ({
     ...state,
     address: null,
+    privateKey: null,
+    currentBlock: '',
   })
 
   return event

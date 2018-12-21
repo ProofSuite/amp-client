@@ -72,6 +72,7 @@ export const Flex = styled(Box)`
   display: flex;
   ${alignItems}
   ${justifyContent}
+  ${alignContent}
   ${flexWrap}
   ${flexBasis}
   ${flexDirection}
@@ -81,6 +82,7 @@ export const FlexRow = styled(Box)`
   display: flex;
   flex-direction: row;
   ${alignItems}
+  ${alignContent}
   ${justifyContent}
   ${flexWrap}
   ${flexBasis}
@@ -90,6 +92,7 @@ export const FlexColumn = styled(Box)`
   display: flex;
   flex-direction: column;
   ${alignItems}
+  ${alignContent}
   ${justifyContent}
   ${flexWrap}
   ${flexBasis}
