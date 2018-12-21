@@ -16,11 +16,11 @@ export default function tradingPageSelector(state: State) {
 
   let authenticated = accountDomain.authenticated()
 
-  let { 
-    pair, 
-    makeFee, 
-    takeFee, 
-    baseTokenSymbol, 
+  let {
+    pair,
+    makeFee,
+    takeFee,
+    baseTokenSymbol,
     quoteTokenSymbol,
   } = pairDomain.getCurrentPair()
 
