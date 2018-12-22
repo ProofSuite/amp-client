@@ -69,6 +69,14 @@ const WalletInfoRenderer = (props: Props) => {
           onClick={() => handleChangeTab("Add Token")}
           active={selectedTab === "Add Token"}
           intent={selectedTab === "Add Token" ? 'primary' : ''}
+          disabled
+        />
+        <Button
+          text="Premium Listing"
+          minimal
+          intent="warning"
+          onClick={() => handleChangeTab("Premium Listing")}
+          active={selectedTab === "Premium Listing"}
         />    
       </ButtonRow>
       <Tabs selectedTabId={selectedTab}>
@@ -89,6 +97,24 @@ const WalletInfoRenderer = (props: Props) => {
           id="Add Token"
           panel={
             <AddTokenPanel
+              handleChangeTokenAddress={handleChangeTokenAddress}
+              handleDetectContract={handleDetectContract}
+              tokenAddress={tokenAddress}
+              tokenAddressStatus={tokenAddressStatus}
+              tokenSymbol={tokenSymbol}
+              tokenEtherscanUrl={tokenEtherscanUrl}
+              tokenIsAdded={tokenIsAdded}
+              tokenIsRegistered={tokenIsRegistered}
+              tokenIsListed={tokenIsListed}
+              handleAddToken={handleAddToken}
+              handleRegisterToken={handleRegisterToken}
+            />
+          }
+        />
+        <Tab
+          id="Premium Listing"
+          panel={
+            <PremiumListingPanel
               handleChangeTokenAddress={handleChangeTokenAddress}
               handleDetectContract={handleDetectContract}
               tokenAddress={tokenAddress}
@@ -247,6 +273,15 @@ const AddTokenPanel = (props: *) => {
         </React.Fragment>
       }
     </React.Fragment>
+  )
+}
+
+
+const PremiumListingPanel = (props: *) => {
+  return (
+    <Box>
+      For premium listing, contact us at support@proofsuite.com
+    </Box>
   )
 }
 
