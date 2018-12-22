@@ -1,11 +1,31 @@
 import React from 'react'
 import { defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Callout, Spinner, Button } from '@blueprintjs/core'
 import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
-import { Centered, Divider, LargeText, LinkText, Colors, Flex, Indent } from '../../components/Common'
 import type { CreateWalletParams } from '../../types/createWallet'
+
+import { 
+  Callout, 
+  Card,
+  Spinner, 
+  Button
+} from '@blueprintjs/core'
+
+import { 
+  Centered, 
+  Divider, 
+  LargeText, 
+  LinkText, 
+  Colors, 
+  Flex, 
+  Indent,
+  FlexColumn,
+  FlexRow,
+  Box,
+  EmphasizedText
+} from '../../components/Common'
+
 
 type Props = {
   view: string,
@@ -61,32 +81,46 @@ const LoginPageRenderer = (props: Props) => {
 const LoginMethodsView = (props: Props) => {
   const { showWalletLoginForm, loginWithMetamask, metamaskStatus, showCreateWallet } = props
   return (
-    <Wrapper>
-      <Announcement>
-        <Callout intent="success" title="Disclaimer">
+    <FlexRow p={5} pb={6} justifyContent="space-between">
+      <Box />
+      <Box width="500px">
+        <Card intent="success" title="Disclaimer">
+          <h2>
+          <EmphasizedText>Welcome to AMP!</EmphasizedText>
+          </h2>
+          <h3>Trade from your own wallet, without waiting for deposits and with the security of instant blockchain settlements.</h3>
           <AnnouncementMessages>
-            <FormattedMessage
+            • <FormattedMessage
               {...messages.announcement}
               values={{ link: <a href="https://amp.exchange">https://amp.exchange</a> }}
             />
+            <br />
+            <br />
             <Reminder>
-              <FormattedMessage {...messages.noDisclosure} />
+              • <FormattedMessage {...messages.noDisclosure} />
             </Reminder>
+            <br />
             <Reminder>
-              <FormattedMessage {...messages.noOfficialStaffs} />
+              • <FormattedMessage {...messages.noOfficialStaffs} />
             </Reminder>
+            <br />
             <Reminder>
-              <FormattedMessage {...messages.exchangeLaws} />
+              • <FormattedMessage {...messages.exchangeLaws} />
             </Reminder>
+            <br />
+            <Reminder>
+              • <FormattedMessage {...messages.tokenListing} />
+            </Reminder>
+            <br />
           </AnnouncementMessages>
-        </Callout>
-      </Announcement>
-      <LoginMethods>
+        </Card>
+      </Box>
+      <Box width="30%">
         <LoginMethodsHeading>
           <FormattedMessage {...messages.loginMethods} />
         </LoginMethodsHeading>
             <LoginCards>
-                <Flex flexDirection="column" width="30%">
+                <Flex flexDirection="column" width="100%">
                   <Flex flexDirection="column" py={1}>
                     <StyledButton 
                       onClick={loginWithMetamask} 
@@ -122,8 +156,9 @@ const LoginMethodsView = (props: Props) => {
                   </Flex>
                 </Flex>
             </LoginCards>
-      </LoginMethods>
-    </Wrapper>
+      </Box>
+      <Box />
+    </FlexRow>
   )
 }
 
@@ -195,6 +230,10 @@ const messages = defineMessages({
   exchangeLaws: {
     id: 'loginPage.exchangeLaws',
     defaultMessage: ' To adhere to international securities and exchange laws, AMP Marketplace prohibits use of this platform by US and South Korean residents. By using this platform, you are confirming that you are not excluded from use by this criteria.',
+  },
+  tokenListing: {
+    id: 'loginPage.tokenListing',
+    defaultMessage: 'For inquiries about listing your token, contact us at support@proofsuite.com.'
   },
   noOfficialStaffs: {
     id: 'loginPage.noOfficialStaffs',

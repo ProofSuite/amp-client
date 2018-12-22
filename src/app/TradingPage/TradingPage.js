@@ -100,7 +100,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       this.props.getDefaultData();
     }
 
-    this.checkIfCalloutRequired()
+    // this.checkIfCalloutRequired()
   }
 
   componentDidUpdate(prevProps: Props) {
