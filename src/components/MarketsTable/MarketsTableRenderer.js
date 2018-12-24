@@ -1,9 +1,11 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { formatNumber } from 'accounting-js'
-
 import Help from '../../components/Help'
+
+import { 
+  formatNumber
+} from 'accounting-js'
 
 import { 
   Button, 
@@ -117,7 +119,7 @@ const MarketTableRow = (props: *) => {
     currentReferenceCurrency
   } = props;
 
-  return pairs.map(({ pair, baseTokenSymbol, quoteTokenSymbol, baseTokenAddress, quoteTokenAddress, lastPrice, change, high, low, volume, orderVolume }, index) => {
+  return pairs.map(({ pair, baseTokenSymbol, quoteTokenSymbol, baseTokenAddress, quoteTokenAddress, price, change, high, low, volume, orderVolume }, index) => {
     return (
       <Row key={index} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)}>
         <Cell>
@@ -128,12 +130,12 @@ const MarketTableRow = (props: *) => {
         </Cell>
         <Cell>
           <SmallText muted>
-            {formatNumber(lastPrice, { precision: 2 })} {quoteTokenSymbol}
+            {formatNumber(price, { precision: 2 })} {quoteTokenSymbol}
           </SmallText>
         </Cell>
         <Cell>
           <SmallText muted>
-            {formatNumber(lastPrice, { precision: 2 })} {currentReferenceCurrency}
+            {formatNumber(price, { precision: 2 })} {currentReferenceCurrency}
           </SmallText>
         </Cell>
         <Cell>

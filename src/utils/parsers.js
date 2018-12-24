@@ -1,6 +1,6 @@
 // @flow
 
-import { isFloat, isInteger, round } from './helpers'
+import { isFloat, isInteger, round, computeChange } from './helpers'
 import { utils } from 'ethers'
 
 import type { TokenPair, APITokens, APIToken, Tokens } from '../types/tokens'
@@ -98,6 +98,8 @@ export const parsePricepoint = (pricepoint: string, pair: TokenPair, precision: 
   return (Number(bigPricepoint.div(priceMultiplier).toString()) / Number(quoteMultiplier.toString()))
 }
 
+
+
 export const parseOrder = (order: Order, pair: TokenPair, precision: number = 2) => {
   
   return {
@@ -184,12 +186,33 @@ export const parseOrderBookData = (data: OrderBookData, pair: TokenPair, precisi
   return { asks, bids }
 }
 
+export const parseTokenPairsData = (data: APIPairData, pairs: Object) => {
+  let parsed = (data: APIPairData).map(datum => {
+    let pair = pairs[datum.pair.pairName]
+    
+    return {
+      pair: pair.pair,
+      price: datum.price ? parsePricepoint(datum.price, pair) : null,
+      lastPrice: datum.close ? parsePricepoint(datum.close, pair) : null,
+      change: datum.open ? round((datum.close - datum.open) / datum.open, 1) : null,
+      high: datum.high ? parsePricepoint(datum.high, pair) : null,
+      low: datum.low ? parsePricepoint(datum.low, pair) : null,
+      volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,
+      orderVolume: datum.orderVolume ? parseTokenAmount(datum.orderVolume, pair, 0) : null,
+      orderCount: datum.orderCount ? datum.orderCount : null,
+    }
+  })
+    
+  return parsed
+}
+
 export const parseTokenPairData = (data: APIPairData, pair: TokenPair) => {
   let parsed = (data: APIPairData).map(datum => {
     return {
       pair: datum.pair.pairName,
+      price: datum.price ? parsePricepoint(datum.price, pair) : null,
       lastPrice: datum.close ? parsePricepoint(datum.close, pair) : null,
-      change: datum.open ? round((datum.close - datum.open) / datum.open, 1) : null,
+      change: datum.open ? computeChange(datum.open, datum.close) : null,
       high: datum.high ? parsePricepoint(datum.high, pair) : null,
       low: datum.low ? parsePricepoint(datum.low, pair) : null,
       volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,

@@ -63,6 +63,7 @@ export function queryAccountData(): ThunkAction {
       tokens.push({ symbol: 'ETH', address: '0x0'})
       let tokenSymbols = tokens.map(token => token.symbol)
       let currencySymbols = ['USD', 'EUR', 'JPY']
+
       let exchangeRates = await api.fetchExchangeRates(tokenSymbols, currencySymbols)
 
       tokens = tokens.map(token => {
@@ -75,7 +76,6 @@ export function queryAccountData(): ThunkAction {
       })
 
       dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress))
-
 
       //we remove the ETH 'token' because the process to obtain balances for ETH and others tokens is different
       tokens = tokens.filter(token => token.symbol !== 'ETH')

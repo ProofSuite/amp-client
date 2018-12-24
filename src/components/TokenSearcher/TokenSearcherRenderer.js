@@ -1,6 +1,11 @@
 // @flow
 import React from 'react'
 import { Icon, Tooltip, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
+
+import {
+  formatNumber
+} from 'accounting-js'
+
 import {
   Colors,
   SmallText,
@@ -11,6 +16,11 @@ import {
   CryptoIcon,
   SmallTextDiv
 } from '../Common'
+
+import {
+  isNotNull
+} from '../../utils/helpers'
+
 import styled from 'styled-components'
 import { ResizableBox } from 'react-resizable'
 
@@ -207,7 +217,7 @@ type TokenRowProps = {
 }
 
 const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSelectedToken }: TokenRowProps) => {
-  const { favorited, lastPrice, change, base, pair } = token
+  const { favorited, price, change, base, pair } = token
   return (
     <li key={pair} className="row">
       <CryptoIcon size={25} name={base} />
@@ -215,10 +225,10 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
         {isFavoriteTokensList ? pair : base}
       </SmallText>
       <SmallText className="lastPrice" onClick={() => changeSelectedToken(token)}>
-        {lastPrice ? lastPrice : 'N.A'}
+        {price ? price : 'N.A'}
       </SmallText>
       <Change24H change={change} onClick={() => changeSelectedToken(token)}>
-        {change ? `${change}%` : 'N.A'}
+        {isNotNull(change) ? `${change}%` : 'N.A'}
       </Change24H>
       <SmallText className="star">
         <Tooltip hoverOpenDelay={500} content={favorited ? ' Unfavorite' : 'Favorite'}>
@@ -271,7 +281,7 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
 }
 
 const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => {
-  const { pair, lastPrice, volume, high, low, quote, base } = selectedPair
+  const { pair, price, volume, high, low, quote, base } = selectedPair
 
   return (
     <SelectedPairCard>
@@ -285,20 +295,20 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
       </Row>
       <List>
         <Item>
-          <SmallTextDiv>Last Price:</SmallTextDiv>
-          <SmallTextDiv>{ lastPrice ? `${lastPrice}/${quote}` : 'N.A'}</SmallTextDiv>
+          <SmallTextDiv>Price:</SmallTextDiv>
+          <SmallTextDiv>{ price ? `${ formatNumber(price, { precision: 5 }) } ${quote}` : 'N.A'}</SmallTextDiv>
         </Item>
         <Item>
           <SmallTextDiv>Volume:</SmallTextDiv>
-          <SmallTextDiv>{volume || 'N.A' }</SmallTextDiv>
+          <SmallTextDiv>{volume ? formatNumber(volume, { precision: 2 }) : 'N.A'  }</SmallTextDiv>
         </Item>
         <Item>
           <SmallTextDiv>High:</SmallTextDiv>
-          <SmallTextDiv>{high || 'N.A'}</SmallTextDiv>
+          <SmallTextDiv>{high ? formatNumber(high, { precision: 2 }) : 'N.A' }</SmallTextDiv>
         </Item>
         <Item>
           <SmallTextDiv>Low:</SmallTextDiv>
-          <SmallTextDiv>{low || 'N.A'}</SmallTextDiv>
+          <SmallTextDiv>{low ? formatNumber(low, { precision: 2 }) : 'N.A'}</SmallTextDiv>
         </Item>
       </List>
     </SelectedPairCard>
