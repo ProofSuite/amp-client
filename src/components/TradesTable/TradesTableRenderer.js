@@ -187,6 +187,8 @@ const ListHeader = styled.ul`
   flex-direction: row;
   justify-content: space-around;
   margin: 0px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `;
 
 const ListBody = styled.ul`
@@ -194,6 +196,8 @@ const ListBody = styled.ul`
   max-height: 500px;
   overflow-y: scroll;
   margin: 0;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `;
 
 const HeadingRow = styled.li`
@@ -203,6 +207,8 @@ const HeadingRow = styled.li`
   margin-bottom: 10px;
   justify-content: space-between;
   padding-left: 10px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `;
 
 const Row = styled.li.attrs({
@@ -218,6 +224,7 @@ const Row = styled.li.attrs({
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
   padding: 7px;
+  margin-left: 0px !important;
   padding-left: 10px !important;
   background-color: ${props => props.color};
   cursor: pointer;

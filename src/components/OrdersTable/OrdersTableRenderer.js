@@ -161,6 +161,8 @@ const ListHeaderWrapper = styled.ul`
   justify-content: space-around;
   margin: 0px;
   margin-bottom: 10px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `
 
 const ListBodyWrapper = styled.ul`
@@ -169,6 +171,8 @@ const ListBodyWrapper = styled.ul`
   margin: 0;
   height: 90%;
   overflow-y: scroll;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `
 
 const ListHeader = styled.li`
@@ -178,6 +182,8 @@ const ListHeader = styled.li`
   padding: 10px;
   text-align: left;
   padding: 0;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
   span {
     font-weight: 600;
   }
@@ -192,6 +198,8 @@ const Row = styled.li.attrs({ className: 'row' })`
   border: 1px transparent;
   border-radius: 2px;
   box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `
 
 

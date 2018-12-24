@@ -8,6 +8,7 @@ import {
 
 import {
   Colors,
+  Box,
   SmallText,
   Centered,
   Chevron,
@@ -286,7 +287,9 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
   return (
     <SelectedPairCard>
       <Row>
-        <ColoredCryptoIcon size={75} name={base} />
+        <Box p={1}>
+          <ColoredCryptoIcon size={60} name={base} />
+        </Box>
         <TokenPair>
           <h2>{pair}</h2>
           <div><b>{base}</b> Balance: {baseTokenBalance || 'N.A'}</div>
@@ -340,11 +343,15 @@ const List = styled.ul`
   border-top: 1px dashed #202f39;
   padding-top: 15px;
   margin-top: 5px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `;
 
 const Item = styled.li`
   display: flex;
   justify-content: space-between;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `;
 
 const TokenPair = styled.div`
@@ -362,6 +369,8 @@ const SearchInput = styled(InputGroup)`
 
 const ListHeader = styled.ul`
   margin: 10px 0 7px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `
 
 const Change24H = styled(SmallText).attrs({ className: 'change' })`
