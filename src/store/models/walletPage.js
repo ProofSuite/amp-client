@@ -46,15 +46,21 @@ export function queryAccountData(): ThunkAction {
     let allowances = []
 
     try {
-      const currentBlock = await getCurrentBlock()
+      let [
+        currentBlock,
+        tokens,
+        pairs,
+        exchangeAddress
+      ] = await Promise.all([
+        getCurrentBlock(),
+        api.getTokens(),
+        api.fetchPairs(),
+        api.getExchangeAddress()
+      ])
+
       if (!currentBlock) throw new Error('')
 
-      let tokens = await api.getTokens()
       tokens.push({ symbol: 'ETH', address: '0x0'})
-
-      let pairs = await api.fetchPairs()
-      let exchangeAddress = await api.getExchangeAddress()
-
       let tokenSymbols = tokens.map(token => token.symbol)
       let currencySymbols = ['USD', 'EUR', 'JPY']
       let exchangeRates = await api.fetchExchangeRates(tokenSymbols, currencySymbols)
@@ -74,27 +80,31 @@ export function queryAccountData(): ThunkAction {
       //we remove the ETH 'token' because the process to obtain balances for ETH and others tokens is different
       tokens = tokens.filter(token => token.symbol !== 'ETH')
 
-      let etherBalance = await provider.queryEtherBalance(accountAddress)
+      let [
+        etherBalance,
+        tokenBalanceResult,
+        tokenAllowanceResult
+      ] = await Promise.all([
+        provider.queryEtherBalance(accountAddress),
+        provider.queryTokenBalances(accountAddress, tokens),
+        provider.queryExchangeTokenAllowances(accountAddress, tokens)
+      ])
+
       balances.push(etherBalance)
 
-      let { errors: tokenBalanceErrors, tokenBalances } = await provider.queryTokenBalances(accountAddress, tokens)
+      let { errors: tokenBalanceErrors, tokenBalances } = tokenBalanceResult
       balances.concat(tokenBalances)
-
-      let { errors: tokenAllowanceErrors, tokenAllowances } = await provider.queryExchangeTokenAllowances(accountAddress, tokens)
+      let { errors: tokenAllowanceErrors, tokenAllowances } = tokenAllowanceResult
       allowances = tokenAllowances
-
       balances = [etherBalance].concat(tokenBalances)
       
-      await provider.subscribeTokenBalances(accountAddress, tokens, balance =>
-        dispatch(actionCreators.updateBalance(balance))
-      )
-
-      await provider.subscribeEtherBalance(accountAddress, balance =>
+      // TODO handle unsubscriptions
+      provider.subscribeTokenBalances(accountAddress, tokens, balance =>
+        dispatch(actionCreators.updateBalance(balance)))
+      provider.subscribeEtherBalance(accountAddress, balance =>
         dispatch(actionCreators.updateBalance({ symbol: 'ETH', balance: balance })))
-
-      await provider.subscribeTokenAllowances(accountAddress, tokens, allowance => {
-        return dispatch(actionCreators.updateAllowance(allowance))
-      })
+      provider.subscribeTokenAllowances(accountAddress, tokens, allowance => {
+        dispatch(actionCreators.updateAllowance(allowance))})
 
     } catch (e) {
       console.log(e)
