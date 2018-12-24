@@ -194,7 +194,7 @@ export const parseTokenPairData = (data: APIPairData, pair: TokenPair) => {
       low: datum.low ? parsePricepoint(datum.low, pair) : null,
       volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,
       orderVolume: datum.orderVolume ? parseTokenAmount(datum.orderVolume, pair, 0) : null,
-      orderCount: datum.orderCount ? parseTokenAmount(datum.orderCount, pair, 0) : null,
+      orderCount: datum.orderCount ? datum.orderCount : null,
     }
   })
     
