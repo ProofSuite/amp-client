@@ -149,33 +149,32 @@ export function toggleAllowance(symbol: string): ThunkAction {
 
       if (isPending) throw new Error('Trading approval pending')
 
-
-      const lockTxSentHandler = () => {
-        dispatch(notifierActionCreators.addSuccessNotification({ message: `Locking ${symbol}. You will not be able to trade ${symbol} after the transaction is confirmed` }))
+      const lockTxSentHandler = (txHash) => {
+        dispatch(notifierActionCreators.addUnlockTokenPendingNotification({ txHash, symbol }))
         dispatch(actionCreators.updateAllowancePending(symbol))
       }
 
-      const unlockTxSentHandler = () => {
-        dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${symbol}. You will be able to trade  ${symbol} after the transaction is confirmed.` }))
+      const unlockTxSentHandler = (txHash) => {
+        dispatch(notifierActionCreators.addLockTokenPendingNotification({ txHash, symbol }))
         dispatch(actionCreators.updateAllowancePending(symbol))
       }
 
-      const approvalConfirmedHandler = (txConfirmed) => {
+      const lockTxConfirmedHandler = (txConfirmed, txHash) => {
         txConfirmed
-          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Approval Successful. You can now start trading!` }))
+          ? dispatch(notifierActionCreators.addUnlockTokenConfirmedNotification({ symbol, txHash }))
           : dispatch(notifierActionCreators.addErrorNotification({ message: `${symbol} Approval Failed. Please try again.` }))
       }
 
-      const approvalRemovedHandler = (txConfirmed) => {
+      const unlockTxConfirmedHandler = (txConfirmed, txHash) => {
         txConfirmed
-          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `${symbol} Allowance Removal Successful.` }))
+          ? dispatch(notifierActionCreators.addLockTokenConfirmedNotification({ symbol, txHash }))
           : dispatch(notifierActionCreators.addErrorNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
       }
 
       if (isAllowed) {
-        await txProvider.updateExchangeAllowance(tokenContractAddress, 0, approvalRemovedHandler, lockTxSentHandler)
+        await txProvider.updateExchangeAllowance(tokenContractAddress, 0, unlockTxConfirmedHandler, lockTxSentHandler)
       } else {
-        await txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, approvalConfirmedHandler, unlockTxSentHandler)
+        await txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, lockTxConfirmedHandler, unlockTxSentHandler)
       }
       
     } catch (e) {
