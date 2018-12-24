@@ -15,9 +15,14 @@ const ETHERSCAN_MAINNET_TX = 'https://etherscan.io/tx'
 const ETHERSCAN_RINKEBY_TOKEN = 'https://rinkeby.etherscan.io/token'
 const ETHERSCAN_MAINNET_TOKEN = 'https://etherscan.io/token'
 
+const ETHERSCAN_RINKEBY_ADDRESS = 'https://rinkeby.etherscan.io/address'
+const ETHERSCAN_MAINNET_ADDRESS = 'https://etherscan.io/address'
+
 
 export const ETHERSCAN_TX_URL = { '4': ETHERSCAN_RINKEBY_TX, '1': ETHERSCAN_MAINNET_TX }[env.DEFAULT_NETWORK_ID]
 export const ETHERSCAN_TOKEN_URL = { '4': ETHERSCAN_RINKEBY_TOKEN, '1': ETHERSCAN_MAINNET_TOKEN }[env.DEFAULT_NETWORK_ID]
+export const ETHERSCAN_ADDRESS_URL = { '4': ETHERSCAN_RINKEBY_ADDRESS, '1': ETHERSCAN_MAINNET_ADDRESS }[env.DEFAULT_NETWORK_ID]
+
 
 
 

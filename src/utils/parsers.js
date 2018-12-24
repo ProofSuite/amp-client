@@ -158,6 +158,7 @@ export const parseTrades = (trades: Array<Trade>, pair: TokenPair, precision: nu
     price: parsePricepoint(trade.pricepoint, pair, precision),
     amount: parseTokenAmount(trade.amount, pair, precision),
     hash: trade.hash,
+    txHash: trade.txHash,
     orderHash: trade.orderHash,
     type: trade.type || 'LIMIT',
     side: trade.side,
