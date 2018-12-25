@@ -1,10 +1,11 @@
+
 // @flow
 import { getAccountDomain, getTokenPairsDomain } from '../domains';
 import * as actionCreators from '../actions/marketsPage';
 import * as notifierActionCreators from '../actions/app';
 import { parseQueryMarketDataError } from '../../config/errors';
 
-import { parseTokenPairData } from '../../utils/parsers';
+import { parseTokenPairsData } from '../../utils/parsers';
 
 import type { State, ThunkAction } from '../../types';
 
@@ -21,10 +22,10 @@ export function queryMarketData(): ThunkAction {
     try {
       let state = getState();
       let pairDomain = getTokenPairsDomain(state);
-      let currentPair = pairDomain.getCurrentPair();
-
+      let pairs = pairDomain.getPairsByCode();
+      
       let tokenPairData = await api.fetchTokenPairData();
-      tokenPairData = parseTokenPairData(tokenPairData, currentPair);
+      tokenPairData = parseTokenPairsData(tokenPairData, pairs);
 
       dispatch(actionCreators.updateTokenPairData(tokenPairData));
     } catch (e) {

@@ -1,11 +1,13 @@
 // @flow
 import React from 'react';
-import { Card, Position, Button, Tag, Tabs, Tab, InputGroup } from '@blueprintjs/core';
 import styled from 'styled-components';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import TransferTokensModal from '../../components/TransferTokensModal';
 import TokenBalanceChart from '../../components/TokenBalanceChart'
 import Help from '../../components/Help'
-import { Flex, FlexItem, Box, Colors, Text,TextDiv, TextBox, BlueGlowingButton } from '../Common'
+
+import { Card, Position, Button, Tag, Tabs, Tab, InputGroup, Icon } from '@blueprintjs/core';
+import { Flex, FlexRow, FlexItem, Box, Colors, Text,TextDiv, TextBox, BlueGlowingButton } from '../Common'
 import { Fonts } from '../Common/Variables'
 
 type Props = {
@@ -19,6 +21,7 @@ type Props = {
   tokenAddressStatus: string,
   tokenSymbol: string,
   tokenEtherscanUrl: string,
+  accountEtherscanUrl: string,
   tokenIsAdded: ?boolean,
   tokenIsListed: ?boolean,
   tokenIsRegistered: ?boolean,
@@ -42,6 +45,7 @@ const WalletInfoRenderer = (props: Props) => {
     tokenAddress,
     tokenSymbol,
     tokenEtherscanUrl,
+    accountEtherscanUrl,
     tokenAddressStatus,
     handleChangeTab,
     handleChangeTokenAddress,
@@ -87,6 +91,7 @@ const WalletInfoRenderer = (props: Props) => {
               isModalOpen={isModalOpen}
               handleModalClose={handleModalClose}
               accountAddress={accountAddress}
+              accountEtherscanUrl={accountEtherscanUrl}
               balance={balance}
               gasPrice={gasPrice}
               gas={gas}             
@@ -142,7 +147,8 @@ const PortfolioPanel = (props: *) => {
     gas,
     gasPrice,
     isModalOpen,
-    handleModalClose
+    handleModalClose,
+    accountEtherscanUrl
   } = props
 
   return (
@@ -154,9 +160,25 @@ const PortfolioPanel = (props: *) => {
         <TextDiv py={2} small muted>
           Here is your ethereum address where people can send you tokens:
         </TextDiv>
-        <TextBox py={2} fontSize={Fonts.FONT_SIZE} textAlign="right">
-          {accountAddress}
-        </TextBox>
+        <FlexRow 
+          py={2} 
+          px={1} 
+          justifyContent="flex-end" 
+          fontSize={Fonts.FONT_SIZE_SMALL} 
+        >
+          <a href={accountEtherscanUrl}
+             target="_blank"
+             rel="noopener noreferrer"
+             class="bp3-text-overflow-ellipsis"
+           >
+            {accountAddress}
+          </a>
+          <CopyToClipboardBox px={1}>
+            <CopyToClipboard text={accountAddress}>
+              <Icon icon="clipboard" intent="primary" />
+            </CopyToClipboard>
+          </CopyToClipboardBox>
+        </FlexRow>
       </Box>
       <Tag minimal large>Portfolio Overview</Tag>
       <TokenBalanceChartBox>
@@ -175,6 +197,10 @@ const PortfolioPanel = (props: *) => {
     </React.Fragment>
   )
 }
+
+const CopyToClipboardBox = styled(Box)`
+  cursor: context-menu;
+`
 
 const AddTokenPanel = (props: *) => {
   const { 

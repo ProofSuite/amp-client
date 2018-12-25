@@ -35,12 +35,12 @@ export async function updateExchangeAllowance(
 
   const tx = await contract.approve(exchange, balance)
 
-  txSentHandler()
+  txSentHandler(tx.hash)
 
   const receipt = await signer.provider.waitForTransaction(tx.hash)
 
   receipt.status === 1
-    ? txConfirmHandler(true)
+    ? txConfirmHandler(true, tx.hash)
     : txConfirmHandler(false)
 }
 
@@ -67,7 +67,8 @@ export async function updatePairAllowances(
 
     let [ tx1, tx2 ] = await Promise.all([promise1, promise2])
 
-    txSendHandler()
+    //we can only open one tab so we show only one transaction
+    txSendHandler(tx1.hash)
 
     let [ receipt1, receipt2 ] = await Promise.all([
         signer.provider.waitForTransaction(tx1.hash),
@@ -76,7 +77,7 @@ export async function updatePairAllowances(
 
     (receipt1.status === 0 || receipt2.status === 0)
       ? txConfirmHandler(false)
-      : txConfirmHandler(true)
+      : txConfirmHandler(true, tx1.hash)
 
   } catch (e) {
     console.log(e.message) 

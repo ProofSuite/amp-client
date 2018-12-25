@@ -1,8 +1,14 @@
 // @flow
 import React from 'react'
 import { Icon, Tooltip, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
+
+import {
+  formatNumber
+} from 'accounting-js'
+
 import {
   Colors,
+  Box,
   SmallText,
   Centered,
   Chevron,
@@ -11,6 +17,11 @@ import {
   CryptoIcon,
   SmallTextDiv
 } from '../Common'
+
+import {
+  isNotNull
+} from '../../utils/helpers'
+
 import styled from 'styled-components'
 import { ResizableBox } from 'react-resizable'
 
@@ -207,7 +218,7 @@ type TokenRowProps = {
 }
 
 const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSelectedToken }: TokenRowProps) => {
-  const { favorited, lastPrice, change, base, pair } = token
+  const { favorited, price, change, base, pair } = token
   return (
     <li key={pair} className="row">
       <CryptoIcon size={25} name={base} />
@@ -215,10 +226,10 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
         {isFavoriteTokensList ? pair : base}
       </SmallText>
       <SmallText className="lastPrice" onClick={() => changeSelectedToken(token)}>
-        {lastPrice ? lastPrice : 'N.A'}
+        {price ? price : 'N.A'}
       </SmallText>
       <Change24H change={change} onClick={() => changeSelectedToken(token)}>
-        {change ? `${change}%` : 'N.A'}
+        {isNotNull(change) ? `${change}%` : 'N.A'}
       </Change24H>
       <SmallText className="star">
         <Tooltip hoverOpenDelay={500} content={favorited ? ' Unfavorite' : 'Favorite'}>
@@ -271,12 +282,14 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
 }
 
 const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => {
-  const { pair, lastPrice, volume, high, low, quote, base } = selectedPair
+  const { pair, price, volume, high, low, quote, base } = selectedPair
 
   return (
     <SelectedPairCard>
       <Row>
-        <ColoredCryptoIcon size={75} name={base} />
+        <Box p={1}>
+          <ColoredCryptoIcon size={60} name={base} />
+        </Box>
         <TokenPair>
           <h2>{pair}</h2>
           <div><b>{base}</b> Balance: {baseTokenBalance || 'N.A'}</div>
@@ -285,20 +298,20 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
       </Row>
       <List>
         <Item>
-          <SmallTextDiv>Last Price:</SmallTextDiv>
-          <SmallTextDiv>{ lastPrice ? `${lastPrice}/${quote}` : 'N.A'}</SmallTextDiv>
+          <SmallTextDiv>Price:</SmallTextDiv>
+          <SmallTextDiv>{ price ? `${ formatNumber(price, { precision: 5 }) } ${quote}` : 'N.A'}</SmallTextDiv>
         </Item>
         <Item>
           <SmallTextDiv>Volume:</SmallTextDiv>
-          <SmallTextDiv>{volume || 'N.A' }</SmallTextDiv>
+          <SmallTextDiv>{volume ? formatNumber(volume, { precision: 2 }) : 'N.A'  }</SmallTextDiv>
         </Item>
         <Item>
           <SmallTextDiv>High:</SmallTextDiv>
-          <SmallTextDiv>{high || 'N.A'}</SmallTextDiv>
+          <SmallTextDiv>{high ? formatNumber(high, { precision: 2 }) : 'N.A' }</SmallTextDiv>
         </Item>
         <Item>
           <SmallTextDiv>Low:</SmallTextDiv>
-          <SmallTextDiv>{low || 'N.A'}</SmallTextDiv>
+          <SmallTextDiv>{low ? formatNumber(low, { precision: 2 }) : 'N.A'}</SmallTextDiv>
         </Item>
       </List>
     </SelectedPairCard>
@@ -330,11 +343,15 @@ const List = styled.ul`
   border-top: 1px dashed #202f39;
   padding-top: 15px;
   margin-top: 5px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `;
 
 const Item = styled.li`
   display: flex;
   justify-content: space-between;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `;
 
 const TokenPair = styled.div`
@@ -352,6 +369,8 @@ const SearchInput = styled(InputGroup)`
 
 const ListHeader = styled.ul`
   margin: 10px 0 7px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 `
 
 const Change24H = styled(SmallText).attrs({ className: 'change' })`

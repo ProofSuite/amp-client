@@ -133,7 +133,7 @@ export const tokenPairRemoved = (baseToken: Token) => {
   return event
 }
 
-export const tokenPairDataUpdated = (tokenPairData: Array<Object>) => {
+export const tokenPairDataUpdated = (tokenPairData: Array<TokenPairData>) => {
   const event = (state: TokenPairDataMap) => {
 
     let data = tokenPairData.reduce((result, item) => {
