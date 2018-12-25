@@ -119,16 +119,11 @@ class OrderForm extends React.PureComponent<Props, State> {
     const { side, price } = this.state
     const { quoteTokenBalance, baseTokenBalance } = this.props
     let amount, total
-
-    console.log(side)
-    console.log(price)
-    console.log(quoteTokenBalance)
-    console.log(baseTokenBalance)
-    console.log(fraction)
+    let numericPrice = unformat(price)
 
     if (side === 'SELL') {
       amount = (baseTokenBalance / 100) * fraction
-      total = unformat(price) * amount
+      total = numericPrice * amount
 
       this.setState({
         fraction: fraction,
@@ -136,8 +131,20 @@ class OrderForm extends React.PureComponent<Props, State> {
         total: formatNumber(total, { precision: 3 })
       })
     } else {
+      // Temporary solution to handle the case where price = 0. 
+      // In the case orderbooks are full, we do not need to care about this
+      if (numericPrice === 0) {
+        this.setState({
+          fraction: fraction, 
+          amount: formatNumber(0, { precision: 3 }),
+          total: formatNumber(0, { precision: 3 })
+        })
+
+        return
+      }
+
       total = (quoteTokenBalance / 100) * fraction
-      amount = total / unformat(price)
+      amount = total / numericPrice
 
       this.setState({
         fraction: fraction,

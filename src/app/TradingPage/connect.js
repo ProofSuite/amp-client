@@ -1,6 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
-import tradingPageSelector, { getDefaultData, toggleAllowances } from '../../store/models/tradingPage';
+import tradingPageSelector, { queryTradingPageData, toggleAllowances } from '../../store/models/tradingPage';
 
 import type { State } from '../../types'
 
@@ -11,7 +11,7 @@ export function mapStateToProps(state: State) {
 }
 
 export const mapDispatchToProps = {
-  getDefaultData,
+  queryTradingPageData,
   toggleAllowances
 };
 

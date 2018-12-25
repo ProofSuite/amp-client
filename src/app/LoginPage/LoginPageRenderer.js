@@ -5,6 +5,7 @@ import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
 import type { CreateWalletParams } from '../../types/createWallet'
 
+
 import { 
   Callout, 
   Card,
@@ -23,7 +24,8 @@ import {
   FlexColumn,
   FlexRow,
   Box,
-  EmphasizedText
+  EmphasizedText,
+  TwitterShareLink
 } from '../../components/Common'
 
 
@@ -110,6 +112,10 @@ const LoginMethodsView = (props: Props) => {
             <br />
             <Reminder>
               • <FormattedMessage {...messages.tokenListing} />
+            </Reminder>
+            <br />
+            <Reminder>
+              • Support us by sharing on <TwitterShareLink />
             </Reminder>
             <br />
           </AnnouncementMessages>

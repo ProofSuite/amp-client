@@ -162,14 +162,14 @@ export function unlockPair(baseTokenSymbol: string, quoteTokenSymbol: string): T
       const baseTokenAddress = tokens[baseTokenSymbol].address
       const quoteTokenAddress = tokens[quoteTokenSymbol].address
 
-      const txSentHandler = () => {
+      const txSentHandler = (txHash) => {
         dispatch(actionCreators.unlockPair(baseTokenSymbol, quoteTokenSymbol))
-        dispatch(notifierActionCreators.addSuccessNotification({ message: `Unlocking ${baseTokenSymbol}/${quoteTokenSymbol} trading. Your transaction should be approved within a few minutes`}))
+        dispatch(notifierActionCreators.addUnlockPairPendingNotification({ baseTokenSymbol, quoteTokenSymbol, txHash }))
       }
       
-      const txConfirmHandler = (txConfirmed) => {
+      const txConfirmHandler = (txConfirmed, txHash) => {
         txConfirmed
-          ? dispatch(notifierActionCreators.addSuccessNotification({ message: `Approval Successful. You can now start trading!` }))
+          ? dispatch(notifierActionCreators.addUnlockPairConfirmedNotification({ baseTokenSymbol, quoteTokenSymbol, txHash }))
           : dispatch(notifierActionCreators.addErrorNotification({ message: `Approval Failed. Please try again.` }))
       }
 

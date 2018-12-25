@@ -4,6 +4,8 @@ import TradesTableRenderer from './TradesTableRenderer';
 import type Trade from '../../types/trades';
 import type { TokenPair } from '../../types/tokens';
 
+import { ETHERSCAN_TX_URL } from '../../config/urls'
+
 type State = {
   selectedTabId: string,
   isOpen: boolean,
@@ -26,6 +28,10 @@ class TradesTable extends React.PureComponent<Props, State> {
     this.setState({ selectedTabId: tabId });
   };
 
+  openEtherscanLink = (txHash: string) => {
+    window.open(`${ETHERSCAN_TX_URL}/${txHash}`)
+  }
+
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
@@ -36,6 +42,7 @@ class TradesTable extends React.PureComponent<Props, State> {
       state: { selectedTabId, isOpen },
       changeTab,
       toggleCollapse,
+      openEtherscanLink
     } = this;
 
     return (
@@ -47,6 +54,7 @@ class TradesTable extends React.PureComponent<Props, State> {
         userTrades={userTrades}
         isOpen={isOpen}
         toggleCollapse={toggleCollapse}
+        openEtherscanLink={openEtherscanLink}
       />
     );
   }

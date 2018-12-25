@@ -24,7 +24,7 @@ type Props = {
   quoteTokenSymbol: string,
   pairIsAllowed: boolean,
   pairName: string,
-  getDefaultData: () => void,
+  queryTradingPageData: () => void,
   makeFee: string, 
   takeFee: string,
   toggleAllowances: (string, string) => void,
@@ -97,7 +97,7 @@ class TradingPage extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     if (this.props.isConnected) {
-      this.props.getDefaultData();
+      this.props.queryTradingPageData();
     }
 
     // this.checkIfCalloutRequired()
@@ -108,7 +108,7 @@ class TradingPage extends React.PureComponent<Props, State> {
       return;
     }
 
-    this.props.getDefaultData();
+    this.props.queryTradingPageData();
   }
 
   checkIfCalloutRequired = () => {
