@@ -5,7 +5,7 @@ import * as notifierActionCreators from '../actions/app'
 
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
-import { parseOrders, parseTokenPairData } from '../../utils/parsers'
+import { parseOrders, parseTokenPairsData } from '../../utils/parsers'
 
 // eslint-disable-next-line
 export default function tradingPageSelector(state: State) {
@@ -57,7 +57,7 @@ export default function tradingPageSelector(state: State) {
   }
 }
 
-export const getDefaultData = (): ThunkAction => {
+export const queryTradingPageData = (): ThunkAction => {
   return async (dispatch, getState, { api, socket }) => {
     try {
       socket.unsubscribeChart()
@@ -72,9 +72,15 @@ export const getDefaultData = (): ThunkAction => {
 
       let userAddress = await signer.getAddress()
 
-      let tokenPairData = await api.fetchTokenPairData()
-      tokenPairData = parseTokenPairData(tokenPairData, currentPair)
-      let orders = await api.fetchOrders(userAddress)
+      let [
+        tokenPairData,
+        orders
+      ] = await Promise.all([
+        api.fetchTokenPairData(),
+        api.fetchOrders(userAddress)
+      ])
+  
+      tokenPairData = parseTokenPairsData(tokenPairData, pairs)
       orders = parseOrders(orders, pairs)
 
       dispatch(actionCreators.updateTradingPageData(tokenPairData, orders))

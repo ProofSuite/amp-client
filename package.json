@@ -20,7 +20,7 @@
     "/rates": {
       "target": "https://min-api.cryptocompare.com",
       "pathRewrite": {
-        "^/rates" : ""
+        "^/rates": ""
       },
       "changeOrigin": true
     }
@@ -56,6 +56,7 @@
     "react": "^16.4.1",
     "react-app-rewire-hot-loader": "^1.0.2",
     "react-app-rewired": "^1.6.2",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.13",
     "react-hot-loader": "^4.3.11",

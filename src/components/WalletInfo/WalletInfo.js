@@ -3,7 +3,7 @@ import React from 'react';
 import WalletInfoRenderer from './WalletInfoRenderer';
 
 import { isEthereumAddress } from '../../utils/crypto'
-import { ETHERSCAN_TOKEN_URL } from '../../config/urls'
+import { ETHERSCAN_TOKEN_URL, ETHERSCAN_ADDRESS_URL } from '../../config/urls'
 
 import type { Token, TokenPairs } from '../../types/tokens'
 
@@ -127,6 +127,7 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
     } = this;
 
     let tokenEtherscanUrl = `${ETHERSCAN_TOKEN_URL}/${tokenAddress}`
+    let accountEtherscanUrl = `${ETHERSCAN_ADDRESS_URL}/${accountAddress}`
     let tokenIsAdded = userTokens.indexOf(tokenAddress) !== -1
     let tokenIsListed = listedTokens.indexOf(tokenAddress) !== -1
 
@@ -138,6 +139,7 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
         isModalOpen={isModalOpen}
         selectedTab={selectedTab}
         accountAddress={accountAddress}
+        accountEtherscanUrl={accountEtherscanUrl}
         tokenAddress={tokenAddress}
         tokenAddressStatus={tokenAddressStatus}
         tokenSymbol={tokenSymbol}

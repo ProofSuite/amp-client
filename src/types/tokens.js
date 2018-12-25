@@ -113,6 +113,8 @@ export type TokenPairData = {
   base: ?string,
   quote: ?string,
   favorited: ?string,
+  orderCount: string, 
+  orderVolume: string,
 };
 
 export type TokenPairDataArray = Array<TokenPairData>;

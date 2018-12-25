@@ -58,6 +58,10 @@ export const isJson = (text: *) => {
   )
 }
 
+export const isNotNull = (elem: *) => {
+  return elem !== null
+}
+
 
 export const computeTokenAmount = (amount: Object, tokenDecimals: number) => {
   return utils.bigNumberify(amount).div(utils.bigNumberify(10).pow(tokenDecimals)).toString()
@@ -83,6 +87,18 @@ export const computeAmountPoints = ({ amount, baseMultiplier, precisionMultiplie
 
 export const computePairMultiplier = ({ priceMultiplier, baseMultiplier, quoteMultiplier }: *) => {  
     return priceMultiplier.mul(baseMultiplier)
+}
+
+export const computeChange = ( open: string, close: string ) => {
+  let bigOpen = utils.bigNumberify(open)
+  let bigClose = utils.bigNumberify(close)
+  let percentMultiplier = utils.bigNumberify(100)
+
+  if (bigOpen.eq(bigClose)) return 0
+
+  let change = ((bigClose.sub(bigOpen)).mul(percentMultiplier)).div(bigOpen)
+  let percentChange = Number(change.toString()) / 100
+  return percentChange
 }
 
 

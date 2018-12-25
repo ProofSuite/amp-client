@@ -89,14 +89,21 @@
     margin-bottom: 0px;
     margin-top: 0px;
     overflow-y: scroll;
+    padding-left: 0px !important;
+    margin-left: 0px !important;
   }
 
   li.row {
     box-shadow: inset 0px 1px 0 0 rgba(16, 22, 26, 0.15);
     padding: 3px;
+    padding-left: 0px !important;
+    margin-left: 0px !important;
   }
 
   li.heading {
+    padding-left: 0px !important;
+    margin-left: 0px !important;
+
     span {
       cursor: pointer;
       font-weight: 600;
