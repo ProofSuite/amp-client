@@ -59,7 +59,7 @@ export const isJson = (text: *) => {
 }
 
 export const isNotNull = (elem: *) => {
-  return elem !== null
+  return (elem !== null && elem !== NaN)
 }
 
 
@@ -97,6 +97,10 @@ export const computeChange = ( open: string, close: string ) => {
   if (bigOpen.eq(bigClose)) return 0
 
   let change = ((bigClose.sub(bigOpen)).mul(percentMultiplier)).div(bigOpen)
+
+
+  console.log(change.toString())
+
   let percentChange = Number(change.toString()) / 100
   return percentChange
 }
