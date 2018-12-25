@@ -195,7 +195,7 @@ export const parseTokenPairsData = (data: APIPairData, pairs: Object) => {
       pair: pair.pair,
       price: datum.price ? parsePricepoint(datum.price, pair) : null,
       lastPrice: datum.close ? parsePricepoint(datum.close, pair) : null,
-      change: datum.open ? round((datum.close - datum.open) / datum.open, 1) : null,
+      change: datum.open ? computeChange(datum.open, datum.close) : null,
       high: datum.high ? parsePricepoint(datum.high, pair) : null,
       low: datum.low ? parsePricepoint(datum.low, pair) : null,
       volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,
@@ -208,6 +208,9 @@ export const parseTokenPairsData = (data: APIPairData, pairs: Object) => {
 }
 
 export const parseTokenPairData = (data: APIPairData, pair: TokenPair) => {
+
+  console.log(data)
+
   let parsed = (data: APIPairData).map(datum => {
     return {
       pair: datum.pair.pairName,

@@ -59,7 +59,7 @@ export const isJson = (text: *) => {
 }
 
 export const isNotNull = (elem: *) => {
-  return elem !== null
+  return (elem !== null && elem !== NaN)
 }
 
 
