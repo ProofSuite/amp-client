@@ -43,9 +43,6 @@ export default function tokenSearcherSelector(state: State) {
   let baseTokenAvailableBalance = baseTokenBalance - baseTokenLockedBalance
   let quoteTokenAvailableBalance = quoteTokenBalance - quoteTokenLockedBalance
 
-  console.log(baseTokenAvailableBalance)
-  console.log(quoteTokenAvailableBalance)
-
   return {
     tokenPairsByQuoteToken,
     currentPair,

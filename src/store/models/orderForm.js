@@ -7,7 +7,8 @@ import {
   getOrderBookDomain, 
   getAccountBalancesDomain, 
   getAccountDomain,
-  getTokenDomain
+  getTokenDomain,
+  getOrdersDomain
 } from '../domains/'
 
 import { utils } from 'ethers'
@@ -19,6 +20,7 @@ import { max, minOrderAmount } from '../../utils/helpers'
 export default function getOrderFormSelector(state: State) {
   let tokenPairDomain = getTokenPairsDomain(state)
   let orderBookDomain = getOrderBookDomain(state)
+  let orderDomain = getOrdersDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let currentPair = tokenPairDomain.getCurrentPair()
 
@@ -34,19 +36,14 @@ export default function getOrderFormSelector(state: State) {
   let askPrice = orderBookDomain.getAskPrice()
   let bidPrice = orderBookDomain.getBidPrice()
   let selectedOrder = orderBookDomain.getSelectedOrder()
-  let [ baseToken, quoteToken ] = accountBalancesDomain.getBalancesAndAllowancesBySymbol([baseTokenSymbol, quoteTokenSymbol])
   
-  let {
-    balance: baseTokenBalance,
-    allowed: baseTokenIsAllowed,
-  } = baseToken
+  let [ baseToken, quoteToken ] = accountBalancesDomain.getBalancesAndAllowancesBySymbol([baseTokenSymbol, quoteTokenSymbol])
 
-  let {
-    balance: quoteTokenBalance,
-    allowed: quoteTokenIsAllowed
-  } = quoteToken
-
-  let pairIsAllowed = baseTokenIsAllowed && quoteTokenIsAllowed
+  let baseTokenLockedBalance = orderDomain.lockedBalanceByToken(baseTokenSymbol)
+  let quoteTokenLockedBalance = orderDomain.lockedBalanceByToken(quoteTokenSymbol)
+  let baseTokenBalance = baseToken.balance - baseTokenLockedBalance
+  let quoteTokenBalance = quoteToken.balance - quoteTokenLockedBalance
+  let pairIsAllowed = baseToken.allowed && quoteToken.allowed
   let pairAllowanceIsPending = baseToken.allowancePending || quoteToken.allowancePending
 
   return {
@@ -55,9 +52,7 @@ export default function getOrderFormSelector(state: State) {
     baseTokenSymbol,
     quoteTokenSymbol,
     baseTokenBalance,
-    baseTokenIsAllowed,
     quoteTokenBalance,
-    quoteTokenIsAllowed,
     baseTokenDecimals,
     quoteTokenDecimals,
     askPrice,

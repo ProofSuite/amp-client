@@ -155,9 +155,6 @@ class TokenSearcher extends React.PureComponent<Props, State> {
       changeSelectedToken,
     } = this;
 
-    console.log(baseTokenAvailableBalance)
-    console.log(quoteTokenAvailableBalance)
-
     const filteredPairs = this.filterTokens();
 
     //Temporary loading condition
