@@ -21,6 +21,8 @@ type Props = {
   currentPair: Object,
   baseTokenBalance: number,
   quoteTokenBalance: number,
+  baseTokenAvailableBalance: number,
+  quoteTokenAvailableBalance: number,
   updateFavorite: (string, boolean) => void,
   updateCurrentPair: string => void,
 };
@@ -129,8 +131,22 @@ class TokenSearcher extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      state: { selectedTabId, searchFilter, selectedPair, sortOrder, filterName, quoteTokens, isOpen },
-      props: { updateFavorite, baseTokenBalance, quoteTokenBalance },
+      state: { 
+        selectedTabId, 
+        searchFilter, 
+        selectedPair, 
+        sortOrder, 
+        filterName, 
+        quoteTokens, 
+        isOpen
+      },
+      props: { 
+        updateFavorite, 
+        baseTokenBalance, 
+        quoteTokenBalance, 
+        baseTokenAvailableBalance, 
+        quoteTokenAvailableBalance
+      },
       onChangeSearchFilter,
       onChangeFilterName,
       onChangeSortOrder,
@@ -138,6 +154,9 @@ class TokenSearcher extends React.PureComponent<Props, State> {
       toggleCollapse,
       changeSelectedToken,
     } = this;
+
+    console.log(baseTokenAvailableBalance)
+    console.log(quoteTokenAvailableBalance)
 
     const filteredPairs = this.filterTokens();
 
@@ -165,6 +184,8 @@ class TokenSearcher extends React.PureComponent<Props, State> {
         changeTab={changeTab}
         toggleCollapse={toggleCollapse}
         changeSelectedToken={changeSelectedToken}
+        baseTokenAvailableBalance={baseTokenAvailableBalance}
+        quoteTokenAvailableBalance={quoteTokenAvailableBalance}
       />
     );
   }

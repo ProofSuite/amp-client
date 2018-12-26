@@ -1,6 +1,10 @@
 // @flow
 import type { State, ThunkAction } from '../../types'
-import { getTokenPairsDomain, getAccountBalancesDomain } from '../domains'
+import { 
+  getTokenPairsDomain, 
+  getAccountBalancesDomain,
+  getOrdersDomain
+} from '../domains'
 import * as actionCreators from '../actions/tokenSearcher'
 
 import { getQuoteToken, getBaseToken } from '../../utils/tokens'
@@ -9,6 +13,9 @@ import { quoteTokenSymbols as quotes } from '../../config/quotes'
 export default function tokenSearcherSelector(state: State) {
   let domain = getTokenPairsDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
+  let ordersDomain = getOrdersDomain(state)
+
+  
   let tokenPairs = domain.getTokenPairsDataArray()
   let favoriteTokenPairs = domain.getFavoritePairs()
   let tokenPairsByQuoteToken = {}
@@ -28,14 +35,24 @@ export default function tokenSearcherSelector(state: State) {
   }
 
   let currentPair = domain.getCurrentPair()
-  let baseTokenBalance = accountBalancesDomain.formattedTokenBalance(currentPair.baseTokenSymbol)
-  let quoteTokenBalance = accountBalancesDomain.formattedTokenBalance(currentPair.quoteTokenSymbol)
+
+  let baseTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.baseTokenSymbol)
+  let quoteTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.quoteTokenSymbol)
+  let baseTokenBalance = accountBalancesDomain.get(currentPair.baseTokenSymbol)
+  let quoteTokenBalance = accountBalancesDomain.get(currentPair.quoteTokenSymbol)
+  let baseTokenAvailableBalance = baseTokenBalance - baseTokenLockedBalance
+  let quoteTokenAvailableBalance = quoteTokenBalance - quoteTokenLockedBalance
+
+  console.log(baseTokenAvailableBalance)
+  console.log(quoteTokenAvailableBalance)
 
   return {
     tokenPairsByQuoteToken,
     currentPair,
     baseTokenBalance,
-    quoteTokenBalance
+    quoteTokenBalance,
+    baseTokenAvailableBalance,
+    quoteTokenAvailableBalance
   }
 }
 

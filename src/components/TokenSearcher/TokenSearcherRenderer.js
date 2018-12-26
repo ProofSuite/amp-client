@@ -43,6 +43,8 @@ type Props = {
   selectedTabId: string,
   baseTokenBalance: number,
   quoteTokenBalance: number,
+  baseTokenAvailableBalance: number,
+  quoteTokenAvailableBalance: number,
   searchFilter: string,
   selectedPair: Token,
   filterName: string,
@@ -77,7 +79,9 @@ const TokenSearchRenderer = (props: Props) => {
     changeSelectedToken,
     toggleCollapse,
     baseTokenBalance,
-    quoteTokenBalance
+    quoteTokenBalance,
+    baseTokenAvailableBalance,
+    quoteTokenAvailableBalance
   } = props
 
   return (
@@ -100,6 +104,8 @@ const TokenSearchRenderer = (props: Props) => {
               selectedPair={selectedPair}
               baseTokenBalance={baseTokenBalance}
               quoteTokenBalance={quoteTokenBalance}
+              baseTokenAvailableBalance={baseTokenAvailableBalance}
+              quoteTokenAvailableBalance={quoteTokenAvailableBalance}
             />
             <Tabs selectedTabId={selectedTabId} onChange={changeTab}>
               <Tab
@@ -222,17 +228,29 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
   return (
     <li key={pair} className="row">
       <CryptoIcon size={25} name={base} />
-      <SmallText className="base" onClick={() => changeSelectedToken(token)}>
+      <SmallText 
+        className="base" 
+        onClick={() => changeSelectedToken(token)}
+      >
         {isFavoriteTokensList ? pair : base}
       </SmallText>
-      <SmallText className="lastPrice" onClick={() => changeSelectedToken(token)}>
+      <SmallText 
+        className="lastPrice" 
+        onClick={() => changeSelectedToken(token)}
+      >
         {price ? price : 'N.A'}
       </SmallText>
-      <Change24H change={change} onClick={() => changeSelectedToken(token)}>
+      <Change24H 
+        change={change} 
+        onClick={() => changeSelectedToken(token)}
+      >
         {isNotNull(change) ? `${change}%` : 'N.A'}
       </Change24H>
       <SmallText className="star">
-        <Tooltip hoverOpenDelay={500} content={favorited ? ' Unfavorite' : 'Favorite'}>
+        <Tooltip
+          hoverOpenDelay={500} 
+          content={favorited ? ' Unfavorite' : 'Favorite'}
+        >
           <Icon icon={favorited ? 'star' : 'star-empty'} onClick={() => updateFavorite(pair, !favorited)} />
         </Tooltip>
       </SmallText>
@@ -281,8 +299,24 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
   )
 }
 
-const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => {
-  const { pair, price, volume, high, low, quote, base } = selectedPair
+const SelectedPair = (props: *) => {
+  const { 
+    selectedPair,
+    baseTokenBalance,
+    quoteTokenBalance,
+    baseTokenAvailableBalance,
+    quoteTokenAvailableBalance
+  } = props
+
+  const { 
+    pair, 
+    price, 
+    volume, 
+    high, 
+    low, 
+    quote, 
+    base
+  } = selectedPair
 
   return (
     <SelectedPairCard>
@@ -292,8 +326,14 @@ const SelectedPair = ({ selectedPair, baseTokenBalance, quoteTokenBalance }) => 
         </Box>
         <TokenPair>
           <h2>{pair}</h2>
-          <div><b>{base}</b> Balance: {baseTokenBalance || 'N.A'}</div>
-          <div><b>{quote}</b> Balance: {quoteTokenBalance || 'N.A' }</div>
+          <SmallTextDiv>
+          <b>{base} </b> 
+            Balance: {formatNumber(baseTokenAvailableBalance, { precision: 2 })} / {formatNumber(baseTokenBalance, { precision: 2 })}
+          </SmallTextDiv>
+          <SmallTextDiv>
+          <b>{quote} </b> 
+            Balance: {formatNumber(quoteTokenAvailableBalance, { precision: 2 }) } / {formatNumber(quoteTokenBalance, { precision: 2 })}
+          </SmallTextDiv>
         </TokenPair>
       </Row>
       <List>
