@@ -31,6 +31,8 @@ type Props = {
   handleDetectContract: SyntheticEvent<> => Promise<void>,
   handleAddToken: SyntheticEvent<> => Promise<void>,
   handleRegisterToken: SyntheticEvent<> => Promise<void>,
+  addTokenPending: boolean,
+  registerTokenPending: boolean,
 }
 
 const WalletInfoRenderer = (props: Props) => {
@@ -55,6 +57,8 @@ const WalletInfoRenderer = (props: Props) => {
     tokenIsRegistered,
     handleAddToken,
     handleRegisterToken,
+    addTokenPending,
+    registerTokenPending,
   } = props;
 
   return (
@@ -73,7 +77,6 @@ const WalletInfoRenderer = (props: Props) => {
           onClick={() => handleChangeTab("Add Token")}
           active={selectedTab === "Add Token"}
           intent={selectedTab === "Add Token" ? 'primary' : ''}
-          disabled
         />
         <Button
           text="Premium Listing"
@@ -113,6 +116,8 @@ const WalletInfoRenderer = (props: Props) => {
               tokenIsListed={tokenIsListed}
               handleAddToken={handleAddToken}
               handleRegisterToken={handleRegisterToken}
+              addTokenPending={addTokenPending}
+              registerTokenPending={registerTokenPending}
             />
           }
         />
@@ -215,6 +220,8 @@ const AddTokenPanel = (props: *) => {
     handleChangeTokenAddress, 
     handleAddToken,
     handleRegisterToken,
+    addTokenPending,
+    registerTokenPending
   } = props
 
   return (
@@ -258,7 +265,8 @@ const AddTokenPanel = (props: *) => {
             <Flex py={1} width="50%">
               <BlueGlowingButton
                 disabled={tokenIsAdded}
-                text={tokenIsAdded ? "Token already added" : "Add token"}
+                text={tokenIsAdded ? "Token added" : "Add token"}
+                loading={addTokenPending}
                 intent="primary"
                 fill
                 onClick={handleAddToken}
@@ -273,7 +281,8 @@ const AddTokenPanel = (props: *) => {
             <Flex py={1} width="50%">
               <BlueGlowingButton
                 disabled={tokenIsRegistered}
-                text={tokenIsRegistered ? "Token already registered" : "Register token"}
+                text={tokenIsRegistered ? "Token registered" : "Register token"}
+                loading={registerTokenPending}
                 intent="primary"
                 fill
                 onClick={handleRegisterToken}

@@ -195,7 +195,7 @@ const WETHRow = (props: Props) => {
 
 
   if (!WETHTokenData) return null
-  const { symbol, balance, allowed, allowancePending, value } = WETHTokenData
+  const { symbol, balance, allowed, allowancePending, value, listed } = WETHTokenData
 
   return (
     <Row key='WETH'>
@@ -203,11 +203,13 @@ const WETHRow = (props: Props) => {
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
-          <Box px={2}>
-            <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
-              <Icon icon="tick-circle" iconSize={14} intent="primary" />
-            </Tooltip>
-          </Box>
+          {
+            listed && <Box px={2}>
+              <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
+                <Icon icon="tick-circle" iconSize={14} intent="primary" />
+              </Tooltip>
+            </Box>
+          }
         </TokenNameWrapper>
       </Cell>
       <Cell onClick={() => redirectToTradingPage(symbol)}>
@@ -326,18 +328,20 @@ const BaseTokenRows = (props: Props) => {
 
   if (!baseTokensData) return null
 
-  return baseTokensData.map(({ symbol, balance, allowed, allowancePending, value }, index) => {
+  return baseTokensData.map(({ symbol, balance, allowed, allowancePending, value, listed }, index) => {
     return (
       <Row key={index}>
         <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
           <TokenNameWrapper>
             <ColoredCryptoIcon size={32} name={symbol} />
             <SmallText muted>{symbol}</SmallText>
-            <Box px={2}>
-              <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
-                <Icon icon="tick-circle" iconSize={14} intent="primary" />
-              </Tooltip>
-            </Box>
+            {
+              listed && <Box px={2}>
+                <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
+                  <Icon icon="tick-circle" iconSize={14} intent="primary" />
+                </Tooltip>
+              </Box>
+            }
           </TokenNameWrapper>
         </Cell>
         <Cell onClick={() => redirectToTradingPage(symbol)}>

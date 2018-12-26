@@ -1,9 +1,14 @@
 // @flow
 import { push } from 'connected-react-router'
-
-import { getAccountBalancesDomain, getAccountDomain, getTokenDomain } from '../domains'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
+
+import { 
+  getAccountBalancesDomain, 
+  getAccountDomain, 
+  getTokenDomain
+} from '../domains'
+
 import { quoteTokens } from '../../config/quotes'
 import { getCurrentBlock } from '../services/wallet'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
@@ -40,7 +45,10 @@ export default function walletPageSelector(state: State) {
 export function queryAccountData(): ThunkAction {
   return async (dispatch, getState, { api, provider }) => {
     const state = getState()
+
     const accountAddress = getAccountDomain(state).address()
+    const savedTokens = getTokenDomain(state).tokens()
+
 
     let balances = []
     let allowances = []
@@ -60,10 +68,10 @@ export function queryAccountData(): ThunkAction {
 
       if (!currentBlock) throw new Error('')
 
-      tokens.push({ symbol: 'ETH', address: '0x0'})
+      tokens = [ ...new Set([ ...tokens, ...savedTokens ])]
       let tokenSymbols = tokens.map(token => token.symbol)
+    
       let currencySymbols = ['USD', 'EUR', 'JPY']
-
       let exchangeRates = await api.fetchExchangeRates(tokenSymbols, currencySymbols)
 
       tokens = tokens.map(token => {

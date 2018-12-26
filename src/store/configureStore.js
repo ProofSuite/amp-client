@@ -1,17 +1,13 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { loadState, saveState } from '../store/services/storage/localStorage'
 import history from './history'
 import thunk from 'redux-thunk'
 import * as services from './services'
 import rootReducer from './index.js'
 import '../styles/css/index.css'
 
-// import { persistReducer, persistStore } from 'redux-persist'
-// import storage from 'redux-persist/lib/storage'
-
 let composeEnhancers = compose
-
-// const persistConfig = { key: 'root', storage }
 
 if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -22,8 +18,16 @@ const enhancers = [applyMiddleware(...middlewares)]
 const storeEnhancer = composeEnhancers(...enhancers)
 
 
-const configureStore = preloadedState => {
-  let store = createStore(connectRouter(history)(rootReducer), preloadedState, storeEnhancer)
+const configureStore = () => {
+  let persistedState = loadState()
+  let store = createStore(connectRouter(history)(rootReducer), persistedState, storeEnhancer)
+
+  store.subscribe(() => {
+    saveState({
+      tokens: store.getState().tokens,
+      tokenPairs: store.getState().tokenPairs
+    })
+  })
 
   if (module.hot) {
     module.hot.accept('./index.js', () => {
