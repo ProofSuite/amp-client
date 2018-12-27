@@ -54,7 +54,7 @@ const RecentTxTableRenderer = (props: Props) => {
           <Row 
             key={index}
             onClick={() => openEtherscanLink(tx.hash)}
-            color={tx.status === 'ERROR' ? Colors.RED_MUTED : Colors.GREEN_MUTED}
+            // color={tx.status === 'ERROR' ? Colors.RED_MUTED : Colors.GREEN_MUTED}
           >
             {
               {
