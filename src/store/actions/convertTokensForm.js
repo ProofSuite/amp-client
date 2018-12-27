@@ -26,45 +26,45 @@ export function reset(tokenSymbol: string) {
   };
 }
 
-export function sendConvertTx(tokenSymbol: string, hash: string) {
+export function sendConvertTx(tokenSymbol: string, tx: Tx) {
   return {
     type: actionTypes.sendConvertTx,
-    payload: { tokenSymbol, hash },
+    payload: { tokenSymbol, hash: tx.hash, transactions: [ tx ] },
   };
 }
 
-export function revertConvertTx(tokenSymbol: string, receipt: TxReceipt) {
+export function revertConvertTx(tokenSymbol: string, tx: Tx) {
   return {
     type: actionTypes.revertConvertTx,
-    payload: { tokenSymbol, receipt },
+    payload: { tokenSymbol, receipt: tx.receipt, transactions: [ tx ] },
   };
 }
 
-export function confirmConvertTx(tokenSymbol: string, receipt: TxReceipt) {
+export function confirmConvertTx(tokenSymbol: string, tx: Tx) {
   return {
     type: actionTypes.confirmConvertTx,
-    payload: { tokenSymbol, receipt },
+    payload: { tokenSymbol, receipt: tx.receipt, transactions: [ tx ] },
   };
 }
 
-export function sendAllowTx(tokenSymbol: string, hash: string) {
+export function sendAllowTx(tokenSymbol: string, tx: Tx ) {
   return {
     type: actionTypes.sendAllowTx,
-    payload: { tokenSymbol, hash },
+    payload: { tokenSymbol, hash: tx.hash, transactions: [ tx ] },
   };
 }
 
-export function revertAllowTx(tokenSymbol: string, receipt: TxReceipt) {
+export function revertAllowTx(tokenSymbol: string, tx: Tx, message: string) {
   return {
     type: actionTypes.revertAllowTx,
-    payload: { tokenSymbol, receipt },
+    payload: { tokenSymbol, receipt: tx.receipt, transactions: [ tx ], message },
   };
 }
 
-export function confirmAllowTx(tokenSymbol: string, receipt: TxReceipt) {
+export function confirmAllowTx(tokenSymbol: string, tx: Tx, message: string) {
   return {
     type: actionTypes.confirmAllowTx,
-    payload: { tokenSymbol, receipt },
+    payload: { tokenSymbol, receipt: tx.receipt, transactions: [ tx ], message },
   };
 }
 

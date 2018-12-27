@@ -103,17 +103,18 @@ export const accountBalances = createReducer(action => {
 export const transactions = createReducer(action => {
   const { type, payload } = action
   switch (type) {
-    // case transferTokensFormActionTypes.sendTx:
-    // case transferTokensFormActionTypes.confirmTx:
-    // case transferTokensFormActionTypes.revertTx:
-    // case transferTokensFormActionTypes.txError:
-    // case convertTokensFormActionTypes.sendConvertTx:
-    // case convertTokensFormActionTypes.revertConvertTx:
-    // case convertTokensFormActionTypes.confirmConvertTx:
-    // case convertTokensFormActionTypes.sendAllowTx:
-    // case convertTokensFormActionTypes.revertAllowTx:
-    // case convertTokensFormActionTypes.confirmAllowTx:
-    // case orderFormActionTypes.unlockPair:
+
+    case transferTokensFormActionTypes.sendTx:
+    case transferTokensFormActionTypes.confirmTx:
+    case transferTokensFormActionTypes.revertTx:
+      return transactionEvents.txsUpdated(payload.transactions)
+    case convertTokensFormActionTypes.sendConvertTx:
+    case convertTokensFormActionTypes.revertConvertTx:
+    case convertTokensFormActionTypes.confirmConvertTx:
+    case convertTokensFormActionTypes.sendAllowTx:
+    case convertTokensFormActionTypes.revertAllowTx:
+    case convertTokensFormActionTypes.confirmAllowTx:
+    return transactionEvents.txsUpdated(payload.transactions)
     case orderFormActionTypes.unlockPair:
     case orderFormActionTypes.confirmUnlockPair:
     case orderFormActionTypes.errorUnlockPair:
@@ -443,6 +444,13 @@ export const notifications = createReducer(action => {
     case walletPageActionTypes.errorLockToken:
     case walletPageActionTypes.errorUnlockToken:
       return notificationEvents.notificationAdded(payload.notificationType, { intent: 'danger', message: payload.message })
+    case transferTokensFormActionTypes.revertTx:
+    case transferTokensFormActionTypes.revertAllowTx:
+    case transferTokensFormActionTypes.revertConvertTx:
+      return notificationEvents.dangerNotificationAdded(payload.message)
+    case transferTokensFormActionTypes.confirmTx:
+    case transferTokensFormActionTypes.sendTx:
+      return notificationEvents.successNotificationAdded(payload.message)
     default:
       return notificationEvents.initialized()
   }

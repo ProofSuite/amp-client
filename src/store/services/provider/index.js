@@ -56,7 +56,7 @@ export async function queryTransactionHistory(address: string) {
                 parsedTxs.push({ type: 'Token Unlocked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
                 break
               case '0':
-                parsedTxs.push({ type: 'Token locked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+                parsedTxs.push({ type: 'Token Locked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
                 break
               default:
                 parsedTxs.push({ type: 'Approval', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
@@ -64,7 +64,7 @@ export async function queryTransactionHistory(address: string) {
             }
             break
           case 'transfer':
-            parsedTxs.push({ type: 'Transfer', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+            parsedTxs.push({ type: 'Token Transfer', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
             break
           default:
             parsedTxs.push({ type: '/', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
