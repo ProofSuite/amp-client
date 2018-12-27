@@ -1,5 +1,5 @@
 import { DEFAULT_NETWORK_ID } from '../../../config/environment'
-import { ERC20 } from '../../../config/abis'
+import { ERC20, WETH } from '../../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { utils, providers, Contract, getDefaultProvider } from 'ethers'
 import { decodeValue } from '../../../utils/helpers'
@@ -40,6 +40,8 @@ export async function detectContract(address: string) {
 export async function queryTransactionHistory(address: string) {
   try {
     abiDecoder.addABI(ERC20)
+    abiDecoder.addABI(WETH)
+
     const provider = getEtherscanProvider()
     const txs = await provider.getHistory(address)
     const parsedTxs = []
@@ -65,6 +67,12 @@ export async function queryTransactionHistory(address: string) {
             break
           case 'transfer':
             parsedTxs.push({ type: 'Token Transfer', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+            break
+          case 'deposit': 
+            parsedTxs.push({ type: 'ETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+            break
+          case 'withdraw':
+            parsedTxs.push({ type: 'WETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
             break
           default:
             parsedTxs.push({ type: '/', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
