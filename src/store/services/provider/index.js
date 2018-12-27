@@ -1,17 +1,27 @@
 import { DEFAULT_NETWORK_ID } from '../../../config/environment'
 import { ERC20 } from '../../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
-import { utils, providers, Contract } from 'ethers'
+import { utils, providers, Contract, getDefaultProvider } from 'ethers'
+import { decodeValue } from '../../../utils/helpers'
+import abiDecoder from 'abi-decoder'
 
 export const createConnection = () => {
     switch(DEFAULT_NETWORK_ID) {
         case '1':
-            return window.provider = new providers.InfuraProvider('homestead')
+            return window.provider = new getDefaultProvider('homestead')
         case '4':
-            return window.provider = new providers.InfuraProvider('rinkeby')
+            return window.provider = new getDefaultProvider('rinkeby')
         default:
             throw new Error('unknown network')
     }
+}
+
+export const getInfuraProvider = () => {
+  return window.provider.providers[0]
+}
+
+export const getEtherscanProvider = () => {
+  return window.provider.providers[1]
 }
 
 export async function detectContract(address: string) {
@@ -22,6 +32,47 @@ export async function detectContract(address: string) {
     let symbol = await contract.symbol()
 
     return { decimals, symbol }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export async function queryTransactionHistory(address: string) {
+  try {
+    abiDecoder.addABI(ERC20)
+    const provider = getEtherscanProvider()
+    const txs = await provider.getHistory(address)
+    const parsedTxs = []
+
+    txs.forEach(tx => {
+      let decoded = tx.data ? abiDecoder.decodeMethod(tx.data) : null
+      
+      if (decoded) {
+        switch(decoded.name) {
+          case 'approve':
+            let value = decodeValue(decoded.params)
+            switch(value) {
+              case '1e+36':
+                parsedTxs.push({ type: 'Token Unlocked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+                break
+              case '0':
+                parsedTxs.push({ type: 'Token locked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+                break
+              default:
+                parsedTxs.push({ type: 'Approval', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+                break
+            }
+            break
+          case 'transfer':
+            parsedTxs.push({ type: 'Transfer', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+            break
+          default:
+            parsedTxs.push({ type: '/', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+        }
+      }
+    })
+
+    return parsedTxs
   } catch (e) {
     console.log(e)
   }

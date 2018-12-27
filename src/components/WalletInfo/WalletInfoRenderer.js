@@ -2,13 +2,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import TransferTokensModal from '../../components/TransferTokensModal';
 import TokenBalanceChart from '../../components/TokenBalanceChart'
+import RecentTxTable from '../../components/RecentTxTable'
 import Help from '../../components/Help'
 
 import { Card, Position, Button, Tag, Tabs, Tab, InputGroup, Icon } from '@blueprintjs/core';
 import { Flex, FlexRow, FlexItem, Box, Colors, Text,TextDiv, TextBox, BlueGlowingButton } from '../Common'
 import { Fonts } from '../Common/Variables'
+
+import type { Tx } from '../../types/transactions'
 
 type Props = {
   isModalOpen: boolean,
@@ -33,6 +35,7 @@ type Props = {
   handleRegisterToken: SyntheticEvent<> => Promise<void>,
   addTokenPending: boolean,
   registerTokenPending: boolean,
+  recentTransactions: Array<Tx>
 }
 
 const WalletInfoRenderer = (props: Props) => {
@@ -41,8 +44,6 @@ const WalletInfoRenderer = (props: Props) => {
     handleModalClose,
     accountAddress,
     balance,
-    gasPrice,
-    gas,
     selectedTab,
     tokenAddress,
     tokenSymbol,
@@ -59,6 +60,7 @@ const WalletInfoRenderer = (props: Props) => {
     handleRegisterToken,
     addTokenPending,
     registerTokenPending,
+    recentTransactions
   } = props;
 
   return (
@@ -81,8 +83,8 @@ const WalletInfoRenderer = (props: Props) => {
         <Button
           text="Premium Listing"
           minimal
-          intent="warning"
           onClick={() => handleChangeTab("Premium Listing")}
+          intent={selectedTab === "Premium Listing" ? 'warning' : ''}
           active={selectedTab === "Premium Listing"}
         />    
       </ButtonRow>
@@ -96,8 +98,7 @@ const WalletInfoRenderer = (props: Props) => {
               accountAddress={accountAddress}
               accountEtherscanUrl={accountEtherscanUrl}
               balance={balance}
-              gasPrice={gasPrice}
-              gas={gas}             
+              transactions={recentTransactions}
             />
           }
         />
@@ -148,12 +149,8 @@ const WalletInfoRenderer = (props: Props) => {
 const PortfolioPanel = (props: *) => {
   const {
     accountAddress,
-    balance,
-    gas,
-    gasPrice,
-    isModalOpen,
-    handleModalClose,
-    accountEtherscanUrl
+    accountEtherscanUrl,
+    transactions
   } = props
 
   return (
@@ -189,16 +186,12 @@ const PortfolioPanel = (props: *) => {
       <TokenBalanceChartBox>
         <TokenBalanceChart />
       </TokenBalanceChartBox>
-      <TextBox>
-        <GlowingButton
-          fill
-          onClick={handleModalClose}
-          text="NEW TRANSACTION"
-          intent="primary"
-          large
-        />
-      </TextBox>
-      <TransferTokensModal gas={gas} gasPrice={gasPrice} isOpen={isModalOpen} handleClose={handleModalClose} />
+      <Tag minimal large>Recent Transactions</Tag>
+        <Box my={2}>
+          <RecentTxTable
+            transactions={transactions}
+          />
+        </Box>
     </React.Fragment>
   )
 }
@@ -322,6 +315,7 @@ const PremiumListingPanel = (props: *) => {
 
 const WalletInfoCard = styled(Card)`
   height: 92vh;
+  overflow-y: scroll;
 `
 
 const GlowingButton = styled(Button)`

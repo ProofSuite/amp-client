@@ -6,7 +6,7 @@ import * as notifierActionCreators from '../actions/app'
 import { 
   getAccountBalancesDomain, 
   getAccountDomain, 
-  getTokenDomain
+  getTokenDomain,
 } from '../domains'
 
 import { quoteTokens } from '../../config/quotes'
@@ -38,7 +38,7 @@ export default function walletPageSelector(state: State) {
     currentBlock: accountDomain.currentBlock(),
     showHelpModal: accountDomain.showHelpModal(),
     connected: true,
-    referenceCurrency: currency.symbol
+    referenceCurrency: currency.symbol,
   }
 }
 
@@ -58,12 +58,14 @@ export function queryAccountData(): ThunkAction {
         currentBlock,
         tokens,
         pairs,
-        exchangeAddress
+        exchangeAddress,
+        txs
       ] = await Promise.all([
         getCurrentBlock(),
         api.getTokens(),
         api.fetchPairs(),
-        api.getExchangeAddress()
+        api.getExchangeAddress(),
+        provider.queryTransactionHistory(accountAddress)
       ])
 
       if (!currentBlock) throw new Error('')
@@ -83,7 +85,9 @@ export function queryAccountData(): ThunkAction {
         }
       })
 
-      dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress))
+      console.log(txs)
+
+      dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress, txs))
 
       //we remove the ETH 'token' because the process to obtain balances for ETH and others tokens is different
       tokens = tokens.filter(token => token.symbol !== 'ETH')
@@ -91,7 +95,7 @@ export function queryAccountData(): ThunkAction {
       let [
         etherBalance,
         tokenBalanceResult,
-        tokenAllowanceResult
+        tokenAllowanceResult,
       ] = await Promise.all([
         provider.queryEtherBalance(accountAddress),
         provider.queryTokenBalances(accountAddress, tokens),
@@ -154,35 +158,48 @@ export function toggleAllowance(symbol: string): ThunkAction {
       const isAllowed = getAccountBalancesDomain(state).isAllowed(symbol)
       const isPending = getAccountBalancesDomain(state).isAllowancePending(symbol)
       const tokenContractAddress = tokens[symbol].address
+      const txType = isAllowed ? 'Token Locked' : 'Token Unlocked'
 
       if (isPending) throw new Error('Trading approval pending')
 
       const lockTxSentHandler = (txHash) => {
-        dispatch(notifierActionCreators.addUnlockTokenPendingNotification({ txHash, symbol }))
-        dispatch(actionCreators.updateAllowancePending(symbol))
+        let tx = { type: txType, hash: txHash, time: Date.now(), status: 'PENDING' }
+        dispatch(actionCreators.lockToken(symbol, txHash, tx))
       }
 
       const unlockTxSentHandler = (txHash) => {
-        dispatch(notifierActionCreators.addLockTokenPendingNotification({ txHash, symbol }))
-        dispatch(actionCreators.updateAllowancePending(symbol))
+        let tx = { type: txType, hash: txHash, time: Date.now(), status: 'PENDING' }
+        dispatch(actionCreators.unlockToken(symbol, txHash, tx))
       }
 
       const lockTxConfirmedHandler = (txConfirmed, txHash) => {
-        txConfirmed
-          ? dispatch(notifierActionCreators.addUnlockTokenConfirmedNotification({ symbol, txHash }))
-          : dispatch(notifierActionCreators.addErrorNotification({ message: `${symbol} Approval Failed. Please try again.` }))
+        if (txConfirmed) {
+          let tx = { type: txType, hash: txHash, time: Date.now(), status: 'CONFIRMED' }
+          dispatch(actionCreators.confirmLockToken(symbol, txHash, tx))
+
+        } else {
+          let tx = { type: txType, hash: txHash, time: Date.now(), status: 'ERROR' }
+          let errorMessage = `${symbol} Approval Failed. Please try again.`
+          dispatch(actionCreators.errorLockToken(symbol, txHash, tx, errorMessage))
+        }
       }
 
-      const unlockTxConfirmedHandler = (txConfirmed, txHash) => {
-        txConfirmed
-          ? dispatch(notifierActionCreators.addLockTokenConfirmedNotification({ symbol, txHash }))
-          : dispatch(notifierActionCreators.addErrorNotification({ message: `${symbol} Allowance Removal Failed. Please try again.` }))
+      const unlockTxConfirmedHandler = (txConfirmed, txHash) => {      
+        if (txConfirmed) {
+          let tx = { type: txType, hash: txHash, time: Date.now(), status: 'CONFIRMED' }
+          dispatch(actionCreators.confirmUnlockToken(symbol, txHash, tx))
+
+        } else {
+          let tx = { type: txType, hash: txHash, time: Date.now(), status: 'ERROR' }
+          let message = `${symbol} Allowance Removal Failed. Please try again.`
+          dispatch(actionCreators.errorUnlockToken(symbol, txHash, tx, message))
+        }
       }
 
       if (isAllowed) {
-        await txProvider.updateExchangeAllowance(tokenContractAddress, 0, unlockTxConfirmedHandler, lockTxSentHandler)
+        await txProvider.updateExchangeAllowance(tokenContractAddress, 0, lockTxConfirmedHandler, lockTxSentHandler)
       } else {
-        await txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, lockTxConfirmedHandler, unlockTxSentHandler)
+        await txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, unlockTxConfirmedHandler, unlockTxSentHandler)
       }
       
     } catch (e) {

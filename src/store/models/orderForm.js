@@ -90,8 +90,6 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
         takeFee,
       } = pair
 
-      console.log(pair)
-
       let signer = getSigner()
       let userAddress = await signer.getAddress()
 
@@ -157,15 +155,21 @@ export function unlockPair(baseTokenSymbol: string, quoteTokenSymbol: string): T
       const baseTokenAddress = tokens[baseTokenSymbol].address
       const quoteTokenAddress = tokens[quoteTokenSymbol].address
 
-      const txSentHandler = (txHash) => {
-        dispatch(actionCreators.unlockPair(baseTokenSymbol, quoteTokenSymbol))
-        dispatch(notifierActionCreators.addUnlockPairPendingNotification({ baseTokenSymbol, quoteTokenSymbol, txHash }))
+      const txSentHandler = (txHash1, txHash2) => {
+        let tx1 = { type: 'Token Unlocked', hash: txHash1, time: Date.now(), status: 'PENDING'}
+        let tx2 = { type: 'Token Unlocked', hash: txHash2, time: Date.now(), status: 'PENDING'}
+
+        dispatch(actionCreators.unlockPair(baseTokenSymbol, quoteTokenSymbol, tx1, tx2 ))
       }
-      
-      const txConfirmHandler = (txConfirmed, txHash) => {
+
+      const txConfirmHandler = (txConfirmed, txHash1, txHash2) => {
+        let tx1 = { type: 'Token Unlocked', hash: txHash1, time: Date.now(), status: 'CONFIRMED' }
+        let tx2 = { type: 'Token Unlocked', hash: txHash2, time: Date.now(), status: 'CONFIRMED' }
+        let errorMessage = `Approval failed. Please try again`
+
         txConfirmed
-          ? dispatch(notifierActionCreators.addUnlockPairConfirmedNotification({ baseTokenSymbol, quoteTokenSymbol, txHash }))
-          : dispatch(notifierActionCreators.addErrorNotification({ message: `Approval Failed. Please try again.` }))
+          ? dispatch(actionCreators.confirmUnlockPair(baseTokenSymbol, quoteTokenSymbol, tx1, tx2))
+          : dispatch(actionCreators.errorUnlockPair(baseTokenSymbol, quoteTokenSymbol, tx1, tx2, errorMessage))
       }
 
       txProvider.updatePairAllowances(baseTokenAddress, quoteTokenAddress, txConfirmHandler, txSentHandler)

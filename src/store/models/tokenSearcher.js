@@ -1,10 +1,15 @@
 // @flow
-import type { State, ThunkAction } from '../../types'
+import type { 
+  State, 
+  ThunkAction 
+} from '../../types'
+
 import { 
   getTokenPairsDomain, 
   getAccountBalancesDomain,
   getOrdersDomain
 } from '../domains'
+
 import * as actionCreators from '../actions/tokenSearcher'
 
 import { getQuoteToken, getBaseToken } from '../../utils/tokens'
@@ -14,8 +19,6 @@ export default function tokenSearcherSelector(state: State) {
   let domain = getTokenPairsDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let ordersDomain = getOrdersDomain(state)
-
-  
   let tokenPairs = domain.getTokenPairsDataArray()
   let favoriteTokenPairs = domain.getFavoritePairs()
   let tokenPairsByQuoteToken = {}
@@ -35,7 +38,6 @@ export default function tokenSearcherSelector(state: State) {
   }
 
   let currentPair = domain.getCurrentPair()
-
   let baseTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.baseTokenSymbol)
   let quoteTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.quoteTokenSymbol)
   let baseTokenBalance = accountBalancesDomain.get(currentPair.baseTokenSymbol)

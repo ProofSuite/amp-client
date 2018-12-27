@@ -8,6 +8,7 @@ import WalletInfo from '../../components/WalletInfo'
 import GetStartedModal from '../../components/GetStartedModal'
 
 import type { TokenData } from '../../types/tokens'
+import type { Tx } from '../../types/Tx'
 
 type Props = {
   tokenData: Array<TokenData>,
@@ -33,7 +34,7 @@ const WalletPageRenderer = (props: Props) => {
     isHelpModalOpen,
     closeHelpModal,
     balancesLoading,
-    referenceCurrency
+    referenceCurrency,
   } = props
 
   return (

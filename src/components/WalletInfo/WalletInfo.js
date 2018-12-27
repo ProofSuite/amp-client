@@ -6,6 +6,7 @@ import { isEthereumAddress } from '../../utils/crypto'
 import { ETHERSCAN_TOKEN_URL, ETHERSCAN_ADDRESS_URL } from '../../config/urls'
 
 import type { Token, TokenPairs } from '../../types/tokens'
+import type { Tx } from '../../types/transactions'
 
 type Props = {
   accountAddress: string,
@@ -17,6 +18,7 @@ type Props = {
   detectContract: string => { decimals: number, symbol: string, isRegistered: boolean },
   addToken: string => { error: string, token: Token, pairs: TokenPairs },
   registerToken: string => { error?: string, token?: Token, pairs?: TokenPairs },
+  recentTransactions: Array<Tx>
 }
 
 type State = {
@@ -117,6 +119,7 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
         etherBalance,
         userTokens,
         listedTokens,
+        recentTransactions
       },
       state: { 
         isModalOpen,
@@ -165,6 +168,7 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
         handleRegisterToken={handleRegisterToken}
         registerTokenPending={registerTokenPending}
         addTokenPending={addTokenPending}
+        recentTransactions={recentTransactions}
       />
     );
   }
