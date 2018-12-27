@@ -2,13 +2,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import TransferTokensModal from '../../components/TransferTokensModal';
 import TokenBalanceChart from '../../components/TokenBalanceChart'
+import RecentTxTable from '../../components/RecentTxTable'
 import Help from '../../components/Help'
 
 import { Card, Position, Button, Tag, Tabs, Tab, InputGroup, Icon } from '@blueprintjs/core';
 import { Flex, FlexRow, FlexItem, Box, Colors, Text,TextDiv, TextBox, BlueGlowingButton } from '../Common'
 import { Fonts } from '../Common/Variables'
+
+import type { Tx } from '../../types/transactions'
 
 type Props = {
   isModalOpen: boolean,
@@ -31,6 +33,9 @@ type Props = {
   handleDetectContract: SyntheticEvent<> => Promise<void>,
   handleAddToken: SyntheticEvent<> => Promise<void>,
   handleRegisterToken: SyntheticEvent<> => Promise<void>,
+  addTokenPending: boolean,
+  registerTokenPending: boolean,
+  recentTransactions: Array<Tx>
 }
 
 const WalletInfoRenderer = (props: Props) => {
@@ -39,8 +44,6 @@ const WalletInfoRenderer = (props: Props) => {
     handleModalClose,
     accountAddress,
     balance,
-    gasPrice,
-    gas,
     selectedTab,
     tokenAddress,
     tokenSymbol,
@@ -55,6 +58,9 @@ const WalletInfoRenderer = (props: Props) => {
     tokenIsRegistered,
     handleAddToken,
     handleRegisterToken,
+    addTokenPending,
+    registerTokenPending,
+    recentTransactions
   } = props;
 
   return (
@@ -73,13 +79,12 @@ const WalletInfoRenderer = (props: Props) => {
           onClick={() => handleChangeTab("Add Token")}
           active={selectedTab === "Add Token"}
           intent={selectedTab === "Add Token" ? 'primary' : ''}
-          disabled
         />
         <Button
           text="Premium Listing"
           minimal
-          intent="warning"
           onClick={() => handleChangeTab("Premium Listing")}
+          intent={selectedTab === "Premium Listing" ? 'warning' : ''}
           active={selectedTab === "Premium Listing"}
         />    
       </ButtonRow>
@@ -93,8 +98,7 @@ const WalletInfoRenderer = (props: Props) => {
               accountAddress={accountAddress}
               accountEtherscanUrl={accountEtherscanUrl}
               balance={balance}
-              gasPrice={gasPrice}
-              gas={gas}             
+              transactions={recentTransactions}
             />
           }
         />
@@ -113,6 +117,8 @@ const WalletInfoRenderer = (props: Props) => {
               tokenIsListed={tokenIsListed}
               handleAddToken={handleAddToken}
               handleRegisterToken={handleRegisterToken}
+              addTokenPending={addTokenPending}
+              registerTokenPending={registerTokenPending}
             />
           }
         />
@@ -143,12 +149,8 @@ const WalletInfoRenderer = (props: Props) => {
 const PortfolioPanel = (props: *) => {
   const {
     accountAddress,
-    balance,
-    gas,
-    gasPrice,
-    isModalOpen,
-    handleModalClose,
-    accountEtherscanUrl
+    accountEtherscanUrl,
+    transactions
   } = props
 
   return (
@@ -184,16 +186,12 @@ const PortfolioPanel = (props: *) => {
       <TokenBalanceChartBox>
         <TokenBalanceChart />
       </TokenBalanceChartBox>
-      <TextBox>
-        <GlowingButton
-          fill
-          onClick={handleModalClose}
-          text="NEW TRANSACTION"
-          intent="primary"
-          large
-        />
-      </TextBox>
-      <TransferTokensModal gas={gas} gasPrice={gasPrice} isOpen={isModalOpen} handleClose={handleModalClose} />
+      <Tag minimal large>Recent Transactions</Tag>
+        <Box my={2}>
+          <RecentTxTable
+            transactions={transactions}
+          />
+        </Box>
     </React.Fragment>
   )
 }
@@ -215,6 +213,8 @@ const AddTokenPanel = (props: *) => {
     handleChangeTokenAddress, 
     handleAddToken,
     handleRegisterToken,
+    addTokenPending,
+    registerTokenPending
   } = props
 
   return (
@@ -258,7 +258,8 @@ const AddTokenPanel = (props: *) => {
             <Flex py={1} width="50%">
               <BlueGlowingButton
                 disabled={tokenIsAdded}
-                text={tokenIsAdded ? "Token already added" : "Add token"}
+                text={tokenIsAdded ? "Token added" : "Add token"}
+                loading={addTokenPending}
                 intent="primary"
                 fill
                 onClick={handleAddToken}
@@ -273,7 +274,8 @@ const AddTokenPanel = (props: *) => {
             <Flex py={1} width="50%">
               <BlueGlowingButton
                 disabled={tokenIsRegistered}
-                text={tokenIsRegistered ? "Token already registered" : "Register token"}
+                text={tokenIsRegistered ? "Token registered" : "Register token"}
+                loading={registerTokenPending}
                 intent="primary"
                 fill
                 onClick={handleRegisterToken}
@@ -313,6 +315,7 @@ const PremiumListingPanel = (props: *) => {
 
 const WalletInfoCard = styled(Card)`
   height: 92vh;
+  overflow-y: scroll;
 `
 
 const GlowingButton = styled(Button)`

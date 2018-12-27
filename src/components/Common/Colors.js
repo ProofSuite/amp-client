@@ -168,7 +168,7 @@ export default {
   success: Colors.GREEN3,
   warning: Colors.ORANGE3,
   danger: Colors.RED3,
-
+  
   OUTLINE: rgba(Colors.BLUE3, 0.6),
 
   LIGHT_APP_BACKGROUND: Colors.LIGHT_GRAY5,
@@ -191,6 +191,8 @@ export default {
   SELL_MUTED: rgba('#F55656', 0.1),
   BUY_MUTED: rgba('#15B371', 0.1),
   BLUE_MUTED: rgba('#137CBD', 0.3),
+  RED_MUTED: rgba('#F55656', 0.1),
+  GREEN_MUTED: rgba('#15B371', 0.1),
 };
 
 export const Icons = {

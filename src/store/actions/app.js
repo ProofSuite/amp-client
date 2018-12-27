@@ -150,7 +150,7 @@ export function addUnlockPairConfirmedNotification({ baseTokenSymbol, quoteToken
     payload: {
       notificationType: 'unlockPairConfirmed',
       options: {
-        baseTokenSymbol, 
+        baseTokenSymbol,
         quoteTokenSymbol,
         txHash
       }

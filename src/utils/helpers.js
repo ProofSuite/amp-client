@@ -144,3 +144,7 @@ export const getExchangeRate = (currency: string, token: Token) => {
       return null
   }
 }
+
+export const decodeValue = (params) => {
+  return params.filter(param => param.name === '_value')[0].value
+}

@@ -24,6 +24,40 @@ export const notificationAdded = (notificationType, options) => {
   return event;
 };
 
+export const successNotificationAdded = (message) => {
+  const event = (state: NotificationState) => {
+    return [
+      ...state,
+      {
+        id: ++id,
+        options: {
+          intent: 'success',
+          message: message
+        }
+      }
+    ]
+  }
+  
+  return event;
+}
+
+export const dangerNotificationAdded = (message) => {
+  const event = (state: NotificationState) => {
+    return [
+      ...state,
+      {
+        id: ++id,
+        options: {
+          intent: 'danger',
+          message: message
+        }
+      }
+    ]
+  }
+  
+  return event;
+}
+
 export const notificationRemoved = id => {
   const event = (state: NotificationState) => {
     return state.filter(notification => notification.id !== id);

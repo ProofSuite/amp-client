@@ -1,21 +1,26 @@
 
 import * as actionCreators from '../actions/walletInfo'
-import { getTokenDomain, getAccountBalancesDomain, getTransferTokensFormDomain, getAccountDomain } from '../domains'
+
+import { 
+    getTokenDomain, 
+    getAccountBalancesDomain,
+    getAccountDomain,
+    getTransactionsDomain
+} from '../domains'
 
 export default function walletInfoSelector(state: State) {
     let tokenDomain = getTokenDomain(state)
-    let transferTokensDomain = getTransferTokensFormDomain(state)
     let accountDomain = getAccountDomain(state)
     let accountBalancesDomain = getAccountBalancesDomain(state)
+    let transactionsDomain = getTransactionsDomain(state)
 
     return {
         userTokens: tokenDomain.tokenAddresses(),
         listedTokens: tokenDomain.listedTokenAddresses(),
         registeredTokens: tokenDomain.registeredTokenAddresses(),
         etherBalance: accountBalancesDomain.formattedEtherBalance(),
-        gas: transferTokensDomain.getGas(),
-        gasPrice: transferTokensDomain.getGasPrice(),
-        accountAddress: accountDomain.address()
+        accountAddress: accountDomain.address(),
+        recentTransactions: transactionsDomain.recentTransactions(8)
     }
 }
 
@@ -34,8 +39,6 @@ export function detectContract(tokenAddress: string): ThunkAction {
 
             token = await api.getToken(tokenAddress)
             if (token) {
-                console.log('found token in api')
-
                 return {
                     isRegistered: true,
                     decimals: token.decimals,
