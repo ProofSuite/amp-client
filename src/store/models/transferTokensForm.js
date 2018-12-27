@@ -71,17 +71,22 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
         value: utils.parseEther(amount.toString()),
       };
 
-      let tx = await signer.sendTransaction(rawTx);
-      dispatch(actionCreators.sendTx(tx.hash));
+      let { hash } = await signer.sendTransaction(rawTx);
+      let tx = { type: 'Ether Transfer', hash, time: Date.now(), status: 'PENDING' }
+      dispatch(actionCreators.sendTx(tx));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
 
       if (receipt.status === 0) {
-        dispatch(actionCreators.revertTx('Transaction Failed', receipt))
-        dispatch(notificationActionCreators.addErrorNotification({ message: 'Token transfer failed.' }))
+        let tx = { type: 'Ether Transfer', time: Date.now(), status: 'ERROR', hash, receipt }
+        let message = 'Token transfer failed.'
+        
+        dispatch(actionCreators.revertTx(tx, message))
       } else {
-        dispatch(actionCreators.confirmTx(receipt))
-        dispatch(notificationActionCreators.addSuccessNotification({ message: 'Token transfer successful!' }))
+        let tx = { type: 'Ether Transfer', time: Date.now(), status: 'CONFIRMED', hash, receipt }
+        let message = 'Token transfer successful!'
+        
+        dispatch(actionCreators.confirmTx(tx, message))
       }
 
     } catch (error) {
@@ -126,23 +131,23 @@ export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkActio
       let token = new Contract(tokenAddress, ERC20, signer);
       let decimals = await token.decimals.call()
       let amountTokens = utils.parseUnits(amount, decimals)
+      let txOpts = { gasLimit: parseFloat(gas) || 0, gasPrice: parseFloat(gasPrice) || 2 * 10e9 };
 
-      let txOpts = {
-        gasLimit: parseFloat(gas) || 0,
-        gasPrice: parseFloat(gasPrice) || 2 * 10e9,
-      };
-
-      let tx = await token.transfer(receiver, amountTokens, txOpts);
-      dispatch(actionCreators.sendTx(tx.hash));
+      let { hash } = await token.transfer(receiver, amountTokens, txOpts);
+      let tx = { type: 'Token Transfer', hash, time: Date.now(), status: 'PENDING' }
+      dispatch(actionCreators.sendTx(tx));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
 
       if (receipt.status === 0) {
-        dispatch(actionCreators.revertTx('Transaction Failed', receipt))
-        dispatch(notificationActionCreators.addErrorNotification({ message: 'Token transfer failed.' }))
+        let tx = { type: 'Token Transfer', time: Date.now(), status: 'ERROR', hash, receipt }
+        let message = 'Token transfer failed'
+        dispatch(actionCreators.revertTx(tx, message))
+
       } else {
-        dispatch(actionCreators.confirmTx(receipt));
-        dispatch(notificationActionCreators.addSuccessNotification({ message: 'Token transfer successful!' }))
+        let tx = { type: 'Token Transfer', time: Date.now(), status: 'CONFIRMED', hash, receipt }
+        let message = 'Token transfer successful'
+        dispatch(actionCreators.confirmTx(tx, message));
       }
 
     } catch (error) {

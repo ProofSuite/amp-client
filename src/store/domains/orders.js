@@ -1,5 +1,6 @@
 // @flow
 import type { Orders, OrdersState } from '../../types/orders'
+import { getBaseToken, getQuoteToken } from '../../utils/tokens'
 import { formatNumber } from 'accounting-js'
 
 const initialState = {
@@ -80,6 +81,38 @@ export default function ordersDomain(state: OrdersState) {
       })
 
       return orders
+    },
+
+    currentPositionsByToken: (symbol) => {
+      let orders = Object.values(state.byHash)
+    
+      return orders.filter(order => {
+        if (symbol !== getBaseToken(order.pair) && symbol !== getQuoteToken(order.pair)) return false
+        if (['NEW', 'OPEN', 'PARTIALLY_FILLED'].indexOf(order.status) === -1) return false
+
+        return true
+      })
+    },
+
+    lockedBalanceByToken: (symbol) => {
+      let orders = Object.values(state.byHash)
+      let lockedBalance = 0
+
+      orders.forEach(order => {
+        if (symbol === getBaseToken(order.pair) && order.side === 'SELL') {
+          if (['NEW', 'OPEN', 'PARTIALLY_FILLED'].indexOf(order.status) !== -1) {
+            lockedBalance = lockedBalance + (order.amount - order.filled)
+          }
+        }
+
+        if (symbol === getQuoteToken(order.pair) && order.side === 'BUY') {
+          if (['NEW', 'OPEN', 'PARTIALLY_FILLED'].indexOf(order.status) !== -1) {
+            lockedBalance = lockedBalance + (order.amount - order.filled)
+          }
+        }
+      })
+    
+      return lockedBalance
     },
 
 

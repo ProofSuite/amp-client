@@ -26,6 +26,8 @@ const initialTokenPairState = {
   byPair: generateTokenPairs(quoteTokens, tokens),
   data: {},
   favorites: [],
+  currentPair: 'WETH/USDC',
+  sortedPairs: [],
 };
 
 function getDomain(events) {

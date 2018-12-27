@@ -592,11 +592,11 @@ export const WETH = [
     "constant": false,
     "inputs": [
       {
-        "name": "guy",
+        "name": "_spender",
         "type": "address"
       },
       {
-        "name": "wad",
+        "name": "_value",
         "type": "uint256"
       }
     ],

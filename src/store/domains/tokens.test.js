@@ -8,23 +8,37 @@ function getDomain(events) {
 it('handles initialized event properly', () => {
   const tokenDomain = getDomain([eventCreators.initialized()]);
 
-  expect(tokenDomain.symbols()).toEqual([]);
-  expect(tokenDomain.tokens()).toEqual([]);
-  expect(tokenDomain.bySymbol()).toEqual({});
+  expect(tokenDomain.symbols()).toEqual(['ETH']);
+  expect(tokenDomain.tokens()).toEqual([
+    { symbol: 'ETH', address: '0x0', decimals: 18, quote: false }
+  ]);
+  expect(tokenDomain.bySymbol()).toEqual({
+    'ETH': { symbol: 'ETH', address: '0x0', decimals: 18, quote: false }
+  });
 });
 
 it('handle update tokens correctly', () => {
   const tokens1 = [
     { 
       symbol: 'DAI',
-      address: '0x0'
+      address: '0x0',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     }
   ]
 
   const tokens2 = [
     {
       symbol: 'ZRX',
-      address: '0x1'
+      address: '0x1',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     },
     {
       symbol: 'WETH',
@@ -38,35 +52,95 @@ it('handle update tokens correctly', () => {
     eventCreators.tokensUpdated(tokens2)
   ])
 
-  expect(tokenDomain.symbols()).toEqual(['DAI', 'ZRX', 'WETH'])
+  expect(tokenDomain.symbols()).toEqual(['ETH', 'DAI', 'ZRX', 'WETH'])
 
   expect(tokenDomain.bySymbol()).toEqual({
+    'ETH': {
+      symbol: 'ETH',
+      address: '0x0',
+      decimals: 18,
+      quote: false,
+    },
     'DAI': {
       symbol: 'DAI',
-      address: '0x0'
+      address: '0x0',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null
     },
     'ZRX': {
       symbol: 'ZRX',
-      address: '0x1'
+      address: '0x1',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null
     },
     "WETH": {
       symbol: 'WETH',
-      address: '0x2'
+      address: '0x2',
+      decimals: null,
+      listed: null,
+      registered: null,
+      quote: null,
+      rank: null,
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null
     }
   })
 
   expect(tokenDomain.tokens()).toEqual([
     {
+      symbol: 'ETH',
+      address: '0x0',
+      decimals: 18,
+      quote: false,
+    },
+    {
       symbol: 'DAI',
-      address: '0x0'
+      address: '0x0',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null
     },
     {
       symbol: 'ZRX',
-      address: '0x1'
+      address: '0x1',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null
     },
     {
       symbol: "WETH",
-      address: '0x2'
+      address: '0x2',
+      decimals: null,
+      listed: null,
+      registered: null,
+      quote: null,
+      rank: null,
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null
     }
   ])  
 })
@@ -75,18 +149,33 @@ it('handle tokensReset correctly', () => {
     const tokens1 = [
     { 
       symbol: 'DAI',
-      address: '0x0'
+      address: '0x0',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     }
   ]
 
   const tokens2 = [
     {
       symbol: 'ZRX',
-      address: '0x1'
+      address: '0x1',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     },
     {
       symbol: 'WETH',
-      address: '0x2'
+      address: '0x2',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     }
   ]
 
@@ -101,22 +190,54 @@ it('handle tokensReset correctly', () => {
   expect(tokenDomain.bySymbol()).toEqual({
     'ZRX': {
       symbol: 'ZRX',
-      address: '0x1'
+      address: '0x1',
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null,
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     },
     "WETH": {
       symbol: 'WETH',
-      address: '0x2'
+      address: '0x2',
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null,
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     }
   })
 
   expect(tokenDomain.tokens()).toEqual([
     {
       symbol: 'ZRX',
-      address: '0x1'
+      address: '0x1',
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null,
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     },
     {
       symbol: "WETH",
-      address: '0x2'
+      address: '0x2',
+      USDRate: null,
+      EURRate: null,
+      JPYRate: null,
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     }
   ])  
 })
@@ -125,11 +246,21 @@ it('handles tokenRatesUpdated correctly', () => {
   const tokens = [
     {
       symbol: 'ZRX',
-      address: '0x1'
+      address: '0x1',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     },
     {
       symbol: 'WETH',
-      address: '0x2'
+      address: '0x2',
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     }
   ]
 
@@ -156,12 +287,23 @@ it('handles tokenRatesUpdated correctly', () => {
 
   
   expect(tokenDomain.bySymbol()).toEqual({
+    'ETH': {
+      symbol: 'ETH',
+      address: '0x0',
+      decimals: 18,
+      quote: false,
+    },
     'ZRX': {
       symbol: 'ZRX',
       address: '0x1',
       USDRate: 1.50,
       EURRate: 2.15,
       JPYRate: 3000,
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     },
     "WETH": {
       symbol: 'WETH',
@@ -169,28 +311,11 @@ it('handles tokenRatesUpdated correctly', () => {
       USDRate: 2.1,
       EURRate: 2.2,
       JPYRate: 3.4,
+      decimals: 18,
+      listed: true,
+      registered: true,
+      quote: true,
+      rank: 1,
     }
   })
 })
-
-
-// it('handles update and remove tokens events properly', () => {
-//   const newToken = {
-//     symbol: 'TOK',
-//     address: '0x7e0f08462bf391ee4154a88994f8ce2aad7ab144',
-//   };
-
-//   const expectedSymbols = tokenSymbols.concat('TOK').filter(elem => elem !== 'ZRX');
-//   const expectedTokensBySymbol = objectWithoutKey({ ...tokensBySymbol, ['TOK']: newToken }, 'ZRX');
-//   const expectedTokens = Object.values(expectedTokensBySymbol);
-
-//   const tokenDomain = getDomain([
-//     eventCreators.initialized(),
-//     eventCreators.tokenUpdated(newToken.symbol, newToken.address),
-//     eventCreators.tokenRemoved('ZRX'),
-//   ]);
-
-//   expect(tokenDomain.symbols()).toEqual(expectedSymbols);
-//   expect(tokenDomain.bySymbol()).toEqual(expectedTokensBySymbol);
-//   expect(tokenDomain.tokens()).toEqual(expectedTokens);
-// });
