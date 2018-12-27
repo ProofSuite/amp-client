@@ -19,14 +19,14 @@ export const tokensUpdated = (tokens: Tokens) => {
         result[token.symbol] = {
           address: token.address,
           symbol: token.symbol,
-          decimals: token.decimals,
-          registered: token.registered,
-          listed: token.listed,
-          quote: token.quote,
-          rank: token.rank,
-          USDRate: token.USDRate,
-          EURRate: token.EURRate,
-          JPYRate: token.JPYRate
+          decimals: token.decimals ? token.decimals : null,
+          registered: token.registered ? token.registered : null,
+          listed: token.listed ? token.listed : null,
+          quote: token.quote ? token.quote : null,
+          rank: token.rank ? token.rank : null,
+          USDRate: token.USDRate ? token.USDRate : null,
+          EURRate: token.EURRate ? token.EURRate : null,
+          JPYRate: token.JPYRate ? token.JPYRate : null
         }
 
         return result
@@ -53,14 +53,14 @@ export const tokensReset = (tokens: Tokens) => {
         result[token.symbol] = {
           address: token.address,
           symbol: token.symbol,
-          decimals: token.decimals,
-          registered: token.registered,
-          listed: token.listed,
-          quote: token.quote,
-          rank: token.rank,
-          USDRate: token.USDRate,
-          EURRate: token.EURRate,
-          JPYRate: token.JPYRate
+          decimals: token.decimals ? token.decimals : null,
+          registered: token.registered ? token.registered : null,
+          listed: token.listed ? token.listed : null,
+          quote: token.quote ? token.quote : null,
+          rank: token.rank ? token.rank : null,
+          USDRate: token.USDRate ? token.USDRate : null,
+          EURRate: token.EURRate ? token.EURRate : null,
+          JPYRate: token.JPYRate ? token.JPYRate : null
         }
 
         return result

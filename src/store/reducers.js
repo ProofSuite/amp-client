@@ -43,6 +43,7 @@ import * as walletsEvents from './domains/wallets'
 import * as notificationEvents from './domains/notifications'
 import * as convertTokensFormEvents from './domains/convertTokensForm'
 import * as connectionEvents from './domains/connection'
+import * as transactionEvents from './domains/transactions'
 
 export const loginPage = createReducer(action => {
   const { type, payload } = action
@@ -89,14 +90,46 @@ export const accountBalances = createReducer(action => {
       return accountBalancesEvents.allowancesUpdated(payload.allowances)
     case walletPageActionTypes.updateAllowance:
       return accountBalancesEvents.allowancesUpdated([{ symbol: payload.symbol, allowance: payload.allowance }])
-    case walletPageActionTypes.updateAllowancePending:
-      return accountBalancesEvents.allowancesPendingUpdated([ payload.symbol ])
-    case marketsTableActionTypes.updateAllowancePending:
+    case walletPageActionTypes.unlockToken:
+    case walletPageActionTypes.lockToken:
       return accountBalancesEvents.allowancesPendingUpdated([ payload.symbol ])
     case orderFormActionTypes.unlockPair:
       return accountBalancesEvents.allowancesPendingUpdated([ payload.baseTokenSymbol, payload.quoteTokenSymbol ])
     default:
       return accountBalancesEvents.initialized()
+  }
+})
+
+export const transactions = createReducer(action => {
+  const { type, payload } = action
+  switch (type) {
+
+    case transferTokensFormActionTypes.sendTx:
+    case transferTokensFormActionTypes.confirmTx:
+    case transferTokensFormActionTypes.revertTx:
+      return transactionEvents.txsUpdated(payload.transactions)
+    case convertTokensFormActionTypes.sendConvertTx:
+    case convertTokensFormActionTypes.revertConvertTx:
+    case convertTokensFormActionTypes.confirmConvertTx:
+    case convertTokensFormActionTypes.sendAllowTx:
+    case convertTokensFormActionTypes.revertAllowTx:
+    case convertTokensFormActionTypes.confirmAllowTx:
+    return transactionEvents.txsUpdated(payload.transactions)
+    case orderFormActionTypes.unlockPair:
+    case orderFormActionTypes.confirmUnlockPair:
+    case orderFormActionTypes.errorUnlockPair:
+      return transactionEvents.txsUpdated(payload.transactions)
+    case walletPageActionTypes.unlockToken:
+    case walletPageActionTypes.lockToken:
+    case walletPageActionTypes.confirmLockToken:
+    case walletPageActionTypes.confirmUnlockToken:
+    case walletPageActionTypes.errorLockToken:
+    case walletPageActionTypes.errorUnlockToken:
+      return transactionEvents.txsUpdated([ payload.tx ])
+    case walletPageActionTypes.updateWalletPageData:
+      return transactionEvents.txsUpdated(payload.transactions)
+    default:
+      return transactionEvents.initialized()
   }
 })
 
@@ -384,6 +417,40 @@ export const notifications = createReducer(action => {
       return notificationEvents.notificationAdded(payload.notificationType, payload.options)
     case appActionTypes.removeNotification:
       return notificationEvents.notificationRemoved(payload.id)
+    case orderFormActionTypes.unlockPair:
+      return notificationEvents.notificationAdded('unlockPairPending', { 
+        symbol: payload.symbol, 
+        txHash: payload.txHash, 
+        baseTokenSymbol: payload.baseTokenSymbol, 
+        quoteTokenSymbol: payload.quoteTokenSymbol
+      })
+    case orderFormActionTypes.confirmUnlockPair:
+      return notificationEvents.notificationAdded('unlockPairConfirmed', {
+        symbol: payload.symbol,
+        txHash: payload.txHash,
+        baseTokenSymbol: payload.baseTokenSymbol,
+        quoteTokenSymbol: payload.quoteTokenSymbol
+      })
+    case orderFormActionTypes.errorUnlockPair:
+      return notificationEvents.notificationAdded(payload.notificationType, { intent: 'danger', message: payload.message })
+    case walletPageActionTypes.unlockToken:
+      return notificationEvents.notificationAdded('unlockTokenPending', { symbol: payload.symbol, txHash: payload.txHash })
+    case walletPageActionTypes.lockToken:
+      return notificationEvents.notificationAdded('lockTokenPending', { symbol: payload.symbol, txHash: payload.txHash })
+    case walletPageActionTypes.confirmUnlockToken:
+      return notificationEvents.notificationAdded('unlockTokenConfirmed', { symbol: payload.symbol, txHash: payload.txHash })
+    case walletPageActionTypes.confirmLockToken:
+      return notificationEvents.notificationAdded('lockTokenConfirmed', { symbol: payload.symbol, txHash: payload.txHash })
+    case walletPageActionTypes.errorLockToken:
+    case walletPageActionTypes.errorUnlockToken:
+      return notificationEvents.notificationAdded(payload.notificationType, { intent: 'danger', message: payload.message })
+    case transferTokensFormActionTypes.revertTx:
+    case transferTokensFormActionTypes.revertAllowTx:
+    case transferTokensFormActionTypes.revertConvertTx:
+      return notificationEvents.dangerNotificationAdded(payload.message)
+    case transferTokensFormActionTypes.confirmTx:
+    case transferTokensFormActionTypes.sendTx:
+      return notificationEvents.successNotificationAdded(payload.message)
     default:
       return notificationEvents.initialized()
   }

@@ -40,24 +40,24 @@ export function validateTx(statusMessage: string, gas: number): ValidateTxAction
   };
 }
 
-export function sendTx(hash: string): SendTxAction {
+export function sendTx(tx: Tx): SendTxAction {
   return {
     type: actionTypes.sendTx,
-    payload: { hash },
+    payload: { hash: tx.hash, transactions: [ tx ] },
   };
 }
 
-export function revertTx(statusMessage: string, receipt: TxReceipt): RevertTxAction {
+export function revertTx(tx: Tx, message: string): RevertTxAction {
   return {
     type: actionTypes.revertTx,
-    payload: { statusMessage, receipt },
+    payload: { receipt: tx.receipt, transactions: [ tx ], message },
   };
 }
 
-export function confirmTx(receipt: TxReceipt): ConfirmTxAction {
+export function confirmTx(tx: Tx, message: string): ConfirmTxAction {
   return {
     type: actionTypes.confirmTx,
-    payload: { receipt },
+    payload: { receipt: tx.receipt, transactions: [ tx ], message },
   };
 }
 

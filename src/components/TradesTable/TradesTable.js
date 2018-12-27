@@ -29,7 +29,7 @@ class TradesTable extends React.PureComponent<Props, State> {
   };
 
   openEtherscanLink = (txHash: string) => {
-    window.open(`${ETHERSCAN_TX_URL}/${txHash}`)
+    if (txHash !== "") window.open(`${ETHERSCAN_TX_URL}/${txHash}`)
   }
 
   toggleCollapse = () => {

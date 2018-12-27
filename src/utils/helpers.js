@@ -59,7 +59,7 @@ export const isJson = (text: *) => {
 }
 
 export const isNotNull = (elem: *) => {
-  return elem !== null
+  return (elem !== null && elem !== NaN)
 }
 
 
@@ -143,4 +143,8 @@ export const getExchangeRate = (currency: string, token: Token) => {
     default:
       return null
   }
+}
+
+export const decodeValue = (params) => {
+  return params.filter(param => param.name === '_value')[0].value
 }

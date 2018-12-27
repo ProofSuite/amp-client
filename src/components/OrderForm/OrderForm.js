@@ -118,6 +118,7 @@ class OrderForm extends React.PureComponent<Props, State> {
   handleUpdateAmountFraction = (fraction: number) => {
     const { side, price } = this.state
     const { quoteTokenBalance, baseTokenBalance } = this.props
+
     let amount, total
     let numericPrice = unformat(price)
 
@@ -130,6 +131,7 @@ class OrderForm extends React.PureComponent<Props, State> {
         amount: formatNumber(amount, { precision: 3 }),
         total: formatNumber(total, { precision: 3 })
       })
+
     } else {
       // Temporary solution to handle the case where price = 0. 
       // In the case orderbooks are full, we do not need to care about this

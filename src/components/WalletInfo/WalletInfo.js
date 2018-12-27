@@ -6,6 +6,7 @@ import { isEthereumAddress } from '../../utils/crypto'
 import { ETHERSCAN_TOKEN_URL, ETHERSCAN_ADDRESS_URL } from '../../config/urls'
 
 import type { Token, TokenPairs } from '../../types/tokens'
+import type { Tx } from '../../types/transactions'
 
 type Props = {
   accountAddress: string,
@@ -17,6 +18,7 @@ type Props = {
   detectContract: string => { decimals: number, symbol: string, isRegistered: boolean },
   addToken: string => { error: string, token: Token, pairs: TokenPairs },
   registerToken: string => { error?: string, token?: Token, pairs?: TokenPairs },
+  recentTransactions: Array<Tx>
 }
 
 type State = {
@@ -27,6 +29,8 @@ type State = {
   tokenSymbol: string,
   tokenDecimals: number,
   tokenIsRegistered: ?boolean,
+  addTokenPending: boolean,
+  registerTokenPending: boolean,
 }
 
 export default class WalletInfo extends React.PureComponent<Props, State> {
@@ -37,7 +41,9 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
     tokenAddressStatus: "",
     tokenDecimals: 0,
     tokenSymbol: "",
-    tokenIsRegistered: null
+    tokenIsRegistered: null,
+    addTokenPending: false,
+    registerTokenPending: false,
   };
 
   handleModalClose = () => {
@@ -76,7 +82,10 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
   handleAddToken = async () => {
     const { tokenAddress } = this.state
     const { addToken } = this.props
+
+    this.setState({ addTokenPending: true })
     const { error, token, pairs } = await addToken(tokenAddress)
+    this.setState({ addTokenPending: false })
 
     if (error) {
       console.log(error)
@@ -89,14 +98,15 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
   handleRegisterToken = async () => {
     const { tokenAddress } = this.state
     const { registerToken } = this.props
+
+    this.setState({ registerTokenPending: true })
     const { error } = await registerToken(tokenAddress)
+    this.setState({ registerTokenPending: false })
 
     if (error) {
       console.log(error)
     } else {
-      return this.setState({
-        tokenIsRegistered: true
-      })
+      return this.setState({ tokenIsRegistered: true })
     }
   }
 
@@ -109,6 +119,7 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
         etherBalance,
         userTokens,
         listedTokens,
+        recentTransactions
       },
       state: { 
         isModalOpen,
@@ -116,7 +127,9 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
         tokenAddress,
         tokenSymbol,
         tokenAddressStatus,
-        tokenIsRegistered
+        tokenIsRegistered,
+        addTokenPending,
+        registerTokenPending,
       },
       handleModalClose,
       handleChangeTab,
@@ -153,6 +166,9 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
         handleDetectContract={handleDetectContract}
         handleAddToken={handleAddToken}
         handleRegisterToken={handleRegisterToken}
+        registerTokenPending={registerTokenPending}
+        addTokenPending={addTokenPending}
+        recentTransactions={recentTransactions}
       />
     );
   }

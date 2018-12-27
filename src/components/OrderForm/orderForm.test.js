@@ -79,8 +79,8 @@ describe('tests Functions and state', () => {
     expect(instance.state.amount).toEqual('40.000')
   })
 
-  it('validates onPortionChange Func', () => {
+  it('validates onFractionChange Func', () => {
     instance.onInputChange({ target: { name: 'fraction', value: 50 } })
-    expect(instance.state.amount).toEqual('5.000')
+    expect(instance.state.amount).toEqual('1,724.138')
   })
 })

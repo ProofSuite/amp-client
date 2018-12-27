@@ -32,7 +32,6 @@ export type Order = {
   amount: number,
   filled: number,
   price: number,
-  price: number,
   hash: string,
   side: 'BUY' | 'SELL',
   pair: string,

@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 
 import type { State } from '../../types'
 import type { TokenData } from '../../types/tokens'
+import type { Tx } from '../../types/transactions'
 
 import { loadShowHelpModalSetting } from '../../store/services/storage'
 
@@ -28,6 +29,7 @@ export type Props = {
   WETHBalance: string,
   WETHAllowance: string,
   referenceCurrency: string,
+  recentTransactions: Array<Tx>
 }
 
 class WalletPage extends React.PureComponent<Props, State> {
@@ -65,7 +67,8 @@ class WalletPage extends React.PureComponent<Props, State> {
       baseTokens,
       closeHelpModal,
       balancesLoading,
-      referenceCurrency
+      referenceCurrency,
+      recentTransactions
     } = this.props
 
 
@@ -89,6 +92,7 @@ class WalletPage extends React.PureComponent<Props, State> {
         isHelpModalOpen={isHelpModalOpen}
         closeHelpModal={closeHelpModal}
         referenceCurrency={referenceCurrency}
+        recentTransactions={recentTransactions}
       />
     )
   }

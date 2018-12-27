@@ -123,3 +123,149 @@ it('handles orders removed event', () => {
 
   expect(ordersDomain.byHash()).toEqual(expected);
 });
+
+
+it('return correct current positions by token', () => {
+  let orders = [
+    {
+      amount: 10,
+      price: 10,
+      type: 'MARKET',
+      side: 'SELL',
+      hash: '0x1',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x2',
+      pair: 'OMG/WETH',
+      status: 'PARTIALLY_FILLED'
+    },
+    {
+      amount: 100,
+      price: 10,
+      type: 'MARKET',
+      side: 'SELL',
+      hash: '0x2',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x2',
+      pair: 'OMG/WETH',
+      status: 'FILLED'
+    },
+    {
+      amount: 1000,
+      price: 100,
+      type: 'LIMIT',
+      side: 'SELL',
+      hash: '0x3',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x1',
+      pair: 'ZRX/DAI',
+      status: 'OPEN'
+    },
+  ];
+
+  const ordersDomain = getDomain([
+    eventCreators.initialized(),
+    eventCreators.ordersUpdated(orders),
+  ]);
+
+  expect(ordersDomain.currentPositionsByToken('OMG')).toEqual([
+    {
+      amount: 10,
+      price: 10,
+      type: 'MARKET',
+      side: 'SELL',
+      hash: '0x1',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x2',
+      pair: 'OMG/WETH',
+      status: 'PARTIALLY_FILLED'
+    }
+  ]);
+
+  expect(ordersDomain.currentPositionsByToken('WETH')).toEqual([
+    {
+      amount: 10,
+      price: 10,
+      type: 'MARKET',
+      side: 'SELL',
+      hash: '0x1',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x2',
+      pair: 'OMG/WETH',
+      status: 'PARTIALLY_FILLED'
+    }
+  ]);
+
+  expect(ordersDomain.currentPositionsByToken('DAI')).toEqual([
+    {
+      amount: 1000,
+      price: 100,
+      type: 'LIMIT',
+      side: 'SELL',
+      hash: '0x3',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x1',
+      pair: 'ZRX/DAI',
+      status: 'OPEN'
+    },
+  ]);
+});
+
+// file.only
+
+it('return correct locked balance by token', () => {
+  let orders = [
+    {
+      amount: 10,
+      filled: 5,
+      price: 10,
+      type: 'MARKET',
+      side: 'SELL',
+      hash: '0x1',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x2',
+      pair: 'OMG/WETH',
+      status: 'PARTIALLY_FILLED'
+    },
+    {
+      amount: 100,
+      filled: 0,
+      price: 10,
+      type: 'MARKET',
+      side: 'BUY',
+      hash: '0x2',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x2',
+      pair: 'OMG/WETH',
+      status: 'NEW'
+    },
+    {
+      amount: 1000,
+      filled: 0,
+      price: 100,
+      type: 'LIMIT',
+      side: 'BUY',
+      hash: '0x3',
+      orderHash: '0x1',
+      taker: '0x1',
+      maker: '0x1',
+      pair: 'ZRX/DAI',
+      status: 'OPEN'
+    },
+  ];
+
+  const ordersDomain = getDomain([
+    eventCreators.initialized(),
+    eventCreators.ordersUpdated(orders),
+  ]);
+
+  expect(ordersDomain.lockedBalanceByToken('OMG')).toEqual(5);
+  expect(ordersDomain.lockedBalanceByToken('DAI')).toEqual(1000);
+});

@@ -47,17 +47,22 @@ export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
       let weth = new Contract(WETH_ADDRESS[networkID], WETH, signer)
       let amount = utils.parseEther(convertAmount.toString())
 
-      let tx = await weth.withdraw(amount)
-      dispatch(actionCreators.sendConvertTx('WETH', tx.hash))
+      let { hash } = await weth.withdraw(amount)
+      let tx = { type: 'WETH Converted', status: 'PENDING', hash }
+      dispatch(actionCreators.sendConvertTx('WETH', tx))
 
-      let txReceipt = await signer.provider.waitForTransaction(tx.hash)
+      let receipt = await signer.provider.waitForTransaction(tx.hash)
 
-      if (txReceipt.status === 0) {
-        dispatch(actionCreators.revertConvertTx('WETH', txReceipt))
-        dispatch(notificationActionCreators.addErrorNotification({ message: 'ETH conversion transaction failed' }))
+      if (receipt.status === 0) {
+        let tx = { type: 'WETH Converted', status: 'ERROR', hash, receipt, time: Date.now() }
+        let message = 'ETH conversion transaction failed'
+        dispatch(actionCreators.revertConvertTx('WETH', tx, message))
+
       } else {
-        dispatch(actionCreators.confirmConvertTx('WETH', txReceipt))
-        dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
+        let tx = { type: 'WETH Converted', status: 'CONFIRMED', hash, receipt, time: Date.now() }
+        let message = 'ETH conversion transaction successful'
+        dispatch(actionCreators.confirmConvertTx('WETH', tx, message))
+
       }
     } catch (error) {
       console.log(error.message)
@@ -90,41 +95,60 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
           { nonce: txCount + 1 }
         );
 
-        let [convertTx, allowTx] = await Promise.all([convertTxPromise, allowTxPromise]);
-        dispatch(actionCreators.sendConvertTx('ETH', convertTx.hash));
-        dispatch(actionCreators.sendAllowTx('ETH', allowTx.hash));
+        let [convertTxResult, allowTxResult] = await Promise.all([convertTxPromise, allowTxPromise]);
+
+        let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'PENDING' }
+        let allowTx = { type: 'Token Unlocked', hash: allowTxResult.hash, status: 'PENDING' }
+
+        dispatch(actionCreators.sendConvertTx('ETH', convertTx));
+        dispatch(actionCreators.sendAllowTx('ETH', allowTx));
 
         let [convertTxReceipt, allowTxReceipt] = await Promise.all([
           signer.provider.waitForTransaction(convertTx.hash),
           signer.provider.waitForTransaction(allowTx.hash),
         ]);
 
-        convertTxReceipt.status === 0
-          ? dispatch(actionCreators.revertConvertTx('ETH', convertTxReceipt))
-          : dispatch(actionCreators.confirmConvertTx('ETH', convertTxReceipt));
 
-        allowTxReceipt.status === 0
-          ? dispatch(actionCreators.revertAllowTx('ETH', allowTxReceipt))
-          : dispatch(actionCreators.confirmAllowTx('ETH', allowTxReceipt));
+        if (convertTxReceipt.status === 0) {
+          let convertTxMessage = 'ETH conversion transaction failed'
+          let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'ERROR', receipt: convertTxReceipt, time: Date.now() }
+          dispatch(actionCreators.revertConvertTx('ETH', convertTx, convertTxMessage))
+        } else {
+          let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'CONFIRMED', receipt: convertTxReceipt, time: Date.now()  }
+          dispatch(actionCreators.confirmConvertTx('ETH', convertTx))
+        }
 
-        (convertTxReceipt.status === 0 || allowTxReceipt.status === 0)
-          ? dispatch(notificationActionCreators.addErrorNotification({ message: 'ETH conversion transaction failed' }))
-          : dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
+        if (allowTxReceipt.status === 0) {
+          let allowTxMessage = 'ETH allowance transaction failed'
+          let allowTx = { type: 'Token unlocked', hash: allowTxResult.hash, status: 'ERROR', receipt: allowTxReceipt, time: Date.now() }
+          dispatch(actionCreators.revertAllowTx('ETH', allowTx, allowTxMessage))
+        } else {
+          let convertTx = { type: 'Token unlocked', hash: allowTxResult.hash, status: 'CONFIRMED', receipt: allowTxReceipt, time: Date.now() }
+          dispatch(actionCreators.confirmAllowTx('ETH', convertTx, allowTxReceipt))
+        }
 
+        if (convertTxReceipt.status !== 0 || allowTxReceipt.status !== 0) {
+          dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
+        }
       } else {
-        let convertTx = await weth.deposit({
-          value: utils.parseEther(convertAmount.toString())
-        });
-        dispatch(actionCreators.sendConvertTx('ETH', convertTx.hash));
+        // Case of only conversion 
+        let convertTxResult = await weth.deposit({ value: utils.parseEther(convertAmount.toString()) })
+        let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'PENDING', time: Date.now() }
+        dispatch(actionCreators.sendConvertTx('ETH', convertTx));
+
         let convertTxReceipt = await signer.provider.waitForTransaction(convertTx.hash);
 
-        convertTxReceipt.status === 0
-          ? dispatch(actionCreators.revertConvertTx('ETH', convertTxReceipt))
-          : dispatch(actionCreators.confirmConvertTx('ETH', convertTxReceipt));
+        if (convertTxReceipt.status === 0) {
+          let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'ERROR', receipt: convertTxReceipt, time: Date.now() }
+          dispatch(actionCreators.revertConvertTx('ETH', convertTx))
+        } else {
+          let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'CONFIRMED', receipt: convertTxReceipt, time: Date.now() }
+          dispatch(actionCreators.confirmConvertTx('ETH', convertTx))
+          dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
+        }
       }
 
     } catch (error) {
-      //TODO add an error here
       console.log(error.message);
     }
   };
