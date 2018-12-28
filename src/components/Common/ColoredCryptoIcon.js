@@ -26,7 +26,7 @@ import ZRX from './Icons/icon/zrx.js'
 import ETH from './Icons/icon/eth.js'
 import DAI from './Icons/icon/dai.js'
 import USD from './Icons/icon/usd.js'
-
+import Generic from './Icons/icon/generic.js'
 
 const ColoredCryptoIcon = ({ name, color, size }) => {
   color = color || Colors.BLUE5
@@ -50,7 +50,6 @@ const ColoredCryptoIcon = ({ name, color, size }) => {
     case 'NPXS': return <NPXS width={size} height={size} viewBox="0 0 32 32"  />
     case 'OMG': return <OMG width={size} height={size} viewBox="0 0 32 32"  />
     case 'PPT': return <PPT width={size} height={size} viewBox="0 0 32 32"  />
-    // case 'PRFT': return <PRFT width={size} height={size} viewBox="0 0 32 32"  />
     case 'DAI': return <DAI width={size} height={size} viewBox="0 0 32 32"  />
     case 'USDC': return <USD width={size} height={size} viewBox="0 0 32 32"  />
     case 'REP': return <REP width={size} height={size} viewBox="0 0 32 32"  />
@@ -61,7 +60,7 @@ const ColoredCryptoIcon = ({ name, color, size }) => {
     case 'ETH': return <ETH width={size} height={size} viewBox="0 0 32 32"  />
     case 'WETH': return <ETH width={size} height={size} viewBox="0 0 32 32"  />
     case 'ZRX': return <ZRX width={size} height={size} viewBox="0 0 32 32"  />
-    default: return <ETH width={size} height={size} viewBox="0 0 32 32"  />
+    default: return <Generic width={size} height={size} viewBox="0 0 32 32"  />
   }
 }
 
