@@ -2,8 +2,7 @@ import { DEFAULT_NETWORK_ID } from '../../../config/environment'
 import { ERC20, WETH } from '../../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { utils, providers, Contract, getDefaultProvider } from 'ethers'
-import { decodeValue } from '../../../utils/helpers'
-import abiDecoder from 'abi-decoder'
+import abiDecoder from 'ethereum-input-data-decoder'
 
 export const createConnection = () => {
     switch(DEFAULT_NETWORK_ID) {
@@ -39,22 +38,22 @@ export async function detectContract(address: string) {
 
 export async function queryTransactionHistory(address: string) {
   try {
-    abiDecoder.addABI(ERC20)
-    abiDecoder.addABI(WETH)
-
+    const decoder = new abiDecoder([...ERC20, ...WETH])
     const provider = getEtherscanProvider()
-    const txs = await provider.getHistory(address)
-    const parsedTxs = []
 
+    let txs = await provider.getHistory(address)
+    let parsedTxs = []
+
+    txs = txs.slice(Math.max(txs.length - 50, 0))
     txs.forEach(tx => {
-      let decoded = tx.data ? abiDecoder.decodeMethod(tx.data) : null
+      let decoded = tx.data ? decoder.decodeData(tx.data) : null
       
       if (decoded) {
         switch(decoded.name) {
           case 'approve':
-            let value = decodeValue(decoded.params)
+            let value = decoded.inputs[1].toString()
             switch(value) {
-              case '1e+36':
+              case '1000000000000000000000000000000000000':
                 parsedTxs.push({ type: 'Token Unlocked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
                 break
               case '0':
