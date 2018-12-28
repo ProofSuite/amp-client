@@ -74,7 +74,7 @@ export async function queryTransactionHistory(address: string) {
             parsedTxs.push({ type: 'WETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
             break
           default:
-            parsedTxs.push({ type: '/', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+            parsedTxs.push({ type: '', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
         }
       }
     })
