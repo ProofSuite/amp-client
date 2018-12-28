@@ -47,8 +47,7 @@ export function detectContract(tokenAddress: string): ThunkAction {
             }
 
             token = await provider.detectContract(tokenAddress)
-            if (token && token.decimals && token.symbol) {
-                console.log('found token contract')
+            if (token && token.symbol) {
 
                 return {
                     isRegistered: false,
@@ -84,7 +83,7 @@ export function addToken(tokenAddress: string): ThunkAction {
 
             const { decimals, symbol } = await provider.detectContract(tokenAddress)
 
-            if (!decimals || !symbol) {
+            if (!symbol) {
                 return { error: 'Could not detect contract' }
             }
 
@@ -149,9 +148,6 @@ export function registerToken(tokenAddress: string): ThunkAction {
             }
 
             let pairs = await api.createPairs(tokenAddress)
-
-            console.log(pairs)
-
             if (pairs) await dispatch(actionCreators.registerToken(pairs))
 
             return { pairs }

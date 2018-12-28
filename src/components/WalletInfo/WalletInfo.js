@@ -68,6 +68,9 @@ export default class WalletInfo extends React.PureComponent<Props, State> {
 
     const { decimals, symbol, isRegistered } = await detectContract(tokenAddress)
 
+    console.log(decimals)
+    console.log(symbol)
+
     if (!symbol) {
       return this.setState({ tokenAddressStatus: "invalid" })
     }
