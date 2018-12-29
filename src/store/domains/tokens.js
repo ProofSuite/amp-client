@@ -19,7 +19,7 @@ export const tokensUpdated = (tokens: Tokens) => {
         result[token.symbol] = {
           address: token.address,
           symbol: token.symbol,
-          decimals: token.decimals ? token.decimals : null,
+          decimals: token.decimals,
           registered: token.registered ? token.registered : null,
           listed: token.listed ? token.listed : null,
           quote: token.quote ? token.quote : null,
@@ -53,7 +53,7 @@ export const tokensReset = (tokens: Tokens) => {
         result[token.symbol] = {
           address: token.address,
           symbol: token.symbol,
-          decimals: token.decimals ? token.decimals : null,
+          decimals: token.decimals,
           registered: token.registered ? token.registered : null,
           listed: token.listed ? token.listed : null,
           quote: token.quote ? token.quote : null,
