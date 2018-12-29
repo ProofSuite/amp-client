@@ -85,8 +85,6 @@ export function queryAccountData(): ThunkAction {
         }
       })
 
-      console.log(txs)
-
       dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress, txs))
 
       //we remove the ETH 'token' because the process to obtain balances for ETH and others tokens is different
@@ -103,6 +101,8 @@ export function queryAccountData(): ThunkAction {
       ])
 
       balances.push(etherBalance)
+
+      console.log(tokenBalanceResult)
 
       let { errors: tokenBalanceErrors, tokenBalances } = tokenBalanceResult
       balances.concat(tokenBalances)
