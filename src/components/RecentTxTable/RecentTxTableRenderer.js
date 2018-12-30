@@ -42,7 +42,12 @@ const RecentTxTableRenderer = (props: Props) => {
 
 
   if (!transactions) return <Loading />
-  if (transactions.length === 0) return <CenteredMessage message="No transactions for this token pair" />
+  if (transactions.length === 0) return (
+    <NoTransactionsMessage>
+      No recent transactions
+    </NoTransactionsMessage>
+  )
+    
 
   return (
     <React.Fragment>
@@ -175,6 +180,16 @@ const Row = styled.li.attrs({
   }
 
 `;
+
+const NoTransactionsMessage = styled.p`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 150px;
+  align-items: center;
+  align-content: center;
+`
+
 
 const Cell = styled.span`
   color: ${props => props.color ? props.color : Colors.TEXT_MUTED};
