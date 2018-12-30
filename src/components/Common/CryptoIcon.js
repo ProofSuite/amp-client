@@ -26,6 +26,7 @@ import WTC from './Icons/black/wtc.js'
 import ZRX from './Icons/black/zrx.js'
 import ETH from './Icons/black/eth.js'
 import USD from './Icons/black/usd.js'
+import Generic from './Icons/black/generic.js'
 
 
 
@@ -63,7 +64,7 @@ const CryptoIcon = ({ name, color, size }) => {
     case 'WETH': return <ETH width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
     case 'ZRX': return <ZRX width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
     //case 'LOOM': return <LOOM width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32" ine
-    default: return <ETH width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
+    default: return <Generic width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
   }
 }
 

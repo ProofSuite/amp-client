@@ -72,18 +72,18 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
       };
 
       let { hash } = await signer.sendTransaction(rawTx);
-      let tx = { type: 'Ether Transfer', hash, time: Date.now(), status: 'PENDING' }
+      let tx = { type: 'Transferred Ether', hash, time: Date.now(), status: 'PENDING' }
       dispatch(actionCreators.sendTx(tx));
 
       let receipt = await signer.provider.waitForTransaction(tx.hash);
 
       if (receipt.status === 0) {
-        let tx = { type: 'Ether Transfer', time: Date.now(), status: 'ERROR', hash, receipt }
+        let tx = { type: 'Transferred Ether', time: Date.now(), status: 'ERROR', hash, receipt }
         let message = 'Token transfer failed.'
         
         dispatch(actionCreators.revertTx(tx, message))
       } else {
-        let tx = { type: 'Ether Transfer', time: Date.now(), status: 'CONFIRMED', hash, receipt }
+        let tx = { type: 'Transferred Ether', time: Date.now(), status: 'CONFIRMED', hash, receipt }
         let message = 'Token transfer successful!'
         
         dispatch(actionCreators.confirmTx(tx, message))

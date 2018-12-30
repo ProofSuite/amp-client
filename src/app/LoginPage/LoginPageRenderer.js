@@ -1,6 +1,6 @@
 import React from 'react'
 import { defineMessages, FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
+import styled, { keyframes }  from 'styled-components'
 import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
 import type { CreateWalletParams } from '../../types/createWallet'
@@ -35,6 +35,28 @@ type Props = {
   showLoginMethods: () => void,
   loginWithMetamask: void => void,
   loginWithWallet: void => void,
+}
+
+const glitchAnimation1 = () => {
+  keyframes`
+    $steps:20;
+    @for $i from 0 through $steps{
+      #{percentage($i*(1/$steps))}{
+        clip:rect(random(100)+px,9999px,random(100)+px,0);
+      }
+    }
+  `
+}
+
+const glitchAnimation2 = () => {
+  keyframes`
+    $steps:20;
+    @for $i from 0 through $steps{
+      #{percentage($i*(1/$steps))}{
+        clip:rect(random(100)+px,9999px,random(100)+px,0);
+      }
+    }
+  `
 }
 
 const LoginPageRenderer = (props: Props) => {
@@ -87,10 +109,12 @@ const LoginMethodsView = (props: Props) => {
       <Box />
       <Box width="500px">
         <Card intent="success" title="Disclaimer">
-          <h2>
-          <EmphasizedText>Welcome to AMP!</EmphasizedText>
-          </h2>
-          <h3>Trade from your own wallet, without waiting for deposits and with the security of instant blockchain settlements.</h3>
+          <WelcomeMessage>
+          Welcome to <div className="glitch" data-text="AMP!">AMP!</div>
+          </WelcomeMessage>
+          <h3>
+          Trade from your own wallet, without waiting for deposits and with the security of instant blockchain settlements.
+          </h3>
           <AnnouncementMessages>
             • <FormattedMessage
               {...messages.announcement}
@@ -219,6 +243,10 @@ const AnnouncementMessages = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
 `;
+
+const WelcomeMessage = styled.div`
+  font-size: 40px;
+`
 
 const messages = defineMessages({
   announcement: {

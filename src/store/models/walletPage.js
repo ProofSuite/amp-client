@@ -70,7 +70,7 @@ export function queryAccountData(): ThunkAction {
 
       if (!currentBlock) throw new Error('')
 
-      tokens = [ ...new Set([ ...tokens, ...savedTokens ])]
+      tokens = [ ...new Set([ ...savedTokens, ...tokens ])]
       let tokenSymbols = tokens.map(token => token.symbol)
     
       let currencySymbols = ['USD', 'EUR', 'JPY']
@@ -84,8 +84,6 @@ export function queryAccountData(): ThunkAction {
           JPYRate: exchangeRates[token.symbol] ? exchangeRates[token.symbol].JPY : 0,
         }
       })
-
-      console.log(txs)
 
       dispatch(actionCreators.updateWalletPageData(currentBlock, tokens, pairs, exchangeAddress, txs))
 
@@ -103,6 +101,8 @@ export function queryAccountData(): ThunkAction {
       ])
 
       balances.push(etherBalance)
+
+      console.log(tokenBalanceResult)
 
       let { errors: tokenBalanceErrors, tokenBalances } = tokenBalanceResult
       balances.concat(tokenBalances)

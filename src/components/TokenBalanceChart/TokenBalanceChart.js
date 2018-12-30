@@ -94,6 +94,9 @@ export default class TokenBalanceChart extends React.PureComponent<Props,State> 
 render() {
   const { activeIndex } = this.state
   const { tokenBalances, balancesLoading } = this.props
+
+  console.log(tokenBalances)
+
   const isEmpty = (tokenBalances.length === 0)
 
   return (
