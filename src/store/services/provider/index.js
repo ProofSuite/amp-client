@@ -45,39 +45,42 @@ export async function queryTransactionHistory(address: string) {
     let parsedTxs = []
 
     txs = txs.slice(Math.max(txs.length - 50, 0))
+
     txs.forEach(tx => {
-      let decoded = tx.data ? decoder.decodeData(tx.data) : null
-      
-      if (decoded) {
-        switch(decoded.name) {
-          case 'approve':
-            let value = decoded.inputs[1].toString()
-            switch(value) {
-              case '1000000000000000000000000000000000000':
-                parsedTxs.push({ type: 'Token Unlocked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-                break
-              case '0':
-                parsedTxs.push({ type: 'Token Locked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-                break
-              default:
-                parsedTxs.push({ type: 'Approval', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-                break
-            }
-            break
-          case 'transfer':
-            parsedTxs.push({ type: 'Token Transfer', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-            break
-          case 'deposit': 
-            parsedTxs.push({ type: 'ETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-            break
-          case 'withdraw':
-            parsedTxs.push({ type: 'WETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-            break
-          default:
-            parsedTxs.push({ type: '', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+      if (tx.data === '0x') {
+          parsedTxs.push({ type: 'Ether transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+        } else {
+          let decoded = decoder.decodeData(tx.data)
+
+          switch(decoded.name) {
+            case 'approve':
+              let value = decoded.inputs[1].toString()
+              switch(value) {
+                case '1000000000000000000000000000000000000':
+                  parsedTxs.push({ type: 'Token Unlocked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+                  break
+                case '0':
+                  parsedTxs.push({ type: 'Token Locked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+                  break
+                default:
+                  parsedTxs.push({ type: 'Approval', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+                  break
+              }
+              break
+            case 'transfer':
+              parsedTxs.push({ type: 'Token Transfer', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+              break
+            case 'deposit': 
+              parsedTxs.push({ type: 'ETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+              break
+            case 'withdraw':
+              parsedTxs.push({ type: 'WETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+              break
+            default:
+              parsedTxs.push({ type: '', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+          }
         }
-      }
-    })
+      })
 
     return parsedTxs
   } catch (e) {
