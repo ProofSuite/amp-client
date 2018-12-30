@@ -23,6 +23,8 @@ export function queryMarketData(): ThunkAction {
       let state = getState();
       let pairDomain = getTokenPairsDomain(state);
       let pairs = pairDomain.getPairsByCode();
+
+      console.log(pairs)
       
       let tokenPairData = await api.fetchTokenPairData();
       tokenPairData = parseTokenPairsData(tokenPairData, pairs);
