@@ -2,7 +2,6 @@
 import React from 'react'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
 import { Colors, CenteredSpinner } from '../Common'
-import { H4 } from '@blueprintjs/core'
 import styled from 'styled-components'
 
 type Props = {
@@ -35,7 +34,7 @@ const TokenBalanceChartRenderer = (props: Props) => {
 
   if (isEmpty) return (
     <EmptyChartNotification>
-      <H4>Your account is empty</H4>
+      Your account is empty
     </EmptyChartNotification>
   )
   let p = Math.floor(colors.length/data.length)
@@ -73,7 +72,7 @@ const EmptyChartNotification = styled.p`
   display: flex;
   width: 100%;
   justify-content: center;
-  height: 400px;
+  height: 150px;
   align-items: center;
   align-content: center;
 `

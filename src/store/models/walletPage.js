@@ -70,7 +70,7 @@ export function queryAccountData(): ThunkAction {
 
       if (!currentBlock) throw new Error('')
 
-      tokens = [ ...new Set([ ...tokens, ...savedTokens ])]
+      tokens = [ ...new Set([ ...savedTokens, ...tokens ])]
       let tokenSymbols = tokens.map(token => token.symbol)
     
       let currencySymbols = ['USD', 'EUR', 'JPY']

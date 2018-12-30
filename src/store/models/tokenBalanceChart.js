@@ -12,19 +12,23 @@ export default function tokenBalanceChartSelector(state: State) {
   let tokens = getTokenDomain(state).bySymbol()
   let currency = getAccountDomain(state).referenceCurrency()
 
-  let chartData = Object.keys(tokenBalances).map((symbol) => {
+  let chartData = []
+
+  Object.keys(tokenBalances).forEach(symbol => {
     let token = tokens[symbol]
     if (symbol === 'WETH') token = tokens['ETH']
-      
-    let rate = getExchangeRate(currency.name, token)  
+
+    let rate = getExchangeRate(currency.name, token)
     let balance = round(tokenBalances[symbol].balance, 4)
     let value = round(rate * balance)
 
-    return {
-      symbol,
-      balance,
-      value,
-      currency: currency.symbol
+    if (value !== 0) {
+      chartData.push({
+        symbol,
+        balance,
+        value, 
+        currency: currency.symbol
+      })
     }
   })
 
