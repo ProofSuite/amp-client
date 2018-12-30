@@ -48,7 +48,7 @@ export async function queryTransactionHistory(address: string) {
 
     txs.forEach(tx => {
       if (tx.data === '0x') {
-          parsedTxs.push({ type: 'Ether transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+          parsedTxs.push({ type: 'Ether Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
         } else {
           let decoded = decoder.decodeData(tx.data)
 
