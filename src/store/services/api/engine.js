@@ -3,7 +3,6 @@ import { ENGINE_HTTP_URL } from '../../../config/urls'
 
 import { parseToken,
   parseTokens, 
-  parseTokenPairData, 
   parseOrders, 
   parseTrades, 
   parseOrderBookData 
@@ -89,7 +88,7 @@ export const fetchToken = async (address: string) => {
 }
 
 export const fetchPairs = async () => {
-  const response = await request(`/pairs`)
+  const response = await request(`/pairs?listed=true`)
 
   if (response.status !== 200) {
     throw new Error('Error')
@@ -314,13 +313,6 @@ export const getOrderBookData = async (pair: TokenPair) => {
   let { asks, bids } = parseOrderBookData(orderbook, pair)
 
   return { asks, bids }
-}
-
-export const getTokenPairData = async (pair: TokenPair) => {
-  let data = await fetchTokenPairData()
-  let parsedData = parseTokenPairData(data, pair)
-
-  return parsedData
 }
 
 export const getExchangeAddress = async () => {

@@ -188,44 +188,28 @@ export const parseOrderBookData = (data: OrderBookData, pair: TokenPair, precisi
 }
 
 export const parseTokenPairsData = (data: APIPairData, pairs: Object) => {
-  let parsed = (data: APIPairData).map(datum => {
+
+  let result = []
+
+  data.forEach(datum => {
     let pair = pairs[datum.pair.pairName]
-    
-    return {
-      pair: pair.pair,
-      price: datum.price ? parsePricepoint(datum.price, pair) : null,
-      lastPrice: datum.close ? parsePricepoint(datum.close, pair) : null,
-      change: datum.open ? computeChange(datum.open, datum.close) : null,
-      high: datum.high ? parsePricepoint(datum.high, pair) : null,
-      low: datum.low ? parsePricepoint(datum.low, pair) : null,
-      volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,
-      orderVolume: datum.orderVolume ? parseTokenAmount(datum.orderVolume, pair, 0) : null,
-      orderCount: datum.orderCount ? datum.orderCount : null,
+
+    if (pair) {
+      result.push({
+        pair: pair.pair,
+        price: datum.price ? parsePricepoint(datum.price, pair) : null,
+        lastPrice: datum.close ? parsePricepoint(datum.close, pair) : null,
+        change: datum.open ? computeChange(datum.open, datum.close) : null,
+        high: datum.high ? parsePricepoint(datum.high, pair) : null,
+        low: datum.low ? parsePricepoint(datum.low, pair) : null,
+        volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,
+        orderVolume: datum.orderVolume ? parseTokenAmount(datum.orderVolume, pair, 0) : null,
+        orderCount: datum.orderCount ? datum.orderCount : null,
+      })
     }
   })
     
-  return parsed
-}
-
-export const parseTokenPairData = (data: APIPairData, pair: TokenPair) => {
-
-  console.log(data)
-
-  let parsed = (data: APIPairData).map(datum => {
-    return {
-      pair: datum.pair.pairName,
-      price: datum.price ? parsePricepoint(datum.price, pair) : null,
-      lastPrice: datum.close ? parsePricepoint(datum.close, pair) : null,
-      change: datum.open ? computeChange(datum.open, datum.close) : null,
-      high: datum.high ? parsePricepoint(datum.high, pair) : null,
-      low: datum.low ? parsePricepoint(datum.low, pair) : null,
-      volume: datum.volume ? parseTokenAmount(datum.volume, pair, 0) : null,
-      orderVolume: datum.orderVolume ? parseTokenAmount(datum.orderVolume, pair, 0) : null,
-      orderCount: datum.orderCount ? datum.orderCount : null,
-    }
-  })
-    
-  return parsed
+  return result
 }
 
 export const parseOHLCV = (data: Candles, pair: TokenPair) => {
@@ -242,36 +226,3 @@ export const parseOHLCV = (data: Candles, pair: TokenPair) => {
 
   return parsed
 }
-
-// export const parseOrderBookData = (data, decimals = 2) => {
-//   let { buys, sells, trades } = data;
-
-//   let bids = buys.map(buy => ({
-//     price: round(buy.price, decimals),
-//     amount: round(buy.volume, decimals),
-//   }));
-
-//   let asks = sells.map(sell => ({
-//     price: round(sell.price, decimals),
-//     amount: round(sell.volume, decimals),
-//   }));
-
-//   trades = trades.map(trade => ({
-//     time: trade.createdAt,
-//     pricepoint: round(trade.pricepoint, decimals),
-//     amount: round(trade.amount, decimals),
-//     hash: trade.hash,
-//     orderHash: trade.orderHash,
-//     type: trade.type || "LIMIT",
-//     side: trade.side,
-//     pair: trade.pairName,
-//     maker: trade.maker,
-//     taker: trade.taker,
-//   }));
-
-//   return {
-//     bids,
-//     asks,
-//     trades,
-//   };
-// };
