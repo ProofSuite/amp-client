@@ -29,6 +29,8 @@ import {
   Box
 } from '../Common';
 
+import { Devices } from '../../components/Common/Variables'
+
 type TokenData = {
   symbol: string,
   address: string,
@@ -87,18 +89,18 @@ const TokenTableRenderer = (props: Props) => {
       </RowSpaceBetween>
       <Table>
         <TableHeader>
-          <TableHeaderCell style={{ width: '15%' }}>Token Name</TableHeaderCell>
-          <TableHeaderCell>Balances</TableHeaderCell>
-          <TableHeaderCell style={{ width: '15%' }}>
+          <TokenNameHeaderCell>Token Name</TokenNameHeaderCell>
+          <BalancesHeaderCell>Balances</BalancesHeaderCell>
+          <UnlockedHeaderCell>
           Unlocked 
           <span> </span>
           <Help position={Position.RIGHT}>
             By unlocking tokens, you allow the AMP smart-contract to settle trades you have approved.
             Unlocking both tokens is required before starting trading a given pair.
           </Help>
-          </TableHeaderCell>
-          <TableHeaderCell style={{ width: '70%' }}></TableHeaderCell>
-        </TableHeader>
+          </UnlockedHeaderCell>
+          <ActionsHeaderCell></ActionsHeaderCell>
+      </TableHeader>
       </Table>
       <TableBodyContainer>
         <Table>
@@ -137,19 +139,19 @@ const ETHRow = (props: Props) => {
 
   return (
     <Row key='ETH'>
-      <Cell style={{ width: '15%'}}>
+      <TokenNameCell>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
         </TokenNameWrapper>
-      </Cell>
-      <Cell>
+      </TokenNameCell>
+      <BalancesCell>
         <SmallText muted>
           {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
         </SmallText>
-      </Cell>
-      <Cell style={{ width: '15%'}}></Cell>
-      <Cell style={{ width: '70%' }}>
+      </BalancesCell>
+      <UnlockedCell></UnlockedCell>
+      <ActionsCell>
         <FlexRow justifyContent="flex-end" p={1}>
             <ButtonWrapper>
             <GreenGlowingButton
@@ -176,7 +178,7 @@ const ETHRow = (props: Props) => {
             />
           </ButtonWrapper>
         </FlexRow>
-      </Cell>
+      </ActionsCell>
     </Row>
   );
 }
@@ -199,7 +201,7 @@ const WETHRow = (props: Props) => {
 
   return (
     <Row key='WETH'>
-      <Cell style={{ width: '15%'}} onClick={() => redirectToTradingPage(symbol)}>
+      <Cell onClick={() => redirectToTradingPage(symbol)}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -212,16 +214,16 @@ const WETHRow = (props: Props) => {
           }
         </TokenNameWrapper>
       </Cell>
-      <Cell onClick={() => redirectToTradingPage(symbol)}>
+      <BalancesCell onClick={() => redirectToTradingPage(symbol)}>
         <SmallText muted>
           {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
         </SmallText>
-      </Cell>
-      <Cell style={{ width: '15%'}} >
+      </BalancesCell>
+      <UnlockedCell >
           <Switch inline checked={allowed} onClick={(event) => handleToggleAllowance(event, symbol)} />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
-        </Cell>
-      <Cell style={{ width: '70%' }} onClick={() => redirectToTradingPage(symbol)}>
+      </UnlockedCell>
+      <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
         <FlexRow justifyContent="flex-end" p={1}>
           <ButtonWrapper>
             <GreenGlowingButton
@@ -247,7 +249,7 @@ const WETHRow = (props: Props) => {
             />
           </ButtonWrapper>
           </FlexRow>
-      </Cell>
+      </ActionsCell>
     </Row>
   )
 }
@@ -279,7 +281,7 @@ const QuoteTokenRows = (props: Props) => {
             {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
           </SmallText>
         </Cell>
-        <Cell style={{ width: '15%'}}>
+        <UnlockedCell>
           <Button
             disabled={!connected}
             intent={allowed ? 'primary' : 'danger'}
@@ -287,8 +289,8 @@ const QuoteTokenRows = (props: Props) => {
             onClick={event => handleToggleAllowance(event, symbol)}
           />
           {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
-        </Cell>
-        <Cell style={{ width: '70%' }} onClick={() => redirectToTradingPage(symbol)}>
+        </UnlockedCell>
+        <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
           <FlexRow justifyContent="flex-end" p={1}>
           <ButtonWrapper>
             <BlueGlowingButton
@@ -307,7 +309,7 @@ const QuoteTokenRows = (props: Props) => {
             />
           </ButtonWrapper>
           </FlexRow>
-        </Cell>
+        </ActionsCell>
       </Row>
     )
   })
@@ -349,12 +351,12 @@ const BaseTokenRows = (props: Props) => {
             {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
           </SmallText>
         </Cell>
-        <Cell style={{ width: '15%'}}>
+        <UnlockedCell>
           <Switch inline checked={allowed} 
             onChange={(event) => handleToggleAllowance(event, symbol)} />
             {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
-        </Cell>
-        <Cell style={{ width: '70%' }} onClick={() => redirectToTradingPage(symbol)}>
+        </UnlockedCell>
+        <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
           <FlexRow justifyContent="flex-end" p={1}>
             <ButtonWrapper>
               <BlueGlowingButton
@@ -373,7 +375,7 @@ const BaseTokenRows = (props: Props) => {
                 />
             </ButtonWrapper>
           </FlexRow>
-        </Cell>
+        </ActionsCell>
       </Row>
     );
   });
@@ -409,6 +411,25 @@ width: 20%;
 text-align: middle;
 `;
 
+const TokenNameHeaderCell = styled(TableHeaderCell)`
+  width: 15%;
+`
+
+const BalancesHeaderCell = styled(TableHeaderCell)`
+`
+
+const UnlockedHeaderCell = styled(TableHeaderCell)`
+  width: 15%;
+
+  @media ${Devices.tablet} {
+    display: none;
+  }
+`
+
+const ActionsHeaderCell = styled(TableHeaderCell)`
+  width: 70%;
+`
+
 const Cell = styled.td`
   width: 20%;
   vertical-align: middle !important;
@@ -417,8 +438,35 @@ const Cell = styled.td`
   }
 `;
 
+const TokenNameCell = styled(Cell)`
+  @media ${Devices.tablet} {
+    
+  }
+`
+
+const BalancesCell = styled(Cell)`
+  @media ${Devices.tablet} {
+    
+  }
+`
+
+const UnlockedCell = styled(Cell)`
+  width: 15%;
+
+  @media ${Devices.tablet} {
+    display: none; 
+  }
+`
+
+const ActionsCell = styled(Cell)`
+  width: 70%;
+`
+
 const Row = styled.tr`
   width: 100%;
+
+  overflow-x: scroll;
+
   &:hover {
     background-color: ${Colors.BLUE_MUTED} !important;
     cursor: pointer;

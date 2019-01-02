@@ -71,7 +71,7 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-  width: 420px;
+  // width: 420px;
   display: flex;
   justify-content: space-between;
   align-items: center;

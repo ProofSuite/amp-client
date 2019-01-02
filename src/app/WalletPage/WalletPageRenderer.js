@@ -10,6 +10,8 @@ import GetStartedModal from '../../components/GetStartedModal'
 import type { TokenData } from '../../types/tokens'
 import type { Tx } from '../../types/Tx'
 
+import { Devices } from '../../components/Common/Variables'
+
 type Props = {
   tokenData: Array<TokenData>,
   baseTokens: Array<string>,
@@ -82,6 +84,11 @@ const WalletInfoBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media ${Devices.tablet} {
+    display: none;
+  }
+
 `
 
 const WalletPageContentBox = styled(Card)`
@@ -89,6 +96,10 @@ const WalletPageContentBox = styled(Card)`
   width: 70%;
   margin-right: 0.5em;
   margin-left: 0.5em;
+
+  @media ${Devices.tablet} {
+    width: 100%;
+  }
 `
 
 const RowWrapper = styled.div`
