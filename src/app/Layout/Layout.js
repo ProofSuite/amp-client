@@ -1,5 +1,6 @@
 // @flow
 import type { Node } from 'react'
+import styled from 'styled-components'
 import React from 'react'
 import Notifier from '../../components/Notifier'
 import ampLogo from '../../assets/amp_black.png'
@@ -7,18 +8,28 @@ import ConnectionStatus from '../../components/ConnectionStatus'
 
 import { IntlProvider } from 'react-intl'
 import { NavLink } from 'react-router-dom'
-import { Footer, Indent } from '../../components/Common'
+
+import { 
+  Footer, 
+  Indent,
+  Card,
+  NavbarHeading,
+  NavbarGroup,
+  NavbarDivider,
+  Box
+   } from '../../components/Common'
+
+import {
+  Devices
+} from '../../components/Common/Variables'
+
 import { ReferenceCurrencySelect } from '../../components/SelectMenu'
 
-import styled from 'styled-components'
 import {
   Alignment,
   Button,
   Menu,
   Navbar,
-  NavbarDivider,
-  NavbarGroup,
-  NavbarHeading,
   Popover,
   Position,
   Tag
@@ -53,7 +64,6 @@ class Layout extends React.PureComponent<Props, State> {
     const {
       children,
       authenticated,
-      address,
       locale,
       messages,
       referenceCurrencies,
@@ -87,19 +97,21 @@ class Layout extends React.PureComponent<Props, State> {
                 </NavbarHeading>
                 {authenticated && (
                   <React.Fragment>
-                    <NavbarDivider />
+                      <NavbarDivider hideOnMobile />
                     <NavbarLink to="/wallet">Wallet</NavbarLink>
                     <NavbarLink to="/markets">Markets</NavbarLink>
                     <NavbarLink to="/trade">Exchange</NavbarLink>
-                    <NavbarLink to="/settings">Settings</NavbarLink>
+                    <NavbarLink to="/settings" hideOnMobile>Settings</NavbarLink>
                     <NavbarLink to="/faq">FAQ</NavbarLink>
-                    <NavbarDivider />
+                    <NavbarDivider hideOnMobile />
+                    <ReferenceCurrencyBox>
                     <ReferenceCurrencySelect
                       items={referenceCurrencies}
                       item={currentReferenceCurrency}
                       handleChange={(item) => updateReferenceCurrency(item)}
                       type="text"
                     />
+                    </ReferenceCurrencyBox>
                   </React.Fragment>
                 )}
               </NavbarGroup>
@@ -108,9 +120,11 @@ class Layout extends React.PureComponent<Props, State> {
                   <NavbarLink to="/login">Login</NavbarLink>
                 ) : (
                   <React.Fragment>
-                    <ConnectionStatus />
+                    <ConnectionStatusBox>
+                      <ConnectionStatus />
+                    </ConnectionStatusBox>
                     <Popover content={menu} position={Position.BOTTOM_RIGHT} minimal>
-                      <Button icon="key" text={address} />
+                      <Button icon="key" text="Menu" />
                     </Popover>
                   </React.Fragment>
                 )}
@@ -144,13 +158,34 @@ const NavbarHeaderBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  @media ${Devices.tablet} {
+    display: none;
+  }
+`
+
+const ReferenceCurrencyBox = styled.div`
+  @media ${Devices.tablet} {
+    display: none;
+  }
+`
+
+const ConnectionStatusBox = styled.div`
+  @media ${Devices.tablet} {
+    display: none;
+  }
 `
 
 const NavbarLink = styled(NavLink).attrs({
   activeClassName: 'bp3-active bp3-intent-primary',
   className: 'bp3-button bp3-minimal',
   role: 'button'
-})``
+})`
+
+    @media ${Devices.mobileL} {
+    ${props => props.hideOnMobile && "display: none;"}
+  }
+`
 
 const MenuItem = styled.li``
 

@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Box } from "../../components/Common"
+
+import {
+  Devices
+} from '../../components/Common/Variables'
+
 import FaqItem from './FaqItem';
 
 class FaqPage extends React.PureComponent {
@@ -237,6 +242,10 @@ const FaqGrid = styled.div`
   display: grid;
   grid-gap: 2em;
   grid-template-columns: 1fr 1fr;
+
+  @media ${Devices.tablet} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const FirstColumn = styled.div``
