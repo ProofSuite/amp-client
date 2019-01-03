@@ -238,7 +238,7 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
         className="lastPrice" 
         onClick={() => changeSelectedToken(token)}
       >
-        {price ? price : 'N.A'}
+        {price ? formatNumber(price, { precision: 3 }) : 'N.A'}
       </SmallText>
       <Change24H 
         change={change} 

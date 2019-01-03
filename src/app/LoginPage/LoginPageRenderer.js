@@ -5,10 +5,8 @@ import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
 import type { CreateWalletParams } from '../../types/createWallet'
 
-
 import { 
   Callout, 
-  Card,
   Spinner, 
   Button
 } from '@blueprintjs/core'
@@ -21,12 +19,15 @@ import {
   Colors, 
   Flex, 
   Indent,
-  FlexColumn,
   FlexRow,
   Box,
-  EmphasizedText,
-  TwitterShareLink
+  TwitterShareLink,
+  Card
 } from '../../components/Common'
+
+import {
+  Devices
+} from '../../components/Common/Variables'
 
 
 type Props = {
@@ -35,28 +36,6 @@ type Props = {
   showLoginMethods: () => void,
   loginWithMetamask: void => void,
   loginWithWallet: void => void,
-}
-
-const glitchAnimation1 = () => {
-  keyframes`
-    $steps:20;
-    @for $i from 0 through $steps{
-      #{percentage($i*(1/$steps))}{
-        clip:rect(random(100)+px,9999px,random(100)+px,0);
-      }
-    }
-  `
-}
-
-const glitchAnimation2 = () => {
-  keyframes`
-    $steps:20;
-    @for $i from 0 through $steps{
-      #{percentage($i*(1/$steps))}{
-        clip:rect(random(100)+px,9999px,random(100)+px,0);
-      }
-    }
-  `
 }
 
 const LoginPageRenderer = (props: Props) => {
@@ -107,10 +86,9 @@ const LoginMethodsView = (props: Props) => {
   return (
     <FlexRow p={5} pb={6} justifyContent="space-between">
       <Box />
-      <Box width="500px">
-        <Card intent="success" title="Disclaimer">
+      <WelcomeCard intent="success" title="Disclaimer" hideOnTablet>
           <WelcomeMessage>
-          Welcome to <div className="glitch" data-text="AMP!">AMP!</div>
+            Welcome to <div className="glitch" data-text="AMP!">AMP!</div>
           </WelcomeMessage>
           <h3>
           Trade from your own wallet, without waiting for deposits and with the security of instant blockchain settlements.
@@ -143,9 +121,8 @@ const LoginMethodsView = (props: Props) => {
             </Reminder>
             <br />
           </AnnouncementMessages>
-        </Card>
-      </Box>
-      <Box width="30%">
+      </WelcomeCard>
+      <LoginMethodsBox>
         <LoginMethodsHeading>
           <FormattedMessage {...messages.loginMethods} />
         </LoginMethodsHeading>
@@ -186,7 +163,7 @@ const LoginMethodsView = (props: Props) => {
                   </Flex>
                 </Flex>
             </LoginCards>
-      </Box>
+      </LoginMethodsBox>
       <Box />
     </FlexRow>
   )
@@ -203,28 +180,28 @@ const StyledButton = styled(Button)`
   }
 `
 
-const Wrapper = styled.div`
-  display: grid;
-  padding-left: 2em;
-  padding-right: 2em;
-  padding-top: 2em;
-  padding-bottom: 6em;
-`;
+const WelcomeCard = styled(Card)`
+  width: 500px;
+`
+
+const LoginMethodsBox = styled(Box)`
+  width: 30%;
+
+  @media ${Devices.tablet} {
+    width: 60%;
+  }
+
+  @media ${Devices.mobileL} {
+    width: 100%;
+  }
+`
 
 const WidgetWrapper = styled.div`
   width: 600px;
   margin: 60px auto;
 `;
 
-const Announcement = styled.section``;
-
 const Reminder = styled.div``;
-
-const LoginMethods = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
 
 const LoginMethodsHeading = styled.h3`
   display: flex;

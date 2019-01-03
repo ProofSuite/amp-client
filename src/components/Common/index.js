@@ -22,6 +22,13 @@ import {
     LinkText
 } from './Text';
 
+import {
+    Card,
+    NavbarHeading,
+    NavbarGroup,
+    NavbarDivider
+} from './Blueprint'
+
 import { 
     GreenGlowingButton,
     RedGlowingButton,
@@ -32,6 +39,13 @@ import {
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
 export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
 export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+
+export { 
+    Card, 
+    NavbarHeading, 
+    NavbarGroup,
+    NavbarDivider
+}
 
 export { default as Spacer } from './Spacer'
 export { default as Chevron } from './Chevron';

@@ -1,10 +1,15 @@
 //@flow
 import React from 'react';
+import styled from 'styled-components';
+import { Card, Button, Collapse } from '@blueprintjs/core';
+
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
-import { Card, Button, Collapse } from '@blueprintjs/core';
-import styled from 'styled-components';
 import { ResizableBox } from 'react-resizable'
+
+import { 
+  FlexRow
+} from '../Common/index'
 
 type Indicator = {
   name: string,
@@ -194,31 +199,33 @@ const Toolbar = ({
   isOpen,
   toggleCollapse,
 }) => (
-  <ToolbarWrapper>
-    <ChartTypeMenu>
-      <StandardSelect
-        items={state.chartTypes}
-        item={state.currentChart || state.chartTypes[0]}
-        handleChange={changeChartType}
-        icon="series-configuration"
-        minimal
-      />
-    </ChartTypeMenu>
-    <TimeSpanMenu>
-      <StandardSelect
-        items={state.timeSpans}
-        item={currentTimeSpan || state.timeSpans[0]}
-        handleChange={changeTimeSpan}
-        icon="series-add"
-      />
-    </TimeSpanMenu>
+    <FlexRow justifyContent="flex-start">
+      <ToolbarWrapper>
+        <ChartTypeMenu>
+          <StandardSelect
+            items={state.chartTypes}
+            item={state.currentChart || state.chartTypes[0]}
+            handleChange={changeChartType}
+            icon="series-configuration"
+            minimal
+          />
+        </ChartTypeMenu>
+        <TimeSpanMenu>
+          <StandardSelect
+            items={state.timeSpans}
+            item={currentTimeSpan || state.timeSpans[0]}
+            handleChange={changeTimeSpan}
+            icon="series-add"
+          />
+        </TimeSpanMenu>
 
-    <DurationMenu duration={state.duration} currentDuration={currentDuration} changeDuration={changeDuration} />
-    <TimeSpanMenu>
-      <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
-    </TimeSpanMenu>
-    <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
-  </ToolbarWrapper>
+        <DurationMenu duration={state.duration} currentDuration={currentDuration} changeDuration={changeDuration} />
+        <TimeSpanMenu>
+          <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
+        </TimeSpanMenu>
+      </ToolbarWrapper>
+      <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+    </FlexRow>
 );
 
 const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
@@ -258,7 +265,6 @@ const DurationWrapper = styled.div`
 `;
 
 const ToolbarWrapper = styled.div`
-  width: 100%;
   display: flex;
   justify-content: start;
 

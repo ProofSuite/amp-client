@@ -12,6 +12,14 @@ import { faYoutube } from '../Common/Icons/faYoutube'
 import { faFacebook } from '../Common/Icons/faFacebook'
 import { faMedium } from '../Common/Icons/faMedium'
 
+import {
+  Box
+} from './Box'
+
+import {
+  Devices
+} from './Variables'
+
 
 const Footer = () => (
   <Wrapper>
@@ -19,13 +27,13 @@ const Footer = () => (
       <TopSection>
         <LogosWrapper>
         <img src={ampLogo} class="Profile-image" width="120" height="120" alt=""/>
-        <FooterText>
+        <FooterText mt={3}>
             <FooterSatoshiQuote>"03/Jan/2009 Chancellor on brink of second bailout for banks"</FooterSatoshiQuote>
             <FooterFirstBlock>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa in Block 1</FooterFirstBlock>
         </FooterText>
         </LogosWrapper>
         <LinksWrapper className="content">
-          <List>
+          <List hideOnMobile>
             <HeadListItem>About</HeadListItem>
             <NormalListItem>
                 <LinkText>
@@ -61,7 +69,7 @@ const Footer = () => (
               </LinkText>
             </NormalListItem>
           </List>
-          <List>
+          <List hideOnMobile>
             <HeadListItem>Platforms</HeadListItem>
             <NormalListItem>
               <LinkText>
@@ -194,6 +202,10 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  @media ${Devices.laptop} {
+    width: 100%;
+  }
 `;
 
 const TopSection = styled.div`
@@ -202,6 +214,11 @@ const TopSection = styled.div`
   justify-content: space-between;
   padding: 40px 0px 30px;
   margin-bottom: 15px;
+
+  @media ${Devices.laptop} {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 `;
 
 const LogosWrapper = styled.div`
@@ -216,9 +233,19 @@ const LinksWrapper = styled.div`
   width: 75%;
   display: flex;
   justify-content: space-between;
+
+  @media ${Devices.mobileL} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
-const List = styled.ul``;
+const List = styled.ul`
+
+  @media ${Devices.mobileL} {
+    ${props => props.hideOnMobile && "display: none;" }
+  }
+`;
 
 const NormalListItem = styled.li`
   margin: 10px auto;
@@ -228,8 +255,8 @@ const HeadListItem = styled.li`
   color: ${Colors.GRAY2};
 `;
 
-const FooterText = styled.div`
-
+const FooterText = styled(Box)`
+  
 `;
 
 const FooterSatoshiQuote = styled.div`
