@@ -36,10 +36,4 @@ class ReferenceCurrencySelect extends Component {
   }
 }
 
-ReferenceCurrencySelect.propTypes = {
-  item: PropTypes.object,
-  items: PropTypes.array,
-  handleChange: PropTypes.func,
-};
-
 export default ReferenceCurrencySelect;

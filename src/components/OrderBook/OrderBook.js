@@ -113,7 +113,7 @@ const Heading = styled.h3`
 `;
 
 const Wrapper = styled(Card)`
-  min-width: 500px;
+  // min-width: 500px;
   width: 100%;
   min-height: 50px;
   /* ul {
