@@ -38,8 +38,6 @@ export function openConnection(): ThunkAction {
 
     socket.onMessage((message: WebsocketMessage) => {
       let { channel, event } = message
-      console.log(channel, event)
-
       switch (channel) {
         case 'orders':
           return handleOrderMessage(dispatch, event)

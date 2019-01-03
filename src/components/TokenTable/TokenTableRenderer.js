@@ -412,7 +412,6 @@ text-align: middle;
 `;
 
 const TokenNameHeaderCell = styled(TableHeaderCell)`
-  width: 15%;
 `
 
 const BalancesHeaderCell = styled(TableHeaderCell)`
