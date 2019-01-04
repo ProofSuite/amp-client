@@ -169,8 +169,6 @@ class TokenTable extends React.PureComponent<Props, State> {
      let WETHTokenData = tokenData.filter((token: Token) => token.symbol === 'WETH')
      let ETHTokenData = tokenData.filter((token: Token) => token.symbol === 'ETH')
 
-     baseTokenData = baseTokenData.concat(baseTokenData).concat(baseTokenData).concat(baseTokenData)
-
     let filteredBaseTokenData = this.filterTokens(baseTokenData)
     let filteredWETHTokenData = this.filterTokens(WETHTokenData)
     let filteredETHTokenData = this.filterTokens(ETHTokenData)

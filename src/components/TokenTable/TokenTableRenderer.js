@@ -30,6 +30,11 @@ import {
   Box
 } from '../Common';
 
+import {
+  List,
+  AutoSizer
+} from 'react-virtualized'
+
 import { Devices } from '../../components/Common/Variables'
 
 type TokenData = {
@@ -65,73 +70,90 @@ type Props = {
   referenceCurrency: string,
 };
 
-const TokenTableRenderer = (props: Props) => {
-  const {
-    hideZeroBalanceToken,
-    toggleZeroBalanceToken,
-    searchInput,
-    handleSearchInputChange,
-    totalFilteredTokens
-  } = props;
+class TokenTableRenderer extends React.PureComponent<Props> {
 
-  return (
-    <TableSection>
-      <RowSpaceBetween style={{ marginBottom: '10px' }}>
-        <InputGroup
-          type="string"
-          leftIcon="search"
-          placeholder="Search Token ..."
-          value={searchInput}
-          onChange={handleSearchInputChange}
-        />
-        <HideTokenCheck checked={hideZeroBalanceToken} onChange={toggleZeroBalanceToken}>
-          Hide small balances
-        </HideTokenCheck>
-      </RowSpaceBetween>
-      <Table>
-        <TableHeader>
-          <TokenNameHeaderCell>Token Name</TokenNameHeaderCell>
-          <BalancesHeaderCell>Balances</BalancesHeaderCell>
-          <UnlockedHeaderCell>
-          Unlocked 
-          <span> </span>
-          <Help position={Position.RIGHT}>
-            By unlocking tokens, you allow the AMP smart-contract to settle trades you have approved.
-            Unlocking both tokens is required before starting trading a given pair.
-          </Help>
-          </UnlockedHeaderCell>
-          <ActionsHeaderCell></ActionsHeaderCell>
-      </TableHeader>
-      </Table>
-      <TableBodyContainer>
-        <Table>
-          <TableBody>
-            <ETHRow {...props} />
-            <WETHRow {...props} />
-            <QuoteTokenRows {...props} />
-            <BaseTokenRows {...props} />
-          </TableBody>
-        </Table>
-      </TableBodyContainer>
-      {totalFilteredTokens === 0 && (
-          <Centered>
-            <AMPLogo height="150em" width="150em" />
-            <LargeText muted>No tokens to display!</LargeText>
-          </Centered>
-      )}
-    </TableSection>
-  );
-};
+  getRowRenderer = ({ key, index, style }: *) => {
+      if (index === 0) return <ETHRow key={key} style={style} {...this.props} />
+      if (index === 1) return <WETHRow key={key} style={style} {...this.props} />
+      
+      return <BaseTokenRow key={key} index={index} style={style} {...this.props} />
+  }
+
+  render () {
+    const {
+        hideZeroBalanceToken,
+        toggleZeroBalanceToken,
+        searchInput,
+        handleSearchInputChange,
+        totalFilteredTokens
+      } = this.props;
+
+          return (
+        <TableSection>
+          <RowSpaceBetween style={{ marginBottom: '10px' }}>
+            <InputGroup
+              type="string"
+              leftIcon="search"
+              placeholder="Search Token ..."
+              value={searchInput}
+              onChange={handleSearchInputChange}
+            />
+            <HideTokenCheck checked={hideZeroBalanceToken} onChange={toggleZeroBalanceToken}>
+              Hide small balances
+            </HideTokenCheck>
+          </RowSpaceBetween>
+          <TableHeader>
+              <TokenNameHeaderCell>Token Name</TokenNameHeaderCell>
+              <BalancesHeaderCell>Balances</BalancesHeaderCell>
+              <UnlockedHeaderCell>
+                Unlocked 
+                <span> </span>
+                <Help position={Position.RIGHT}>
+                  By unlocking tokens, you allow the AMP smart-contract to settle trades you have approved.
+                  Unlocking both tokens is required before starting trading a given pair.
+                </Help>
+              </UnlockedHeaderCell>
+              <ActionsHeaderCell></ActionsHeaderCell>
+          </TableHeader>
+            <Table>
+              <TableBody>
+                <AutoSizer>
+                  {({ width, height }) => (
+                    <List
+                      width={width}
+                      height={height}
+                      rowCount={totalFilteredTokens}
+                      rowHeight={60}
+                      rowRenderer={this.getRowRenderer}
+                    />
+                  )}
+              </AutoSizer>
+              </TableBody>
+            </Table>
+          {totalFilteredTokens === 0 && (
+              <Centered>
+                <AMPLogo height="150em" width="150em" />
+                <LargeText muted>No tokens to display!</LargeText>
+              </Centered>
+          )}
+        </TableSection>
+      );
+
+  }
+
+}
+
 
 const ETHRow = (props: Props) => {
   const {
+    key,
+    style,
     connected,
     ETHTokenData,
     openDepositModal,
     openSendModal,
     openConvertModal,
     referenceCurrency,
-    redirectToTradingPage
   } = props;
 
   if (!ETHTokenData) return null
@@ -139,8 +161,8 @@ const ETHRow = (props: Props) => {
   const { symbol, balance, value } = ETHTokenData
 
   return (
-    <Row key='ETH'>
-      <TokenNameCell>
+    <Row key={key} style={style}>
+      <TokenNameCell style={{ width: '15%'}}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -186,6 +208,8 @@ const ETHRow = (props: Props) => {
 
 const WETHRow = (props: Props) => {
   const {
+    key,
+    style,
     connected,
     WETHTokenData,
     handleToggleAllowance,
@@ -196,13 +220,12 @@ const WETHRow = (props: Props) => {
     redirectToTradingPage
   } = props
 
-
-  if (!WETHTokenData) return null
+  // if (!WETHTokenData) return null
   const { symbol, balance, allowed, allowancePending, value, listed } = WETHTokenData
 
   return (
-    <Row key='WETH'>
-      <Cell onClick={() => redirectToTradingPage(symbol)}>
+    <Row key={key} style={style}>
+      <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -255,71 +278,12 @@ const WETHRow = (props: Props) => {
   )
 }
 
-const QuoteTokenRows = (props: Props) => {
+
+const BaseTokenRow = (props: Props) => {
   const {
-    connected,
-    quoteTokensData,
-    handleToggleAllowance,
-    openDepositModal,
-    openSendModal,
-    referenceCurrency,
-    redirectToTradingPage
-  } = props
-
-  if (!quoteTokensData) return null
-
-  return quoteTokensData.map(({ symbol, balance, allowed, allowancePending, value }, index) => {
-    return (
-        <Row key={index}>
-          <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
-            <TokenNameWrapper>
-              <ColoredCryptoIcon size={32} name={symbol} />
-              <SmallText muted>{symbol}</SmallText>
-            </TokenNameWrapper>
-          </Cell>
-          <Cell onClick={() => redirectToTradingPage(symbol)}>
-            <SmallText muted>
-              {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
-            </SmallText>
-          </Cell>
-          <UnlockedCell>
-            <Button
-              disabled={!connected}
-              intent={allowed ? 'primary' : 'danger'}
-              text={allowed ? 'Unlocked' : 'Locked'}
-              onClick={event => handleToggleAllowance(event, symbol)}
-            />
-            {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
-          </UnlockedCell>
-          <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
-            <FlexRow justifyContent="flex-end" p={1}>
-            <ButtonWrapper>
-              <BlueGlowingButton
-                disabled={!connected}
-                intent="primary"
-                text="Deposit"
-                onClick={(event) => openDepositModal(event, symbol)}
-              />
-            </ButtonWrapper>
-            <ButtonWrapper>
-              <BlueGlowingButton
-                disabled={!connected}
-                intent="primary"
-                text="Send"
-                onClick={(event) => openSendModal(event, symbol)}
-              />
-            </ButtonWrapper>
-            </FlexRow>
-          </ActionsCell>
-        </Row>
-    )
-  })
-}
-
-
-
-const BaseTokenRows = (props: Props) => {
-  const {
+    index,
+    key,
+    style,
     baseTokensData,
     connected,
     handleToggleAllowance,
@@ -329,11 +293,10 @@ const BaseTokenRows = (props: Props) => {
     referenceCurrency
   } = props;
 
-  if (!baseTokensData) return null
+  const { symbol, balance, allowed, allowancePending, value, listed } = baseTokensData[index-2]
 
-  return baseTokensData.map(({ symbol, balance, allowed, allowancePending, value, listed }, index) => {
     return (
-        <Row key={index}>
+        <Row key={key} style={style}>
           <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
             <TokenNameWrapper>
               <ColoredCryptoIcon size={32} name={symbol} />
@@ -379,17 +342,10 @@ const BaseTokenRows = (props: Props) => {
           </ActionsCell>
         </Row>
     );
-  });
 };
 
-const Table = styled.table.attrs({
-  className: 'bp3-html-table bp3-condensed',
-})`
+const Table = styled.div`
   width: 100%;
-`;
-
-const TableBodyContainer = styled.div`
-  overflow-y: scroll;
 `;
 
 const TableSection = styled.div`
@@ -400,15 +356,18 @@ const TableSection = styled.div`
   width: 100%;
 `;
 
-const TableBody = styled.tbody`
+const TableBody = styled.div`
+  height: 80vh;
 `;
 
-const TableHeader = styled.tr`
+const TableHeader = styled.div`
+  display: flex;
   width: 100%;
+  margin-top: 10px;
 `;
 
-const TableHeaderCell = styled.th`
-width: 20%;
+const TableHeaderCell = styled.div`
+width: 15%;
 text-align: middle;
 `;
 
@@ -430,12 +389,11 @@ const ActionsHeaderCell = styled(TableHeaderCell)`
   width: 70%;
 `
 
-const Cell = styled.td`
+const Cell = styled.div`
   width: 20%;
-  vertical-align: middle !important;
-  & label {
-    margin: 0;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const TokenNameCell = styled(Cell)`
@@ -445,9 +403,7 @@ const TokenNameCell = styled(Cell)`
 `
 
 const BalancesCell = styled(Cell)`
-  @media ${Devices.tablet} {
-    
-  }
+  @media ${Devices.tablet} {}
 `
 
 const UnlockedCell = styled(Cell)`
@@ -462,10 +418,10 @@ const ActionsCell = styled(Cell)`
   width: 70%;
 `
 
-const Row = styled.tr`
+const Row = styled.div`
   width: 100%;
-
-  overflow-x: scroll;
+  display: flex;
+  height: 60px;
 
   &:hover {
     background-color: ${Colors.BLUE_MUTED} !important;
@@ -499,8 +455,7 @@ const NoToken = styled.p`
   margin: 0;
 `;
 
-const ButtonWrapper = styled.span`
-  
+const ButtonWrapper = styled.span`  
   margin-left: 10px !important;
   margin-right: 10px !important;
 `;
