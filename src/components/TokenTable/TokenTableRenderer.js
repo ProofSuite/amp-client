@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import Lazyload from 'react-lazyload'
 import { formatNumber } from 'accounting-js'
 import Help from '../../components/Help'
 
@@ -269,48 +270,48 @@ const QuoteTokenRows = (props: Props) => {
 
   return quoteTokensData.map(({ symbol, balance, allowed, allowancePending, value }, index) => {
     return (
-      <Row key={index}>
-        <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
-          <TokenNameWrapper>
-            <ColoredCryptoIcon size={32} name={symbol} />
-            <SmallText muted>{symbol}</SmallText>
-          </TokenNameWrapper>
-        </Cell>
-        <Cell onClick={() => redirectToTradingPage(symbol)}>
-          <SmallText muted>
-            {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
-          </SmallText>
-        </Cell>
-        <UnlockedCell>
-          <Button
-            disabled={!connected}
-            intent={allowed ? 'primary' : 'danger'}
-            text={allowed ? 'Unlocked' : 'Locked'}
-            onClick={event => handleToggleAllowance(event, symbol)}
-          />
-          {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
-        </UnlockedCell>
-        <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
-          <FlexRow justifyContent="flex-end" p={1}>
-          <ButtonWrapper>
-            <BlueGlowingButton
+        <Row key={index}>
+          <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+            <TokenNameWrapper>
+              <ColoredCryptoIcon size={32} name={symbol} />
+              <SmallText muted>{symbol}</SmallText>
+            </TokenNameWrapper>
+          </Cell>
+          <Cell onClick={() => redirectToTradingPage(symbol)}>
+            <SmallText muted>
+              {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
+            </SmallText>
+          </Cell>
+          <UnlockedCell>
+            <Button
               disabled={!connected}
-              intent="primary"
-              text="Deposit"
-              onClick={(event) => openDepositModal(event, symbol)}
+              intent={allowed ? 'primary' : 'danger'}
+              text={allowed ? 'Unlocked' : 'Locked'}
+              onClick={event => handleToggleAllowance(event, symbol)}
             />
-          </ButtonWrapper>
-          <ButtonWrapper>
-            <BlueGlowingButton
-              disabled={!connected}
-              intent="primary"
-              text="Send"
-              onClick={(event) => openSendModal(event, symbol)}
-            />
-          </ButtonWrapper>
-          </FlexRow>
-        </ActionsCell>
-      </Row>
+            {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
+          </UnlockedCell>
+          <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
+            <FlexRow justifyContent="flex-end" p={1}>
+            <ButtonWrapper>
+              <BlueGlowingButton
+                disabled={!connected}
+                intent="primary"
+                text="Deposit"
+                onClick={(event) => openDepositModal(event, symbol)}
+              />
+            </ButtonWrapper>
+            <ButtonWrapper>
+              <BlueGlowingButton
+                disabled={!connected}
+                intent="primary"
+                text="Send"
+                onClick={(event) => openSendModal(event, symbol)}
+              />
+            </ButtonWrapper>
+            </FlexRow>
+          </ActionsCell>
+        </Row>
     )
   })
 }
@@ -332,51 +333,51 @@ const BaseTokenRows = (props: Props) => {
 
   return baseTokensData.map(({ symbol, balance, allowed, allowancePending, value, listed }, index) => {
     return (
-      <Row key={index}>
-        <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
-          <TokenNameWrapper>
-            <ColoredCryptoIcon size={32} name={symbol} />
-            <SmallText muted>{symbol}</SmallText>
-            {
-              listed && <Box px={2}>
-                <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
-                  <Icon icon="tick-circle" iconSize={14} intent="primary" />
-                </Tooltip>
-              </Box>
-            }
-          </TokenNameWrapper>
-        </Cell>
-        <Cell onClick={() => redirectToTradingPage(symbol)}>
-          <SmallText muted>
-            {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
-          </SmallText>
-        </Cell>
-        <UnlockedCell>
-          <Switch inline checked={allowed} 
-            onChange={(event) => handleToggleAllowance(event, symbol)} />
-            {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
-        </UnlockedCell>
-        <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
-          <FlexRow justifyContent="flex-end" p={1}>
-            <ButtonWrapper>
-              <BlueGlowingButton
-                disabled={!connected}
-                intent="primary"
-                text="Deposit"
-                onClick={(event) => openDepositModal(event, symbol)}
-              />
-            </ButtonWrapper>
-            <ButtonWrapper>
-              <BlueGlowingButton
-                disabled={!connected}
-                intent="primary"
-                text="Send"
-                onClick={(event) => openSendModal(event, symbol)}
+        <Row key={index}>
+          <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+            <TokenNameWrapper>
+              <ColoredCryptoIcon size={32} name={symbol} />
+              <SmallText muted>{symbol}</SmallText>
+              {
+                listed && <Box px={2}>
+                  <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
+                    <Icon icon="tick-circle" iconSize={14} intent="primary" />
+                  </Tooltip>
+                </Box>
+              }
+            </TokenNameWrapper>
+          </Cell>
+          <Cell onClick={() => redirectToTradingPage(symbol)}>
+            <SmallText muted>
+              {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2 })} {referenceCurrency})
+            </SmallText>
+          </Cell>
+          <UnlockedCell>
+            <Switch inline checked={allowed} 
+              onChange={(event) => handleToggleAllowance(event, symbol)} />
+              {allowancePending && <Tag intent="success" large minimal interactive icon="time">Pending</Tag>}
+          </UnlockedCell>
+          <ActionsCell onClick={() => redirectToTradingPage(symbol)}>
+            <FlexRow justifyContent="flex-end" p={1}>
+              <ButtonWrapper>
+                <BlueGlowingButton
+                  disabled={!connected}
+                  intent="primary"
+                  text="Deposit"
+                  onClick={(event) => openDepositModal(event, symbol)}
                 />
-            </ButtonWrapper>
-          </FlexRow>
-        </ActionsCell>
-      </Row>
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <BlueGlowingButton
+                  disabled={!connected}
+                  intent="primary"
+                  text="Send"
+                  onClick={(event) => openSendModal(event, symbol)}
+                  />
+              </ButtonWrapper>
+            </FlexRow>
+          </ActionsCell>
+        </Row>
     );
   });
 };
