@@ -1,6 +1,16 @@
 // @flow
 import React from 'react'
-import { Icon, Tooltip, Card, Tabs, Tab, InputGroup, Button, Collapse } from '@blueprintjs/core'
+
+import { 
+  Icon, 
+  Tooltip, 
+  Card, 
+  Tabs, 
+  Tab, 
+  InputGroup, 
+  Button, 
+  Collapse  
+} from '@blueprintjs/core'
 
 import {
   formatNumber
@@ -15,7 +25,8 @@ import {
   OverlaySpinner,
   ColoredCryptoIcon,
   CryptoIcon,
-  SmallTextDiv
+  SmallTextDiv,
+  FlexRow
 } from '../Common'
 
 import {
@@ -228,7 +239,7 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
   return (
     <li key={pair} className="row">
       <CryptoIcon size={25} name={base} />
-      <SmallText 
+      <SmallText
         className="base" 
         onClick={() => changeSelectedToken(token)}
       >
@@ -277,6 +288,7 @@ const Header = ({ onChangeFilterName, filterName, sortOrder, isFavoriteTokensLis
             </span>
           )}
         </SmallText>
+        <span />
         <SmallText className="lastPrice" onClick={onChangeFilterName}>
           Last Price
           {filterName === 'lastPrice' && (
