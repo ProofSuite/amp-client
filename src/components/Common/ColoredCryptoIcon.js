@@ -63,8 +63,8 @@ const ColoredCryptoIcon = ({ name, color, size }) => {
     case 'ETH': return <ETH width={size} height={size} viewBox="0 0 32 32"  />
     case 'WETH': return <ETH width={size} height={size} viewBox="0 0 32 32"  />
     case 'ZRX': return <ZRX width={size} height={size} viewBox="0 0 32 32"  />
-    case 'FLMI': return <FLMI width={size} height={size} viewBox="0 0 32 32"  />
-    case 'FRECN': return <FRECN width={size} height={size} viewBox="0 0 32 32"  />
+    // case 'FLMI': return <FLMI width={size} height={size} viewBox="0 0 32 32"  />
+    // case 'FRECN': return <FRECN width={size} height={size} viewBox="0 0 32 32"  />
     default: return <Generic width={size} height={size} viewBox="0 0 32 32"  />
   }
 }
