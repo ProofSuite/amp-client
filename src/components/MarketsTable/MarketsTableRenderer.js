@@ -222,7 +222,7 @@ const TableHeader = styled.div`
   width: 100%;
   display: flex;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const TableHeaderCell = styled.div`
@@ -240,6 +240,7 @@ const Row = styled.div`
   width: 100%;
   display: flex;
   height: 60px;
+  padding-left: 6px;
 
   &:hover {
     background-color: ${Colors.BLUE_MUTED} !important;
