@@ -44,7 +44,13 @@ type Props = {
 
 class MarketsTableRenderer extends React.PureComponent<Props> {
 
-    getRowRenderer = ({ key, index, style }: *) => {
+    rowRenderer = ({ key, index, style }: *) => {
+      const {
+        pairs,
+        redirectToTradingPage,
+        currentReferenceCurrency,
+      } = this.props;
+
       const { 
         pair,
         baseTokenSymbol,
@@ -57,9 +63,9 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
         low,
         volume, 
         orderVolume,
-        redirectToTradingPage,
-        currentReferenceCurrency
-      } = this.props.pairs[index]
+      } = pairs[index]
+
+
   
       return (
         <Row key={key} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)} style={style}>
@@ -105,12 +111,20 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
       )
   }
 
+  noRowsRenderer = () => {
+    return (
+      <Centered my={4}>
+        <AMPLogo height="150em" width="150em" />
+        <LargeText muted>No pairs to display!</LargeText>
+      </Centered>
+    )
+  }
+
   render() {
       const {
       pairs,
       searchInput,
       handleSearchInputChange,
-      redirectToTradingPage,
       selectedTab,
       handleChangeTab,
       currentReferenceCurrency,
@@ -142,7 +156,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
           }
           </ButtonRow>
         </RowSpaceBetween>
-          <Table>
+          
             <TableHeader>
               <TableHeaderCell>Market</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
@@ -158,6 +172,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
               <TableHeaderCell>Change 24H</TableHeaderCell>
               <TableHeaderCell></TableHeaderCell>
             </TableHeader>
+            <Table>
             <TableBody>
               <AutoSizer>
                 {({ width, height }) => (
@@ -166,19 +181,14 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
                     height={height}
                     rowCount={pairs.length}
                     rowHeight={60}
-                    rowRenderer={this.getRowRenderer}
+                    rowRenderer={this.rowRenderer}
+                    noRowsRenderer={this.noRowsRenderer}
                     overscanRowCount={0}
                   />
                 )}
               </AutoSizer>
               </TableBody>
           </Table>
-        {pairs.length === 0 && (
-            <Centered my={4}>
-              <AMPLogo height="150em" width="150em" />
-              <LargeText muted>No tokens to display!</LargeText>
-            </Centered>
-        )}
       </TableSection>
     );
   }
@@ -205,12 +215,14 @@ const TableSection = styled.div`
 `;
 
 const TableBody = styled.div`
-  height: 750px !important;
+  height: 80vh;
 `;
 
 const TableHeader = styled.div`
   width: 100%;
   display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const TableHeaderCell = styled.div`

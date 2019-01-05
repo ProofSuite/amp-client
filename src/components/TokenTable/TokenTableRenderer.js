@@ -72,11 +72,28 @@ type Props = {
 
 class TokenTableRenderer extends React.PureComponent<Props> {
 
-  getRowRenderer = ({ key, index, style }: *) => {
-      if (index === 0) return <ETHRow key={key} style={style} {...this.props} />
-      if (index === 1) return <WETHRow key={key} style={style} {...this.props} />
-      
+  rowRenderer = ({ key, index, style }: *) => {
+      const {
+        ETHTokenData,
+        WETHTokenData,
+      } = this.props
+
+      if (index === 0 && ETHTokenData) return <ETHRow key={key} style={style} {...this.props} />
+      if (index === 0 && WETHTokenData) return <WETHRow key={key} style={style} {...this.props} />
+      if (index === 1 && ETHTokenData && WETHTokenData) return <WETHRow key={key} style={style} {...this.props} />
+      if (ETHTokenData) index = index - 1
+      if (WETHTokenData) index = index - 1
+
       return <BaseTokenRow key={key} index={index} style={style} {...this.props} />
+  }
+
+  noRowRenderer = () => {
+    return (
+      <Centered>
+        <AMPLogo height="150em" width="150em" />
+        <LargeText muted>No tokens to display!</LargeText>
+      </Centered>
+    )
   }
 
   render () {
@@ -124,24 +141,20 @@ class TokenTableRenderer extends React.PureComponent<Props> {
                       height={height}
                       rowCount={totalFilteredTokens}
                       rowHeight={60}
-                      rowRenderer={this.getRowRenderer}
+                      rowRenderer={this.rowRenderer}
+                      noRowsRenderer={this.noRowRenderer}
                     />
                   )}
               </AutoSizer>
               </TableBody>
             </Table>
-          {totalFilteredTokens === 0 && (
-              <Centered>
-                <AMPLogo height="150em" width="150em" />
-                <LargeText muted>No tokens to display!</LargeText>
-              </Centered>
-          )}
         </TableSection>
       );
 
   }
-
 }
+
+
 
 
 const ETHRow = (props: Props) => {
@@ -157,7 +170,6 @@ const ETHRow = (props: Props) => {
   } = props;
 
   if (!ETHTokenData) return null
-
   const { symbol, balance, value } = ETHTokenData
 
   return (
@@ -225,7 +237,7 @@ const WETHRow = (props: Props) => {
 
   return (
     <Row key={key} style={style}>
-      <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+      <TokenNameCell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -237,7 +249,7 @@ const WETHRow = (props: Props) => {
             </Box>
           }
         </TokenNameWrapper>
-      </Cell>
+      </TokenNameCell>
       <BalancesCell onClick={() => redirectToTradingPage(symbol)}>
         <SmallText muted>
           {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
@@ -293,11 +305,11 @@ const BaseTokenRow = (props: Props) => {
     referenceCurrency
   } = props;
 
-  const { symbol, balance, allowed, allowancePending, value, listed } = baseTokensData[index-2]
+  const { symbol, balance, allowed, allowancePending, value, listed } = baseTokensData[index]
 
     return (
         <Row key={key} style={style}>
-          <Cell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+          <TokenNameCell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
             <TokenNameWrapper>
               <ColoredCryptoIcon size={32} name={symbol} />
               <SmallText muted>{symbol}</SmallText>
@@ -309,12 +321,12 @@ const BaseTokenRow = (props: Props) => {
                 </Box>
               }
             </TokenNameWrapper>
-          </Cell>
-          <Cell onClick={() => redirectToTradingPage(symbol)}>
+          </TokenNameCell>
+          <BalancesCell onClick={() => redirectToTradingPage(symbol)}>
             <SmallText muted>
               {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2 })} {referenceCurrency})
             </SmallText>
-          </Cell>
+          </BalancesCell>
           <UnlockedCell>
             <Switch inline checked={allowed} 
               onChange={(event) => handleToggleAllowance(event, symbol)} />
@@ -367,14 +379,15 @@ const TableHeader = styled.div`
 `;
 
 const TableHeaderCell = styled.div`
-width: 15%;
-text-align: middle;
+  width: 20%;
 `;
 
 const TokenNameHeaderCell = styled(TableHeaderCell)`
+  min-witdh: 130px;
 `
 
 const BalancesHeaderCell = styled(TableHeaderCell)`
+  width: 25%;
 `
 
 const UnlockedHeaderCell = styled(TableHeaderCell)`
@@ -397,12 +410,14 @@ const Cell = styled.div`
 `;
 
 const TokenNameCell = styled(Cell)`
+  min-width: 130px;
   @media ${Devices.tablet} {
     
   }
 `
 
 const BalancesCell = styled(Cell)`
+  width: 25%;
   @media ${Devices.tablet} {}
 `
 
@@ -438,9 +453,12 @@ const Row = styled.div`
 const TokenNameWrapper = styled.span`
   display: flex;
   align-items: center;
+
   & svg {
     margin-right: 12px;
   }
+
+  padding-left: 6px;
 `;
 
 const HideTokenCheck = styled(Checkbox)`

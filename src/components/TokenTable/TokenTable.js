@@ -100,9 +100,7 @@ class TokenTable extends React.PureComponent<Props, State> {
     })
   }
 
-  handleToggleAllowance = (event: SyntheticEvent<>, symbol: string) => {
-    console.log(event)
-    
+  handleToggleAllowance = (event: SyntheticEvent<>, symbol: string) => {    
     // event.stopProp
     event.preventDefault()
     event.stopPropagation();
