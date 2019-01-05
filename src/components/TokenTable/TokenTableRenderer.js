@@ -364,7 +364,7 @@ const TableSection = styled.div`
   display: flex;
   justify-content: start;
   flex-direction: column;
-  height: 100%;
+  height: 90%;
   width: 100%;
 `;
 
@@ -375,7 +375,8 @@ const TableBody = styled.div`
 const TableHeader = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const TableHeaderCell = styled.div`
@@ -463,14 +464,6 @@ const TokenNameWrapper = styled.span`
 
 const HideTokenCheck = styled(Checkbox)`
   margin: 0 !important;
-`;
-
-const NoToken = styled.p`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
 `;
 
 const ButtonWrapper = styled.span`  
