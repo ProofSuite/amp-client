@@ -100,9 +100,7 @@ class TokenTable extends React.PureComponent<Props, State> {
     })
   }
 
-  handleToggleAllowance = (event: SyntheticEvent<>, symbol: string) => {
-    console.log(event)
-    
+  handleToggleAllowance = (event: SyntheticEvent<>, symbol: string) => {    
     // event.stopProp
     event.preventDefault()
     event.stopPropagation();
@@ -165,16 +163,14 @@ class TokenTable extends React.PureComponent<Props, State> {
       convertModalToToken,
      } = this.state;
 
-     let quoteTokenData = tokenData.filter((token: Token) => quoteTokens.indexOf(token.symbol) !== -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
      let baseTokenData = tokenData.filter((token: Token) => baseTokens.indexOf(token.symbol) === -1 && token.symbol !== 'WETH' && token.symbol !== 'ETH')
      let WETHTokenData = tokenData.filter((token: Token) => token.symbol === 'WETH')
      let ETHTokenData = tokenData.filter((token: Token) => token.symbol === 'ETH')
 
     let filteredBaseTokenData = this.filterTokens(baseTokenData)
-    let filteredQuoteTokenData = this.filterTokens(quoteTokenData)
     let filteredWETHTokenData = this.filterTokens(WETHTokenData)
     let filteredETHTokenData = this.filterTokens(ETHTokenData)
-    let totalFilteredTokens = filteredBaseTokenData.length + filteredQuoteTokenData.length + filteredWETHTokenData.length + filteredETHTokenData.length
+    let totalFilteredTokens = filteredBaseTokenData.length + filteredWETHTokenData.length + filteredETHTokenData.length
 
     return (
       <Wrapper>
@@ -182,7 +178,6 @@ class TokenTable extends React.PureComponent<Props, State> {
           connected={connected}
           handleToggleAllowance={this.handleToggleAllowance}
           baseTokensData={filteredBaseTokenData}
-          quoteTokensData={filteredQuoteTokenData}
           ETHTokenData={filteredETHTokenData[0]}
           WETHTokenData={filteredWETHTokenData[0]}
           tokenDataLength={tokenData.length}
