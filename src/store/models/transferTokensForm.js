@@ -60,7 +60,7 @@ export const validateEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxPara
 
 export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('send-ether-tx');
+    mixpanel.track('wallet-page/send-ether-tx');
 
     try {
       let signer = getSigner();
@@ -99,7 +99,6 @@ export const sendEtherTx = ({ amount, receiver, gas, gasPrice }: EtherTxParams):
 
 export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('validate-transfer-token-tx');
 
     try {
       let { receiver, amount, tokenAddress } = params;
@@ -123,7 +122,7 @@ export const validateTransferTokensTx = (params: TransferTokensTxParams): ThunkA
 
 export const sendTransferTokensTx = (params: TransferTokensTxParams): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('send-transfer-tokens-tx');
+    mixpanel.track('wallet-page/send-transfer-tokens-tx');
 
     try {
       let { receiver, amount, gas, gasPrice, tokenAddress } = params;
