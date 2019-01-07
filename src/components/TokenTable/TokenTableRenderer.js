@@ -174,7 +174,7 @@ const ETHRow = (props: Props) => {
 
   return (
     <Row key={key} style={style}>
-      <TokenNameCell style={{ width: '15%'}}>
+      <TokenNameCell>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -237,7 +237,7 @@ const WETHRow = (props: Props) => {
 
   return (
     <Row key={key} style={style}>
-      <TokenNameCell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+      <TokenNameCell onClick={() => redirectToTradingPage(symbol)}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -309,7 +309,7 @@ const BaseTokenRow = (props: Props) => {
 
     return (
         <Row key={key} style={style}>
-          <TokenNameCell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+          <TokenNameCell onClick={() => redirectToTradingPage(symbol)}>
             <TokenNameWrapper>
               <ColoredCryptoIcon size={32} name={symbol} />
               <SmallText muted>{symbol}</SmallText>
@@ -364,7 +364,7 @@ const TableSection = styled.div`
   display: flex;
   justify-content: start;
   flex-direction: column;
-  height: 90%;
+  height: 100%;
   width: 100%;
 `;
 
@@ -375,8 +375,6 @@ const TableBody = styled.div`
 const TableHeader = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
 `;
 
 const TableHeaderCell = styled.div`
