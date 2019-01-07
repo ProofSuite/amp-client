@@ -174,7 +174,7 @@ const ETHRow = (props: Props) => {
 
   return (
     <Row key={key} style={style}>
-      <TokenNameCell style={{ width: '15%'}}>
+      <TokenNameCell>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -237,7 +237,7 @@ const WETHRow = (props: Props) => {
 
   return (
     <Row key={key} style={style}>
-      <TokenNameCell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+      <TokenNameCell onClick={() => redirectToTradingPage(symbol)}>
         <TokenNameWrapper>
           <ColoredCryptoIcon size={32} name={symbol} />
           <SmallText muted>{symbol}</SmallText>
@@ -309,7 +309,7 @@ const BaseTokenRow = (props: Props) => {
 
     return (
         <Row key={key} style={style}>
-          <TokenNameCell onClick={() => redirectToTradingPage(symbol)} style={{ width: '15%'}}>
+          <TokenNameCell onClick={() => redirectToTradingPage(symbol)}>
             <TokenNameWrapper>
               <ColoredCryptoIcon size={32} name={symbol} />
               <SmallText muted>{symbol}</SmallText>
@@ -375,7 +375,6 @@ const TableBody = styled.div`
 const TableHeader = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 10px;
 `;
 
 const TableHeaderCell = styled.div`
@@ -463,14 +462,6 @@ const TokenNameWrapper = styled.span`
 
 const HideTokenCheck = styled(Checkbox)`
   margin: 0 !important;
-`;
-
-const NoToken = styled.p`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
 `;
 
 const ButtonWrapper = styled.span`  
