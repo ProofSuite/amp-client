@@ -102,8 +102,6 @@ export function queryAccountData(): ThunkAction {
 
       balances.push(etherBalance)
 
-      console.log(tokenBalanceResult)
-
       let { errors: tokenBalanceErrors, tokenBalances } = tokenBalanceResult
       balances.concat(tokenBalances)
       let { errors: tokenAllowanceErrors, tokenAllowances } = tokenAllowanceResult
