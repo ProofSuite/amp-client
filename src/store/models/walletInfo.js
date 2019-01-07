@@ -25,7 +25,9 @@ export default function walletInfoSelector(state: State) {
 }
 
 export function detectContract(tokenAddress: string): ThunkAction {
-    return async (dispatch, getState, { provider, api }) => {
+    return async (dispatch, getState, { provider, api, mixpanel }) => {
+        mixpanel.track('wallet-page/detect-contract')
+
         try {
             let state = getState()
             let tokenDomain = getTokenDomain(state)
@@ -65,7 +67,9 @@ export function detectContract(tokenAddress: string): ThunkAction {
 }
 
 export function addToken(tokenAddress: string): ThunkAction {
-    return async (dispatch, getState, { provider, api }) => {
+    return async (dispatch, getState, { provider, api, mixpanel }) => {
+        mixpanel.track('wallet-page/add-token')
+
         try {
             let state = getState()
             let tokenDomain = getTokenDomain(state)
@@ -132,7 +136,9 @@ export function addToken(tokenAddress: string): ThunkAction {
 
 
 export function registerToken(tokenAddress: string): ThunkAction {
-    return async (dispatch, getState, { provider, api }) => {
+    return async (dispatch, getState, { provider, api, mixpanel }) => {
+        mixpanel.track('wallet-page/register-token')
+
         try {
             let state = getState()
             let tokenDomain = getTokenDomain(state)

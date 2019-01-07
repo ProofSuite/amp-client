@@ -56,7 +56,9 @@ export default function tokenSearcherSelector(state: State) {
 }
 
 export const updateCurrentPair = (pair: string): ThunkAction => {
-  return async (dispatch, getState, { socket }) => {
+  return async (dispatch, getState, { socket, mixpanel }) => {
+    mixpanel.track('trading-page/update-current-pair')
+
     try {
       socket.unsubscribeChart()
       socket.unsubscribeOrderBook()

@@ -25,7 +25,7 @@ export default function loginPageSelector(state: State) {
 
 export function loginWithMetamask(): ThunkAction {
   return async (dispatch, getState, { socket, mixpanel }) => {
-    mixpanel.track('login-with-metamask');
+    mixpanel.track('login-page/login-with-metamask');
 
     try {
       dispatch(actionCreators.requestLogin());
@@ -55,7 +55,7 @@ export function loginWithMetamask(): ThunkAction {
 
 export function loginWithWallet(params: CreateWalletParams): ThunkAction {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('login-with-wallet');
+    mixpanel.track('login-page/login-with-wallet');
 
     try {
       dispatch(actionCreators.requestLogin());

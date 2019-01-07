@@ -37,7 +37,7 @@ export default function convertTokensFormSelector(state: State) {
 
 export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('convert-from-weth-to-eth');
+    mixpanel.track('wallet-page/convert-from-weth-to-eth');
 
     try {
       dispatch(actionCreators.confirm('WETH'))
@@ -72,7 +72,7 @@ export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
 
 export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('convert-from-eth-to-weth');
+    mixpanel.track('wallet-page/convert-from-eth-to-weth');
 
     try {
       dispatch(actionCreators.confirm('ETH'));
