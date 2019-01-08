@@ -1,10 +1,10 @@
 // @flow
-import * as actionCreators from '../actions/loginPage';
+import * as actionCreators from '../actions/loginPage'
+import * as notifierActionCreators from '../actions/app'
+import { getAccountDomain, getLoginPageDomain } from '../domains'
 
-import * as notifierActionCreators from '../actions/app';
-import { getAccountDomain, getLoginPageDomain } from '../domains';
-import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet';
-import { createDefaultWalletSigner, createMetamaskSigner } from '../services/signer';
+import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet'
+import { createDefaultWalletSigner, createMetamaskSigner, createLedgerSigner } from '../services/signer'
 
 import type { State, ThunkAction } from '../../types';
 
@@ -66,6 +66,31 @@ export function loginWithWallet(params: CreateWalletParams): ThunkAction {
       if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, privateKey });
 
       await createDefaultWalletSigner(wallet);
+      dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
+      dispatch(actionCreators.loginWithWallet(address, privateKey));
+      dispatch(notifierActionCreators.addSuccessNotification({ message: `Signed in with ${address}` }));
+    } catch (e) {
+      console.log(e);
+      dispatch(notifierActionCreators.addNotification({ message: 'Login Error' }));
+      dispatch(actionCreators.loginError(e.message));
+    }
+  };
+}
+
+
+export function loginWithLedger(params: CreateWalletParams): ThunkAction {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('login-page/login-with-ledger');
+
+    try {
+      dispatch(actionCreators.requestLogin());
+      let { wallet, encryptedWallet, storeWallet, storePrivateKey } = params;
+      let { address, privateKey } = wallet;
+
+      if (storeWallet && encryptedWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
+      if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, privateKey });
+
+      await createLedgerSigner(wallet);
       dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
       dispatch(actionCreators.loginWithWallet(address, privateKey));
       dispatch(notifierActionCreators.addSuccessNotification({ message: `Signed in with ${address}` }));
