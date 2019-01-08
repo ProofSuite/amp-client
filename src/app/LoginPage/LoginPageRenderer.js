@@ -35,6 +35,7 @@ type Props = {
   showWalletLoginForm: CreateWalletParams => void,
   showLoginMethods: () => void,
   loginWithMetamask: void => void,
+  loginWithLedger: void => void,
   loginWithWallet: void => void,
 }
 
@@ -43,6 +44,7 @@ const LoginPageRenderer = (props: Props) => {
     view,
     loginWithMetamask,
     loginWithWallet,
+    loginWithLedger,
     showCreateWallet,
     showWalletLoginForm,
     metamaskStatus,
@@ -55,6 +57,7 @@ const LoginPageRenderer = (props: Props) => {
       <LoginMethodsView
         showWalletLoginForm={showWalletLoginForm}
         loginWithMetamask={loginWithMetamask}
+        loginWithLedger={loginWithLedger}
         showCreateWallet={showCreateWallet}
         metamaskStatus={metamaskStatus}
       />
@@ -82,7 +85,15 @@ const LoginPageRenderer = (props: Props) => {
 }
 
 const LoginMethodsView = (props: Props) => {
-  const { showWalletLoginForm, loginWithMetamask, metamaskStatus, showCreateWallet } = props
+  
+  const { 
+    showWalletLoginForm, 
+    loginWithMetamask, 
+    loginWithLedger,
+    metamaskStatus, 
+    showCreateWallet
+  } = props
+
   return (
     <FlexRow p={5} pb={6} justifyContent="space-between">
       <Box />
@@ -152,6 +163,16 @@ const LoginMethodsView = (props: Props) => {
                           )
                           : null
                       }
+                  </Flex>
+                  <Flex flexDirection="column" py={1}>
+                    <StyledButton 
+                      onClick={loginWithLedger} 
+                      large 
+                      intent="primary"
+                      fill
+                    >
+                        <FormattedMessage {...messages.ledger} />
+                    </StyledButton>
                   </Flex>
                   <Flex flexDirection="column" py={1}>
                     <StyledButton onClick={showWalletLoginForm} large intent="primary" fill>
@@ -270,6 +291,10 @@ const messages = defineMessages({
   metamask: {
     id: 'loginPage.metamask',
     defaultMessage: 'Metamask',
+  },
+  ledger: {
+    id: 'loginPage.ledger',
+    defaultMessage: 'Ledger',
   },
   metamaskNotFound: {
     id: 'loginPage.metamask',

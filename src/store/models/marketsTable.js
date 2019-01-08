@@ -32,7 +32,8 @@ export default function marketsTableSelector(state: State) {
 }
 
 export function redirectToTradingPage(baseTokenSymbol: string, quoteTokenSymbol: string): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('market-page/redirect-to-trading-page')
     let pair = `${baseTokenSymbol}/${quoteTokenSymbol}`
 
     dispatch(actionCreators.updateCurrentPair(pair))

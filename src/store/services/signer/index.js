@@ -1,5 +1,5 @@
 // @flow
-import { providers, Wallet } from 'ethers'
+import { providers, Wallet, LedgerSigner } from 'ethers'
 import { signOrder, signTrade, createRawOrder, createOrderCancel } from './methods'
 import { ETHEREUM_NODE_HTTP_URL } from '../../../config/urls'
 import { DEFAULT_NETWORK_ID } from '../../../config/environment'
@@ -76,6 +76,39 @@ export const createMetamaskSigner = async () => {
   window.signer = { instance: signer, type: 'metamask' }
 
   return { address, networkID }
+}
+
+export const createLedgerSigner = async (networkID: ?number) => {
+  let provider
+  networkID = networkID || DEFAULT_NETWORK_ID
+
+  if (networkID === '8888') {
+    provider = createProofNodeProvider(networkID)
+  }
+
+  if (networkID === '4' || networkID === '1') {
+    let fallbackProviders = await Promise.all([
+      createInfuraProvider(networkID),
+      createEtherscanProvider(networkID),
+      createProofNodeProvider(networkID)
+    ])
+
+    provider = new providers.FallbackProvider(fallbackProviders)
+  }
+
+  let signer = LedgerSigner.connect(provider)
+
+  signer.networkID = networkID
+  signer.signOrder = signOrder
+  signer.signTrade = signTrade
+  signer.createRawOrder = createRawOrder
+  signer.createOrderCancel = createOrderCancel
+
+  window.signer = { instance: signer, type: 'wallet' }
+
+  console.log(signer)
+
+  return '0x'
 }
 
 export const createDefaultWalletSigner = async (wallet: Object, networkID: ?number) => {
