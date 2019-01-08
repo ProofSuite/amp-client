@@ -120,7 +120,8 @@ export function toggleAllowances(baseTokenSymbol: string, quoteTokenSymbol: stri
 
 // eslint-disable-next-line
 export const updateCurrentPair = (pair: string): ThunkAction => {
-  return async (dispatch, getState, { api, socket }) => {
+  return async (dispatch, getState, { api, socket, mixpanel }) => {
+    mixpanel.track('trading-page/update-current-pair')
     try {
       socket.unsubscribeChart()
       socket.unsubscribeOrderBook()

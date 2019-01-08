@@ -70,7 +70,7 @@ export const defaultFunction = (): ThunkAction => {
 
 export const sendNewOrder = (side: string, amount: number, price: number): ThunkAction => {
   return async (dispatch, getState, { socket, mixpanel }) => {
-    mixpanel.track('send-new-order');
+    mixpanel.track('trading-page/send-new-order');
 
     try {
       let state = getState()
@@ -148,7 +148,9 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
 
 
 export function unlockPair(baseTokenSymbol: string, quoteTokenSymbol: string): ThunkAction {
-  return async (dispatch, getState, { txProvider }) => {
+  return async (dispatch, getState, { txProvider, mixpanel }) => {
+    mixpanel.track('trading-page/unlock-pair');
+
     try {
       const state = getState()
       const tokens = getTokenDomain(state).bySymbol()

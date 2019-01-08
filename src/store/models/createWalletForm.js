@@ -19,7 +19,7 @@ export default function createWalletFormSelector(state: State) {
 
 export function createWallet(params: CreateWalletParams): ThunkAction {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('create-wallet');
+    mixpanel.track('login-page/create-wallet');
 
     try {
       let { address, encryptedWallet, password, storeWallet, storePrivateKey } = params;

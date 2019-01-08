@@ -39,9 +39,8 @@ export default function depositFormSelector(state: State) {
 }
 
 export function queryBalances(): ThunkAction {
-  return async (dispatch, getState, { mixpanel, provider }) => {
+  return async (dispatch, getState, { provider }) => {
     try {
-      mixpanel.track('query-balances');
       const state = getState();
       const accountAddress = depositFormSelector(state).accountAddress();
       let tokens = depositFormSelector(state).tokens();
@@ -62,9 +61,7 @@ export function queryBalances(): ThunkAction {
 
 export function subscribeBalance(token: Token): ThunkAction {
   return async (dispatch, getState, { mixpanel, provider }) => {
-    try {
-      mixpanel.track('subscribe-balances');
-      
+    try {      
       let unsubscribe;
       const { symbol } = token;
       const state = getState();
@@ -111,7 +108,7 @@ export const confirmEtherDeposit = (
   convertAmount: number
 ): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('confirm-ether-deposit');
+    mixpanel.track('wallet-page/confirm-ether-deposit');
 
     try {
       dispatch(depositFormActionCreators.confirm());
@@ -162,7 +159,7 @@ export const confirmEtherDeposit = (
 
 export const confirmTokenDeposit = ({ address }: Token, shouldAllow: boolean): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
-    mixpanel.track('confirm-token-deposit');
+    mixpanel.track('wallet-page/confirm-token-deposit');
 
     try {
       let signer = getSigner();

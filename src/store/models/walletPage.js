@@ -128,7 +128,9 @@ export function queryAccountData(): ThunkAction {
 }
 
 export function redirectToTradingPage(symbol: string): ThunkAction {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, { mixpanel }) => {
+    mixpanel.track('wallet-page/redirect-to-trading-page')
+
     let quoteTokenSymbols = quoteTokens.map(token => token.symbol)
     let quoteTokenIndex = quoteTokenSymbols.indexOf(symbol)
     let baseTokenSymbol, quoteTokenSymbol
@@ -149,7 +151,9 @@ export function redirectToTradingPage(symbol: string): ThunkAction {
 }
 
 export function toggleAllowance(symbol: string): ThunkAction {
-  return async (dispatch, getState, { txProvider }) => {
+  return async (dispatch, getState, { txProvider, mixpanel }) => {
+    mixpanel.track('wallet-page/toggle-allowance')
+
     try {
       const state = getState()
       const tokens = getTokenDomain(state).bySymbol()
