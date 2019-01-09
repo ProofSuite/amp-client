@@ -164,7 +164,7 @@ const LoginMethodsView = (props: Props) => {
                           : null
                       }
                   </Flex>
-                  <Flex flexDirection="column" py={1}>
+                  {/* <Flex flexDirection="column" py={1}>
                     <StyledButton 
                       onClick={loginWithLedger} 
                       large 
@@ -173,7 +173,7 @@ const LoginMethodsView = (props: Props) => {
                     >
                         <FormattedMessage {...messages.ledger} />
                     </StyledButton>
-                  </Flex>
+                  </Flex> */}
                   <Flex flexDirection="column" py={1}>
                     <StyledButton onClick={showWalletLoginForm} large intent="primary" fill>
                       <FormattedMessage {...messages.wallet} />

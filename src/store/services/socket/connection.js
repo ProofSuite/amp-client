@@ -27,7 +27,6 @@ export const onMessage = (listener: Listener) => {
   if (!window.socket) throw new Error('Socket connection not established')
 
   window.socket.onmessage = message => {
-    console.log(message)
     let { channel, event } = JSON.parse(message.data)
     return listener({ channel, event })
   }
