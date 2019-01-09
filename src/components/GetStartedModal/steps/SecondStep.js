@@ -272,8 +272,8 @@ const SecondStep = (props: Props) => {
     return (
       <React.Fragment>
         <ModalBody>
-          <Callout intent='success' title='Deposit Ether'>
-            Send ETH to the address displayed below. This form will update once we detect your balance has changed.
+          <Callout intent='success'>
+            It looks like you do not have any ether. You can deposit some now or skip this step. This form will update when your Ether is received.
           </Callout>
           <WaitingFormBox>
             <SpinnerBox>

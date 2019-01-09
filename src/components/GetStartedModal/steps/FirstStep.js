@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Callout, Button, Checkbox } from '@blueprintjs/core'
 import { ModalBody, ModalFooter } from '../../Common'
+import { DISCORD_URL } from '../../../config/urls'
 
 type Props = {
   step: string,
@@ -38,13 +39,30 @@ const FirstStep = (props: Props) => {
   return (
     <React.Fragment>
       <ModalBody>
-        <Callout intent='success' title='Welcome to the AMP Exchange!' icon='hand' />
-        <ul>
-          <li>1) Before starting, make sure you are on https://amp.exchange. </li>
-          <li>2) AMP allows you to trade from your own Ethereum wallet. We can not control your funds.</li>
-          <li>3) All trades are settled on the Ethereum blockchain. </li>
-          <li>4) Only invest and trade what you can afford to risk. </li>
-        </ul>
+        <ModalText>
+        <Callout intent='warning' >
+        Please take some time to read the information below before you start trading
+        </Callout>
+        <br />
+        <h2>What is AMP ?</h2>
+        <p>• AMP is an open-source cryptocurrency exchange which gives you full control over your funds.</p>
+        <p>• We allow you to trade directly from your wallet without the need for deposits and withdrawals.</p>
+        <p>• We do not control your account and therefore cannot help you recover your funds if you send them to the wrong address or lose your private key. 
+        You are fully responsible for your security.</p>
+        <p>• Trades performed on AMP are immediately settled on the Ethereum blockchain. For better performance and UX, the orderbook is currently centralized.</p>
+        <br />
+        <h2>Security advice</h2>
+        <p>• Verify that you are on https://amp.exchange everytime you log in</p>
+        <p>• We recommend to use Metamask for the most secure trading experience</p>
+        <p>• We do not control your account and therefore cannot help you recover your funds if you send them to the wrong address or lose your private key. You are fully responsible for your security.</p>
+        <p>• Trades performed on AMP are immediately settled on the Ethereum blockchain. For better performance and UX, the orderbook is currently centralized.</p>
+        <p>• Only invest and trade what you can afford to risk</p>
+        <br />
+        <h2>Ask for help or join the Proofsuite community</h2>
+        <p>• Write to us anytime at: support@proofsuite.com</p>
+        <p>• If you have any suggestions, or want to get involved with the project, join us on <a href={DISCORD_URL}>Discord</a></p>
+        <br />
+        </ModalText>
       </ModalBody>
       <ModalFooter>
         <FooterBox>
@@ -62,6 +80,11 @@ const FirstStep = (props: Props) => {
     </React.Fragment>
   )
 }
+
+const ModalText = styled.div`
+  overflow-y: scroll;
+  max-height: 400px;
+`
 
 const FooterBox = styled.div`
   width: 100%;

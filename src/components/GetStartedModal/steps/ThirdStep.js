@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Checkbox, Intent } from '@blueprintjs/core'
 import { ModalFooter, ModalBody } from '../../Common'
+import { DISCORD_URL } from '../../../config/urls'
 
 type Props = {
   step: string,
@@ -60,7 +61,7 @@ const Thirdstep = (props: Props) => {
           </ButtonGroupBox>
           <ContactLinksBox>
             <p>Contact us at support@proofsuite.com</p>
-            <p>Join our discord channel</p>
+            <p>Join our <a href={DISCORD_URL}>Discord</a> channel</p>
           </ContactLinksBox>
         </Box>
       </ModalBody>

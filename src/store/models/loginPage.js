@@ -84,16 +84,7 @@ export function loginWithLedger(params: CreateWalletParams): ThunkAction {
 
     try {
       dispatch(actionCreators.requestLogin());
-      let { wallet, encryptedWallet, storeWallet, storePrivateKey } = params;
-      let { address, privateKey } = wallet;
-
-      if (storeWallet && encryptedWallet) saveEncryptedWalletInLocalStorage(address, encryptedWallet);
-      if (storePrivateKey) await savePrivateKeyInSessionStorage({ address, privateKey });
-
-      await createLedgerSigner(wallet);
-      dispatch(actionCreators.createWallet(wallet.address, encryptedWallet));
-      dispatch(actionCreators.loginWithWallet(address, privateKey));
-      dispatch(notifierActionCreators.addSuccessNotification({ message: `Signed in with ${address}` }));
+      await createLedgerSigner();
     } catch (e) {
       console.log(e);
       dispatch(notifierActionCreators.addNotification({ message: 'Login Error' }));
