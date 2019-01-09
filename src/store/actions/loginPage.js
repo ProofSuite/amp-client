@@ -4,6 +4,7 @@ import type {
   LoginErrorAction,
   LoginWithMetamaskAction,
   LoginWithWalletAction,
+  LoginWithLedgerAction,
   RequestLoginAction,
 } from '../../types/loginPage';
 
@@ -12,6 +13,7 @@ const actionTypes = {
   requestLogin: 'loginPage/REQUEST_LOGIN',
   loginWithMetamask: 'loginPage/LOGIN_WITH_METAMASK',
   loginWithWallet: 'loginPage/LOGIN_WITH_WALLET',
+  loginWithLedger: 'loginPage/LOGIN_WITH_LEDGER',
   loginError: 'loginPage/LOGIN_ERROR',
 };
 
@@ -34,6 +36,13 @@ export function loginWithWallet(address: string, privateKey: string): LoginWithW
     type: actionTypes.loginWithWallet,
     payload: { address, privateKey },
   };
+}
+
+export function loginWithLedger(address: string): LoginWithLedgerAction {
+  return {
+    type: actionTypes.loginWithLedger,
+    payload: { address }
+  }
 }
 
 export function loginError(error: string): LoginErrorAction {

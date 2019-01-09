@@ -8,6 +8,7 @@ import type { LoginWithWallet } from '../../types/loginPage';
 type Props = {
   authenticated: boolean,
   loginWithMetamask: () => void,
+  loginWithLedger: () => void,
   loginWithWallet: LoginWithWallet => void,
   removeNotification: any => void,
 };
@@ -45,10 +46,6 @@ class LoginPage extends React.PureComponent<Props, State> {
     this.setState({ view: 'createWallet' });
   };
 
-  loginWithMetamask = () => {
-    this.props.loginWithMetamask();
-  };
-
   hideModal = () => {
     this.setState({ view: 'loginMethods' });
   };
@@ -66,7 +63,12 @@ class LoginPage extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { loginWithMetamask, loginWithWallet, authenticated },
+      props: { 
+        loginWithMetamask, 
+        loginWithWallet, 
+        loginWithLedger,
+        authenticated
+      },
       state: { view, metamaskStatus },
       showWalletLoginForm,
       showLoginMethods,
@@ -84,10 +86,11 @@ class LoginPage extends React.PureComponent<Props, State> {
           view={view}
           metamaskStatus={metamaskStatus}
           loginWithWallet={loginWithWallet}
+          loginWithLedger={loginWithLedger}
+          loginWithMetamask={loginWithMetamask}
           showCreateWallet={showCreateWallet}
           hideModal={hideModal}
           walletCreated={walletCreated}
-          loginWithMetamask={loginWithMetamask}
           showWalletLoginForm={showWalletLoginForm}
           showLoginMethods={showLoginMethods}
         />

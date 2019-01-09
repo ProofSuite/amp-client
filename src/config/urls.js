@@ -7,6 +7,7 @@ export const ETHEREUM_NODE_WS_URL = env.ETHEREUM_NODE_WS_URL
 
 
 export const EXCHANGE_RATE_API_URL = "/rates"
+export const DISCORD_URL = 'https://discordapp.com/invite/eChaHFk'
 // export const EXCHANGE_RATE_API_URL = 'https://min-api.cryptocompare.com'
 
 const ETHERSCAN_RINKEBY_TX = 'https://rinkeby.etherscan.io/tx'
