@@ -3,6 +3,7 @@ import React from 'react'
 import { Callout, Button, Intent, Spinner } from '@blueprintjs/core'
 import { Indent } from '../Common'
 import styled from 'styled-components'
+import { ETHERSCAN_TX_URL } from '../../config/urls'
 
 type Props = {
   loading: boolean,
@@ -13,7 +14,9 @@ type Props = {
 
 //TODO Add link to Etherscan
 const SmallTxNotification = (props: Props) => {
-  const {  status, txName } = props
+  const {  status, txName, hash } = props
+
+  const txUrl = `${ETHERSCAN_TX_URL}/${hash}`
 
   switch (status) {
     case 'incomplete':
@@ -27,7 +30,9 @@ const SmallTxNotification = (props: Props) => {
                 <Spinner size={25} intent={Intent.SUCCESS} />
                   <Indent /> {txName} pending
               </div>
-              <Button minimal interactive>View on Etherscan</Button>
+              <a href={txUrl} target="_blank">
+                <Button minimal interactive>View on Etherscan</Button>
+              </a>
             </NotificationBox>
           </Callout>
         </CalloutBox>
@@ -38,7 +43,9 @@ const SmallTxNotification = (props: Props) => {
           <Callout intent={Intent.SUCCESS} icon='tick'>
             <NotificationBox>
               {txName} successful
-              <Button minimal interactive>View on Etherscan</Button>
+              <a href={txUrl} target="_blank">
+                <Button minimal interactive>View on Etherscan</Button>
+              </a>
             </NotificationBox>
           </Callout>
         </CalloutBox>
@@ -49,7 +56,9 @@ const SmallTxNotification = (props: Props) => {
           <Callout intent={Intent.DANGER} icon='cross'>
             <NotificationBox>
               {txName} error
-              <Button minimal interactive>View on Etherscan</Button>
+              <a href={txUrl} target="_blank">
+                <Button minimal interactive>View on Etherscan</Button>
+              </a>
             </NotificationBox>
           </Callout>
         </CalloutBox>
