@@ -11,6 +11,9 @@ if (window.env) {
   ETHEREUM_NODE_WS_URL = window.env.REACT_APP_ETHEREUM_NODE_WS_URL
   DEFAULT_NETWORK_ID = window.env.REACT_APP_DEFAULT_NETWORK_ID
   MIXPANEL_TOKEN = window.env.REACT_APP_MIXPANEL_TOKEN
+
+  console.log(MIXPANEL_TOKEN)
+
 } else {
   ENGINE_HTTP_URL = process.env.REACT_APP_ENGINE_HTTP_URL
   ENGINE_WS_URL = process.env.REACT_APP_ENGINE_WS_URL
@@ -19,6 +22,8 @@ if (window.env) {
   MIXPANEL_TOKEN = ''
   DEFAULT_NETWORK_ID = process.env.REACT_APP_DEFAULT_NETWORK_ID || 'default'
 }
+
+console.log(MIXPANEL_TOKEN)
 
 export {
   ENGINE_HTTP_URL,
