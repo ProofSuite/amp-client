@@ -3,6 +3,8 @@ import { Callout, Intent, Spinner, Button } from '@blueprintjs/core';
 import { Colors, Indent } from '../Common'
 import styled from 'styled-components';
 
+import { ETHERSCAN_TX_URL } from '../../config/urls'
+
 type Props = {
   hash: string,
   title: ?string,
@@ -20,7 +22,7 @@ const TxPendingNotification = ({ hash, title }: Props) => (
     </CalloutText>
     <NotificationBox>
       <Button minimal interactive>
-        <EtherscanLink href={`https://etherscan.io/tx/${hash}`}>
+        <EtherscanLink target="_blank" href={`${ETHERSCAN_TX_URL}/${hash}`}>
           View on etherscan
         </EtherscanLink>
       </Button>
