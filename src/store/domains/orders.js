@@ -16,9 +16,9 @@ export function ordersInitialized(orders: Orders) {
   const event = (state: OrdersState) => {
     let newState = orders.reduce((result, item) => {
       result[item.hash] = {
-        ...state[item.hash],
         ...item
       }
+
       return result
     }, {})
 
@@ -30,6 +30,7 @@ export function ordersInitialized(orders: Orders) {
 
 export function ordersUpdated(orders: Orders) {
   const event = (state: OrdersState) => {
+
     let newState = orders.reduce((result, item) => {
       result[item.hash] = {
         ...state[item.hash],
@@ -71,16 +72,14 @@ export default function ordersDomain(state: OrdersState) {
 
     lastOrders: (n: number) => {
       let orders = Object.values(state.byHash)
-      orders = (orders: Orders).slice(Math.max(orders.length - n, 0))
-      orders = (orders: Orders).map(order => {
-        order.filled = formatNumber(order.filled, { precision: 3 })
-        order.amount = formatNumber(order.amount, { precision: 3 })
-        order.price = formatNumber(order.price, { precision: 5 })
+
+      let lastOrders = (orders: Orders).slice(Math.max(orders.length - n, 0))
+      lastOrders = (lastOrders: Orders).map(order => {
         order.cancelleable = (order.status === 'OPEN' || order.status === 'PARTIAL_FILLED')
         return order
       })
 
-      return orders
+      return lastOrders
     },
 
     currentPositionsByToken: (symbol: string) => {

@@ -95,13 +95,20 @@ export const parsePricepoint = (pricepoint: string, pair: TokenPair, precision: 
   let quoteMultiplier = utils.bigNumberify(10).pow(quoteTokenDecimals)
   let bigPricepoint = utils.bigNumberify(pricepoint)
 
-  return (Number(bigPricepoint.div(priceMultiplier).toString()) / Number(quoteMultiplier.toString()))
+  let nominator = Number(bigPricepoint.div(priceMultiplier).toString())
+  let denominator = Number(quoteMultiplier.toString()) 
+
+  console.log('nominator', typeof nominator, nominator)
+  console.log('denominator', typeof denominator, denominator)
+  let result =  nominator / denominator
+  console.log('result', typeof result, result)
+
+  return result
 }
 
 
 
-export const parseOrder = (order: Order, pair: TokenPair, precision: number = 2) => {
-  
+export const parseOrder = (order: Order, pair: TokenPair, precision: number = 2) => {  
   return {
   time: order.createdAt,
   amount: parseTokenAmount(order.amount, pair, precision),
@@ -120,20 +127,26 @@ export const parseOrders = (orders: Array<Order>, pairs: Object, precision: numb
   orders.forEach(order => {
     let pair = pairs[order.pairName]
     if (pair) {
-      parsedOrders.push({
+      let amount = parseTokenAmount(order.amount, pair, precision)
+      let filled = parseTokenAmount(order.filledAmount, pair, precision)
+      let price = parsePricepoint(order.pricepoint, pair, precision)
+
+      let newOrder = {
         time: order.createdAt,
-        amount: parseTokenAmount(order.amount, pair, precision),
-        filled: parseTokenAmount(order.filledAmount, pair, precision),
-        price: parsePricepoint(order.pricepoint, pair, precision),
+        amount: amount,
+        filled: filled,
+        price: price,
         hash: order.hash,
         side: order.side,
         pair: order.pairName,
         type: 'LIMIT',
         status: order.status
-      })
+      }
+
+      parsedOrders.push(newOrder)
     }
   })
-
+  
   return parsedOrders
 }
 

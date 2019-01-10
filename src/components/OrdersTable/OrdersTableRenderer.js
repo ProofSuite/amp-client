@@ -1,6 +1,7 @@
 //@flow
 import React from 'react'
 import styled from 'styled-components'
+import { formatNumber } from 'accounting-js'
 
 import { 
   Card, 
@@ -91,13 +92,19 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
   return (
     <Row>
       <Cell className="pair" muted>
-        <SmallText muted>{order.pair}</SmallText>
+        <SmallText muted>
+          {order.pair}
+        </SmallText>
       </Cell>
       <Cell className="amount" muted>
-        <SmallText muted>{order.filled}/{order.amount}</SmallText>
+        <SmallText muted>
+          {formatNumber(order.filled, { precision: 3 })}/{formatNumber(order.amount, { precision: 3 })}
+        </SmallText>
       </Cell>
       <Cell className="price" muted>
-        <SmallText muted>{order.price} ({order.type})</SmallText>
+        <SmallText muted>
+          {formatNumber(order.price, { precision: 5 })} ({order.type})
+        </SmallText>
       </Cell>
       <Cell className="status" muted>
         <StatusTag status={order.status} />
@@ -107,7 +114,6 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
       </Cell>
       <Cell className="time" muted>
         <SmallText muted>{relativeDate(order.time)}</SmallText>
-        {/* {format(order.time, 'DD/MM/YYYY HH:MM:SS')} */}
       </Cell>
       <Cell className="cancel" muted>
         {order.cancelleable && (
