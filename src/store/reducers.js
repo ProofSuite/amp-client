@@ -216,7 +216,9 @@ export const orderBook = createReducer(action => {
     case socketControllerActionTypes.updateOrderBook:
       return orderBookEvents.orderBookUpdated(payload.bids, payload.asks)
     case tradingPageActionTypes.initOrderBook:
+      return orderBookEvents.orderBookInitialized(payload.bids, payload.asks)
     case tokenSearcherActionTypes.initOrderBook:
+      return orderBookEvents.orderBookInitialized(payload.bids, payload.asks)
     case socketControllerActionTypes.initOrderBook:
       return orderBookEvents.orderBookInitialized(payload.bids, payload.asks)
     case tradingPageActionTypes.updateCurrentPair:
@@ -229,11 +231,11 @@ export const orderBook = createReducer(action => {
 
 export const orders = createReducer(action => {
   const { type, payload } = action
+  
   switch (type) {
     case socketControllerActionTypes.updateOrdersTable:
       return orderEvents.ordersUpdated(payload.orders)
     case tradingPageActionTypes.updateTradingPageData:
-    case tokenSearcherActionTypes.initOrdersTable:
       return orderEvents.ordersInitialized(payload.orders)
     default:
       return orderEvents.initialized()

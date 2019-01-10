@@ -8,7 +8,7 @@ import {
   getAccountBalancesDomain, 
   getAccountDomain,
   getTokenDomain,
-  getOrdersDomain
+  getOrdersDomain,
 } from '../domains/'
 
 import { utils } from 'ethers'
@@ -22,6 +22,7 @@ export default function getOrderFormSelector(state: State) {
   let orderBookDomain = getOrderBookDomain(state)
   let orderDomain = getOrdersDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
+  let accountDomain = getAccountDomain(state)
   let currentPair = tokenPairDomain.getCurrentPair()
 
   let { 
@@ -38,9 +39,9 @@ export default function getOrderFormSelector(state: State) {
   let selectedOrder = orderBookDomain.getSelectedOrder()
   
   let [ baseToken, quoteToken ] = accountBalancesDomain.getBalancesAndAllowancesBySymbol([baseTokenSymbol, quoteTokenSymbol])
-
-  let baseTokenLockedBalance = orderDomain.lockedBalanceByToken(baseTokenSymbol)
-  let quoteTokenLockedBalance = orderDomain.lockedBalanceByToken(quoteTokenSymbol)
+  let currentAddress = accountDomain.address()
+  let baseTokenLockedBalance = orderDomain.lockedBalanceByToken(baseTokenSymbol, currentAddress)
+  let quoteTokenLockedBalance = orderDomain.lockedBalanceByToken(quoteTokenSymbol, currentAddress)
   let baseTokenBalance = baseToken.balance - baseTokenLockedBalance
   let quoteTokenBalance = quoteToken.balance - quoteTokenLockedBalance
   let pairIsAllowed = baseToken.allowed && quoteToken.allowed
