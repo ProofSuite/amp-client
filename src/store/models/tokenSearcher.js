@@ -7,7 +7,8 @@ import type {
 import { 
   getTokenPairsDomain, 
   getAccountBalancesDomain,
-  getOrdersDomain
+  getOrdersDomain,
+  getAccountDomain
 } from '../domains'
 
 import * as actionCreators from '../actions/tokenSearcher'
@@ -18,6 +19,7 @@ import { quoteTokenSymbols as quotes } from '../../config/quotes'
 export default function tokenSearcherSelector(state: State) {
   let domain = getTokenPairsDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
+  let accountDomain = getAccountDomain(state)
   let ordersDomain = getOrdersDomain(state)
   let tokenPairs = domain.getTokenPairsDataArray()
   let favoriteTokenPairs = domain.getFavoritePairs()
@@ -37,13 +39,17 @@ export default function tokenSearcherSelector(state: State) {
       }))
   }
 
+  let currentAddress = accountDomain.address()
   let currentPair = domain.getCurrentPair()
-  let baseTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.baseTokenSymbol)
-  let quoteTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.quoteTokenSymbol)
+  let baseTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.baseTokenSymbol, currentAddress)
+  let quoteTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.quoteTokenSymbol, currentAddress)
   let baseTokenBalance = accountBalancesDomain.get(currentPair.baseTokenSymbol)
   let quoteTokenBalance = accountBalancesDomain.get(currentPair.quoteTokenSymbol)
   let baseTokenAvailableBalance = baseTokenBalance - baseTokenLockedBalance
   let quoteTokenAvailableBalance = quoteTokenBalance - quoteTokenLockedBalance
+
+  console.log(baseTokenLockedBalance)
+  console.log(quoteTokenLockedBalance)
 
   return {
     tokenPairsByQuoteToken,

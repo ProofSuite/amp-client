@@ -83,7 +83,7 @@ export default function ordersDomain(state: OrdersState) {
       return orders
     },
 
-    currentPositionsByToken: (symbol) => {
+    currentPositionsByToken: (symbol: string) => {
       let orders = Object.values(state.byHash)
     
       return orders.filter(order => {
@@ -94,7 +94,7 @@ export default function ordersDomain(state: OrdersState) {
       })
     },
 
-    lockedBalanceByToken: (symbol) => {
+    lockedBalanceByToken: (symbol: string, address:string) => {
       let orders = Object.values(state.byHash)
       let lockedBalance = 0
 
@@ -107,7 +107,7 @@ export default function ordersDomain(state: OrdersState) {
 
         if (symbol === getQuoteToken(order.pair) && order.side === 'BUY') {
           if (['NEW', 'OPEN', 'PARTIALLY_FILLED'].indexOf(order.status) !== -1) {
-            lockedBalance = lockedBalance + (order.amount - order.filled)
+            lockedBalance = lockedBalance + (order.amount - order.filled) * order.price
           }
         }
       })
