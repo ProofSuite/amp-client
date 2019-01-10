@@ -8,7 +8,7 @@ import { getSigner } from '../services/signer'
 
 export default function ordersTableSelector(state: State) {
   return {
-    orders: () => getOrdersDomain(state).lastOrders(100),
+    orders: () => getOrdersDomain(state).lastOrders(50),
   };
 }
 

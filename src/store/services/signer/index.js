@@ -98,9 +98,6 @@ export const createLedgerSigner = async (networkID: ?number) => {
 
   let signer = LedgerSigner.connect(provider)
 
-  console.log(signer)
-  // window.signer = signer
-
   signer.networkID = networkID
   signer.signOrder = signOrder
   signer.signTrade = signTrade
@@ -108,8 +105,6 @@ export const createLedgerSigner = async (networkID: ?number) => {
   signer.createOrderCancel = createOrderCancel
 
   window.signer = { instance: signer, type: 'wallet' }
-
-  // console.log(signer)
 
   return '0x'
 }

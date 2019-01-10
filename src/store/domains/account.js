@@ -71,9 +71,6 @@ export const exchangeAddressUpdated = (exchangeAddress: string) => {
 }
 
 export const referenceCurrencyUpdated = (referenceCurrency: ReferenceCurrency) => {
-
-  console.log(referenceCurrency)
-
   const event = (state: AccountState) => ({
     ...state,
     referenceCurrency: {

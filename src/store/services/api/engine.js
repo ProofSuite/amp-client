@@ -27,8 +27,6 @@ const request = (endpoint, options) => {
 }
 
 export const createPairs = async (tokenAddress: string) => {
-  console.log(tokenAddress)
-
   const response = await request(`/pairs/create`, {
     body: JSON.stringify({ address: tokenAddress }),
     method: 'POST'

@@ -236,7 +236,6 @@ const SavedWalletInputForm = ({
   savedWalletPasswordStatus
 }: *) => {
 
-  console.log(savedWalletAddress)
   const walletsSaved = localStorageWallets && localStorageWallets.length >= 1;
   // silence-error: couldn't resolve
   return (
