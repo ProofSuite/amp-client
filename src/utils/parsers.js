@@ -97,11 +97,7 @@ export const parsePricepoint = (pricepoint: string, pair: TokenPair, precision: 
 
   let nominator = Number(bigPricepoint.div(priceMultiplier).toString())
   let denominator = Number(quoteMultiplier.toString()) 
-
-  console.log('nominator', typeof nominator, nominator)
-  console.log('denominator', typeof denominator, denominator)
   let result =  nominator / denominator
-  console.log('result', typeof result, result)
 
   return result
 }
@@ -146,7 +142,7 @@ export const parseOrders = (orders: Array<Order>, pairs: Object, precision: numb
       parsedOrders.push(newOrder)
     }
   })
-  
+
   return parsedOrders
 }
 
