@@ -82,7 +82,6 @@ export type SingleOrderProps = {
 const BuyOrder = (props: SingleOrderProps) => {
   const { order, onClick } = props;
 
-  console.log(order)
   return (
     <Row onClick={onClick}>
       <BuyRowBackground amount={order.relativeTotal} />
@@ -96,7 +95,6 @@ const BuyOrder = (props: SingleOrderProps) => {
 const SellOrder = (props: SingleOrderProps) => {
   const { order, onClick } = props;
 
-  console.log(order)
   return (
     <Row onClick={onClick}>
       <SellRowBackGround amount={order.relativeTotal} />

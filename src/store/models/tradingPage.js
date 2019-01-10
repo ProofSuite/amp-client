@@ -80,14 +80,14 @@ export const queryTradingPageData = (): ThunkAction => {
         api.fetchOrders(userAddress)
       ])
   
-      tokenPairData = parseTokenPairsData(tokenPairData, pairs)
-      orders = parseOrders(orders, pairs)
-
-      dispatch(actionCreators.updateTradingPageData(tokenPairData, orders))
+      let parsedTokenPairData = parseTokenPairsData(tokenPairData, pairs)
+      let parsedOrders = parseOrders(orders, pairs)
 
       socket.subscribeTrades(currentPair)
       socket.subscribeOrderBook(currentPair)
       socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
+      
+      dispatch(actionCreators.updateTradingPageData(parsedTokenPairData, parsedOrders))
     } catch (e) {
       console.log(e)
     }

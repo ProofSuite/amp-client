@@ -55,8 +55,6 @@ class TokenTable extends React.PureComponent<Props, State> {
   };
 
   openDepositModal = (event: SyntheticEvent<>, symbol: string) => {
-    console.log(event)
-
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
 
@@ -69,8 +67,6 @@ class TokenTable extends React.PureComponent<Props, State> {
   };
 
   openSendModal = (event: SyntheticEvent<>, symbol: string) => {
-    console.log(event)
-
     event.preventDefault()
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
@@ -84,8 +80,6 @@ class TokenTable extends React.PureComponent<Props, State> {
   };
 
   openConvertModal = (event: SyntheticEvent<>, fromTokenSymbol: string, toTokenSymbol: string) => {
-    console.log(event)
-
     event.preventDefault()
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
