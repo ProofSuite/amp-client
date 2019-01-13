@@ -90,6 +90,12 @@ export const redirectToTradingPage = (): ThunkAction => {
   }
 }
 
+export const redirectToFAQPage = (): ThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch(push('/faq'))
+  }
+}
+
 
 export const approveWETH = (): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {

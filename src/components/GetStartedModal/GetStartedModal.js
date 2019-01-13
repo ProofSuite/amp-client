@@ -14,6 +14,7 @@ type Props = {
   approveTxState: Object,
   convertTxState: Object,
   redirectToTradingPage: void => void,
+  redirectToFAQPage: void => void,
   isOpen: boolean,
   closeHelpModal: void => void,
 }
@@ -126,6 +127,7 @@ class GetStartedModal extends React.PureComponent<Props, State> {
       approveTxState,
       convertTxState,
       redirectToTradingPage,
+      redirectToFAQPage,
       isOpen,
     } = this.props
 
@@ -161,6 +163,7 @@ class GetStartedModal extends React.PureComponent<Props, State> {
         convertTxStatus={convertTxStatus}
         convertTxHash={convertTxHash}
         redirectToTradingPage={redirectToTradingPage}
+        redirectToFAQPage={redirectToFAQPage}
         toggleShowHelpModalCheckBox={this.toggleShowHelpModalCheckBox}
         showHelpModalChecked={showHelpModalChecked}
         isOpen={isOpen}
