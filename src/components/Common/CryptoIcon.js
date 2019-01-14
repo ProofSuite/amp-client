@@ -26,6 +26,7 @@ import WTC from './Icons/black/wtc.js'
 import ZRX from './Icons/black/zrx.js'
 import ETH from './Icons/black/eth.js'
 import USD from './Icons/black/usd.js'
+import GTC from './Icons/black/gtc.js'
 import Generic from './Icons/black/generic.js'
 
 
@@ -38,7 +39,7 @@ const CryptoIcon = ({ name, color, size }) => {
     // eslint-disable-next-line
     case 'AE': return <AE width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
     case 'AION': return <AION width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
-    case 'BAT': return <BAT width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
+    case 'BAT': return <GTC width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
     case 'BNB': return <BNB width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
     case 'BTM': return <BTM width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />
     case 'FUN': return <FUN width={size} height={size} fill={Colors.BLUE5} viewBox="0 0 32 32"  />

@@ -13,6 +13,7 @@ import { quoteTokens } from '../../config/quotes'
 import { getCurrentBlock } from '../services/wallet'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import { parseQueryAccountDataError } from '../../config/errors'
+import { pricedTokens } from '../../config'
 
 import type { State, ThunkAction } from '../../types'
 
@@ -71,8 +72,9 @@ export function queryAccountData(): ThunkAction {
       if (!currentBlock) throw new Error('')
 
       tokens = [ ...new Set([ ...savedTokens, ...tokens ])]
-      let tokenSymbols = tokens.map(token => token.symbol)
+      // let tokenSymbols = tokens.map(token => token.symbol)
     
+      let tokenSymbols = pricedTokens
       let currencySymbols = ['USD', 'EUR', 'JPY']
       let exchangeRates = await api.fetchExchangeRates(tokenSymbols, currencySymbols)
 
