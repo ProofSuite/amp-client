@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import Lazyload from 'react-lazyload'
 import { formatNumber } from 'accounting-js'
 import Help from '../../components/Help'
 
@@ -232,7 +231,6 @@ const WETHRow = (props: Props) => {
     redirectToTradingPage
   } = props
 
-  // if (!WETHTokenData) return null
   const { symbol, balance, allowed, allowancePending, value, listed } = WETHTokenData
 
   return (
@@ -251,9 +249,16 @@ const WETHRow = (props: Props) => {
         </TokenNameWrapper>
       </TokenNameCell>
       <BalancesCell onClick={() => redirectToTradingPage(symbol)}>
-        <SmallText muted>
-          {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2})} {referenceCurrency})
-        </SmallText>
+        <FlexRow>
+          <SmallText muted>
+            {formatNumber(balance, { precision: 4})}  {symbol} 
+          </SmallText>
+          {value !== null && 
+            <SmallText muted ml={1}> 
+              ({formatNumber(value, { precision: 2})} {referenceCurrency})
+            </SmallText>
+          }
+        </FlexRow>
       </BalancesCell>
       <UnlockedCell >
           <Switch inline checked={allowed} onClick={(event) => handleToggleAllowance(event, symbol)} />
@@ -323,9 +328,16 @@ const BaseTokenRow = (props: Props) => {
             </TokenNameWrapper>
           </TokenNameCell>
           <BalancesCell onClick={() => redirectToTradingPage(symbol)}>
-            <SmallText muted>
-              {formatNumber(balance, { precision: 4})}  {symbol} ({formatNumber(value, { precision: 2 })} {referenceCurrency})
-            </SmallText>
+            <FlexRow>
+              <SmallText muted>
+                {formatNumber(balance, { precision: 4})}  {symbol} 
+              </SmallText>
+              {value !== null && 
+                <SmallText muted ml={1}> 
+                  ({formatNumber(value, { precision: 2})} {referenceCurrency})
+                </SmallText>
+              }
+            </FlexRow>
           </BalancesCell>
           <UnlockedCell>
             <Switch inline checked={allowed} 

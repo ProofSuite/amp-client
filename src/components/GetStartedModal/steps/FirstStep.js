@@ -55,7 +55,6 @@ const FirstStep = (props: Props) => {
         <p>• Verify that you are on https://amp.exchange everytime you log in</p>
         <p>• We recommend to use Metamask for the most secure trading experience</p>
         <p>• We do not control your account and therefore cannot help you recover your funds if you send them to the wrong address or lose your private key. You are fully responsible for your security.</p>
-        <p>• Trades performed on AMP are immediately settled on the Ethereum blockchain. For better performance and UX, the orderbook is currently centralized.</p>
         <p>• Only invest and trade what you can afford to risk</p>
         <br />
         <h2>Ask for help or join the Proofsuite community</h2>

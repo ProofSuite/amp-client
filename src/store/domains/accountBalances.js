@@ -203,7 +203,8 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
             ...token,
             balance: null,
             allowed: null,
-            allowancePending: null
+            allowancePending: null,
+            value: null
           }
         }
 
@@ -211,7 +212,10 @@ export default function accountBalancesDomain(state: AccountBalancesState) {
         let allowance = state[token.symbol].allowance
         let allowed = Number(allowance) >= Math.max(Number(balance), 100000)
         let exchangeRate = getExchangeRate(currency.name, token)
-        let value = balance * exchangeRate
+
+        //In case the exchange rate is equal to 0 (meaning the token is not listed on the price feed, the value is set to null
+        //In case the exchange rate is defined but the balance is empty, value is set to 0
+        let value = exchangeRate ? balance * exchangeRate : null
 
         return {
           ...token,

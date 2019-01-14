@@ -238,7 +238,7 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
   const { favorited, price, change, base, pair } = token
   return (
     <li key={pair} className="row">
-      <CryptoIcon size={25} name={base} />
+      <ColoredCryptoIcon size={25} name={base} />
       <SmallText
         className="base" 
         onClick={() => changeSelectedToken(token)}
