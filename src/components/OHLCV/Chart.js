@@ -167,8 +167,11 @@ class OHLCVChart extends React.Component {
               <YAxis axisAt="right" orient="right" ticks={10} {...yGrid} {...axisAppearance} outerTickSize={0} />
 
               <CandlestickSeries
-                opacity={1}
+                opacity={0.6}
+                widthRatio={0.6}
                 fill={d => { return d.close >= d.open ? theme.GREEN3 : theme.RED2 }}
+                candleStrokeWidth={3}
+                strokeWidth={3}
                 stroke={d => { return d.close >= d.open ? theme.GREEN3 : theme.RED2 }}
                 wickStroke={d => { return d.close >= d.open ? theme.GREEN3 : theme.RED2 }}
               />
