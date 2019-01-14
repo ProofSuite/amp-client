@@ -27,6 +27,7 @@ type Props = {
   convertTxHash: string,
   handleClose: void => void,
   redirectToTradingPage: void => void,
+  redirectToFAQPage: void => void,
   showHelpModalChecked: boolean,
   toggleShowHelpModalCheckBox: void => void,
 }
@@ -35,6 +36,7 @@ const Thirdstep = (props: Props) => {
   const {
     handleClose,
     redirectToTradingPage,
+    redirectToFAQPage,
     showHelpModalChecked,
     toggleShowHelpModalCheckBox
   } = props
@@ -56,7 +58,9 @@ const Thirdstep = (props: Props) => {
               </Button>
             </ButtonBox>
             <ButtonBox>
-              <Button intent={Intent.PRIMARY} large>Read Frequently Questions</Button>
+              <Button intent={Intent.PRIMARY} onClick={redirectToFAQPage} large>
+                Frequently asked questions
+              </Button>
             </ButtonBox>
           </ButtonGroupBox>
           <ContactLinksBox>

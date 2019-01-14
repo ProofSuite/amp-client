@@ -26,6 +26,7 @@ type Props = {
   convertTxStatus: string,
   convertTxHash: string,
   redirectToTradingPage: void => void,
+  redirectToFAQPage: void => void,
   toggleShowHelpModalCheckBox: void => void,
   showHelpModalChecked: boolean,
   handleClose: void => void,

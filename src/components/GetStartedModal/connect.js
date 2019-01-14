@@ -1,9 +1,14 @@
 // @flow
 import { connect } from 'react-redux';
 
-import getGetStartedModalSelector, { convertETH, approveWETH, redirectToTradingPage } from '../../store/models/getStartedModal'
-import type { State } from '../../types';
+import getGetStartedModalSelector, { 
+  convertETH, 
+  approveWETH, 
+  redirectToTradingPage,
+  redirectToFAQPage,
+} from '../../store/models/getStartedModal'
 
+import type { State } from '../../types';
 
 export const mapStateToProps = (state: State, ownProps: Object) => {
   const selector = getGetStartedModalSelector(state)
@@ -23,6 +28,7 @@ const mapDispatchToProps = {
   convertETH,
   approveWETH,
   redirectToTradingPage,
+  redirectToFAQPage
 }
 
 export default connect(
