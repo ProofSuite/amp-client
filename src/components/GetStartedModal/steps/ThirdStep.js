@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Checkbox, Intent } from '@blueprintjs/core'
-import { ModalFooter, ModalBody } from '../../Common'
+import { ModalFooter, ModalBody, FlexColumn } from '../../Common'
 import { DISCORD_URL } from '../../../config/urls'
 
 type Props = {
@@ -38,28 +38,35 @@ const Thirdstep = (props: Props) => {
     redirectToTradingPage,
     redirectToFAQPage,
     showHelpModalChecked,
-    toggleShowHelpModalCheckBox
+    toggleShowHelpModalCheckBox,
+    goToFirstStep
   } = props
 
   return (
-    <React.Fragment>
+    <FlexColumn width="100%">
       <ModalBody>
         <Box>
+          <h2>It seems like you have everything you need to start trading!</h2> 
           <h2>Choose what to do next:</h2>
           <ButtonGroupBox>
             <ButtonBox>
-              <Button intent={Intent.PRIMARY} onClick={redirectToTradingPage} large>
-                Start Trading Now
+              <Button intent={Intent.PRIMARY} onClick={redirectToTradingPage}>
+                View Trading page
               </Button>
             </ButtonBox>
             <ButtonBox>
-              <Button intent={Intent.PRIMARY} onClick={handleClose} large>
-                View Portfolio / Deposit more Funds
+              <Button intent={Intent.PRIMARY} onClick={handleClose}>
+                View Portfolio
               </Button>
             </ButtonBox>
             <ButtonBox>
-              <Button intent={Intent.PRIMARY} onClick={redirectToFAQPage} large>
+              <Button intent={Intent.PRIMARY} onClick={redirectToFAQPage}>
                 Frequently asked questions
+              </Button>
+            </ButtonBox>
+            <ButtonBox>
+              <Button intent={Intent.PRIMARY} onClick={goToFirstStep}>
+                Go back to introduction modal
               </Button>
             </ButtonBox>
           </ButtonGroupBox>
@@ -74,20 +81,22 @@ const Thirdstep = (props: Props) => {
           <Checkbox checked={showHelpModalChecked} onClick={toggleShowHelpModalCheckBox}>
             Do not show again
           </Checkbox>
-          <Button large onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>Close</Button>
         </FooterBox>
       </ModalFooter>
-    </React.Fragment>
+    </FlexColumn>
   )
 }
 
 const Box = styled.div`
   text-align: center;
+  padding-left: 10%;
+  padding-right: 10%;
 `
 
 const ButtonBox = styled.div`
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin: auto;
   width: 100%;
   display: flex;
@@ -95,8 +104,8 @@ const ButtonBox = styled.div`
 `
 
 const ButtonGroupBox = styled.div`
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 25%;
+  padding-right: 25%;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -106,6 +115,7 @@ const FooterBox = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: flex-end;
 `
 
 const ContactLinksBox = styled.div`

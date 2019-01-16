@@ -11,6 +11,7 @@ import {
 
 import { 
     Text, 
+    Header,
     SmallText, 
     SmallTextDiv, 
     TextDiv, 
@@ -19,14 +20,15 @@ import {
     HeaderText, 
     LabelText,
     MutedText, 
-    LinkText
+    LinkText,
 } from './Text';
 
 import {
     Card,
     NavbarHeading,
     NavbarGroup,
-    NavbarDivider
+    NavbarDivider,
+    Button
 } from './Blueprint'
 
 import { 
@@ -38,13 +40,14 @@ import {
 
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
 export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
-export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { Text, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export { 
     Card, 
     NavbarHeading, 
     NavbarGroup,
-    NavbarDivider
+    NavbarDivider,
+    Button
 }
 
 export { default as Spacer } from './Spacer'
