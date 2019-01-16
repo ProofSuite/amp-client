@@ -120,7 +120,7 @@ class OHLCVChart extends React.Component {
     var yGrid = showGrid
       ? {
           innerTickSize: -1 * gridWidth,
-          tickStrokeDasharray: 'Solid',
+          tickStrokeDasharray: 'ShortDot',
           tickStrokeOpacity: 0.1,
           tickStrokeWidth: 1
         }
@@ -128,7 +128,7 @@ class OHLCVChart extends React.Component {
     var xGrid = showGrid
       ? {
           innerTickSize: -1 * gridHeight,
-          tickStrokeDasharray: 'Solid',
+          tickStrokeDasharray: 'ShortDot',
           tickStrokeOpacity: 0.1,
           tickStrokeWidth: 1
         }
