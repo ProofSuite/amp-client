@@ -26,8 +26,10 @@ import {
   Centered, 
   LargeText, 
   SmallText,
+  SmallTextDiv,
   BlueGlowingButton,
   FlexRow,
+  Box
 } from '../Common';
 
 type Props = {
@@ -55,12 +57,8 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
         pair,
         baseTokenSymbol,
         quoteTokenSymbol,
-        baseTokenAddress,
-        quoteTokenAddress,
         price,
         change, 
-        high,
-        low,
         volume, 
         orderVolume,
       } = pairs[index]
@@ -71,8 +69,10 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
         <Row key={key} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)} style={style}>
           <Cell>
             <FlexRow alignItems="center">
-              <CryptoIconPair size={35} baseToken={baseTokenSymbol} quoteToken={quoteTokenSymbol} />
-              <SmallText p={2} muted>{pair}</SmallText>
+              <Box pb={4} mr={2}>
+                <CryptoIconPair size={32} baseToken={baseTokenSymbol} quoteToken={quoteTokenSymbol} />
+              </Box>
+              <SmallText muted>{pair}</SmallText>
             </FlexRow>
           </Cell>
           <Cell>

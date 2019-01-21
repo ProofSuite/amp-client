@@ -17,6 +17,7 @@ type Props = {
   redirectToFAQPage: void => void,
   isOpen: boolean,
   closeHelpModal: void => void,
+  currentTab: string
 }
 
 type State = {
@@ -33,6 +34,7 @@ class GetStartedModal extends React.PureComponent<Props, State> {
     convertAmount: 0,
     convertFraction: 0,
     showHelpModalChecked: false,
+    currentTab: "default"
   }
 
   componentDidUnmount = () => {
@@ -44,6 +46,18 @@ class GetStartedModal extends React.PureComponent<Props, State> {
   }
 
   goToSecondStep = () => {
+    const {
+      ETHBalance,
+      WETHBalance,
+      WETHAllowance
+    } = this.props
+
+    if (ETHBalance > 0 && WETHBalance > 0 && WETHAllowance > 0) {
+      console.log('here')
+      this.setState({ step: '3' })
+      return
+    }
+
     this.setState({ step: '2' })
   }
 
@@ -65,6 +79,10 @@ class GetStartedModal extends React.PureComponent<Props, State> {
     this.setState({ showHelpModalChecked: !this.state.showHelpModalChecked })
   }
 
+  handleChangeTab = (tab: string) => {
+    this.setState({ currentTab: tab })
+  }
+
   handleClose = () => {
     let { closeHelpModal } = this.props
     let { showHelpModalChecked } = this.state
@@ -84,7 +102,6 @@ class GetStartedModal extends React.PureComponent<Props, State> {
 
   checkTransactionsPending = () => {
     const { approveTxState, convertTxState } = this.props
-
 
     //the form shows pending transactions if any of the transactions is pending
     if (approveTxState.approveTxStatus === 'sent') return true
@@ -117,6 +134,7 @@ class GetStartedModal extends React.PureComponent<Props, State> {
       convertAmount,
       convertFraction,
       showHelpModalChecked,
+      currentTab
      } = this.state
 
     const {
@@ -169,6 +187,8 @@ class GetStartedModal extends React.PureComponent<Props, State> {
         isOpen={isOpen}
         transactionsPending={transactionsPending}
         transactionsComplete={transactionsComplete}
+        currentTab={currentTab}
+        handleChangeTab={this.handleChangeTab}
       />
     )
   }

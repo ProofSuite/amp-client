@@ -19,18 +19,17 @@ const CryptoIconPair = ({ baseToken, quoteToken, size }) => {
 
 const Container = styled.div`
     position: relative;
-    width: ${props => 2 * props.size + "px"};
+    width: ${props => (3/2 * props.size) + "px"};
 `
 
 const BaseIconContainer = styled.div`
     position: absolute;
-    top: ${props => -props.size / 2 + "px"};
 `
 
 const QuoteIconContainer = styled.div`
     position: absolute;
-    left: 25px;
-    top: ${props => -props.size / 2 + "px"};
+    left: ${props => props.size / 2 + "px"};
 `   
 
 export default CryptoIconPair
+

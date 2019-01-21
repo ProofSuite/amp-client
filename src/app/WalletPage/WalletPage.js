@@ -47,7 +47,7 @@ class WalletPage extends React.PureComponent<Props, State> {
     if (!authenticated) return false
     if (!showHelpModal) return false
     if (balancesLoading) return false
-    if (WETHBalance !== '0.0' && WETHAllowance !== '0.0') return false
+    // if (WETHBalance !== '0.0' && WETHAllowance !== '0.0') return false
 
     return true
   }

@@ -158,7 +158,7 @@ export default {
   VIOLET5: Colors.VIOLET5,
   WHITE: Colors.WHITE,
 
-  PRIMARY: Colors.BLUE3,
+  PRIMARY: Colors.BLUE5,
   SUCCESS: Colors.GREEN3,
   WARNING: Colors.ORANGE3,
   DANGER: Colors.RED3,

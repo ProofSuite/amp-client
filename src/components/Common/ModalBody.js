@@ -1,12 +1,14 @@
 import React from 'react'
 import { Classes } from '@blueprintjs/core'
 
-const ModalFooter = (props) => {
+import { Box } from './Box'
+
+const ModalBody = (props) => {
   return (
-    <div className={Classes.DIALOG_BODY}>
+    <Box className={Classes.DIALOG_BODY} {...props}>
       {props.children}
-    </div>
+    </Box>
   )
 }
 
-export default ModalFooter
+export default ModalBody

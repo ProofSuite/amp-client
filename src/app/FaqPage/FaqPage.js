@@ -50,13 +50,13 @@ class FaqPage extends React.PureComponent {
             match={match}
           >
             Yes! Here are some of the things we are currently working on:
-            <ul>
-              <li>- Improved usability and bug fixes</li>
-              <li>- A mobile version of the site</li>
-              <li>- More tokens pairs including stablecoins, tethered assets and financial instruments (shorts, options)</li>
-              <li>- The ability for anyone to list a token and start trading immediately</li>
-              <li>- Enhanced charting</li>
-            </ul>
+            <FaqList>
+              <FaqListItem>• Improved usability and bug fixes</FaqListItem>
+              <FaqListItem>• A mobile version of the site</FaqListItem>
+              <FaqListItem>• More tokens pairs including stablecoins, tethered assets and financial instruments (shorts, options)</FaqListItem>
+              <FaqListItem>• The ability for anyone to list a token and start trading immediately</FaqListItem>
+              <FaqListItem>• Enhanced charting</FaqListItem>
+            </FaqList>
             Any features you think we should add ? Let us know! support@proofsuite.com
           </FaqItem>
           <Box p={2} />
@@ -74,11 +74,11 @@ class FaqPage extends React.PureComponent {
             Now that you are connected, you will be redirected to your wallet page. Here is a quick rundown of the basic actions needed
             to start trading:
             <br />
-            <ul>
-              <li>- If you do not own any tokens or Ether, you have to make a deposit before any further step.</li>
-              <li>- If you have Ether in your account and want to start trading, you will need to tokenize your ETH into WETH (see next question)</li>
-              <li>- To start trading a token pair, you need to unlock both tokens on the wallet page. Click the switch on the corresponding token row on the wallet page</li>
-            </ul>
+            <FaqList>
+              <FaqListItem>• If you do not own any tokens or Ether, you have to make a deposit before any further step.</FaqListItem>
+              <FaqListItem>• If you have Ether in your account and want to start trading, you will need to tokenize your ETH into WETH (see next question)</FaqListItem>
+              <FaqListItem>• To start trading a token pair, you need to unlock both tokens on the wallet page. Click the switch on the corresponding token row on the wallet page</FaqListItem>
+            </FaqList>
           </FaqItem>
           <Box p={2} />
           <FaqItem
@@ -173,11 +173,11 @@ class FaqPage extends React.PureComponent {
           >
             The AMP matching-engine matches orders fast. When your order is matched, the corresponding trade is sent to a queue that will settle the trade
             on the Ethereum chain as soon as possible. You will thus receive several messages: 
-            <ul>
-              <li>1) An order matched message: Your order was successfully filled or partially filled and the corresponding transaction is waiting to be sent to the Ethereum chain.</li> <br/>
-              <li>2) An order pending message: The transaction has been sent to the Ethereum chain and is currently pending. You can follow the transaction with the given Etherscan link.</li><br/>
-              <li>3) An order success message: Your order was confirmed and settled on the Ethereum chain and you have receive your tokens</li><br/>
-            </ul>
+            <FaqList>
+              <FaqListItem>1) An order matched message: Your order was successfully filled or partially filled and the corresponding transaction is waiting to be sent to the Ethereum chain.</FaqListItem> <br/>
+              <FaqListItem>2) An order pending message: The transaction has been sent to the Ethereum chain and is currently pending. You can follow the transaction with the given Etherscan link.</FaqListItem><br/>
+              <FaqListItem>3) An order success message: Your order was confirmed and settled on the Ethereum chain and you have receive your tokens</FaqListItem><br/>
+            </FaqList>
           </FaqItem>
           <Box p={2} />
           <FaqItem
@@ -185,15 +185,15 @@ class FaqPage extends React.PureComponent {
             match={match}
           >
             Here are some facts about AMP security: 
-            <ul>
-              <li> - We do not hold any of your Ether or tokens. They are all stored in your wallet on the Ethereum network and you can access them at anytime through any Ethereum client (think GUI) such as MyEtherWallet or Metamask. </li>
-              <li> - The most secure way to trade on AMP is to use the Metamask wallet </li>
-              <li> - If you choose log in without metamask, your secret key will be stored in the browser session storage and is deleted immediately at the end of the session (or also upon page refresh) </li>
-              <li> - We do not have access to your private key. If you choose to do so, the only thing that will be stored after you leave the AMP website is your encrypted 
+            <FaqList>
+              <FaqListItem>• We do not hold any of your Ether or tokens. They are all stored in your wallet on the Ethereum network and you can access them at anytime through any Ethereum client (think GUI) such as MyEtherWallet or Metamask. </FaqListItem>
+              <FaqListItem>• The most secure way to trade on AMP is to use the Metamask wallet </FaqListItem>
+              <FaqListItem>• If you choose log in without metamask, your secret key will be stored in the browser session storage and is deleted immediately at the end of the session (or also upon page refresh) </FaqListItem>
+              <FaqListItem>• We do not have access to your private key. If you choose to do so, the only thing that will be stored after you leave the AMP website is your encrypted 
               Ethereum wallet if you choose to log in with your own wallet file, create your own wallet. You can delete the encrypted wallet from the browser storage at 
-              anytime by deleting the corresponding address on the settings page. </li>
-              <li> - All AMP source code can be read at https://github.com/Proofsuite </li>
-            </ul>
+              anytime by deleting the corresponding address on the settings page. </FaqListItem>
+              <FaqListItem>• All AMP source code can be read at https://github.com/Proofsuite </FaqListItem>
+            </FaqList>
           </FaqItem>
           <Box p={2} />
           <FaqItem
@@ -236,6 +236,18 @@ const Container = styled.div`
   padding-left: 50px;
   padding-right: 50px;
   padding-bottom: 50px;
+`
+
+const FaqList = styled.ul`
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+`
+
+const FaqListItem = styled.li`
+  padding: 10px;
 `
 
 const FaqGrid = styled.div`
