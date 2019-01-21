@@ -9,12 +9,18 @@ const AMPLogo = (props: { height: number, width: number }) => {
 
   return (
     <Wrapper>
-      <Box p={3}>
-        <img src={ampLogo} class="Profile-image" width={width} height={height} alt=""/>
-      </Box>
+      <Container p={3}>
+        {/* <div class="glitch-logo" /> */}
+        <img src={ampLogo} width={width} height={height} alt=""/>
+      </Container>
     </Wrapper>
   );
 };
+
+const Container = styled(Box)`
+  z-index: 1;
+  position: relative
+`
 
 const Wrapper = styled.div`
   opacity: 0.3;

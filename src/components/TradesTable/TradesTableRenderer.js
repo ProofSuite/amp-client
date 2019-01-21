@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { relativeDate } from '../../utils/helpers'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import { 
   Loading, 
@@ -99,11 +100,13 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
         </HeadingRow>
       </ListHeader>
       <ListBody className="list">
+      <ReactCSSTransitionGroup transitionName="flash-buy">
         {trades.map((trade, index) => (
           <Row 
             color={trade.change === 'positive' ? Colors.BUY_MUTED : Colors.SELL_MUTED} 
-            key={index}
+            key={trade.hash}
             onClick={() => openEtherscanLink(trade.txHash)}
+            className="blah"
             >
               <Cell color={trade.change === 'positive' ? Colors.BUY : Colors.SELL}>
               <Icon icon={trade.change === 'positive' ? 'chevron-up' : 'chevron-down'} iconSize={14}/>
@@ -121,6 +124,7 @@ const MarketTradesPanel = (props: { trades: Array<Trade> }) => {
             </Cell>
           </Row>
         ))}
+      </ReactCSSTransitionGroup>
       </ListBody>
     </ResizableBox>
   );
@@ -143,8 +147,9 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
         </HeadingRow>
       </ListHeader>
       <ListBody className="list">
+      <ReactCSSTransitionGroup transitionName="flash-buy">
         {trades.map((trade, index) => (
-          <Row color={trade.status === 'EXECUTED' ? Colors.BUY_MUTED : Colors.SELL_MUTED} key={index}>
+          <Row color={trade.status === 'EXECUTED' ? Colors.BUY_MUTED : Colors.SELL_MUTED} key={trade.hash}>
             <Cell>
               <SmallText muted>{trade.price}</SmallText>
             </Cell>
@@ -159,6 +164,7 @@ const UserTradesPanel = (props: { trades: Array<Trade> }) => {
             </Cell>
           </Row>
         ))}
+      </ReactCSSTransitionGroup>
       </ListBody>
     </ResizableBox>
   );

@@ -119,6 +119,27 @@ export const FlexColumn = styled(Box)`
   ${flexBasis}
 `
 
+export const FlexRowWrap = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  ${alignItems}
+  ${alignContent}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
+export const FlexColumnWrap = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  ${alignItems}
+  ${alignContent}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
 export const FlexItem = styled.div`
   ${flex}
   ${justifySelf}
