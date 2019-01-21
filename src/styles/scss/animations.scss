@@ -1,0 +1,230 @@
+@import "vars";
+
+
+.flash-neutral-enter {
+  opacity: 0.01;
+}
+
+.flash-neutral-enter.flash-neutral-enter-active {
+  opacity: 1;
+  background-color: $pt-intent-primary;
+  transition: background-color 300ms ease-in !important;
+}
+
+.flash-neutral-leave {
+}
+
+.flash-neutral-leave.flash-neutral-leave-active {
+opacity: 0.01;
+background-color: $pt-intent-primary;
+transition: opacity 300ms ease-in;
+}
+
+
+
+
+.flash-buy-enter {
+  opacity: 0.01;
+}
+
+.flash-buy-enter.flash-buy-enter-active {
+    opacity: 1;
+    background-color: $pt-intent-success;
+    transition: background-color 300ms cubic-bezier(.04,.87,.13,.99) !important;
+    
+}
+
+.flash-buy-leave {
+  opacity: 1;
+}
+
+.flash-buy-leave.flash-buy-leave-active {
+  opacity: 0.01;
+  background-color: $pt-intent-success;
+  transition: opacity 300ms ease-in;
+}
+
+.flash-sell-enter {
+  opacity: 0.01;
+}
+
+.flash-sell-enter.flash-sell-enter-active {
+  opacity: 1;
+  background-color: $pt-intent-danger;
+  transition: background-color 300ms cubic-bezier(.04,.87,.13,.99) !important;  
+}
+
+.flash-sell-leave {
+  opacity: 1;
+}
+
+.flash-sell-leave.flash-sell-leave-active {
+  opacity: 0.01;
+  background-color: $pt-intent-danger;
+  transition: opacity 300ms ease-in;
+}
+
+.glitch{
+    color:white;
+    font-size:40px;
+    position:relative;
+    // width:200px;
+    // margin:0 auto;
+    display: inline-block;
+  }
+  @keyframes noise-anim{
+    $steps:20;
+    @for $i from 0 through $steps{
+      #{percentage($i*(1/$steps))}{
+        clip:rect(random(100)+px,9999px,random(100)+px,0);
+      }
+    }
+  }
+  .glitch:after{
+    content:attr(data-text);
+    position:absolute;
+    left:2px;
+    text-shadow:-1px 0 red;
+    top:0;
+    color:white;
+    background:$dark-gray4;
+    overflow:hidden;
+    clip:rect(0,900px,0,0); 
+    animation:noise-anim 2s infinite linear alternate-reverse;
+  }
+  
+  @keyframes noise-anim-2{
+    $steps:20;
+    @for $i from 0 through $steps{
+      #{percentage($i*(1/$steps))}{
+        clip:rect(random(40)+px,9999px,random(30)+px,0);
+      }
+    }
+  }
+  .glitch:before{
+    content:attr(data-text);
+    position:absolute;
+    left:-2px;
+    text-shadow:1px 0 blue; 
+    top:0;
+    color:white;
+    background:$dark-gray4;
+    overflow:hidden;
+    clip:rect(0,900px,0,0); 
+    animation:noise-anim-2 3s infinite linear alternate-reverse;
+  }
+  
+  .glitch-logo{
+    background: url('../../assets/amp_black.png');
+    background-size: contain;
+    width:200px;
+    height:200px;
+    font-size:40px;
+    position: relative;
+    animation: logo-glitch-animation .2s infinite
+    // margin:0 auto;
+  
+    // animation:noise-anim-3 1s infinite linear alternate-reverse;
+  }
+  
+  // .glitch-logo:after{
+  //   content: "";
+  //   background: url('../../assets/amp_blue.svg');
+  //   // linear-gradient(
+  //   //   rgba(255, 0, 0, 0.45), 
+  //   //   rgba(255, 0, 0, 0.45)
+  //   // );
+  //   background-size: contain;
+  //   position:absolute;
+  //   width:200px;
+  //   height:200px;
+  //   left:4px;
+  //   top:0;
+  //   z-index: -1;
+  //   // color:white;
+  //   // background:$dark-gray4;
+  //   // overflow:hidden;
+  //   clip:rect(0,900px,0,0); 
+  //   opacity: 0;
+  //   animation:noise-anim-3 2s infinite linear alternate-reverse;
+  // }
+  
+  // @keyframes noise-anim-4{
+  //   $steps:20;
+  //   @for $i from 0 through $steps{
+  //     #{percentage($i*(1/$steps))}{
+  //       opacity: random(1);
+  //       clip:rect(random(100)+px,9999px,random(100)+px,0);
+  //     }
+  //   }
+  // }
+  .glitch-logo:before{
+    content: "";
+    background: url('../../assets/amp_black.png');
+    // linear-gradient(
+    //   rgba(0, 0, 255, 0.45), 
+    //   rgba(0, 0, 255, 0.45)
+    // );
+    opacity: 0.5;
+    position:absolute;
+    background-size: contain;
+    width:200px;
+    height:200px;
+    left:0;
+    top:0;
+    // color:white;
+    // background:$dark-gray4;
+    // overflow:hidden;
+    // clip:rect(0,900px,0,0); 
+    // opacity: 0;
+    // // rect (top, right, bottom, left)
+    // animation:noise-anim-4 1.1s infinite linear alternate-reverse;
+  }
+  
+  
+  
+  // @keyframes noise-anim-3{
+  //   $steps:20;
+  //   @for $i from 0 through $steps{
+  //     #{percentage($i*(1/$steps))}{
+  //       opacity: random(1);
+  //       clip:rect(random(100)+px,9999px,random(200)+px,0);
+  //     }
+  //   }
+  // }
+  
+  @keyframes logo-glitch-animation {
+    0% {
+          background-position: 0 0;
+          filter: hue-rotate(0deg);
+    }
+    10% {
+          background-position: 1px 0;
+    }
+    20% {
+          background-position: -1px 0;
+    }
+    30% {
+          background-position: 2px 0;
+    }
+    40% {
+          background-position: -3px 0;
+    }
+    50% {
+          background-position: -4px 0;
+    }
+    60% {
+          background-position: -5px 0;
+    }
+    70% {
+          background-position: 0 2px;
+    }
+    80% {
+          background-position: -3px -1px;
+    }
+    100% {
+          background-position: 0 0;
+          // filter: red;
+          // filter: hue-rotate(360deg);
+    }
+  }

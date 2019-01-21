@@ -5,7 +5,9 @@ import {
     Flex, 
     FlexItem, 
     FlexRow, 
-    FlexColumn
+    FlexColumn,
+    FlexColumnWrap,
+    FlexRowWrap
 } from './Box'
 
 
@@ -39,7 +41,7 @@ import {
 
 
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
-export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
+export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn, FlexRowWrap, FlexColumnWrap }
 export { Text, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export { 

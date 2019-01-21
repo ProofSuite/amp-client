@@ -68,6 +68,20 @@ export const Header = styled.h2`
   line-height: 20px;
 `
 
+export const H2 = styled.h2`
+  ${space}
+  ${width}
+  color: ${props =>
+    props.intent
+      ? Colors[props.intent]
+      : props.muted
+        ? Colors.TEXT_MUTED
+        : props.color
+          ? props.color
+          : Colors.WHITE
+  };
+`
+
 
 export const LargeText = styled.h3`
   ${space}

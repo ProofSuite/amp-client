@@ -9,6 +9,7 @@ import {
 } from '../Common';
 
 import { ResizableBox } from 'react-resizable'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 type BidOrAsk = {
   price: number,
@@ -57,14 +58,22 @@ export const OrderBookRenderer = (props: Props) => {
           {bids && (
             <ListContainer className="list-container">
               <List className="bp3-list-unstyled list">
-                {bids.map((order, index) => <BuyOrder key={index} order={order} onClick={() => onSelect(order)} />)}
+                <ReactCSSTransitionGroup
+                  transitionName="flash-buy"
+                >
+                  {bids.map((order, index) => <BuyOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
+                </ReactCSSTransitionGroup>
               </List>
             </ListContainer>
           )}
           {asks && (
             <ListContainer className="list-container left-list">
               <List className="bp3-list-unstyled list">
-                {asks.map((order, index) => <SellOrder key={index} order={order} onClick={() => onSelect(order)} />)}
+                <ReactCSSTransitionGroup
+                  transitionName="flash-sell"
+                >
+                  {asks.map((order, index) => <SellOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
+                </ReactCSSTransitionGroup>
               </List>
             </ListContainer>
           )}
