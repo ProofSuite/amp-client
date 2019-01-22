@@ -77,5 +77,6 @@ export { default as ModalBody } from './ModalBody'
 export { default as ModalFooter } from './ModalFooter'
 export { default as CloseableCallout } from './CloseableCallout'
 export { default as AMPLogo } from './AMPLogo'
+export { default as Link } from './Link'
 
 export { default as TwitterShareLink } from './TwitterShareLink'

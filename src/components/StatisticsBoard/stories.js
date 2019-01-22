@@ -95,7 +95,7 @@ storiesOf('StatisticsBoard', module)
             mostTradedPair="USDC/WETH"
             biggestWinners={["WETH", "PRFT"]}
             biggestLosers={["ZRX", "AUR"]}
-            transactionSuccessPercentage={0.99}
+            tradeSuccessRatio={0.99}
             totalBuyValue={1000}
             totalSellValue={2000}
             total24HVolume={234}

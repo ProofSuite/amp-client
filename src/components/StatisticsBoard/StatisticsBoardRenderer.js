@@ -1,15 +1,20 @@
+// @flow
+
 import React from 'react'
 import styled from 'styled-components'
 import { formatNumber } from 'accounting-js'
 
-import { FlexRowWrap, FlexColumn, FlexRow, LargeText, Header, Box, Colors } from '../Common'
+import { FlexRowWrap, FlexColumn, FlexRow, LargeText, Header, Box, Colors, Button } from '../Common'
 import { Position } from '@blueprintjs/core'
 import ColoredCryptoIcon from '../Common/ColoredCryptoIcon'
 import CryptoIconPair from '../Common/CryptoIconPair'
 import Help from '../../components/Help'
 
+
 import TubeChart from '../TubeChart'
 import PieChart from '../PieChart'
+
+import { arrayIsNotEmpty } from '../../utils/helpers'
 
 type Props = {
     tradeCountsByToken: Array<Object>,
@@ -22,13 +27,14 @@ type Props = {
     orderValuesByPair: Array<Object>,
     mostTradedToken: string,
     mostTradedPair: string,
-    transactionSuccessPercentage: number,
+    tradeSuccessRatio: number,
     totalBuyBalue: number,
     totalSellValue: number,
     numberOfTrades: number,
     numberOfOrders: number,
     numberOfBuys: number,
-    numberOfSells: number
+    numberOfSells: number,
+    toggleMarketStatistics: void => void
 }
 
 const colorsTable = [
@@ -57,26 +63,32 @@ const StatisticsBoardRenderer = (props: Props) => {
         orderValuesByPair,
         mostTradedToken,
         mostTradedPair,
-        biggestWinners,
-        biggestLosers,
-        transactionSuccessPercentage,
+        tradeSuccessRatio,
         totalBuyValue,
         totalSellValue,
         numberOfTrades,
         numberOfOrders,
         numberOfSells,
         numberOfBuys,
+        totalBuyAmount,
+        totalSellAmount,
         total24HVolume,
         totalOrderVolume,
-        currency
+        currency,
+        toggleMarketStatistics
     } = props
 
     return (
         <React.Fragment>
-            <FlexRow>
-                <FlexColumn width="40%">
+            <Button 
+                intent="danger" 
+                text="Back to markets page"
+                onClick={toggleMarketStatistics}
+            />
+            <FlexRow alignItems="center">
+                <FlexColumn mt={3} width="40%">
                     <FlexRow justifyContent="space-around">
-                        <FlexColumn mt={2} alignItems="center">
+                        <FlexColumn alignItems="center">
                             <InfoHeader muted large>Most Traded Token </InfoHeader>
                             <Box p={2}>
                                 <ColoredCryptoIcon name={mostTradedToken} size={96} />
@@ -89,17 +101,19 @@ const StatisticsBoardRenderer = (props: Props) => {
                             </Box>
                         </FlexColumn>
                     </FlexRow>
-                    <FlexRow mt={4} justifyContent="space-around" >
+                    <FlexRow mt={5} justifyContent="space-around" >
                         <FlexColumn>
                             <FlexColumn alignItems="center">
                                 <InfoHeader muted large>Total 24H Volume </InfoHeader>
-                                <InfoNumber large pl={2}>{formatNumber(total24HVolume) } {currency} </InfoNumber>
+                                <InfoNumber large pl={2}>
+                                  {total24HVolume ? `${formatNumber(total24HVolume)} ${currency}` : 'N.A'} </InfoNumber>
                             </FlexColumn>
                             <FlexColumn alignItems="center">
                                 <InfoHeader muted large>Total Orderbook Volume
                                 <Help ml={1} position={Position.RIGHT}>Total value of all orders in AMP orderbooks. This number does not include non-listed tokens</Help>
                                 </InfoHeader>
-                                <InfoNumber large pl={2}>{formatNumber(totalOrderVolume) } {currency} </InfoNumber>
+                                <InfoNumber large pl={2}>
+                                    {totalOrderVolume ? `${formatNumber(totalOrderVolume)} ${currency}` : 'N.A'} </InfoNumber>
                             </FlexColumn>
                         </FlexColumn>
                         <FlexColumn>                    
@@ -107,13 +121,13 @@ const StatisticsBoardRenderer = (props: Props) => {
                                 <InfoHeader muted large>Total Trades (24H) 
                                     <Help ml={1} position={Position.RIGHT}>This number does not include non-listed tokens</Help>
                                 </InfoHeader>
-                                <InfoNumber large pl={2}>{numberOfTrades}</InfoNumber>
+                                <InfoNumber large pl={2}>{numberOfTrades ? numberOfTrades : 'N.A'}</InfoNumber>
                             </FlexColumn>
                             <FlexColumn alignItems="center">
                                 <InfoHeader muted large>Total Orders Number
                                     <Help ml={1} position={Position.RIGHT}>This number does not include non-listed tokens</Help>
                                 </InfoHeader>
-                                <InfoNumber large pl={2}>{numberOfOrders } </InfoNumber>
+                                <InfoNumber large pl={2}>{numberOfOrders ? numberOfOrders : 'N.A'}</InfoNumber>
                             </FlexColumn>
                         </FlexColumn>
                     </FlexRow>
@@ -121,8 +135,8 @@ const StatisticsBoardRenderer = (props: Props) => {
                         <InfoHeader large>Transaction Success Percentage</InfoHeader>
                         <TubeChart 
                             loading={false}
-                            positiveAmount={transactionSuccessPercentage}
-                            negativeAmount={1 - transactionSuccessPercentage}
+                            positiveAmount={tradeSuccessRatio}
+                            negativeAmount={1 - tradeSuccessRatio}
                             unit="%"
                         />
                     </FlexColumn>          
@@ -130,45 +144,69 @@ const StatisticsBoardRenderer = (props: Props) => {
                         <InfoHeader large>Buy/Sell Pressure</InfoHeader>
                         <TubeChart 
                             loading={false}
-                            positiveAmount={totalBuyValue}
-                            negativeAmount={totalSellValue}
+                            positiveAmount={totalBuyAmount}
+                            negativeAmount={totalSellAmount}
                             unit="%"
                         />
                     </FlexColumn>
                 </FlexColumn>
-                <FlexRowWrap width="60%">
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={tradeCountsByToken} colors={colorsTable[1]}/>
-                        <ChartTitle>Number of Trades / Token</ChartTitle>
-                    </FlexColumn>
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={orderCountsByToken}colors={colorsTable[2]} />
-                        <ChartTitle>Number of Orders / Token</ChartTitle>
-                    </FlexColumn>
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={tradeCountsByPair}colors={colorsTable[3]} />
-                        <ChartTitle>Number of Trades / Pair</ChartTitle>
-                    </FlexColumn>
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={orderCountsByPair} colors={colorsTable[4]} />
-                        <ChartTitle>Number of Orders / Pair</ChartTitle>
-                    </FlexColumn>
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={tradeValuesByToken} colors={colorsTable[5]} />
-                        <ChartTitle>Trade Volume / Token</ChartTitle>
-                    </FlexColumn>
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={orderValuesByToken} colors={colorsTable[6]} />
-                        <ChartTitle>Order Volume / Token</ChartTitle>
-                    </FlexColumn>
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={tradeValuesByPair} colors={colorsTable[7]} />
-                        <ChartTitle>Trade Volume / Pair</ChartTitle>
-                    </FlexColumn>
-                    <FlexColumn alignItems="center" mb={5}>
-                        <PieChart data={orderValuesByPair} colors={colorsTable[8]} />
-                        <ChartTitle>Order Volume / Pair</ChartTitle>
-                    </FlexColumn>
+                <FlexRowWrap width="60%" justifyContent="center">
+                    {
+                        arrayIsNotEmpty(tradeCountsByToken) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={tradeCountsByToken} colors={colorsTable[1]}/>
+                            <ChartTitle>Number of Trades / Token</ChartTitle>
+                        </FlexColumn>
+                    }
+                    {
+                        arrayIsNotEmpty(orderCountsByToken) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={orderCountsByToken}colors={colorsTable[2]} />
+                            <ChartTitle>Number of Orders / Token</ChartTitle>
+                        </FlexColumn>
+                    }
+                    {
+                        arrayIsNotEmpty(tradeCountsByPair) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={tradeCountsByPair}colors={colorsTable[3]} />
+                            <ChartTitle>Number of Trades / Pair</ChartTitle>
+                        </FlexColumn>
+                    }
+                    {
+                        arrayIsNotEmpty(orderCountsByPair) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={orderCountsByPair} colors={colorsTable[4]} />
+                            <ChartTitle>Number of Orders / Pair</ChartTitle>
+                        </FlexColumn>    
+                    }
+                    {
+                        arrayIsNotEmpty(tradeValuesByToken) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={tradeValuesByToken} colors={colorsTable[5]} />
+                            <ChartTitle>Trade Volume / Token</ChartTitle>
+                        </FlexColumn>
+                    }
+                    {   
+                        arrayIsNotEmpty(orderValuesByToken) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={orderValuesByToken} colors={colorsTable[6]} />
+                            <ChartTitle>Order Volume / Token</ChartTitle>
+                        </FlexColumn>
+                    }
+                    {
+                        arrayIsNotEmpty(tradeValuesByPair) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={tradeValuesByPair} colors={colorsTable[7]} />
+                            <ChartTitle>Trade Volume / Pair</ChartTitle>
+                        </FlexColumn>
+                    }
+                    {
+                        arrayIsNotEmpty(orderValuesByPair) &&
+                        <FlexColumn alignItems="center" mb={5}>
+                            <PieChart data={orderValuesByPair} colors={colorsTable[8]} />
+                            <ChartTitle>Order Volume / Pair</ChartTitle>
+                        </FlexColumn>
+                    }                    
                 </FlexRowWrap>
             </FlexRow>
         </React.Fragment>

@@ -196,7 +196,7 @@ export const parseOrderBookData = (data: OrderBookData, pair: TokenPair, precisi
   return { asks, bids }
 }
 
-export const parseTokenPairsData = (data: APIPairData, pairs: Object) => {
+export const parseExactTokenPairData = (data: APIPairData, pairs: Object) => {
   let result = []
 
   data.forEach(datum => {
@@ -217,6 +217,33 @@ export const parseTokenPairsData = (data: APIPairData, pairs: Object) => {
     }
   })
     
+  return result
+}
+
+export const parseTokenPairsData = (data: APIPairData, pairs: Object) => {
+  let result = []
+
+  data.forEach(datum => {
+    let pair = pairs[datum.pair.pairName]
+
+    if (pair) {
+      result.push({
+        pair: pair.pair,
+        price: datum.price ? datum.price : null,
+        lastPrice: datum.close ? datum.close : null,
+        change: datum.open ? (datum.open - datum.close) / datum.open : null,
+        high: datum.high ? datum.high : null,
+        low: datum.low ? datum.low : null,
+        volume: datum.volume ? datum.volume : null,
+        orderVolume: datum.orderVolume ? datum.orderVolume : null,
+        orderCount: datum.orderCount ? datum.orderCount : null,
+        tradeCount: datum.tradeCount ? datum.tradeCount : null,
+        averageOrderAmount: datum.averageOrderAmount ? datum.averageOrderAmount : null,
+        averageTradeAmount: datum.averageTradeAmount ? datum.averageTradeAmount : null
+      })
+    }
+  })
+
   return result
 }
 
