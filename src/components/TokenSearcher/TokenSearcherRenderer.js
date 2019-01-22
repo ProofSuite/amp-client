@@ -255,7 +255,7 @@ const TokenRow = ({ index, token, updateFavorite, isFavoriteTokensList, changeSe
         change={change} 
         onClick={() => changeSelectedToken(token)}
       >
-        {isNotNull(change) ? `${change}%` : 'N.A'}
+        {isNotNull(change) ? `${formatNumber(change, { precision: 2 })}%` : 'N.A'}
       </Change24H>
       <SmallText className="star">
         <Tooltip

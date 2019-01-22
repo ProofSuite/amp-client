@@ -183,6 +183,22 @@ export default function getTokenDomain(state: TokenState) {
 
       return addresses
     },
+
+    exchangeRates: (): any => {
+      let exchangeRates = Object.keys(state.bySymbol).reduce((result, symbol) => {
+        result[symbol] = {
+          USD: state.bySymbol[symbol].USDRate,
+          EUR: state.bySymbol[symbol].EURRate,
+          JPY: state.bySymbol[symbol].JPYRate
+        }
+
+        return result
+      }, {})
+
+      return exchangeRates
+    },
+
+
     rankedTokens: () => (Object.values(state.bySymbol): any).map((m, index) => ({ ...m, rank: index + 1 })),
   };
 }

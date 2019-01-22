@@ -42,6 +42,7 @@ type Props = {
   tabs: Array<string>,
   quoteTokens: Array<string>,
   currentReferenceCurrency: string,
+  toggleMarketStatistics: void => void
 };
 
 class MarketsTableRenderer extends React.PureComponent<Props> {
@@ -96,7 +97,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
             </SmallText>
           </Cell>
           <Cell>
-            <ChangeCell change={change}>{change ? `${change}%` : 'N.A'}</ChangeCell>
+            <ChangeCell change={change}>{change ? `${formatNumber(change, { precision: 2 })}%` : 'N.A'}</ChangeCell>
           </Cell>
           <Cell>
             <FlexRow justifyContent="flex-end" p={1}>
@@ -128,19 +129,28 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
       selectedTab,
       handleChangeTab,
       currentReferenceCurrency,
-      tabs
+      tabs,
+      toggleMarketStatistics
     } = this.props;
 
     return (
       <TableSection>
         <RowSpaceBetween style={{ marginBottom: '10px' }}>
-          <InputGroup
-            type="string"
-            leftIcon="search"
-            placeholder="Search Token ..."
-            value={searchInput}
-            onChange={handleSearchInputChange}
-          />
+          <FlexRow>
+            <InputGroup
+              type="string"
+              leftIcon="search"
+              placeholder="Search Token ..."
+              value={searchInput}
+              onChange={handleSearchInputChange}
+            />
+            <Button
+              minimal
+              intent="primary"
+              text="View Market Statistics"
+              onClick={toggleMarketStatistics}
+            />
+          </FlexRow>
           <ButtonRow>
             {tabs.map((tab, i) => {
               return (

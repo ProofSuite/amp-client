@@ -1,10 +1,11 @@
 // @flow
 import type { TokenPair } from './tokens'
+import type { TradingStats } from './stats'
 
-export type UpdateTokenPairDataAction = {
-  type: 'marketsPage/UPDATE_TOKEN_PAIR_DATA',
-  payload: { tokenPairData: Array<TokenPair> }
+export type UpdateMarketPageDataAction = {
+  type: 'marketsPage/UPDATE_MARKET_PAGE_DATA',
+  payload: { tokenPairData: Array<TokenPair>, tradingStats: TradingStats }
 }
 
 export type MarketsPageActions = 
-  | UpdateTokenPairDataAction
+  | UpdateMarketPageDataAction

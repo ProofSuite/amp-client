@@ -11,6 +11,7 @@ type Props = {
   quoteTokens: Array<string>,
   redirectToTradingPage: (string, string) => void,
   currentReferenceCurrency: string,
+  toggleMarketStatistics: void => void
 };
 
 type State = {
@@ -50,7 +51,8 @@ class MarketsTable extends React.PureComponent<Props, State> {
       pairs,
       redirectToTradingPage,
       quoteTokens,
-      currentReferenceCurrency
+      currentReferenceCurrency,
+      toggleMarketStatistics
      } = this.props;
 
     let {
@@ -73,6 +75,7 @@ class MarketsTable extends React.PureComponent<Props, State> {
           selectedTab={selectedTab}
           handleChangeTab={this.handleChangeTab}
           currentReferenceCurrency={currentReferenceCurrency}
+          toggleMarketStatistics={toggleMarketStatistics}
         />
       </Wrapper>
     );

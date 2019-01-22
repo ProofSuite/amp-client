@@ -253,7 +253,7 @@ const AddTokenPanel = (props: *) => {
       {tokenSymbol &&
         <React.Fragment>
           <h3>Token found: {tokenSymbol}</h3>
-          <a href={tokenEtherscanUrl}>→ View on Etherscan</a>
+          <a href={tokenEtherscanUrl} target="_blank">→ View on Etherscan</a>
           <Box py={3}>
             <Flex py={1} width="50%">
               <BlueGlowingButton

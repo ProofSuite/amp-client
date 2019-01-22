@@ -27,7 +27,9 @@ export function queryMarketData(): ThunkAction {
       let tokenPairData = await api.fetchTokenPairData();
       tokenPairData = parseTokenPairsData(tokenPairData, pairs);
 
-      dispatch(actionCreators.updateTokenPairData(tokenPairData));
+      let tradingStats = await api.fetchTradingStats()
+      
+      dispatch(actionCreators.updateMarketPageData(tokenPairData, tradingStats));
     } catch (e) {
       console.log(e);
       let message = parseQueryMarketDataError(e);

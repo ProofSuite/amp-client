@@ -253,6 +253,18 @@ export const fetchTokenPairData = async () => {
   return data
 }
 
+export const fetchTradingStats = async () => {
+  const response = await request('/stats/trading')
+
+  if (response.status === 400) {
+    const { error } = await response.json()
+    throw new Error(error)
+  }
+
+  const { data } = await response.json()
+  return data
+}
+
 export const createAccount = async (address: string) => {
   const response = await request(`/account/create?address=${address}`, { method: 'post'})
 

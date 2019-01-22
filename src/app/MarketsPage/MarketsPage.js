@@ -3,7 +3,6 @@ import React from 'react'
 import MarketsPageRenderer from './MarketsPageRenderer'
 import { Redirect } from 'react-router-dom'
 
-import type { State } from '../../types'
 import type { TokenPair } from '../../types/tokens'
 
 export type Props = {
@@ -17,11 +16,23 @@ export type Props = {
   queryMarketData: void => void,
 }
 
+export type State = {
+  showMarketStatistics: boolean
+}
+
 class MarketsPage extends React.PureComponent<Props, State> {
+
+  state = {
+    showMarketStatistics: false
+  }
 
   componentDidMount() {
     const { authenticated, queryMarketData } = this.props
     if (authenticated) queryMarketData()
+  }
+
+  toggleMarketStatistics = () => {
+    this.setState({ showMarketStatistics: !this.state.showMarketStatistics })
   }
 
   render() {
@@ -35,6 +46,9 @@ class MarketsPage extends React.PureComponent<Props, State> {
       loading,
     } = this.props
 
+    const {
+      showMarketStatistics
+    } = this.state
 
     // if (!authenticated) return <Redirect to="/login" />
 
@@ -46,6 +60,8 @@ class MarketsPage extends React.PureComponent<Props, State> {
         toggleAllowance={toggleAllowance}
         loading={loading}
         redirectToTradingPage={redirectToTradingPage}
+        showMarketStatistics={showMarketStatistics}
+        toggleMarketStatistics={this.toggleMarketStatistics}
       />
     )
   }
