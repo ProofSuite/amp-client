@@ -4,14 +4,19 @@ import styled from 'styled-components'
 import { Card } from '@blueprintjs/core'
 import CenteredSpinner from '../../components/Common/CenteredSpinner'
 import MarketsTable from '../../components/MarketsTable'
+import StatisticsBoard from '../../components/StatisticsBoard'
 
 type Props = {
   loading: boolean,
+  showMarketStatistics: boolean,
+  toggleMarketStatistics: void => void
 }
 
 const MarketsPageRenderer = (props: Props) => {
   const {
-    loading
+    loading,
+    showMarketStatistics,
+    toggleMarketStatistics
   } = props
 
   return (
@@ -22,7 +27,17 @@ const MarketsPageRenderer = (props: Props) => {
             <CenteredSpinner />
           ) : (
             <MarketsTableBox>
-              <MarketsTable/>
+            {
+              showMarketStatistics ? (
+                <StatisticsBoard  
+                  toggleMarketStatistics={toggleMarketStatistics}
+                />
+              ) : (
+                <MarketsTable
+                  toggleMarketStatistics={toggleMarketStatistics}
+                />
+              )
+            }
             </MarketsTableBox>
           )}
         </WalletPageContentBox>

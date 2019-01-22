@@ -40,7 +40,7 @@ const PieChartRenderer = (props: Props) => {
   let p = Math.floor(colors.length/data.length)
 
   return (
-    <ResponsiveContainer height={250} width={320}>
+    <ResponsiveContainer height={250} width={400}>
       <PieChart>
         <Pie
           data={data}

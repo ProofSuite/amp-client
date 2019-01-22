@@ -62,6 +62,13 @@ export const isNotNull = (elem: *) => {
   return (elem !== null && elem !== NaN)
 }
 
+export const arrayIsNotEmpty = (arr: *) => {
+  return (
+    typeof arr != "undefined"
+    && arr != null
+    && arr.length != null
+    && arr.length > 0)
+}
 
 export const computeTokenAmount = (amount: Object, tokenDecimals: number) => {
   return utils.bigNumberify(amount).div(utils.bigNumberify(10).pow(tokenDecimals)).toString()

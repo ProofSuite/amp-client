@@ -3,16 +3,20 @@ import type {
   UpdateTokenPairDataAction
 } from '../../types/marketsPage'
 
+import type {
+  TradingStats
+} from '../../types/stats'
+
 import type { TokenPair } from '../../types/tokens'
 
 const actionTypes = {
-  updateTokenPairData: 'marketsPage/UPDATE_TOKEN_PAIR_DATA'
+  updateMarketPageData: 'marketsPage/UPDATE_MARKET_PAGE_DATA'
 }
 
-export function updateTokenPairData(tokenPairData: Array<TokenPair>): UpdateTokenPairDataAction {
+export function updateMarketPageData(tokenPairData: Array<TokenPair>, tradingStats: TradingStats): UpdateTokenPairDataAction {
   return {
-    type: actionTypes.updateTokenPairData,
-    payload: { tokenPairData }
+    type: actionTypes.updateMarketPageData,
+    payload: { tokenPairData, tradingStats }
   }
 }
 
