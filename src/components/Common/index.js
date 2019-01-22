@@ -5,12 +5,15 @@ import {
     Flex, 
     FlexItem, 
     FlexRow, 
-    FlexColumn
+    FlexColumn,
+    FlexColumnWrap,
+    FlexRowWrap
 } from './Box'
 
 
 import { 
     Text, 
+    Header,
     SmallText, 
     SmallTextDiv, 
     TextDiv, 
@@ -19,14 +22,15 @@ import {
     HeaderText, 
     LabelText,
     MutedText, 
-    LinkText
+    LinkText,
 } from './Text';
 
 import {
     Card,
     NavbarHeading,
     NavbarGroup,
-    NavbarDivider
+    NavbarDivider,
+    Button
 } from './Blueprint'
 
 import { 
@@ -37,14 +41,15 @@ import {
 
 
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
-export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn }
-export { Text, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn, FlexRowWrap, FlexColumnWrap }
+export { Text, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export { 
     Card, 
     NavbarHeading, 
     NavbarGroup,
-    NavbarDivider
+    NavbarDivider,
+    Button
 }
 
 export { default as Spacer } from './Spacer'
@@ -72,5 +77,6 @@ export { default as ModalBody } from './ModalBody'
 export { default as ModalFooter } from './ModalFooter'
 export { default as CloseableCallout } from './CloseableCallout'
 export { default as AMPLogo } from './AMPLogo'
+export { default as Link } from './Link'
 
 export { default as TwitterShareLink } from './TwitterShareLink'

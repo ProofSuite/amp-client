@@ -44,6 +44,7 @@ import * as notificationEvents from './domains/notifications'
 import * as convertTokensFormEvents from './domains/convertTokensForm'
 import * as connectionEvents from './domains/connection'
 import * as transactionEvents from './domains/transactions'
+import * as statsEvents from './domains/stats'
 
 export const loginPage = createReducer(action => {
   const { type, payload } = action
@@ -273,7 +274,7 @@ export const tokenPairs = createReducer(action => {
       return tokenPairsEvents.currentPairUpdated(payload.pair)
     case tradingPageActionTypes.updateTradingPageData:
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
-    case marketsPageActionTypes.updateTokenPairData:
+    case marketsPageActionTypes.updateMarketPageData:
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
     case walletPageActionTypes.updateWalletPageData:
       return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
@@ -307,6 +308,16 @@ export const account = createReducer(action => {
       return accountEvents.accountRemoved()
     default:
       return accountEvents.initialized()
+  }
+})
+
+export const stats = createReducer(action => {
+  const { type, payload } = action
+  switch (type) {
+    case marketsPageActionTypes.updateMarketPageData:
+      return statsEvents.updated(payload.tradingStats)
+    default:
+      return statsEvents.initialized()
   }
 })
 

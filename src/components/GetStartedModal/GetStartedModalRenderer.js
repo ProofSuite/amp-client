@@ -1,9 +1,13 @@
 // @flow
-import React from 'react'
-import Modal from '../Modal'
-import FirstStep from './steps/FirstStep'
-import SecondStep from './steps/SecondStep'
-import ThirdStep from './steps/ThirdStep'
+import React from 'react';
+import styled from 'styled-components';
+import Modal from '../Modal';
+import FirstStep from './steps/FirstStep';
+import SecondStep from './steps/SecondStep';
+import ThirdStep from './steps/ThirdStep';
+
+import { FlexRow } from '../Common'
+
 
 type Props = {
   step: string,
@@ -33,28 +37,36 @@ type Props = {
   isOpen: boolean,
   transactionsPending: boolean,
   transactionsComplete: boolean,
-}
-
+  currentTab: string,
+  handleChangeTab: string => void,
+};
 
 const GetStartedModalRenderer = (props: Props) => {
+  const { handleClose, isOpen } = props;
+
   return (
-    <Modal title="Get Started" icon="info-sign" isOpen={props.isOpen} onClose={props.handleClose}>
-      <StepsRenderer {...props} />
+    <Modal title="Get Started" icon="info-sign" isOpen={isOpen} onClose={handleClose}>
+      <ModalContent>
+        <Stepper {...props} />
+      </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-const StepsRenderer = (props: Props) => {
-  switch(props.step) {
+const Stepper = (props: Props) => {
+  switch (props.step) {
     case '1':
-      return <FirstStep {...props} />
+      return <FirstStep {...props} />;
     case '2':
-      return <SecondStep {...props} />
+      return <SecondStep {...props} />;
     case '3':
-      return <ThirdStep {...props} />
+      return <ThirdStep {...props} />;
     default:
-      return null
+      return null;
   }
-}
+};
 
-export default GetStartedModalRenderer
+// 🚀📈 💶💵💴🔥🌊🛸🍪🧞🧙🐲
+const ModalContent = styled(FlexRow)``;
+
+export default GetStartedModalRenderer;
