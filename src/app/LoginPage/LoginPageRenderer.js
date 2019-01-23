@@ -4,6 +4,7 @@ import styled  from 'styled-components'
 import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
 import type { CreateWalletParams } from '../../types/createWallet'
+import { Spring } from 'react-spring'
 
 import { 
   Spinner, 
@@ -67,9 +68,10 @@ const LoginPageRenderer = (props: Props) => {
       </WidgetWrapper>
     ),
     createWallet: (
-      <WidgetWrapper>
-        <CreateWalletForm walletCreated={walletCreated} showLoginMethods={showLoginMethods}/>
+      <WidgetWrapper >
+          <CreateWalletForm walletCreated={walletCreated} showLoginMethods={showLoginMethods}/>
       </WidgetWrapper>
+      
     ),
     loading: (
       <Centered>
@@ -95,42 +97,46 @@ const LoginMethodsView = (props: Props) => {
   return (
     <FlexRow p={5} pb={6} justifyContent="space-between">
       <Box />
-      <WelcomeCard intent="success" title="Disclaimer" hideOnTablet>
-          <WelcomeMessage>
-            Welcome to <div className="glitch" data-text="AMP!">AMP!</div>
-          </WelcomeMessage>
-          <h3>
-          Trade from your own wallet, without waiting for deposits and with the security of instant blockchain settlements.
-          </h3>
-          <AnnouncementMessages>
-            • <FormattedMessage
-              {...messages.announcement}
-              values={{ link: <a href="https://amp.exchange">https://amp.exchange</a> }}
-            />
-            <br />
-            <br />
-            <Reminder>
-              • <FormattedMessage {...messages.noDisclosure} />
-            </Reminder>
-            <br />
-            <Reminder>
-              • <FormattedMessage {...messages.noOfficialStaffs} />
-            </Reminder>
-            <br />
-            <Reminder>
-              • <FormattedMessage {...messages.exchangeLaws} />
-            </Reminder>
-            <br />
-            <Reminder>
-              • <FormattedMessage {...messages.tokenListing} />
-            </Reminder>
-            <br />
-            <Reminder>
-              • Support us by sharing on <TwitterShareLink />
-            </Reminder>
-            <br />
-          </AnnouncementMessages>
-      </WelcomeCard>
+      <Spring from={{ opacity: 0, marginTop: -1000 }} to={{ opacity: 1, marginTop: 0 }}>
+      {props => 
+        <WelcomeCard style={props} intent="success" title="Disclaimer" hideOnTablet>
+            <WelcomeMessage>
+              Welcome to <div className="glitch" data-text="AMP!">AMP!</div>
+            </WelcomeMessage>
+            <h3>
+            Trade from your own wallet, without waiting for deposits and with the security of instant blockchain settlements.
+            </h3>
+            <AnnouncementMessages>
+              • <FormattedMessage
+                {...messages.announcement}
+                values={{ link: <a href="https://amp.exchange">https://amp.exchange</a> }}
+              />
+              <br />
+              <br />
+              <Reminder>
+                • <FormattedMessage {...messages.noDisclosure} />
+              </Reminder>
+              <br />
+              <Reminder>
+                • <FormattedMessage {...messages.noOfficialStaffs} />
+              </Reminder>
+              <br />
+              <Reminder>
+                • <FormattedMessage {...messages.exchangeLaws} />
+              </Reminder>
+              <br />
+              <Reminder>
+                • <FormattedMessage {...messages.tokenListing} />
+              </Reminder>
+              <br />
+              <Reminder>
+                • Support us by sharing on <TwitterShareLink />
+              </Reminder>
+              <br />
+            </AnnouncementMessages>
+        </WelcomeCard>
+      }
+      </Spring>
       <LoginMethodsBox>
         <LoginMethodsHeading>
           <FormattedMessage {...messages.loginMethods} />
@@ -162,16 +168,6 @@ const LoginMethodsView = (props: Props) => {
                           : null
                       }
                   </Flex>
-                  {/* <Flex flexDirection="column" py={1}>
-                    <StyledButton 
-                      onClick={loginWithLedger} 
-                      large 
-                      intent="primary"
-                      fill
-                    >
-                        <FormattedMessage {...messages.ledger} />
-                    </StyledButton>
-                  </Flex> */}
                   <Flex flexDirection="column" py={1}>
                     <StyledButton onClick={showWalletLoginForm} large intent="primary" fill>
                       <FormattedMessage {...messages.wallet} />

@@ -11,6 +11,8 @@ import CryptoIconPair from '../Common/CryptoIconPair'
 import Help from '../../components/Help'
 
 
+import { Spring } from 'react-spring'
+
 import TubeChart from '../TubeChart'
 import PieChart from '../PieChart'
 
@@ -83,7 +85,9 @@ const StatisticsBoardRenderer = (props: Props) => {
     } = props
 
     return (
-        <React.Fragment>
+        <Spring from={{ opacity: 0, marginLeft: -1000 }} to={{ opacity: 1, marginLeft: 0 }} >
+        {props =>
+        <Box style={props}>
             <Button 
                 intent="primary" 
                 minimal
@@ -215,7 +219,9 @@ const StatisticsBoardRenderer = (props: Props) => {
                     }                    
                 </RightPanelBox>
             </StatsPanelBox>
-        </React.Fragment>
+        </Box>
+        }
+    </Spring>
     )
 }
 

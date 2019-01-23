@@ -18,6 +18,10 @@ import {
   Position,
 } from '@blueprintjs/core';
 
+import {
+  Spring
+} from 'react-spring'
+
 import { 
   FlexRowSpaceBetween,
   Colors, 
@@ -131,7 +135,9 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <TableSection>
+      <Spring from={{ opacity: 0, marginLeft: -200 }} to={{ opacity: 1, marginLeft: 0 }} >
+      {props =>
+      <TableSection style={props}>
         <TableToolBar mt={3} mb={4}>
           <FlexRow>
             <InputGroup
@@ -183,6 +189,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
             <TableBody>
               <AutoSizer>
                 {({ width, height }) => (
+                  
                   <List
                     width={width}
                     height={height}
@@ -197,6 +204,8 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
               </TableBody>
           </Table>
       </TableSection>
+      }
+      </Spring>
     );
   }
 };

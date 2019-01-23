@@ -11,6 +11,8 @@ import { CloseableCallout, EmphasizedText } from '../../components/Common'
 import { Grid } from 'styled-css-grid'
 import { Redirect } from 'react-router-dom'
 
+import { Spring } from 'react-spring'
+
 type Props = {
   authenticated: boolean,
   isConnected: boolean,
@@ -146,6 +148,7 @@ class TradingPage extends React.PureComponent<Props, State> {
     if (!isInitiated) return null;
 
     return (
+      
       <TradingPageLayout>
         <SidePanel>
           <Grid columns={1} alignContent="start">
@@ -161,7 +164,11 @@ class TradingPage extends React.PureComponent<Props, State> {
 
         <MainPanel>
           <Grid columns={1} alignContent="start">
-              <OHLCV />
+          <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+            {props =>
+              <OHLCV style={props}/>
+            }
+            </Spring>
             <OrdersTableBox />
             <OrdersAndTradesTableBox>
                 <OrderBookBox />

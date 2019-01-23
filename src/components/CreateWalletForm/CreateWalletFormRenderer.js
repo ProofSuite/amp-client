@@ -16,6 +16,8 @@ import Steps from 'rc-steps';
 import { OverlaySpinner } from '../Common'
 import styled from 'styled-components';
 
+import { Spring } from 'react-spring'
+
 type Props = {
   address: string,
   title: string,
@@ -131,7 +133,9 @@ const CreateWalletFormRenderer = (props: Props) => {
     )
   };
   return (
-    <Card>
+    <Spring from={{ opacity: 0, marginLeft: -1000, marginRight: 1000 }} to={{ opacity: 1, marginLeft: 0, marginRight: 0 }}>
+    {props =>
+    <Card style={props}>
         <Steps current={currentStep}>
           <Steps.Step title="Choose password" />
           <Steps.Step title="Download Wallet" />
@@ -153,6 +157,8 @@ const CreateWalletFormRenderer = (props: Props) => {
           />
         </CardFooterBox>
     </Card>
+    }
+    </Spring>
   );
 };
 
