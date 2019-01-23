@@ -140,6 +140,30 @@ export const FlexColumnWrap = styled(Box)`
   ${flexBasis}
 `
 
+export const FlexRowSpaceBetween = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  ${alignItems}
+  ${alignContent}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}
+`
+
+export const FlexRowSpaceAround = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  ${alignItems}
+  ${alignContent}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexBasis}  
+`
+
 export const FlexItem = styled.div`
   ${flex}
   ${justifySelf}

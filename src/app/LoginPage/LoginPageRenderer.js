@@ -1,12 +1,11 @@
 import React from 'react'
 import { defineMessages, FormattedMessage } from 'react-intl'
-import styled, { keyframes }  from 'styled-components'
+import styled  from 'styled-components'
 import WalletLoginForm from '../../components/WalletLoginForm'
 import CreateWalletForm from '../../components/CreateWalletForm'
 import type { CreateWalletParams } from '../../types/createWallet'
 
 import { 
-  Callout, 
   Spinner, 
   Button
 } from '@blueprintjs/core'
@@ -89,7 +88,6 @@ const LoginMethodsView = (props: Props) => {
   const { 
     showWalletLoginForm, 
     loginWithMetamask, 
-    loginWithLedger,
     metamaskStatus, 
     showCreateWallet
   } = props

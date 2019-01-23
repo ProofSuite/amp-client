@@ -20,9 +20,9 @@ const MarketsPageRenderer = (props: Props) => {
   } = props
 
   return (
-    <WalletPageBox>
+    <MarketPageBox>
       <RowWrapper>
-        <WalletPageContentBox>
+        <MarketPageContentBox>
           {loading ? (
             <CenteredSpinner />
           ) : (
@@ -40,25 +40,26 @@ const MarketsPageRenderer = (props: Props) => {
             }
             </MarketsTableBox>
           )}
-        </WalletPageContentBox>
+        </MarketPageContentBox>
       </RowWrapper>
-    </WalletPageBox>
+    </MarketPageBox>
   )
 }
 
 
-const WalletPageBox = styled.div`
+const MarketPageBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1em;
   margin-bottom: 1em;
 `
 
-const WalletPageContentBox = styled(Card)`
-  height: 92vh;
+const MarketPageContentBox = styled(Card)`
+  height: 90vh;
   width: 100%;
   margin-right: 0.5em;
   margin-left: 0.5em;
+  overflow-y:scroll;
 `
 
 const RowWrapper = styled.div`

@@ -19,17 +19,16 @@ import {
 } from '@blueprintjs/core';
 
 import { 
-  RowSpaceBetween,
-  CryptoIconPair,
+  FlexRowSpaceBetween,
   Colors, 
   AMPLogo, 
   Centered, 
   LargeText, 
   SmallText,
-  SmallTextDiv,
   BlueGlowingButton,
   FlexRow,
-  Box
+  Box,
+  CryptoIconPair
 } from '../Common';
 
 type Props = {
@@ -63,8 +62,6 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
         volume, 
         orderVolume,
       } = pairs[index]
-
-
   
       return (
         <Row key={key} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)} style={style}>
@@ -135,7 +132,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
 
     return (
       <TableSection>
-        <RowSpaceBetween style={{ marginBottom: '10px' }}>
+        <TableToolBar mt={3} mb={4}>
           <FlexRow>
             <InputGroup
               type="string"
@@ -148,6 +145,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
               minimal
               intent="primary"
               text="View Market Statistics"
+              icon="stacked-chart"
               onClick={toggleMarketStatistics}
             />
           </FlexRow>
@@ -165,8 +163,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
             })
           }
           </ButtonRow>
-        </RowSpaceBetween>
-          
+        </TableToolBar>
             <TableHeader>
               <TableHeaderCell>Market</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
@@ -215,6 +212,8 @@ const Table = styled.div.attrs({
   width: 100%;
   border: none !important;
 `;
+
+const TableToolBar = styled(FlexRowSpaceBetween)``
 
 const TableSection = styled.div`
   display: flex;

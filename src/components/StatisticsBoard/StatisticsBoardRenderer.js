@@ -14,6 +14,10 @@ import Help from '../../components/Help'
 import TubeChart from '../TubeChart'
 import PieChart from '../PieChart'
 
+import {
+    Devices
+} from '../../components/Common/Variables'
+
 import { arrayIsNotEmpty } from '../../utils/helpers'
 
 type Props = {
@@ -81,12 +85,14 @@ const StatisticsBoardRenderer = (props: Props) => {
     return (
         <React.Fragment>
             <Button 
-                intent="danger" 
-                text="Back to markets page"
+                intent="primary" 
+                minimal
+                text="View markets"
+                icon="arrow-left"
                 onClick={toggleMarketStatistics}
             />
-            <FlexRow alignItems="center">
-                <FlexColumn mt={3} width="40%">
+            <StatsPanelBox alignItems="center">
+                <LeftPanelBox m={5}>
                     <FlexRow justifyContent="space-around">
                         <FlexColumn alignItems="center">
                             <InfoHeader muted large>Most Traded Token </InfoHeader>
@@ -94,7 +100,7 @@ const StatisticsBoardRenderer = (props: Props) => {
                                 <ColoredCryptoIcon name={mostTradedToken} size={96} />
                             </Box>
                         </FlexColumn>
-                        <FlexColumn mt={2} alignItems="center">
+                        <FlexColumn alignItems="center">
                             <InfoHeader muted large>Most Traded Pair </InfoHeader>
                             <Box p={2}>
                                 <CryptoIconPair baseToken={"WETH"} quoteToken={"USDC"} size={96} />
@@ -149,8 +155,8 @@ const StatisticsBoardRenderer = (props: Props) => {
                             unit="%"
                         />
                     </FlexColumn>
-                </FlexColumn>
-                <FlexRowWrap width="60%" justifyContent="center">
+                </LeftPanelBox>
+                <RightPanelBox>
                     {
                         arrayIsNotEmpty(tradeCountsByToken) &&
                         <FlexColumn alignItems="center" mb={5}>
@@ -207,13 +213,47 @@ const StatisticsBoardRenderer = (props: Props) => {
                             <ChartTitle>Order Volume / Pair</ChartTitle>
                         </FlexColumn>
                     }                    
-                </FlexRowWrap>
-            </FlexRow>
+                </RightPanelBox>
+            </StatsPanelBox>
         </React.Fragment>
     )
 }
 
 export const ChartTitle = styled(LargeText)``
+
+export const StatsPanelBox = styled(Box)`
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+    @media ${Devices.tablet} {
+        flex-direction: column;
+        align-items: center;
+    }    
+`
+
+export const LeftPanelBox = styled(FlexColumn)`
+    width: 40%;
+    height: 100%;
+    min-height: 500px;
+    // justify-content: center;
+    
+    
+    @media ${Devices.tablet} {
+        width: 100%;
+        justify-content: space-around;
+    }
+`
+
+export const RightPanelBox = styled(FlexRowWrap)`
+    width: 60%;
+    height: 100%;
+    justify-content: center;
+
+    @media ${Devices.tablet} {
+        width: 100%;
+    }
+`
 
 export const InfoHeader = styled.p`
     color: ${props => props.muted && Colors.TEXT_MUTED};
