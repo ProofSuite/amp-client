@@ -5,8 +5,19 @@ import { formatNumber } from 'accounting-js'
 import { 
   Loading, 
   SmallText,
-  Colors
+  Colors,
+  Text
 } from '../Common';
+
+import {
+  Card,
+  Button,
+  Collapse,
+  Tabs,
+  Tab
+} from '@blueprintjs/core'
+
+import type { TokenPair } from '../../types/Tokens'
 
 import { ResizableBox } from 'react-resizable'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
@@ -21,9 +32,61 @@ type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
   onSelect: BidOrAsk => void,
+  selectedTabId: string,
+  isOpen: boolean,
+  currentPair: TokenPair,
+  changeTab: string => void,
+  toggleCollapse: void => void
 };
 
+
 export const OrderBookRenderer = (props: Props) => {
+  const { 
+    bids, 
+    asks,
+    currentPair, 
+    selectedTabId,
+    isOpen,
+    onSelect,
+    changeTab,
+    toggleCollapse
+  } = props;
+
+  return (
+    <div>
+        <Wrapper>
+          <OrderBookHeader>
+            <Heading>
+              Order Book
+              <Text muted>
+                {' '}
+                ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
+              </Text>
+            </Heading>
+            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+          </OrderBookHeader>
+          <Collapse isOpen={isOpen} transitionDuration={100}>
+            <Tabs selectedTabId={selectedTabId} onChange={changeTab}>
+              <Tab 
+                id="list"
+                title="Order List" 
+                panel={<OrderListRenderer
+                  bids={bids} 
+                  asks={asks} 
+                  onSelect={onSelect} 
+                />}
+              />
+            </Tabs>
+          </Collapse>
+        </Wrapper>
+      </div>
+  )
+
+}
+
+
+
+export const OrderListRenderer = (props: *) => {
   const { bids, asks, onSelect } = props;
 
   return (
@@ -96,7 +159,7 @@ const BuyOrder = (props: SingleOrderProps) => {
       <BuyRowBackground amount={order.relativeTotal} />
       <Cell>{formatNumber(order.total, { precision: 3 })}</Cell>
       <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
-      <Cell>{formatNumber(order.price, { precision: 5 })}</Cell>
+      <Cell color={Colors.BUY}>{formatNumber(order.price, { precision: 5 })}</Cell>
     </Row>
   );
 };
@@ -107,7 +170,7 @@ const SellOrder = (props: SingleOrderProps) => {
   return (
     <Row onClick={onClick}>
       <SellRowBackGround amount={order.relativeTotal} />
-      <Cell>{formatNumber(order.price, { precision: 5 })}</Cell>
+      <Cell color={Colors.SELL}>{formatNumber(order.price, { precision: 5 })}</Cell>
       <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
       <Cell>{formatNumber(order.total, { precision: 3 })}</Cell>
     </Row>
@@ -198,6 +261,30 @@ const HeaderRow = styled.li`
   span {
     font-weight: 600;
   }
+`;
+
+
+const Wrapper = styled(Card)`
+  // min-width: 500px;
+  width: 100%;
+  min-height: 50px;
+  /* ul {
+       li {
+         padding-right: 15px;
+       }
+     } */
+`;
+
+const OrderBookHeader = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  grid-gap: 10px;
+  align-items: center;
+`;
+
+const Heading = styled.h3`
+  margin: auto;
 `;
 
 const HeaderCell = styled.span`

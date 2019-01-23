@@ -1,14 +1,9 @@
 // @flow
 import React from 'react';
-import styled from 'styled-components';
-import { Card, Tab, Tabs, Collapse, Button } from '@blueprintjs/core';
-import { Text } from '../Common';
-import OrderListRenderer from './OrderListRenderer';
-import DepthChartRenderer from './DepthChartRenderer';
+import OrderBookRenderer from './OrderBookRenderer';
+import VerticalOrderBookRenderer from './VerticalOrderBookRenderer'
 
 import type { TokenPair } from '../../types/tokens';
-
-var AmCharts = require('@amcharts/amcharts3-react');
 
 type BidOrAsk = {
   price: number,
@@ -21,7 +16,8 @@ type Props = {
   asks: Array<BidOrAsk>,
   bids: Array<BidOrAsk>,
   currentPair: TokenPair,
-  select: BidOrAsk => void
+  select: BidOrAsk => void,
+  direction: "vertical" | "horizontal"
 };
 
 type State = {
@@ -36,7 +32,6 @@ class OrderBook extends React.Component<Props, State> {
   };
 
   changeTab = (tabId: string) => {
-    // silence-error: setState unknown Issue
     this.setState({ selectedTabId: tabId });
   };
 
@@ -44,83 +39,35 @@ class OrderBook extends React.Component<Props, State> {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
 
-  formatNumber = (val: string, chart: Object, precision: number) => {
-    return AmCharts.formatNumber(val, {
-      precision: precision ? precision : chart.precision,
-      decimalSeparator: chart.decimalSeparator,
-      thousandsSeparator: chart.thousandsSeparator,
-    });
-  };
-
-  toolTip = (item: Object, graph: Object) => {
-    let txt;
-    if (graph.id === 'asks') {
-      txt = `Ask: <strong>${this.formatNumber(item.dataContext.price, graph.chart, 4)}</strong><br />
-      Total volume: <strong>${this.formatNumber(item.dataContext.total, graph.chart, 4)}</strong><br />
-      Volume: <strong>${this.formatNumber(item.dataContext.amount, graph.chart, 4)}</strong>`;
-    } else {
-      txt = `Bid: <strong>${this.formatNumber(item.dataContext.price, graph.chart, 4)}</strong><br />
-      Total volume: <strong>${this.formatNumber(item.dataContext.total, graph.chart, 4)}</strong><br />
-      Volume: <strong>${this.formatNumber(item.dataContext.amount, graph.chart, 4)}</strong>`;
-    }
-    return txt;
-  };
-
   render() {
-    const { bids, asks, currentPair, select } = this.props;
+    const { bids, asks, currentPair, select, direction } = this.props;
     const { selectedTabId, isOpen } = this.state;
 
-    return (
-      <div>
-        <Wrapper>
-          <OrderBookHeader>
-            <Heading>
-              Order Book
-              <Text muted>
-                {' '}
-                ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
-              </Text>
-            </Heading>
-            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={this.toggleCollapse} />
-          </OrderBookHeader>
-          <Collapse isOpen={isOpen} transitionDuration={100}>
-            <Tabs selectedTabId={selectedTabId} onChange={this.changeTab}>
-              <Tab id="list" title="Order List" panel={<OrderListRenderer bids={bids} asks={asks} onSelect={select} />} />
-              <Tab
-                id="depth-chart"
-                title="Depth Chart"
-                disabled
-                panel={<DepthChartRenderer bids={bids} asks={asks} toolTip={this.toolTip} />}
-              />
-            </Tabs>
-          </Collapse>
-        </Wrapper>
-      </div>
-    );
+    return {
+      "vertical": 
+        <VerticalOrderBookRenderer 
+          bids={bids}
+          asks={asks}
+          currentPair={currentPair}
+          onSelect={select}
+          selectedTabId={selectedTabId}
+          isOpen={isOpen}
+          changeTab={this.changeTab}
+          toggleCollapse={this.toggleCollapse}
+        />,
+      "horizontal": 
+        <OrderBookRenderer 
+          bids={bids}
+          asks={asks}
+          currentPair={currentPair}
+          onSelect={select}
+          selectedTabId={selectedTabId}
+          isOpen={isOpen}
+          changeTab={this.changeTab}
+          toggleCollapse={this.toggleCollapse}
+        />
+    }[direction]
   }
 }
-
-const OrderBookHeader = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  grid-gap: 10px;
-  align-items: center;
-`;
-
-const Heading = styled.h3`
-  margin: auto;
-`;
-
-const Wrapper = styled(Card)`
-  // min-width: 500px;
-  width: 100%;
-  min-height: 50px;
-  /* ul {
-       li {
-         padding-right: 15px;
-       }
-     } */
-`;
 
 export default OrderBook;
