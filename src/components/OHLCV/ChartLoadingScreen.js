@@ -3,13 +3,12 @@ import React from 'react';
 import Chart from './Chart';
 import { Loading, AMPLogo, Centered, LargeText } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
-import AutoScaler from '../AutoScaler';
+import { AutoSizer } from 'react-virtualized'
 import styled from 'styled-components';
 
 type Props = {
   macd: Object,
   volume: Object,
-  chartHeight: number,
   indicatorHeight: number,
   rsi: Object,
   line: Object,
@@ -54,29 +53,30 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
 
     return (
         <Wrapper className="chart-container">
-            <AutoScaler>
-              {({ width, height }) => (
-                <TypeChooser>
+          <AutoSizer>
+            {({ width, height }) => (
+              <TypeChooser>
                 {type => (
                   <Chart
-                  width={width}
-                  type={type}
-                  macd={macd}
-                  volume={volume}
-                  chartHeight={height - indicatorHeight}
-                  indicatorHeight={indicatorHeight}
-                  rsi={rsi}
-                  line={line}
-                  currentChart={currentChart}
-                  atr={atr ? atr : nullIndicator}
-                  forceIndex={forceIndex ? forceIndex : nullIndicator}
-                  data={data}
-                  noOfCandles={noOfCandles}
+                    type={type}
+                    macd={macd}
+                    volume={volume}
+                    indicatorHeight={indicatorHeight}
+                    chartHeight={height-indicatorHeight}
+                    rsi={rsi}
+                    line={line}
+                    currentChart={currentChart}
+                    atr={atr ? atr : nullIndicator}
+                    forceIndex={forceIndex ? forceIndex : nullIndicator}
+                    data={data}
+                    noOfCandles={noOfCandles}
+                    width={width}
                 />
                 )}
-                </TypeChooser>
-              )}
-            </AutoScaler>
+              </TypeChooser>
+            )
+          }
+          </AutoSizer>
         </Wrapper>
     );
   }
@@ -84,6 +84,5 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
 
 const Wrapper = styled.div`
   text-align: left;
-  margin: 10px -10px 0px -20px;
-  height: 80%;
+  flex: 0.9;
 `;

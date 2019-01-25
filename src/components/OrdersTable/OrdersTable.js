@@ -9,6 +9,7 @@ type Props = {
   orders: Array<Order>,
   authenticated: false,
   cancelOrder: string => void,
+  onCollapse: string => void
 }
 
 type State = {
@@ -21,7 +22,7 @@ class OrdersTable extends React.PureComponent<Props, State> {
 
   state = {
     selectedTabId: 'all',
-    isOpen: false
+    isOpen: true
   }
 
   changeTab = (tabId: string) => {
@@ -30,6 +31,7 @@ class OrdersTable extends React.PureComponent<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }))
+    this.props.onCollapse('ordersTable')
   }
 
   filterOrders = () => {

@@ -41,17 +41,16 @@ import {
     BlueGlowingButton
 } from './Button'
 
-
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
 export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn, FlexRowWrap, FlexColumnWrap, FlexRowSpaceAround, FlexRowSpaceBetween }
 export { Text, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
-export { 
-    Card, 
-    NavbarHeading, 
+export {
+    Card,
+    NavbarHeading,
     NavbarGroup,
     NavbarDivider,
-    Button
+    Button,
 }
 
 export { default as Spacer } from './Spacer'
@@ -63,11 +62,9 @@ export { default as Divider } from './Divider';
 export { default as Heading } from './Heading';
 export { default as CenteredSpinner } from './CenteredSpinner';
 export { default as OverlaySpinner } from './OverlaySpinner';
+export { default as Hideable } from './Hideable';
 
 export { default as RowStart, RowEnd, RowCenter, RowSpaceAround, RowSpaceBetween } from './Row';
-
-
-
 export { default as Column, ColumnStart, ColumnEnd, ColumnSpaceAround } from './Column';
 export { default as Loading } from './Loading';
 export { default as CenteredMessage } from './CenteredMessage';

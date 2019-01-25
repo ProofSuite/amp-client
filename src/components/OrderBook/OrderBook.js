@@ -4,6 +4,9 @@ import OrderBookRenderer from './OrderBookRenderer';
 import VerticalOrderBookRenderer from './VerticalOrderBookRenderer'
 
 import type { TokenPair } from '../../types/tokens';
+import { AutoSizer } from 'react-virtualized'
+
+import styled from 'styled-components'
 
 type BidOrAsk = {
   price: number,
@@ -17,18 +20,20 @@ type Props = {
   bids: Array<BidOrAsk>,
   currentPair: TokenPair,
   select: BidOrAsk => void,
-  direction: "vertical" | "horizontal"
+  onCollapse: string => void
 };
 
 type State = {
   selectedTabId: string,
   isOpen: boolean,
+  directionSetting: "vertical" | "horizontal"
 };
 
 class OrderBook extends React.Component<Props, State> {
   state = {
     isOpen: true,
     selectedTabId: 'list',
+    directionSetting: 'horizontal'
   };
 
   changeTab = (tabId: string) => {
@@ -37,11 +42,13 @@ class OrderBook extends React.Component<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.props.onCollapse('orderBook')
   };
 
-  render() {
-    const { bids, asks, currentPair, select, direction } = this.props;
-    const { selectedTabId, isOpen } = this.state;
+  renderOrderBook = (width: number, height: number) => {
+    const { bids, asks, currentPair, select } = this.props;
+    const { selectedTabId, isOpen, directionSetting } = this.state;  
+    const direction = (width < 500) ? "vertical" : directionSetting
 
     return {
       "vertical": 
@@ -67,6 +74,16 @@ class OrderBook extends React.Component<Props, State> {
           toggleCollapse={this.toggleCollapse}
         />
     }[direction]
+  }
+
+  render() {
+    return (
+      <AutoSizer style={{ width: '100%', height: '100%' }}>
+        {({ width, height }) => {
+          return this.renderOrderBook(width, height)
+        }}
+      </AutoSizer>
+    )    
   }
 }
 

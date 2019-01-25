@@ -19,6 +19,12 @@ import history from '../store/history'
 
 
 import '../styles/css/index.css'
+import '../../node_modules/react-grid-layout/css/styles.css'
+import '../../node_modules/react-resizable/css/styles.css'
+
+// /node_modules/
+// 
+
 
 const App = () => {
   return (

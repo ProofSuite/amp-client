@@ -109,11 +109,11 @@ class OHLCVChart extends React.Component {
     const start = xAccessor(last(data))
     const end = xAccessor(data[Math.max(0, data.length - noOfCandles)])
     const xExtents = [start, end]
-    const height = chartHeight + indicatorHeight + 42
+    const height = chartHeight + indicatorHeight + 50
 
     var margin = { left: 70, right: 70, top: 20, bottom: 30 }
     var gridHeight = height - margin.top - margin.bottom
-    var gridWidth = width - margin.left - margin.right + 42
+    var gridWidth = width - margin.left - margin.right + 50
 
     var showGrid = true
 

@@ -15,6 +15,7 @@ type Props = {
   trades: Array<Trade>,
   userTrades: Array<Trade>,
   currentPair: TokenPair,
+  onCollapse: string => void
 };
 
 class TradesTable extends React.PureComponent<Props, State> {
@@ -34,6 +35,7 @@ class TradesTable extends React.PureComponent<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.props.onCollapse('tradesTable')
   };
 
   render() {

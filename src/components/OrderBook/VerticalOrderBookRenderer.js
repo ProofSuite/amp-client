@@ -11,6 +11,10 @@ import {
   Text
 } from '../Common';
 
+import {
+    Card
+} from '@blueprintjs/core'
+
 import { ResizableBox } from 'react-resizable'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
@@ -26,27 +30,24 @@ type Props = {
   onSelect: BidOrAsk => void,
 };
 
-export const OrderBookRenderer = (props: Props) => {
+export const VerticalOrderBookRenderer = (props: Props) => {
   const { bids, asks, onSelect } = props;
 
   return (
-    <React.Fragment>
+    <Wrapper>
       <OrderBookBox>
-        {!bids && <Loading />}
-        {(bids || asks) && (
-          <ListContainer className="list-container">
-            <ListHeading>
-              <HeaderRow>
-                <HeaderCell>TOTAL</HeaderCell>
-                <HeaderCell>AMOUNT</HeaderCell>
-                <HeaderCell>PRICE</HeaderCell>
-              </HeaderRow>
-            </ListHeading>
-          </ListContainer>
-        )}
-      </OrderBookBox>
-      <ResizableBox height={400}>
-        <OrderBookBox>
+          {!bids && <Loading />}
+          {(bids || asks) && (
+            <ListContainer className="list-container">
+              <ListHeading>
+                <HeaderRow>
+                  <HeaderCell>TOTAL</HeaderCell>
+                  <HeaderCell>AMOUNT</HeaderCell>
+                  <HeaderCell>PRICE</HeaderCell>
+                </HeaderRow>
+              </ListHeading>
+            </ListContainer>
+          )}
           {asks && (
             <ListContainer className="list-container left-list">
               <List className="bp3-list-unstyled list">
@@ -76,8 +77,7 @@ export const OrderBookRenderer = (props: Props) => {
             </ListContainer>
           )}
         </OrderBookBox>
-      </ResizableBox>
-    </React.Fragment>
+    </Wrapper>
   );
 };
 
@@ -112,6 +112,12 @@ const SellOrder = (props: SingleOrderProps) => {
   );
 };
 
+const Wrapper = styled(Card)`
+  // width: 100%;
+  height: 100%;
+  // overflow-y: hidden;
+`
+
 const OrderBookBox = styled.div.attrs({})`
   width: 100%;
   display: flex;
@@ -123,9 +129,8 @@ const OrderBookBox = styled.div.attrs({})`
 
 const ListContainer = styled.div`
   width: 100%;
-//   height: 100%;
-//   overflow-y: scroll;
 `;
+
 const List = styled.ul``;
 
 const Row = styled.li.attrs({
@@ -205,4 +210,4 @@ const HeaderCell = styled.span`
   width: 20%;
 `;
 
-export default OrderBookRenderer;
+export default VerticalOrderBookRenderer;

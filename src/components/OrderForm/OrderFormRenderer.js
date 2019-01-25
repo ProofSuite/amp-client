@@ -86,9 +86,8 @@ const OrderFormRenderer = (props: Props) => {
   } = props
 
   return (
-    <Wrapper className="order-form">
+    <Wrapper>
       <OrderFormHeader>
-        {/* <HeaderText text={`${side} ${baseTokenSymbol}`} /> */}
         <ButtonRow>
           <Button
             text="BUY"
@@ -477,6 +476,7 @@ const OrderFormHeader = styled.div`
 
 const Wrapper = styled(Card)`
   min-width: 240px;
+  height: 100%;
 `
 
 const ButtonRow = styled.span`

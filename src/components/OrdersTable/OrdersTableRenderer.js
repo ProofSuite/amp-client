@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { formatNumber } from 'accounting-js'
+import { AutoSizer } from 'react-virtualized'
 
 import { 
   Card, 
@@ -43,11 +44,12 @@ type Props = {
 const OrdersTableRenderer = (props: Props) => {
   const { loading, selectedTabId, onChange, cancelOrder, orders, isOpen, toggleCollapse } = props
   return (
-    <Wrapper className="order-history">
+    <CardBox>
       <OrdersTableHeader>
         <Heading>Orders</Heading>
         <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
       </OrdersTableHeader>
+      <Wrapper>
       <Collapse isOpen={isOpen}>
         <Tabs selectedTabId={selectedTabId} onChange={onChange}>
           <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} cancelOrder={cancelOrder} />} />
@@ -56,7 +58,8 @@ const OrdersTableRenderer = (props: Props) => {
           <Tab id="executed" title="EXECUTED" panel={<OrdersTablePanel loading={loading} orders={orders['FILLED']} cancelOrder={cancelOrder} />} />
         </Tabs>
       </Collapse>
-    </Wrapper>
+      </Wrapper>
+    </CardBox>
   )
 }
 
@@ -67,22 +70,22 @@ const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order>, cance
   ) : orders.length < 1 ? (
     <CenteredMessage message="No orders" />
   ) : (
-    <ListContainer className="list-container">
-      <ListHeaderWrapper className="heading">
-        <ListHeader className="heading">
-          <HeaderCell className="pair">PAIR</HeaderCell>
-          <HeaderCell className="amount">AMOUNT</HeaderCell>
-          <HeaderCell className="price">PRICE</HeaderCell>
-          <HeaderCell className="status">STATUS</HeaderCell>
-          <HeaderCell className="side">SIDE</HeaderCell>
-          <HeaderCell className="time">TIME</HeaderCell>
-          <HeaderCell className="cancel" />
-        </ListHeader>
-      </ListHeaderWrapper>
-      <ListBodyWrapper className="list">
-        {orders.map((order, index) => <OrderRow key={index} order={order} index={index} cancelOrder={cancelOrder} />)}
-      </ListBodyWrapper>
-    </ListContainer>
+        <ListContainer>
+          <ListHeaderWrapper>
+            <ListHeader>
+              <HeaderCell className="pair">PAIR</HeaderCell>
+              <HeaderCell className="amount">AMOUNT</HeaderCell>
+              <HeaderCell className="price">PRICE</HeaderCell>
+              <HeaderCell className="status">STATUS</HeaderCell>
+              <HeaderCell className="side">SIDE</HeaderCell>
+              <HeaderCell className="time">TIME</HeaderCell>
+              <HeaderCell className="cancel" />
+            </ListHeader>
+          </ListHeaderWrapper>
+          <ListBodyWrapper>
+            {orders.map((order, index) => <OrderRow key={index} order={order} index={index} cancelOrder={cancelOrder} />)}
+          </ListBodyWrapper>
+        </ListContainer>
   )
 }
 
@@ -150,14 +153,22 @@ const OrdersTableHeader = styled.div`
   grid-gap: 10px;
   align-items: center;
 `
-const Wrapper = styled(Card)``
+
+const CardBox = styled(Card)`
+  height: 100%;
+`
+
+const Wrapper = styled.div`
+  overflow-y: scroll;
+  height: 90%;
+`
 
 const Heading = styled.h3`
   margin: auto;
 `
 
-const ListContainer = styled.div`
-  height: 100%;
+const ListContainer = styled.div`  
+  height: 90%;
 `
 
 const ListHeaderWrapper = styled.ul`
@@ -172,11 +183,8 @@ const ListHeaderWrapper = styled.ul`
 `
 
 const ListBodyWrapper = styled.ul`
-  width: 100%;
-  max-height: 300px;
-  margin: 0;
-  height: 90%;
-  overflow-y: scroll;
+  width: 100%; 
+  height: 100%;
   padding-left: 0px !important;
   margin-left: 0px !important;
 `

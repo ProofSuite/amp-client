@@ -5,7 +5,6 @@ import { Card, Button, Collapse } from '@blueprintjs/core';
 
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
-import { ResizableBox } from 'react-resizable'
 
 import { 
   FlexRow
@@ -71,6 +70,7 @@ type Props = {
   saveTimeSpan: Object => void,
   updateDuration: (*, *) => void,
   updateTimeSpan: (*, *) => void,
+  onCollapse: string => void
 };
 
 type State = {
@@ -119,6 +119,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.props.onCollapse('ohlcv')
   };
 
   onUpdateIndicators = (indicator: Indicator, active: boolean) => {
@@ -149,6 +150,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
       changeDuration,
       changeChartType,
     } = this;
+
     return (
       <Wrapper className="main-chart">
         <Toolbar
@@ -162,29 +164,25 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           isOpen={isOpen}
           toggleCollapse={this.toggleCollapse}
         />
-        <Collapse isOpen={isOpen} transitionDuration={100}>
-          <ResizableBox height={600}>
-            <ChartLoadingScreen
-              volume={indicators[0]}
-              line={indicators[1]}
-              macd={indicators[2]}
-              rsi={indicators[3]}
-              atr={indicators[4]}
-              forceIndex={indicators[5]}
-              indicatorHeight={indicatorHeight}
-              chartHeight={chartHeight}
-              noOfCandles={noOfCandles}
-              currentChart={currentChart}
-              expandedChard={expandedChard}
-              data={ohlcvData}
-              width="100%"
-            />
-          </ResizableBox>
-        </Collapse>
-      </Wrapper>
-    );
+        <ChartLoadingScreen
+          volume={indicators[0]}
+          line={indicators[1]}
+          macd={indicators[2]}
+          rsi={indicators[3]}
+          atr={indicators[4]}
+          forceIndex={indicators[5]}
+          indicatorHeight={indicatorHeight}
+          noOfCandles={noOfCandles}
+          currentChart={currentChart}
+          expandedChard={expandedChard}
+          data={ohlcvData}
+          width="100%"
+          />
+        </Wrapper>
+        )
+      }
   }
-}
+
 
 const Toolbar = ({
   state,
@@ -285,6 +283,8 @@ const ChartTypeMenu = styled.div`
 
 const Wrapper = styled(Card)`
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const TimeSpanMenu = styled.div`

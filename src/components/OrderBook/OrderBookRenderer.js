@@ -18,8 +18,6 @@ import {
 } from '@blueprintjs/core'
 
 import type { TokenPair } from '../../types/Tokens'
-
-import { ResizableBox } from 'react-resizable'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 type BidOrAsk = {
@@ -53,33 +51,25 @@ export const OrderBookRenderer = (props: Props) => {
   } = props;
 
   return (
-    <div>
-        <Wrapper>
-          <OrderBookHeader>
-            <Heading>
-              Order Book
-              <Text muted>
-                {' '}
-                ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
-              </Text>
-            </Heading>
-            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
-          </OrderBookHeader>
-          <Collapse isOpen={isOpen} transitionDuration={100}>
-            <Tabs selectedTabId={selectedTabId} onChange={changeTab}>
-              <Tab 
-                id="list"
-                title="Order List" 
-                panel={<OrderListRenderer
-                  bids={bids} 
-                  asks={asks} 
-                  onSelect={onSelect} 
-                />}
-              />
-            </Tabs>
-          </Collapse>
-        </Wrapper>
-      </div>
+    <Wrapper>
+      <OrderBookHeader>
+        <Heading>
+          Order Book
+          <Text muted>
+            {' '}
+            ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
+          </Text>
+        </Heading>
+        <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+      </OrderBookHeader>
+      <Collapse isOpen={isOpen} transitionDuration={100}>
+        <OrderListRenderer
+          bids={bids} 
+          asks={asks} 
+          onSelect={onSelect} 
+        />
+      </Collapse>
+    </Wrapper>
   )
 
 }
@@ -116,7 +106,6 @@ export const OrderListRenderer = (props: *) => {
           </ListContainer>
         )}
       </OrderBookBox>
-      <ResizableBox height={400}>
         <OrderBookBox>
           {bids && (
             <ListContainer className="list-container">
@@ -141,7 +130,6 @@ export const OrderListRenderer = (props: *) => {
             </ListContainer>
           )}
         </OrderBookBox>
-      </ResizableBox>
     </React.Fragment>
   );
 };
@@ -177,17 +165,25 @@ const SellOrder = (props: SingleOrderProps) => {
   );
 };
 
-const OrderBookBox = styled.div.attrs({})`
+const Wrapper = styled(Card)`
   width: 100%;
   height: 100%;
+  overflow-y: hidden;
+  min-height: 50px;
+`;
+
+const OrderBookBox = styled.div.attrs({})`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 `;
+
 const ListContainer = styled.div`
   width: 100%;
 `;
+
 const List = styled.ul``;
 
 const Row = styled.li.attrs({
@@ -261,18 +257,6 @@ const HeaderRow = styled.li`
   span {
     font-weight: 600;
   }
-`;
-
-
-const Wrapper = styled(Card)`
-  // min-width: 500px;
-  width: 100%;
-  min-height: 50px;
-  /* ul {
-       li {
-         padding-right: 15px;
-       }
-     } */
 `;
 
 const OrderBookHeader = styled.div`

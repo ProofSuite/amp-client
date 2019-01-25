@@ -22,7 +22,7 @@ type Props = {
   selectedOrder: Object,
   unlockPair: (string, string) => void,
   sendNewOrder: (string, number, number) => void,
-  
+  onCollapse: string => void
 }
 
 type State = {
@@ -48,10 +48,6 @@ class OrderForm extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props)
-
-    let price
-    //TODO: not quite sure whether the suggested price should be equal to
-    //the ask price, the bid price or somewhere in between
     this.state = {
       side: 'BUY',
       fraction: 0,
@@ -258,6 +254,7 @@ class OrderForm extends React.PureComponent<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }))
+    this.props.onCollapse('orderForm')
   }
 
   render() {
