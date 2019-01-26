@@ -243,14 +243,14 @@ class TradingPage extends React.PureComponent<Props, State> {
         console.log('Overlap vertically', elem.i)
 
         //left side collision detection
-        if (x < xc) {
+        if ((x + w) <= xc) {
           if ((x + w) > newX) newX = x + w
         }
         
         //probably x + w
         //right side collision detection        
-        if ((x + w) > xc) {
-          if ((x + w) < newXPlusW) newXPlusW = x
+        if (x > (xc + wc)) {
+          if (x < newXPlusW) newXPlusW = x
         }
       }
 
@@ -262,7 +262,6 @@ class TradingPage extends React.PureComponent<Props, State> {
         //down side side collision detection
         //we only expand vertically if the difference below is small
         if ((yc + hc) <= y && (y < (yc + hc + 100))) {
-          console.log('ookkk')
           if (y < newYPlusH) newYPlusH = y
         }
       }
@@ -318,26 +317,31 @@ class TradingPage extends React.PureComponent<Props, State> {
         <div key="orderForm">
           <OrderForm
             onCollapse={this.onCollapse}
+            onExpand={this.onExpand}
            />
         </div>
         <div key="ohlcv">
           <OHLCV
             onCollapse={this.onCollapse}
+            onExpand={this.onExpand}
            />
         </div>
         <div key="ordersTable">
           <OrdersTable
             onCollapse={this.onCollapse}
+            onExpand={this.onExpand}
            />
         </div>
         <div key="orderBook">
           <OrderBook
             onCollapse={this.onCollapse}
+            onExpand={this.onExpand}
           />
         </div>
         <div key="tradesTable">
           <TradesTable
             onCollapse={this.onCollapse}
+            onExpand={this.onExpand}
            />
         </div>
       </ResponsiveReactGridLayout>

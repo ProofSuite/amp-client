@@ -15,7 +15,8 @@ type Props = {
   trades: Array<Trade>,
   userTrades: Array<Trade>,
   currentPair: TokenPair,
-  onCollapse: string => void
+  onCollapse: string => void,
+  onExpand: string => void
 };
 
 class TradesTable extends React.PureComponent<Props, State> {
@@ -38,13 +39,18 @@ class TradesTable extends React.PureComponent<Props, State> {
     this.props.onCollapse('tradesTable')
   };
 
+  expand = () => {
+    this.props.onExpand('tradesTable')
+  }
+
   render() {
     const {
       props: { trades, userTrades, currentPair },
       state: { selectedTabId, isOpen },
       changeTab,
       toggleCollapse,
-      openEtherscanLink
+      openEtherscanLink,
+      expand
     } = this;
 
     return (
@@ -57,6 +63,7 @@ class TradesTable extends React.PureComponent<Props, State> {
         isOpen={isOpen}
         toggleCollapse={toggleCollapse}
         openEtherscanLink={openEtherscanLink}
+        expand={expand}
       />
     );
   }

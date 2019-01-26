@@ -20,7 +20,8 @@ type Props = {
   bids: Array<BidOrAsk>,
   currentPair: TokenPair,
   select: BidOrAsk => void,
-  onCollapse: string => void
+  onCollapse: string => void,
+  onExpand: string => void
 };
 
 type State = {
@@ -45,9 +46,19 @@ class OrderBook extends React.Component<Props, State> {
     this.props.onCollapse('orderBook')
   };
 
+  expand = () => {
+    this.props.onExpand('orderBook')
+  }
+
   renderOrderBook = (width: number, height: number) => {
-    const { bids, asks, currentPair, select } = this.props;
-    const { selectedTabId, isOpen, directionSetting } = this.state;  
+    const {
+      props: { bids, asks, currentPair, select },
+      state: { selectedTabId, isOpen, directionSetting },
+      changeTab,
+      toggleCollapse,
+      expand
+    } = this
+
     const direction = (width < 500) ? "vertical" : directionSetting
 
     return {
@@ -59,8 +70,9 @@ class OrderBook extends React.Component<Props, State> {
           onSelect={select}
           selectedTabId={selectedTabId}
           isOpen={isOpen}
-          changeTab={this.changeTab}
-          toggleCollapse={this.toggleCollapse}
+          changeTab={changeTab}
+          toggleCollapse={toggleCollapse}
+          expand={expand}
         />,
       "horizontal": 
         <OrderBookRenderer 
@@ -70,8 +82,9 @@ class OrderBook extends React.Component<Props, State> {
           onSelect={select}
           selectedTabId={selectedTabId}
           isOpen={isOpen}
-          changeTab={this.changeTab}
-          toggleCollapse={this.toggleCollapse}
+          changeTab={changeTab}
+          toggleCollapse={toggleCollapse}
+          expand={expand}
         />
     }[direction]
   }

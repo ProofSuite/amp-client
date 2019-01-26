@@ -6,6 +6,8 @@ import { TypeChooser } from 'react-stockcharts/lib/helper';
 import { AutoSizer } from 'react-virtualized'
 import styled from 'styled-components';
 
+import { Collapse } from '@blueprintjs/core'
+
 type Props = {
   macd: Object,
   volume: Object,
@@ -52,7 +54,7 @@ export default class ChartLoadingScreen extends React.PureComponent<Props> {
     }
 
     return (
-        <Wrapper className="chart-container">
+        <Wrapper transitionDuration={100} className="chart-container">
           <AutoSizer>
             {({ width, height }) => (
               <TypeChooser>

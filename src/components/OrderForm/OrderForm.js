@@ -22,7 +22,8 @@ type Props = {
   selectedOrder: Object,
   unlockPair: (string, string) => void,
   sendNewOrder: (string, number, number) => void,
-  onCollapse: string => void
+  onCollapse: string => void,
+  onExpand: string => void
 }
 
 type State = {
@@ -257,6 +258,10 @@ class OrderForm extends React.PureComponent<Props, State> {
     this.props.onCollapse('orderForm')
   }
 
+  expand = () => {
+    this.props.onExpand('orderForm')
+  }
+
   render() {
     const {
       state: { 
@@ -342,6 +347,7 @@ class OrderForm extends React.PureComponent<Props, State> {
         pairIsAllowed={pairIsAllowed}
         pairAllowanceIsPending={pairAllowanceIsPending}
         handleSideChange={handleSideChange}
+        expand={this.expand}
       />
     )
   }

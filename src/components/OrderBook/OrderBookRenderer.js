@@ -13,8 +13,6 @@ import {
   Card,
   Button,
   Collapse,
-  Tabs,
-  Tab
 } from '@blueprintjs/core'
 
 import type { TokenPair } from '../../types/Tokens'
@@ -34,7 +32,8 @@ type Props = {
   isOpen: boolean,
   currentPair: TokenPair,
   changeTab: string => void,
-  toggleCollapse: void => void
+  toggleCollapse: SyntheticEvent<> => void,
+  expand: SyntheticEvent<> => void
 };
 
 
@@ -43,15 +42,14 @@ export const OrderBookRenderer = (props: Props) => {
     bids, 
     asks,
     currentPair, 
-    selectedTabId,
     isOpen,
     onSelect,
-    changeTab,
-    toggleCollapse
+    toggleCollapse,
+    expand
   } = props;
 
   return (
-    <Wrapper>
+    <CardBox>
       <OrderBookHeader>
         <Heading>
           Order Book
@@ -61,17 +59,19 @@ export const OrderBookRenderer = (props: Props) => {
           </Text>
         </Heading>
         <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+        <Button icon='maximize' minimal onClick={expand} />
       </OrderBookHeader>
-      <Collapse isOpen={isOpen} transitionDuration={100}>
-        <OrderListRenderer
-          bids={bids} 
-          asks={asks} 
-          onSelect={onSelect} 
-        />
-      </Collapse>
-    </Wrapper>
+      <Wrapper>
+        <Collapse isOpen={isOpen} transitionDuration={100}>
+          <OrderListRenderer
+            bids={bids} 
+            asks={asks} 
+            onSelect={onSelect} 
+          />
+        </Collapse>
+      </Wrapper>
+    </CardBox>
   )
-
 }
 
 
@@ -80,7 +80,7 @@ export const OrderListRenderer = (props: *) => {
   const { bids, asks, onSelect } = props;
 
   return (
-    <React.Fragment>
+    <OrderListBox>
       <OrderBookBox>
         {!bids && <Loading />}
         {bids && (
@@ -130,7 +130,7 @@ export const OrderListRenderer = (props: *) => {
             </ListContainer>
           )}
         </OrderBookBox>
-    </React.Fragment>
+    </OrderListBox>
   );
 };
 
@@ -165,23 +165,29 @@ const SellOrder = (props: SingleOrderProps) => {
   );
 };
 
-const Wrapper = styled(Card)`
+const CardBox = styled(Card)`
   width: 100%;
   height: 100%;
-  overflow-y: hidden;
   min-height: 50px;
 `;
 
-const OrderBookBox = styled.div.attrs({})`
+const Wrapper = styled.div`
+  overflow-y: scroll;
+  height: 85%;
+`
+
+const OrderBookBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-  // overflow-y: scroll;
 `;
 
 const ListContainer = styled.div`
   width: 100%;
+`;
+
+const OrderListBox = styled.div`
 `;
 
 const List = styled.ul``;
@@ -265,6 +271,7 @@ const OrderBookHeader = styled.div`
   justify-content: start;
   grid-gap: 10px;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 const Heading = styled.h3`

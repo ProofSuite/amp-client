@@ -38,16 +38,28 @@ type Props = {
     EXECUTED: Array<Order>,
     CANCELLED: Array<Order>,
     FILLED: Array<Order>
-  }
+  },
+  expand: SyntheticEvent<> => void
 }
 
 const OrdersTableRenderer = (props: Props) => {
-  const { loading, selectedTabId, onChange, cancelOrder, orders, isOpen, toggleCollapse } = props
+  const { 
+    loading, 
+    selectedTabId, 
+    onChange, 
+    cancelOrder, 
+    orders, 
+    isOpen, 
+    toggleCollapse,
+    expand
+  } = props
+
   return (
     <CardBox>
       <OrdersTableHeader>
         <Heading>Orders</Heading>
         <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+        <Button icon='maximize' minimal onClick={expand} />
       </OrdersTableHeader>
       <Wrapper>
       <Collapse isOpen={isOpen}>
@@ -65,6 +77,7 @@ const OrdersTableRenderer = (props: Props) => {
 
 const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order>, cancelOrder: string => void }) => {
   const { loading, orders, cancelOrder } = props
+
   return loading ? (
     <Loading />
   ) : orders.length < 1 ? (

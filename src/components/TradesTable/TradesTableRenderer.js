@@ -36,6 +36,7 @@ type Props = {
   toggleCollapse: (SyntheticEvent<>) => void,
   openEtherscanLink: string => void,
   isOpen: boolean,
+  expand: SyntheticEvent<> => void
 };
 
 const TradesTableRenderer = (props: Props) => {
@@ -47,13 +48,14 @@ const TradesTableRenderer = (props: Props) => {
     trades, 
     userTrades, 
     toggleCollapse,
-    openEtherscanLink
+    openEtherscanLink,
+    expand
   } = props;
 
   return (
     <AutoSizer style={{ width: '100%', height: '100%' }}>
         {({ width, height }) => (
-          <Wrapper>
+          <CardBox>
             <TradesTableHeader>
               <Heading>
                 Trades
@@ -67,37 +69,44 @@ const TradesTableRenderer = (props: Props) => {
                 minimal 
                 onClick={toggleCollapse}
               />
+              <Button
+                icon='maximize'
+                minimal
+                onClick={expand}
+              />
             </TradesTableHeader>
-            <Collapse isOpen={isOpen}>
-              <Tabs 
-                selectedTabId={selectedTabId} 
-                onChange={onChange}
-              >
-                <Tab 
-                  id="Market"
-                  title="Market"
-                  panel={
-                    <MarketTradesPanel 
-                      trades={trades} 
-                      openEtherscanLink={openEtherscanLink}
-                      width={width}
-                    />
-                  }
-                />
-                <Tab
-                  id="User"
-                  title="User"
-                  panel={
-                    <UserTradesPanel 
-                      trades={userTrades} 
-                      openEtherscanLink={openEtherscanLink} 
-                      width={width}
-                    />
-                  }
-                />
-              </Tabs>
-            </Collapse>
-          </Wrapper>
+            <Wrapper>
+              <Collapse isOpen={isOpen}>
+                <Tabs 
+                  selectedTabId={selectedTabId} 
+                  onChange={onChange}
+                >
+                  <Tab 
+                    id="Market"
+                    title="Market"
+                    panel={
+                      <MarketTradesPanel 
+                        trades={trades} 
+                        openEtherscanLink={openEtherscanLink}
+                        width={width}
+                      />
+                    }
+                  />
+                  <Tab
+                    id="User"
+                    title="User"
+                    panel={
+                      <UserTradesPanel 
+                        trades={userTrades} 
+                        openEtherscanLink={openEtherscanLink} 
+                        width={width}
+                      />
+                    }
+                  />
+                </Tabs>
+              </Collapse>
+            </Wrapper>
+          </CardBox>
         )}
       </AutoSizer>
   )
@@ -216,14 +225,17 @@ const TradesTableHeader = styled.div`
   align-items: center;
 `;
 
+const Wrapper = styled.div`
+  overflow-y: scroll;
+  height: 95%;
+`
+
 const Heading = styled.h3`
   margin: auto;
 `;
 
-const Wrapper = styled(Card)`
-  margin: auto;
-  height: 100% !important;
-  overflow-y: scroll;
+const CardBox = styled(Card)`
+  height: 100%;
 `;
 
 const ListHeader = styled.ul`

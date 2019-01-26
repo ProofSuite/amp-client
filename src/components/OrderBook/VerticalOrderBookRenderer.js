@@ -12,10 +12,12 @@ import {
 } from '../Common';
 
 import {
-    Card
+    Card,
+    Button,
+    Collapse
 } from '@blueprintjs/core'
 
-import { ResizableBox } from 'react-resizable'
+import type { TokenPair } from '../../types/Tokens'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 type BidOrAsk = {
@@ -28,17 +30,58 @@ type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
   onSelect: BidOrAsk => void,
+  isOpen: boolean,
+  toggleCollapse: SyntheticEvent<> => void,
+  expand: SyntheticEvent<> => void,
+  currentPair: TokenPair
 };
 
 export const VerticalOrderBookRenderer = (props: Props) => {
+  const { 
+    bids, 
+    asks,
+    currentPair, 
+    isOpen,
+    onSelect,
+    toggleCollapse,
+    expand
+  } = props;
+
+  return (
+    <CardBox>
+      <OrderBookHeader>
+        <Heading>
+          Order Book
+          <Text muted>
+            {' '}
+            ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
+          </Text>
+        </Heading>
+        <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+        <Button icon='maximize' minimal onClick={expand} />
+      </OrderBookHeader>
+      <Wrapper>
+        <Collapse isOpen={isOpen} transitionDuration={100}>
+          <OrderListRenderer
+            bids={bids} 
+            asks={asks} 
+            onSelect={onSelect} 
+          />
+        </Collapse>
+      </Wrapper>
+    </CardBox>
+  )
+}
+
+export const OrderListRenderer = (props: *) => {
   const { bids, asks, onSelect } = props;
 
   return (
-    <Wrapper>
+    <OrderListBox>
       <OrderBookBox>
           {!bids && <Loading />}
           {(bids || asks) && (
-            <ListContainer className="list-container">
+            <ListContainer>
               <ListHeading>
                 <HeaderRow>
                   <HeaderCell>TOTAL</HeaderCell>
@@ -49,8 +92,8 @@ export const VerticalOrderBookRenderer = (props: Props) => {
             </ListContainer>
           )}
           {asks && (
-            <ListContainer className="list-container left-list">
-              <List className="bp3-list-unstyled list">
+            <ListContainer>
+              <List className="bp3-list-unstyled">
                 <ReactCSSTransitionGroup
                   transitionName="flash-sell"
                 >
@@ -66,8 +109,8 @@ export const VerticalOrderBookRenderer = (props: Props) => {
             </FlexColumn>
           </Box>
           {bids && (
-            <ListContainer className="list-container">
-              <List className="bp3-list-unstyled list">
+            <ListContainer>
+              <List className="bp3-list-unstyled">
                 <ReactCSSTransitionGroup
                   transitionName="flash-buy"
                 >
@@ -77,7 +120,7 @@ export const VerticalOrderBookRenderer = (props: Props) => {
             </ListContainer>
           )}
         </OrderBookBox>
-    </Wrapper>
+    </OrderListBox>
   );
 };
 
@@ -112,19 +155,37 @@ const SellOrder = (props: SingleOrderProps) => {
   );
 };
 
-const Wrapper = styled(Card)`
-  // width: 100%;
+const CardBox = styled(Card)`
+  width: 100%;
   height: 100%;
-  // overflow-y: hidden;
-`
+  min-height: 50px;
+`;
 
-const OrderBookBox = styled.div.attrs({})`
+const Wrapper = styled.div`
+  overflow-y: scroll;
+  height: 85%;
+`
+const OrderListBox = styled.div``
+
+const OrderBookBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
   height: 100%;
-  overflow-y: scroll;
+`;
+
+const OrderBookHeader = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  grid-gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Heading = styled.h3`
+  margin: auto;
 `;
 
 const ListContainer = styled.div`

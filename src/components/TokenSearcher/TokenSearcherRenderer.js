@@ -24,9 +24,7 @@ import {
   Chevron,
   OverlaySpinner,
   ColoredCryptoIcon,
-  CryptoIcon,
   SmallTextDiv,
-  FlexRow
 } from '../Common'
 
 import {
@@ -34,7 +32,6 @@ import {
 } from '../../utils/helpers'
 
 import styled from 'styled-components'
-import { ResizableBox } from 'react-resizable'
 
 type Token = {
   pair: string,

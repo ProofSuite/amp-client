@@ -1,7 +1,12 @@
 //@flow
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Button, Collapse } from '@blueprintjs/core';
+
+import { 
+  Card, 
+  Collapse,
+  Button
+} from '@blueprintjs/core';
 
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
@@ -70,7 +75,8 @@ type Props = {
   saveTimeSpan: Object => void,
   updateDuration: (*, *) => void,
   updateTimeSpan: (*, *) => void,
-  onCollapse: string => void
+  onCollapse: string => void,
+  onExpand: string => void
 };
 
 type State = {
@@ -83,6 +89,7 @@ type State = {
   duration: Array<Object>,
   expandedChard: boolean,
   isOpen: boolean,
+
 };
 
 export default class OHLCV extends React.PureComponent<Props, State> {
@@ -122,6 +129,10 @@ export default class OHLCV extends React.PureComponent<Props, State> {
     this.props.onCollapse('ohlcv')
   };
 
+  expand = () => {
+    this.props.onExpand('ohlcv')
+  }
+
   onUpdateIndicators = (indicator: Indicator, active: boolean) => {
     const { indicators, indicatorHeight } = this.state;
     let newIndicatorHeight;
@@ -144,11 +155,12 @@ export default class OHLCV extends React.PureComponent<Props, State> {
   render() {
     const {
       props: { ohlcvData, currentDuration, currentTimeSpan, noOfCandles },
-      state: { indicators, chartHeight, indicatorHeight, expandedChard, currentChart, isOpen },
+      state: { indicators, indicatorHeight, expandedChard, currentChart, isOpen },
       changeTimeSpan,
       onUpdateIndicators,
       changeDuration,
       changeChartType,
+      expand
     } = this;
 
     return (
@@ -162,6 +174,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           currentTimeSpan={currentTimeSpan}
           state={this.state}
           isOpen={isOpen}
+          expand={expand}
           toggleCollapse={this.toggleCollapse}
         />
         <ChartLoadingScreen
@@ -194,8 +207,7 @@ const Toolbar = ({
   changeDuration,
   changeChartType,
   indicators,
-  isOpen,
-  toggleCollapse,
+  expand
 }) => (
     <FlexRow justifyContent="flex-start">
       <ToolbarWrapper>
@@ -222,7 +234,11 @@ const Toolbar = ({
           <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
         </TimeSpanMenu>
       </ToolbarWrapper>
-      <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+      <Button 
+        icon='maximize' 
+        minimal 
+        onClick={expand}
+      />
     </FlexRow>
 );
 

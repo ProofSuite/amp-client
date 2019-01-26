@@ -46,14 +46,15 @@ type Props = {
   handleChangeOrderType: string => void,
   handleSendOrder: void => void,
   handleUnlockPair: (string, string) => void,
-  toggleCollapse: (SyntheticEvent<>) => void,
   makeFee: string,
   takeFee: string,
   baseTokenDecimals: number,
   quoteTokenDecimals: number,
   pairIsAllowed: boolean,
   pairAllowanceIsPending: boolean,
-  handleSideChange: string => void
+  handleSideChange: string => void,
+  toggleCollapse: SyntheticEvent<> => void,
+  expand: SyntheticEvent<> => void,
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -83,6 +84,7 @@ const OrderFormRenderer = (props: Props) => {
     pairAllowanceIsPending,
     handleUnlockPair,
     handleSideChange,
+    expand
   } = props
 
   return (
@@ -120,6 +122,7 @@ const OrderFormRenderer = (props: Props) => {
             active={selectedTabId === 'market'}
             intent={selectedTabId === 'market' ? 'primary' : ''}
           />
+          <Button icon='maximize' minimal onClick={expand} />
           <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
         </ButtonRow>
       </OrderFormHeader>
