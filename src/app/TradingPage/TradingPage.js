@@ -249,7 +249,7 @@ class TradingPage extends React.PureComponent<Props, State> {
         
         //probably x + w
         //right side collision detection        
-        if (x > (xc + wc)) {
+        if (x >= (xc + wc)) {
           if (x < newXPlusW) newXPlusW = x
         }
       }
