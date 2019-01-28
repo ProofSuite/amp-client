@@ -67,6 +67,7 @@ type Props = {
   changeSelectedToken: Token => void,
   toggleCollapse: () => void,
   expand: () => void,
+  onContextMenu: () => void
 }
 
 const TokenSearchRenderer = (props: Props) => {
@@ -91,7 +92,8 @@ const TokenSearchRenderer = (props: Props) => {
     quoteTokenBalance,
     baseTokenAvailableBalance,
     quoteTokenAvailableBalance,
-    expand
+    expand,
+    onContextMenu
   } = props
 
   return (
@@ -99,7 +101,7 @@ const TokenSearchRenderer = (props: Props) => {
       {loading ? (
         <OverlaySpinner visible={loading} transparent />
       ) : (
-        <div style={{ height: '100%', overflowY: 'scroll' }}>
+        <div style={{ height: '100%', overflowY: 'scroll' }} onContextMenu={onContextMenu}>
           <div style={{ display: 'flex', justifyContent: 'space-between', height: '30px' }}>
             <SearchInput
               leftIcon="search"
@@ -108,6 +110,7 @@ const TokenSearchRenderer = (props: Props) => {
               placeholder="Search Token ..."
             />
             <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal />
+            <Button icon='move' className="dragMe" minimal />
             <Button icon='maximize' onClick={expand} minimal />
           </div>
           <Collapse isOpen={isOpen}>

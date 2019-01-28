@@ -1,5 +1,7 @@
 // @flow
 import React from 'react'
+import styled from 'styled-components'
+import { utils } from 'ethers'
 
 import { 
   Position, 
@@ -16,7 +18,6 @@ import {
 
 import {
    Flex, 
-   HeaderText, 
    MutedText, 
    RedGlowingButton, 
    GreenGlowingButton,
@@ -24,9 +25,10 @@ import {
    Box
 } from '../Common'
 
-import styled from 'styled-components'
 import Help from '../../components/Help'
-import { utils } from 'ethers'
+
+import type { Node } from 'react'
+
 
 type Props = {
   selectedTabId: string,
@@ -55,6 +57,7 @@ type Props = {
   handleSideChange: string => void,
   toggleCollapse: SyntheticEvent<> => void,
   expand: SyntheticEvent<> => void,
+  onContextMenu: Node => void
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -84,7 +87,8 @@ const OrderFormRenderer = (props: Props) => {
     pairAllowanceIsPending,
     handleUnlockPair,
     handleSideChange,
-    expand
+    expand,
+    onContextMenu
   } = props
 
   return (
@@ -122,8 +126,24 @@ const OrderFormRenderer = (props: Props) => {
             active={selectedTabId === 'market'}
             intent={selectedTabId === 'market' ? 'primary' : ''}
           />
-          <Button icon='maximize' minimal onClick={expand} />
-          <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+          <Button 
+            icon='maximize' 
+            minimal 
+            onClick={expand} 
+            small
+          />
+          <Button 
+            icon='move' 
+            className="dragMe" 
+            minimal 
+            small
+          />
+          <Button 
+            icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+            minimal 
+            onClick={toggleCollapse} 
+            small
+          />
         </ButtonRow>
       </OrderFormHeader>
       <Collapse isOpen={isOpen}>

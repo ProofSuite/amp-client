@@ -8,11 +8,12 @@ import TokenSearcher from '../../components/TokenSearcher'
 import OrderBook from '../../components/OrderBook'
 import { CloseableCallout, EmphasizedText } from '../../components/Common'
 import { Redirect } from 'react-router-dom'
+import { AutoSizer } from 'react-virtualized'
 import { SizesAsNumbers as Sizes } from '../../components/Common/Variables'
 
 import { Responsive, WidthProvider } from 'react-grid-layout'
 
-const ResponsiveReactGridLayout = WidthProvider(Responsive)
+const ResponsiveReactGridLayout = Responsive
 
 type Props = {
   authenticated: boolean,
@@ -61,6 +62,48 @@ const defaultLayout: Layout = [
   {i: 'orderBook', x: 12, y: 50, w: 24, h: 30 },
   {i: 'tradesTable', x: 36, y: 50, w: 24, h: 30 },
 ]
+
+const fullScreenOHLCVLayouts: Layout = {
+  'lg': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 },
+  'md': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 },
+  'sm': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 },
+  'xs': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 }
+}
+
+// const defaultSizes = {
+//   'lg': {
+//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
+//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
+//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
+//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
+//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
+//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
+//   },
+//   'md': {
+//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
+//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
+//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
+//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
+//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
+//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
+//   },
+//   'sm': {
+//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
+//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
+//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
+//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
+//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
+//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
+//   },
+//   'xs': {
+//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
+//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
+//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
+//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
+//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
+//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
+//   }
+// }
 
 const defaultLayouts = {
   'lg': [
@@ -233,15 +276,20 @@ class TradingPage extends React.PureComponent<Props, State> {
     })
   }
 
+  onFullScreenOHLCV = () => {
+    this.setState({ layouts: fullScreenOHLCVLayouts })
+  }
+
   onLayoutChange = (currentLayout: Layout, layouts: LayoutMap) => {
     this.setState({ layouts })
   }
 
   onBreakpointChange = (currentBreakpoint: string, newCols: number) => {
+    console.log('the current breakpoint', currentBreakpoint, newCols)
     this.setState({ currentBreakpoint })
   }
 
-  onResetDefaultLayout() {
+  onResetDefaultLayout = () => {
     this.setState({ 
       layouts: defaultLayouts,
       collapsedItems: {
@@ -320,59 +368,71 @@ class TradingPage extends React.PureComponent<Props, State> {
     if (!isInitiated) return null;
     
     return (
-      <ResponsiveReactGridLayout
-        // layout={layout}
-        layouts={layouts}
-        breakpoints={{lg: Sizes.laptop, md: Sizes.tablet, sm: Sizes.mobileL, xs: Sizes.mobileM, xxs: Sizes.mobileS }}
-        cols={{lg:60, md: 60, sm: 60, xs: 60, xxs: 60 }}
-        onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
-        onBreakpointChange={this.onBreakpointChange}
-        className="layout"
-        rowHeight={10}
-        compactType="vertical"
-      >
-        {/* <CloseableCallout
-          visible={calloutVisible}
-          handleClose={this.closeCallout}
-          {...calloutOptions}
-        /> */}
-        <div key="tokenSearcher">
-          <TokenSearcher
-            onCollapse={this.onCollapse}
-            onExpand={this.onExpand}
-          />
-        </div>
-        <div key="orderForm">
-          <OrderForm
-            onCollapse={this.onCollapse}
-            onExpand={this.onExpand}
-           />
-        </div>
-        <div key="ohlcv">
-          <OHLCV
-            onCollapse={this.onCollapse}
-            onExpand={this.onExpand}
-           />
-        </div>
-        <div key="ordersTable">
-          <OrdersTable
-            onCollapse={this.onCollapse}
-            onExpand={this.onExpand}
-           />
-        </div>
-        <div key="orderBook">
-          <OrderBook
-            onCollapse={this.onCollapse}
-            onExpand={this.onExpand}
-          />
-        </div>
-        <div key="tradesTable">
-          <TradesTable
-            onCollapse={this.onCollapse}
-            onExpand={this.onExpand}
-           />
-        </div>
-      </ResponsiveReactGridLayout>
+      <AutoSizer style={{ width: '100%', height: '100%' }}>
+        {({ width, height }) => (
+          <ResponsiveReactGridLayout
+            width={width}
+            layouts={layouts}
+            breakpoints={{lg: Sizes.laptop, md: Sizes.tablet, sm: Sizes.mobileL, xs: Sizes.mobileM, xxs: Sizes.mobileS }}
+            cols={{lg:60, md: 60, sm: 60, xs: 60, xxs: 60 }}
+            onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+            onBreakpointChange={this.onBreakpointChange}
+            className="layout"
+            rowHeight={10}
+            compactType="vertical"
+            draggableHandle=".dragMe"
+          >
+            {/* <CloseableCallout
+              visible={calloutVisible}
+              handleClose={this.closeCallout}
+              {...calloutOptions}
+            /> */}
+            <div key="tokenSearcher">
+              <TokenSearcher
+                onCollapse={this.onCollapse}
+                onExpand={this.onExpand}
+                onResetDefaultLayout={this.onResetDefaultLayout}
+              />
+            </div>
+            <div key="orderForm">
+              <OrderForm
+                onCollapse={this.onCollapse}
+                onExpand={this.onExpand}
+                onResetDefaultLayout={this.onResetDefaultLayout}
+              />
+            </div>
+            <div key="ohlcv">
+              <OHLCV
+                onCollapse={this.onCollapse}
+                onExpand={this.onExpand}
+                onResetDefaultLayout={this.onResetDefaultLayout}
+                onFullScreen={this.onFullScreenOHLCV}
+              />
+            </div>
+            <div key="ordersTable">
+              <OrdersTable
+                onCollapse={this.onCollapse}
+                onExpand={this.onExpand}
+                onResetDefaultLayout={this.onResetDefaultLayout}
+              />
+            </div>
+            <div key="orderBook">
+              <OrderBook
+                onCollapse={this.onCollapse}
+                onExpand={this.onExpand}
+                onResetDefaultLayout={this.onResetDefaultLayout}
+              />
+            </div>
+            <div key="tradesTable">
+              <TradesTable
+                onCollapse={this.onCollapse}
+                onExpand={this.onExpand}
+                onResetDefaultLayout={this.onResetDefaultLayout}
+              />
+            </div>
+          </ResponsiveReactGridLayout>
+        )}
+      </AutoSizer>
     )
   }
 }

@@ -3,6 +3,7 @@ import React from 'react'
 import OrderFormRenderer from './OrderFormRenderer'
 import { formatNumber, unformat } from 'accounting-js'
 import { utils } from 'ethers'
+import { Menu, MenuItem, ContextMenuTarget } from '@blueprintjs/core'
 
 type Props = {
   side: 'BUY' | 'SELL',
@@ -23,7 +24,8 @@ type Props = {
   unlockPair: (string, string) => void,
   sendNewOrder: (string, number, number) => void,
   onCollapse: string => void,
-  onExpand: string => void
+  onExpand: string => void,
+  onResetDefaultLayout: void => void
 }
 
 type State = {
@@ -80,6 +82,10 @@ class OrderForm extends React.PureComponent<Props, State> {
   }
 
   onInputChange = ({ target }: Object) => {
+
+    console.log('hello')
+    console.log(target)
+
     const { loggedIn } = this.props
     switch (target.name) {
       case 'stopPrice':
@@ -258,6 +264,23 @@ class OrderForm extends React.PureComponent<Props, State> {
     this.props.onCollapse('orderForm')
   }
 
+  renderContextMenu = () => {
+    const {
+      state: { isOpen },
+      props: { onResetDefaultLayout },
+      expand,
+      toggleCollapse
+    } = this
+
+    return (
+        <Menu>
+            <MenuItem text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem text="Maximize" onClick={expand} />
+        </Menu>
+    );
+  }
+
   expand = () => {
     this.props.onExpand('orderForm')
   }
@@ -293,6 +316,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       handleUnlockPair,
       handleSideChange,
       toggleCollapse,
+      renderContextMenu
     } = this
 
 
@@ -348,9 +372,10 @@ class OrderForm extends React.PureComponent<Props, State> {
         pairAllowanceIsPending={pairAllowanceIsPending}
         handleSideChange={handleSideChange}
         expand={this.expand}
+        onContextMenu={renderContextMenu}
       />
     )
   }
 }
 
-export default OrderForm
+export default ContextMenuTarget(OrderForm)

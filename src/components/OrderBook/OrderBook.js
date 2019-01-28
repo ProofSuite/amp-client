@@ -1,12 +1,10 @@
 // @flow
 import React from 'react';
-import OrderBookRenderer from './OrderBookRenderer';
-import VerticalOrderBookRenderer from './VerticalOrderBookRenderer'
-
+import HorizontalOrderBook from './HorizontalOrderBook';
+import VerticalOrderBook from './VerticalOrderBook'
 import type { TokenPair } from '../../types/tokens';
 import { AutoSizer } from 'react-virtualized'
 
-import styled from 'styled-components'
 
 type BidOrAsk = {
   price: number,
@@ -21,7 +19,8 @@ type Props = {
   currentPair: TokenPair,
   select: BidOrAsk => void,
   onCollapse: string => void,
-  onExpand: string => void
+  onExpand: string => void,
+  onResetDefaultLayout: void => void
 };
 
 type State = {
@@ -52,18 +51,18 @@ class OrderBook extends React.Component<Props, State> {
 
   renderOrderBook = (width: number, height: number) => {
     const {
-      props: { bids, asks, currentPair, select },
+      props: { bids, asks, currentPair, select, onResetDefaultLayout },
       state: { selectedTabId, isOpen, directionSetting },
       changeTab,
       toggleCollapse,
-      expand
+      expand,
     } = this
 
     const direction = (width < 500) ? "vertical" : directionSetting
 
     return {
       "vertical": 
-        <VerticalOrderBookRenderer 
+        <VerticalOrderBook 
           bids={bids}
           asks={asks}
           currentPair={currentPair}
@@ -73,9 +72,11 @@ class OrderBook extends React.Component<Props, State> {
           changeTab={changeTab}
           toggleCollapse={toggleCollapse}
           expand={expand}
+          onResetDefaultLayout={onResetDefaultLayout}
+          
         />,
       "horizontal": 
-        <OrderBookRenderer 
+        <HorizontalOrderBook 
           bids={bids}
           asks={asks}
           currentPair={currentPair}
@@ -85,6 +86,7 @@ class OrderBook extends React.Component<Props, State> {
           changeTab={changeTab}
           toggleCollapse={toggleCollapse}
           expand={expand}
+          onResetDefaultLayout={onResetDefaultLayout}
         />
     }[direction]
   }
@@ -93,7 +95,7 @@ class OrderBook extends React.Component<Props, State> {
     return (
       <AutoSizer style={{ width: '100%', height: '100%' }}>
         {({ width, height }) => {
-          return this.renderOrderBook(width, height)
+           return this.renderOrderBook(width, height)
         }}
       </AutoSizer>
     )    

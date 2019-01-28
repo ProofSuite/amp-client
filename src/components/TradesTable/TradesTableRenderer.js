@@ -36,7 +36,8 @@ type Props = {
   toggleCollapse: (SyntheticEvent<>) => void,
   openEtherscanLink: string => void,
   isOpen: boolean,
-  expand: SyntheticEvent<> => void
+  expand: SyntheticEvent<> => void,
+  onContextMenu: void => void
 };
 
 const TradesTableRenderer = (props: Props) => {
@@ -49,13 +50,14 @@ const TradesTableRenderer = (props: Props) => {
     userTrades, 
     toggleCollapse,
     openEtherscanLink,
-    expand
+    expand,
+    onContextMenu
   } = props;
 
   return (
     <AutoSizer style={{ width: '100%', height: '100%' }}>
         {({ width, height }) => (
-          <CardBox>
+          <CardBox onContextMenu={onContextMenu}>
             <TradesTableHeader>
               <Heading>
                 Trades
@@ -68,11 +70,19 @@ const TradesTableRenderer = (props: Props) => {
                 icon={isOpen ? 'chevron-up' : 'chevron-down'} 
                 minimal 
                 onClick={toggleCollapse}
+                small
               />
               <Button
                 icon='maximize'
                 minimal
                 onClick={expand}
+                small
+              />
+              <Button 
+                icon='move' 
+                className="dragMe" 
+                minimal 
+                small
               />
             </TradesTableHeader>
             <Wrapper>

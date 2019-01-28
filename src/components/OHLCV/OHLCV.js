@@ -4,8 +4,7 @@ import styled from 'styled-components';
 
 import { 
   Card, 
-  Collapse,
-  Button
+  Button,
 } from '@blueprintjs/core';
 
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
@@ -76,7 +75,9 @@ type Props = {
   updateDuration: (*, *) => void,
   updateTimeSpan: (*, *) => void,
   onCollapse: string => void,
-  onExpand: string => void
+  onExpand: string => void,
+  onResetDefaultLayout: void => void,
+  onFullScreen: void => void,
 };
 
 type State = {
@@ -89,10 +90,9 @@ type State = {
   duration: Array<Object>,
   expandedChard: boolean,
   isOpen: boolean,
-
 };
 
-export default class OHLCV extends React.PureComponent<Props, State> {
+class OHLCV extends React.PureComponent<Props, State> {
   state = {
     chartHeight: 500,
     indicatorHeight: 0,
@@ -152,6 +152,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
     });
   };
 
+
   render() {
     const {
       props: { ohlcvData, currentDuration, currentTimeSpan, noOfCandles },
@@ -160,7 +161,7 @@ export default class OHLCV extends React.PureComponent<Props, State> {
       onUpdateIndicators,
       changeDuration,
       changeChartType,
-      expand
+      expand,
     } = this;
 
     return (
@@ -190,10 +191,10 @@ export default class OHLCV extends React.PureComponent<Props, State> {
           expandedChard={expandedChard}
           data={ohlcvData}
           width="100%"
-          />
-        </Wrapper>
-        )
-      }
+        />
+      </Wrapper>
+      )
+    }
   }
 
 
@@ -228,16 +229,27 @@ const Toolbar = ({
             icon="series-add"
           />
         </TimeSpanMenu>
-
-        <DurationMenu duration={state.duration} currentDuration={currentDuration} changeDuration={changeDuration} />
+        <DurationMenu 
+          duration={state.duration} 
+          currentDuration={currentDuration} 
+          changeDuration={changeDuration} 
+        />
         <TimeSpanMenu>
-          <IndicatorSelect indicators={state.indicators} onUpdateIndicators={onUpdateIndicators} />
+          <IndicatorSelect 
+            indicators={state.indicators} 
+            onUpdateIndicators={onUpdateIndicators} 
+          />
         </TimeSpanMenu>
       </ToolbarWrapper>
       <Button 
         icon='maximize' 
         minimal 
         onClick={expand}
+      />
+      <Button 
+        icon='move' 
+        className="dragMe" 
+        minimal 
       />
     </FlexRow>
 );
@@ -261,6 +273,8 @@ const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
     </DurationWrapper>
   );
 };
+
+export default OHLCV
 
 const DurationWrapper = styled.div`
   position: relative;

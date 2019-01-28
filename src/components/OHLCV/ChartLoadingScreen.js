@@ -1,12 +1,13 @@
 // @flow
 import React from 'react';
 import Chart from './Chart';
+import styled from 'styled-components';
+
 import { Loading, AMPLogo, Centered, LargeText } from '../Common';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 import { AutoSizer } from 'react-virtualized'
-import styled from 'styled-components';
 
-import { Collapse } from '@blueprintjs/core'
+import type { Node } from 'react'
 
 type Props = {
   macd: Object,

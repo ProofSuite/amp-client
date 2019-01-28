@@ -1,10 +1,12 @@
 // @flow
 import React from 'react';
 import TradesTableRenderer from './TradesTableRenderer';
+import { ETHERSCAN_TX_URL } from '../../config/urls'
+import { ContextMenuTarget, Menu, MenuItem } from '@blueprintjs/core'
+
 import type Trade from '../../types/trades';
 import type { TokenPair } from '../../types/tokens';
-
-import { ETHERSCAN_TX_URL } from '../../config/urls'
+import type { Node } from 'react'
 
 type State = {
   selectedTabId: string,
@@ -16,7 +18,8 @@ type Props = {
   userTrades: Array<Trade>,
   currentPair: TokenPair,
   onCollapse: string => void,
-  onExpand: string => void
+  onExpand: string => void,
+  onResetDefaultLayout: void => void
 };
 
 class TradesTable extends React.PureComponent<Props, State> {
@@ -43,6 +46,23 @@ class TradesTable extends React.PureComponent<Props, State> {
     this.props.onExpand('tradesTable')
   }
 
+  renderContextMenu = () => {
+    const {
+      state: { isOpen },
+      props: { onResetDefaultLayout },
+      expand,
+      toggleCollapse
+    } = this
+
+    return (
+        <Menu>
+            <MenuItem text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem text="Maximize" onClick={expand} />
+        </Menu>
+    );
+  }
+
   render() {
     const {
       props: { trades, userTrades, currentPair },
@@ -50,7 +70,8 @@ class TradesTable extends React.PureComponent<Props, State> {
       changeTab,
       toggleCollapse,
       openEtherscanLink,
-      expand
+      expand,
+      renderContextMenu
     } = this;
 
     return (
@@ -64,9 +85,10 @@ class TradesTable extends React.PureComponent<Props, State> {
         toggleCollapse={toggleCollapse}
         openEtherscanLink={openEtherscanLink}
         expand={expand}
+        onContextMenu={renderContextMenu}
       />
     );
   }
 }
 
-export default TradesTable
+export default ContextMenuTarget(TradesTable)

@@ -2,6 +2,7 @@
 import React from 'react'
 import OrdersTableRenderer from './OrdersTableRenderer'
 import { sortTable } from '../../utils/helpers'
+import { ContextMenuTarget, Menu, MenuItem } from '@blueprintjs/core'
 
 import type { Order } from '../../types/Orders'
 
@@ -10,7 +11,8 @@ type Props = {
   authenticated: false,
   cancelOrder: string => void,
   onCollapse: string => void,
-  onExpand: string => void
+  onExpand: string => void,
+  onResetDefaultLayout: void => void
 }
 
 type State = {
@@ -62,9 +64,31 @@ class OrdersTable extends React.PureComponent<Props, State> {
     return result
   }
 
+
+  renderContextMenu = () => {
+    const {
+      state: { isOpen },
+      props: { onResetDefaultLayout },
+      expand,
+      toggleCollapse
+    } = this
+
+    return (
+        <Menu>
+            <MenuItem text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem text="Maximize" onClick={expand} />
+        </Menu>
+    );
+  }
+
   render() {
-    const { authenticated, orders, cancelOrder } = this.props
-    const { selectedTabId, isOpen } = this.state
+    const {
+      props: { authenticated, orders, cancelOrder },
+      state: { selectedTabId, isOpen },
+      renderContextMenu
+    } = this
+
     const filteredOrders = this.filterOrders()
     const loading = orders.length === []
 
@@ -80,9 +104,10 @@ class OrdersTable extends React.PureComponent<Props, State> {
         cancelOrder={cancelOrder}
         // silence-error: currently too many flow errors, waiting for rest to be resolved
         orders={filteredOrders}
+        onContextMenu={renderContextMenu}
       />
     )
   }
 }
 
-export default OrdersTable
+export default ContextMenuTarget(OrdersTable)

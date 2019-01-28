@@ -1,22 +1,30 @@
 // @flow
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import styled from 'styled-components';
-import { formatNumber } from 'accounting-js'
+
 import { 
   Loading, 
   SmallText,
   Colors,
+  Box,
+  FlexColumn,
   Text
 } from '../Common';
 
 import {
-  Card,
-  Button,
-  Collapse,
+    Card,
+    Button,
+    Collapse,
+    ContextMenuTarget,
+    Menu,
+    MenuItem
 } from '@blueprintjs/core'
 
+import { formatNumber } from 'accounting-js'
+
 import type { TokenPair } from '../../types/Tokens'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import type { Node } from 'react'
 
 type BidOrAsk = {
   price: number,
@@ -28,28 +36,46 @@ type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
   onSelect: BidOrAsk => void,
-  selectedTabId: string,
   isOpen: boolean,
-  currentPair: TokenPair,
-  changeTab: string => void,
   toggleCollapse: SyntheticEvent<> => void,
-  expand: SyntheticEvent<> => void
+  expand: SyntheticEvent<> => void,
+  currentPair: TokenPair,
+  onContextMenu: void => Node,
+  onResetDefaultLayout: void => void
 };
 
+class VerticalOrderBook extends React.Component<Props> {
 
-export const OrderBookRenderer = (props: Props) => {
-  const { 
+  renderContextMenu = () => {
+    const {
+      isOpen,
+      onResetDefaultLayout,
+      expand,
+      toggleCollapse
+    } = this.props
+
+    return (
+        <Menu>
+            <MenuItem text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem text="Maximize" onClick={expand} />
+        </Menu>
+    );
+  }
+
+  render() {  
+    const { 
     bids, 
     asks,
     currentPair, 
     isOpen,
     onSelect,
     toggleCollapse,
-    expand
-  } = props;
+    expand,
+  } = this.props;
 
   return (
-    <CardBox>
+    <CardBox onContextMenu={this.renderContextMenu}>
       <OrderBookHeader>
         <Heading>
           Order Book
@@ -58,8 +84,24 @@ export const OrderBookRenderer = (props: Props) => {
             ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
           </Text>
         </Heading>
-        <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
-        <Button icon='maximize' minimal onClick={expand} />
+        <Button 
+          icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+          minimal 
+          onClick={toggleCollapse} 
+          small
+        />
+        <Button 
+          icon='maximize' 
+          minimal 
+          onClick={expand} 
+          small
+        />
+        <Button 
+          icon='move' 
+          className="dragMe" 
+          minimal 
+          small
+        />
       </OrderBookHeader>
       <Wrapper>
         <Collapse isOpen={isOpen} transitionDuration={100}>
@@ -72,9 +114,10 @@ export const OrderBookRenderer = (props: Props) => {
       </Wrapper>
     </CardBox>
   )
+  }
 }
 
-
+export default ContextMenuTarget(VerticalOrderBook)
 
 export const OrderListRenderer = (props: *) => {
   const { bids, asks, onSelect } = props;
@@ -82,49 +125,42 @@ export const OrderListRenderer = (props: *) => {
   return (
     <OrderListBox>
       <OrderBookBox>
-        {!bids && <Loading />}
-        {bids && (
-          <ListContainer className="list-container">
-            <ListHeading>
-              <HeaderRow>
-                <HeaderCell>TOTAL</HeaderCell>
-                <HeaderCell>AMOUNT</HeaderCell>
-                <HeaderCell>PRICE</HeaderCell>
-              </HeaderRow>
-            </ListHeading>
-          </ListContainer>
-        )}
-        {asks && (
-          <ListContainer className="list-container left-list">
-            <ListHeading>
-              <HeaderRow>
-                <HeaderCell>PRICE</HeaderCell>
-                <HeaderCell>AMOUNT</HeaderCell>
-                <HeaderCell>TOTAL</HeaderCell>
-              </HeaderRow>
-            </ListHeading>
-          </ListContainer>
-        )}
-      </OrderBookBox>
-        <OrderBookBox>
-          {bids && (
-            <ListContainer className="list-container">
-              <List className="bp3-list-unstyled list">
+          {!bids && <Loading />}
+          {(bids || asks) && (
+            <ListContainer>
+              <ListHeading>
+                <HeaderRow>
+                  <HeaderCell>TOTAL</HeaderCell>
+                  <HeaderCell>AMOUNT</HeaderCell>
+                  <HeaderCell>PRICE</HeaderCell>
+                </HeaderRow>
+              </ListHeading>
+            </ListContainer>
+          )}
+          {asks && (
+            <ListContainer>
+              <List className="bp3-list-unstyled">
                 <ReactCSSTransitionGroup
-                  transitionName="flash-buy"
+                  transitionName="flash-sell"
                 >
-                  {bids.map((order, index) => <BuyOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
+                  {asks.reverse().map((order, index) => <SellOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
                 </ReactCSSTransitionGroup>
               </List>
             </ListContainer>
           )}
-          {asks && (
-            <ListContainer className="list-container left-list">
-              <List className="bp3-list-unstyled list">
+          <Box>
+            <FlexColumn alignItems="center" my={3}>
+                <Text>Midmarket Price: 123.45</Text>
+                <Text>Spread: 0.34%</Text>
+            </FlexColumn>
+          </Box>
+          {bids && (
+            <ListContainer>
+              <List className="bp3-list-unstyled">
                 <ReactCSSTransitionGroup
-                  transitionName="flash-sell"
+                  transitionName="flash-buy"
                 >
-                  {asks.map((order, index) => <SellOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
+                  {bids.map((order, index) => <BuyOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
                 </ReactCSSTransitionGroup>
               </List>
             </ListContainer>
@@ -158,9 +194,9 @@ const SellOrder = (props: SingleOrderProps) => {
   return (
     <Row onClick={onClick}>
       <SellRowBackGround amount={order.relativeTotal} />
-      <Cell color={Colors.SELL}>{formatNumber(order.price, { precision: 5 })}</Cell>
-      <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
       <Cell>{formatNumber(order.total, { precision: 3 })}</Cell>
+      <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
+      <Cell color={Colors.SELL}>{formatNumber(order.price, { precision: 5 })}</Cell>
     </Row>
   );
 };
@@ -175,19 +211,31 @@ const Wrapper = styled.div`
   overflow-y: scroll;
   height: 85%;
 `
+const OrderListBox = styled.div``
 
 const OrderBookBox = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: stretch;
+  height: 100%;
+`;
+
+const OrderBookHeader = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  grid-gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Heading = styled.h3`
+  margin: auto;
 `;
 
 const ListContainer = styled.div`
   width: 100%;
-`;
-
-const OrderListBox = styled.div`
 `;
 
 const List = styled.ul``;
@@ -233,7 +281,7 @@ const SellRowBackGround = styled.span`
 const BuyRowBackground = styled.span`
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   height: 100%;
   width: ${props => 100 * props.amount}% !important;
   background-color: ${Colors.BUY_MUTED} !important;
@@ -265,21 +313,6 @@ const HeaderRow = styled.li`
   }
 `;
 
-const OrderBookHeader = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  grid-gap: 10px;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const Heading = styled.h3`
-  margin: auto;
-`;
-
 const HeaderCell = styled.span`
   width: 20%;
 `;
-
-export default OrderBookRenderer;

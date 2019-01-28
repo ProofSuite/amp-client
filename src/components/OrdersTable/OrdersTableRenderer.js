@@ -25,6 +25,8 @@ import {
 import { relativeDate } from '../../utils/helpers'
 import { Order } from '../../types/orders'
 
+import type { Node } from 'react'
+
 type Props = {
   loading: boolean,
   selectedTabId: string,
@@ -40,7 +42,8 @@ type Props = {
     CANCELLED: Array<Order>,
     FILLED: Array<Order>
   },
-  expand: SyntheticEvent<> => void
+  expand: SyntheticEvent<> => void,
+  onContextMenu: void => Node
 }
 
 const breakpoints = {
@@ -59,17 +62,34 @@ const OrdersTableRenderer = (props: Props) => {
     orders, 
     isOpen, 
     toggleCollapse,
-    expand
+    expand,
+    onContextMenu
   } = props
 
   return (
     <AutoSizer style={{ width: '100%', height: '100%' }}>
         {({ width, height }) => (
-          <CardBox>
+          <CardBox onContextMenu={onContextMenu}>
             <OrdersTableHeader>
               <Heading>Orders</Heading>
-              <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
-              <Button icon='maximize' minimal onClick={expand} />
+              <Button 
+                icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+                minimal 
+                onClick={toggleCollapse}
+                small
+              />
+              <Button 
+                icon='maximize' 
+                minimal 
+                onClick={expand} 
+                small
+              />
+              <Button 
+                icon='move'
+                className="dragMe"
+                minimal 
+                small
+              />
             </OrdersTableHeader>
             <Wrapper>
             <Collapse isOpen={isOpen}>
@@ -89,7 +109,6 @@ const OrdersTableRenderer = (props: Props) => {
 
 const OrdersTablePanel = (props: *) => {
   const { loading, orders, cancelOrder, width } = props
-  console.log(width)
 
   return loading ? (
     <Loading />
