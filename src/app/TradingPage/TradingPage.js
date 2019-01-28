@@ -38,6 +38,7 @@ type State = {
   calloutVisible: boolean,
   calloutOptions: Object,
   layouts: LayoutMap,
+  items: Array<string>,
   collapsedItems: any,
   currentBreakpoint: string,
 }
@@ -54,56 +55,12 @@ const defaultSizes = {
   'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
 }
 
-const defaultLayout: Layout = [
-  {i: 'tokenSearcher', x: 0, y: 0, w: 12, h: 30, minW: 12 },
-  {i: 'orderForm', x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
-  {i: 'ohlcv', x: 12, y: 0, w: 48, h: 30 },
-  {i: 'ordersTable', x: 12, y: 30, w: 48, h: 20 },
-  {i: 'orderBook', x: 12, y: 50, w: 24, h: 30 },
-  {i: 'tradesTable', x: 36, y: 50, w: 24, h: 30 },
-]
-
-const fullScreenOHLCVLayouts: Layout = {
-  'lg': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 },
-  'md': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 },
-  'sm': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 },
-  'xs': {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 }
+const fullScreenOHLCVLayouts: LayoutMap = {
+  'lg': [ {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 } ],
+  'md': [ {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 } ],
+  'sm': [ {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 } ],
+  'xs': [ {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 } ],
 }
-
-// const defaultSizes = {
-//   'lg': {
-//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
-//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
-//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
-//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
-//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
-//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
-//   },
-//   'md': {
-//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
-//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
-//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
-//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
-//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
-//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
-//   },
-//   'sm': {
-//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
-//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
-//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
-//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
-//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
-//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
-//   },
-//   'xs': {
-//     'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
-//     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
-//     'ohlcv': { x: 12, y: 0, w: 48, h: 30},
-//     'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
-//     'orderBook': { x: 12, y: 50, w: 24, h: 30 },
-//     'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
-//   }
-// }
 
 const defaultLayouts = {
   'lg': [
@@ -143,6 +100,7 @@ const defaultLayouts = {
 class TradingPage extends React.PureComponent<Props, State> {
 
   state = {
+    items: ['tokenSearcher', 'orderForm', 'ohlcv', 'ordersTable', 'orderBook', 'tradesTable'],
     calloutVisible: false,
     calloutOptions: {},
     layouts: defaultLayouts,
@@ -277,7 +235,7 @@ class TradingPage extends React.PureComponent<Props, State> {
   }
 
   onFullScreenOHLCV = () => {
-    this.setState({ layouts: fullScreenOHLCVLayouts })
+    this.setState({ layouts: fullScreenOHLCVLayouts, items: ['ohlcv'] })
   }
 
   onLayoutChange = (currentLayout: Layout, layouts: LayoutMap) => {
@@ -292,6 +250,7 @@ class TradingPage extends React.PureComponent<Props, State> {
   onResetDefaultLayout = () => {
     this.setState({ 
       layouts: defaultLayouts,
+      items: ['tokenSearcher', 'orderForm', 'ohlcv', 'ordersTable', 'orderBook', 'tradesTable'],
       collapsedItems: {
         'tokenSearcher': false,
         'orderForm': false,
@@ -360,10 +319,78 @@ class TradingPage extends React.PureComponent<Props, State> {
     this.setState({ layouts: newLayouts })
   }
 
+
+  renderItem =(item: string) => {
+    const { items } = this.state
+    const fullScreen = (items[0] === "ohlcv" && items.length === 1)
+
+
+    const renderedItems = {
+        tokenSearcher: (
+          <div key="tokenSearcher">
+            <TokenSearcher
+              onCollapse={this.onCollapse}
+              onExpand={this.onExpand}
+              onResetDefaultLayout={this.onResetDefaultLayout}
+            />
+          </div>
+        ),
+        orderForm: (
+          <div key="orderForm">
+              <OrderForm
+                onCollapse={this.onCollapse}
+                onExpand={this.onExpand}
+                onResetDefaultLayout={this.onResetDefaultLayout}
+              />
+          </div>
+        ),  
+        ohlcv: (
+          <div key="ohlcv">
+            <OHLCV
+              onCollapse={this.onCollapse}
+              onExpand={this.onExpand}
+              onResetDefaultLayout={this.onResetDefaultLayout}
+              onFullScreen={this.onFullScreenOHLCV}
+              fullScreen={fullScreen}
+            />
+          </div>
+        ),
+        ordersTable: (
+          <div key="ordersTable">
+            <OrdersTable
+              onCollapse={this.onCollapse}
+              onExpand={this.onExpand}
+              onResetDefaultLayout={this.onResetDefaultLayout}
+            />
+          </div>
+        ),
+        orderBook: (
+          <div key="orderBook">
+            <OrderBook
+              onCollapse={this.onCollapse}
+              onExpand={this.onExpand}
+              onResetDefaultLayout={this.onResetDefaultLayout}
+            />
+          </div>
+        ),
+        tradesTable: (
+          <div key="tradesTable">
+            <TradesTable
+              onCollapse={this.onCollapse}
+              onExpand={this.onExpand}
+              onResetDefaultLayout={this.onResetDefaultLayout}
+            />
+          </div>
+        )
+      }
+
+    return renderedItems[item]
+  }
+
   render() {
     const { authenticated, isInitiated } = this.props
-    const { calloutOptions, calloutVisible, layouts } = this.state
-
+    const { calloutOptions, calloutVisible, layouts, items } = this.state
+    
     if (!authenticated) return <Redirect to="/login" />
     if (!isInitiated) return null;
     
@@ -380,56 +407,9 @@ class TradingPage extends React.PureComponent<Props, State> {
             className="layout"
             rowHeight={10}
             compactType="vertical"
-            draggableHandle=".dragMe"
+            draggableHandle=".drag"
           >
-            {/* <CloseableCallout
-              visible={calloutVisible}
-              handleClose={this.closeCallout}
-              {...calloutOptions}
-            /> */}
-            <div key="tokenSearcher">
-              <TokenSearcher
-                onCollapse={this.onCollapse}
-                onExpand={this.onExpand}
-                onResetDefaultLayout={this.onResetDefaultLayout}
-              />
-            </div>
-            <div key="orderForm">
-              <OrderForm
-                onCollapse={this.onCollapse}
-                onExpand={this.onExpand}
-                onResetDefaultLayout={this.onResetDefaultLayout}
-              />
-            </div>
-            <div key="ohlcv">
-              <OHLCV
-                onCollapse={this.onCollapse}
-                onExpand={this.onExpand}
-                onResetDefaultLayout={this.onResetDefaultLayout}
-                onFullScreen={this.onFullScreenOHLCV}
-              />
-            </div>
-            <div key="ordersTable">
-              <OrdersTable
-                onCollapse={this.onCollapse}
-                onExpand={this.onExpand}
-                onResetDefaultLayout={this.onResetDefaultLayout}
-              />
-            </div>
-            <div key="orderBook">
-              <OrderBook
-                onCollapse={this.onCollapse}
-                onExpand={this.onExpand}
-                onResetDefaultLayout={this.onResetDefaultLayout}
-              />
-            </div>
-            <div key="tradesTable">
-              <TradesTable
-                onCollapse={this.onCollapse}
-                onExpand={this.onExpand}
-                onResetDefaultLayout={this.onResetDefaultLayout}
-              />
-            </div>
+            {items.map(item => this.renderItem(item))}
           </ResponsiveReactGridLayout>
         )}
       </AutoSizer>
@@ -438,3 +418,10 @@ class TradingPage extends React.PureComponent<Props, State> {
 }
 
 export default TradingPage
+
+
+// {/* <CloseableCallout
+//   visible={calloutVisible}
+//   handleClose={this.closeCallout}
+//   {...calloutOptions}
+// /> */}

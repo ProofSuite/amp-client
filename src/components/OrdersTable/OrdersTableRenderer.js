@@ -81,14 +81,14 @@ const OrdersTableRenderer = (props: Props) => {
                   small
                 />
                 <Button 
-                  icon='maximize' 
+                  icon='zoom-to-fit' 
                   minimal 
                   onClick={expand} 
                   small
                 />
                 <Button 
                   icon='move'
-                  className="dragMe"
+                  className="drag"
                   minimal 
                   small
                 />

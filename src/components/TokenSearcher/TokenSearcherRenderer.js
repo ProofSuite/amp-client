@@ -110,8 +110,8 @@ const TokenSearchRenderer = (props: Props) => {
               placeholder="Search Token ..."
             />
             <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal />
-            <Button icon='move' className="dragMe" minimal />
-            <Button icon='maximize' onClick={expand} minimal />
+            <Button icon='move' className="drag" minimal />
+            <Button icon='zoom-to-fit' onClick={expand} minimal />
           </div>
           <Collapse isOpen={isOpen}>
             <SelectedPair

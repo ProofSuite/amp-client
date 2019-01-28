@@ -1,12 +1,6 @@
 //@flow
 import React from 'react';
 import styled from 'styled-components';
-
-import { 
-  Card, 
-  Button,
-} from '@blueprintjs/core';
-
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 
@@ -14,6 +8,11 @@ import {
   FlexRow,
   FlexItem
 } from '../Common/index'
+
+import { 
+  Card, 
+  Button,
+} from '@blueprintjs/core';
 
 type Indicator = {
   name: string,
@@ -79,6 +78,7 @@ type Props = {
   onExpand: string => void,
   onResetDefaultLayout: void => void,
   onFullScreen: void => void,
+  fullScreen: boolean,
 };
 
 type State = {
@@ -91,6 +91,7 @@ type State = {
   duration: Array<Object>,
   expandedChard: boolean,
   isOpen: boolean,
+  onResetDefaultLayout: void => void
 };
 
 class OHLCV extends React.PureComponent<Props, State> {
@@ -156,13 +157,28 @@ class OHLCV extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { ohlcvData, currentDuration, currentTimeSpan, noOfCandles },
-      state: { indicators, indicatorHeight, expandedChard, currentChart, isOpen },
+      props: { 
+        ohlcvData, 
+        currentDuration, 
+        currentTimeSpan, 
+        noOfCandles, 
+        onFullScreen, 
+        fullScreen,
+        onResetDefaultLayout
+      },
+      state: { 
+        indicators, 
+        indicatorHeight, 
+        expandedChard, 
+        currentChart,
+        isOpen
+      },
       changeTimeSpan,
       onUpdateIndicators,
       changeDuration,
       changeChartType,
       expand,
+      toggleCollapse
     } = this;
 
     return (
@@ -177,7 +193,10 @@ class OHLCV extends React.PureComponent<Props, State> {
           state={this.state}
           isOpen={isOpen}
           expand={expand}
-          toggleCollapse={this.toggleCollapse}
+          toggleCollapse={toggleCollapse}
+          onFullScreen={onFullScreen}
+          fullScreen={fullScreen}
+          onResetDefaultLayout={onResetDefaultLayout}
         />
         <ChartLoadingScreen
           volume={indicators[0]}
@@ -209,7 +228,10 @@ const Toolbar = ({
   changeDuration,
   changeChartType,
   indicators,
-  expand
+  expand,
+  onFullScreen,
+  fullScreen,
+  onResetDefaultLayout
 }) => (
     <FlexRow justifyContent="space-between">
       <ToolbarWrapper>
@@ -244,13 +266,18 @@ const Toolbar = ({
       </ToolbarWrapper>
       <FlexItem justifySelf="flex-end">
         <Button 
-          icon='maximize' 
+          icon='zoom-to-fit' 
           minimal 
           onClick={expand}
         />
         <Button 
+          icon={fullScreen ? 'minimize' : 'maximize'}
+          minimal 
+          onClick={fullScreen ? onResetDefaultLayout : onFullScreen}
+        />
+        <Button 
           icon='move' 
-          className="dragMe" 
+          className="drag" 
           minimal 
         />
       </FlexItem>
