@@ -19,7 +19,8 @@ import {
   Loading, 
   CenteredMessage,
   SmallText,
-  Hideable
+  Hideable,
+  FlexRow
 } from '../Common'
 
 import { relativeDate } from '../../utils/helpers'
@@ -72,24 +73,26 @@ const OrdersTableRenderer = (props: Props) => {
           <CardBox onContextMenu={onContextMenu}>
             <OrdersTableHeader>
               <Heading>Orders</Heading>
-              <Button 
-                icon={isOpen ? 'chevron-up' : 'chevron-down'} 
-                minimal 
-                onClick={toggleCollapse}
-                small
-              />
-              <Button 
-                icon='maximize' 
-                minimal 
-                onClick={expand} 
-                small
-              />
-              <Button 
-                icon='move'
-                className="dragMe"
-                minimal 
-                small
-              />
+              <FlexRow>
+                <Button 
+                  icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+                  minimal 
+                  onClick={toggleCollapse}
+                  small
+                />
+                <Button 
+                  icon='maximize' 
+                  minimal 
+                  onClick={expand} 
+                  small
+                />
+                <Button 
+                  icon='move'
+                  className="dragMe"
+                  minimal 
+                  small
+                />
+              </FlexRow>
             </OrdersTableHeader>
             <Wrapper>
             <Collapse isOpen={isOpen}>
@@ -213,9 +216,10 @@ const StatusTag = ({ status }) => {
 const OrdersTableHeader = styled.div`
   display: grid;
   grid-auto-flow: column;
-  justify-content: start;
+  justify-content: space-between;
   grid-gap: 10px;
   align-items: center;
+  margin-bottom: 10px;
 `
 
 const CardBox = styled(Card)`

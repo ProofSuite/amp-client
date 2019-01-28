@@ -11,7 +11,8 @@ import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 
 import { 
-  FlexRow
+  FlexRow,
+  FlexItem
 } from '../Common/index'
 
 type Indicator = {
@@ -210,7 +211,7 @@ const Toolbar = ({
   indicators,
   expand
 }) => (
-    <FlexRow justifyContent="flex-start">
+    <FlexRow justifyContent="space-between">
       <ToolbarWrapper>
         <ChartTypeMenu>
           <StandardSelect
@@ -241,16 +242,18 @@ const Toolbar = ({
           />
         </TimeSpanMenu>
       </ToolbarWrapper>
-      <Button 
-        icon='maximize' 
-        minimal 
-        onClick={expand}
-      />
-      <Button 
-        icon='move' 
-        className="dragMe" 
-        minimal 
-      />
+      <FlexItem justifySelf="flex-end">
+        <Button 
+          icon='maximize' 
+          minimal 
+          onClick={expand}
+        />
+        <Button 
+          icon='move' 
+          className="dragMe" 
+          minimal 
+        />
+      </FlexItem>
     </FlexRow>
 );
 
@@ -265,6 +268,7 @@ const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
             onClick={() => changeDuration(index)}
             text={label}
             minimal
+            small
             intent={currentDuration.label === label ? 'primary' : ''}
             active={currentDuration.label === label}
           />

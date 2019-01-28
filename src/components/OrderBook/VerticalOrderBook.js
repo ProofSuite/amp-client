@@ -9,7 +9,8 @@ import {
   Colors,
   Box,
   FlexColumn,
-  Text
+  Text,
+  FlexRow
 } from '../Common';
 
 import {
@@ -84,24 +85,26 @@ class VerticalOrderBook extends React.Component<Props> {
             ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
           </Text>
         </Heading>
-        <Button 
-          icon={isOpen ? 'chevron-up' : 'chevron-down'} 
-          minimal 
-          onClick={toggleCollapse} 
-          small
-        />
-        <Button 
-          icon='maximize' 
-          minimal 
-          onClick={expand} 
-          small
-        />
-        <Button 
-          icon='move' 
-          className="dragMe" 
-          minimal 
-          small
-        />
+        <FlexRow>
+          <Button 
+            icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+            minimal 
+            onClick={toggleCollapse} 
+            small
+          />
+          <Button 
+            icon='maximize' 
+            minimal 
+            onClick={expand} 
+            small
+          />
+          <Button 
+            icon='move' 
+            className="dragMe" 
+            minimal 
+            small
+          />
+        </FlexRow>
       </OrderBookHeader>
       <Wrapper>
         <Collapse isOpen={isOpen} transitionDuration={100}>
@@ -224,7 +227,7 @@ const OrderBookBox = styled.div`
 const OrderBookHeader = styled.div`
   display: grid;
   grid-auto-flow: column;
-  justify-content: start;
+  justify-content: space-between;
   grid-gap: 10px;
   align-items: center;
   margin-bottom: 10px;

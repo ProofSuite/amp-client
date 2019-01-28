@@ -11,7 +11,8 @@ import {
   Text, 
   CenteredMessage,
   SmallText,
-  Hideable
+  Hideable,
+  FlexRow
 } from '../Common';
 
 import { 
@@ -66,6 +67,7 @@ const TradesTableRenderer = (props: Props) => {
                   ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
                 </Text>
               </Heading>
+              <FlexRow>
               <Button 
                 icon={isOpen ? 'chevron-up' : 'chevron-down'} 
                 minimal 
@@ -84,6 +86,7 @@ const TradesTableRenderer = (props: Props) => {
                 minimal 
                 small
               />
+              </FlexRow>
             </TradesTableHeader>
             <Wrapper>
               <Collapse isOpen={isOpen}>
@@ -230,9 +233,10 @@ const UserTradesPanel = (props: *) => {
 const TradesTableHeader = styled.div`
   display: grid;
   grid-auto-flow: column;
-  justify-content: start;
+  justify-content: space-between;
   grid-gap: 10px;
   align-items: center;
+  padding-bottom: 10px;
 `;
 
 const Wrapper = styled.div`

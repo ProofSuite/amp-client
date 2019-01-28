@@ -505,9 +505,6 @@ const Wrapper = styled(Card)`
 const ButtonRow = styled.span`
   display: flex;
   justify-content: flex-end;
-  & .bp3-button {
-    margin-left: 5px;
-  }
 `
 const RadioButtonsWrapper = styled.div`
   width: 100%;
