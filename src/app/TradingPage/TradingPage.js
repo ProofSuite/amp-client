@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import styled from 'styled-components'
 import OHLCV from '../../components/OHLCV'
 import OrdersTable from '../../components/OrdersTable'
 import OrderForm from '../../components/OrderForm'
@@ -8,15 +7,12 @@ import TradesTable from '../../components/TradesTable'
 import TokenSearcher from '../../components/TokenSearcher'
 import OrderBook from '../../components/OrderBook'
 import { CloseableCallout, EmphasizedText } from '../../components/Common'
-import { Grid } from 'styled-css-grid'
 import { Redirect } from 'react-router-dom'
-import { AutoSizer } from 'react-virtualized'
+import { SizesAsNumbers as Sizes } from '../../components/Common/Variables'
 
-import { Spring } from 'react-spring'
-import GridLayout, { Responsive, WidthProvider } from 'react-grid-layout'
+import { Responsive, WidthProvider } from 'react-grid-layout'
 
-const ResponsiveReactGridLayout = WidthProvider(GridLayout)
-
+const ResponsiveReactGridLayout = WidthProvider(Responsive)
 
 type Props = {
   authenticated: boolean,
@@ -40,11 +36,13 @@ type Props = {
 type State = {
   calloutVisible: boolean,
   calloutOptions: Object,
-  layout: Array<Object>,
-  collapsedItems: any
+  layouts: LayoutMap,
+  collapsedItems: any,
+  currentBreakpoint: string,
 }
 
 type Layout = Array<Object>
+type LayoutMap = { [string]: Layout }
 
 const defaultSizes = {
   'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
@@ -64,12 +62,48 @@ const defaultLayout: Layout = [
   {i: 'tradesTable', x: 36, y: 50, w: 24, h: 30 },
 ]
 
+const defaultLayouts = {
+  'lg': [
+    {i: 'tokenSearcher', x: 0, y: 0, w: 12, h: 28, minW: 12 },
+    {i: 'orderForm', x: 0, y: 35, w: 12, h: 16, minH: 16, maxH: 16 },
+    {i: 'ohlcv', x: 12, y: 0, w: 36, h: 28 },
+    {i: 'ordersTable', x: 12, y: 35, w: 23, h: 16 },
+    {i: 'orderBook', x: 48, y: 0, w: 12, h: 28 },
+    {i: 'tradesTable', x: 35, y: 35, w: 25, h: 16 },
+  ],
+  'md': [
+    {i: 'tokenSearcher', x: 0, y: 0, w: 18, h: 30, minW: 12 },
+    {i: 'orderForm', x: 0, y: 30, w: 18, h: 16, minH: 18, maxH: 18 },
+    {i: 'ohlcv', x: 18, y: 0, w: 42, h: 30 },
+    {i: 'ordersTable', x: 18, y: 30, w: 42, h: 20 },
+    {i: 'orderBook', x: 18, y: 50, w: 21, h: 30 },
+    {i: 'tradesTable', x: 39, y: 50, w: 21, h: 30 },
+  ],
+  'sm': [
+    {i: 'tokenSearcher', x: 0, y: 0, w: 30, h: 16, minW: 12 },
+    {i: 'orderForm', x: 30, y: 0, w: 30, h: 16, minH: 16, maxH: 16 },
+    {i: 'ohlcv', x: 0, y: 16, w: 60, h: 30 },
+    {i: 'ordersTable', x: 0, y: 106, w: 60, h: 20 },
+    {i: 'orderBook', x: 0, y: 46, w: 30, h: 30 },
+    {i: 'tradesTable', x: 30, y: 46, w: 30, h: 30 },
+  ],
+  'xs': [
+    {i: 'tokenSearcher', x: 0, y: 0, w: 60, h: 20, minW: 12 },
+    {i: 'orderForm', x: 0, y: 40, w: 60, h: 16, minH: 16, maxH: 16 },
+    {i: 'ohlcv', x: 0, y: 20, w: 60, h: 20 },
+    {i: 'ordersTable', x: 0, y: 56, w: 60, h: 20 },
+    {i: 'orderBook', x: 0, y: 76, w: 60, h: 20 },
+    {i: 'tradesTable', x: 0, y: 96, w: 60, h: 20 },
+  ]
+}
+
 class TradingPage extends React.PureComponent<Props, State> {
 
   state = {
     calloutVisible: false,
     calloutOptions: {},
-    layout: defaultLayout,
+    layouts: defaultLayouts,
+    currentBreakpoint: 'lg',
     collapsedItems: {
       'tokenSearcher': false,
       'orderForm': false,
@@ -149,10 +183,6 @@ class TradingPage extends React.PureComponent<Props, State> {
     this.props.queryTradingPageData();
   }
 
-  onLayoutChange = (layout: Layout) => {
-    this.setState({ layout })
-  }
-
   checkIfCalloutRequired = () => {
     const {
       authenticated,
@@ -176,18 +206,16 @@ class TradingPage extends React.PureComponent<Props, State> {
     }
   }
 
-  onBreakpointChange = breakpoint => {
-    this.setState({ currentBreakpoint: breakpoint })
-  }
-
   closeCallout = () => {
     this.setState({ calloutVisible: false })
   }
 
   onCollapse = (item: string) => {
+    let { currentBreakpoint, layouts } = this.state
     let newLayout = []
+    let currentLayout = layouts[currentBreakpoint]
 
-    this.state.layout.forEach(elem => {
+    currentLayout.forEach(elem => {
       if (elem.i === item) {
         this.state.collapsedItems[item]
         ? newLayout.push({ ...elem, h: defaultSizes[item].h })
@@ -197,20 +225,25 @@ class TradingPage extends React.PureComponent<Props, State> {
       }
     })
 
-    this.setState({ layout: newLayout, collapsedItems: {
+    let newLayouts = { ...this.state.layouts, [currentBreakpoint]: newLayout }
+    this.setState({ layouts: newLayouts, collapsedItems: {
       ...this.state.collapsedItems, 
       [item]: !this.state.collapsedItems[item]
       }
     })
   }
 
-  onLayoutChange(layout: Layout) {
-    this.setState({ layout })
+  onLayoutChange = (currentLayout: Layout, layouts: LayoutMap) => {
+    this.setState({ layouts })
+  }
+
+  onBreakpointChange = (currentBreakpoint: string, newCols: number) => {
+    this.setState({ currentBreakpoint })
   }
 
   onResetDefaultLayout() {
     this.setState({ 
-      layout: defaultLayout,
+      layouts: defaultLayouts,
       collapsedItems: {
         'tokenSearcher': false,
         'orderForm': false,
@@ -223,11 +256,12 @@ class TradingPage extends React.PureComponent<Props, State> {
   }
 
   onExpand = (item: string) => {
-    let currentItem = this.state.layout.filter(elem => elem.i === item)[0]
-    let otherItems = this.state.layout.filter(elem => elem.i !== item)
-    console.log('Current item', currentItem)
+    let { currentBreakpoint, layouts } = this.state
+    let currentLayout = layouts[currentBreakpoint]
+
+    let currentItem = currentLayout.filter(elem => elem.i === item)[0]
+    let otherItems = currentLayout.filter(elem => elem.i !== item)
     let { y: yc, h: hc, x: xc, w: wc } = currentItem
-    console.log('yc:',yc,'hc:', hc,'xc:',xc,'wc:', wc)
 
     let newX = 0
     let newXPlusW = 60 // number of columns
@@ -236,12 +270,9 @@ class TradingPage extends React.PureComponent<Props, State> {
     otherItems.forEach(elem => {
       let { x, y, h, w, i } = elem
       
-
       // check if items heights overlap
       if ((yc < (y + h) && (yc + hc) >= (y + h)) || (yc <= y && (yc + hc) > y))
       {
-        console.log('Overlap vertically', elem.i)
-
         //left side collision detection
         if ((x + w) <= xc) {
           if ((x + w) > newX) newX = x + w
@@ -257,8 +288,6 @@ class TradingPage extends React.PureComponent<Props, State> {
       // check if items lengths overlap
       if (((xc > x) && (xc <= (x + w))) || (((xc + wc) > x) && ((xc+wc) <= (x + w))))
       {
-        console.log('Overlap horizontally', elem.i)
-        console.log(i, 'y:',y,'h:', h,'x:',x,'w:', w)
         //down side side collision detection
         //we only expand vertically if the difference below is small
         if ((yc + hc) <= y && (y < (yc + hc + 100))) {
@@ -270,8 +299,8 @@ class TradingPage extends React.PureComponent<Props, State> {
     //we didn't find a nearby element blocking vertically
     if (newYPlusH === 100000) newYPlusH = yc + hc
 
-    let newLayout = []    
-    this.state.layout.forEach(elem => {
+    let newLayout = []
+    currentLayout.forEach(elem => {
       if (elem.i === item) {
         newLayout.push({ ...elem, x: newX, w: newXPlusW - newX, h: newYPlusH - yc })
       } else {
@@ -279,28 +308,27 @@ class TradingPage extends React.PureComponent<Props, State> {
       }
     })
 
-    console.log('The new layout is', newLayout)
-    this.setState({ layout: newLayout })
+    let newLayouts = { ...this.state.layouts, [currentBreakpoint]: newLayout }
+    this.setState({ layouts: newLayouts })
   }
 
   render() {
     const { authenticated, isInitiated } = this.props
-    const { calloutOptions, calloutVisible, layout } = this.state
+    const { calloutOptions, calloutVisible, layouts } = this.state
 
     if (!authenticated) return <Redirect to="/login" />
     if (!isInitiated) return null;
     
     return (
       <ResponsiveReactGridLayout
-        layout={layout}
-        // layouts={layouts}
-        // onBreakpointChange={this.onBreakpointChange}
-        // breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-        // cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}>
-        onLayoutChange={this.onLayoutChange}
+        // layout={layout}
+        layouts={layouts}
+        breakpoints={{lg: Sizes.laptop, md: Sizes.tablet, sm: Sizes.mobileL, xs: Sizes.mobileM, xxs: Sizes.mobileS }}
+        cols={{lg:60, md: 60, sm: 60, xs: 60, xxs: 60 }}
+        onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+        onBreakpointChange={this.onBreakpointChange}
         className="layout"
         rowHeight={10}
-        cols={60}
         compactType="vertical"
       >
         {/* <CloseableCallout

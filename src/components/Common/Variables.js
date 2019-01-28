@@ -49,6 +49,17 @@ export const Sizes = {
   desktop: '3000px'
 }
 
+export const SizesAsNumbers = {
+  mobileS: 375,
+  mobileM: 425,
+  mobileL: 768,
+  tablet: 1024,
+  laptop: 1440,
+  laptopM: 2048,
+  laptopL: 2560,
+  desktop: 3000
+}
+
 export const Devices = {
   mobileS: `(max-width: ${Sizes.mobileS})`,
   mobileM: `(max-width: ${Sizes.mobileM})`,

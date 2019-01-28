@@ -19,6 +19,7 @@ import {
   Loading, 
   CenteredMessage,
   SmallText,
+  Hideable
 } from '../Common'
 
 import { relativeDate } from '../../utils/helpers'
@@ -42,6 +43,13 @@ type Props = {
   expand: SyntheticEvent<> => void
 }
 
+const breakpoints = {
+  S: 400,
+  M: 600, 
+  L: 800
+}
+
+
 const OrdersTableRenderer = (props: Props) => {
   const { 
     loading, 
@@ -55,28 +63,33 @@ const OrdersTableRenderer = (props: Props) => {
   } = props
 
   return (
-    <CardBox>
-      <OrdersTableHeader>
-        <Heading>Orders</Heading>
-        <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
-        <Button icon='maximize' minimal onClick={expand} />
-      </OrdersTableHeader>
-      <Wrapper>
-      <Collapse isOpen={isOpen}>
-        <Tabs selectedTabId={selectedTabId} onChange={onChange}>
-          <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} cancelOrder={cancelOrder} />} />
-          <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} cancelOrder={cancelOrder} />} />
-          <Tab id="cancelled" title="CANCELLED" panel={<OrdersTablePanel loading={loading} orders={orders['CANCELLED']} cancelOrder={cancelOrder} />} />
-          <Tab id="executed" title="EXECUTED" panel={<OrdersTablePanel loading={loading} orders={orders['FILLED']} cancelOrder={cancelOrder} />} />
-        </Tabs>
-      </Collapse>
-      </Wrapper>
-    </CardBox>
+    <AutoSizer style={{ width: '100%', height: '100%' }}>
+        {({ width, height }) => (
+          <CardBox>
+            <OrdersTableHeader>
+              <Heading>Orders</Heading>
+              <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+              <Button icon='maximize' minimal onClick={expand} />
+            </OrdersTableHeader>
+            <Wrapper>
+            <Collapse isOpen={isOpen}>
+              <Tabs selectedTabId={selectedTabId} onChange={onChange}>
+                <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} cancelOrder={cancelOrder} width={width} />} />
+                <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} cancelOrder={cancelOrder} width={width} />} />
+                <Tab id="cancelled" title="CANCELLED" panel={<OrdersTablePanel loading={loading} orders={orders['CANCELLED']} cancelOrder={cancelOrder} width={width} />} />
+                <Tab id="executed" title="EXECUTED" panel={<OrdersTablePanel loading={loading} orders={orders['FILLED']} cancelOrder={cancelOrder} width={width} />} />
+              </Tabs>
+            </Collapse>
+            </Wrapper>
+          </CardBox>
+        )}
+      </AutoSizer>
   )
 }
 
-const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order>, cancelOrder: string => void }) => {
-  const { loading, orders, cancelOrder } = props
+const OrdersTablePanel = (props: *) => {
+  const { loading, orders, cancelOrder, width } = props
+  console.log(width)
 
   return loading ? (
     <Loading />
@@ -88,22 +101,37 @@ const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order>, cance
             <ListHeader>
               <HeaderCell className="pair">PAIR</HeaderCell>
               <HeaderCell className="amount">AMOUNT</HeaderCell>
-              <HeaderCell className="price">PRICE</HeaderCell>
+              <Hideable hiddenIf={width<breakpoints.L}>
+                <HeaderCell className="price">PRICE</HeaderCell>
+              </Hideable>
               <HeaderCell className="status">STATUS</HeaderCell>
               <HeaderCell className="side">SIDE</HeaderCell>
-              <HeaderCell className="time">TIME</HeaderCell>
+              <Hideable hiddenIf={width<breakpoints.L}>
+                <HeaderCell className="time">TIME</HeaderCell>
+              </Hideable>
               <HeaderCell className="cancel" />
             </ListHeader>
           </ListHeaderWrapper>
           <ListBodyWrapper>
-            {orders.map((order, index) => <OrderRow key={index} order={order} index={index} cancelOrder={cancelOrder} />)}
+            {orders.map((order, index) => {
+              return (
+                <OrderRow 
+                  key={index} 
+                  order={order} 
+                  index={index} 
+                  cancelOrder={cancelOrder}
+                  width={width}
+                />
+              )
+            }
+            )}
           </ListBodyWrapper>
         </ListContainer>
   )
 }
 
-const OrderRow = (props: { order: Order, index: number, cancelOrder: string => void }) => {
-  const { order, cancelOrder } = props
+const OrderRow = (props: *) => {
+  const { order, cancelOrder, width } = props
 
   return (
     <Row>
@@ -117,20 +145,24 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
           {formatNumber(order.filled, { precision: 3 })}/{formatNumber(order.amount, { precision: 3 })}
         </SmallText>
       </Cell>
+      <Hideable hiddenIf={width < breakpoints.L}>
       <Cell className="price" muted>
         <SmallText muted>
           {formatNumber(order.price, { precision: 5 })} ({order.type})
         </SmallText>
       </Cell>
-      <Cell className="status" muted>
-        <StatusTag status={order.status} />
-      </Cell>
+      </Hideable>
+        <Cell className="status" muted>
+          <StatusTag status={order.status} />
+        </Cell>
       <Cell className="side" side={order.side} muted>
         <SmallText color={order.side === 'BUY' ? Colors.BUY : Colors.SELL}>{order.side}</SmallText>
       </Cell>
-      <Cell className="time" muted>
-        <SmallText muted>{relativeDate(order.time)}</SmallText>
-      </Cell>
+      <Hideable hiddenIf={width < breakpoints.L}>
+        <Cell className="time" muted>
+          <SmallText muted>{relativeDate(order.time)}</SmallText>
+        </Cell>
+      </Hideable>
       <Cell className="cancel" muted>
         {order.cancelleable && (
           <Button intent="danger" minimal onClick={() => cancelOrder(order.hash)}>
