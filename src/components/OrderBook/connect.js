@@ -10,9 +10,9 @@ type OwnProps = {
 }
 
 export const mapStateToProps = (state: State, ownProps: OwnProps) => {
-  let { bids, asks, currentPair } = orderBookSelector(state);
+  let selector = orderBookSelector(state);
   
-  return { bids, asks, currentPair, ...ownProps };
+  return { ...selector, ...ownProps };
 };
 
 export const mapDispatchToProps = {

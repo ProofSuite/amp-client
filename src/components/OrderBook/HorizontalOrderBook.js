@@ -2,11 +2,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { formatNumber } from 'accounting-js'
+
 import { 
   Loading, 
   SmallText,
   Colors,
-  Text
+  Text,
+  FlexRow
 } from '../Common';
 
 import {
@@ -81,6 +83,7 @@ class HorizontalOrderBook extends React.Component<Props> {
               ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
             </Text>
           </Heading>
+          <FlexRow>
           <Button 
             icon={isOpen ? 'chevron-up' : 'chevron-down'} 
             minimal 
@@ -99,6 +102,7 @@ class HorizontalOrderBook extends React.Component<Props> {
             minimal
             small
           />
+          </FlexRow>
         </OrderBookHeader>
         <Wrapper>
           <Collapse isOpen={isOpen} transitionDuration={100}>
@@ -308,7 +312,7 @@ const HeaderRow = styled.li`
 const OrderBookHeader = styled.div`
   display: grid;
   grid-auto-flow: column;
-  justify-content: start;
+  justify-content: space-between;
   grid-gap: 10px;
   align-items: center;
   margin-bottom: 10px;

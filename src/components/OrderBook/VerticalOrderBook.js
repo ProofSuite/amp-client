@@ -36,6 +36,8 @@ type BidOrAsk = {
 type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
+  midMarketPrice: ?number,
+  spread: ?number,
   onSelect: BidOrAsk => void,
   isOpen: boolean,
   toggleCollapse: SyntheticEvent<> => void,
@@ -73,6 +75,8 @@ class VerticalOrderBook extends React.Component<Props> {
     onSelect,
     toggleCollapse,
     expand,
+    midMarketPrice,
+    spread
   } = this.props;
 
   return (
@@ -112,6 +116,8 @@ class VerticalOrderBook extends React.Component<Props> {
             bids={bids} 
             asks={asks} 
             onSelect={onSelect} 
+            midMarketPrice={midMarketPrice}
+            spread={spread}
           />
         </Collapse>
       </Wrapper>
@@ -123,7 +129,13 @@ class VerticalOrderBook extends React.Component<Props> {
 export default ContextMenuTarget(VerticalOrderBook)
 
 export const OrderListRenderer = (props: *) => {
-  const { bids, asks, onSelect } = props;
+  const { 
+    bids, 
+    asks, 
+    onSelect,
+    midMarketPrice,
+    spread
+  } = props;
 
   return (
     <OrderListBox>
@@ -153,8 +165,8 @@ export const OrderListRenderer = (props: *) => {
           )}
           <Box>
             <FlexColumn alignItems="center" my={3}>
-                <Text>Midmarket Price: 123.45</Text>
-                <Text>Spread: 0.34%</Text>
+                <Text>Midmarket Price: {midMarketPrice ? formatNumber(midMarketPrice, { precision: 5 }) : 'N.A'}</Text>
+                <Text>Spread: {spread ? formatNumber(spread, { precision: 2 }) : 'N.A'}%</Text>
             </FlexColumn>
           </Box>
           {bids && (

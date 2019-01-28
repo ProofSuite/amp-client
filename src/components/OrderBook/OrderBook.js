@@ -17,6 +17,8 @@ type Props = {
   asks: Array<BidOrAsk>,
   bids: Array<BidOrAsk>,
   currentPair: TokenPair,
+  midMarketPrice: ?number,
+  spread: ?number,
   select: BidOrAsk => void,
   onCollapse: string => void,
   onExpand: string => void,
@@ -51,8 +53,20 @@ class OrderBook extends React.Component<Props, State> {
 
   renderOrderBook = (width: number, height: number) => {
     const {
-      props: { bids, asks, currentPair, select, onResetDefaultLayout },
-      state: { selectedTabId, isOpen, directionSetting },
+      props: { 
+        bids, 
+        asks,
+        currentPair,
+        midMarketPrice,
+        spread,
+        select,
+        onResetDefaultLayout
+      },
+      state: { 
+        selectedTabId, 
+        isOpen, 
+        directionSetting
+      },
       changeTab,
       toggleCollapse,
       expand,
@@ -66,6 +80,8 @@ class OrderBook extends React.Component<Props, State> {
           bids={bids}
           asks={asks}
           currentPair={currentPair}
+          midMarketPrice={midMarketPrice}
+          spread={spread}
           onSelect={select}
           selectedTabId={selectedTabId}
           isOpen={isOpen}
@@ -80,6 +96,8 @@ class OrderBook extends React.Component<Props, State> {
           bids={bids}
           asks={asks}
           currentPair={currentPair}
+          midMarketPrice={midMarketPrice}
+          spread={spread}
           onSelect={select}
           selectedTabId={selectedTabId}
           isOpen={isOpen}
