@@ -236,12 +236,12 @@ const TradesTableHeader = styled.div`
   justify-content: space-between;
   grid-gap: 10px;
   align-items: center;
-  padding-bottom: 10px;
+  margin-bottom: 10px;
 `;
 
 const Wrapper = styled.div`
   overflow-y: scroll;
-  height: 95%;
+  height: 90%;
 `
 
 const Heading = styled.h3`
