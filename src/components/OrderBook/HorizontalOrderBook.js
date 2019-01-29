@@ -55,9 +55,9 @@ class HorizontalOrderBook extends React.Component<Props> {
 
     return (
         <Menu>
-            <MenuItem text="Reset Default Layout" onClick={onResetDefaultLayout} />
-            <MenuItem text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
-            <MenuItem text="Maximize" onClick={expand} />
+            <MenuItem icon="page-layout" text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem icon={isOpen ? "chevron-up" : "chevron-down"} text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem icon="zoom-to-fit" text="Fit" onClick={expand} />
         </Menu>
     );
   }

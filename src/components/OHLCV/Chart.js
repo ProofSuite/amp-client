@@ -95,27 +95,6 @@ function calculateData(inputData) {
 
 class OHLCVChart extends React.Component {
 
-  renderContextMenu = (moreProps, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // console.log('eyyyey')
-
-    // let menu = (
-    //   <Menu>
-    //       <MenuItem text="Reset Default Layout" />
-    //   </Menu>
-    // )
-
-    // console.log('hey again')
-
-    // return ReactDOM.createPortal(
-    //   menu,
-    //   document.body
-    // )
-
-    // console.log('hey again again')
-  }
-
   render() {
     const {
       type,
@@ -262,9 +241,6 @@ class OHLCVChart extends React.Component {
                   }
                 ]}
               />
-              {/* <ClickCallback
-                onContextMenu={this.renderContextMenu}
-					    /> */}
             </Chart>
           )}
 

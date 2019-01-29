@@ -92,7 +92,7 @@ const OrderFormRenderer = (props: Props) => {
   } = props
 
   return (
-    <Wrapper>
+    <Wrapper onContextMenu={onContextMenu}>
       <OrderFormHeader>
         <ButtonRow>
           <Button

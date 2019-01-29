@@ -82,10 +82,6 @@ class OrderForm extends React.PureComponent<Props, State> {
   }
 
   onInputChange = ({ target }: Object) => {
-
-    console.log('hello')
-    console.log(target)
-
     const { loggedIn } = this.props
     switch (target.name) {
       case 'stopPrice':
@@ -274,9 +270,9 @@ class OrderForm extends React.PureComponent<Props, State> {
 
     return (
         <Menu>
-            <MenuItem text="Reset Default Layout" onClick={onResetDefaultLayout} />
-            <MenuItem text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
-            <MenuItem text="Maximize" onClick={expand} />
+            <MenuItem icon="page-layout" text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem icon={isOpen ? "chevron-up" : "chevron-down"} text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem icon="zoom-to-fit" text="Fit" onClick={expand} />
         </Menu>
     );
   }
