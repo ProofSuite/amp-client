@@ -271,14 +271,14 @@ const Toolbar = ({
           onClick={expand}
         />
         <Button 
-          icon={fullScreen ? 'minimize' : 'maximize'}
-          minimal 
-          onClick={fullScreen ? onResetDefaultLayout : onFullScreen}
-        />
-        <Button 
           icon='move' 
           className="drag" 
           minimal 
+        />
+        <Button 
+          icon={fullScreen ? 'minimize' : 'maximize'}
+          minimal 
+          onClick={fullScreen ? onResetDefaultLayout : onFullScreen}
         />
       </FlexItem>
     </FlexRow>

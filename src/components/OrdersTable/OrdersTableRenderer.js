@@ -73,13 +73,7 @@ const OrdersTableRenderer = (props: Props) => {
           <CardBox onContextMenu={onContextMenu}>
             <OrdersTableHeader>
               <Heading>Orders</Heading>
-              <FlexRow>
-                <Button 
-                  icon={isOpen ? 'chevron-up' : 'chevron-down'} 
-                  minimal 
-                  onClick={toggleCollapse}
-                  small
-                />
+              <FlexRow>                
                 <Button 
                   icon='zoom-to-fit' 
                   minimal 
@@ -90,6 +84,12 @@ const OrdersTableRenderer = (props: Props) => {
                   icon='move'
                   className="drag"
                   minimal 
+                  small
+                />
+                <Button 
+                  icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+                  minimal 
+                  onClick={toggleCollapse}
                   small
                 />
               </FlexRow>

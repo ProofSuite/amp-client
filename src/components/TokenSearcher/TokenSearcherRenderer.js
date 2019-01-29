@@ -25,6 +25,7 @@ import {
   OverlaySpinner,
   ColoredCryptoIcon,
   SmallTextDiv,
+  FlexRow
 } from '../Common'
 
 import {
@@ -109,9 +110,11 @@ const TokenSearchRenderer = (props: Props) => {
               value={searchFilter}
               placeholder="Search Token ..."
             />
-            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal />
-            <Button icon='move' className="drag" minimal />
-            <Button icon='zoom-to-fit' onClick={expand} minimal />
+            <FlexRow ml={1}>
+              <Button icon='zoom-to-fit' onClick={expand} minimal small />
+              <Button icon='move' className="drag" minimal small />
+              <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal small />
+            </FlexRow>
           </div>
           <Collapse isOpen={isOpen}>
             <SelectedPair

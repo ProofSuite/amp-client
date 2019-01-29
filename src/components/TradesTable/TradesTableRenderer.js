@@ -68,12 +68,6 @@ const TradesTableRenderer = (props: Props) => {
                 </Text>
               </Heading>
               <FlexRow>
-              <Button 
-                icon={isOpen ? 'chevron-up' : 'chevron-down'} 
-                minimal 
-                onClick={toggleCollapse}
-                small
-              />
               <Button
                 icon='zoom-to-fit'
                 minimal
@@ -84,6 +78,12 @@ const TradesTableRenderer = (props: Props) => {
                 icon='move' 
                 className="drag" 
                 minimal 
+                small
+              />
+              <Button 
+                icon={isOpen ? 'chevron-up' : 'chevron-down'}
+                minimal 
+                onClick={toggleCollapse}
                 small
               />
               </FlexRow>
