@@ -224,6 +224,7 @@ const CardBox = styled(Card)`
 
 const Wrapper = styled.div`
   overflow-y: scroll;
+  overflow-x: hidden;
   height: 85%;
 `
 const OrderListBox = styled.div``
