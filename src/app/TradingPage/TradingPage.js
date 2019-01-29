@@ -47,13 +47,42 @@ type Layout = Array<Object>
 type LayoutMap = { [string]: Layout }
 
 const defaultSizes = {
-  'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
-  'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
-  'ohlcv': { x: 12, y: 0, w: 48, h: 30},
-  'ordersTable': { x: 12, y: 30, w: 48, h: 20 },
-  'orderBook': { x: 12, y: 50, w: 24, h: 30 },
-  'tradesTable': { x: 36, y: 50, w: 24, h: 30 },
+  'lg': {
+    'tokenSearcher': { x: 0, y: 0, w: 12, h: 30, minW: 12 },
+    'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
+    'ohlcv': { x: 12, y: 0, w: 36, h: 28},
+    'ordersTable': { x: 12, y: 35, w: 23, h: 16 },
+    'orderBook': { x: 48, y: 0, w: 12, h: 28 },
+    'tradesTable': { x: 35, y: 35, w: 25, h: 16 },
+  },
+  'md': {
+    'tokenSearcher': { x: 0, y: 0, w: 18, h: 30, minW: 12 },
+    'orderForm': { x: 0, y: 30, w: 18, h: 16, minH: 18, maxH: 18 },
+    'ohlcv': { x: 18, y: 0, w: 42, h: 30 },
+    'ordersTable': { x: 18, y: 30, w: 42, h: 20 },
+    'orderBook': { x: 18, y: 50, w: 21, h: 30 },
+    'tradesTable': { x: 39, y: 50, w: 21, h: 30 },
+  },
+  'sm': {
+    'tokenSearcher': { x: 0, y: 0, w: 30, h: 16, minW: 12 },
+    'orderForm': { x: 30, y: 0, w: 30, h: 16, minH: 16, maxH: 16 },
+    'ohlcv': { x: 0, y: 16, w: 60, h: 30 },
+    'ordersTable': { x: 0, y: 106, w: 60, h: 20 },
+    'orderBook': { x: 0, y: 46, w: 30, h: 30 },
+    'tradesTable': { x: 30, y: 46, w: 30, h: 30 },
+  },
+  'xs': {
+    'tokenSearcher': { x: 0, y: 0, w: 60, h: 20, minW: 12 },
+    'orderForm': { x: 0, y: 40, w: 60, h: 16, minH: 16, maxH: 16 },
+    'ohlcv': { x: 0, y: 20, w: 60, h: 20 },
+    'ordersTable': { x: 0, y: 56, w: 60, h: 20 },
+    'orderBook': { x: 0, y: 76, w: 60, h: 30 },
+    'tradesTable': { x: 0, y: 96, w: 60, h: 30 },
+  },
+  
 }
+
+
 
 const fullScreenOHLCVLayouts: LayoutMap = {
   'lg': [ {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 } ],
@@ -219,7 +248,7 @@ class TradingPage extends React.PureComponent<Props, State> {
     currentLayout.forEach(elem => {
       if (elem.i === item) {
         this.state.collapsedItems[item]
-        ? newLayout.push({ ...elem, h: defaultSizes[item].h })
+        ? newLayout.push({ ...elem, h: defaultSizes[currentBreakpoint][item].h })
         : newLayout.push({ ...elem, h: 4 })
       } else {
         newLayout.push(elem)
