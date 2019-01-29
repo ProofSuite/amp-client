@@ -9,6 +9,7 @@ import Help from '../../components/Help'
 import { Card, Position, Button, Tag, Tabs, Tab, InputGroup, Icon } from '@blueprintjs/core';
 import { Flex, FlexRow, FlexItem, Box, Colors, Text,TextDiv, TextBox, BlueGlowingButton } from '../Common'
 import { Fonts } from '../Common/Variables'
+import { Spring } from 'react-spring'
 
 import type { Tx } from '../../types/transactions'
 
@@ -154,45 +155,45 @@ const PortfolioPanel = (props: *) => {
   } = props
 
   return (
-    <React.Fragment>
-      <Box py={3}>
-        <TextBox>
-          <Tag minimal large>Ethereum Account</Tag>
-        </TextBox>
-        <TextDiv py={2} small muted>
-          Here is your ethereum address where people can send you tokens:
-        </TextDiv>
-        <FlexRow 
-          py={2} 
-          px={1} 
-          justifyContent="flex-end" 
-          fontSize={Fonts.FONT_SIZE_SMALL} 
-        >
-          <a href={accountEtherscanUrl}
-             target="_blank"
-             rel="noopener noreferrer"
-             class="bp3-text-overflow-ellipsis"
-           >
-            {accountAddress}
-          </a>
-          <CopyToClipboardBox px={1}>
-            <CopyToClipboard text={accountAddress}>
-              <Icon icon="clipboard" intent="primary" />
-            </CopyToClipboard>
-          </CopyToClipboardBox>
-        </FlexRow>
-      </Box>
-      <Tag minimal large>Portfolio Overview</Tag>
-      <TokenBalanceChartBox>
-        <TokenBalanceChart />
-      </TokenBalanceChartBox>
-      <Tag minimal large>Recent Transactions</Tag>
-        <Box my={2}>
-          <RecentTxTable
-            transactions={transactions}
-          />
+    <Box>
+          <Box py={3}>
+          <TextBox>
+            <Tag minimal large>Ethereum Account</Tag>
+          </TextBox>
+          <TextDiv py={2} small muted>
+            Here is your ethereum address where people can send you tokens:
+          </TextDiv>
+          <FlexRow 
+            py={2} 
+            px={1} 
+            justifyContent="flex-end" 
+            fontSize={Fonts.FONT_SIZE_SMALL} 
+          >
+            <a href={accountEtherscanUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bp3-text-overflow-ellipsis"
+            >
+              {accountAddress}
+            </a>
+            <CopyToClipboardBox px={1}>
+              <CopyToClipboard text={accountAddress}>
+                <Icon icon="clipboard" intent="primary" />
+              </CopyToClipboard>
+            </CopyToClipboardBox>
+          </FlexRow>
         </Box>
-    </React.Fragment>
+        <Tag minimal large>Portfolio Overview</Tag>
+        <TokenBalanceChartBox>
+          <TokenBalanceChart />
+        </TokenBalanceChartBox>
+        <Tag minimal large>Recent Transactions</Tag>
+          <Box my={2}>
+            <RecentTxTable
+              transactions={transactions}
+            />
+          </Box>
+        </Box>
   )
 }
 
@@ -218,7 +219,9 @@ const AddTokenPanel = (props: *) => {
   } = props
 
   return (
-      <React.Fragment>
+      <Spring from={{opacity: 0}} to={{opacity: 1}}>
+      {props =>
+        <Box style={props}>
         <Text muted>
           Add a token that is not listed among the default AMP tokens. If the token has not yet been added to 
           the AMP you can also list the token.
@@ -251,7 +254,7 @@ const AddTokenPanel = (props: *) => {
           </Box>
       </Flex>
       {tokenSymbol &&
-        <React.Fragment>
+        <Box>
           <h3>Token found: {tokenSymbol}</h3>
           <a href={tokenEtherscanUrl} target="_blank">→ View on Etherscan</a>
           <Box py={3}>
@@ -297,10 +300,11 @@ const AddTokenPanel = (props: *) => {
               </Box>
             </Flex>
           </Box>
- 
-        </React.Fragment>
+        </Box>
+        }
+      </Box>
       }
-    </React.Fragment>
+    </Spring>
   )
 }
 

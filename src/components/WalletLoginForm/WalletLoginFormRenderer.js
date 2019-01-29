@@ -27,6 +27,8 @@ import {
 import Help from '../../components/Help';
 import WalletSelect from './WalletSelect';
 
+import { Spring } from 'react-spring'
+
 
 // TODO -> Intent issue is still to get fix this func () => `JSONFileInputForm`
 
@@ -203,25 +205,29 @@ const WalletLoginFormRenderer = (props: Props) => {
   };
 
   return (
-    <Card elevation="1">
-      <RadioGroup name="method" onChange={handleChange} selectedValue={method} label="Choose how to access your wallet">
-        <Radio label="Saved Wallet" value="savedWallet" disabled={savedWalletsDisabled} />
-        <Radio label="Private Key" value="privateKey" />
-        <Radio label="JSON" value="json" />
-        <Radio label="Wallet File" value="walletFile" />
-        <Radio label="Mnemonic Sentence" value="mnemonic" />
-      </RadioGroup>
-      <InputFormsBox>{inputForms[method]}</InputFormsBox>
-      <FooterWrapper>
-        <ButtonBox>
-          <Button intent="danger" text="Back" onClick={showLoginMethods} />
-        </ButtonBox>
-        <ButtonBox>
-          <Button intent="primary" text="Authenticate" onClick={submit} />
-        </ButtonBox>
-      </FooterWrapper>
-      <OverlaySpinner visible={loading} transparent />
-    </Card>
+    <Spring from={{ opacity: 0, marginLeft: -1000, marginRight: 1000 }} to={{ opacity: 1, marginLeft: 0, marginRight: 0 }}>
+      {props =>
+      <Card elevation="1" style={props}>
+        <RadioGroup name="method" onChange={handleChange} selectedValue={method} label="Choose how to access your wallet">
+          <Radio label="Saved Wallet" value="savedWallet" disabled={savedWalletsDisabled} />
+          <Radio label="Private Key" value="privateKey" />
+          <Radio label="JSON" value="json" />
+          <Radio label="Wallet File" value="walletFile" />
+          <Radio label="Mnemonic Sentence" value="mnemonic" />
+        </RadioGroup>
+        <InputFormsBox>{inputForms[method]}</InputFormsBox>
+        <FooterWrapper>
+          <ButtonBox>
+            <Button intent="danger" text="Back" onClick={showLoginMethods} />
+          </ButtonBox>
+          <ButtonBox>
+            <Button intent="primary" text="Authenticate" onClick={submit} />
+          </ButtonBox>
+        </FooterWrapper>
+        <OverlaySpinner visible={loading} transparent />
+      </Card>
+      }
+    </Spring>
   );
 };
 

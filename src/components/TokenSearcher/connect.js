@@ -7,8 +7,15 @@ import { updateCurrentPair } from '../../store/models/tokenSearcher';
 
 import type { State } from '../../types';
 
-export const mapStateToProps = (state: State) => {
-  return tokenSearcherSelector(state);
+type Props = {
+  onCollapse: string => void
+}
+
+export const mapStateToProps = (state: State, ownProps: Props) => {
+  return {
+    ...tokenSearcherSelector(state),
+    ...ownProps
+  }
 };
 
 export const mapDispatchToProps = {

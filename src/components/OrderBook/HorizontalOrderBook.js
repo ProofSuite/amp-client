@@ -2,13 +2,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { formatNumber } from 'accounting-js'
+
 import { 
   Loading, 
   SmallText,
-  Colors
+  Colors,
+  Text,
+  FlexRow
 } from '../Common';
 
-import { ResizableBox } from 'react-resizable'
+import {
+  Card,
+  Button,
+  Collapse,
+  Menu,
+  MenuItem,
+  ContextMenuTarget
+} from '@blueprintjs/core'
+
+import type { TokenPair } from '../../types/Tokens'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 type BidOrAsk = {
@@ -21,13 +33,98 @@ type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
   onSelect: BidOrAsk => void,
+  selectedTabId: string,
+  isOpen: boolean,
+  currentPair: TokenPair,
+  changeTab: string => void,
+  toggleCollapse: SyntheticEvent<> => void,
+  expand: SyntheticEvent<> => void,
+  onResetDefaultLayout: void => void
 };
 
-export const OrderBookRenderer = (props: Props) => {
+
+class HorizontalOrderBook extends React.Component<Props> {
+
+    renderContextMenu = () => {
+    const {
+      isOpen,
+      onResetDefaultLayout,
+      expand,
+      toggleCollapse
+    } = this.props
+
+    return (
+        <Menu>
+            <MenuItem icon="page-layout" text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem icon={isOpen ? "chevron-up" : "chevron-down"} text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem icon="zoom-to-fit" text="Fit" onClick={expand} />
+        </Menu>
+    );
+  }
+
+  render() {
+    const { 
+      bids, 
+      asks,
+      currentPair, 
+      isOpen,
+      onSelect,
+      toggleCollapse,
+      expand,
+    } = this.props
+
+    return (
+      <CardBox onContextMenu={this.renderContextMenu}>
+        <OrderBookHeader>
+          <Heading>
+            Order Book
+            <Text muted>
+              {' '}
+              ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
+            </Text>
+          </Heading>
+          <FlexRow>
+          <Button 
+            icon='zoom-to-fit' 
+            minimal 
+            onClick={expand}
+            small
+          />
+          <Button 
+            icon='move' 
+            className="drag"
+            minimal
+            small
+          />
+          <Button 
+            icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+            minimal 
+            onClick={toggleCollapse} 
+            small
+          />
+          </FlexRow>
+        </OrderBookHeader>
+        <Wrapper>
+          <Collapse isOpen={isOpen} transitionDuration={100}>
+            <OrderListRenderer
+              bids={bids} 
+              asks={asks} 
+              onSelect={onSelect} 
+            />
+          </Collapse>
+        </Wrapper>
+      </CardBox>
+    )
+  }
+}
+
+
+
+export const OrderListRenderer = (props: *) => {
   const { bids, asks, onSelect } = props;
 
   return (
-    <React.Fragment>
+    <OrderListBox>
       <OrderBookBox>
         {!bids && <Loading />}
         {bids && (
@@ -53,7 +150,6 @@ export const OrderBookRenderer = (props: Props) => {
           </ListContainer>
         )}
       </OrderBookBox>
-      <ResizableBox height={400}>
         <OrderBookBox>
           {bids && (
             <ListContainer className="list-container">
@@ -78,8 +174,7 @@ export const OrderBookRenderer = (props: Props) => {
             </ListContainer>
           )}
         </OrderBookBox>
-      </ResizableBox>
-    </React.Fragment>
+    </OrderListBox>
   );
 };
 
@@ -96,7 +191,7 @@ const BuyOrder = (props: SingleOrderProps) => {
       <BuyRowBackground amount={order.relativeTotal} />
       <Cell>{formatNumber(order.total, { precision: 3 })}</Cell>
       <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
-      <Cell>{formatNumber(order.price, { precision: 5 })}</Cell>
+      <Cell color={Colors.BUY}>{formatNumber(order.price, { precision: 5 })}</Cell>
     </Row>
   );
 };
@@ -107,24 +202,38 @@ const SellOrder = (props: SingleOrderProps) => {
   return (
     <Row onClick={onClick}>
       <SellRowBackGround amount={order.relativeTotal} />
-      <Cell>{formatNumber(order.price, { precision: 5 })}</Cell>
+      <Cell color={Colors.SELL}>{formatNumber(order.price, { precision: 5 })}</Cell>
       <Cell>{formatNumber(order.amount, { precision: 3 })}</Cell>
       <Cell>{formatNumber(order.total, { precision: 3 })}</Cell>
     </Row>
   );
 };
 
-const OrderBookBox = styled.div.attrs({})`
+const CardBox = styled(Card)`
   width: 100%;
   height: 100%;
+  min-height: 50px;
+`;
+
+const Wrapper = styled.div`
+  overflow-y: scroll;
+  height: 85%;
+`
+
+const OrderBookBox = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-  overflow-y: scroll;
 `;
+
 const ListContainer = styled.div`
   width: 100%;
 `;
+
+const OrderListBox = styled.div`
+`;
+
 const List = styled.ul``;
 
 const Row = styled.li.attrs({
@@ -200,8 +309,21 @@ const HeaderRow = styled.li`
   }
 `;
 
+const OrderBookHeader = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  grid-gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Heading = styled.h3`
+  margin: auto;
+`;
+
 const HeaderCell = styled.span`
   width: 20%;
 `;
 
-export default OrderBookRenderer;
+export default ContextMenuTarget(HorizontalOrderBook);

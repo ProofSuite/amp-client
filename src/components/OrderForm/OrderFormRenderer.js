@@ -1,5 +1,7 @@
 // @flow
 import React from 'react'
+import styled from 'styled-components'
+import { utils } from 'ethers'
 
 import { 
   Position, 
@@ -16,7 +18,6 @@ import {
 
 import {
    Flex, 
-   HeaderText, 
    MutedText, 
    RedGlowingButton, 
    GreenGlowingButton,
@@ -24,9 +25,10 @@ import {
    Box
 } from '../Common'
 
-import styled from 'styled-components'
 import Help from '../../components/Help'
-import { utils } from 'ethers'
+
+import type { Node } from 'react'
+
 
 type Props = {
   selectedTabId: string,
@@ -46,14 +48,16 @@ type Props = {
   handleChangeOrderType: string => void,
   handleSendOrder: void => void,
   handleUnlockPair: (string, string) => void,
-  toggleCollapse: (SyntheticEvent<>) => void,
   makeFee: string,
   takeFee: string,
   baseTokenDecimals: number,
   quoteTokenDecimals: number,
   pairIsAllowed: boolean,
   pairAllowanceIsPending: boolean,
-  handleSideChange: string => void
+  handleSideChange: string => void,
+  toggleCollapse: SyntheticEvent<> => void,
+  expand: SyntheticEvent<> => void,
+  onContextMenu: Node => void
 }
 
 const OrderFormRenderer = (props: Props) => {
@@ -83,12 +87,13 @@ const OrderFormRenderer = (props: Props) => {
     pairAllowanceIsPending,
     handleUnlockPair,
     handleSideChange,
+    expand,
+    onContextMenu
   } = props
 
   return (
-    <Wrapper className="order-form">
+    <Wrapper onContextMenu={onContextMenu}>
       <OrderFormHeader>
-        {/* <HeaderText text={`${side} ${baseTokenSymbol}`} /> */}
         <ButtonRow>
           <Button
             text="BUY"
@@ -121,7 +126,24 @@ const OrderFormRenderer = (props: Props) => {
             active={selectedTabId === 'market'}
             intent={selectedTabId === 'market' ? 'primary' : ''}
           />
-          <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
+          <Button 
+            icon='zoom-to-fit' 
+            minimal 
+            onClick={expand} 
+            small
+          />
+          <Button 
+            icon='move' 
+            className="drag" 
+            minimal 
+            small
+          />
+          <Button 
+            icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+            minimal 
+            onClick={toggleCollapse} 
+            small
+          />
         </ButtonRow>
       </OrderFormHeader>
       <Collapse isOpen={isOpen}>
@@ -477,14 +499,12 @@ const OrderFormHeader = styled.div`
 
 const Wrapper = styled(Card)`
   min-width: 240px;
+  height: 100%;
 `
 
 const ButtonRow = styled.span`
   display: flex;
   justify-content: flex-end;
-  & .bp3-button {
-    margin-left: 5px;
-  }
 `
 const RadioButtonsWrapper = styled.div`
   width: 100%;

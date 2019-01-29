@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box } from "../../components/Common"
 
+import { Spring } from 'react-spring'
+
 import {
   Devices
 } from '../../components/Common/Variables'
@@ -13,7 +15,9 @@ class FaqPage extends React.PureComponent {
     const { match } = this.props;
 
     return (
-      <Container>
+      <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+      {props => 
+      <Container style={props}>
         <h1>AMP Knowledge Base</h1>
         <FaqGrid>
           <FirstColumn>
@@ -228,6 +232,8 @@ class FaqPage extends React.PureComponent {
           </SecondColumn>
         </FaqGrid>
       </Container>
+      }
+      </Spring>
     );
   }
 }

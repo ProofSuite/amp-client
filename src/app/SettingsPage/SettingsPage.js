@@ -9,6 +9,7 @@ import SignerSettingsForm from '../../components/SignerSettingsForm/index.js';
 import { Box } from '../../components/Common';
 
 import { Devices } from '../../components/Common/Variables'
+import { Spring } from 'react-spring'
 
 import type { Wallet } from '../../types/wallets'
 import type { Address } from '../../types/common'
@@ -41,14 +42,18 @@ class SettingsPage extends React.PureComponent<Props, State> {
     }
 
     return (
-      <React.Fragment>
-        <WalletSettingsFormBox p={2} pt={3}>
-          <WalletSettingsForm wallets={wallets} removeWallet={this.removeWallet} />
-        </WalletSettingsFormBox>
-        <SignerSettingsFormBox p={2} pb={3}>
-          <SignerSettingsForm />
-        </SignerSettingsFormBox>
-      </React.Fragment>
+      <Spring from={{ opacity: 0 }} to= {{ opacity: 1}} >
+      {props =>
+        <Box style={props}>
+          <WalletSettingsFormBox p={2} pt={3}>
+            <WalletSettingsForm wallets={wallets} removeWallet={this.removeWallet} />
+          </WalletSettingsFormBox>
+          <SignerSettingsFormBox p={2} pb={3}>
+            <SignerSettingsForm />
+          </SignerSettingsFormBox>
+        </Box>
+      }
+      </Spring>
     );
   }
 }

@@ -6,8 +6,8 @@ import FirstStep from './steps/FirstStep';
 import SecondStep from './steps/SecondStep';
 import ThirdStep from './steps/ThirdStep';
 
-import { FlexRow } from '../Common'
-
+import { FlexRow, Box } from '../Common'
+import { Spring } from 'react-spring'
 
 type Props = {
   step: string,

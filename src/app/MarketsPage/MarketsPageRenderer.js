@@ -6,6 +6,10 @@ import CenteredSpinner from '../../components/Common/CenteredSpinner'
 import MarketsTable from '../../components/MarketsTable'
 import StatisticsBoard from '../../components/StatisticsBoard'
 
+import { Box } from '../../components/Common'
+
+import { Spring } from 'react-spring'
+
 type Props = {
   loading: boolean,
   showMarketStatistics: boolean,
@@ -20,45 +24,46 @@ const MarketsPageRenderer = (props: Props) => {
   } = props
 
   return (
-    <WalletPageBox>
+      <MarketPageBox>
       <RowWrapper>
-        <WalletPageContentBox>
+        <MarketPageContentBox>
           {loading ? (
             <CenteredSpinner />
           ) : (
             <MarketsTableBox>
             {
               showMarketStatistics ? (
-                <StatisticsBoard  
-                  toggleMarketStatistics={toggleMarketStatistics}
-                />
+                  <StatisticsBoard  
+                    toggleMarketStatistics={toggleMarketStatistics}
+                  />
               ) : (
-                <MarketsTable
-                  toggleMarketStatistics={toggleMarketStatistics}
-                />
+                  <MarketsTable
+                    toggleMarketStatistics={toggleMarketStatistics}
+                  />
               )
             }
             </MarketsTableBox>
           )}
-        </WalletPageContentBox>
+        </MarketPageContentBox>
       </RowWrapper>
-    </WalletPageBox>
+      </MarketPageBox>
   )
 }
 
 
-const WalletPageBox = styled.div`
+const MarketPageBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1em;
   margin-bottom: 1em;
 `
 
-const WalletPageContentBox = styled(Card)`
-  height: 92vh;
+const MarketPageContentBox = styled(Card)`
+  height: 90vh;
   width: 100%;
   margin-right: 0.5em;
   margin-left: 0.5em;
+  overflow-y:scroll;
 `
 
 const RowWrapper = styled.div`

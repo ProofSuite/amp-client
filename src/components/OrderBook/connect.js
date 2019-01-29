@@ -4,9 +4,15 @@ import orderBookSelector from '../../store/models/orderBook';
 import { select } from '../../store/actions/orderBook';
 import type { State } from '../../types';
 
-export const mapStateToProps = (state: State) => {
-  let { bids, asks, currentPair } = orderBookSelector(state);
-  return { bids, asks, currentPair };
+type OwnProps = {
+  direction: "vertical" | "horizontal",
+  onCollapse: string => void
+}
+
+export const mapStateToProps = (state: State, ownProps: OwnProps) => {
+  let selector = orderBookSelector(state);
+  
+  return { ...selector, ...ownProps };
 };
 
 export const mapDispatchToProps = {

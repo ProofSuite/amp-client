@@ -2,6 +2,7 @@
 import React from 'react';
 import TokenSearcherRenderer from './TokenSearcherRenderer';
 import { sortTable } from '../../utils/helpers';
+import { ContextMenuTarget, Menu, MenuItem } from '@blueprintjs/core'
 
 //TODO not sure exactly where to define this type.
 type Token = {
@@ -25,6 +26,9 @@ type Props = {
   quoteTokenAvailableBalance: number,
   updateFavorite: (string, boolean) => void,
   updateCurrentPair: string => void,
+  onCollapse: string => void,
+  onExpand: string => void,
+  onResetDefaultLayout: string => void
 };
 
 type State = {
@@ -97,11 +101,34 @@ class TokenSearcher extends React.PureComponent<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.props.onCollapse('tokenSearcher')
   };
+  
+
+  expand = () => {
+    this.props.onExpand('tokenSearcher')
+  }
 
   changeTab = (tabId: string) => {
     this.setState({ selectedTabId: tabId });
   };
+
+  renderContextMenu = () => {
+    const {
+      state: { isOpen },
+      props: { onResetDefaultLayout },
+      expand,
+      toggleCollapse
+    } = this
+
+    return (
+        <Menu>
+            <MenuItem icon="page-layout" text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem icon={isOpen ? "chevron-up" : "chevron-down"} text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem icon="zoom-to-fit" text="Fit" onClick={expand} />
+        </Menu>
+    );
+  }
 
   filterTokens = () => {
     let result = { favorites: [] };
@@ -145,7 +172,7 @@ class TokenSearcher extends React.PureComponent<Props, State> {
         baseTokenBalance, 
         quoteTokenBalance, 
         baseTokenAvailableBalance, 
-        quoteTokenAvailableBalance
+        quoteTokenAvailableBalance,
       },
       onChangeSearchFilter,
       onChangeFilterName,
@@ -153,6 +180,8 @@ class TokenSearcher extends React.PureComponent<Props, State> {
       changeTab,
       toggleCollapse,
       changeSelectedToken,
+      expand,
+      renderContextMenu
     } = this;
 
     const filteredPairs = this.filterTokens();
@@ -183,9 +212,11 @@ class TokenSearcher extends React.PureComponent<Props, State> {
         changeSelectedToken={changeSelectedToken}
         baseTokenAvailableBalance={baseTokenAvailableBalance}
         quoteTokenAvailableBalance={quoteTokenAvailableBalance}
+        expand={expand}
+        onContextMenu={renderContextMenu}
       />
     );
   }
 }
 
-export default TokenSearcher;
+export default ContextMenuTarget(TokenSearcher);

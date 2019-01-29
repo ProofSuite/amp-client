@@ -2,6 +2,7 @@
 import React from 'react'
 import OrdersTableRenderer from './OrdersTableRenderer'
 import { sortTable } from '../../utils/helpers'
+import { ContextMenuTarget, Menu, MenuItem } from '@blueprintjs/core'
 
 import type { Order } from '../../types/Orders'
 
@@ -9,6 +10,9 @@ type Props = {
   orders: Array<Order>,
   authenticated: false,
   cancelOrder: string => void,
+  onCollapse: string => void,
+  onExpand: string => void,
+  onResetDefaultLayout: void => void
 }
 
 type State = {
@@ -21,7 +25,7 @@ class OrdersTable extends React.PureComponent<Props, State> {
 
   state = {
     selectedTabId: 'all',
-    isOpen: false
+    isOpen: true
   }
 
   changeTab = (tabId: string) => {
@@ -30,6 +34,11 @@ class OrdersTable extends React.PureComponent<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }))
+    this.props.onCollapse('ordersTable')
+  }
+
+  expand = () => {
+    this.props.onExpand('ordersTable')
   }
 
   filterOrders = () => {
@@ -55,9 +64,31 @@ class OrdersTable extends React.PureComponent<Props, State> {
     return result
   }
 
+
+  renderContextMenu = () => {
+    const {
+      state: { isOpen },
+      props: { onResetDefaultLayout },
+      expand,
+      toggleCollapse
+    } = this
+
+    return (
+        <Menu>
+            <MenuItem icon="page-layout" text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem icon={isOpen ? "chevron-up" : "chevron-down"} text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem icon="zoom-to-fit" text="Fit" onClick={expand} />
+        </Menu>
+    );
+  }
+
   render() {
-    const { authenticated, orders, cancelOrder } = this.props
-    const { selectedTabId, isOpen } = this.state
+    const {
+      props: { authenticated, orders, cancelOrder },
+      state: { selectedTabId, isOpen },
+      renderContextMenu
+    } = this
+
     const filteredOrders = this.filterOrders()
     const loading = orders.length === []
 
@@ -68,13 +99,15 @@ class OrdersTable extends React.PureComponent<Props, State> {
         selectedTabId={selectedTabId}
         onChange={this.changeTab}
         toggleCollapse={this.toggleCollapse}
+        expand={this.expand}
         authenticated={authenticated}
         cancelOrder={cancelOrder}
         // silence-error: currently too many flow errors, waiting for rest to be resolved
         orders={filteredOrders}
+        onContextMenu={renderContextMenu}
       />
     )
   }
 }
 
-export default OrdersTable
+export default ContextMenuTarget(OrdersTable)

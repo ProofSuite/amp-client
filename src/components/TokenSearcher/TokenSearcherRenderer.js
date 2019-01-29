@@ -24,7 +24,6 @@ import {
   Chevron,
   OverlaySpinner,
   ColoredCryptoIcon,
-  CryptoIcon,
   SmallTextDiv,
   FlexRow
 } from '../Common'
@@ -34,7 +33,6 @@ import {
 } from '../../utils/helpers'
 
 import styled from 'styled-components'
-import { ResizableBox } from 'react-resizable'
 
 type Token = {
   pair: string,
@@ -68,7 +66,9 @@ type Props = {
   onChangeSearchFilter: (SyntheticInputEvent<>) => void,
   onChangeFilterName: (SyntheticInputEvent<>) => void,
   changeSelectedToken: Token => void,
-  toggleCollapse: () => void
+  toggleCollapse: () => void,
+  expand: () => void,
+  onContextMenu: () => void
 }
 
 const TokenSearchRenderer = (props: Props) => {
@@ -92,7 +92,9 @@ const TokenSearchRenderer = (props: Props) => {
     baseTokenBalance,
     quoteTokenBalance,
     baseTokenAvailableBalance,
-    quoteTokenAvailableBalance
+    quoteTokenAvailableBalance,
+    expand,
+    onContextMenu
   } = props
 
   return (
@@ -100,7 +102,7 @@ const TokenSearchRenderer = (props: Props) => {
       {loading ? (
         <OverlaySpinner visible={loading} transparent />
       ) : (
-        <div>
+        <div style={{ height: '100%', overflowY: 'scroll' }} onContextMenu={onContextMenu}>
           <div style={{ display: 'flex', justifyContent: 'space-between', height: '30px' }}>
             <SearchInput
               leftIcon="search"
@@ -108,7 +110,11 @@ const TokenSearchRenderer = (props: Props) => {
               value={searchFilter}
               placeholder="Search Token ..."
             />
-            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal />
+            <FlexRow ml={1}>
+              <Button icon='zoom-to-fit' onClick={expand} minimal small />
+              <Button icon='move' className="drag" minimal small />
+              <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal small />
+            </FlexRow>
           </div>
           <Collapse isOpen={isOpen}>
             <SelectedPair
@@ -206,8 +212,7 @@ const Panel = (props: PanelProps) => {
         filterName={filterName}
         sortOrder={sortOrder}
       />
-      <ResizableBox height={150}>
-      <ul className="list">
+      <ListBox>
         {tokenPairs.map((token, index) => (
           <TokenRow
             key={index}
@@ -220,8 +225,7 @@ const Panel = (props: PanelProps) => {
           />
         ))}
         {tokenPairs.length === 0 && <Centered>No Tokens to show</Centered>}
-      </ul>
-      </ResizableBox>
+      </ListBox>
     </TokenSearchPanelBox>
   )
 }
@@ -374,6 +378,7 @@ const TokenSearchCard = styled(Card).attrs({
   className: 'token-searcher'
 })`
   position: relative;
+  height: 100%;
 `
 
 const Row = styled.div`
@@ -382,7 +387,6 @@ const Row = styled.div`
 `
 
 const TokenSearchPanelBox = styled.div`
-  height: 100%;
   margin-top: 10px;
 `
 
@@ -390,6 +394,10 @@ const SelectedPairCard = styled(Card)`
   margin: 15px 0px;
   padding: 5px 15px;
 `
+
+const ListBox = styled.ul.attrs({ className: 'list' })`
+  height: 100%;
+`;
 
 const List = styled.ul`
   border-top: 1px dashed #202f39;
