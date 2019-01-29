@@ -19,14 +19,13 @@ import type { State, ThunkAction } from '../../types'
 
 export default function walletPageSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
-  let accountDomain = getAccountDomain(state)
   let tokenDomain = getTokenDomain(state)
+  let { authenticated, currentBlock, showHelpModal, referenceCurrency } = getAccountDomain(state)
 
   let tokens = tokenDomain.tokens()
   let quoteTokens = tokenDomain.quoteTokens()
   let baseTokens = tokenDomain.baseTokens()
-  let currency = accountDomain.referenceCurrency()
-  let tokenData = accountBalancesDomain.getBalancesAndAllowances(tokens, currency)
+  let tokenData = accountBalancesDomain.getBalancesAndAllowances(tokens, referenceCurrency)
 
   return {
     balancesLoading: accountBalancesDomain.loading(),
@@ -35,19 +34,18 @@ export default function walletPageSelector(state: State) {
     tokenData: tokenData,
     quoteTokens: quoteTokens,
     baseTokens: baseTokens,
-    authenticated: accountDomain.authenticated(),
-    currentBlock: accountDomain.currentBlock(),
-    showHelpModal: accountDomain.showHelpModal(),
+    authenticated: authenticated,
+    currentBlock: currentBlock,
+    showHelpModal: showHelpModal,
     connected: true,
-    referenceCurrency: currency.symbol,
+    referenceCurrency: referenceCurrency.symbol,
   }
 }
 
 export function queryAccountData(): ThunkAction {
   return async (dispatch, getState, { api, provider }) => {
     const state = getState()
-
-    const accountAddress = getAccountDomain(state).address()
+    const { address: accountAddress } = getAccountDomain(state)
     const savedTokens = getTokenDomain(state).tokens()
 
 

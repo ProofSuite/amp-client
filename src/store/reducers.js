@@ -250,6 +250,8 @@ export const tokens = createReducer(action => {
       return tokensEvents.tokensUpdated(payload.tokens)
     case walletPageActionTypes.updateWalletPageData:
       return tokensEvents.tokensUpdated(payload.tokens)
+    case layoutActionTypes.updateAppData:
+      return tokensEvents.tokensUpdated(payload.tokens)
     case walletInfoActionTypes.addToken:
       return tokensEvents.tokensUpdated([payload.token])
     default:
@@ -278,6 +280,8 @@ export const tokenPairs = createReducer(action => {
       return tokenPairsEvents.tokenPairDataUpdated(payload.tokenPairData)
     case walletPageActionTypes.updateWalletPageData:
       return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
+    case layoutActionTypes.updateAppData:
+      return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
     case walletInfoActionTypes.addToken:
       return tokenPairsEvents.tokenPairsUpdated(payload.pairs)
     case walletInfoActionTypes.registerToken:
@@ -290,6 +294,8 @@ export const tokenPairs = createReducer(action => {
 export const account = createReducer(action => {
   const { type, payload } = action
   switch (type) {
+    case layoutActionTypes.updateAppData:
+      return accountEvents.accountLoaded(true)
     case accountActionTypes.updateAccount:
       return accountEvents.accountUpdated(payload.address, '')
     case signerSettingsActionTypes.updateSigner:

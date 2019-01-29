@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 import { AutoSizer } from 'react-virtualized'
 import { SizesAsNumbers as Sizes } from '../../components/Common/Variables'
 
-import { Responsive, WidthProvider } from 'react-grid-layout'
+import { Responsive } from 'react-grid-layout'
 
 const ResponsiveReactGridLayout = Responsive
 
@@ -78,11 +78,8 @@ const defaultSizes = {
     'ordersTable': { x: 0, y: 56, w: 60, h: 20 },
     'orderBook': { x: 0, y: 76, w: 60, h: 30 },
     'tradesTable': { x: 0, y: 96, w: 60, h: 30 },
-  },
-  
+  },  
 }
-
-
 
 const fullScreenOHLCVLayouts: LayoutMap = {
   'lg': [ {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 } ],
@@ -272,7 +269,6 @@ class TradingPage extends React.PureComponent<Props, State> {
   }
 
   onBreakpointChange = (currentBreakpoint: string, newCols: number) => {
-    console.log('the current breakpoint', currentBreakpoint, newCols)
     this.setState({ currentBreakpoint })
   }
 
@@ -420,8 +416,8 @@ class TradingPage extends React.PureComponent<Props, State> {
     const { authenticated, isInitiated } = this.props
     const { calloutOptions, calloutVisible, layouts, items } = this.state
     
-    if (!authenticated) return <Redirect to="/login" />
-    if (!isInitiated) return null;
+    // if (!authenticated) return <Redirect to="/login" />
+    // if (!isInitiated) return null;
     
     return (
       <AutoSizer style={{ width: '100%', height: '100%' }}>

@@ -34,14 +34,16 @@ export default function getOrderFormSelector(state: State) {
     quoteTokenDecimals
   } = currentPair
 
+  let { authenticated, address } = getAccountDomain(state)
+
   let askPrice = orderBookDomain.getAskPrice()
   let bidPrice = orderBookDomain.getBidPrice()
   let selectedOrder = orderBookDomain.getSelectedOrder()
   
   let [ baseToken, quoteToken ] = accountBalancesDomain.getBalancesAndAllowancesBySymbol([baseTokenSymbol, quoteTokenSymbol])
-  let currentAddress = accountDomain.address()
-  let baseTokenLockedBalance = orderDomain.lockedBalanceByToken(baseTokenSymbol, currentAddress)
-  let quoteTokenLockedBalance = orderDomain.lockedBalanceByToken(quoteTokenSymbol, currentAddress)
+
+  let baseTokenLockedBalance = orderDomain.lockedBalanceByToken(baseTokenSymbol, address)
+  let quoteTokenLockedBalance = orderDomain.lockedBalanceByToken(quoteTokenSymbol, address)
   let baseTokenBalance = baseToken.balance - baseTokenLockedBalance
   let quoteTokenBalance = quoteToken.balance - quoteTokenLockedBalance
   let pairIsAllowed = baseToken.allowed && quoteToken.allowed
@@ -61,7 +63,8 @@ export default function getOrderFormSelector(state: State) {
     makeFee,
     takeFee,
     pairIsAllowed,
-    pairAllowanceIsPending
+    pairAllowanceIsPending,
+    authenticated
   }
 }
 
@@ -77,10 +80,8 @@ export const sendNewOrder = (side: string, amount: number, price: number): Thunk
       let state = getState()
       let tokenPairDomain = getTokenPairsDomain(state)
       let accountBalancesDomain = getAccountBalancesDomain(state)
-      let accountDomain = getAccountDomain(state)
-
+      let { exchangeAddress } = getAccountDomain(state)
       let pair = tokenPairDomain.getCurrentPair()
-      let exchangeAddress = accountDomain.exchangeAddress()
 
       let {
         baseTokenSymbol,

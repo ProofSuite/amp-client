@@ -1,5 +1,5 @@
 // @flow
-import * as appActionCreators from '../actions/app'
+import * as notifierActionCreators from '../actions/app'
 import { getOrdersDomain } from '../domains';
 import type { State, ThunkAction } from '../../types'
 
@@ -20,12 +20,12 @@ export const cancelOrder = (hash: string): ThunkAction => {
       let signer = getSigner()
       let orderCancelPayload = await signer.createOrderCancel(hash)
 
-      dispatch(appActionCreators.addSuccessNotification({ message: `Cancelling order ...` }))
+      dispatch(notifierActionCreators.addSuccessNotification({ message: `Cancelling order ...` }))
       socket.sendNewOrderCancelMessage(orderCancelPayload)
     } catch (error) {
 
       let message = parseCancelOrderError(error)
-      return dispatch(appActionCreators.addErrorNotification({ message }))
+      return dispatch(notifierActionCreators.addErrorNotification({ message }))
     }
   }
 }

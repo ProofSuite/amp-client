@@ -37,7 +37,7 @@ export const closed = () => {
   return event;
 }
 
-export default function accountDomain(state: AccountState) {
+export default function connectionDomain(state: AccountState) {
   return {
     isConnected: !state.isConnecting && state.connectedCount > 0,
     isConnecting: state.isConnecting,

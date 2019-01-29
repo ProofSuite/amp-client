@@ -2,6 +2,7 @@
 import type { AccountState, AccountParams, ReferenceCurrency } from '../../types/account'
 
 const initialState = {
+  loaded: false,
   address: null,
   privateKey: null,
   currentBlock: '',
@@ -21,6 +22,15 @@ export const updated = (newAccountState: AccountParams) => {
     ...newAccountState
   })
   
+  return event
+}
+
+export const accountLoaded = (loaded: boolean) => {
+  const event = (state: AccountState) => ({
+    ...state,
+    loaded
+  })
+
   return event
 }
 
@@ -47,7 +57,7 @@ export const accountRemoved = () => {
 export const currentBlockUpdated = (currentBlock: string) => {
   const event = (state: AccountState) => ({
     ...state,
-    currentBlock: currentBlock,
+    currentBlock,
   })
   return event
 }
@@ -84,13 +94,14 @@ export const referenceCurrencyUpdated = (referenceCurrency: ReferenceCurrency) =
 
 export default function accountDomain(state: AccountState) {
   return {
-    address: () => state.address,
-    privateKey: () => state.privateKey,
-    currentBlock: () => state.currentBlock,
-    authenticated: () => state.address !== null,
-    showHelpModal: () => state.showHelpModal,
-    exchangeAddress: () => state.exchangeAddress,
-    referenceCurrency: () => state.referenceCurrency,
-    referenceCurrencyName: () => state.referenceCurrency.name
+    appIsLoaded: state.loaded,
+    authenticated: state.address !== null,
+    address: state.address,
+    privateKey: state.privateKey,
+    currentBlock: state.currentBlock,
+    showHelpModal: state.showHelpModal,
+    exchangeAddress: state.exchangeAddress,
+    referenceCurrency: state.referenceCurrency,
+    referenceCurrencyName: state.referenceCurrency.name
   };
 }

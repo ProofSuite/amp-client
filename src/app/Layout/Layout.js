@@ -1,17 +1,15 @@
 // @flow
-import type { Node } from 'react'
-import styled from 'styled-components'
 import React from 'react'
+import styled from 'styled-components'
+import { IntlProvider } from 'react-intl'
+import { NavLink } from 'react-router-dom'
 import Notifier from '../../components/Notifier'
 import ampLogo from '../../assets/amp_black.png'
 import ConnectionStatus from '../../components/ConnectionStatus'
 
-import { IntlProvider } from 'react-intl'
-import { NavLink } from 'react-router-dom'
 
 import { 
   Footer, 
-  Indent,
   NavbarHeading,
   NavbarGroup,
   NavbarDivider
@@ -29,9 +27,16 @@ import {
   Menu,
   Navbar,
   Popover,
-  Position,
-  Tag
+  Position
 } from '@blueprintjs/core'
+
+import type { 
+  Node,
+} from 'react'
+
+import type {
+  Location
+} from '../../types/common'
 
 export type Props = {
   ETHBalance: string,
@@ -44,10 +49,12 @@ export type Props = {
   locale: string,
   messages: string,
   currentBlock?: string,
-  createProvider: () => {},
   referenceCurrencies: Array<string>,
   updateReferenceCurrency: void => string,
   currentReferenceCurrency: string,
+  createProvider: void => void,
+  queryAppData: void => void,
+  location: Location
 }
 
 type State = {}
@@ -56,6 +63,7 @@ class Layout extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     this.props.createProvider()
+    this.props.queryAppData()
   }
 
   render() {
@@ -67,7 +75,11 @@ class Layout extends React.PureComponent<Props, State> {
       referenceCurrencies,
       currentReferenceCurrency,
       updateReferenceCurrency,
+      location
     } = this.props
+
+    const showReferenceCurrency = authenticated
+    const showLoginButton = (location !== "/login")
 
     const menu = (
       <Menu>
@@ -89,34 +101,28 @@ class Layout extends React.PureComponent<Props, State> {
                 <NavbarHeading>
                   <NavbarHeaderBox>
                     <img src={ampLogo} class="Profile-image" height={25} width={25} alt="AMP Logo" />
-                    {/* <Indent /> */}
-                    {/* <Tag minimal intent="success">BETA</Tag> */}
                   </NavbarHeaderBox>
                 </NavbarHeading>
-                {authenticated && (
-                  <React.Fragment>
-                      {/* <NavbarDivider hideOnMobile /> */}
-                    <NavbarLink to="/wallet">Wallet</NavbarLink>
-                    <NavbarLink to="/markets">Markets</NavbarLink>
-                    <NavbarLink to="/trade">Exchange</NavbarLink>
-                    <NavbarLink to="/settings" hideOnMobile>Settings</NavbarLink>
-                    <NavbarLink to="/faq">FAQ</NavbarLink>
-                    <NavbarDivider hideOnMobile />
-                    <ReferenceCurrencyBox>
+                {authenticated && <NavbarLink to="/wallet">Wallet</NavbarLink>}    
+                {authenticated && <NavbarLink to="/markets">Markets</NavbarLink>}
+                <NavbarLink to="/trade">Exchange</NavbarLink>
+                {authenticated && <NavbarLink to="/settings" hideOnMobile>Settings</NavbarLink>}
+                <NavbarLink to="/faq">FAQ</NavbarLink>
+                <NavbarDivider hideOnMobile />
+                {showReferenceCurrency &&
+                  <ReferenceCurrencyBox>
                     <ReferenceCurrencySelect
                       items={referenceCurrencies}
                       item={currentReferenceCurrency}
                       handleChange={(item) => updateReferenceCurrency(item)}
                       type="text"
                     />
-                    </ReferenceCurrencyBox>
-                  </React.Fragment>
-                )}
+                  </ReferenceCurrencyBox>
+                }                
               </NavbarGroup>
               <NavbarGroup align={Alignment.RIGHT}>
-                {!authenticated ? (
-                  <NavbarLink to="/login">Login</NavbarLink>
-                ) : (
+              {showLoginButton && <NavbarLink to="/login">Login</NavbarLink>}
+              {authenticated && (
                   <React.Fragment>
                     <ConnectionStatusBox>
                       <ConnectionStatus />

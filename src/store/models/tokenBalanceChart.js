@@ -10,7 +10,7 @@ export default function tokenBalanceChartSelector(state: State) {
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let tokenBalances = accountBalancesDomain.balances()
   let tokens = getTokenDomain(state).bySymbol()
-  let currency = getAccountDomain(state).referenceCurrency()
+  let currency = getAccountDomain(state).referenceCurrency
 
   let chartData = []
 

@@ -40,12 +40,12 @@ export const defaultGasPriceSet = (defaultGasPrice: number) => {
 
 export default function model(state: SettingsState) {
   return {
-    defaultGasPrice: () => state.defaultGasPrice,
-    defaultGasLimit: () => state.defaultGasLimit,
-    pvtKeyLocked: () => state.pvtKeyLocked,
-    gasSettings: () => ({
+    defaultGasPrice: state.defaultGasPrice,
+    defaultGasLimit: state.defaultGasLimit,
+    pvtKeyLocked: state.pvtKeyLocked,
+    gasSettings: {
       defaultgasPrice: state.defaultGasPrice,
       defaultGasLimit: state.defaultGasLimit,
-    }),
+    },
   };
 }
