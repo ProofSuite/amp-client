@@ -34,6 +34,7 @@ import {
   AutoSizer
 } from 'react-virtualized'
 
+import { Spring } from 'react-spring'
 import { Devices } from '../../components/Common/Variables'
 
 type TokenData = {
@@ -104,8 +105,10 @@ class TokenTableRenderer extends React.PureComponent<Props> {
         totalFilteredTokens
       } = this.props;
 
-          return (
-        <TableSection>
+      return (
+        <Spring from={{ opacity: 0, marginLeft: 100 }} to={{ opacity: 1, marginLeft: 0 }} >
+        {props =>
+        <TableSection style={props}>
           <RowSpaceBetween style={{ marginBottom: '10px' }}>
             <InputGroup
               type="string"
@@ -148,6 +151,8 @@ class TokenTableRenderer extends React.PureComponent<Props> {
               </TableBody>
             </Table>
         </TableSection>
+        }
+        </Spring>
       );
 
   }

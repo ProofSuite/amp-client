@@ -12,11 +12,9 @@ import { NavLink } from 'react-router-dom'
 import { 
   Footer, 
   Indent,
-  Card,
   NavbarHeading,
   NavbarGroup,
-  NavbarDivider,
-  Box
+  NavbarDivider
    } from '../../components/Common'
 
 import {
@@ -91,13 +89,13 @@ class Layout extends React.PureComponent<Props, State> {
                 <NavbarHeading>
                   <NavbarHeaderBox>
                     <img src={ampLogo} class="Profile-image" height={25} width={25} alt="AMP Logo" />
-                    <Indent />
-                    <Tag minimal intent="success">BETA</Tag>
+                    {/* <Indent /> */}
+                    {/* <Tag minimal intent="success">BETA</Tag> */}
                   </NavbarHeaderBox>
                 </NavbarHeading>
                 {authenticated && (
                   <React.Fragment>
-                      <NavbarDivider hideOnMobile />
+                      {/* <NavbarDivider hideOnMobile /> */}
                     <NavbarLink to="/wallet">Wallet</NavbarLink>
                     <NavbarLink to="/markets">Markets</NavbarLink>
                     <NavbarLink to="/trade">Exchange</NavbarLink>
