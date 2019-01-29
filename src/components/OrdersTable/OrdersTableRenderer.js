@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { formatNumber } from 'accounting-js'
+import { AutoSizer } from 'react-virtualized'
 
 import { 
   Card, 
@@ -18,10 +19,14 @@ import {
   Loading, 
   CenteredMessage,
   SmallText,
+  Hideable,
+  FlexRow
 } from '../Common'
 
 import { relativeDate } from '../../utils/helpers'
 import { Order } from '../../types/orders'
+
+import type { Node } from 'react'
 
 type Props = {
   loading: boolean,
@@ -37,57 +42,118 @@ type Props = {
     EXECUTED: Array<Order>,
     CANCELLED: Array<Order>,
     FILLED: Array<Order>
-  }
+  },
+  expand: SyntheticEvent<> => void,
+  onContextMenu: void => Node
 }
 
+const breakpoints = {
+  S: 400,
+  M: 600, 
+  L: 800
+}
+
+
 const OrdersTableRenderer = (props: Props) => {
-  const { loading, selectedTabId, onChange, cancelOrder, orders, isOpen, toggleCollapse } = props
+  const { 
+    loading, 
+    selectedTabId, 
+    onChange, 
+    cancelOrder, 
+    orders, 
+    isOpen, 
+    toggleCollapse,
+    expand,
+    onContextMenu
+  } = props
+
   return (
-    <Wrapper className="order-history">
-      <OrdersTableHeader>
-        <Heading>Orders</Heading>
-        <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={toggleCollapse} />
-      </OrdersTableHeader>
-      <Collapse isOpen={isOpen}>
-        <Tabs selectedTabId={selectedTabId} onChange={onChange}>
-          <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} cancelOrder={cancelOrder} />} />
-          <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} cancelOrder={cancelOrder} />} />
-          <Tab id="cancelled" title="CANCELLED" panel={<OrdersTablePanel loading={loading} orders={orders['CANCELLED']} cancelOrder={cancelOrder} />} />
-          <Tab id="executed" title="EXECUTED" panel={<OrdersTablePanel loading={loading} orders={orders['FILLED']} cancelOrder={cancelOrder} />} />
-        </Tabs>
-      </Collapse>
-    </Wrapper>
+    <AutoSizer style={{ width: '100%', height: '100%' }}>
+        {({ width, height }) => (
+          <CardBox onContextMenu={onContextMenu}>
+            <OrdersTableHeader>
+              <Heading>Orders</Heading>
+              <FlexRow>                
+                <Button 
+                  icon='zoom-to-fit' 
+                  minimal 
+                  onClick={expand} 
+                  small
+                />
+                <Button 
+                  icon='move'
+                  className="drag"
+                  minimal 
+                  small
+                />
+                <Button 
+                  icon={isOpen ? 'chevron-up' : 'chevron-down'} 
+                  minimal 
+                  onClick={toggleCollapse}
+                  small
+                />
+              </FlexRow>
+            </OrdersTableHeader>
+            <Wrapper>
+            <Collapse isOpen={isOpen}>
+              <Tabs selectedTabId={selectedTabId} onChange={onChange}>
+                <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} cancelOrder={cancelOrder} width={width} />} />
+                <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} cancelOrder={cancelOrder} width={width} />} />
+                <Tab id="cancelled" title="CANCELLED" panel={<OrdersTablePanel loading={loading} orders={orders['CANCELLED']} cancelOrder={cancelOrder} width={width} />} />
+                <Tab id="executed" title="EXECUTED" panel={<OrdersTablePanel loading={loading} orders={orders['FILLED']} cancelOrder={cancelOrder} width={width} />} />
+              </Tabs>
+            </Collapse>
+            </Wrapper>
+          </CardBox>
+        )}
+      </AutoSizer>
   )
 }
 
-const OrdersTablePanel = (props: { loading: boolean, orders: Array<Order>, cancelOrder: string => void }) => {
-  const { loading, orders, cancelOrder } = props
+const OrdersTablePanel = (props: *) => {
+  const { loading, orders, cancelOrder, width } = props
+
   return loading ? (
     <Loading />
   ) : orders.length < 1 ? (
     <CenteredMessage message="No orders" />
   ) : (
-    <ListContainer className="list-container">
-      <ListHeaderWrapper className="heading">
-        <ListHeader className="heading">
-          <HeaderCell className="pair">PAIR</HeaderCell>
-          <HeaderCell className="amount">AMOUNT</HeaderCell>
-          <HeaderCell className="price">PRICE</HeaderCell>
-          <HeaderCell className="status">STATUS</HeaderCell>
-          <HeaderCell className="side">SIDE</HeaderCell>
-          <HeaderCell className="time">TIME</HeaderCell>
-          <HeaderCell className="cancel" />
-        </ListHeader>
-      </ListHeaderWrapper>
-      <ListBodyWrapper className="list">
-        {orders.map((order, index) => <OrderRow key={index} order={order} index={index} cancelOrder={cancelOrder} />)}
-      </ListBodyWrapper>
-    </ListContainer>
+        <ListContainer>
+          <ListHeaderWrapper>
+            <ListHeader>
+              <HeaderCell className="pair">PAIR</HeaderCell>
+              <HeaderCell className="amount">AMOUNT</HeaderCell>
+              <Hideable hiddenIf={width<breakpoints.L}>
+                <HeaderCell className="price">PRICE</HeaderCell>
+              </Hideable>
+              <HeaderCell className="status">STATUS</HeaderCell>
+              <HeaderCell className="side">SIDE</HeaderCell>
+              <Hideable hiddenIf={width<breakpoints.L}>
+                <HeaderCell className="time">TIME</HeaderCell>
+              </Hideable>
+              <HeaderCell className="cancel" />
+            </ListHeader>
+          </ListHeaderWrapper>
+          <ListBodyWrapper>
+            {orders.map((order, index) => {
+              return (
+                <OrderRow 
+                  key={index} 
+                  order={order} 
+                  index={index} 
+                  cancelOrder={cancelOrder}
+                  width={width}
+                />
+              )
+            }
+            )}
+          </ListBodyWrapper>
+        </ListContainer>
   )
 }
 
-const OrderRow = (props: { order: Order, index: number, cancelOrder: string => void }) => {
-  const { order, cancelOrder } = props
+const OrderRow = (props: *) => {
+  const { order, cancelOrder, width } = props
 
   return (
     <Row>
@@ -101,20 +167,24 @@ const OrderRow = (props: { order: Order, index: number, cancelOrder: string => v
           {formatNumber(order.filled, { precision: 3 })}/{formatNumber(order.amount, { precision: 3 })}
         </SmallText>
       </Cell>
+      <Hideable hiddenIf={width < breakpoints.L}>
       <Cell className="price" muted>
         <SmallText muted>
           {formatNumber(order.price, { precision: 5 })} ({order.type})
         </SmallText>
       </Cell>
-      <Cell className="status" muted>
-        <StatusTag status={order.status} />
-      </Cell>
+      </Hideable>
+        <Cell className="status" muted>
+          <StatusTag status={order.status} />
+        </Cell>
       <Cell className="side" side={order.side} muted>
         <SmallText color={order.side === 'BUY' ? Colors.BUY : Colors.SELL}>{order.side}</SmallText>
       </Cell>
-      <Cell className="time" muted>
-        <SmallText muted>{relativeDate(order.time)}</SmallText>
-      </Cell>
+      <Hideable hiddenIf={width < breakpoints.L}>
+        <Cell className="time" muted>
+          <SmallText muted>{relativeDate(order.time)}</SmallText>
+        </Cell>
+      </Hideable>
       <Cell className="cancel" muted>
         {order.cancelleable && (
           <Button intent="danger" minimal onClick={() => cancelOrder(order.hash)}>
@@ -146,18 +216,27 @@ const StatusTag = ({ status }) => {
 const OrdersTableHeader = styled.div`
   display: grid;
   grid-auto-flow: column;
-  justify-content: start;
+  justify-content: space-between;
   grid-gap: 10px;
   align-items: center;
+  margin-bottom: 10px;
 `
-const Wrapper = styled(Card)``
+
+const CardBox = styled(Card)`
+  height: 100%;
+`
+
+const Wrapper = styled.div`
+  overflow-y: scroll;
+  height: 90%;
+`
 
 const Heading = styled.h3`
   margin: auto;
 `
 
-const ListContainer = styled.div`
-  height: 100%;
+const ListContainer = styled.div`  
+  height: 90%;
 `
 
 const ListHeaderWrapper = styled.ul`
@@ -172,11 +251,8 @@ const ListHeaderWrapper = styled.ul`
 `
 
 const ListBodyWrapper = styled.ul`
-  width: 100%;
-  max-height: 300px;
-  margin: 0;
-  height: 90%;
-  overflow-y: scroll;
+  width: 100%; 
+  height: 100%;
   padding-left: 0px !important;
   margin-left: 0px !important;
 `

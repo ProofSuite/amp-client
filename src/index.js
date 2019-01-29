@@ -28,11 +28,3 @@ if (module.hot) {
     render();
   });
 }
-
-//TODO Reinclude PersistGate if needed:
-// const NextApp = require('./app').default;
-// import { PersistGate } from 'redux-persist/integration/react';
-// const { store, persistor } = configureStore();
-// <PersistGate loading={null} persistor={persistor}>
-// <Component />
-// </PersistGate>

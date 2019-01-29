@@ -3,9 +3,14 @@ import { connect } from 'react-redux'
 import ordersTableSelector, { cancelOrder } from '../../store/models/ordersTable'
 import type { State } from '../../types'
 
-export const mapStateToProps = (state: State) => {
+type Props = {
+  onCollapse: string => void
+}
+
+export const mapStateToProps = (state: State, ownProps: Props) => {
   return {
     orders: ordersTableSelector(state).orders(),
+    ...ownProps
   }
 }
 

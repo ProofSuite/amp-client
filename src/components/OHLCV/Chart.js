@@ -1,7 +1,11 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { format } from 'd3-format'
 import { timeFormat } from 'd3-time-format'
 import { Chart, ChartCanvas } from 'react-stockcharts'
+import { ClickCallback } from "react-stockcharts/lib/interactive";
+import { Menu, MenuItem, ContextMenuTarget } from '@blueprintjs/core'
+
 import {
   AreaSeries,
   BarSeries,
@@ -13,7 +17,12 @@ import {
   CircleMarker,
   StraightLine
 } from 'react-stockcharts/lib/series'
-import { XAxis, YAxis } from 'react-stockcharts/lib/axes'
+
+import { 
+  XAxis, 
+  YAxis
+} from 'react-stockcharts/lib/axes'
+
 import {
   CrossHairCursor,
   CurrentCoordinate,
@@ -21,9 +30,12 @@ import {
   MouseCoordinateX,
   MouseCoordinateY
 } from 'react-stockcharts/lib/coordinates'
-import { elderRay } from 'react-stockcharts/lib/indicator'
 
+import { elderRay } from 'react-stockcharts/lib/indicator'
 import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale'
+import { fitWidth } from 'react-stockcharts/lib/helper'
+import { last } from 'react-stockcharts/lib/utils'
+
 import {
   MACDTooltip,
   MovingAverageTooltip,
@@ -31,8 +43,8 @@ import {
   RSITooltip,
   SingleValueTooltip
 } from 'react-stockcharts/lib/tooltip'
-import { fitWidth } from 'react-stockcharts/lib/helper'
-import { last } from 'react-stockcharts/lib/utils'
+
+
 import {
   macdAppearance,
   atrAppearance,
@@ -43,6 +55,7 @@ import {
   edgeIndicatorAppearance,
   volumeAppearance
 } from './indicatorSettings'
+
 import { curveMonotoneX } from 'd3-shape'
 
 import {
@@ -81,6 +94,7 @@ function calculateData(inputData) {
 }
 
 class OHLCVChart extends React.Component {
+
   render() {
     const {
       type,
@@ -96,7 +110,7 @@ class OHLCVChart extends React.Component {
       chartHeight,
       forceIndex,
       currentChart,
-      noOfCandles
+      noOfCandles,
     } = this.props
 
     let calculatedData = calculateData(initialData)
@@ -109,12 +123,11 @@ class OHLCVChart extends React.Component {
     const start = xAccessor(last(data))
     const end = xAccessor(data[Math.max(0, data.length - noOfCandles)])
     const xExtents = [start, end]
-    const height = chartHeight + indicatorHeight + 42
+    const height = chartHeight + indicatorHeight + 50
 
     var margin = { left: 70, right: 70, top: 20, bottom: 30 }
     var gridHeight = height - margin.top - margin.bottom
-    var gridWidth = width - margin.left - margin.right + 42
-
+    var gridWidth = width - margin.left - margin.right + 50
     var showGrid = true
 
     var yGrid = showGrid
@@ -125,6 +138,7 @@ class OHLCVChart extends React.Component {
           tickStrokeWidth: 1
         }
       : {}
+
     var xGrid = showGrid
       ? {
           innerTickSize: -1 * gridHeight,
@@ -133,6 +147,7 @@ class OHLCVChart extends React.Component {
           tickStrokeWidth: 1
         }
       : {}
+
     return (
       <div>
         <ChartCanvas
@@ -599,6 +614,7 @@ class OHLCVChart extends React.Component {
   }
 }
 
+OHLCVChart = ContextMenuTarget(OHLCVChart)
 OHLCVChart = fitWidth(OHLCVChart)
 
 export default OHLCVChart

@@ -13,6 +13,8 @@ import {
   Box
 } from '../Common';
 
+import { Spring } from 'react-spring'
+
 import { 
   Spinner,
 } from '@blueprintjs/core';
@@ -50,7 +52,9 @@ const RecentTxTableRenderer = (props: Props) => {
     
 
   return (
-    <React.Fragment>
+    <Spring from={{ opacity: 0, marginLeft: -1000 }} to={{ opacity: 1, marginLeft: 0 }} >
+    {props => 
+    <Box style={props}>
       <ListHeader className="heading">
       </ListHeader>
       <ListBody className="list">
@@ -117,7 +121,9 @@ const RecentTxTableRenderer = (props: Props) => {
         ))
         }
       </ListBody>
-    </React.Fragment>
+      </Box>
+      }
+    </Spring>
   );
 };
 

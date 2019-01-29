@@ -3,6 +3,7 @@ import React from 'react'
 import OrderFormRenderer from './OrderFormRenderer'
 import { formatNumber, unformat } from 'accounting-js'
 import { utils } from 'ethers'
+import { Menu, MenuItem, ContextMenuTarget } from '@blueprintjs/core'
 
 type Props = {
   side: 'BUY' | 'SELL',
@@ -22,7 +23,9 @@ type Props = {
   selectedOrder: Object,
   unlockPair: (string, string) => void,
   sendNewOrder: (string, number, number) => void,
-  
+  onCollapse: string => void,
+  onExpand: string => void,
+  onResetDefaultLayout: void => void
 }
 
 type State = {
@@ -48,10 +51,6 @@ class OrderForm extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props)
-
-    let price
-    //TODO: not quite sure whether the suggested price should be equal to
-    //the ask price, the bid price or somewhere in between
     this.state = {
       side: 'BUY',
       fraction: 0,
@@ -258,6 +257,28 @@ class OrderForm extends React.PureComponent<Props, State> {
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }))
+    this.props.onCollapse('orderForm')
+  }
+
+  renderContextMenu = () => {
+    const {
+      state: { isOpen },
+      props: { onResetDefaultLayout },
+      expand,
+      toggleCollapse
+    } = this
+
+    return (
+        <Menu>
+            <MenuItem icon="page-layout" text="Reset Default Layout" onClick={onResetDefaultLayout} />
+            <MenuItem icon={isOpen ? "chevron-up" : "chevron-down"} text={isOpen ? "Close" : "Open"} onClick={toggleCollapse} />
+            <MenuItem icon="zoom-to-fit" text="Fit" onClick={expand} />
+        </Menu>
+    );
+  }
+
+  expand = () => {
+    this.props.onExpand('orderForm')
   }
 
   render() {
@@ -291,6 +312,7 @@ class OrderForm extends React.PureComponent<Props, State> {
       handleUnlockPair,
       handleSideChange,
       toggleCollapse,
+      renderContextMenu
     } = this
 
 
@@ -345,9 +367,11 @@ class OrderForm extends React.PureComponent<Props, State> {
         pairIsAllowed={pairIsAllowed}
         pairAllowanceIsPending={pairAllowanceIsPending}
         handleSideChange={handleSideChange}
+        expand={this.expand}
+        onContextMenu={renderContextMenu}
       />
     )
   }
 }
 
-export default OrderForm
+export default ContextMenuTarget(OrderForm)

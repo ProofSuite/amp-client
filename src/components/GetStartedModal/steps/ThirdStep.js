@@ -5,6 +5,8 @@ import { Button, Checkbox, Intent } from '@blueprintjs/core'
 import { ModalFooter, ModalBody, FlexColumn } from '../../Common'
 import { DISCORD_URL } from '../../../config/urls'
 
+import { Spring } from 'react-spring'
+
 type Props = {
   step: string,
   goToFirstStep: void => void,
@@ -43,48 +45,52 @@ const Thirdstep = (props: Props) => {
   } = props
 
   return (
-    <FlexColumn width="100%">
-      <ModalBody>
-        <Box>
-          <h2>It seems like you have everything you need to start trading!</h2> 
-          <h2>Choose what to do next:</h2>
-          <ButtonGroupBox>
-            <ButtonBox>
-              <Button intent={Intent.PRIMARY} onClick={redirectToTradingPage}>
-                View Trading page
-              </Button>
-            </ButtonBox>
-            <ButtonBox>
-              <Button intent={Intent.PRIMARY} onClick={handleClose}>
-                View Portfolio
-              </Button>
-            </ButtonBox>
-            <ButtonBox>
-              <Button intent={Intent.PRIMARY} onClick={redirectToFAQPage}>
-                Frequently asked questions
-              </Button>
-            </ButtonBox>
-            <ButtonBox>
-              <Button intent={Intent.PRIMARY} onClick={goToFirstStep}>
-                Go back to introduction modal
-              </Button>
-            </ButtonBox>
-          </ButtonGroupBox>
-          <ContactLinksBox>
-            <p>Contact us at support@proofsuite.com</p>
-            <p>Join our <a href={DISCORD_URL}>Discord</a> channel</p>
-          </ContactLinksBox>
-        </Box>
-      </ModalBody>
-      <ModalFooter>
-        <FooterBox>
-          <Checkbox checked={showHelpModalChecked} onClick={toggleShowHelpModalCheckBox}>
-            Do not show again
-          </Checkbox>
-          <Button onClick={handleClose}>Close</Button>
-        </FooterBox>
-      </ModalFooter>
-    </FlexColumn>
+    <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} >
+    {animation =>
+      <FlexColumn width="100%" style={animation}>
+        <ModalBody>
+          <Box>
+            <h2>It seems like you have everything you need to start trading!</h2> 
+            <h2>Choose what to do next:</h2>
+            <ButtonGroupBox>
+              <ButtonBox>
+                <Button intent={Intent.PRIMARY} onClick={redirectToTradingPage}>
+                  View Trading page
+                </Button>
+              </ButtonBox>
+              <ButtonBox>
+                <Button intent={Intent.PRIMARY} onClick={handleClose}>
+                  View Portfolio
+                </Button>
+              </ButtonBox>
+              <ButtonBox>
+                <Button intent={Intent.PRIMARY} onClick={redirectToFAQPage}>
+                  Frequently asked questions
+                </Button>
+              </ButtonBox>
+              <ButtonBox>
+                <Button intent={Intent.PRIMARY} onClick={goToFirstStep}>
+                  Go back to introduction modal
+                </Button>
+              </ButtonBox>
+            </ButtonGroupBox>
+            <ContactLinksBox>
+              <p>Contact us at support@proofsuite.com</p>
+              <p>Join our <a href={DISCORD_URL}>Discord</a> channel</p>
+            </ContactLinksBox>
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          <FooterBox>
+            <Checkbox checked={showHelpModalChecked} onClick={toggleShowHelpModalCheckBox}>
+              Do not show again
+            </Checkbox>
+            <Button onClick={handleClose}>Close</Button>
+          </FooterBox>
+        </ModalFooter>
+      </FlexColumn>
+    }
+    </Spring>
   )
 }
 

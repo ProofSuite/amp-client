@@ -18,18 +18,21 @@ import {
   Position,
 } from '@blueprintjs/core';
 
+import {
+  Spring
+} from 'react-spring'
+
 import { 
-  RowSpaceBetween,
-  CryptoIconPair,
+  FlexRowSpaceBetween,
   Colors, 
   AMPLogo, 
   Centered, 
   LargeText, 
   SmallText,
-  SmallTextDiv,
   BlueGlowingButton,
   FlexRow,
-  Box
+  Box,
+  CryptoIconPair
 } from '../Common';
 
 type Props = {
@@ -63,8 +66,6 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
         volume, 
         orderVolume,
       } = pairs[index]
-
-
   
       return (
         <Row key={key} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)} style={style}>
@@ -134,8 +135,10 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <TableSection>
-        <RowSpaceBetween style={{ marginBottom: '10px' }}>
+      <Spring from={{ opacity: 0, marginLeft: -200 }} to={{ opacity: 1, marginLeft: 0 }} >
+      {props =>
+      <TableSection style={props}>
+        <TableToolBar mt={3} mb={4}>
           <FlexRow>
             <InputGroup
               type="string"
@@ -148,6 +151,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
               minimal
               intent="primary"
               text="View Market Statistics"
+              icon="stacked-chart"
               onClick={toggleMarketStatistics}
             />
           </FlexRow>
@@ -165,8 +169,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
             })
           }
           </ButtonRow>
-        </RowSpaceBetween>
-          
+        </TableToolBar>
             <TableHeader>
               <TableHeaderCell>Market</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
@@ -186,6 +189,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
             <TableBody>
               <AutoSizer>
                 {({ width, height }) => (
+                  
                   <List
                     width={width}
                     height={height}
@@ -200,6 +204,8 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
               </TableBody>
           </Table>
       </TableSection>
+      }
+      </Spring>
     );
   }
 };
@@ -215,6 +221,8 @@ const Table = styled.div.attrs({
   width: 100%;
   border: none !important;
 `;
+
+const TableToolBar = styled(FlexRowSpaceBetween)``
 
 const TableSection = styled.div`
   display: flex;

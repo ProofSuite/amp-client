@@ -1,14 +1,10 @@
 // @flow
 import React from 'react';
-import styled from 'styled-components';
-import { Card, Tab, Tabs, Collapse, Button } from '@blueprintjs/core';
-import { Text } from '../Common';
-import OrderListRenderer from './OrderListRenderer';
-import DepthChartRenderer from './DepthChartRenderer';
-
+import HorizontalOrderBook from './HorizontalOrderBook';
+import VerticalOrderBook from './VerticalOrderBook'
 import type { TokenPair } from '../../types/tokens';
+import { AutoSizer } from 'react-virtualized'
 
-var AmCharts = require('@amcharts/amcharts3-react');
 
 type BidOrAsk = {
   price: number,
@@ -21,106 +17,107 @@ type Props = {
   asks: Array<BidOrAsk>,
   bids: Array<BidOrAsk>,
   currentPair: TokenPair,
-  select: BidOrAsk => void
+  midMarketPrice: ?number,
+  spread: ?number,
+  select: BidOrAsk => void,
+  onCollapse: string => void,
+  onExpand: string => void,
+  onResetDefaultLayout: void => void
 };
 
 type State = {
   selectedTabId: string,
   isOpen: boolean,
+  directionSetting: "vertical" | "horizontal"
 };
 
 class OrderBook extends React.Component<Props, State> {
   state = {
     isOpen: true,
     selectedTabId: 'list',
+    directionSetting: 'horizontal'
   };
 
   changeTab = (tabId: string) => {
-    // silence-error: setState unknown Issue
     this.setState({ selectedTabId: tabId });
   };
 
   toggleCollapse = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.props.onCollapse('orderBook')
   };
 
-  formatNumber = (val: string, chart: Object, precision: number) => {
-    return AmCharts.formatNumber(val, {
-      precision: precision ? precision : chart.precision,
-      decimalSeparator: chart.decimalSeparator,
-      thousandsSeparator: chart.thousandsSeparator,
-    });
-  };
+  expand = () => {
+    this.props.onExpand('orderBook')
+  }
 
-  toolTip = (item: Object, graph: Object) => {
-    let txt;
-    if (graph.id === 'asks') {
-      txt = `Ask: <strong>${this.formatNumber(item.dataContext.price, graph.chart, 4)}</strong><br />
-      Total volume: <strong>${this.formatNumber(item.dataContext.total, graph.chart, 4)}</strong><br />
-      Volume: <strong>${this.formatNumber(item.dataContext.amount, graph.chart, 4)}</strong>`;
-    } else {
-      txt = `Bid: <strong>${this.formatNumber(item.dataContext.price, graph.chart, 4)}</strong><br />
-      Total volume: <strong>${this.formatNumber(item.dataContext.total, graph.chart, 4)}</strong><br />
-      Volume: <strong>${this.formatNumber(item.dataContext.amount, graph.chart, 4)}</strong>`;
-    }
-    return txt;
-  };
+  renderOrderBook = (width: number, height: number) => {
+    const {
+      props: { 
+        bids, 
+        asks,
+        currentPair,
+        midMarketPrice,
+        spread,
+        select,
+        onResetDefaultLayout
+      },
+      state: { 
+        selectedTabId, 
+        isOpen, 
+        directionSetting
+      },
+      changeTab,
+      toggleCollapse,
+      expand,
+    } = this
+
+    const direction = (width < 500) ? "vertical" : directionSetting
+
+    return {
+      "vertical": 
+        <VerticalOrderBook 
+          bids={bids}
+          asks={asks}
+          currentPair={currentPair}
+          midMarketPrice={midMarketPrice}
+          spread={spread}
+          onSelect={select}
+          selectedTabId={selectedTabId}
+          isOpen={isOpen}
+          changeTab={changeTab}
+          toggleCollapse={toggleCollapse}
+          expand={expand}
+          onResetDefaultLayout={onResetDefaultLayout}
+          
+        />,
+      "horizontal": 
+        <HorizontalOrderBook 
+          bids={bids}
+          asks={asks}
+          currentPair={currentPair}
+          midMarketPrice={midMarketPrice}
+          spread={spread}
+          onSelect={select}
+          selectedTabId={selectedTabId}
+          isOpen={isOpen}
+          changeTab={changeTab}
+          toggleCollapse={toggleCollapse}
+          expand={expand}
+          onResetDefaultLayout={onResetDefaultLayout}
+        />
+    }[direction]
+  }
 
   render() {
-    const { bids, asks, currentPair, select } = this.props;
-    const { selectedTabId, isOpen } = this.state;
-
     return (
-      <div>
-        <Wrapper>
-          <OrderBookHeader>
-            <Heading>
-              Order Book
-              <Text muted>
-                {' '}
-                ({currentPair.baseTokenSymbol} / {currentPair.quoteTokenSymbol})
-              </Text>
-            </Heading>
-            <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} minimal onClick={this.toggleCollapse} />
-          </OrderBookHeader>
-          <Collapse isOpen={isOpen} transitionDuration={100}>
-            <Tabs selectedTabId={selectedTabId} onChange={this.changeTab}>
-              <Tab id="list" title="Order List" panel={<OrderListRenderer bids={bids} asks={asks} onSelect={select} />} />
-              <Tab
-                id="depth-chart"
-                title="Depth Chart"
-                disabled
-                panel={<DepthChartRenderer bids={bids} asks={asks} toolTip={this.toolTip} />}
-              />
-            </Tabs>
-          </Collapse>
-        </Wrapper>
-      </div>
-    );
+      <AutoSizer style={{ width: '100%', height: '100%' }}>
+        {({ width, height }) => {
+           return this.renderOrderBook(width, height)
+        }}
+      </AutoSizer>
+    )    
   }
 }
-
-const OrderBookHeader = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  grid-gap: 10px;
-  align-items: center;
-`;
-
-const Heading = styled.h3`
-  margin: auto;
-`;
-
-const Wrapper = styled(Card)`
-  // min-width: 500px;
-  width: 100%;
-  min-height: 50px;
-  /* ul {
-       li {
-         padding-right: 15px;
-       }
-     } */
-`;
 
 export default OrderBook;

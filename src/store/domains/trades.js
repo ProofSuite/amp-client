@@ -90,8 +90,8 @@ export default function tradesDomain(state: TradesState) {
       trades = trades.map(trade => {
         return {
           ...trade,
-          amount: formatNumber(trade.amount, { precision: 3 }),
-          price: formatNumber(trade.price, { precision: 5 })
+          amount: trade.amount,
+          price: trade.price
         }
       })
 
@@ -112,8 +112,8 @@ export default function tradesDomain(state: TradesState) {
 
         return {
           ...trade,
-          amount: formatNumber(trade.amount, { precision: 3 }),
-          price: formatNumber(trade.price, { precision: 5 }),
+          amount: trade.amount,
+          price: trade.price,
           change
         }
       })

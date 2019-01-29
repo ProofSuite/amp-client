@@ -4,8 +4,15 @@ import ohlcvModel, { updateDuration, updateTimeSpan } from '../../store/models/o
 
 import type { State } from '../../types';
 
-export const mapStateToProps = (state: State) => {
-  return ohlcvModel(state).getState();
+type Props = {
+  onCollapse: string => void
+}
+
+export const mapStateToProps = (state: State, ownProps: Props) => {
+  return {
+    ...ohlcvModel(state).getState(),
+    ...ownProps
+  }
 };
 
 export const mapDispatchToProps = {
