@@ -7,11 +7,12 @@ export default function tradesTableSelector(state: State) {
   let tokenPairsDomain = getTokenPairsDomain(state)
   let tradesDomain = getTradesDomain(state)
   
-  let { address } = accountDomain
+  let { address, authenticated } = accountDomain
 
   return {
-    trades: () => tradesDomain.marketTrades(50),
-    userTrades: () => tradesDomain.userTrades(address),
-    currentPair: () => tokenPairsDomain.getCurrentPair(),
+    authenticated,
+    trades: tradesDomain.marketTrades(50),
+    userTrades: tradesDomain.userTrades(address),
+    currentPair: tokenPairsDomain.getCurrentPair(),
   };
 }

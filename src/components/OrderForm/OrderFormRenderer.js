@@ -302,6 +302,7 @@ const LimitOrderPanel = props => {
           handleSendOrder={handleSendOrder}
           handleUnlockPair={handleUnlockPair}
           buttonType={buttonType}
+          insufficientBalance={insufficientBalance}
         />
     </React.Fragment>
   )
@@ -368,6 +369,7 @@ const MarketOrderPanel = (props: *) => {
         quoteTokenSymbol={quoteTokenSymbol}
         handleSendOrder={handleSendOrder}
         handleUnlockPair={handleUnlockPair}
+        insufficientBalance={insufficientBalance}
         buttonType={buttonType}
       />
     </React.Fragment>
@@ -434,6 +436,7 @@ const StopLimitOrderPanel = (props: *) => {
         quoteTokenSymbol={quoteTokenSymbol}
         handleSendOrder={handleSendOrder}
         handleUnlockPair={handleUnlockPair}
+        insufficientBalance={insufficientBalance}
         buttonType={buttonType}
       />
     </React.Fragment>
@@ -537,7 +540,7 @@ const ButtonRenderer = (props: *) => {
     "BUY_LOGIN": (
       <GreenGlowingButton
           intent="success"
-          text={`Login to trade${baseTokenSymbol}/${quoteTokenSymbol}`}
+          text={`Login to trade ${baseTokenSymbol}/${quoteTokenSymbol}`}
           name="order"
           // onClick={}
           // disabled={insufficientBalance}
