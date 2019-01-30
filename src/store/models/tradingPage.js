@@ -9,12 +9,10 @@ import { parseOrders, parseTokenPairsData } from '../../utils/parsers'
 
 // eslint-disable-next-line
 export default function tradingPageSelector(state: State) {
-  let accountDomain = getAccountDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
   let pairDomain = getTokenPairsDomain(state)
   let { isInitiated, isConnected } = getConnectionDomain(state);
-
-  let authenticated = accountDomain.authenticated()
+  let { authenticated } = getAccountDomain(state)
 
   let {
     pair,
@@ -65,28 +63,41 @@ export const queryTradingPageData = (): ThunkAction => {
       socket.unsubscribeTrades()
 
       let state = getState()
-      let signer = getSigner()
       let pairDomain = getTokenPairsDomain(state)
+      let { authenticated } = getAccountDomain(state)
       let currentPair = pairDomain.getCurrentPair()
       let pairs = pairDomain.getPairsByCode()
 
-      let userAddress = await signer.getAddress()
+      let signer, userAddress
+      let tokenPairData = []
+      let orders = []
 
-      let [
-        tokenPairData,
-        orders
-      ] = await Promise.all([
-        api.fetchTokenPairData(),
-        api.fetchOrders(userAddress)
-      ])
-  
+      // in case the user is authenticated, we query orders/tokenPairData
+      if (authenticated) {
+        signer = getSigner()
+        userAddress = await signer.getAddress()
+
+        let promises = await Promise.all([
+          api.fetchTokenPairData(),
+          api.fetchOrders(userAddress)
+        ])
+
+        tokenPairData = promises[0]
+        orders = promises[1]
+
+      // in case the user is not authenticated, we only query the tokenPairData (no orders)
+      } else {
+        tokenPairData = await api.fetchTokenPairData()
+      }
+
+      console.log('i am here')
+      
       let parsedTokenPairData = parseTokenPairsData(tokenPairData, pairs)
       let parsedOrders = parseOrders(orders, pairs)
 
       socket.subscribeTrades(currentPair)
       socket.subscribeOrderBook(currentPair)
       socket.subscribeChart(currentPair, state.ohlcv.currentTimeSpan.label, state.ohlcv.currentDuration.label)
-      
       dispatch(actionCreators.updateTradingPageData(parsedTokenPairData.slice(0,57), parsedOrders))
     } catch (e) {
       console.log(e)

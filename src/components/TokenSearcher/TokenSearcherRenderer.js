@@ -102,7 +102,7 @@ const TokenSearchRenderer = (props: Props) => {
       {loading ? (
         <OverlaySpinner visible={loading} transparent />
       ) : (
-        <div style={{ height: '100%', overflowY: 'scroll' }} onContextMenu={onContextMenu}>
+        <div style={{ height: '100%', overflowY: 'auto' }} onContextMenu={onContextMenu}>
           <div style={{ display: 'flex', justifyContent: 'space-between', height: '30px' }}>
             <SearchInput
               leftIcon="search"

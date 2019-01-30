@@ -64,7 +64,8 @@ const OrdersTableRenderer = (props: Props) => {
     isOpen, 
     toggleCollapse,
     expand,
-    onContextMenu
+    onContextMenu,
+    authenticated
   } = props
 
   return (
@@ -97,10 +98,43 @@ const OrdersTableRenderer = (props: Props) => {
             <Wrapper>
             <Collapse isOpen={isOpen}>
               <Tabs selectedTabId={selectedTabId} onChange={onChange}>
-                <Tab id="all" title="ALL" panel={<OrdersTablePanel loading={loading} orders={orders['ALL']} cancelOrder={cancelOrder} width={width} />} />
-                <Tab id="open" title="OPEN" panel={<OrdersTablePanel loading={loading} orders={orders['OPEN']} cancelOrder={cancelOrder} width={width} />} />
-                <Tab id="cancelled" title="CANCELLED" panel={<OrdersTablePanel loading={loading} orders={orders['CANCELLED']} cancelOrder={cancelOrder} width={width} />} />
-                <Tab id="executed" title="EXECUTED" panel={<OrdersTablePanel loading={loading} orders={orders['FILLED']} cancelOrder={cancelOrder} width={width} />} />
+                <Tab id="all" title="ALL" panel={
+                  <OrdersTablePanel 
+                    loading={loading} 
+                    orders={orders['ALL']} 
+                    cancelOrder={cancelOrder} 
+                    width={width}
+                    authenticated={authenticated}
+                  />} 
+                />
+                <Tab id="open" title="OPEN" panel={
+                  <OrdersTablePanel 
+                    loading={loading} 
+                    orders={orders['OPEN']} 
+                    cancelOrder={cancelOrder} 
+                    width={width} 
+                    authenticated={authenticated}
+                  />} 
+                />
+                <Tab id="cancelled" title="CANCELLED" panel={
+                  <OrdersTablePanel 
+                    loading={loading} 
+                    orders={orders['CANCELLED']} 
+                    cancelOrder={cancelOrder} 
+                    width={width}
+                    authenticated={authenticated}
+                  />
+                  } 
+                />
+                <Tab id="executed" title="EXECUTED" panel={
+                  <OrdersTablePanel 
+                    loading={loading} 
+                    orders={orders['FILLED']} 
+                    cancelOrder={cancelOrder} 
+                    width={width}
+                    authenticated={authenticated}
+                  />} 
+                />
               </Tabs>
             </Collapse>
             </Wrapper>
@@ -111,13 +145,13 @@ const OrdersTableRenderer = (props: Props) => {
 }
 
 const OrdersTablePanel = (props: *) => {
-  const { loading, orders, cancelOrder, width } = props
+  const { loading, orders, cancelOrder, width, authenticated } = props
 
-  return loading ? (
-    <Loading />
-  ) : orders.length < 1 ? (
-    <CenteredMessage message="No orders" />
-  ) : (
+  if (loading) return <Loading />
+  if (!authenticated) return <CenteredMessage message="Not logged in" />
+  if (orders.length === 0) return <CenteredMessage message="No orders" />
+  
+  return (
         <ListContainer>
           <ListHeaderWrapper>
             <ListHeader>
@@ -227,7 +261,8 @@ const CardBox = styled(Card)`
 `
 
 const Wrapper = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 90%;
 `
 

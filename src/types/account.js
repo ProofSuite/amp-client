@@ -1,5 +1,6 @@
 //@flow
 export type AccountState = {
+  +loaded: boolean,
   +address: ?string,
   +privateKey: ?string,
   +currentBlock: ?string,

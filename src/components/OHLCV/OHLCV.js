@@ -1,12 +1,14 @@
 //@flow
 import React from 'react';
 import styled from 'styled-components';
+import { AutoSizer } from 'react-virtualized'
 import { IndicatorSelect, StandardSelect } from '../SelectMenu';
 import ChartLoadingScreen from './ChartLoadingScreen';
 
 import { 
   FlexRow,
-  FlexItem
+  FlexItem,
+  Hideable
 } from '../Common/index'
 
 import { 
@@ -50,6 +52,11 @@ const chartTypes: Array<Object> = [
   { name: 'Area', icon: 'timeline-area-chart' },
 ].map((p, index) => ({ ...p, rank: index }));
 
+const toolBarBreakpoints = {
+  sm: 500,
+  md: 800
+}
+
 export const duration: Array<Object> = [
   { name: '1 Hour', label: '1h' },
   { name: '6 Hour', label: '6h' },
@@ -63,6 +70,8 @@ export const duration: Array<Object> = [
   { name: '1 Year', label: '1Y' },
   { name: 'Full', label: 'Full' },
 ].map((p, index) => ({ ...p, rank: index }));
+
+
 
 type Props = {
   ohlcvData: Array<Object>,
@@ -183,21 +192,26 @@ class OHLCV extends React.PureComponent<Props, State> {
 
     return (
       <Wrapper className="main-chart">
-        <Toolbar
-          changeDuration={changeDuration}
-          onUpdateIndicators={onUpdateIndicators}
-          changeTimeSpan={changeTimeSpan}
-          changeChartType={changeChartType}
-          currentDuration={currentDuration}
-          currentTimeSpan={currentTimeSpan}
-          state={this.state}
-          isOpen={isOpen}
-          expand={expand}
-          toggleCollapse={toggleCollapse}
-          onFullScreen={onFullScreen}
-          fullScreen={fullScreen}
-          onResetDefaultLayout={onResetDefaultLayout}
-        />
+        <AutoSizer style={{ width: "100%", height: 30 }}>
+        {({ width }) => (
+          <Toolbar
+            changeDuration={changeDuration}
+            onUpdateIndicators={onUpdateIndicators}
+            changeTimeSpan={changeTimeSpan}
+            changeChartType={changeChartType}
+            currentDuration={currentDuration}
+            currentTimeSpan={currentTimeSpan}
+            state={this.state}
+            isOpen={isOpen}
+            expand={expand}
+            toggleCollapse={toggleCollapse}
+            onFullScreen={onFullScreen}
+            fullScreen={fullScreen}
+            onResetDefaultLayout={onResetDefaultLayout}
+            width={width}
+          />
+        )}
+        </AutoSizer>
         <ChartLoadingScreen
           volume={indicators[0]}
           line={indicators[1]}
@@ -218,7 +232,8 @@ class OHLCV extends React.PureComponent<Props, State> {
   }
 
 
-const Toolbar = ({
+const Toolbar = (props: *) => {
+ const {
   state,
   onUpdateIndicators,
   changeTimeSpan,
@@ -231,39 +246,48 @@ const Toolbar = ({
   expand,
   onFullScreen,
   fullScreen,
-  onResetDefaultLayout
-}) => (
-    <FlexRow justifyContent="space-between">
-      <ToolbarWrapper>
-        <ChartTypeMenu>
-          <StandardSelect
-            items={state.chartTypes}
-            item={state.currentChart || state.chartTypes[0]}
-            handleChange={changeChartType}
-            icon="series-configuration"
-            minimal
-          />
-        </ChartTypeMenu>
-        <TimeSpanMenu>
-          <StandardSelect
-            items={state.timeSpans}
-            item={currentTimeSpan || state.timeSpans[0]}
-            handleChange={changeTimeSpan}
-            icon="series-add"
-          />
-        </TimeSpanMenu>
-        <DurationMenu 
-          duration={state.duration} 
-          currentDuration={currentDuration} 
-          changeDuration={changeDuration} 
-        />
-        <TimeSpanMenu>
-          <IndicatorSelect 
-            indicators={state.indicators} 
-            onUpdateIndicators={onUpdateIndicators} 
-          />
-        </TimeSpanMenu>
-      </ToolbarWrapper>
+  onResetDefaultLayout,
+  width
+} = props
+
+ return (
+    <FlexRow justifyContent="space-between" width="100%">
+        <ToolbarWrapper>
+          <ChartTypeMenu>
+            <StandardSelect
+              items={state.chartTypes}
+              item={state.currentChart || state.chartTypes[0]}
+              handleChange={changeChartType}
+              icon="series-configuration"
+              minimal
+            />
+          </ChartTypeMenu>
+          <Hideable hiddenIf={width < toolBarBreakpoints.sm}>
+            <TimeSpanMenu>
+              <StandardSelect
+                items={state.timeSpans}
+                item={currentTimeSpan || state.timeSpans[0]}
+                handleChange={changeTimeSpan}
+                icon="series-add"
+              />
+            </TimeSpanMenu>
+          </Hideable>
+          <Hideable hiddenIf={width < toolBarBreakpoints.md}>
+            <DurationMenu 
+              duration={state.duration} 
+              currentDuration={currentDuration} 
+              changeDuration={changeDuration} 
+            />
+          </Hideable>
+          <Hideable hiddenIf={width < toolBarBreakpoints.sm}>
+            <TimeSpanMenu>
+              <IndicatorSelect 
+                indicators={state.indicators} 
+                onUpdateIndicators={onUpdateIndicators} 
+              />
+            </TimeSpanMenu>
+          </Hideable>
+        </ToolbarWrapper>
       <FlexItem justifySelf="flex-end">
         <Button 
           icon='zoom-to-fit' 
@@ -282,7 +306,8 @@ const Toolbar = ({
         />
       </FlexItem>
     </FlexRow>
-);
+  )
+};
 
 const DurationMenu = ({ duration, changeDuration, currentDuration }) => {
   return (

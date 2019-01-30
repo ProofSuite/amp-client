@@ -17,16 +17,14 @@ import { quoteTokenSymbols as quoteTokens } from '../../config/quotes'
 import type { State, ThunkAction } from '../../types'
 
 export default function marketsTableSelector(state: State) {
-    let accountDomain = getAccountDomain(state)
+    let { referenceCurrency } = getAccountDomain(state)
     let pairsDomain = getTokenPairsDomain(state)
 
-    let referenceCurrency = accountDomain.referenceCurrency()
     let pairs = pairsDomain.getTokenPairsWithDataArray()
     
     return {
         pairs,
         quoteTokens,
-        authenticated: accountDomain.authenticated(),
         currentReferenceCurrency: referenceCurrency.symbol
     }
 }

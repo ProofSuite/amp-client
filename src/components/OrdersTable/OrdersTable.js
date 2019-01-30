@@ -8,7 +8,7 @@ import type { Order } from '../../types/Orders'
 
 type Props = {
   orders: Array<Order>,
-  authenticated: false,
+  authenticated: boolean,
   cancelOrder: string => void,
   onCollapse: string => void,
   onExpand: string => void,

@@ -158,7 +158,7 @@ export const OrderListRenderer = (props: *) => {
                 <ReactCSSTransitionGroup
                   transitionName="flash-sell"
                 >
-                  {asks.reverse().map((order, index) => <SellOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
+                  {[...asks].reverse().map((order, index) => <SellOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
                 </ReactCSSTransitionGroup>
               </List>
             </ListContainer>
@@ -223,7 +223,7 @@ const CardBox = styled(Card)`
 `;
 
 const Wrapper = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height: 85%;
 `

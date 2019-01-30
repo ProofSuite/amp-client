@@ -6,9 +6,6 @@ import CenteredSpinner from '../../components/Common/CenteredSpinner'
 import MarketsTable from '../../components/MarketsTable'
 import StatisticsBoard from '../../components/StatisticsBoard'
 
-import { Box } from '../../components/Common'
-
-import { Spring } from 'react-spring'
 
 type Props = {
   loading: boolean,

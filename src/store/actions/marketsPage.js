@@ -1,6 +1,6 @@
 // @flow
 import type {
-  UpdateTokenPairDataAction
+  UpdateMarketPageDataAction
 } from '../../types/marketsPage'
 
 import type {
@@ -13,7 +13,7 @@ const actionTypes = {
   updateMarketPageData: 'marketsPage/UPDATE_MARKET_PAGE_DATA'
 }
 
-export function updateMarketPageData(tokenPairData: Array<TokenPair>, tradingStats: TradingStats): UpdateTokenPairDataAction {
+export function updateMarketPageData(tokenPairData: Array<TokenPair>, tradingStats: TradingStats): UpdateMarketPageDataAction {
   return {
     type: actionTypes.updateMarketPageData,
     payload: { tokenPairData, tradingStats }

@@ -24,13 +24,14 @@ class socketController extends React.Component<Props> {
   }
 
   componentDidMount() {
-    if (this.props.authenticated) this.openConnection()
+    this.openConnection()
+    // if (this.props.authenticated) this.openConnection()
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.authenticated === this.props.authenticated) return
-
-    this.props.authenticated ? this.openConnection() : this.closeConnection()
+    this.openConnection()
+    // if (prevProps.authenticated === this.props.authenticated) return
+    // this.props.authenticated ? this.openConnection() : this.closeConnection()
   }
 
   componentWillUnmount() {

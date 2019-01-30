@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 import { AutoSizer } from 'react-virtualized'
 import { SizesAsNumbers as Sizes } from '../../components/Common/Variables'
 
-import { Responsive, WidthProvider } from 'react-grid-layout'
+import { Responsive } from 'react-grid-layout'
 
 const ResponsiveReactGridLayout = Responsive
 
@@ -52,7 +52,7 @@ const defaultSizes = {
     'orderForm': { x: 0, y: 30, w: 12, h: 16, minH: 16, maxH: 16 },
     'ohlcv': { x: 12, y: 0, w: 36, h: 28},
     'ordersTable': { x: 12, y: 35, w: 23, h: 16 },
-    'orderBook': { x: 48, y: 0, w: 12, h: 28 },
+    'orderBook': { x: 48, y: 0, w: 12, h: 28, minW: 10 },
     'tradesTable': { x: 35, y: 35, w: 25, h: 16 },
   },
   'md': {
@@ -78,11 +78,8 @@ const defaultSizes = {
     'ordersTable': { x: 0, y: 56, w: 60, h: 20 },
     'orderBook': { x: 0, y: 76, w: 60, h: 30 },
     'tradesTable': { x: 0, y: 96, w: 60, h: 30 },
-  },
-  
+  },  
 }
-
-
 
 const fullScreenOHLCVLayouts: LayoutMap = {
   'lg': [ {i: 'ohlcv', x: 0, y: 0, w: 60, h: 60 } ],
@@ -95,34 +92,34 @@ const defaultLayouts = {
   'lg': [
     {i: 'tokenSearcher', x: 0, y: 0, w: 12, h: 28, minW: 12 },
     {i: 'orderForm', x: 0, y: 35, w: 12, h: 16, minH: 16, maxH: 16 },
-    {i: 'ohlcv', x: 12, y: 0, w: 36, h: 28 },
-    {i: 'ordersTable', x: 12, y: 35, w: 23, h: 16 },
-    {i: 'orderBook', x: 48, y: 0, w: 12, h: 28 },
-    {i: 'tradesTable', x: 35, y: 35, w: 25, h: 16 },
+    {i: 'ohlcv', x: 12, y: 0, w: 36, h: 28, minW: 10 },
+    {i: 'ordersTable', x: 12, y: 35, w: 23, h: 16, minW: 10 },
+    {i: 'orderBook', x: 48, y: 0, w: 12, h: 28, minW: 10 },
+    {i: 'tradesTable', x: 35, y: 35, w: 25, h: 16, minW: 10 },
   ],
   'md': [
     {i: 'tokenSearcher', x: 0, y: 0, w: 18, h: 30, minW: 12 },
-    {i: 'orderForm', x: 0, y: 30, w: 18, h: 16, minH: 18, maxH: 18 },
-    {i: 'ohlcv', x: 18, y: 0, w: 42, h: 30 },
-    {i: 'ordersTable', x: 18, y: 30, w: 42, h: 20 },
-    {i: 'orderBook', x: 18, y: 50, w: 21, h: 30 },
-    {i: 'tradesTable', x: 39, y: 50, w: 21, h: 30 },
+    {i: 'orderForm', x: 0, y: 30, w: 18, h: 16, minH: 16, maxH: 16 },
+    {i: 'ohlcv', x: 18, y: 0, w: 42, h: 30, minW: 15 },
+    {i: 'ordersTable', x: 18, y: 30, w: 42, h: 20, minW: 15 },
+    {i: 'orderBook', x: 18, y: 50, w: 21, h: 30, minW: 15 },
+    {i: 'tradesTable', x: 39, y: 50, w: 21, h: 30, minW: 12 },
   ],
   'sm': [
     {i: 'tokenSearcher', x: 0, y: 0, w: 30, h: 16, minW: 12 },
     {i: 'orderForm', x: 30, y: 0, w: 30, h: 16, minH: 16, maxH: 16 },
     {i: 'ohlcv', x: 0, y: 16, w: 60, h: 30 },
     {i: 'ordersTable', x: 0, y: 106, w: 60, h: 20 },
-    {i: 'orderBook', x: 0, y: 46, w: 30, h: 30 },
+    {i: 'orderBook', x: 0, y: 46, w: 30, h: 30, minW: 20 },
     {i: 'tradesTable', x: 30, y: 46, w: 30, h: 30 },
   ],
   'xs': [
-    {i: 'tokenSearcher', x: 0, y: 0, w: 60, h: 20, minW: 12 },
-    {i: 'orderForm', x: 0, y: 40, w: 60, h: 16, minH: 16, maxH: 16 },
-    {i: 'ohlcv', x: 0, y: 20, w: 60, h: 20 },
-    {i: 'ordersTable', x: 0, y: 56, w: 60, h: 20 },
-    {i: 'orderBook', x: 0, y: 76, w: 60, h: 20 },
-    {i: 'tradesTable', x: 0, y: 96, w: 60, h: 20 },
+    {i: 'tokenSearcher', x: 0, y: 0, w: 60, h: 20, minW: 60, maxW: 60 },
+    {i: 'orderForm', x: 0, y: 40, w: 60, h: 16, minH: 16, maxH: 16, minW: 60, maxW: 60 },
+    {i: 'ohlcv', x: 0, y: 20, w: 60, h: 20, minW: 60, maxW: 60 },
+    {i: 'ordersTable', x: 0, y: 56, w: 60, h: 20, minW: 60, maxW: 60 },
+    {i: 'orderBook', x: 0, y: 76, w: 60, h: 20, minW: 60, maxW: 60 },
+    {i: 'tradesTable', x: 0, y: 96, w: 60, h: 20, minW: 60, maxW: 60 },
   ]
 }
 
@@ -272,7 +269,6 @@ class TradingPage extends React.PureComponent<Props, State> {
   }
 
   onBreakpointChange = (currentBreakpoint: string, newCols: number) => {
-    console.log('the current breakpoint', currentBreakpoint, newCols)
     this.setState({ currentBreakpoint })
   }
 
@@ -420,8 +416,8 @@ class TradingPage extends React.PureComponent<Props, State> {
     const { authenticated, isInitiated } = this.props
     const { calloutOptions, calloutVisible, layouts, items } = this.state
     
-    if (!authenticated) return <Redirect to="/login" />
-    if (!isInitiated) return null;
+    // if (!authenticated) return <Redirect to="/login" />
+    // if (!isInitiated) return null;
     
     return (
       <AutoSizer style={{ width: '100%', height: '100%' }}>
