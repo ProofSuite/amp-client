@@ -4,8 +4,8 @@ import OrderFormRenderer from './OrderFormRenderer'
 import { formatNumber, unformat } from 'accounting-js'
 import { utils } from 'ethers'
 import { Menu, MenuItem, ContextMenuTarget } from '@blueprintjs/core'
-
 type Props = {
+  authenticated: boolean,
   side: 'BUY' | 'SELL',
   askPrice: number,
   bidPrice: number,
@@ -25,7 +25,7 @@ type Props = {
   sendNewOrder: (string, number, number) => void,
   onCollapse: string => void,
   onExpand: string => void,
-  onResetDefaultLayout: void => void
+  onResetDefaultLayout: void => void,
 }
 
 type State = {
@@ -304,7 +304,8 @@ class OrderForm extends React.PureComponent<Props, State> {
         baseTokenDecimals, 
         quoteTokenDecimals, 
         pairIsAllowed,
-        pairAllowanceIsPending
+        pairAllowanceIsPending,
+        authenticated
       },
       onInputChange,
       handleChangeOrderType,
@@ -316,7 +317,7 @@ class OrderForm extends React.PureComponent<Props, State> {
     } = this
 
 
-    //TODO refactor!
+    //TODO REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR 
     let maxAmount
     let formattedMakeFee = utils.formatUnits(makeFee, quoteTokenDecimals)
     let maxQuoteTokenAmount = quoteTokenBalance - Number(formattedMakeFee)
@@ -331,15 +332,24 @@ class OrderForm extends React.PureComponent<Props, State> {
       maxAmount = '0.0'
     }
 
-    // (price !== '0.000')
-    // ? maxAmount = side === 'BUY'
-    //   ? formatNumber((quoteTokenBalance - makeFee) / unformat(price), { decimals: 3 })
-    //   : formatNumber(baseTokenBalance, { decimals: 3 })
-    // : maxAmount = '0.0'
-
     let insufficientBalance = (unformat(amount) > unformat(maxAmount))
-
-
+    
+    let buttonType = authenticated
+      ? pairIsAllowed
+        ? side === "BUY"
+          ? "BUY"
+          : "SELL"
+        : pairAllowanceIsPending
+          ? side === "BUY"
+            ? "BUY_UNLOCK_PENDING"
+            : "SELL_UNLOCK_PENDING"
+          : side === "BUY"
+            ? "BUY_UNLOCK"
+            : "SELL_UNLOCK"
+      : side === "BUY"
+        ? "BUY_LOGIN"
+        : "SELL_LOGIN"
+    
     return (
       <OrderFormRenderer
         selectedTabId={selectedTabId}
@@ -369,6 +379,8 @@ class OrderForm extends React.PureComponent<Props, State> {
         handleSideChange={handleSideChange}
         expand={this.expand}
         onContextMenu={renderContextMenu}
+        authenticated={authenticated}
+        buttonType={buttonType}
       />
     )
   }

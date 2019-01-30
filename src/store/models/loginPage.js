@@ -16,10 +16,13 @@ type CreateWalletParams = {
 };
 
 export default function loginPageSelector(state: State) {
+  let { authenticated } = getAccountDomain(state)
+  let { loading, error } = getLoginPageDomain(state)
+
   return {
-    authenticated: getAccountDomain(state).authenticated(),
-    loading: getLoginPageDomain(state).isLoading(),
-    error: getLoginPageDomain(state).getError(),
+    authenticated,
+    loading,
+    error,
   };
 }
 

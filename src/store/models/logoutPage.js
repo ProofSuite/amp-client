@@ -4,8 +4,10 @@ import { getAccountDomain } from '../domains';
 import type { State, ThunkAction } from '../../types';
 
 export default function logoutPageSelector(state: State) {
+  let { authenticated } = getAccountDomain(state)
+  
   return {
-    authenticated: getAccountDomain(state).authenticated(),
+    authenticated,
   };
 }
 

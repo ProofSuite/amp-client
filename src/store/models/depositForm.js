@@ -25,7 +25,7 @@ export default function depositFormSelector(state: State) {
   let depositFormDomain = getDepositFormDomain(state);
 
   return {
-    accountAddress: () => accountDomain.address(),
+    accountAddress: () => accountDomain.address,
     tokens: () => tokenDomain.tokens(),
     rankedTokens: () => tokenDomain.rankedTokens(),
     symbols: () => tokenDomain.symbols(),

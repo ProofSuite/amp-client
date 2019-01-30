@@ -27,7 +27,7 @@ export default function convertTokensFormSelector(state: State) {
   tokens['ETH'] = { symbol: 'ETH', address: '0x0' }
 
   return {
-    accountAddress: () => accountDomain.address(),
+    accountAddress: () => accountDomain.address,
     tokens: () => tokens,
     balances: () => accountBalancesDomain.balances(),
     networkID: () => signerDomain.getNetworkID(),

@@ -1,17 +1,14 @@
 import createStore from '../../store/configureStore'
-import loginPageSelector from './loginPage'
-import * as actionCreators from './loginPage'
 import getAccountDomain from '../domains/account'
 import getWalletDomain from '../domains/wallets'
+import loginPageSelector from './loginPage'
+import * as actionCreators from './loginPage'
 import * as walletService from '../services/wallet'
 import * as signerService from '../services/signer'
 import * as services from '../services/index.js'
 
 //TODO: -> (1) Test fix at line 84(commented)
 // TODO: -> (2) Currently there is a local and session storage mock which don't persist values line 205
-
-
-
 jest.mock('../services/wallet')
 jest.mock('../services/signer')
 jest.mock('../services')
@@ -45,7 +42,7 @@ describe('Login Page Model', () => {
     expect(model.authenticated).toEqual(false)
 
     accountDomain = getAccountDomain(store.getState().account)
-    expect(accountDomain.address()).toEqual(null)
+    expect(accountDomain.address).toEqual(null)
 
     model = loginPageSelector(store.getState())
     expect(model.authenticated).toEqual(false)
@@ -68,7 +65,7 @@ describe('Login Page Model', () => {
     expect(model.authenticated).toEqual(false)
 
     accountDomain = getAccountDomain(store.getState().account)
-    expect(accountDomain.address()).toEqual(null)
+    expect(accountDomain.address).toEqual(null)
 
     model = loginPageSelector(store.getState())
     expect(model.authenticated).toEqual(false)
@@ -112,8 +109,8 @@ describe('Login Page Model', () => {
     expect(walletService.saveEncryptedWalletInLocalStorage).toHaveBeenCalledTimes(0)
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(0)
     domain = getWalletDomain(store.getState().wallets)
-    expect(domain.addresses()).toEqual(['test address'])
-    expect(domain.byAddress()).toEqual({
+    expect(domain.addresses).toEqual(['test address'])
+    expect(domain.byAddress).toEqual({
       'test address': {
         address: 'test address',
         encryptedWallet: 'test encryptedWallet'
@@ -137,8 +134,8 @@ describe('Login Page Model', () => {
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(1)
 
     domain = getWalletDomain(store.getState().wallets)
-    expect(domain.addresses()).toEqual(['test address'])
-    expect(domain.byAddress()).toEqual({
+    expect(domain.addresses).toEqual(['test address'])
+    expect(domain.byAddress).toEqual({
       'test address': {
         address: 'test address',
         encryptedWallet: null
@@ -164,8 +161,8 @@ describe('Login Page Model', () => {
     expect(walletService.savePrivateKeyInSessionStorage).toHaveBeenCalledTimes(1)
 
     domain = getWalletDomain(store.getState().wallets)
-    expect(domain.addresses()).toEqual(['test address'])
-    expect(domain.byAddress()).toEqual({
+    expect(domain.addresses).toEqual(['test address'])
+    expect(domain.byAddress).toEqual({
       'test address': {
         address: 'test address',
         encryptedWallet: 'test encryptedWallet'
@@ -204,8 +201,8 @@ describe('Create wallet (Integration Test)', () => {
     await store.dispatch(actionCreators.loginWithWallet(params))
 
     domain = getWalletDomain(store.getState().wallets)
-    expect(domain.addresses()).toEqual(['0x17fE89190052827FB351e965C965E5fE1Ee60080'])
-    expect(domain.byAddress()).toEqual({
+    expect(domain.addresses).toEqual(['0x17fE89190052827FB351e965C965E5fE1Ee60080'])
+    expect(domain.byAddress).toEqual({
       '0x17fE89190052827FB351e965C965E5fE1Ee60080': {
         address: '0x17fE89190052827FB351e965C965E5fE1Ee60080',
         encryptedWallet: encryptedWallet

@@ -18,13 +18,13 @@ import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import type { State, ThunkAction } from '../../types';
 
 export default function convertTokensFormSelector(state: State) {
-  let accountDomain = getAccountDomain(state);
+  let { address } = getAccountDomain(state);
   let accountBalancesDomain = getAccountBalancesDomain(state);
   let signerDomain = getSignerDomain(state);
   let getStartedModalDomain = getGetStartedModalDomain(state)
 
   return {
-    ETHAddress: () => accountDomain.address(),
+    ETHAddress: () => address,
     ETHBalance: () => accountBalancesDomain.etherBalance(),
     WETHBalance: () => accountBalancesDomain.tokenBalance('WETH'),
     WETHAllowance: () => accountBalancesDomain.tokenAllowance('WETH'),

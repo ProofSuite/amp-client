@@ -42,7 +42,7 @@ export const authenticated = () => {
 
 export default function getLoginPageDomain(state: LoginPageState) {
   return {
-    isLoading: () => state.loading,
-    getError: () => state.error,
+    loading: state.loading,
+    error: state.error,
   };
 }

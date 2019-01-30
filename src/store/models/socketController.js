@@ -11,8 +11,10 @@ import type { State, ThunkAction } from '../../types/'
 import type { WebsocketEvent, WebsocketMessage } from '../../types/websocket'
 
 export default function socketControllerSelector(state: State) {
+  let { authenticated } = getAccountDomain(state)
+
   return {
-    authenticated: getAccountDomain(state).authenticated(),
+    authenticated,
     pairs: getTokenPairsDomain(state).getPairsByCode()
   }
 }

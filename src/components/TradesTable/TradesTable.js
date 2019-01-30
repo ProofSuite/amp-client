@@ -14,6 +14,7 @@ type State = {
 };
 
 type Props = {
+  authenticated: boolean,
   trades: Array<Trade>,
   userTrades: Array<Trade>,
   currentPair: TokenPair,
@@ -67,7 +68,7 @@ class TradesTable extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      props: { trades, userTrades, currentPair },
+      props: { trades, userTrades, currentPair, authenticated },
       state: { selectedTabId, isOpen },
       changeTab,
       toggleCollapse,
@@ -88,6 +89,7 @@ class TradesTable extends React.PureComponent<Props, State> {
         openEtherscanLink={openEtherscanLink}
         expand={expand}
         onContextMenu={renderContextMenu}
+        authenticated={authenticated}
       />
     );
   }
