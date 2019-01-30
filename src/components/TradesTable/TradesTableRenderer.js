@@ -38,7 +38,8 @@ type Props = {
   openEtherscanLink: string => void,
   isOpen: boolean,
   expand: SyntheticEvent<> => void,
-  onContextMenu: void => void
+  onContextMenu: void => void,
+  authenticated: boolean
 };
 
 const TradesTableRenderer = (props: Props) => {
@@ -52,7 +53,8 @@ const TradesTableRenderer = (props: Props) => {
     toggleCollapse,
     openEtherscanLink,
     expand,
-    onContextMenu
+    onContextMenu,
+    authenticated
   } = props;
 
   return (
@@ -113,6 +115,7 @@ const TradesTableRenderer = (props: Props) => {
                         trades={userTrades} 
                         openEtherscanLink={openEtherscanLink} 
                         width={width}
+                        authenticated={authenticated}
                       />
                     }
                   />
@@ -183,9 +186,10 @@ const MarketTradesPanel = (props: *) => {
 };
 
 const UserTradesPanel = (props: *) => {
-  const { trades, width } = props;
+  const { trades, width, authenticated } = props;
 
   if (!trades) return <Loading />
+  if (!authenticated) return <CenteredMessage message="Not logged in" />
   if (trades.length === 0) return <CenteredMessage message="No trades for this token pair" />
 
   return (
@@ -240,7 +244,8 @@ const TradesTableHeader = styled.div`
 `;
 
 const Wrapper = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 90%;
 `
 

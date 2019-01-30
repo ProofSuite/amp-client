@@ -10,11 +10,9 @@ import { parseTokenPairsData } from '../../utils/parsers'
 import type { State, ThunkAction } from '../../types'
 
 export default function marketsPageSelector(state: State) {
-  let accountDomain = getAccountDomain(state)
+  let { authenticated, appIsLoaded } = getAccountDomain(state)
 
-  return {
-    authenticated: accountDomain.authenticated(),
-  }
+  return { authenticated, appIsLoaded }
 }
 
 export function queryMarketData(): ThunkAction {

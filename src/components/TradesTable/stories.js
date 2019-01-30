@@ -6,7 +6,6 @@ import TradesTableContainer from './index';
 import TradesTable from './TradesTable';
 import README from './README.md';
 import { LoadData } from '../Common';
-import * as tradeHistory from '../../jsons/tradeHistory.json';
 import { getTrades } from '../../store/services/api';
 
 const currentPair = {

@@ -103,7 +103,7 @@ const GetStartedSectionRenderer = (props: Props) => {
         Please take some time to read some of the information before you start trading
         </Callout>
         <br />
-        <Header>🖖 Welcome to AMP</Header>
+        <Header>Welcome</Header>
         <p>• AMP is an open-source cryptocurrency exchange which gives you full control over your funds.</p>
         <p>• We allow you to trade directly from your wallet without the need for deposits and withdrawals.</p>
         <p>• We do not control your account and therefore cannot help you recover your funds if you send them to the wrong address or lose your private key. 

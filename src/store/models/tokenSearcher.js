@@ -39,7 +39,7 @@ export default function tokenSearcherSelector(state: State) {
       }))
   }
 
-  let currentAddress = accountDomain.address()
+  let currentAddress = accountDomain.address
   let currentPair = domain.getCurrentPair()
   let baseTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.baseTokenSymbol, currentAddress)
   let quoteTokenLockedBalance = ordersDomain.lockedBalanceByToken(currentPair.quoteTokenSymbol, currentAddress)

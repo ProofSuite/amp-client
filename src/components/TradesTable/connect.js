@@ -11,9 +11,7 @@ export const mapStateToProps = (state: State, ownProps: Props) => {
   let selector = tradesTableSelector(state)
 
   return {
-    trades: selector.trades(),
-    userTrades: selector.userTrades(),
-    currentPair: selector.currentPair(),
+    ...selector,
     ...ownProps
   }
 };

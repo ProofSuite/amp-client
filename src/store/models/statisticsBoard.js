@@ -11,14 +11,12 @@ import {
 export default function statisticsBoardSelector(state: State) {
     let tokenPairsDomain = getTokenPairsDomain(state)
     let tokensDomain = getTokenDomain(state)
-    let accountDomain = getAccountDomain(state)
     let statsDomain = getStatsDomain(state)
+    let { referenceCurrencyName } = getAccountDomain(state)
 
-    let currency = accountDomain.referenceCurrencyName()
+    let currency = referenceCurrencyName
     let exchangeRates = tokensDomain.exchangeRates(currency)
-    let tradingStats = statsDomain.getState()
-
-    console.log(currency)
+    let tradingStats = statsDomain.state
 
     let orderCountsByPair = tokenPairsDomain.orderCountsBySymbol()
     let tradeCountsByPair = tokenPairsDomain.tradeCountsBySymbol()

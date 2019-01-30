@@ -8,8 +8,10 @@ type Props = {
 }
 
 export const mapStateToProps = (state: State, ownProps: Props) => {
+  let selector = ordersTableSelector(state)
+
   return {
-    orders: ordersTableSelector(state).orders(),
+    ...selector,
     ...ownProps
   }
 }

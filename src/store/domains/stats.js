@@ -30,15 +30,15 @@ export const updated = (newState: StatsState) => {
 
 export default function statsDomain(state: StatsState) {
     return {
-        getState: () => state,
-        totalOrders: () => state.totalOrders,
-        totalTrades: () => state.totalTrades,
-        totalSellOrders: () => state.totalSellOrders,
-        totalBuyOrders: () => state.totalBuyOrders,
-        totalVolume: () => state.totalVolume,
-        totalOrderAmount: () => state.totalOrderAmount,
-        mostTradedToken: () => state.mostTradedToken,
-        mostTradedPair: () => state.mostTradedPair,
+        state: state,
+        totalOrders: state.totalOrders,
+        totalTrades: state.totalTrades,
+        totalSellOrders: state.totalSellOrders,
+        totalBuyOrders: state.totalBuyOrders,
+        totalVolume: state.totalVolume,
+        totalOrderAmount: state.totalOrderAmount,
+        mostTradedToken: state.mostTradedToken,
+        mostTradedPair: state.mostTradedPair,
     }
 }
 

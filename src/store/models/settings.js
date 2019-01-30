@@ -4,10 +4,11 @@ import { getAccountDomain, getSettingsDomain } from '../domains';
 import type { State } from '../../types';
 
 export default function settingsPageSelector(state: State) {
-  let accountDomain = getAccountDomain(state)
+  let { authenticated } = getAccountDomain(state)
+  let { pvtKeyLocked } = getSettingsDomain(state)
 
   return {
-    authenticated: accountDomain.authenticated(),
-    pvtKeyLocked: getSettingsDomain(state).pvtKeyLocked(),
+    authenticated,
+    pvtKeyLocked,
   };
 }

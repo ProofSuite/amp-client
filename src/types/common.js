@@ -35,3 +35,5 @@ export type BN = {
 }
 
 export type Numberish = string | number;
+
+export type Location = "/login" | "/markets" | "/trade" | "/wallet"

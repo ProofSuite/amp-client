@@ -216,7 +216,8 @@ const CardBox = styled(Card)`
 `;
 
 const Wrapper = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 85%;
 `
 

@@ -44,7 +44,7 @@ export const walletRemoved = (address: string) => {
 
 export default function walletDomain(state: WalletsState) {
   return {
-    addresses: () => state.addresses,
-    byAddress: () => state.byAddress,
+    addresses: state.addresses,
+    byAddress: state.byAddress,
   };
 }

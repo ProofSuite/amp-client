@@ -10,17 +10,17 @@ import {
 
 export default function walletInfoSelector(state: State) {
     let tokenDomain = getTokenDomain(state)
-    let accountDomain = getAccountDomain(state)
     let accountBalancesDomain = getAccountBalancesDomain(state)
     let transactionsDomain = getTransactionsDomain(state)
+    let accountDomain = getAccountDomain(state)
 
     return {
         userTokens: tokenDomain.tokenAddresses(),
         listedTokens: tokenDomain.listedTokenAddresses(),
         registeredTokens: tokenDomain.registeredTokenAddresses(),
         etherBalance: accountBalancesDomain.formattedEtherBalance(),
-        accountAddress: accountDomain.address(),
-        recentTransactions: transactionsDomain.recentTransactions(8)
+        recentTransactions: transactionsDomain.recentTransactions(8),
+        accountAddress: accountDomain.address
     }
 }
 
