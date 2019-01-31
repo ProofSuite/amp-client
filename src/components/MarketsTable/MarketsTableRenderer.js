@@ -35,9 +35,11 @@ import {
   CryptoIconPair
 } from '../Common';
 
+import type { PairData } from './MarketsTable'
+
 type Props = {
   searchInput: string,
-  pairs: Array<Object>,
+  pairs: Array<PairData>,
   handleSearchInputChange: (SyntheticInputEvent<>) => void,
   redirectToTradingPage: (string, string) => void,
   selectedTab: string,

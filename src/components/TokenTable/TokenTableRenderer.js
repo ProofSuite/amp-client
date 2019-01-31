@@ -10,7 +10,6 @@ import {
   InputGroup, 
   Tag, 
   Position,
-  Button,
   Icon,
   Tooltip
 } from '@blueprintjs/core';
@@ -40,7 +39,8 @@ import { Devices } from '../../components/Common/Variables'
 type TokenData = {
   symbol: string,
   address: string,
-  balance: string,
+  balance: number,
+  value: number,
   allowed: boolean,
   decimals: number,
   allowancePending: boolean,
@@ -53,10 +53,8 @@ type TokenData = {
 type Props = {
   connected: boolean,
   baseTokensData: Array<TokenData>,
-  quoteTokensData: Array<TokenData>,
   ETHTokenData: TokenData,
   WETHTokenData: TokenData,
-  tokenDataLength: number,
   searchInput: string,
   handleSearchInputChange: (SyntheticInputEvent<>) => void,
   hideZeroBalanceToken: boolean,
@@ -154,7 +152,6 @@ class TokenTableRenderer extends React.PureComponent<Props> {
         }
         </Spring>
       );
-
   }
 }
 
@@ -256,11 +253,11 @@ const WETHRow = (props: Props) => {
       <BalancesCell onClick={() => redirectToTradingPage(symbol)}>
         <FlexRow>
           <SmallText muted>
-            {formatNumber(balance, { precision: 4})}  {symbol} 
+            {formatNumber(balance, { precision: 4 })}  {symbol} 
           </SmallText>
           {value !== null && 
             <SmallText muted ml={1}> 
-              ({formatNumber(value, { precision: 2})} {referenceCurrency})
+              ({formatNumber(value, { precision: 2 })} {referenceCurrency})
             </SmallText>
           }
         </FlexRow>
@@ -335,11 +332,11 @@ const BaseTokenRow = (props: Props) => {
           <BalancesCell onClick={() => redirectToTradingPage(symbol)}>
             <FlexRow>
               <SmallText muted>
-                {formatNumber(balance, { precision: 4})}  {symbol} 
+                {formatNumber(balance, { precision: 4 })}  {symbol} 
               </SmallText>
               {value !== null && 
                 <SmallText muted ml={1}> 
-                  ({formatNumber(value, { precision: 2})} {referenceCurrency})
+                  ({formatNumber(value, { precision: 2 })} {referenceCurrency})
                 </SmallText>
               }
             </FlexRow>
