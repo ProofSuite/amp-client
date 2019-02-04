@@ -37,8 +37,10 @@ storiesOf('Token Table', module)
           handleToggleAllowance={action('handleToggleAllowance')}
           toggleZeroBalanceToken={action('toggleZeroBalanceToken')}
           redirectToTradingPage={action('redirectToTradingPage')}
-          totalFilteredTokens={5}
+          totalFilteredTokens={4}
           referenceCurrency={"$"}
+          totalETHandWETHBalance={29.00000}
+          selectedToken="ZRX"
            />
       </Card>
     ))
@@ -60,8 +62,10 @@ storiesOf('Token Table', module)
           handleToggleAllowance={action('handleToggleAllowance')}
           toggleZeroBalanceToken={action('toggleZeroBalanceToken')}
           redirectToTradingPage={action('redirectToTradingPage')}
-          totalFilteredTokens={5}
+          totalFilteredTokens={4}
           referenceCurrency={"$"}
+          totalETHandWETHBalance={29.00000}
+          selectedToken="ETH"
            />
       </Card>
     ))

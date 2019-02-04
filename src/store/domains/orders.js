@@ -1,7 +1,7 @@
 // @flow
 import type { Orders, OrdersState } from '../../types/orders'
 import { getBaseToken, getQuoteToken } from '../../utils/tokens'
-import { formatNumber } from 'accounting-js'
+import { parseWETHPair } from '../../utils/helpers'
 
 const initialState = {
   byHash: {}
@@ -74,11 +74,13 @@ export default function ordersDomain(state: OrdersState) {
       let orders = Object.values(state.byHash)
 
       let lastOrders = (orders: Orders).slice(Math.max(orders.length - n, 0))
-      lastOrders = (lastOrders: Orders).map(order => {
-        order.cancelleable = (order.status === 'OPEN' || order.status === 'PARTIAL_FILLED')
-        return order
-      })
+      lastOrders = (lastOrders: Orders).map(rawOrder => {
+        let cancelleable = (rawOrder.status === 'OPEN' || rawOrder.status === 'PARTIAL_FILLED')
+        let pair = parseWETHPair(rawOrder.pair)
 
+        return { ...rawOrder, cancelleable, pair }
+      })
+      
       return lastOrders
     },
 

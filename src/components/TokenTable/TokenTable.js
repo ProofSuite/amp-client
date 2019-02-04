@@ -47,7 +47,7 @@ class TokenTable extends React.PureComponent<Props, State> {
     isDepositModalOpen: false,
     isSendModalOpen: false,
     isConvertModalOpen: false,
-    selectedToken: null,
+    selectedToken: 'ETH',
     hideZeroBalanceToken: false,
     searchInput: '',
     convertModalFromToken: 'ETH',
@@ -126,6 +126,10 @@ class TokenTable extends React.PureComponent<Props, State> {
     this.setState({ hideZeroBalanceToken: !this.state.hideZeroBalanceToken });
   };
 
+  updateSelectedToken = (selectedToken: string) => {
+    this.setState({ selectedToken })
+  }
+
   filterTokens = (data: Array<TokenData>) => {
     const { searchInput, hideZeroBalanceToken } = this.state;
 
@@ -139,9 +143,7 @@ class TokenTable extends React.PureComponent<Props, State> {
     let {
       connected,
       tokenData,
-      quoteTokens,
       baseTokens,
-      toggleAllowance,
       redirectToTradingPage,
       referenceCurrency
      } = this.props;
@@ -161,10 +163,23 @@ class TokenTable extends React.PureComponent<Props, State> {
      let WETHTokenData = tokenData.filter((token: Token) => token.symbol === 'WETH')
      let ETHTokenData = tokenData.filter((token: Token) => token.symbol === 'ETH')
 
+     let ETHData = [{
+       ...ETHTokenData[0],
+       ETHBalance: ETHTokenData[0].balance,
+       WETHBalance: WETHTokenData[0].balance,
+       totalBalance: Number(ETHTokenData[0].balance) + Number(WETHTokenData[0].balance)
+     }]
+
+    let selectedTokenData
+     if (selectedToken === "ETH") {       
+       selectedTokenData = ETHData[0]
+     } else {
+       selectedTokenData = tokenData.filter((token: Token) => token.symbol === selectedToken)[0]
+     }
+     
     let filteredBaseTokenData = this.filterTokens(baseTokenData)
-    let filteredWETHTokenData = this.filterTokens(WETHTokenData)
-    let filteredETHTokenData = this.filterTokens(ETHTokenData)
-    let totalFilteredTokens = filteredBaseTokenData.length + filteredWETHTokenData.length + filteredETHTokenData.length
+    let filteredETHData = this.filterTokens(ETHData)
+    let totalFilteredTokens = filteredBaseTokenData.length
 
     return (
       <Wrapper>
@@ -172,8 +187,7 @@ class TokenTable extends React.PureComponent<Props, State> {
           connected={connected}
           handleToggleAllowance={this.handleToggleAllowance}
           baseTokensData={filteredBaseTokenData}
-          ETHTokenData={filteredETHTokenData[0]}
-          WETHTokenData={filteredWETHTokenData[0]}
+          ETHTokenData={filteredETHData[0]}
           tokenDataLength={tokenData.length}
           searchInput={searchInput}
           hideZeroBalanceToken={hideZeroBalanceToken}
@@ -185,6 +199,9 @@ class TokenTable extends React.PureComponent<Props, State> {
           redirectToTradingPage={redirectToTradingPage}
           totalFilteredTokens={totalFilteredTokens}
           referenceCurrency={referenceCurrency}
+          updateSelectedToken={this.updateSelectedToken}
+          selectedToken={selectedToken}
+          selectedTokenData={selectedTokenData}
         />
         <DepositModal
           isOpen={isDepositModalOpen}
@@ -207,7 +224,7 @@ class TokenTable extends React.PureComponent<Props, State> {
     );
   }
 }
-
+1
 export default TokenTable;
 
 const Wrapper = styled.div`

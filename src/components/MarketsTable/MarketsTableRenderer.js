@@ -41,7 +41,7 @@ type Props = {
   searchInput: string,
   pairs: Array<PairData>,
   handleSearchInputChange: (SyntheticInputEvent<>) => void,
-  redirectToTradingPage: (string, string) => void,
+  redirectToTradingPage: string => void,
   selectedTab: string,
   handleChangeTab: string => void,
   tabs: Array<string>,
@@ -70,7 +70,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
       } = pairs[index]
   
       return (
-        <Row key={key} onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)} style={style}>
+        <Row key={key} onClick={() => redirectToTradingPage(pair)} style={style}>
           <Cell>
             <FlexRow alignItems="center">
               <Box pb={4} mr={2}>
@@ -107,7 +107,7 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
               <BlueGlowingButton
                 intent="primary"
                 text="Trade"
-                onClick={() => redirectToTradingPage(baseTokenSymbol, quoteTokenSymbol)}
+                onClick={() => redirectToTradingPage(pair)}
               />
             </FlexRow>
           </Cell>

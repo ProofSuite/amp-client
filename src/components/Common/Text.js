@@ -2,6 +2,11 @@
 import {
   space,
   width,
+  textAlign,
+  lineHeight,
+  fontWeight,
+  alignSelf,
+  justifySelf,
 } from 'styled-system'
 
 
@@ -11,13 +16,43 @@ import Colors from './Colors';
 import { Fonts } from './Variables'
 
 
-export const Text = styled.span`
+export const Text = styled.div`
   ${space}
   ${width}
+  ${textAlign}
+  ${lineHeight}
+  ${alignSelf}
+  ${justifySelf}
+
   font-size: ${props => (props.small ? Fonts.FONT_SIZE_SMALL : props.large ? Fonts.FONT_SIZE_LARGE : Fonts.FONT_SIZE)}
   color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
   margin: auto;
-  )}
+`;
+
+export const XLText = styled.div`
+  ${space}
+  ${width}
+  ${textAlign}
+  ${lineHeight}
+  ${alignSelf}
+  ${justifySelf}
+
+  font-size: ${props => Fonts.FONT_SIZE_XL + 'px'};
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)};
+`;
+
+
+export const TextDiv = styled.div`
+  ${space}
+  ${width}
+  ${textAlign}
+  ${lineHeight}
+  ${alignSelf}
+  ${justifySelf}
+  
+  font-size: ${props => (props.small ? Fonts.FONT_SIZE_SMALL : props.large ? Fonts.FONT_SIZE_LARGE : Fonts.FONT_SIZE)}
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
+  margin: auto;
 `;
 
 export const SmallText = styled.span`
@@ -42,14 +77,7 @@ export const SmallTextDiv = styled.div`
   color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)};
 `;
   
-export const TextDiv = styled.div`
-  ${space}
-  ${width}
-  font-size: ${props => (props.small ? Fonts.FONT_SIZE_SMALL : props.large ? Fonts.FONT_SIZE_LARGE : Fonts.FONT_SIZE)}
-  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
-  margin: auto;
-  )}
-`;
+
 
 export const Header = styled.h2`
   ${space}
@@ -81,6 +109,7 @@ export const H2 = styled.h2`
           : Colors.WHITE
   };
 `
+
 
 
 export const LargeText = styled.h3`

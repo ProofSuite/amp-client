@@ -2,7 +2,7 @@ import { DEFAULT_NETWORK_ID } from '../../../config/environment'
 import { ERC20, WETH } from '../../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { utils, providers, Contract, getDefaultProvider } from 'ethers'
-// import abiDecoder from 'ethereum-input-data-decoder'
+import abiDecoder from 'ethereum-input-data-decoder'
 
 export const createConnection = () => {
     switch(DEFAULT_NETWORK_ID) {

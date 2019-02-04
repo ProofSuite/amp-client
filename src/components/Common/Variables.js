@@ -18,6 +18,9 @@ export const Fonts = {
   FONT_SIZE: Grids.GRID_SIZE * 1.4,
   FONT_SIZE_LARGE: Grids.GRID_SIZE * 1.6,
   FONT_SIZE_SMALL: Grids.GRID_SIZE * 1.2,
+  FONT_SIZE_XL: Grids.GRID_SIZE * 2,
+  FONT_SIZE_XXL: Grids.GRID_SIZE * 4,
+  FONT_SIZE_XXXL: Grids.GRID_SIZE * 6,
 };
 
 export const Line = {

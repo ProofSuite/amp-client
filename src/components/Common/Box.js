@@ -107,6 +107,7 @@ export const FlexRow = styled(Box)`
   ${justifyContent}
   ${flexWrap}
   ${flexBasis}
+  ${flex}
 `
 
 export const FlexColumn = styled(Box)`
@@ -117,6 +118,7 @@ export const FlexColumn = styled(Box)`
   ${justifyContent}
   ${flexWrap}
   ${flexBasis}
+  ${flex}
 `
 
 export const FlexRowWrap = styled(Box)`

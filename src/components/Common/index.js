@@ -15,6 +15,7 @@ import {
 
 import { 
     Text, 
+    XLText,
     Header,
     SmallText, 
     SmallTextDiv, 
@@ -43,7 +44,7 @@ import {
 
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
 export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn, FlexRowWrap, FlexColumnWrap, FlexRowSpaceAround, FlexRowSpaceBetween }
-export { Text, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { Text, XLText, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export {
     Card,
