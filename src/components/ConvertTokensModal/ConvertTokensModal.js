@@ -13,9 +13,20 @@ type Props = {
 };
 
 const ConvertTokensFormModal = (props: Props) => {
+  const title = (props.fromToken === "ETH") ? "Deposit" : "Withdraw"
+
   return (
-    <Modal title="Deposit Ether or Tokens" icon="info-sign" isOpen={props.isOpen} onClose={props.handleClose}>
-      <ConvertTokensFormContainer fromToken={props.fromToken} toToken={props.toToken} />
+    <Modal
+      title={title}
+      icon="info-sign"
+      isOpen={props.isOpen}
+      onClose={props.handleClose}
+      width={600}
+    >
+      <ConvertTokensFormContainer
+        fromToken={props.fromToken} 
+        toToken={props.toToken}
+      />
     </Modal>
   );
 };

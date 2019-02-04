@@ -62,7 +62,6 @@ type Props = {
   connected: boolean,
   baseTokensData: Array<TokenData>,
   ETHTokenData: TokenData,
-  WETHTokenData: TokenData,
   searchInput: string,
   handleSearchInputChange: (SyntheticInputEvent<>) => void,
   hideZeroBalanceToken: boolean,
@@ -86,9 +85,6 @@ class TokenTableRenderer extends React.PureComponent<Props> {
       if (index === 0 && ETHTokenData) return <ETHRow key={key} style={style} {...this.props} />
       if (ETHTokenData) index = index - 1
       
-      // if (index === 0 && WETHTokenData) return <WETHRow key={key} style={style} {...this.props} />
-      // if (index === 1 && ETHTokenData && WETHTokenData) return <WETHRow key={key} style={style} {...this.props} />
-      // if (WETHTokenData) index = index - 1
       return (
         <BaseTokenRow 
           key={key} 
@@ -176,22 +172,20 @@ class TokenTableRenderer extends React.PureComponent<Props> {
                   <BalancesHeaderCell>Balances</BalancesHeaderCell>
                   <ActionsHeaderCell></ActionsHeaderCell>
               </TableHeader>
-                <Table>
-                  <TableBody>
-                    <AutoSizer>
-                      {({ width, height }) => (
-                        <List
-                          width={width}
-                          height={height}
-                          rowCount={totalFilteredTokens}
-                          rowHeight={60}
-                          rowRenderer={this.rowRenderer}
-                          noRowsRenderer={this.noRowRenderer}
-                        />
-                      )}
-                  </AutoSizer>
-                  </TableBody>
-                </Table>
+              <Table>
+                  <AutoSizer style={{ height: '100%'}}>
+                    {({ width, height }) => (
+                      <List
+                        width={width}
+                        height={height}
+                        rowCount={totalFilteredTokens}
+                        rowHeight={60}
+                        rowRenderer={this.rowRenderer}
+                        noRowsRenderer={this.noRowRenderer}
+                      />
+                    )}
+                </AutoSizer>
+              </Table>
             </TableSection>
           </React.Fragment>
         }
@@ -211,7 +205,7 @@ const ETHWidget = (props: Props) => {
   return (
     <Spring from={{ marginLeft: -50, opacity: 0 }} to={{ marginLeft: 0, opacity: 1 }}>
         {animation =>
-          <Box m={3} pb={4} style={animation}>
+          <Box m={2} pb={3} style={animation}>
             <FlexRow justifyContent="space-between">
               <FlexRow justifyContent="flex-end">
                 <FlexColumn mx={3}>
@@ -244,21 +238,21 @@ const ETHWidget = (props: Props) => {
               <FlexColumn>
                   <GreenGlowingButton
                     intent="success"
-                    text="Deposit ETH"
+                    text="Deposit"
                     m={2}
                     large
                     onClick={(event) => openConvertModal(event, 'ETH', 'WETH')}
                   />
                   <GreenGlowingButton
                     intent="success"
-                    text="Withdraw ETH"
+                    text="Withdraw"
                     m={2}
                     large
                     onClick={(event) => openConvertModal(event, 'WETH', 'ETH')}
                   />
                   <GreenGlowingButton
                     intent="success"
-                    text="Trade ETH"
+                    text="Trade"
                     large
                     m={2}
                     onClick={(event) => redirectToTradingPage('WETH')}
@@ -310,13 +304,16 @@ const TokenWidget = (props: *) => {
                 </FlexRow>
               </FlexRow>
               <FlexColumn>  
+                {
+                  
+                }
                 <GreenGlowingButton
-                  intent="success"
-                  text={`Unlock ${token.symbol}`}
                   m={2}
                   large
+                  intent="success"
                   onClick={(event) => handleToggleAllowance(event, token.symbol)}
-                  
+                  text={token.allowed ? `Lock ${token.symbol}` : `Unlock ${token.symbol}`}
+                  icon={token.allowed ? "unlock" : "lock"}
                 />
                 {/* <Help position={Position.LEFT}>
                   By unlocking tokens, you allow the AMP smart-contract to settle trades you have approved.
@@ -467,20 +464,21 @@ const BaseTokenRow = (props: *) => {
     );
 };
 
-const Table = styled.div`
-  width: 100%;
-`;
-
 const TableSection = styled.div`
   display: flex;
   justify-content: start;
   flex-direction: column;
   height: 100%;
   width: 100%;
+  overflow-y: auto;
 `;
 
-const TableBody = styled.div`
-  height: 60vh;
+const Table = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: calc(90vh - 250px);
 `;
 
 const TableHeader = styled.div`

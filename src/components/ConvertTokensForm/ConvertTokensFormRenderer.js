@@ -10,7 +10,6 @@ import {
   FlexColumn, 
   FlexRow, 
   Box,
-  Text,
   XLText,
   Colors
 } from '../Common'
@@ -26,11 +25,8 @@ type Props = {
   address: string,
   fromToken: string,
   toToken: string,
-  fromTokenBalance: number,
-  toTokenBalance: number,
   txSubmitted: boolean,
   shouldAllow: boolean,
-  convertAmount: number,
   convertFraction: number,
   handleConvertTokens: void => void,
   handleChangeConvertFraction: number => void,
@@ -43,6 +39,7 @@ type Props = {
   convertTxReceipt: TxReceipt,
   transactionStatus: string,
   reset: string => void,
+  formType: "Deposit" | "Withdrawal"
 };
 
 const ConvertTokensFormRenderer = (props: Props) => {
@@ -59,18 +56,18 @@ const ConversionFormRenderer = (props: Props) => {
     handleConvertTokens,
     handleChangeConvertFraction,
     convertFraction,
-    convertAmount,
     fromToken,
-    fromTokenBalance,
-    toTokenBalance
+    depositBalance,
+    walletBalance,
+    formType
   } = props;
 
   return (
     <ModalBody>
       <FlexColumn my={3}>
-        <FlexColumn m={2} alignItems="center">
+        <FlexColumn m={2} alignItems="center" width="100%">
           <XLText muted>{messages[fromToken].label1}</XLText>
-          <Box my={3}>
+          <Box my={3} width="50%">
             <Slider
               max={100}
               min={0}
@@ -82,16 +79,16 @@ const ConversionFormRenderer = (props: Props) => {
         </FlexColumn>
         <FlexColumn my={3} alignItems="center">
           <XLText muted>Balances after deposit</XLText>
-          <FlexColumn my={3} alignItems="stretch" width="35%">
+          <FlexColumn my={3} alignItems="stretch" width="50%">
             <FlexRow justifyContent="space-between" my={2}>
               <BalanceText>Wallet:</BalanceText>
-              <BalanceValueText>{formatNumber(Number(fromTokenBalance) - convertAmount, { precision : 3 })}
+              <BalanceValueText>{formatNumber(walletBalance, { precision : 3 })}
                 <BalanceSymbolText muted>ETH</BalanceSymbolText>
               </BalanceValueText>
             </FlexRow>
             <FlexRow justifyContent="space-between" my={2}>
                 <BalanceText>Trading Deposit:</BalanceText>
-                <BalanceValueText>{formatNumber(Number(toTokenBalance) + convertAmount, { precision: 3 })}
+                <BalanceValueText>{formatNumber(depositBalance, { precision: 3 })}
                   <BalanceSymbolText muted>ETH</BalanceSymbolText>
                 </BalanceValueText>
             </FlexRow>
@@ -101,7 +98,7 @@ const ConversionFormRenderer = (props: Props) => {
       <Button
         intent="primary"
         onClick={handleConvertTokens}
-        text="Convert"
+        text={formType}
         large
         fill
       />
@@ -245,7 +242,7 @@ const messages = {
   "WETH": {
     title: `Convert back to Ether`,
     callout: `To be able to trade on the AMP platform, you will need to convert you Ether (ETH) to tokenized ether (WETH). ETH and WETH can be converted at anytime through a smart-contract and 1 ETH = 1 WETH consistently`,
-    label1: `Choose the fraction of your ETH trading deposit you want to withdraw`,
+    label1: `Choose the fraction of your ETH you want to withdraw`,
   },
 };
 
