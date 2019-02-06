@@ -205,7 +205,7 @@ const ConfirmFormRenderer = (props: Props) => {
             <ConfirmIconBox>
               <Icon icon="tick-circle" intent="success" iconSize={200} />
             </ConfirmIconBox>
-            <h3>Your ETH has been successfully deposited. You can now start trading</h3>
+            <h3>ETH deposit successful. You can now start trading</h3>
             <Button minimal onClick={reset}>
               Convert again
             </Button>

@@ -312,7 +312,7 @@ const TokenWidget = (props: *) => {
                   large
                   intent="success"
                   onClick={(event) => handleToggleAllowance(event, token.symbol)}
-                  text={token.allowed ? `Lock ${token.symbol}` : `Unlock ${token.symbol}`}
+                  text={token.allowed ? `Lock ${token.symbol} Trading` : `Unlock ${token.symbol} Trading`}
                   icon={token.allowed ? "unlock" : "lock"}
                 />
                 {/* <Help position={Position.LEFT}>

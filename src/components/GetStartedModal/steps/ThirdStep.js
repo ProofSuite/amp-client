@@ -50,7 +50,7 @@ const Thirdstep = (props: Props) => {
       <FlexColumn width="100%" style={animation}>
         <ModalBody>
           <Box>
-            <h2>It seems like you have everything you need to start trading!</h2> 
+            <h2>You have everything you need to start trading!</h2> 
             <h2>Choose what to do next:</h2>
             <ButtonGroupBox>
               <ButtonBox>

@@ -2,7 +2,7 @@ import { DEFAULT_NETWORK_ID } from '../../../config/environment'
 import { ERC20, WETH } from '../../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { utils, providers, Contract, getDefaultProvider } from 'ethers'
-import abiDecoder from 'ethereum-input-data-decoder'
+// import abiDecoder from 'ethereum-input-data-decoder'
 
 export const createConnection = () => {
     switch(DEFAULT_NETWORK_ID) {
@@ -71,10 +71,10 @@ export async function queryTransactionHistory(address: string) {
               parsedTxs.push({ type: 'Token Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             case 'deposit': 
-              parsedTxs.push({ type: 'ETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+              parsedTxs.push({ type: 'ETH Deposited', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             case 'withdraw':
-              parsedTxs.push({ type: 'WETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+              parsedTxs.push({ type: 'ETH Withdrawn', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             default:
               parsedTxs.push({ type: '', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })

@@ -48,18 +48,18 @@ export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
       let amount = utils.parseEther(convertAmount.toString())
 
       let { hash } = await weth.withdraw(amount)
-      let tx = { type: 'WETH Converted', status: 'PENDING', hash }
+      let tx = { type: 'ETH Withrawn', status: 'PENDING', hash }
       dispatch(actionCreators.sendConvertTx('WETH', tx))
 
       let receipt = await signer.provider.waitForTransaction(tx.hash)
 
       if (receipt.status === 0) {
-        let tx = { type: 'WETH Converted', status: 'ERROR', hash, receipt, time: Date.now() }
+        let tx = { type: 'ETH Withrawn', status: 'ERROR', hash, receipt, time: Date.now() }
         let message = 'ETH conversion transaction failed'
         dispatch(actionCreators.revertConvertTx('WETH', tx, message))
 
       } else {
-        let tx = { type: 'WETH Converted', status: 'CONFIRMED', hash, receipt, time: Date.now() }
+        let tx = { type: 'ETH Withrawn', status: 'CONFIRMED', hash, receipt, time: Date.now() }
         let message = 'ETH conversion transaction successful'
         dispatch(actionCreators.confirmConvertTx('WETH', tx, message))
 
