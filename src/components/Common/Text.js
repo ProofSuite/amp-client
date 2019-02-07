@@ -43,7 +43,13 @@ export const Text = styled.div`
   ${justifySelf}
   ${fontWeight}
 
-  font-size: ${props => (props.small ? Fonts.FONT_SIZE_SMALL : props.large ? Fonts.FONT_SIZE_LARGE : Fonts.FONT_SIZE)}
+  font-size: ${props => (props.small 
+    ? Fonts.FONT_SIZE_SMALL 
+    : props.large 
+      ? Fonts.FONT_SIZE_LARGE 
+      : props.xlarge
+        ? Fonts.FONT_SIZE_XL
+        : Fonts.FONT_SIZE) + 'px'};
   color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
   margin: auto;
 `;
