@@ -39,7 +39,7 @@ type Props = {
   convertTxReceipt: TxReceipt,
   transactionStatus: string,
   reset: string => void,
-  formType: "Deposit" | "Withdrawal"
+  formType: "deposit" | "widthdrawal"
 };
 
 const ConvertTokensFormRenderer = (props: Props) => {
@@ -117,6 +117,7 @@ const ConfirmFormRenderer = (props: Props) => {
     convertTxReceipt,
     transactionStatus,
     reset,
+    formType
   } = props;
 
   const notificationBoxTitles = {
@@ -138,7 +139,7 @@ const ConfirmFormRenderer = (props: Props) => {
         <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
-              <Icon icon="error" intent="danger" iconSize={200} />
+              <Icon icon="error" intent="danger" iconSize={150} />
             </ConfirmIconBox>
             <h4>There was a problem with your transaction. But no worries, your funds are safe</h4>
           </ConfirmBox>
@@ -193,7 +194,7 @@ const ConfirmFormRenderer = (props: Props) => {
               status={convertTxStatus}
               hash={convertTxHash}
               receipt={convertTxReceipt}
-              title={notificationBoxTitles.convert[convertTxStatus]}
+              title={formType === "deposit" ? "Processing ETH deposit ..." : "Processing ETH withdrawal..."}
             />
           </TxNotificationBox>
         </ModalBody>
@@ -203,9 +204,14 @@ const ConfirmFormRenderer = (props: Props) => {
         <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
-              <Icon icon="tick-circle" intent="success" iconSize={200} />
+              <Icon icon="tick-circle" intent="success" iconSize={150} />
             </ConfirmIconBox>
-            <h3>ETH deposit successful. You can now start trading</h3>
+            <h3>
+              {formType === "deposit"
+                ? "ETH deposit successful. You can now start trading"
+                : "Withdrawal successful"
+              }
+            </h3>
             <Button minimal onClick={reset}>
               Convert again
             </Button>
@@ -215,6 +221,7 @@ const ConfirmFormRenderer = (props: Props) => {
               status={allowTxStatus}
               hash={allowTxHash}
               receipt={allowTxReceipt}
+              
               title={notificationBoxTitles.allow[allowTxStatus]}
             />
           </TxNotificationBox>
@@ -223,7 +230,7 @@ const ConfirmFormRenderer = (props: Props) => {
               status={convertTxStatus}
               hash={convertTxHash}
               receipt={convertTxReceipt}
-              title={notificationBoxTitles.convert[convertTxStatus]}
+              title={formType === "deposit" ? "ETH Deposit Success" : "ETH Withdrawal Success"}
             />
           </TxNotificationBox>
         </ModalBody>
@@ -237,7 +244,7 @@ const messages = {
   "ETH": {
     title: `You need to deposit ETH before you can start trading ETH pairs`,
     callout: ``,
-    label1: `Choose the fraction of ETH you want to deposit.`,
+    label1: `Choose the fraction of ETH you want to add to your trading balance`,
   },
   "WETH": {
     title: `Convert back to Ether`,

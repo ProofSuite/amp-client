@@ -13,7 +13,8 @@ import {
   FlexRow,
   XLText,
   Colors,
-  Box
+  Box,
+  EmphasizedText
 } from '../../Common'
 
 import {
@@ -165,8 +166,10 @@ const SecondStep = (props: Props) => {
           • <b>ETH Trading Balance:</b> Amount of ETH you can use for trading and placing orders on AMP.
           <br />
           <br />
-          You can withdraw your trading ETH at any time.
-          <Button minimal interactive>View FAQ</Button>
+          <FlexRow alignItems="center">
+            <EmphasizedText bold>You can withdraw your trading ETH at any time</EmphasizedText>
+            <Button minimal interactive>View FAQ</Button>
+          </FlexRow>
               {/* <p>
               Wrapped Ether, or WETH, is a tokenized and tradeable version of regular Ether. Ether needs to be wrapped to trade with it on Paradex. You can convert your WETH back to ETH anytime. Be sure to keep some regular ETH to pay misc. gas costs. Read more WETH (tokenized or 'wrapped') ether here.
             </p>

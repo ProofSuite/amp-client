@@ -91,7 +91,7 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
      } = this.state
 
     if (fromToken === 'WETH' && toToken === 'ETH') return convertFromWETHtoETH(convertAmount)
-    if (fromToken === 'ETH' && toToken === 'WETH') return convertFromETHtoWETH(shouldAllow, convertAmount)
+    if (fromToken === 'ETH' && toToken === 'WETH') return convertFromETHtoWETH(convertAmount)
   }
 
   handleReset = () => {
