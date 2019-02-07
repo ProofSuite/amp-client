@@ -125,7 +125,7 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
     const transactionStatus = this.transactionStatus()
         
     let depositBalance, walletBalance
-    let formType = (fromToken === "WETH" && toToken === "ETH") ? "Withdraw" : "Deposit"
+    let formType = (fromToken === "WETH" && toToken === "ETH") ? "withdrawal" : "deposit"
 
     //Widthdrawal case
     if (fromToken === "WETH" && toToken === "ETH") {

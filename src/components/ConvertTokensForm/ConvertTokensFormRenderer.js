@@ -78,7 +78,7 @@ const ConversionFormRenderer = (props: Props) => {
           </Box>
         </FlexColumn>
         <FlexColumn my={3} alignItems="center">
-          <XLText muted>Balances after deposit</XLText>
+          <XLText muted>Balances after {formType}</XLText>
           <FlexColumn my={3} alignItems="stretch" width="50%">
             <FlexRow justifyContent="space-between" my={2}>
               <BalanceText>Wallet:</BalanceText>
@@ -98,7 +98,7 @@ const ConversionFormRenderer = (props: Props) => {
       <Button
         intent="primary"
         onClick={handleConvertTokens}
-        text={formType}
+        text={formType === "deposit" ? "Deposit" : "Withdraw"}
         large
         fill
       />

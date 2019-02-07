@@ -25,7 +25,9 @@ import {
   FlexRow,
   FlexColumn,
   Box,
+  InlineBox,
   Header,
+  EmphasizedText
 } from '../Common';
 
 import {
@@ -213,21 +215,58 @@ const ETHWidget = (props: Props) => {
                 </FlexColumn>
                 <FlexRow mx={3}>
                   <FlexColumn mx={3} alignItems="flex-end" justifyContent="flex-start">
-                    <Header muted justifyContent="center">Wallet Balance</Header>
-                    <EthereumBalanceText justifyContent="flex-end">{formatNumber(selectedTokenData.ETHBalance, { precision: 3 })}</EthereumBalanceText>
-                    <FlexRow justifyContent="flex-end">
-                      <EthereumBalanceSymbol alignSelf="flex-end" muted>ETH</EthereumBalanceSymbol>
-                    </FlexRow>
+                  <FlexRow alignItems="center">
+                    <Header muted>Wallet Balance</Header>
+                    <InlineBox pl={1} pt={1}>
+                      <Help position={Position.RIGHT}>
+                          Your <EmphasizedText bold>ETH Wallet Balance</EmphasizedText> is the amount of ETH in your wallet.
+                          <br />
+                          <br />
+                          • To be able to place orders on AMP you need to deposit your ETH.
+                          <br />
+                          <br />
+                          • We recommend you to keep some ETH in your wallet in order to be able to pay for transaction fees.
+                          <br />
+                          <br />
+                      </Help>
+                    </InlineBox>
+                  </FlexRow>
+                  <EthereumBalanceText justifyContent="flex-end">{formatNumber(selectedTokenData.ETHBalance, { precision: 3 })}</EthereumBalanceText>
+                  <FlexRow justifyContent="flex-end">
+                    <EthereumBalanceSymbol alignSelf="flex-end" muted>ETH</EthereumBalanceSymbol>
+                  </FlexRow>
                   </FlexColumn>
                   <FlexColumn mx={3} alignItems="flex-end">
-                    <Header muted justifyContent="center">Deposit Balance</Header>
+                    <FlexRow alignItems="center">
+                      <Header muted>Trading Balance</Header>
+                      <InlineBox pl={1} pt={1}>
+                        <Help position={Position.RIGHT}>
+                          Your <EmphasizedText bold>ETH Trading Balance</EmphasizedText> is the amount of ETH that you can use for trading ETH pairs.
+                          <br />
+                          <br />
+                          • You can withdraw your ETH to your wallet at any time.
+                          <br />
+                          <br />
+                          • You can not use these funds for anything other than placing orders on AMP (eg. you won't be able to pay for transactions fees with the ETH in your trading deposit)
+                          <br />
+                          <br />
+                        </Help>
+                      </InlineBox>
+                    </FlexRow>
                     <EthereumBalanceText justifyContent="flex-end">{formatNumber(selectedTokenData.WETHBalance, { precision: 3 })}</EthereumBalanceText>
                     <FlexRow justifyContent="flex-end">
                       <EthereumBalanceSymbol alignSelf="flex-end" muted>ETH</EthereumBalanceSymbol>
                     </FlexRow>
                   </FlexColumn>
                   <FlexColumn mx={5} alignItems="flex-end">
-                    <Header muted justifyContent="center">Total Balance</Header>
+                    <FlexRow alignItems="center">
+                      <Header muted justifyContent="center">Total Balance</Header>
+                      <InlineBox pl={1} pt={1}>
+                        <Help position={Position.RIGHT}>
+                          The ETH <b>Total Balance</b> is the sum of both Wallet balances and Trading balances. 
+                        </Help>
+                      </InlineBox>
+                    </FlexRow>
                     <EthereumBalanceText justifyContent="flex-end">{formatNumber(selectedTokenData.totalBalance, { precision: 3 })}</EthereumBalanceText>
                     <FlexRow justifyContent="flex-end">
                       <EthereumBalanceSymbol alignSelf="flex-end" muted>ETH</EthereumBalanceSymbol>
@@ -236,22 +275,22 @@ const ETHWidget = (props: Props) => {
                 </FlexRow>
               </FlexRow>
               <FlexColumn>
-                  <GreenGlowingButton
-                    intent="success"
+                  <BlueGlowingButton
+                    intent="primary"
                     text="Deposit"
                     m={2}
                     large
                     onClick={(event) => openConvertModal(event, 'ETH', 'WETH')}
                   />
-                  <GreenGlowingButton
-                    intent="success"
+                  <BlueGlowingButton
+                    intent="primary"
                     text="Withdraw"
                     m={2}
                     large
                     onClick={(event) => openConvertModal(event, 'WETH', 'ETH')}
                   />
-                  <GreenGlowingButton
-                    intent="success"
+                  <BlueGlowingButton
+                    intent="primary"
                     text="Trade"
                     large
                     m={2}
@@ -292,7 +331,7 @@ const TokenWidget = (props: *) => {
                   <ColoredCryptoIcon size={128} name={token.symbol} />
                 </FlexColumn>
                 <FlexRow mx={3}>
-                <FlexColumn mx={3} alignItems="stretch">
+                <FlexColumn mx={3} alignItems="flex-end">
                     <FlexRow justifyContent="center">
                       <Header muted alignSelf="center">{token.symbol} Balance</Header>
                     </FlexRow>
@@ -304,13 +343,10 @@ const TokenWidget = (props: *) => {
                 </FlexRow>
               </FlexRow>
               <FlexColumn>  
-                {
-                  
-                }
-                <GreenGlowingButton
+                <BlueGlowingButton
                   m={2}
                   large
-                  intent="success"
+                  intent="primary"
                   onClick={(event) => handleToggleAllowance(event, token.symbol)}
                   text={token.allowed ? `Lock ${token.symbol} Trading` : `Unlock ${token.symbol} Trading`}
                   icon={token.allowed ? "unlock" : "lock"}
@@ -319,10 +355,10 @@ const TokenWidget = (props: *) => {
                   By unlocking tokens, you allow the AMP smart-contract to settle trades you have approved.
                   Unlocking both tokens is required before starting trading a given pair.
                 </Help> */}
-                <GreenGlowingButton
-                  intent="success"
+                <BlueGlowingButton
                   text={`Trade ${token.symbol}`}
                   m={2}
+                  intent="primary"
                   large
                   onClick={(event) => redirectToTradingPage(token.symbol)}
                 />
@@ -422,7 +458,7 @@ const BaseTokenRow = (props: *) => {
               {
                 listed && <Box px={2}>
                   <Tooltip hoverOpenDelay={50} content="Verified" position={Position.RIGHT}>
-                    <Icon icon="tick-circle" iconSize={14} intent="primary" />
+                    <Icon icon="endorsed" iconSize={14} intent="primary" />
                   </Tooltip>
                 </Box>
               }
@@ -478,7 +514,7 @@ const Table = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  height: calc(90vh - 250px);
+  height: calc(90vh - 300px);
 `;
 
 const TableHeader = styled.div`

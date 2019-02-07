@@ -1,5 +1,6 @@
 import { 
     Box, 
+    InlineBox,
     TextBox, 
     DividerBox, 
     Flex, 
@@ -14,6 +15,7 @@ import {
 
 
 import { 
+    Paragraph,
     Text, 
     XLText,
     Header,
@@ -43,8 +45,8 @@ import {
 } from './Button'
 
 export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
-export { Box, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn, FlexRowWrap, FlexColumnWrap, FlexRowSpaceAround, FlexRowSpaceBetween }
-export { Text, XLText, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { Box, InlineBox, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn, FlexRowWrap, FlexColumnWrap, FlexRowSpaceAround, FlexRowSpaceBetween }
+export { Text, Paragraph, XLText, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
 
 export {
     Card,

@@ -89,12 +89,12 @@ const SecondStep = (props: Props) => {
       <FlexColumn width="100%">
         <ModalBody>
           <IconBox>
-            <h2>Your setup is in process and will finish shortly</h2>
+            <h2>Your deposit is being processed ...</h2>
           </IconBox>
           <NotificationBox>
             {convertTxHash &&
               <SmallTxNotification
-                txName='Conversion'
+                txName='Deposit'
                 status={convertTxStatus}
                 hash={convertTxHash}
               />}
@@ -122,13 +122,13 @@ const SecondStep = (props: Props) => {
       <FlexColumn width="100%">
         <ModalBody>
           <IconBox>
-            <Icon intent='success' iconSize={150} icon='tick-circle' />
-            <h2>Setup complete!</h2>
+            <Icon intent='success' iconSize={120} icon='tick-circle' />
+            <h2>Deposit successful!</h2>
           </IconBox>
           <NotificationBox>
             {convertTxHash &&
               <SmallTxNotification
-                txName='Conversion Transaction'
+                txName='Deposit Transaction'
                 status={convertTxStatus}
                 hash={convertTxHash}
               />}
@@ -144,7 +144,7 @@ const SecondStep = (props: Props) => {
         </ModalBody>
         <ModalFooter>
           <ButtonBox>
-            <Button intent='primary' large onClick={goToThirdStep} text='Continue' />
+            <Button intent='primary' onClick={goToThirdStep} text='Continue' />
           </ButtonBox>
         </ModalFooter>
       </FlexColumn>
@@ -157,15 +157,15 @@ const SecondStep = (props: Props) => {
         <ModalBody>
           <Callout intent="primary" title='Deposit ETH for trading!' icon="none">
           To trade on AMP, you need to add some Ether to your trading deposit.
-          You will notice that your ETH balance is now divided into: 
+          You will notice that your ETH balance is now divided into:
           <br />
-          • ETH Wallet Balance: Amount of ETH you can use for blockchain transactions.
           <br />
-          • ETH Trading Balance: Amount of ETH you can use for trading and placing orders on AMP.
+          • <b>ETH Wallet Balance:</b> Amount of ETH you can use for blockchain transactions.
+          <br />
+          • <b>ETH Trading Balance:</b> Amount of ETH you can use for trading and placing orders on AMP.
           <br />
           <br />
           You can withdraw your trading ETH at any time.
-          <Button minimal interactive>More details</Button>
           <Button minimal interactive>View FAQ</Button>
               {/* <p>
               Wrapped Ether, or WETH, is a tokenized and tradeable version of regular Ether. Ether needs to be wrapped to trade with it on Paradex. You can convert your WETH back to ETH anytime. Be sure to keep some regular ETH to pay misc. gas costs. Read more WETH (tokenized or 'wrapped') ether here.
@@ -245,7 +245,7 @@ const SecondStep = (props: Props) => {
     return (
       <FlexColumn width="100%">
         <ModalBody>
-          <Callout intent='success' title='Approve ether to start trading'>
+          <Callout intent='success' title='Approve Ether to start trading'>
             You need to grant approval to perform trades to the AMP exchange. Granting approval does not allow
             the AMP exchange to move your funds without your permission.
           </Callout>
