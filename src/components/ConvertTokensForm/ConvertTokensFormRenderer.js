@@ -66,7 +66,12 @@ const ConversionFormRenderer = (props: Props) => {
     <ModalBody>
       <FlexColumn my={3}>
         <FlexColumn m={2} alignItems="center" width="100%">
-          <XLText muted>{messages[fromToken].label1}</XLText>
+          <XLText 
+            muted 
+            textAlign="center"
+          >
+            {messages[fromToken].label1}
+          </XLText>
           <Box my={3} width="50%">
             <Slider
               max={100}

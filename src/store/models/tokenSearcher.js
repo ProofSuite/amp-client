@@ -31,15 +31,16 @@ export default function tokenSearcherSelector(state: State) {
   let favoriteTokenPairs = domain.getFavoritePairs()
   let tokenPairsByQuoteToken = {}
 
-
-  //Each WETH string is converted into ETH in order to improve UX.
   for (let quote of quotes) {
-    let parsedQuote = quote === "WETH" ? "ETH" : quote
-    tokenPairsByQuoteToken[parsedQuote] = tokenPairs
-      .filter(({ pair }) => getQuoteToken(pair) === quote)
-      .map(tokenPair => {
-        let parsedPair = parseWETHPair(tokenPair.pair)
+    //on the backend, the raw quote is "WETH" instead of "ETH". 
+    let rawQuote = quote === "ETH" ? "WETH" : quote
 
+    tokenPairsByQuoteToken[quote] = tokenPairs
+      //We look for pairs with the corresponding "quote".
+      .filter(({ pair }) => getQuoteToken(pair) === rawQuote)
+      .map(tokenPair => {
+        //For each filtered pair, we parse out "WETH" into "ETH" for the frontend display
+        let parsedPair = parseWETHPair(tokenPair.pair)
         return {
           ...tokenPair,
           pair: parsedPair,
@@ -67,7 +68,8 @@ export default function tokenSearcherSelector(state: State) {
   let quoteTokenSymbol = (rawPair.quoteTokenSymbol === "WETH") ? "ETH" : rawPair.quoteTokenSymbol
   let currentPair = { ...rawPair, pair: currentPairName, baseTokenSymbol, quoteTokenSymbol }
 
-  
+  console.log(tokenPairsByQuoteToken)
+
   return {
     tokenPairsByQuoteToken,
     currentPair,

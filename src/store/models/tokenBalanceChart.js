@@ -36,13 +36,15 @@ export default function tokenBalanceChartSelector(state: State) {
   //So we treat the case of ETH/WETH in a different by adding both balances. 
   //The exchange rate of WETH and ETH are the same
   let ETHExchangeRate = getExchangeRate(currency.name, tokens["ETH"])
-  let ETHBalance = round(round(tokenBalances["ETH"].balance, 4) + round(tokenBalances["WETH"].balance, 4), 4)
-  let ETHValue = round(ETHExchangeRate * ETHBalance)
+  let ETHBalance = tokenBalances["ETH"] ? round(tokenBalances["ETH"].balance, 4) : 0
+  let WETHBalance = tokenBalances["WETH"] ? round(tokenBalances["WETH"].balance, 4) : 0
+  let totalBalance = round(ETHBalance + WETHBalance, 4)
+  let ETHValue = round(ETHExchangeRate * totalBalance)
 
   if (ETHValue !== 0) {
     chartData.push({
       symbol: "ETH",
-      balance: ETHBalance, 
+      balance: totalBalance, 
       value: ETHValue,
       currency: currency.symbol
     })

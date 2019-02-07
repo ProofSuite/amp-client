@@ -48,7 +48,9 @@ export const Text = styled.div`
   margin: auto;
 `;
 
-export const XLText = styled.div`
+export const XLText = styled.div.attrs({
+  className: 'bp3-runnning-text'
+})`
   ${space}
   ${width}
   ${textAlign}
