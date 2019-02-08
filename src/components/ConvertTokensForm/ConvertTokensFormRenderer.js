@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import TxNotification from '../TxNotification';
-import { Button, Callout, Icon, Slider } from '@blueprintjs/core';
+import { Button, Icon, Slider } from '@blueprintjs/core';
 import { formatNumber } from 'accounting-js'
 
 import { 
@@ -39,7 +39,7 @@ type Props = {
   convertTxReceipt: TxReceipt,
   transactionStatus: string,
   reset: string => void,
-  formType: "deposit" | "widthdrawal"
+  formType: "deposit" | "withdrawal"
 };
 
 const ConvertTokensFormRenderer = (props: Props) => {
