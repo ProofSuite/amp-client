@@ -91,7 +91,7 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
      } = this.state
 
     if (fromToken === 'WETH' && toToken === 'ETH') return convertFromWETHtoETH(convertAmount)
-    if (fromToken === 'ETH' && toToken === 'WETH') return convertFromETHtoWETH(shouldAllow, convertAmount)
+    if (fromToken === 'ETH' && toToken === 'WETH') return convertFromETHtoWETH(convertAmount)
   }
 
   handleReset = () => {
@@ -123,6 +123,22 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
     } = this.state;
 
     const transactionStatus = this.transactionStatus()
+        
+    let depositBalance, walletBalance
+    let formType = (fromToken === "WETH" && toToken === "ETH") ? "withdrawal" : "deposit"
+
+    //Widthdrawal case
+    if (fromToken === "WETH" && toToken === "ETH") {
+      depositBalance = Number(fromTokenBalance) - convertAmount
+      walletBalance = Number(toTokenBalance) + convertAmount
+    }
+
+    //Deposit case
+    if (fromToken === "ETH" && toToken === "WETH") {
+      depositBalance = Number(toTokenBalance) + convertAmount
+      walletBalance = Number(fromTokenBalance) - convertAmount
+    }
+
     if (!fromToken) return null
 
     return (
@@ -130,12 +146,9 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
         txSubmitted={txSubmitted}
         fromToken={fromToken}
         toToken={toToken}
-        fromTokenBalance={fromTokenBalance}
-        toTokenBalance={toTokenBalance}
         address={address}
         shouldAllow={shouldAllow}
         convertFraction={convertFraction}
-        convertAmount={convertAmount}
         handleConvertTokens={this.handleConvertTokens}
         handleChangeConvertFraction={this.handleChangeConvertFraction}
         toggleShouldAllowTrading={this.toggleShouldAllowTrading}
@@ -147,6 +160,9 @@ class ConvertTokensForm extends React.PureComponent<Props, State> {
         allowTxReceipt={allowTxReceipt}
         allowTxHash={allowTxHash}
         reset={this.handleReset}
+        depositBalance={depositBalance}
+        walletBalance={walletBalance}
+        formType={formType}
       />
     );
   }

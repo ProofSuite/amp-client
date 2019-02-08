@@ -2,9 +2,17 @@
 import { getOrderBookDomain, getTokenPairsDomain } from '../domains';
 import type { State } from '../../types';
 
+import { parseWETHPair } from '../../utils/helpers'
+
 export default function orderBookSelector(state: State) {
   let { bids, asks } = getOrderBookDomain(state).getOrderBookData(25);
-  let currentPair = getTokenPairsDomain(state).getCurrentPair();
+  let rawPair = getTokenPairsDomain(state).getCurrentPair();
+
+  //we display WETH as ETH on the frontend
+  let currentPairName = parseWETHPair(rawPair.pair)
+  let baseTokenSymbol = (rawPair.baseTokenSymbol === "WETH") ? "ETH" : rawPair.baseTokenSymbol
+  let quoteTokenSymbol = (rawPair.quoteTokenSymbol === "WETH") ? "ETH" : rawPair.quoteTokenSymbol
+  let currentPair = { ...rawPair, pair: currentPairName, baseTokenSymbol, quoteTokenSymbol }
 
   let midMarketPrice, spread
 

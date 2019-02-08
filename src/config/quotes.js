@@ -1,5 +1,10 @@
 import { DEFAULT_NETWORK_ID } from './environment.js'
-import addresses from './addresses.json';
+import addresses from './addresses.json'
+
+import {
+ replace  
+} from '../utils/helpers'
+
 
 const quoteTokensBySymbolsTable = {
   '8888': {

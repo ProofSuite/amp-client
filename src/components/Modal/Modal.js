@@ -12,13 +12,15 @@ type Props = {
 };
 
 const Modal = (props: Props): Node => {
+  const width = props.width || '800px'
+
   return (
     <Dialog
       title={props.title}
       icon={props.icon}
       isOpen={props.isOpen}
       onClose={props.onClose}
-      style={{ width: '800px' }}
+      style={{ width }}
       className="bp3-dark"
       canOutsideClickClose={false}
     >

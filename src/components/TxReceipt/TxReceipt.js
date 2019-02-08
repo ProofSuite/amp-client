@@ -20,7 +20,7 @@ class TxReceipt extends React.PureComponent<Props, State> {
 
   render() {
     const { visible } = this.state;
-    const { blockHash, blockNumber, hash, gasUsed } = this.props.receipt;
+    const { blockHash, blockNumber, transactionHash, gasUsed } = this.props.receipt;
 
     return (
       <TxReceiptRenderer
@@ -29,7 +29,7 @@ class TxReceipt extends React.PureComponent<Props, State> {
         blockHash={blockHash}
         blockNumber={blockNumber}
         gasLimit={gasUsed.toNumber()}
-        hash={hash}
+        transactionHash={transactionHash}
       />
     );
   }

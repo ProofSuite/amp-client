@@ -71,10 +71,10 @@ export async function queryTransactionHistory(address: string) {
               parsedTxs.push({ type: 'Token Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             case 'deposit': 
-              parsedTxs.push({ type: 'ETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+              parsedTxs.push({ type: 'ETH Deposited', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             case 'withdraw':
-              parsedTxs.push({ type: 'WETH Converted', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+              parsedTxs.push({ type: 'ETH Withdrawn', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             default:
               parsedTxs.push({ type: '', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })

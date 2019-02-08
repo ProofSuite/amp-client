@@ -1,10 +1,25 @@
 // @flow
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Callout, Slider, Icon, Spinner, Checkbox } from '@blueprintjs/core'
-import { ModalBody, ModalFooter } from '../../Common'
-import SmallTxNotification from '../../SmallTxNotification'
 import { formatNumber } from 'accounting-js'
+
+import { Button, Callout, Slider, Icon, Spinner, Checkbox } from '@blueprintjs/core'
+import SmallTxNotification from '../../SmallTxNotification'
+
+import { 
+  ModalBody, 
+  ModalFooter,
+  FlexColumn,
+  FlexRow,
+  XLText,
+  Colors,
+  Box,
+  EmphasizedText
+} from '../../Common'
+
+import {
+  Fonts
+} from '../../Common/Variables'
 
 type Props = {
   step: string,
@@ -35,7 +50,7 @@ type Props = {
 const NotificationBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   margin-bottom: 10px;
 `
 
@@ -72,15 +87,15 @@ const SecondStep = (props: Props) => {
 
   if (transactionsPending) {
     return (
-      <React.Fragment>
+      <FlexColumn width="100%">
         <ModalBody>
           <IconBox>
-            <h2>Your setup is in process and will finish shortly</h2>
+            <h2>Your deposit is being processed ...</h2>
           </IconBox>
           <NotificationBox>
             {convertTxHash &&
               <SmallTxNotification
-                txName='Conversion Transaction'
+                txName='Deposit'
                 status={convertTxStatus}
                 hash={convertTxHash}
               />}
@@ -88,7 +103,7 @@ const SecondStep = (props: Props) => {
           <NotificationBox>
             {approveTxHash &&
               <SmallTxNotification
-                txName='Approval Transaction'
+                txName='Approval'
                 status={approveTxStatus}
                 hash={approveTxHash}
               />}
@@ -96,25 +111,25 @@ const SecondStep = (props: Props) => {
         </ModalBody>
         <ModalFooter>
           <ButtonBox>
-            <Button intent='primary' large disabled onClick={goToThirdStep} text='Continue' />
+            <Button intent='primary' disabled onClick={goToThirdStep} text='Continue' />
           </ButtonBox>
         </ModalFooter>
-      </React.Fragment>
+      </FlexColumn>
     )
   }
 
   if (transactionsComplete) {
     return (
-      <React.Fragment>
+      <FlexColumn width="100%">
         <ModalBody>
           <IconBox>
-            <Icon intent='success' iconSize={150} icon='tick-circle' />
-            <h2>Setup complete!</h2>
+            <Icon intent='success' iconSize={120} icon='tick-circle' />
+            <h2>Deposit successful!</h2>
           </IconBox>
           <NotificationBox>
             {convertTxHash &&
               <SmallTxNotification
-                txName='Conversion Transaction'
+                txName='Deposit Transaction'
                 status={convertTxStatus}
                 hash={convertTxHash}
               />}
@@ -130,62 +145,41 @@ const SecondStep = (props: Props) => {
         </ModalBody>
         <ModalFooter>
           <ButtonBox>
-            <Button intent='primary' large onClick={goToThirdStep} text='Continue' />
+            <Button intent='primary' onClick={goToThirdStep} text='Continue' />
           </ButtonBox>
         </ModalFooter>
-      </React.Fragment>
+      </FlexColumn>
     )
   }
 
-  // if (userHasWETH && userHasApprovedWETH || transactionsComplete) {
-  //   return (
-  //     <React.Fragment>
-  //       <ModalBody>
-  //         <IconBox>
-  //           <Icon intent='success' iconSize={180} icon='tick-circle' />
-  //           <h2>You're all set! Click to continue.</h2>
-  //         </IconBox>
-  //         <NotificationBox>
-  //           {convertTxHash &&
-  //             <SmallTxNotification
-  //               txName='Conversion Transaction'
-  //               status={convertTxStatus}
-  //               hash={convertTxHash}
-  //             />}
-  //         </NotificationBox>
-  //         <NotificationBox>
-  //           {approveTxHash &&
-  //             <SmallTxNotification
-  //               txName='Approval Transaction'
-  //               status={approveTxStatus}
-  //               hash={approveTxHash}
-  //             />}
-  //         </NotificationBox>
-  //       </ModalBody>
-  //       <ModalFooter>
-  //         <ButtonBox>
-  //           <Button intent='primary' large onClick={goToThirdStep} text='Continue' />
-  //         </ButtonBox>
-  //       </ModalFooter>
-  //     </React.Fragment>
-  //   )
-  // }
-
   if (userHasETH && !userHasWETH) {
     return (
-      <React.Fragment>
+      <FlexColumn width="100%">
         <ModalBody>
-          <Callout intent='success' title='Tokenize your ETH to start trading!'>
-            <p>
+          <Callout intent="primary" title='Deposit ETH for trading!' icon="none">
+          To trade on AMP, you need to add some Ether to your trading deposit.
+          You will notice that your ETH balance is now divided into:
+          <br />
+          <br />
+          • <b>ETH Wallet Balance:</b> Amount of ETH you can use for blockchain transactions.
+          <br />
+          • <b>ETH Trading Balance:</b> Amount of ETH you can use for trading and placing orders on AMP.
+          <br />
+          <br />
+          <FlexRow alignItems="center">
+            <EmphasizedText bold>You can withdraw your trading ETH at any time</EmphasizedText>
+            <Button minimal interactive>View FAQ</Button>
+          </FlexRow>
+              {/* <p>
               Wrapped Ether, or WETH, is a tokenized and tradeable version of regular Ether. Ether needs to be wrapped to trade with it on Paradex. You can convert your WETH back to ETH anytime. Be sure to keep some regular ETH to pay misc. gas costs. Read more WETH (tokenized or 'wrapped') ether here.
             </p>
             <br />
             <p>
               By clicking the convert button, you will trigger two blockchain transaction.
-              {' '}
-              <Button minimal interactive>View FAQ</Button>
-            </p>
+              {' '}*/}
           </Callout>
+          <FlexColumn width="100%" alignItems="center">
+          <XLText m={4} muted>Choose the fraction of your ETH you want to deposit</XLText>
           <SliderGroup>
             <SliderBox>
               <Slider
@@ -198,17 +192,23 @@ const SecondStep = (props: Props) => {
             </SliderBox>
           </SliderGroup>
           <BalancesGroup>
-            <p>Total after transaction:</p>
-            <BalancesBox>
-              <BalanceBox>
-                <h2>{formatNumber(Number(ETHBalance) - convertAmount, { precision: 3 })} ETH</h2>
-              </BalanceBox>
-              <BalanceBox>
-                <h2>{formatNumber(Number(WETHBalance) + convertAmount, { precision: 3 })} WETH</h2>
-              </BalanceBox>
-            </BalancesBox>
+            <FlexRow width="60%" justifyContent="space-around">
+              <FlexColumn alignItems="center">
+                <BalanceText m={2} muted>Wallet Balance:</BalanceText>
+                <BalanceValueText m={2}>
+                  {formatNumber(Number(ETHBalance) - convertAmount, { precision: 3 })} ETH
+                </BalanceValueText>
+              </FlexColumn>
+              <FlexColumn alignItems="center">
+                <BalanceText m={2} muted>Trading Balance:</BalanceText>
+                <BalanceValueText m={2}>
+                  {formatNumber(Number(WETHBalance) + convertAmount, { precision: 3 })} ETH
+                </BalanceValueText>
+              </FlexColumn>
+            </FlexRow>
           </BalancesGroup>
           <br />
+          </FlexColumn>
 
         </ModalBody>
         <ModalFooter>
@@ -234,21 +234,21 @@ const SecondStep = (props: Props) => {
                 />}
             </NotificationBox>
             <div>
-              <Button large onClick={goToThirdStep}>Skip</Button>
-              <Button large intent='primary' onClick={handleConvertETH} text='Convert ETH' />
+              <Button onClick={goToThirdStep}>Skip</Button>
+              <Button intent='primary' onClick={handleConvertETH} text='Deposit ETH' />
             </div>
             </FooterActionsBox>
           </FooterBox>
         </ModalFooter>
-      </React.Fragment>
+      </FlexColumn>
     )
   }
 
   if (userHasWETH && !userHasApprovedWETH) {
     return (
-      <React.Fragment>
+      <FlexColumn width="100%">
         <ModalBody>
-          <Callout intent='success' title='Approve ether to start trading'>
+          <Callout intent='success' title='Approve Ether to start trading'>
             You need to grant approval to perform trades to the AMP exchange. Granting approval does not allow
             the AMP exchange to move your funds without your permission.
           </Callout>
@@ -259,21 +259,21 @@ const SecondStep = (props: Props) => {
               Do not show again
             </Checkbox>
             <div>
-              <Button large onClick={goToThirdStep}>Skip</Button>
-              <Button large intent='primary' onClick={handleApproveWETH} text='Approve Trading' />
+              <Button onClick={goToThirdStep}>Skip</Button>
+              <Button intent='primary' onClick={handleApproveWETH} text='Approve Trading' />
             </div>
           </FooterBox>
         </ModalFooter>
-      </React.Fragment>
+      </FlexColumn>
     )
   }
 
   if (!userHasETH) {
     return (
-      <React.Fragment>
+      <div>
         <ModalBody>
           <Callout intent='success'>
-            It looks like you do not have any ether. You can deposit some now or skip this step. This form will update when your Ether is received.
+            You don't have any Ether in your wallet. Send some ether now or skip this step. This form will update when your Ether is received.
           </Callout>
           <WaitingFormBox>
             <SpinnerBox>
@@ -290,10 +290,10 @@ const SecondStep = (props: Props) => {
             <Checkbox checked={showHelpModalChecked} onClick={toggleShowHelpModalCheckBox}>
               Do not show again
             </Checkbox>
-            <Button large onClick={goToThirdStep}>Skip</Button>
+            <Button onClick={goToThirdStep}>Skip</Button>
           </FooterBox>
         </ModalFooter>
-      </React.Fragment>
+      </div>
     )
   }
 }
@@ -371,6 +371,16 @@ const BalancesBox = styled.div`
   width: 40%;
   flex-direction: row;
   justify-content: space-around;
+`
+
+const BalanceText = styled(Box)`
+  font-size: ${Fonts.FONT_SIZE_XL + 'px'};
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
+`
+
+const BalanceValueText = styled(Box)`
+  font-size: ${Fonts.FONT_SIZE_XL + 'px'};
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
 `
 
 const BalanceBox = styled.div`

@@ -15,14 +15,13 @@ import { utils } from 'ethers'
 import type { State, ThunkAction } from '../../types'
 import { getSigner } from '../services/signer'
 import { parseNewOrderError } from '../../config/errors'
-import { max, minOrderAmount } from '../../utils/helpers'
+import { max, minOrderAmount, parseWETHToken } from '../../utils/helpers'
 
 export default function getOrderFormSelector(state: State) {
   let tokenPairDomain = getTokenPairsDomain(state)
   let orderBookDomain = getOrderBookDomain(state)
   let orderDomain = getOrdersDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
-  let accountDomain = getAccountDomain(state)
   let currentPair = tokenPairDomain.getCurrentPair()
 
   let { 
@@ -48,6 +47,10 @@ export default function getOrderFormSelector(state: State) {
   let quoteTokenBalance = quoteToken.balance - quoteTokenLockedBalance
   let pairIsAllowed = baseToken.allowed && quoteToken.allowed
   let pairAllowanceIsPending = baseToken.allowancePending || quoteToken.allowancePending
+
+  //we replace WETH by ETH
+  baseTokenSymbol = parseWETHToken(baseTokenSymbol)
+  quoteTokenSymbol = parseWETHToken(quoteTokenSymbol)
 
   return {
     selectedOrder,

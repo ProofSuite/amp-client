@@ -15,6 +15,12 @@ import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import { parseQueryAccountDataError } from '../../config/errors'
 import { pricedTokens } from '../../config'
 
+import { 
+  parseWETHPair,
+  parseETHtoWETHToken,
+  parseToWETHPair
+} from '../../utils/helpers'
+
 import type { State, ThunkAction } from '../../types'
 
 export default function walletPageSelector(state: State) {
@@ -131,8 +137,9 @@ export function redirectToTradingPage(symbol: string): ThunkAction {
   return async (dispatch, getState, { mixpanel }) => {
     mixpanel.track('wallet-page/redirect-to-trading-page')
 
+    let tradedTokenSymbol = parseETHtoWETHToken(symbol)
     let quoteTokenSymbols = quoteTokens.map(token => token.symbol)
-    let quoteTokenIndex = quoteTokenSymbols.indexOf(symbol)
+    let quoteTokenIndex = quoteTokenSymbols.indexOf(tradedTokenSymbol)
     let baseTokenSymbol, quoteTokenSymbol
 
     if (quoteTokenIndex === 0) {

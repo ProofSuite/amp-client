@@ -236,19 +236,33 @@ const LinksWrapper = styled.div`
 
   @media ${Devices.mobileL} {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 `;
 
 const List = styled.ul`
 
   @media ${Devices.mobileL} {
+    display: flex;
+    flex-direction: column;
+
+    align-self: flex-start;
+    padding-inline-start: 0px;
+  
+
     ${props => props.hideOnMobile && "display: none;" }
   }
 `;
 
 const NormalListItem = styled.li`
   margin: 10px auto;
+
+  @media ${Devices.mobileL} {
+    margin: 10px 0px;
+    display: flex;
+    align-self: flex-start;
+  }
+
 `;
 
 const HeadListItem = styled.li`
