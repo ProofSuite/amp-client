@@ -1,8 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Box } from "../../components/Common"
-
 import { Spring } from 'react-spring'
+
+
+import { 
+  Box, 
+  Link,
+  Paragraph,
+  EmphasizedText
+} from "../../components/Common"
 
 import {
   Devices
@@ -50,6 +56,50 @@ class FaqPage extends React.PureComponent {
           </FaqItem>
           <Box p={2} />
           <FaqItem
+            question="What is my ETH wallet balance ? ETH trading balance?"
+            match={match}
+          >
+            <EmphasizedText bold>Short answer</EmphasizedText>
+              <br />
+              <br />
+              <div>
+                <li>Your ETH wallet balance is your normal ETH balance.</li>
+                <li>We recommend that you leave some ETH in your wallet if you need to make an 
+                an Ethereum transaction for example</li>
+                <li>Your ETH trading balance is the amount of ETH that can be used for placing orders on AMP.</li>
+                <li>You can not use your ETH trading balance for paying gas fees</li>
+                <li>You can move ETH between your wallet and your trading account at any time (Proofsuite does not hold any funds)</li>
+              </div>
+              <br />
+              <br />
+              <EmphasizedText bold>Detailed answer</EmphasizedText>
+              <br />
+              <br />
+              <div>
+                <li>Ether or ETH is the native currency of the Ethereum blockchain.</li>
+                <li>WETH is a tokenized version of ETH that implements the ERC20 standard. </li>
+                <li>When you deposit ETH into your trading account, you convert ETH into WETH. </li>
+              </div>
+              <br />
+              <p>
+                As other decentralized exchanges, AMP uses WETH to improve user experience. We also choose to not make the distinction 
+                between ETH and WETH on the user interface to further improve user experience for people that are not familiar with WETH.
+                You can convert any amount of ETH into WETH or any amount of WETH into ETH at any time (Proofsuite does not control WETH funds and can not prevent you from withdrawing your funds).
+                When you are converting ETH to WETH, you receive 1 WETH token for each Ether you've converted.
+                Using WETH allows decentralized applications such as the AMP decentralized exchanges to offer better functionality and a better user experience.
+                You can read more about WETH <Link url={"https://weth.io/"}>here</Link>.
+              </p>
+          </FaqItem>
+          <Box p={2} />
+          <FaqItem
+            question="Why do i need to unlock tokens before trading?"
+            match={match}
+          >
+            Unlocking tokens allows the Proof smart contracts to execute trades while your tokens remain in your wallet. In order to trade a token pair, you must unlock both tokens for that token pair. For example, if you are trading the MKR/USDC pair you will need to unlock
+            trading for both the MKR token and the USDC token.
+          </FaqItem>
+          <Box p={2} />
+          <FaqItem
             question="Will you be adding more features to AMP?"
             match={match}
           >
@@ -58,7 +108,7 @@ class FaqPage extends React.PureComponent {
               <FaqListItem>• Improved usability and bug fixes</FaqListItem>
               <FaqListItem>• A mobile version of the site</FaqListItem>
               <FaqListItem>• More tokens pairs including stablecoins, tethered assets and financial instruments (shorts, options)</FaqListItem>
-              <FaqListItem>• The ability for anyone to list a token and start trading immediately</FaqListItem>
+              <FaqListItem>• Prediction Markets</FaqListItem>
               <FaqListItem>• Enhanced charting</FaqListItem>
             </FaqList>
             Any features you think we should add ? Let us know! support@proofsuite.com
@@ -79,8 +129,8 @@ class FaqPage extends React.PureComponent {
             to start trading:
             <br />
             <FaqList>
-              <FaqListItem>• If you do not own any tokens or Ether, you have to make a deposit before any further step.</FaqListItem>
-              <FaqListItem>• If you have Ether in your account and want to start trading, you will need to tokenize your ETH into WETH (see next question)</FaqListItem>
+              <FaqListItem>• If you do not own any tokens or Ether, you have to send some Ether to your wallet.</FaqListItem>
+              <FaqListItem>• If you have Ether in your account and want to trade /ETH pairs, you will need to deposit some Ether into your Trading Account</FaqListItem>
               <FaqListItem>• To start trading a token pair, you need to unlock both tokens on the wallet page. Click the switch on the corresponding token row on the wallet page</FaqListItem>
             </FaqList>
           </FaqItem>
@@ -92,17 +142,7 @@ class FaqPage extends React.PureComponent {
             No. You can click the "Create new wallet" option on the login page. However we recommend downloading Metamask for the
             most secure trading experience.
           </FaqItem>
-          <Box p={2} />
-          <FaqItem
-            question="What is WETH and why do i need to use it ?"
-            match={match}
-          >
-            Ether or ETH is the native currency of the Ethereum blockchain.
-            The native ETH currency does not however implement the very convenient ERC20 token standard.
-            WETH brings the ERC20 token standard to ether. When you are converting ETH to WETH, you receive 1 WETH token for each Ether you've converted.
-            Using WETH allows decentralized applications such as the AMP decentralized exchanges to offer better functionality and a better user experience.
-            You can convert your WETH back to ether at any time. You can read more about WETH here.
-          </FaqItem>
+
           <Box p={2} />
           <FaqItem
             question="How can i cancel an order ?"
@@ -144,15 +184,6 @@ class FaqPage extends React.PureComponent {
             the amount of Proof tokens they own. To reclaim your trading fees, you need to make a transaction to the rewards contract which will be published 
             soon. Proofsuite currently owns 90% of the Proof tokens and thus receives a large part of the trading fees that is 
             mostly used for paying the Exchange gas fees. 
-          </FaqItem>
-          <Box p={2} />
-          <FaqItem
-            question="What is the 'Unlocked' column section on the wallet page? Why do i need to unlock tokens ?"
-            match={match}
-          >
-            Unlocking tokens allows the Proof smart contracts to make full use of the Ethereum blockchain capacities and provide a better user experience by for example letting your 
-            trade from your wallet. In order to trade a token pair, you must unlock both tokens for that token pair. For example, if you are trading the MKR/USDC pair you will need to unlock
-            trading for both the MKR token and the USDC token.
           </FaqItem>
           <Box p={2} />
           <FaqItem
@@ -253,7 +284,7 @@ const FaqList = styled.ul`
 `
 
 const FaqListItem = styled.li`
-  padding: 10px;
+  // padding: 10px;
 `
 
 const FaqGrid = styled.div`

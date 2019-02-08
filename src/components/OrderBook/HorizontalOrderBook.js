@@ -33,10 +33,8 @@ type Props = {
   bids: Array<BidOrAsk>,
   asks: Array<BidOrAsk>,
   onSelect: BidOrAsk => void,
-  selectedTabId: string,
   isOpen: boolean,
   currentPair: TokenPair,
-  changeTab: string => void,
   toggleCollapse: SyntheticEvent<> => void,
   expand: SyntheticEvent<> => void,
   onResetDefaultLayout: void => void

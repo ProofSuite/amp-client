@@ -40,9 +40,7 @@ setDefaults({
 });
 
 // @storybook/addon-options
-setOptions({
-  addonPanelInRight: true,
-});
+setOptions({ addonPanelInRight: true });
 
 // Configure decorator
 addDecorator((storyFn, context) => withConsole()(storyFn)(context));

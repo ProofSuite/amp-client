@@ -112,8 +112,8 @@ const TradesTableRenderer = (props: Props) => {
                     title="User"
                     panel={
                       <UserTradesPanel 
-                        trades={userTrades} 
-                        openEtherscanLink={openEtherscanLink} 
+                        trades={userTrades}
+                        openEtherscanLink={openEtherscanLink}
                         width={width}
                         authenticated={authenticated}
                       />

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
@@ -17,13 +18,15 @@ const data = [
   {symbol: 'ETH', balance: 100, value: 200, unit: '$' }
 ];
 
+const colors = ["#FFE39F", "#EEDE9F", "#DEDA9F", "#CDD59E", "#BECF9C", "#AECA99", "#9FC596", "#91BF91", "#83B98C", "#76B387", "#69AD80", "#5DA779", "#51A171", "#479A69", "#3D945F", "#358E55", "#2D874B", "#27803F", "#217A32", "#1D7324"]
+
 storiesOf('PieChart', module)
   .addDecorator(withKnobs)
   .add(
-    'TokenB Balance Chart',
+    'Token Balance Chart',
     withInfo({ source: false })(() => (
       <Card className="bp3-dark">
-        <PieChart balances={data} />
+        <PieChart data={data} loading={false} unit={'$'} colors={colors} />
       </Card>
     ))
   )

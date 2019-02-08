@@ -1,13 +1,28 @@
 // @flow
-
 import React from 'react';
 import styled from 'styled-components';
 import MarketsTableRenderer from './MarketsTableRenderer';
 
-import type { TokenPair } from '../../types/tokens';
+export type PairData = {
+  pair: string,
+  baseTokenSymbol: string,
+  quoteTokenSymbol: string,
+  baseTokenAddress: string,
+  baseTokenDecimals: number,
+  quoteTokenDecimals: number,
+  quoteTokenAddress: string,
+  price: number,
+  change: number,
+  orderVolume: number,
+  makeFee: string,
+  takeFee: string,
+  listed: bool,
+  active: bool,
+  rank: number
+}
 
 type Props = {
-  pairs: Array<TokenPair>,
+  pairs: Array<PairData>,
   quoteTokens: Array<string>,
   redirectToTradingPage: (string, string) => void,
   currentReferenceCurrency: string,
@@ -37,7 +52,7 @@ class MarketsTable extends React.PureComponent<Props, State> {
     this.setState({ selectedTab })
   }
 
-  filterTokens = (pairs: Array<TokenPair>) => {
+  filterTokens = (pairs: Array<PairData>) => {
     const { searchInput, selectedTab } = this.state;
 
     if (selectedTab !== 'ALL') pairs = pairs.filter(pair => pair.quoteTokenSymbol === selectedTab)

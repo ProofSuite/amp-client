@@ -2,9 +2,7 @@
 
 import { utils } from 'ethers'
 import distanceInWordsStrict from 'date-fns/distance_in_words_strict'
-
-
-import type { Token } from '../types/Token'
+import type { Token, TokenPair, TokenPairData } from '../types/Token'
 
 export const rand = (min: number, max: number, decimals: number = 4) => {
   return (Math.random() * (max - min) + min).toFixed(decimals)
@@ -20,7 +18,6 @@ export const capitalizeFirstLetter = (str: string) => {
 
 export const relativeDate = (time: number) => {
   let formattedDate = distanceInWordsStrict(time, new Date()) + ' ago'
-  // let formattedDate = formatRelative(time, new Date())
   return capitalizeFirstLetter(formattedDate)
 }
 
@@ -30,6 +27,17 @@ export const isInteger = (n: *) => /^\+?\d+$/.test(n)
 
 // silence-error: silence number/string conversion error
 export const round = (n: *, decimals: number = 2) => Math.round(n * Math.pow(10, decimals)) / Math.pow(10, decimals)
+
+
+export const replace =(arr: Array<any>, element: any, newElement: any) => {
+  let index = arr.indexOf(element)
+  if (index !== -1) {
+    arr[index] = newElement
+  }
+
+  return arr
+}
+
 
 export const convertPricepointToPrice = (n: any, pricePointMultiplier: number = 1e9, decimals: number = 6) =>
   Math.round((n / pricePointMultiplier) * Math.pow(10, decimals)) / Math.pow(10, decimals)
@@ -151,3 +159,64 @@ export const getExchangeRate = (currency: string, token: Token) => {
       return null
   }
 }
+
+
+// parseWETHToken replaces the "WETH" symbol by the more commonly understood "ETH" symbol.
+// On the frontend, we display ETH instead of WETH for a better UX.
+export const parseWETHToken = (symbol: string) => {
+  return symbol === "WETH" ? "ETH" : symbol
+}
+
+// parseWETHPair replaces the "WETH" symbol by the more commonly understood "ETH" symbol.
+// On the frontend, we display ETH instead of WETH for a better UX.
+export const parseWETHPair = (tokenPairSymbol: string) => {
+  let baseSymbol = getBaseToken(tokenPairSymbol)
+  let quoteSymbol = getQuoteToken(tokenPairSymbol)
+  
+  baseSymbol = baseSymbol === 'WETH' ? 'ETH' : baseSymbol
+  quoteSymbol = quoteSymbol === 'WETH' ? 'ETH' : quoteSymbol
+
+  return `${baseSymbol}/${quoteSymbol}`
+}
+
+export const parseTokenPairArray = (data: Array<TokenPair & TokenPairData>) => {
+  return data.map(rawPair => {
+    let pair = parseWETHPair(rawPair.pair)
+    let baseTokenSymbol = parseWETHToken(rawPair.baseTokenSymbol)
+    let quoteTokenSymbol = parseWETHToken(rawPair.quoteTokenSymbol)
+    
+    return {
+      ...rawPair,
+      pair,
+      baseTokenSymbol,
+      quoteTokenSymbol
+    }
+  })
+}
+
+export const parseETHtoWETHToken = (symbol: string) => {
+  return symbol === "ETH" ? "WETH" : symbol
+}
+
+
+export const parseToWETHPair = (tokenPairSymbol: string) => {
+  let baseSymbol = getBaseToken(tokenPairSymbol)
+  let quoteSymbol = getQuoteToken(tokenPairSymbol)
+
+  baseSymbol = baseSymbol === 'ETH' ? 'WETH' : baseSymbol
+  quoteSymbol = quoteSymbol === 'ETH' ? 'WETH' : quoteSymbol
+
+  return `${baseSymbol}/${quoteSymbol}`
+}
+
+export const getPairSymbol = (baseTokenSymbol: string, quoteTokenSymbol: string) => {
+  return `${baseTokenSymbol}/${quoteTokenSymbol}`;
+};
+
+export const getBaseToken = (pairSymbol: string) => {
+  return pairSymbol.split('/')[0];
+};
+
+export const getQuoteToken = (pairSymbol: string) => {
+  return pairSymbol.split('/')[1];
+};

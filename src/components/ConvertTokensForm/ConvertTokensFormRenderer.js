@@ -2,9 +2,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import TxNotification from '../TxNotification';
-import { Button, Callout, Checkbox, Icon, Slider } from '@blueprintjs/core';
+import { Button, Icon, Slider } from '@blueprintjs/core';
 import { formatNumber } from 'accounting-js'
-import { ModalBody } from '../Common'
+
+import { 
+  ModalBody, 
+  FlexColumn, 
+  FlexRow, 
+  Box,
+  XLText,
+  Colors
+} from '../Common'
+
+import {
+  Fonts,
+} from '../Common/Variables'
 
 import CenteredSpinner from '../Common/CenteredSpinner'
 import type { TxReceipt } from '../../types/common'
@@ -13,11 +25,8 @@ type Props = {
   address: string,
   fromToken: string,
   toToken: string,
-  fromTokenBalance: number,
-  toTokenBalance: number,
   txSubmitted: boolean,
   shouldAllow: boolean,
-  convertAmount: number,
   convertFraction: number,
   handleConvertTokens: void => void,
   handleChangeConvertFraction: number => void,
@@ -30,6 +39,7 @@ type Props = {
   convertTxReceipt: TxReceipt,
   transactionStatus: string,
   reset: string => void,
+  formType: "deposit" | "withdrawal"
 };
 
 const ConvertTokensFormRenderer = (props: Props) => {
@@ -41,61 +51,59 @@ const ConvertTokensFormRenderer = (props: Props) => {
 };
 
 const ConversionFormRenderer = (props: Props) => {
+
   const {
-    shouldAllow,
-    toggleShouldAllowTrading,
     handleConvertTokens,
     handleChangeConvertFraction,
     convertFraction,
-    convertAmount,
     fromToken,
-    toToken,
-    fromTokenBalance,
-    toTokenBalance
+    depositBalance,
+    walletBalance,
+    formType
   } = props;
 
   return (
     <ModalBody>
-      <Callout intent="success" title={messages[fromToken].title}>
-        {messages[fromToken].callout}
-      </Callout>
-      <SliderGroup>
-        <p>{messages[fromToken].label1}</p>
-        <SliderBox>
-          <Slider
-            max={100}
-            min={0}
-            onChange={handleChangeConvertFraction}
-            value={convertFraction}
-            labelStepSize={25}
-          />
-        </SliderBox>
-      </SliderGroup>
-      <BalancesGroup>
-          <p>After this transaction you will have</p>
-        <BalancesBox>
-          <BalanceBox>
-            {/* TODO Need to convert all the balances to strings */}
-            <h2>{formatNumber(Number(fromTokenBalance) - convertAmount, { precision : 3})} {fromToken}</h2>
-          </BalanceBox>
-          <BalanceBox>
-            <h2>{formatNumber(Number(toTokenBalance) + convertAmount, { precision: 3})} {toToken}</h2>
-          </BalanceBox>
-        </BalancesBox>
-      </BalancesGroup>
-
-      {/* <p><Icon intent="warning" icon="warning-sign" /> {messages[fromToken].info1}</p> */}
-      <br />
-      <Checkbox
-        checked={shouldAllow}
-        label={"Allow Trading"}
-        onChange={toggleShouldAllowTrading}
-      />
-      <p><Icon intent="warning" icon="warning-sign" /> {messages[fromToken].info2}</p>
+      <FlexColumn my={3}>
+        <FlexColumn m={2} alignItems="center" width="100%">
+          <XLText 
+            muted 
+            textAlign="center"
+          >
+            {messages[fromToken].label1}
+          </XLText>
+          <Box my={3} width="50%">
+            <Slider
+              max={100}
+              min={0}
+              onChange={handleChangeConvertFraction}
+              value={convertFraction}
+              labelStepSize={25}
+            />
+          </Box>
+        </FlexColumn>
+        <FlexColumn my={3} alignItems="center">
+          <XLText muted>Balances after {formType}</XLText>
+          <FlexColumn my={3} alignItems="stretch" width="50%">
+            <FlexRow justifyContent="space-between" my={2}>
+              <BalanceText>Wallet:</BalanceText>
+              <BalanceValueText>{formatNumber(walletBalance, { precision : 3 })}
+                <BalanceSymbolText muted>ETH</BalanceSymbolText>
+              </BalanceValueText>
+            </FlexRow>
+            <FlexRow justifyContent="space-between" my={2}>
+                <BalanceText>Trading Deposit:</BalanceText>
+                <BalanceValueText>{formatNumber(depositBalance, { precision: 3 })}
+                  <BalanceSymbolText muted>ETH</BalanceSymbolText>
+                </BalanceValueText>
+            </FlexRow>
+          </FlexColumn>
+        </FlexColumn>
+      </FlexColumn>
       <Button
         intent="primary"
         onClick={handleConvertTokens}
-        text="Convert"
+        text={formType === "deposit" ? "Deposit" : "Withdraw"}
         large
         fill
       />
@@ -114,18 +122,19 @@ const ConfirmFormRenderer = (props: Props) => {
     convertTxReceipt,
     transactionStatus,
     reset,
+    formType
   } = props;
 
   const notificationBoxTitles = {
     allow: {
-      reverted: 'Transaction Failed. Could not unlock enable WETH trading',
-      sent: 'Unlocking WETH trading ...',
-      confirmed: 'WETH trading unlocked successfully',
+      reverted: 'Transaction Failed. Could not unlock ETH trading',
+      sent: 'Unlocking ETH trading ...',
+      confirmed: 'ETH trading unlocked successfully',
     },
     convert: {
-      reverted: 'Transaction Failed. Could not convert Ether',
-      sent: 'Converting Ether ...',
-      confirmed: 'Ether converted successfully',
+      reverted: 'Transaction Failed. Could not deposit ETH',
+      sent: 'Processing ETH deposit ...',
+      confirmed: 'ETH deposit successful',
     },
   };
 
@@ -135,7 +144,7 @@ const ConfirmFormRenderer = (props: Props) => {
         <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
-              <Icon icon="error" intent="danger" iconSize={200} />
+              <Icon icon="error" intent="danger" iconSize={150} />
             </ConfirmIconBox>
             <h4>There was a problem with your transaction. But no worries, your funds are safe</h4>
           </ConfirmBox>
@@ -190,7 +199,7 @@ const ConfirmFormRenderer = (props: Props) => {
               status={convertTxStatus}
               hash={convertTxHash}
               receipt={convertTxReceipt}
-              title={notificationBoxTitles.convert[convertTxStatus]}
+              title={formType === "deposit" ? "Processing ETH deposit ..." : "Processing ETH withdrawal..."}
             />
           </TxNotificationBox>
         </ModalBody>
@@ -200,9 +209,14 @@ const ConfirmFormRenderer = (props: Props) => {
         <ModalBody>
           <ConfirmBox>
             <ConfirmIconBox>
-              <Icon icon="tick-circle" intent="success" iconSize={200} />
+              <Icon icon="tick-circle" intent="success" iconSize={150} />
             </ConfirmIconBox>
-            <h3>Your {fromToken} has been successfully tokenized. You can now start trading</h3>
+            <h3>
+              {formType === "deposit"
+                ? "ETH deposit successful. You can now start trading"
+                : "Withdrawal successful"
+              }
+            </h3>
             <Button minimal onClick={reset}>
               Convert again
             </Button>
@@ -212,6 +226,7 @@ const ConfirmFormRenderer = (props: Props) => {
               status={allowTxStatus}
               hash={allowTxHash}
               receipt={allowTxReceipt}
+              
               title={notificationBoxTitles.allow[allowTxStatus]}
             />
           </TxNotificationBox>
@@ -220,7 +235,7 @@ const ConfirmFormRenderer = (props: Props) => {
               status={convertTxStatus}
               hash={convertTxHash}
               receipt={convertTxReceipt}
-              title={notificationBoxTitles.convert[convertTxStatus]}
+              title={formType === "deposit" ? "ETH Deposit Success" : "ETH Withdrawal Success"}
             />
           </TxNotificationBox>
         </ModalBody>
@@ -232,58 +247,31 @@ const ConfirmFormRenderer = (props: Props) => {
 
 const messages = {
   "ETH": {
-    title: `Tokenize your Ether for trading!`,
-    callout: `To be able to trade on the AMP platform, you will need to convert you Ether (ETH) to tokenized ether (WETH).
-    ETH and WETH can be converted at anytime through a smart-contract and 1 ETH = 1 WETH consistently. To perform other normal blockchain transactions, you will need Ether to pay for gas. Therefore
-    we recommend tokenizing around 90% of your ETH`,
-    label1: `Choose the fraction of ETH you want to tokenize.`,
-    info1: `WETH is reequired for trading. You can convert back to ETH at any time. Read more about WETH here`,
-    info2: 'Required for trading',
+    title: `You need to deposit ETH before you can start trading ETH pairs`,
+    callout: ``,
+    label1: `Choose the fraction of ETH you want to add to your trading balance`,
   },
   "WETH": {
     title: `Convert back to Ether`,
     callout: `To be able to trade on the AMP platform, you will need to convert you Ether (ETH) to tokenized ether (WETH). ETH and WETH can be converted at anytime through a smart-contract and 1 ETH = 1 WETH consistently`,
-    label1: `Choose the fraction of WETH (tokenized Ether) you want to convert to ETH`,
-    info1: `WETH is required for trading. You can convert between WETH (tokenized ether) and ETH at any time. Read more about WETH here`,
-    info2: 'Required for trading',
+    label1: `Choose the fraction of your ETH you want to withdraw`,
   },
 };
 
-const SliderGroup = styled.div`
-  margin: 40px;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  align-items: center;
+const BalanceText = styled.div`
+  font-size: ${Fonts.FONT_SIZE_XL + 'px'};
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
 `
 
-const SliderBox = styled.div`
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  width: 400px;
-`;
-
-const BalancesGroup = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
+const BalanceValueText = styled.div`
+  font-size: ${Fonts.FONT_SIZE_XL + 'px'};
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
 `
 
-const BalancesBox = styled.div`
-  display: flex;
-  width: 60%;
-  flex-direction: row;
-  justify-content: space-around;
-`;
-
-const BalanceBox = styled.div`
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+const BalanceSymbolText = styled.span`
+  font-size: ${Fonts.FONT_SIZE_LARGE + 'px'};
+  color: ${props => (props.intent ? Colors[props.intent] : props.muted ? Colors.TEXT_MUTED : Colors.TEXT)}
+`
 
 const TxNotificationBox = styled.div`
   margin-top: 5px;

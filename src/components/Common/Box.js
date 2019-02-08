@@ -58,6 +58,29 @@ export const Box = styled.div`
   ${color}
 
   @media ${Devices.mobileS} {
+    ${props => props.hideOnMobileS && "display: none !important;" }
+  }
+
+  @media ${Devices.mobileM} {
+    ${props => props.hideOnMobileM && "display: none !important;" }
+  }
+
+  @media ${Devices.mobileL} {
+    ${props => props.hideOnMobile && "display: none !important;" }
+  }
+
+  @media ${Devices.tablet} {
+    ${props => props.hideOnTablet && "display: none !important;" }
+  }
+`;
+
+export const InlineBox = styled.span`
+  ${space}
+  ${width}
+  ${height}
+  ${color}
+
+  @media ${Devices.mobileS} {
     ${props => props.hideOnMobileS && "display: none;" }
   }
 
@@ -72,7 +95,6 @@ export const Box = styled.div`
   @media ${Devices.tablet} {
     ${props => props.hideOnTablet && "display: none;" }
   }
-
 `;
 
 export const DividerBox = styled(Divider)`
@@ -107,6 +129,7 @@ export const FlexRow = styled(Box)`
   ${justifyContent}
   ${flexWrap}
   ${flexBasis}
+  ${flex}
 `
 
 export const FlexColumn = styled(Box)`
@@ -117,6 +140,7 @@ export const FlexColumn = styled(Box)`
   ${justifyContent}
   ${flexWrap}
   ${flexBasis}
+  ${flex}
 `
 
 export const FlexRowWrap = styled(Box)`

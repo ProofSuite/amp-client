@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs/react';
@@ -5,8 +7,8 @@ import { withInfo } from '@storybook/addon-info';
 import { action } from '@storybook/addon-actions';
 import { Card } from '@blueprintjs/core';
 import OrderBook from './OrderBook';
-import OrderBookRenderer from './OrderBookRenderer'
-import VerticalOrderBookRenderer from './VerticalOrderBookRenderer'
+import HorizontalOrderBook from './HorizontalOrderBook'
+import VerticalOrderBook from './VerticalOrderBook'
 import README from './README.md';
 
 let bids = [
@@ -69,11 +71,14 @@ storiesOf('OrderBook', module)
         <OrderBook
           loading={false}
           asks={asks}
-          currentPair={currentPair}
           bids={bids}
-          baseToken="ETH"
-          quoteToken="USDT"
-          direction="vertical"
+          currentPair={currentPair}
+          midMarketPrice={1.34}
+          spread={234.3}
+          select={action('select')}
+          onCollapse={action('onCollapse')}
+          onExpand={action('onExpand')}
+          onResetDefaultLayout={action('onResetDefaultLayout')}
         />
       </Card>
     ))
@@ -82,10 +87,18 @@ storiesOf('OrderBook', module)
     'Orderlist',
     withInfo({ text: README, source: false })(() => (
       <Card className="bp3-dark">
-        <OrderBookRenderer
+        <HorizontalOrderBook
           asks={asks}
-          onSelect={action('onSelect')}
           bids={bids}
+          currentPair={currentPair}
+          midMarketPrice={1.34}
+          spread={234.3}
+          isOpen={true}
+          onSelect={action('onSelect')}
+          selectTabId={1}
+          toggleCollapse={action('toggleCollapse')}
+          expand={action('expand')}
+          onResetDefaultLayout={action('onResetDefaultLayout')}
         />
       </Card>
     ))
@@ -94,10 +107,18 @@ storiesOf('OrderBook', module)
     'Vertical Orderbook',
     withInfo({ text: README, source: false })(() => (
       <Card className="bp3-dark">
-        <VerticalOrderBookRenderer
+        <VerticalOrderBook
           asks={asks}
-          onSelect={action('onSelect')}
           bids={bids}
+          currentPair={currentPair}
+          midMarketPrice={1.34}
+          spread={234.3}
+          isOpen={true}
+          onSelect={action('onSelect')}
+          selectTabId={1}
+          toggleCollapse={action('toggleCollapse')}
+          expand={action('expand')}
+          onResetDefaultLayout={action('onResetDefaultLayout')}
         />
       </Card>
     ))
@@ -106,10 +127,18 @@ storiesOf('OrderBook', module)
     'Vertical Orderbook (Large)',
     withInfo({ text: README, source: false })(() => (
       <Card className="bp3-dark">
-        <VerticalOrderBookRenderer
+        <VerticalOrderBook
           asks={moreAsks}
-          onSelect={action('onSelect')}
           bids={moreBids}
+          currentPair={currentPair}
+          midMarketPrice={1.34}
+          spread={234.3}
+          isOpen={true}
+          onSelect={action('onSelect')}
+          selectTabId={1}
+          toggleCollapse={action('toggleCollapse')}
+          expand={action('expand')}
+          onResetDefaultLayout={action('onResetDefaultLayout')}
         />
       </Card>
     ))

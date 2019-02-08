@@ -121,7 +121,7 @@ class Layout extends React.PureComponent<Props, State> {
                 }                
               </NavbarGroup>
               <NavbarGroup align={Alignment.RIGHT}>
-              {showLoginButton && <NavbarLink to="/login">Login</NavbarLink>}
+              {!authenticated && <NavbarLink to="/login">Login</NavbarLink>}
               {authenticated && (
                   <React.Fragment>
                     <ConnectionStatusBox>

@@ -185,7 +185,6 @@ export default function getTokenPairsDomain(state: TokenPairState) {
     getTokenPairsDataArray: () => Object.values(state.data),
     getFavoritePairs: () => state.favorites,
     getCurrentPair: (): TokenPair => state.byPair[state.currentPair],
-
     getListedPairs: (): TokenPair => {
       let pairs: any = Object.values(state.byPair)
       let listedPairs = pairs.filter(pair => pair.listed === true)
@@ -225,7 +224,6 @@ export default function getTokenPairsDomain(state: TokenPairState) {
 
       return tokenPairData
     },
-
 
     orderCountsBySymbol: () => {
       let symbols = Object.keys(state.data)
