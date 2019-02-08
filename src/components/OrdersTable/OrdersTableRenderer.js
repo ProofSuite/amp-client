@@ -335,11 +335,13 @@ const Cell = styled.span.attrs({ className: props => props.className })`
   display: flex;
   align-items: center;
   height: 40px !important;
-  width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
+  width: 100%;
+  // width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
 `
 
 const HeaderCell = styled.span.attrs({ className: props => props.className })`
-  width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
+  width: 100%;
+  // width: ${props => (props.className === 'cancel' ? '100px' : '20%')};
 `
 
 export default OrdersTableRenderer
