@@ -11,17 +11,20 @@ import {
 import * as actionCreators from '../actions/marketsTable'
 import * as notifierActionCreators from '../actions/app'
 import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
-
-import { quoteTokenSymbols as quoteTokens } from '../../config/quotes'
-
+import { quoteTokenSymbols as rawQuoteTokens } from '../../config/quotes'
 import type { State, ThunkAction } from '../../types'
+import { parseTokenPairArray, parseToWETHPair, replace } from '../../utils/helpers'
 
 export default function marketsTableSelector(state: State) {
     let { referenceCurrency } = getAccountDomain(state)
     let pairsDomain = getTokenPairsDomain(state)
 
-    let pairs = pairsDomain.getTokenPairsWithDataArray()
-    
+    let rawPairs = pairsDomain.getTokenPairsWithDataArray()
+    let pairs = parseTokenPairArray(rawPairs)
+
+    //We replace WETH by ETH on the frontend
+    let quoteTokens = replace(rawQuoteTokens, "WETH", "ETH")
+
     return {
         pairs,
         quoteTokens,
@@ -29,17 +32,16 @@ export default function marketsTableSelector(state: State) {
     }
 }
 
-export function redirectToTradingPage(baseTokenSymbol: string, quoteTokenSymbol: string): ThunkAction {
+export function redirectToTradingPage(pairSymbol: string): ThunkAction {
   return async (dispatch, getState, { mixpanel }) => {
     mixpanel.track('market-page/redirect-to-trading-page')
-    let pair = `${baseTokenSymbol}/${quoteTokenSymbol}`
+    let rawPairSymbol = parseToWETHPair(pairSymbol)
 
-    dispatch(actionCreators.updateCurrentPair(pair))
+    dispatch(actionCreators.updateCurrentPair(rawPairSymbol))
     dispatch(push('/trade'))
   }
 }
 
-//TODO it seems that updateAllowance callback is missing
 export function toggleAllowance(symbol: string): ThunkAction {
   return async (dispatch, getState, { txProvider }) => {
     try {

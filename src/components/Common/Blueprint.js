@@ -216,3 +216,26 @@ export const Button = styled(Blueprint.Button)`
     ${props => props.hideOnTablet && "display: none;" }
   }
 `
+
+export const InputGroup = styled(Blueprint.InputGroup)`
+  ${space}
+  ${width}
+  ${height}
+  ${color}
+
+  @media ${Devices.mobileS} {
+    ${props => props.hideOnMobileS && "display: none;" }
+  }
+
+  @media ${Devices.mobileM} {
+    ${props => props.hideOnMobileM && "display: none;" }
+  }
+
+  @media ${Devices.mobileL} {
+    ${props => props.hideOnMobile && "display: none;" }
+  }
+
+  @media ${Devices.tablet} {
+    ${props => props.hideOnTablet && "display: none;" }
+  }
+`

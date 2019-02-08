@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import styled from 'styled-components'
 
 import { 
   Icon, 
@@ -7,7 +8,6 @@ import {
   Card, 
   Tabs, 
   Tab, 
-  InputGroup, 
   Button, 
   Collapse  
 } from '@blueprintjs/core'
@@ -25,14 +25,15 @@ import {
   OverlaySpinner,
   ColoredCryptoIcon,
   SmallTextDiv,
-  FlexRow
+  FlexRow,
+  InputGroup
 } from '../Common'
 
 import {
   isNotNull
 } from '../../utils/helpers'
 
-import styled from 'styled-components'
+
 
 type Token = {
   pair: string,
@@ -103,19 +104,19 @@ const TokenSearchRenderer = (props: Props) => {
         <OverlaySpinner visible={loading} transparent />
       ) : (
         <div style={{ height: '100%', overflowY: 'auto' }} onContextMenu={onContextMenu}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', height: '30px' }}>
+          <TokenSearcherToolBar>
             <SearchInput
               leftIcon="search"
               onChange={onChangeSearchFilter}
               value={searchFilter}
               placeholder="Search Token ..."
             />
-            <FlexRow ml={1}>
+            <FlexRow alignItems="center" ml={1}>
               <Button icon='zoom-to-fit' onClick={expand} minimal small />
               <Button icon='move' className="drag" minimal small />
               <Button icon={isOpen ? 'chevron-up' : 'chevron-down'} onClick={toggleCollapse} minimal small />
             </FlexRow>
-          </div>
+          </TokenSearcherToolBar>
           <Collapse isOpen={isOpen}>
             <SelectedPair
               selectedPair={selectedPair}
@@ -435,4 +436,10 @@ const ListHeader = styled.ul`
 
 const Change24H = styled(SmallText).attrs({ className: 'change' })`
   color: ${props => (props.change > 0 ? Colors.GREEN5 : Colors.RED4)} !important;
+`
+
+const TokenSearcherToolBar = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
 `

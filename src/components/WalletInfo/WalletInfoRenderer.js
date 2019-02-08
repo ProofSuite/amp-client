@@ -319,7 +319,7 @@ const PremiumListingPanel = (props: *) => {
 
 const WalletInfoCard = styled(Card)`
   height: 92vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 `
 
 const GlowingButton = styled(Button)`

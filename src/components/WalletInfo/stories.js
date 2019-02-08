@@ -36,22 +36,26 @@ storiesOf('Wallet Info', module)
       <Card className="bp3-dark">
         <WalletInfoRenderer
             isModalOpen={false}
-            handleModalClose={action("handleModalClose")}
             accountAddress="0x1"
             balance="0x2"
+            accountEtherscanUrl=""
             gasPrice={10000}
             gas={100}
-            handleChangeTab={action("handleChangeTab")}
             selectedTab="Portfolio"
             tokenAddress=""
             tokenSymbol=""
             tokenEtherscanUrl=""
-            handleChangeTokenAddress={action("handleChangeTokenAddress")}
-            handleDetectContract={action("handleDetectContract")}
+            recentTransactions={[]}
+            addTokenPending={false}
+            registerTokenPending={false}
             tokenAddressStatus=""
             tokenIsAdded={false}
             tokenIsListed={false}
             tokenIsRegistered={false}
+            handleChangeTab={action("handleChangeTab")}
+            handleChangeTokenAddress={action("handleChangeTokenAddress")}
+            handleDetectContract={action("handleDetectContract")}
+            handleModalClose={action("handleModalClose")}
             handleAddToken={action("handleAddToken")}
             handleRegisterToken={action("handleRegisterToken")}
         />

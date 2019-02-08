@@ -48,18 +48,18 @@ export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
       let amount = utils.parseEther(convertAmount.toString())
 
       let { hash } = await weth.withdraw(amount)
-      let tx = { type: 'WETH Converted', status: 'PENDING', hash }
+      let tx = { type: 'ETH Withrawn', status: 'PENDING', hash }
       dispatch(actionCreators.sendConvertTx('WETH', tx))
 
       let receipt = await signer.provider.waitForTransaction(tx.hash)
 
       if (receipt.status === 0) {
-        let tx = { type: 'WETH Converted', status: 'ERROR', hash, receipt, time: Date.now() }
+        let tx = { type: 'ETH Withrawn', status: 'ERROR', hash, receipt, time: Date.now() }
         let message = 'ETH conversion transaction failed'
         dispatch(actionCreators.revertConvertTx('WETH', tx, message))
 
       } else {
-        let tx = { type: 'WETH Converted', status: 'CONFIRMED', hash, receipt, time: Date.now() }
+        let tx = { type: 'ETH Withrawn', status: 'CONFIRMED', hash, receipt, time: Date.now() }
         let message = 'ETH conversion transaction successful'
         dispatch(actionCreators.confirmConvertTx('WETH', tx, message))
 
@@ -70,7 +70,7 @@ export const convertFromWETHtoETH = (convertAmount: number): ThunkAction => {
   }
 }
 
-export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number): ThunkAction => {
+export const convertFromETHtoWETH = (convertAmount: number): ThunkAction => {
   return async (dispatch, getState, { mixpanel }) => {
     mixpanel.track('wallet-page/convert-from-eth-to-weth');
 
@@ -83,17 +83,16 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
       let signerAddress = await signer.getAddress()
       let txCount = await signer.provider.getTransactionCount(signerAddress)
 
-      if (shouldAllow) {
-        let convertTxPromise = weth.deposit({
-          value: utils.parseEther(convertAmount.toString()),
-          nonce: txCount
-         });
+      let convertTxPromise = weth.deposit({
+        value: utils.parseEther(convertAmount.toString()),
+        nonce: txCount
+        });
 
-        let allowTxPromise = weth.approve(
-          EXCHANGE_ADDRESS[networkID],
-          ALLOWANCE_THRESHOLD,
-          { nonce: txCount + 1 }
-        );
+      let allowTxPromise = weth.approve(
+        EXCHANGE_ADDRESS[networkID],
+        ALLOWANCE_THRESHOLD,
+        { nonce: txCount + 1 }
+      );
 
         let [convertTxResult, allowTxResult] = await Promise.all([convertTxPromise, allowTxPromise]);
 
@@ -130,23 +129,6 @@ export const convertFromETHtoWETH = (shouldAllow: boolean, convertAmount: number
         if (convertTxReceipt.status !== 0 || allowTxReceipt.status !== 0) {
           dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
         }
-      } else {
-        // Case of only conversion 
-        let convertTxResult = await weth.deposit({ value: utils.parseEther(convertAmount.toString()) })
-        let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'PENDING', time: Date.now() }
-        dispatch(actionCreators.sendConvertTx('ETH', convertTx));
-
-        let convertTxReceipt = await signer.provider.waitForTransaction(convertTx.hash);
-
-        if (convertTxReceipt.status === 0) {
-          let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'ERROR', receipt: convertTxReceipt, time: Date.now() }
-          dispatch(actionCreators.revertConvertTx('ETH', convertTx))
-        } else {
-          let convertTx = { type: 'ETH Converted', hash: convertTxResult.hash, status: 'CONFIRMED', receipt: convertTxReceipt, time: Date.now() }
-          dispatch(actionCreators.confirmConvertTx('ETH', convertTx))
-          dispatch(notificationActionCreators.addSuccessNotification({ message: 'ETH conversion transaction successful!' }))
-        }
-      }
 
     } catch (error) {
       console.log(error.message);
