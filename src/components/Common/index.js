@@ -35,7 +35,8 @@ import {
     NavbarHeading,
     NavbarGroup,
     NavbarDivider,
-    Button
+    Button,
+    InputGroup
 } from './Blueprint'
 
 import { 
@@ -44,9 +45,42 @@ import {
     BlueGlowingButton
 } from './Button'
 
-export { GreenGlowingButton, RedGlowingButton, BlueGlowingButton }
-export { Box, InlineBox, TextBox, DividerBox, Flex, FlexItem, FlexRow, FlexColumn, FlexRowWrap, FlexColumnWrap, FlexRowSpaceAround, FlexRowSpaceBetween }
-export { Text, Paragraph, XLText, Header, TextDiv, SmallText, SmallTextDiv, EmphasizedText, LargeText,  HeaderText, LabelText, MutedText, LinkText }
+export { 
+    GreenGlowingButton, 
+    RedGlowingButton, 
+    BlueGlowingButton
+}
+
+export { 
+    Box, 
+    InlineBox, 
+    TextBox, 
+    DividerBox,
+    Flex, 
+    FlexItem, 
+    FlexRow, 
+    FlexColumn, 
+    FlexRowWrap, 
+    FlexColumnWrap, 
+    FlexRowSpaceAround, 
+    FlexRowSpaceBetween
+}
+
+export { 
+    Text, 
+    Paragraph, 
+    XLText, 
+    Header, 
+    TextDiv, 
+    SmallText, 
+    SmallTextDiv, 
+    EmphasizedText, 
+    LargeText,
+    HeaderText, 
+    LabelText, 
+    MutedText, 
+    LinkText 
+}
 
 export {
     Card,
@@ -54,6 +88,7 @@ export {
     NavbarGroup,
     NavbarDivider,
     Button,
+    InputGroup
 }
 
 export { default as Spacer } from './Spacer'
@@ -82,5 +117,4 @@ export { default as ModalFooter } from './ModalFooter'
 export { default as CloseableCallout } from './CloseableCallout'
 export { default as AMPLogo } from './AMPLogo'
 export { default as Link } from './Link'
-
 export { default as TwitterShareLink } from './TwitterShareLink'

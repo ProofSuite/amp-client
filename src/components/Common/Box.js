@@ -58,19 +58,19 @@ export const Box = styled.div`
   ${color}
 
   @media ${Devices.mobileS} {
-    ${props => props.hideOnMobileS && "display: none;" }
+    ${props => props.hideOnMobileS && "display: none !important;" }
   }
 
   @media ${Devices.mobileM} {
-    ${props => props.hideOnMobileM && "display: none;" }
+    ${props => props.hideOnMobileM && "display: none !important;" }
   }
 
   @media ${Devices.mobileL} {
-    ${props => props.hideOnMobile && "display: none;" }
+    ${props => props.hideOnMobile && "display: none !important;" }
   }
 
   @media ${Devices.tablet} {
-    ${props => props.hideOnTablet && "display: none;" }
+    ${props => props.hideOnTablet && "display: none !important;" }
   }
 `;
 

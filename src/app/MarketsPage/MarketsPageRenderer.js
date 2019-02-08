@@ -53,6 +53,7 @@ const MarketPageBox = styled.div`
   flex-direction: column;
   margin-top: 1em;
   margin-bottom: 1em;
+  
 `
 
 const MarketPageContentBox = styled(Card)`
@@ -60,7 +61,8 @@ const MarketPageContentBox = styled(Card)`
   width: 100%;
   margin-right: 0.5em;
   margin-left: 0.5em;
-  overflow-y:scroll;
+
+  overflow: auto;
 `
 
 const RowWrapper = styled.div`

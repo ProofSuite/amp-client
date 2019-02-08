@@ -13,9 +13,9 @@ import {
 } from 'react-virtualized'
 
 import { 
-  Button, 
-  InputGroup, 
   Position,
+  Button,
+  InputGroup
 } from '@blueprintjs/core';
 
 import {
@@ -32,8 +32,12 @@ import {
   BlueGlowingButton,
   FlexRow,
   Box,
-  CryptoIconPair
+  CryptoIconPair,  
 } from '../Common';
+
+import {
+  Devices
+} from '../Common/Variables'
 
 import type { PairData } from './MarketsTable'
 
@@ -79,27 +83,27 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
               <SmallText muted>{pair}</SmallText>
             </FlexRow>
           </Cell>
-          <Cell>
+          <Cell type="price">
             <SmallText muted>
               {formatNumber(price, { precision: 2 })} {quoteTokenSymbol}
             </SmallText>
           </Cell>
-          <Cell>
+          <Cell type="referencePrice">
             <SmallText muted>
               {formatNumber(price, { precision: 2 })} {currentReferenceCurrency}
             </SmallText>
           </Cell>
-          <Cell>
+          <Cell type="volume">
             <SmallText muted>
               {formatNumber(volume, { precision: 2 })}
             </SmallText>
           </Cell>
-          <Cell>
+          <Cell type="orderVolume">
             <SmallText muted>
               {orderVolume ? formatNumber(orderVolume, { precision: 2 }) : 'N.A'}
             </SmallText>
           </Cell>
-          <Cell>
+          <Cell type="change">
             <ChangeCell change={change}>{change ? `${formatNumber(change, { precision: 2 })}%` : 'N.A'}</ChangeCell>
           </Cell>
           <Cell>
@@ -141,28 +145,29 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
       {props =>
       <TableSection style={props}>
         <TableToolBar mt={3} mb={4}>
-          <FlexRow>
+          <TableSearchBar>
             <InputGroup
               type="string"
               leftIcon="search"
-              placeholder="Search Token ..."
+              placeholder="Search Token..."
               value={searchInput}
               onChange={handleSearchInputChange}
             />
-            <Button
+            <MarketStatisticsButton
               minimal
               intent="primary"
               text="View Market Statistics"
               icon="stacked-chart"
               onClick={toggleMarketStatistics}
             />
-          </FlexRow>
+          </TableSearchBar>
           <ButtonRow>
             {tabs.map((tab, i) => {
               return (
-                <Button
+                <QuoteSelectionButton
                   text={tab}
                   minimal
+                  fill
                   onClick={() => handleChangeTab(tab)}
                   active={selectedTab === tab}
                   intent={selectedTab === tab ? 'primary' : ''}
@@ -174,24 +179,23 @@ class MarketsTableRenderer extends React.PureComponent<Props> {
         </TableToolBar>
             <TableHeader>
               <TableHeaderCell>Market</TableHeaderCell>
-              <TableHeaderCell>Price</TableHeaderCell>
-              <TableHeaderCell>Price ({currentReferenceCurrency})</TableHeaderCell>
-              <TableHeaderCell>Volume</TableHeaderCell>
-              <TableHeaderCell>
+              <TableHeaderCell type="price">Price</TableHeaderCell>
+              <TableHeaderCell type="referencePrice">Price ({currentReferenceCurrency})</TableHeaderCell>
+              <TableHeaderCell type="volume">Volume</TableHeaderCell>
+              <TableHeaderCell type="orderVolume">
                 Order Volume
                 <span> </span>
                 <Help position={Position.RIGHT}>
                   The total amount of bids and asks currently in the orderbook
                 </Help>
               </TableHeaderCell>
-              <TableHeaderCell>Change 24H</TableHeaderCell>
+              <TableHeaderCell type="change">Change 24H</TableHeaderCell>
               <TableHeaderCell></TableHeaderCell>
             </TableHeader>
             <Table>
             <TableBody>
               <AutoSizer>
                 {({ width, height }) => (
-                  
                   <List
                     width={width}
                     height={height}
@@ -221,10 +225,30 @@ const Table = styled.div.attrs({
   className: '',
 })`
   width: 100%;
-  border: none !important;
+  overflow: hidden;
+
 `;
 
-const TableToolBar = styled(FlexRowSpaceBetween)``
+const TableToolBar = styled(FlexRowSpaceBetween)`
+  @media ${Devices.mobileL} {
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+`;
+
+const TableSearchBar = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @media ${Devices.mobileL} {
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+`
 
 const TableSection = styled.div`
   display: flex;
@@ -245,8 +269,36 @@ const TableHeader = styled.div`
   margin-bottom: 20px;
 `;
 
-const TableHeaderCell = styled.div`
+const TableHeaderCell = styled(Box)`
   width: 15%;
+
+  @media ${Devices.tablet} {
+    width: 25%;
+    display: ${props => (props.type === "volume")
+      ? "none"
+      : props.type === "orderVolume"
+        ? "none"
+        : props.type === "change"
+          ? "none"
+          : "flex"
+      };
+  }
+
+  @media ${Devices.mobileM} {
+    width: 50%;
+    display: ${props => (props.type === "volume")
+      ? "none"
+      : props.type === "orderVolume"
+        ? "none"
+        : props.type === "change"
+          ? "none"
+          : props.type === "price"
+            ? "none"
+            : props.type === "referencePrice"
+              ? "none"
+              : "flex"
+      };
+  }
 `;
 
 const Cell = styled.div`
@@ -254,6 +306,34 @@ const Cell = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
+  @media ${Devices.tablet} {
+    width: 25%;
+    display: ${props => (props.type === "volume")
+      ? "none"
+      : props.type === "orderVolume"
+        ? "none"
+        : props.type === "change"
+          ? "none"
+          : "flex"
+      };
+  }
+
+  @media ${Devices.mobileM} {
+    width: 50%;
+    display: ${props => (props.type === "volume")
+      ? "none"
+      : props.type === "orderVolume"
+        ? "none"
+        : props.type === "change"
+          ? "none"
+          : props.type === "price"
+            ? "none"
+            : props.type === "referencePrice"
+              ? "none"
+              : "flex"
+      };
+  }
 `;
 
 const Row = styled.div`
@@ -279,6 +359,24 @@ const ButtonRow = styled.span`
   justify-content: flex-end;
   & .bp3-button {
     margin-left: 5px;
+  }
+
+  @media ${Devices.tablet} {
+    justify-content: stretch;
+  }
+`
+
+const QuoteSelectionButton = styled(Button)`
+  @media ${Devices.tablet} {
+    // margin-top: 10px;
+    // margin-bottom: 10px;
+  }
+`
+
+const MarketStatisticsButton = styled(Button)`
+  @media ${Devices.tablet} {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 `
 
