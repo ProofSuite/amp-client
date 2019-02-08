@@ -139,19 +139,8 @@ const ListHeader = styled.ul`
 const ListBody = styled.ul`
   height: 90%;
   max-height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0;
-  padding-left: 0px !important;
-  margin-left: 0px !important;
-`;
-
-const HeadingRow = styled.li`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-  justify-content: space-between;
-  padding-left: 10px;
   padding-left: 0px !important;
   margin-left: 0px !important;
 `;

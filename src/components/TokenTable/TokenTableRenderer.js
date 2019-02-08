@@ -13,20 +13,18 @@ import {
 } from '@blueprintjs/core';
 
 import { 
-  RowSpaceBetween, 
+  FlexRowSpaceBetween, 
   ColoredCryptoIcon, 
   Colors,
   AMPLogo,
   Centered,
   LargeText,
   SmallText,
-  GreenGlowingButton,
   BlueGlowingButton,
   FlexRow,
   FlexColumn,
   Box,
   InlineBox,
-  Header,
   EmphasizedText,
   Text
 } from '../Common';
@@ -154,8 +152,8 @@ class TokenTableRenderer extends React.PureComponent<Props> {
         {animation =>
             <React.Fragment>
             {this.widgetRenderer(selectedToken)}
-            <TableSection style={animation}>
-              <RowSpaceBetween style={{ marginBottom: '20px' }}>
+            <TableSection style={animation} p={1}>
+              <FlexRowSpaceBetween mb={2}>
                 <InputGroup
                   type="string"
                   leftIcon="search"
@@ -169,7 +167,7 @@ class TokenTableRenderer extends React.PureComponent<Props> {
                 >
                   Show all listed tokens
                 </HideTokenCheck>
-              </RowSpaceBetween>
+              </FlexRowSpaceBetween>
               <TableHeader>
                   <TokenNameHeaderCell>Token Name</TokenNameHeaderCell>
                   <BalancesHeaderCell>Balances</BalancesHeaderCell>
@@ -268,7 +266,7 @@ const ETHWidget = (props: Props) => {
                       <Text muted xlarge justifyContent="center">Total Balance</Text>
                       <InlineBox pl={1} pt={1}>
                         <Help position={Position.RIGHT}>
-                          The ETH <b>Total Balance</b> is the sum of both Wallet balances and Trading balances. 
+                          The ETH <EmphasizedText bold>Total Balance</EmphasizedText> is the sum of both Wallet balances and Trading balances. 
                         </Help>
                       </InlineBox>
                     </FlexRow>
@@ -503,7 +501,7 @@ const BaseTokenRow = (props: *) => {
     );
 };
 
-const TableSection = styled.div`
+const TableSection = styled(Box)`
   display: flex;
   justify-content: start;
   flex-direction: column;
