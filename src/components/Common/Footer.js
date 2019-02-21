@@ -26,7 +26,7 @@ const Footer = () => (
     <Container>
       <TopSection>
         <LogosWrapper>
-        <img src={ampLogo} class="Profile-image" width="120" height="120" alt=""/>
+        <img src={ampLogo} className="Profile-image" width="120" height="120" alt=""/>
         <FooterText mt={3}>
             <FooterSatoshiQuote>"03/Jan/2009 Chancellor on brink of second bailout for banks"</FooterSatoshiQuote>
             <FooterFirstBlock>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa in Block 1</FooterFirstBlock>
@@ -286,5 +286,5 @@ const FooterFirstBlock = styled.div`
   text-align: right;
 `;
 
-const LinkText = styled.a`
+const LinkText = styled.span`
 `;
