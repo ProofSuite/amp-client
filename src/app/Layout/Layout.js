@@ -47,7 +47,7 @@ export type Props = {
   accountLoading: boolean,
   address: string,
   locale: string,
-  messages: string,
+  messages: { todo: string },
   currentBlock?: string,
   referenceCurrencies: Array<string>,
   updateReferenceCurrency: void => string,
@@ -100,7 +100,7 @@ class Layout extends React.PureComponent<Props, State> {
               <NavbarGroup align={Alignment.LEFT}>
                 <NavbarHeading>
                   <NavbarHeaderBox>
-                    <img src={ampLogo} class="Profile-image" height={25} width={25} alt="AMP Logo" />
+                    <img src={ampLogo} className="Profile-image" height={25} width={25} alt="AMP Logo" />
                   </NavbarHeaderBox>
                 </NavbarHeading>
                 {authenticated && <NavbarLink to="/wallet">Wallet</NavbarLink>}    
