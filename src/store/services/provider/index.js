@@ -2,7 +2,7 @@ import { DEFAULT_NETWORK_ID } from '../../../config/environment'
 import { ERC20, WETH } from '../../../config/abis'
 import { EXCHANGE_ADDRESS } from '../../../config/contracts'
 import { utils, providers, Contract, getDefaultProvider } from 'ethers'
-import abiDecoder from 'ethereum-input-data-decoder'
+// import abiDecoder from 'ethereum-input-data-decoder'
 
 export const createConnection = () => {
     switch(DEFAULT_NETWORK_ID) {
@@ -26,7 +26,7 @@ export const getEtherscanProvider = () => {
 export async function detectContract(address: string) {
   try {
     const contract = new Contract(address, ERC20, window.provider)
-  
+
     let decimals = await contract.decimals()
     let symbol = await contract.symbol()
 
@@ -44,43 +44,43 @@ export async function queryTransactionHistory(address: string) {
     let txs = await provider.getHistory(address)
     let parsedTxs = []
 
-    txs = txs.slice(Math.max(txs.length - 50, 0))
-
-    txs.forEach(tx => {
-      if (tx.data === '0x') {
-          parsedTxs.push({ type: 'Ether Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-        } else {
-          let decoded = decoder.decodeData(tx.data)
-
-          switch(decoded.name) {
-            case 'approve':
-              let value = decoded.inputs[1].toString()
-              switch(value) {
-                case '1000000000000000000000000000000000000':
-                  parsedTxs.push({ type: 'Token Unlocked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-                  break
-                case '0':
-                  parsedTxs.push({ type: 'Token Locked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-                  break
-                default:
-                  parsedTxs.push({ type: 'Token Approved', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-                  break
-              }
-              break
-            case 'transfer':
-              parsedTxs.push({ type: 'Token Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-              break
-            case 'deposit': 
-              parsedTxs.push({ type: 'ETH Deposited', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-              break
-            case 'withdraw':
-              parsedTxs.push({ type: 'ETH Withdrawn', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-              break
-            default:
-              parsedTxs.push({ type: '', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
-          }
-        }
-      })
+    // txs = txs.slice(Math.max(txs.length - 50, 0))
+    //
+    // txs.forEach(tx => {
+    //   if (tx.data === '0x') {
+    //       parsedTxs.push({ type: 'Ether Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //     } else {
+    //       let decoded = decoder.decodeData(tx.data)
+    //
+    //       switch(decoded.name) {
+    //         case 'approve':
+    //           let value = decoded.inputs[1].toString()
+    //           switch(value) {
+    //             case '1000000000000000000000000000000000000':
+    //               parsedTxs.push({ type: 'Token Unlocked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //               break
+    //             case '0':
+    //               parsedTxs.push({ type: 'Token Locked', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //               break
+    //             default:
+    //               parsedTxs.push({ type: 'Token Approved', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //               break
+    //           }
+    //           break
+    //         case 'transfer':
+    //           parsedTxs.push({ type: 'Token Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //           break
+    //         case 'deposit':
+    //           parsedTxs.push({ type: 'ETH Deposited', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //           break
+    //         case 'withdraw':
+    //           parsedTxs.push({ type: 'ETH Withdrawn', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //           break
+    //         default:
+    //           parsedTxs.push({ type: '', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
+    //       }
+    //     }
+    //   })
 
     return parsedTxs
   } catch (e) {
