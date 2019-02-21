@@ -149,7 +149,11 @@ const MarketTradesPanel = (props: *) => {
           </HeadingRow>
         </ListHeader>
         <ListBody>
-        <ReactCSSTransitionGroup transitionName="flash-buy">
+        <ReactCSSTransitionGroup
+          transitionName="flash-buy"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
           {trades.map((trade, index) => (
             <Row 
               color={trade.change === 'positive' ? Colors.BUY_MUTED : Colors.SELL_MUTED} 
@@ -205,7 +209,11 @@ const UserTradesPanel = (props: *) => {
         </HeadingRow>
       </ListHeader>
       <ListBody>
-      <ReactCSSTransitionGroup transitionName="flash-buy">
+      <ReactCSSTransitionGroup
+        transitionName="flash-buy"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}
+      >
         {trades.map((trade, index) => (
           <Row color={trade.status === 'EXECUTED' ? Colors.BUY_MUTED : Colors.SELL_MUTED} key={trade.hash}>
             <Cell>

@@ -157,6 +157,8 @@ export const OrderListRenderer = (props: *) => {
               <List className="bp3-list-unstyled">
                 <ReactCSSTransitionGroup
                   transitionName="flash-sell"
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={300}
                 >
                   {[...asks].reverse().map((order, index) => <SellOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
                 </ReactCSSTransitionGroup>
@@ -174,6 +176,8 @@ export const OrderListRenderer = (props: *) => {
               <List className="bp3-list-unstyled">
                 <ReactCSSTransitionGroup
                   transitionName="flash-buy"
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={300}
                 >
                   {bids.map((order, index) => <BuyOrder key={order.price} order={order} onClick={() => onSelect(order)} />)}
                 </ReactCSSTransitionGroup>
