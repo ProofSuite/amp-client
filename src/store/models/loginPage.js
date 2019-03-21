@@ -6,7 +6,7 @@ import { getAccountDomain, getLoginPageDomain } from '../domains'
 import { saveEncryptedWalletInLocalStorage, savePrivateKeyInSessionStorage } from '../services/wallet'
 import { createDefaultWalletSigner, createMetamaskSigner, createLedgerSigner } from '../services/signer'
 
-import type { State, ThunkAction } from '../../types';
+import type { State, ThunkAction } from '../../types'
 
 type CreateWalletParams = {
   wallet: Object,
