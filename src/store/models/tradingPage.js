@@ -89,8 +89,6 @@ export const queryTradingPageData = (): ThunkAction => {
       } else {
         tokenPairData = await api.fetchTokenPairData()
       }
-
-      console.log('i am here')
       
       let parsedTokenPairData = parseTokenPairsData(tokenPairData, pairs)
       let parsedOrders = parseOrders(orders, pairs)
