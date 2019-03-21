@@ -33,6 +33,8 @@ export const subscribeChart = (pair: TokenPair, timespan: string, duration: stri
     }
   })
 
+  console.log(message)
+
   window.socket.send(message)
   return () => unsubscribeChart(pair)
 }
@@ -48,6 +50,8 @@ export const unsubscribeChart = () => {
       type: 'UNSUBSCRIBE',
     }
   })
+
+  console.log(message)
 
   window.socket.send(message)
 }
@@ -67,6 +71,8 @@ export const subscribeOrderBook = (pair: TokenPair) => {
     }
   })
 
+  console.log(message)
+
   window.socket.send(message)
   return () => unsubscribeOrderBook(pair)
 }
@@ -79,6 +85,8 @@ export const unsubscribeOrderBook = () => {
     channel: 'orderbook',
     event: { type: 'UNSUBSCRIBE' }
   })
+
+  console.log(message)
 
   window.socket.send(message)
 }
@@ -99,6 +107,8 @@ export const subscribeTrades = (pair: TokenPair) => {
     }
   })
 
+  console.log(message)
+
   window.socket.send(message)
   return () => unsubscribeTrades(pair)
 }
@@ -111,6 +121,8 @@ export const unsubscribeTrades = (pair: TokenPair) => {
     channel: 'trades',
     event: { type: 'UNSUBSCRIBE' }
   })
+
+  console.log(message)
 
   window.socket.send(message)
 }

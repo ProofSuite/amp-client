@@ -20,8 +20,6 @@ import {
   parseToWETHPair
 } from '../../utils/helpers'
 
-import { quoteTokenSymbols as quotes } from '../../config/quotes'
-
 export default function tokenSearcherSelector(state: State) {
   let domain = getTokenPairsDomain(state)
   let accountBalancesDomain = getAccountBalancesDomain(state)
@@ -30,13 +28,14 @@ export default function tokenSearcherSelector(state: State) {
   let tokenPairs = domain.getTokenPairsDataArray()
   let favoriteTokenPairs = domain.getFavoritePairs()
   let tokenPairsByQuoteToken = {}
+  let quotes = ['USDC', 'ETH', 'DAI']
 
   for (let quote of quotes) {
-    //on the backend, the raw quote is "WETH" instead of "ETH". 
+    //on the backend, the raw quote is "WETH" instead of "ETH".
     let rawQuote = quote === "ETH" ? "WETH" : quote
 
+    //We look for pairs with the corresponding "quote".
     tokenPairsByQuoteToken[quote] = tokenPairs
-      //We look for pairs with the corresponding "quote".
       .filter(({ pair }) => getQuoteToken(pair) === rawQuote)
       .map(tokenPair => {
         //For each filtered pair, we parse out "WETH" into "ETH" for the frontend display
@@ -67,8 +66,6 @@ export default function tokenSearcherSelector(state: State) {
   let baseTokenSymbol = (rawPair.baseTokenSymbol === "WETH") ? "ETH" : rawPair.baseTokenSymbol
   let quoteTokenSymbol = (rawPair.quoteTokenSymbol === "WETH") ? "ETH" : rawPair.quoteTokenSymbol
   let currentPair = { ...rawPair, pair: currentPairName, baseTokenSymbol, quoteTokenSymbol }
-
-  console.log(tokenPairsByQuoteToken)
 
   return {
     tokenPairsByQuoteToken,
