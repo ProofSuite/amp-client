@@ -10,6 +10,12 @@ export const createConnection = () => {
             return window.provider = new getDefaultProvider('homestead')
         case '4':
             return window.provider = new getDefaultProvider('rinkeby')
+        case '10':
+            window.provider = new providers.JsonRpcProvider('http://127.0.0.1:22000')
+            window.provider.providers = [ window.provider, window.provider ]
+
+            return window.provider.providers
+
         default:
             throw new Error('unknown network')
     }
@@ -26,7 +32,7 @@ export const getEtherscanProvider = () => {
 export async function detectContract(address: string) {
   try {
     const contract = new Contract(address, ERC20, window.provider)
-  
+
     let decimals = await contract.decimals()
     let symbol = await contract.symbol()
 
@@ -43,7 +49,6 @@ export async function queryTransactionHistory(address: string) {
 
     let txs = await provider.getHistory(address)
     let parsedTxs = []
-
     txs = txs.slice(Math.max(txs.length - 50, 0))
 
     txs.forEach(tx => {
@@ -70,7 +75,7 @@ export async function queryTransactionHistory(address: string) {
             case 'transfer':
               parsedTxs.push({ type: 'Token Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
-            case 'deposit': 
+            case 'deposit':
               parsedTxs.push({ type: 'ETH Deposited', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             case 'withdraw':
@@ -85,6 +90,7 @@ export async function queryTransactionHistory(address: string) {
     return parsedTxs
   } catch (e) {
     console.log(e)
+    return []
   }
 }
 
@@ -98,8 +104,8 @@ export async function queryTokenBalances(address: string, tokens: Array<Token>) 
     return new Promise((resolve) => {
       let payload = new Array(2)
       promise.then((result) => {
-        payload[0] = { 
-          symbol: tokens[i].symbol, 
+        payload[0] = {
+          symbol: tokens[i].symbol,
           balance: utils.formatUnits(result, tokens[i].decimals)}
       })
       .catch((error) => {
@@ -311,7 +317,7 @@ export async function subscribeTokenAllowances(
 export async function queryEtherBalance(address: string) {
   let provider = window.provider
   let balance = await provider.getBalance(address)
-  
+
   return {
     symbol: 'ETH',
     balance: utils.formatEther(balance)

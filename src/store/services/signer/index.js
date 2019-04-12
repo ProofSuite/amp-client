@@ -148,6 +148,8 @@ export const createInfuraProvider = async(networkID: number) => {
     return new providers.InfuraProvider('homestead')
   } else if (networkID === '3') {
     return new providers.InfuraProvider('ropsten')
+  } else if (networkID === '10') {
+    return new providers.JsonRpcProvider('http://127.0.0.1:22000')
   }
 }
 
@@ -158,6 +160,8 @@ export const createEtherscanProvider = async(networkID: number) => {
     return new providers.EtherscanProvider('homestead')
   } else if (networkID === '3') {
     return new providers.EtherscanProvider('ropsten')
+  } else if (networkID === '10') {
+    return new providers.JsonRpcProvider('http://127.0.0.1:22000')
   }
 }
 

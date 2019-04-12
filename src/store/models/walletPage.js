@@ -3,9 +3,9 @@ import { push } from 'connected-react-router'
 import * as actionCreators from '../actions/walletPage'
 import * as notifierActionCreators from '../actions/app'
 
-import { 
-  getAccountBalancesDomain, 
-  getAccountDomain, 
+import {
+  getAccountBalancesDomain,
+  getAccountDomain,
   getTokenDomain,
 } from '../domains'
 
@@ -15,7 +15,7 @@ import { ALLOWANCE_THRESHOLD } from '../../utils/constants'
 import { parseQueryAccountDataError } from '../../config/errors'
 import { pricedTokens } from '../../config'
 
-import { 
+import {
   parseWETHPair,
   parseETHtoWETHToken,
   parseToWETHPair
@@ -73,11 +73,13 @@ export function queryAccountData(): ThunkAction {
         provider.queryTransactionHistory(accountAddress)
       ])
 
+      console.log(tokens, pairs, exchangeAddress, txs)
+
       if (!currentBlock) throw new Error('')
 
       tokens = [ ...new Set([ ...savedTokens, ...tokens ])]
       // let tokenSymbols = tokens.map(token => token.symbol)
-    
+
       let tokenSymbols = pricedTokens
       let currencySymbols = ['USD', 'EUR', 'JPY']
       let exchangeRates = await api.fetchExchangeRates(tokenSymbols, currencySymbols)
@@ -113,7 +115,7 @@ export function queryAccountData(): ThunkAction {
       let { errors: tokenAllowanceErrors, tokenAllowances } = tokenAllowanceResult
       allowances = tokenAllowances
       balances = [etherBalance].concat(tokenBalances)
-      
+
       // TODO handle unsubscriptions
       provider.subscribeTokenBalances(accountAddress, tokens, balance =>
         dispatch(actionCreators.updateBalance(balance)))
@@ -147,7 +149,7 @@ export function redirectToTradingPage(symbol: string): ThunkAction {
       baseTokenSymbol = quoteTokens[1].symbol
     } else {
       quoteTokenSymbol = quoteTokens[0].symbol
-      baseTokenSymbol = symbol      
+      baseTokenSymbol = symbol
     }
 
     let pair = `${baseTokenSymbol}/${quoteTokenSymbol}`
@@ -193,7 +195,7 @@ export function toggleAllowance(symbol: string): ThunkAction {
         }
       }
 
-      const unlockTxConfirmedHandler = (txConfirmed, txHash) => {      
+      const unlockTxConfirmedHandler = (txConfirmed, txHash) => {
         if (txConfirmed) {
           let tx = { type: txType, hash: txHash, time: Date.now(), status: 'CONFIRMED' }
           dispatch(actionCreators.confirmUnlockToken(symbol, txHash, tx))
@@ -210,7 +212,7 @@ export function toggleAllowance(symbol: string): ThunkAction {
       } else {
         await txProvider.updateExchangeAllowance(tokenContractAddress, ALLOWANCE_THRESHOLD, unlockTxConfirmedHandler, unlockTxSentHandler)
       }
-      
+
     } catch (e) {
       console.log(e)
       if (e.message === 'Trading approval pending') {

@@ -5,6 +5,7 @@ export const EXCHANGE_ADDRESS = {
   '4': addresses[4]['Exchange'],
   '1000': addresses[1000]['Exchange'],
   '8888': addresses[8888]['Exchange'],
+  '10': addresses[10]['Exchange']
 };
 
 export const WETH_ADDRESS = {
@@ -12,11 +13,13 @@ export const WETH_ADDRESS = {
   '4': addresses[4]['WETH'],
   '1000': addresses[1000]['WETH'],
   '8888': addresses[8888]['WETH'],
+  '10': addresses[10]['WETH']
 };
 
 export const SETUP_ACCOUNT_ADDRESS = {
   '1': addresses[1]['SetupAccount'],
   '4': addresses[4]['SetupAccount'],
   '1000': addresses[1000]['SetupAccount'],
-  '8888': addresses[8888]['SetupAccount']
+  '8888': addresses[8888]['SetupAccount'],
+  '10': addresses[10]['SetupAccount']
 }

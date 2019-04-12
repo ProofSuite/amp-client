@@ -2,7 +2,7 @@ import { DEFAULT_NETWORK_ID } from './environment.js'
 import addresses from './addresses.json'
 
 import {
- replace  
+ replace
 } from '../utils/helpers'
 
 
@@ -22,7 +22,7 @@ const quoteTokensBySymbolsTable = {
       symbol: 'DAI',
       address: addresses['8888']['DAI'],
       decimals: 18,
-    },    
+    },
   },
   '1000': {
     USDC: {
@@ -58,6 +58,23 @@ const quoteTokensBySymbolsTable = {
       decimals: 18,
     },
   },
+  '10': {
+    USDC: {
+      symbol: 'USDC',
+      address: addresses['10']['USDC'],
+      decimals: 6,
+    },
+    WETH: {
+      symbol: 'WETH',
+      address: addresses['10']['WETH'],
+      decimals: 18,
+    },
+    DAI: {
+      symbol: 'DAI',
+      address: addresses['10']['DAI'],
+      decimals: 18,
+    },
+  },
   '1': {
     USDC: {
       symbol: 'USDC',
@@ -90,7 +107,7 @@ const quoteTokensBySymbolsTable = {
       symbol: 'DAI',
       address: '0x77da6a1ea1cf893ac9941f08bf9714b63c90298d',
       decimals: 18,
-    }    
+    }
   },
 };
 
