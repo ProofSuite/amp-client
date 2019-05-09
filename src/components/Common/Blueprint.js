@@ -100,7 +100,7 @@ export const ComponentWrapper = (props) => {
 //     )
 // }
 
-export const NavbarDivider = styled(Blueprint.NavbarDivider)`
+export const NavbarDivider = styled(({ hideOnMobileS, hideOnMobileM, hideOnMobile, hideOnTablet, ...rest  }) => <Blueprint.NavbarDivider {...rest} />)`
   ${space}
   ${width}
   ${height}
@@ -170,7 +170,7 @@ export const NavbarGroup = styled(Blueprint.NavbarGroup)`
 `
 
 
-export const Card = styled(Blueprint.Card)`
+export const Card = styled(({ hideOnMobileS, hideOnMobileM, hideOnMobile, hideOnTablet, ...rest } ) => <Blueprint.Card {...rest} />)`
   ${space}
   ${width}
   ${height}

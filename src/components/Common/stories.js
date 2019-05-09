@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import { Intent } from '@blueprintjs/core';
-import Text, { EmphasizedText, LargeText } from './Text';
+import { Text, EmphasizedText, LargeText } from './Text';
 import CloseableCallout from './CloseableCallout'
 
 import Heading from './Heading';

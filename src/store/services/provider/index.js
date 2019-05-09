@@ -26,7 +26,7 @@ export const getEtherscanProvider = () => {
 export async function detectContract(address: string) {
   try {
     const contract = new Contract(address, ERC20, window.provider)
-  
+
     let decimals = await contract.decimals()
     let symbol = await contract.symbol()
 
@@ -70,7 +70,7 @@ export async function queryTransactionHistory(address: string) {
             case 'transfer':
               parsedTxs.push({ type: 'Token Transferred', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
-            case 'deposit': 
+            case 'deposit':
               parsedTxs.push({ type: 'ETH Deposited', status: 'CONFIRMED', hash: tx.hash, time: tx.timestamp * 1000 })
               break
             case 'withdraw':
